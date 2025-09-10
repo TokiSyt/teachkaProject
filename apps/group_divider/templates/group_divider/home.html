@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}Group maker{% endblock title %}
+{% block title %}Group divider{% endblock title %}
 
 {% block content %}
 <div class="form-wrapper">
-    <h1>Group maker</h1>
+    <h1>Group divider</h1>
     <hr>
 
     <form method="POST" class="form">
@@ -34,7 +34,7 @@
         <div class="form-container">
             <button type="submit" class="primary-btn">Divide</button>
             <a href="{% url 'group_maker:group-maker-creation' %}" class="secondary-btn">Create a group</a>
-            <a href="{% url 'group-diviver-home' %}" class="secondary-btn">Reset</a>
+            <a href="{% url 'group-divider-home' %}" class="secondary-btn">Reset</a>
             {% if selected_group %}
                 <a id="editGroupsBtn" href="{% url 'group_maker:group-maker-edit' selected_group.id %}" class="secondary-btn">Edit group</a>
             {% else %}
@@ -72,22 +72,22 @@
     document.addEventListener("DOMContentLoaded", function() {
         const groupSelect = document.getElementById("groupSelect");
         const editBtn = document.getElementById("editGroupsBtn");
-        const baseUrl = "{% url 'group_maker:group-maker-edit' 0 %}".replace("0", ""); 
+        const baseUrl = "{% url 'group_maker:group-maker-edit' 0 %}?from=group-divider";
 
-        function updateEditLink() {
-            const groupId = groupSelect.value;
-            if (groupId) {
-                editBtn.href = baseUrl + groupId;
-                editBtn.classList.remove("disabled");
-            } else {
-                editBtn.href = "#";
-                editBtn.classList.add("disabled");
-            }
+    function updateEditLink() {
+        const groupId = groupSelect.value;
+        if (groupId) {
+            editBtn.href = baseUrl.replace("0", groupId);
+            editBtn.classList.remove("disabled");
+        } else {
+            editBtn.href = "#";
+            editBtn.classList.add("disabled");
         }
+    }
 
-        groupSelect.addEventListener("change", updateEditLink);
-        updateEditLink();
-    });
+    groupSelect.addEventListener("change", updateEditLink);
+    updateEditLink();
+});
 </script>
 
 
