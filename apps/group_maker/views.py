@@ -3,7 +3,7 @@ from django.utils.http import url_has_allowed_host_and_scheme
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import GroupCreationModel
 from .forms import GroupCreationForm
-from urllib.parse import urlparse, parse_qs
+from django.urls import reverse
 
 class GroupHome(LoginRequiredMixin, TemplateView):
     template_name = "group_maker/home.html"
@@ -53,14 +53,11 @@ class GroupDelete(LoginRequiredMixin, DeleteView):
     template_name = "group_maker/confirm_delete.html"
 
     def get_success_url(self):
-        next_url = self.request.POST.get("next") or self.request.GET.get("next")
-        if next_url and url_has_allowed_host_and_scheme(next_url, allowed_hosts={self.request.get_host()}):
-            parsed = urlparse(next_url)
-            query = parse_qs(parsed.query)
-            query.pop("group_id", None)
-            cleaned_url = parsed._replace(query="").geturl()
-            return cleaned_url
-        return "/"
+        origin_app = self.request.POST.get("origin_app") or self.request.GET.get("origin_app")
+
+        if origin_app == "points-system":
+            return reverse("karma:karma-home")
+        return reverse("group-divider-home")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
