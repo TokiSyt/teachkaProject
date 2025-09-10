@@ -399,6 +399,7 @@ class DeleteColumn(LoginRequiredMixin, TemplateView):
         field_definition = request.POST.get("field_definition")
         members = group.karma_members.all()
         group.sync_members()
+        member = members[0]
 
         if field_definition == "negative" and member.negative_data:
             all_keys = list(member.negative_data.keys())
