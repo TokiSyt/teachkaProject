@@ -29,6 +29,7 @@
 
   --hr-color: 2px solid rgba(0, 0, 0, 0.5);
   --separator: #95a3bb;
+
 }
 
 :root.dark-theme {
@@ -160,7 +161,6 @@ form label {
 
   .form-container button,
   .form-container a,
-  .form-container input,
   .form-container select {
     display: inline-block;
     width: auto;     
@@ -279,7 +279,20 @@ a:hover {
   padding: 1rem;
 }
 
-.sidebar { width: 60px; padding: 1rem 0; position: fixed; top: 0; height: 100vh; }
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60px;
+  height: 100vh;
+  background-color: var(--sidebar-background) !important;
+  padding: 1rem 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
 
 .sidebar-icon,
 .sidebar-icon-separator,
