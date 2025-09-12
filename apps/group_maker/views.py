@@ -7,7 +7,8 @@ from django.urls import reverse
 
 class GroupHome(LoginRequiredMixin, TemplateView):
     template_name = "group_maker/home.html"
-    form_class = GroupCreationModel
+    form_class = GroupCreationForm
+    model = GroupCreationModel
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -22,7 +23,9 @@ class GroupCreate(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        self.object.sync_members()
+        return response
 
     def get_success_url(self):
         next_url = self.request.POST.get("next") or self.request.GET.get("next")
