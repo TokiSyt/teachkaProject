@@ -32,7 +32,7 @@ class GroupCreationModel(models.Model):
 
     def sync_members(self):
 
-        from apps.point_system.models import Member
+        from apps.point_system.models import Member, FieldDefinition
 
         current_names = self.get_members_list()
         current_names_ordered = list(dict.fromkeys(current_names))
@@ -44,4 +44,18 @@ class GroupCreationModel(models.Model):
                 member.delete()
 
         for name in current_names_ordered:
-            Member.objects.get_or_create(group=self, name=name)
+            member, created = Member.objects.get_or_create(group=self, name=name)
+            
+            if created:
+                positive_fields = FieldDefinition.objects.filter(group=self, definition="positive")
+                negative_fields = FieldDefinition.objects.filter(group=self, definition="negative")
+                
+                member.positive_data = {}
+                for field in positive_fields:
+                    member.positive_data[field.name] = 0 if field.type == "int" else ""
+                    
+                member.negative_data = {}
+                for field in negative_fields:
+                    member.negative_data[field.name] = 0 if field.type == "int" else ""
+                    
+                member.save()
