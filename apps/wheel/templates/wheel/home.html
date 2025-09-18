@@ -1,4 +1,115 @@
-{% extends "navbar.html" %}
+{% extends "base.html" %}
 
-<h1>Base Home Page</h1>
-<p>Check out my <a href="/">Home Page</a>!</p>
+{% block title %}Name wheel{% endblock title %}
+
+{% block content %}
+<div class="form-wrapper">
+  <h1>Name wheel</h1>
+  <hr>
+
+  <form method="POST" class="form">
+    {% csrf_token %}
+
+    <div class="">
+      <label for="groupSelect" class="form-label">Select a group:</label>
+      <select id="groupSelect" name="group_id" class="form-select" required>
+        <option value="" disabled hidden selected>Select a group</option>
+        {% for group in groups %}
+          <option value="{{ group.id }}" {% if selected_group and selected_group.id == group.id %}selected{% endif %}>
+            {{ group.title }} ({{ group.size }} members)
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-container">
+      <button type="submit" class="primary-btn">Spin</button>
+      <a href="{% url 'wheel:home' %}?reset=1&group_id={{ selected_group.id }}" class="secondary-btn">Reset</a>
+      {% if selected_group %}
+        <a id="editGroupsBtn" href="{% url 'group_maker:group-maker-edit' selected_group.id %}" class="secondary-btn">Edit group</a>
+      {% else %}
+        <a id="editGroupsBtn" href="#" class="secondary-btn disabled">Edit group</a>
+      {% endif %}
+    </div>
+  </form>
+
+  {% if chosen_name %}
+    <div class="chosen-card">
+        <div class="big-chosen-name">{{ chosen_name }}</div>
+    </div>
+  {% endif %}
+
+  {% if message %}
+    <div class="chosen-card">
+        <div class="big-chosen-name">{{ message }}</div>
+    </div>
+  {% endif %}
+
+  {% if already_chosen_names %}
+    <div class="collection-wrapper">
+      <h2>Already Chosen</h2>
+      <ul class="list-group">
+        {% for name in already_chosen_names %}
+          <li class="list-group-item">{{ name }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const groupSelect = document.getElementById("groupSelect");
+    const editBtn = document.getElementById("editGroupsBtn");
+    const baseUrl = "{% url 'group_maker:group-maker-edit' 0 %}?from=name-wheel";
+
+    function updateEditLink() {
+      const groupId = groupSelect.value;
+      if (groupId) {
+        editBtn.href = baseUrl.replace("0", groupId);
+        editBtn.classList.remove("disabled");
+      } else {
+        editBtn.href = "#";
+        editBtn.classList.add("disabled");
+      }
+    }
+
+    groupSelect.addEventListener("change", updateEditLink);
+    updateEditLink();
+  });
+</script>
+
+<style>
+.chosen-card {
+  width: 100%; 
+  max-width: 1200px; 
+  margin: 2rem auto; 
+  padding: 4rem 2rem;
+  background-color: var(--form-result-body);
+  border-radius: 0.5rem;
+  box-shadow: var(--form-shadow);
+  text-align: center;
+}
+
+.big-chosen-name {
+  font-size: 15vw;
+  font-weight: bold;
+  color: var(--text-color);
+  line-height: 1;
+  word-break: break-word;
+}
+
+@media (min-width: 768px) {
+  .big-chosen-name {
+    font-size: 12rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .big-chosen-name {
+    font-size: 15rem;
+  }
+}
+</style>
+
+{% endblock content %}
