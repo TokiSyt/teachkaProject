@@ -13,7 +13,7 @@ These apps are fully functional and ready to use:
 - **Group Maker** – Easily create groups for projects or events.  
 - **Karma Points System** – Track and reward user actions or achievements. 
 - **Settings** – Manage app preferences and stellax configurations. 
-- **Name Wheel** – Randomly select names with optional photos. 
+- **Name Wheel** – Randomly pops names from the selected group. 
 
 ---
 
