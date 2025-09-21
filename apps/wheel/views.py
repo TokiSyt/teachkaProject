@@ -57,7 +57,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
                     "already_chosen_names": already_chosen_names,
                     "selected_group": selected_group,
                     "groups": groups,
-                    "message": "All names have been chosen!",
+                    "message": "All names chosen!",
                 },
             )
                 
