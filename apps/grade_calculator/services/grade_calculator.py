@@ -22,5 +22,5 @@ def grade_calculator(max_points: float, rounding_option: int) -> list[float]:
         if grades[high] - grades[low] >= 1:
             grades[low] += increment
     
-    grades[0] = max_points
+    grades[0] = int(max_points) if float(max_points).is_integer() else max_points
     return grades
