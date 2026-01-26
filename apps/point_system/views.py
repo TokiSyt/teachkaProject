@@ -61,6 +61,9 @@ class HomeView(LoginRequiredMixin, TemplateView):
                         if int_value:
                             member_positive_total += int_value
                     member.positive_total = member_positive_total
+                else:
+                    member.positive_total = 0
+                    member.save()
 
                 if member.negative_data:
                     for _, value in member.negative_data.items():
@@ -72,6 +75,9 @@ class HomeView(LoginRequiredMixin, TemplateView):
                         if int_value:
                             member_negative_total += int_value
                     member.negative_total = member_negative_total
+                else:
+                    member.negative_total = 0
+                    member.save()
 
         return render(
             request,
@@ -399,6 +405,7 @@ class DeleteColumn(LoginRequiredMixin, TemplateView):
         field_definition = request.POST.get("field_definition")
         members = group.karma_members.all()
         group.sync_members()
+        member = members[0]
 
         if field_definition == "negative" and member.negative_data:
             all_keys = list(member.negative_data.keys())
