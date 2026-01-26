@@ -4,7 +4,6 @@ from django.contrib.auth.forms import (
     PasswordChangeForm,
 )
 from django.contrib.auth import get_user_model
-from django.core.validators import RegexValidator
 from django import forms
 
 User = get_user_model()
@@ -35,6 +34,11 @@ class EditProfileForm(UserChangeForm):
     class Meta:
         model = User
         fields = ("username", "first_name", "last_name", "email")
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if 'password' in self.fields:
+            self.fields['password'].widget = forms.HiddenInput()
 
 
 class CustomPasswordChangeForm(PasswordChangeForm):

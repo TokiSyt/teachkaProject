@@ -3,14 +3,14 @@
 {% block title %}Group Maker{% endblock title %}
 
 {% block content %}
-<div class="container my-4">
-    <h1 class="mb-4">Group Maker</h1>
+<div class="form-wrapper">
+    <h1>Group Maker</h1>
     <hr>
 
-    <form method="POST" class="mb-4 p-3 border rounded bg-light">
+    <form method="POST" class="form">
         {% csrf_token %}
         
-        <div class="mb-3">
+        <div class="">
             <label for="groupSelect" class="form-label">Select a group:</label>
             <select id="groupSelect" name="group_id" id="group-select" class="form-select" required>
 
@@ -25,28 +25,26 @@
             </select>
         </div>
 
-        <div class="mb-3">
+        <div class="form-container">
             {{ form.size.label_tag }}
             {{ form.size }}
             <div class="form-text">{{ form.size.help_text }}</div>
         </div>
 
-        <div class="d-flex flex-column gap-2">
-            <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-primary">Divide</button>
-                <a href="list-creation/" class="btn btn-outline-secondary">List Creation</a>
-                <a href="{% url 'home' %}" class="btn btn-outline-secondary">Reset</a>
-                <a id="editGroupsBtn" href="#" class="btn btn-outline-secondary">Edit Group</a>
-            </div>
+        <div class="form-container">
+            <button type="submit" class="primary-btn">Divide</button>
+            <a href="list-creation/" class="secondary-btn">List Creation</a>
+            <a href="{% url 'home' %}" class="secondary-btn">Reset</a>
+            <a id="editGroupsBtn" href="#" class="secondary-btn">Edit Group</a>
         </div>
     </form>
 
     {% if splitted_group %}
-        <div class="mt-5">
-            <h2>Divided Groups ({{selected_group.title}})</h2>
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-1">
+        <div class="collection-wrapper">
+            <h2>Divided Groups ({{ selected_group.title }})</h2>
+            <div class="card-collection">
                 {% for group in splitted_group %}
-                    <div class="col">
+                    <div class="card-item">
                         <div class="card h-100 shadow-sm">
                             <div class="card-header fw-bold">
                                 Group {{ forloop.counter }}
@@ -61,6 +59,7 @@
                 {% endfor %}
             </div>
         </div>
+
     {% endif %}
 
 

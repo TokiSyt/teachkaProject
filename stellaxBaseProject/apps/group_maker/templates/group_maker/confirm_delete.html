@@ -4,17 +4,19 @@
 
 {% block content %}
 
-<div class="container my-4">
+<div class="form-wrapper">
     <h1>Delete Confirmation</h1>
     <hr>
 
-    <form method="post">
+    <div class="form-container">
+        <form method="post" class="form">
         {% csrf_token %}
         <p>Are you sure you want to delete "{{ selected_group.title }}"?</p>
 
-        <button type="submit" class="btn btn-danger">Confirm</button>
-        <a href="{% url 'list-edit' selected_group.id %}" class="btn btn-outline-secondary">Cancel</a>
-    </form>
+        <button type="submit" class="delete-btn">Confirm</button>
+        <a href="{% url 'list-edit' selected_group.id %}" class="secondary-btn">Cancel</a>
+        </form>
+    </div>
 
 </div>
 {% endblock content %}

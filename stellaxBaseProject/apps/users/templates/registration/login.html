@@ -6,11 +6,11 @@ Login
 {% endblock title %}
 
 {% block content %}
-<div class="container my-4">
+<div class="form-wrapper">
     <h1 class="mb-4">Login</h1>
     <hr>
 
-    <form method="post" class="p-3 border rounded bg-light">
+    <form method="post" class="form">
         {% csrf_token %}
         {{ form|crispy }}
 
@@ -19,7 +19,7 @@ Login
             <a href="/register">Create one here</a>.
         </p>
 
-        <button type="submit" class="btn btn-primary mt-2">Log in</button>
+        <button type="submit" class="primary-btn">Log in</button>
     </form>
 </div>
 {% endblock content %}
