@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Delete confirmation{% endblock title %}
+
+{% block content %}
+
+<div class="container my-4">
+    <h1>Delete Confirmation</h1>
+    <hr>
+
+    <form method="post">
+        {% csrf_token %}
+        <p>Are you sure you want to delete "{{ selected_group.title }}"?</p>
+
+        <button type="submit" class="btn btn-danger">Confirm</button>
+        <a href="{% url 'list-edit' selected_group.id %}" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+
+</div>
+{% endblock content %}

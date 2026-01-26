@@ -1,56 +1,38 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Grade Calculator</h1>
-<hr />
+<div class="container my-4">
+  <h1 class="mb-4">Grade Calculator</h1>
+  <hr>
 
-<form method="post">
+  <form method="post" class="mb-4 p-3 border rounded bg-light">
     {% csrf_token %}
     {{ form.as_p }}
 
-    <div style="display: flex; gap: 10px;">
-        <button type="submit">Calculate</button>
-</form>
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-primary">Calculate</button>
+      <a href="{% url 'grade_calculator' %}" class="btn btn-outline-secondary">Reset</a>
+    </div>
+  </form>
 
-<form method="get">
-    <button type="submit">Reset</button>
-</form>
-
+  {% if score_range %}
+  <div class="card p-3 rounded shadow-sm">
+    <table class="table table-striped table-bordered rounded mb-0 text-center">
+      <thead>
+        <tr>
+          <th>Grade</th>
+          <th>Score Range</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>{{ score_range.0 }} - {{ score_range.1 }}</td></tr>
+        <tr><td>2</td><td>{{ score_range.2 }} - {{ score_range.3 }}</td></tr>
+        <tr><td>3</td><td>{{ score_range.4 }} - {{ score_range.5 }}</td></tr>
+        <tr><td>4</td><td>{{ score_range.6 }} - {{ score_range.7 }}</td></tr>
+        <tr><td>5</td><td>{{ score_range.8 }} - {{ score_range.9 }}</td></tr>
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
 </div>
-
-<table class="grade-table">
-    <thead>
-        <tr>
-            <th>Grade</th>
-            <th>Score Range</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td> {{ score_range.0 }} - {{ score_range.1 }}</td>
-        </tr>
-
-        <tr>
-            <td>2</td>
-            <td>{{ score_range.2 }} - {{ score_range.3 }}</td>
-        </tr>
-
-        <tr>
-            <td>3</td>
-            <td>{{ score_range.4 }} - {{ score_range.5 }}</td>
-        </tr>
-
-        <tr>
-            <td>4</td>
-            <td>{{ score_range.6 }} - {{ score_range.7 }}</td>
-        </tr>
-
-        <tr>
-            <td>5</td>
-            <td>{{ score_range.8 }} - {{ score_range.9 }}</td>
-        </tr>
-    </tbody>
-</table>
 {% endblock %}

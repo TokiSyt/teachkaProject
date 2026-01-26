@@ -1,28 +1,56 @@
 {% extends "base.html" %}
+{% load widget_tweaks %}
 
 {% block title %}
 Profile Edit
 {% endblock title %}
 
 {% block content %}
+<div class="container my-4">
+    <h1 class="mb-4">Edit Profile</h1>
+    <hr>
 
-<form method="POST">
-    {% csrf_token %}
-    <p>{{ form.username.label_tag }} {{ form.username }} Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</p>
-    <p>{{ form.first_name.label_tag }} {{ form.first_name }}</p>
-    <p>{{ form.last_name.label_tag }} {{ form.last_name }}</p>
-    <p>{{ form.email.label_tag }} {{ form.email }}</p>
-    <p>Password:
-        <a href="{% url 'change-password' %}" class="general-btn">
-            Reset password
-        </a>
-    </p>
-<hr>
-    <a href="{% url 'profile' %}" class="general-btn">
-    Cancel
-    </a>
-    <button type="submit" class="general-btn">
-        Save
-    </button>
-</form>
+    <form method="POST" class="p-3 border rounded bg-light">
+        {% csrf_token %}
+
+        <!-- Username -->
+        <div class="mb-3">
+            <label for="{{ form.username.id_for_label }}" class="form-label">{{ form.username.label }}</label>
+            {{ form.username|add_class:"form-control" }}
+            <div class="form-text">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</div>
+        </div>
+
+        <!-- First Name -->
+        <div class="mb-3">
+            <label for="{{ form.first_name.id_for_label }}" class="form-label">{{ form.first_name.label }}</label>
+            {{ form.first_name|add_class:"form-control" }}
+        </div>
+
+        <!-- Last Name -->
+        <div class="mb-3">
+            <label for="{{ form.last_name.id_for_label }}" class="form-label">{{ form.last_name.label }}</label>
+            {{ form.last_name|add_class:"form-control" }}
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+            <label for="{{ form.email.id_for_label }}" class="form-label">{{ form.email.label }}</label>
+            {{ form.email|add_class:"form-control" }}
+        </div>
+
+        <!-- Password Reset -->
+        <div class="mb-3">
+            <label class="form-label">Password</label><br>
+            <a href="{% url 'change-password' %}" class="btn btn-outline-secondary">Reset password</a>
+        </div>
+
+        <hr>
+
+        <!-- Buttons -->
+        <div class="d-flex gap-2">
+            <a href="{% url 'profile' %}" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+</div>
 {% endblock content %}

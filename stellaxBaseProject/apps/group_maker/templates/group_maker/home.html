@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Group Maker{% endblock title %}
+
+{% block content %}
+<div class="container my-4">
+    <h1 class="mb-4">Group Maker</h1>
+    <hr>
+
+    <form method="POST" class="mb-4 p-3 border rounded bg-light">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="groupSelect" class="form-label">Select a group:</label>
+            <select id="groupSelect" name="group_id" id="group-select" class="form-select" required>
+
+                <option value="" disabled hidden selected>Select a group</option>
+
+                {% for group in groups %}
+                    <option value="{{ group.id }}" {% if selected_group and selected_group.id == group.id %}selected{% endif %}>
+                        {{ group.title }} ({{ group.size }} members)
+                    </option>
+                {% endfor %}
+                
+            </select>
+        </div>
+
+        <div class="mb-3">
+            {{ form.size.label_tag }}
+            {{ form.size }}
+            <div class="form-text">{{ form.size.help_text }}</div>
+        </div>
+
+        <div class="d-flex flex-column gap-2">
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Divide</button>
+                <a href="list-creation/" class="btn btn-outline-secondary">List Creation</a>
+                <a href="{% url 'home' %}" class="btn btn-outline-secondary">Reset</a>
+                <a id="editGroupsBtn" href="#" class="btn btn-outline-secondary">Edit Group</a>
+            </div>
+        </div>
+    </form>
+
+    {% if splitted_group %}
+        <div class="mt-5">
+            <h2>Divided Groups ({{selected_group.title}})</h2>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-1">
+                {% for group in splitted_group %}
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-header fw-bold">
+                                Group {{ forloop.counter }}
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                {% for member in group %}
+                                    <li class="list-group-item">{{ member }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const groupSelect = document.getElementById("groupSelect");
+        const editBtn = document.getElementById("editGroupsBtn");
+
+        function updateEditLink() {
+            const groupId = groupSelect.value;
+            if (groupId) {
+                editBtn.href = `/group_maker/list-edit/${groupId}`;
+                editBtn.classList.remove("disabled");
+            } else {
+                editBtn.href = "#";
+                editBtn.classList.add("disabled");
+            }
+        }
+
+        groupSelect.addEventListener("change", updateEditLink);
+
+        updateEditLink();
+    });
+</script>
+
+{% endblock content %}

@@ -2,21 +2,19 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-
 Register
-
 {% endblock title %}
 
 {% block content %}
+<div class="container my-4">
+    <h1 class="mb-4">Registration</h1>
+    <hr>
 
-<h1>Registration</h1>
+    <form method="post" class="p-3 border rounded bg-light">
+        {% csrf_token %}
+        {{ form|crispy }}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form | crispy}}
-    <button type="submit" class="general-btn">
-        Register
-    </button>
-</form>
-
+        <button type="submit" class="btn btn-primary mt-2">Register</button>
+    </form>
+</div>
 {% endblock content %}

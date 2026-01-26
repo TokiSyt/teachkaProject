@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "lucide",
     "crispy_forms",
     "crispy_bootstrap4",
+    'widget_tweaks',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -58,6 +59,7 @@ INSTALLED_APPS = [
     "apps.math_ops",
     "apps.grade_calculator",
     "apps.users",
+    "apps.group_maker",
 ]
 
 MIDDLEWARE = [
@@ -95,16 +97,16 @@ WSGI_APPLICATION = "stellaxBaseProject.wsgi.application"
 
 if USE_MYSQL:
     DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "stellax$default",
-        "USER": "stellax",
-        "PASSWORD": "NotTokiProject",
-        "HOST": "stellax.mysql.pythonanywhere-services.com",
-        "PORT": "3306",
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": "stellax$default",
+            "USER": "stellax",
+            "PASSWORD": "NotTokiProject",
+            "HOST": "stellax.mysql.pythonanywhere-services.com",
+            "PORT": "3306",
+        }
     }
-}
-    
+
 else:
     DATABASES = {
         "default": {

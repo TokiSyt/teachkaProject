@@ -1,23 +1,27 @@
 {% extends "base.html" %}
+{% load widget_tweaks %}
 
 {% block title %}
 Profile
 {% endblock title %}
 
 {% block content %}
-<h1>
-    Welcome to your profile, {{ user_data.first_name }}!
-</h1>
-<hr>
-<h3>Account Info</h3>
-<p>Username: {{ user_data.username }} </p>
-<p>First Name: {{ user_data.first_name }} </p>
-<p>Surname: {{ user_data.last_name }} </p>
-<p>Email: {{ user_data.email }}</p>
-<hr>
-<p>
-    <a href="{% url 'edit_profile' %}" class="general-btn">
-    Edit
-    </a>
-</p>
+<div class="container my-4">
+    <h1 class="mb-3">Welcome to your profile, {{ user_data.first_name }}!</h1>
+    <hr>
+
+    <div class="p-3 border rounded bg-light">
+        <h4 class="mb-3">Account Info</h4>
+        <p><strong>Username:</strong> {{ user_data.username }}</p>
+        <p><strong>First Name:</strong> {{ user_data.first_name }}</p>
+        <p><strong>Surname:</strong> {{ user_data.last_name }}</p>
+        <p><strong>Email:</strong> {{ user_data.email }}</p>
+
+        <hr>
+
+        <div class="d-flex">
+            <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit</a>
+        </div>
+    </div>
+</div>
 {% endblock content %}

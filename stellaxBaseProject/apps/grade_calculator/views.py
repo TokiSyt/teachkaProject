@@ -1,8 +1,7 @@
-from django.views.generic.edit import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import GradeCalculatorForm
 from .services.grade_calculator import grade_calculator
-
+from django.views.generic.edit import FormView
+from .forms import GradeCalculatorForm
 
 class GradeCalculatorView(LoginRequiredMixin, FormView):
     template_name = "grade_calculator/grade_calculator.html"

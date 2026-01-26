@@ -1,9 +1,9 @@
+from django.contrib.auth import login, authenticate, update_session_auth_hash
+from .forms import RegisterForm, EditProfileForm, CustomPasswordChangeForm
 from django.views.generic import FormView, TemplateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import login, authenticate, update_session_auth_hash
-from django.urls import reverse_lazy
-from .forms import RegisterForm, EditProfileForm, CustomPasswordChangeForm
 from django.contrib.auth import get_user_model
+from django.urls import reverse_lazy
 
 
 User = get_user_model()
