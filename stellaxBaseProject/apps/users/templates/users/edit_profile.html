@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}
+Profile Edit
+{% endblock title %}
+
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+    <p>{{ form.username.label_tag }} {{ form.username }} Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</p>
+    <p>{{ form.first_name.label_tag }} {{ form.first_name }}</p>
+    <p>{{ form.last_name.label_tag }} {{ form.last_name }}</p>
+    <p>{{ form.email.label_tag }} {{ form.email }}</p>
+    <p>Password:
+        <a href="{% url 'change-password' %}" class="general-btn">
+            Reset password
+        </a>
+    </p>
+<hr>
+    <a href="{% url 'profile' %}" class="general-btn">
+    Cancel
+    </a>
+    <button type="submit" class="general-btn">
+        Save
+    </button>
+</form>
+{% endblock content %}

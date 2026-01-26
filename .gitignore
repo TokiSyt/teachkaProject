@@ -3,18 +3,18 @@ __pycache__/
 *.sqlite3
 *.env
 
-
 db.sqlite3
 *.log
 
-
 .vscode/
-
 
 venv/
 env/
 
-*/migrations/
-!*/migrations/__init__.py
 **/migrations/
 !**/migrations/__init__.py
+
+__pycache__/
+**/__pycache__/
+
+*.py[cod]

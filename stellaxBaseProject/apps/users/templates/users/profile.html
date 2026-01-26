@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+Profile
+{% endblock title %}
+
+{% block content %}
+<h1>
+    Welcome to your profile, {{ user_data.first_name }}!
+</h1>
+<hr>
+<h3>Account Info</h3>
+<p>Username: {{ user_data.username }} </p>
+<p>First Name: {{ user_data.first_name }} </p>
+<p>Surname: {{ user_data.last_name }} </p>
+<p>Email: {{ user_data.email }}</p>
+<hr>
+<p>
+    <a href="{% url 'edit_profile' %}" class="general-btn">
+    Edit
+    </a>
+</p>
+{% endblock content %}

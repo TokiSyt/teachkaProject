@@ -36,7 +36,8 @@ nav .label {
     transition: opacity 0.3s, width 0.3s;
 }
 
-.icon, #logout-btn {
+.icon,
+#logout-btn {
     font-size: 20px;
     text-align: center;
     max-width: 50px;
@@ -89,12 +90,34 @@ button[type="submit"] {
     cursor: pointer;
     transition: background 0.3s;
     margin-top: 5px;
-}
-
-button[type="submit"]:hover {
-    background: #242629;
+    text-decoration: none;
 }
 
 .separator {
     width: 60%;
+}
+
+a {
+    color: #fff;
+}
+
+.general-btn {
+    padding: 5px 10px;
+    background: #373c41;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 5px;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    font: inherit; /* makes buttons match text styling */
+    min-width: 50px; /* or any fixed width you like */
+    text-align: center;
+}
+
+.general-btn:hover {
+    background: #242629;
 }
