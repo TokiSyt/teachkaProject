@@ -17,7 +17,11 @@
     </div>
   </form>
 
-  {% if score_range %}
+  {% if min_points_error %}
+  <div class="form-collection">
+    <p class="text-red-500">Maximum points must be 4 or higher.</p>
+  </div>
+  {% elif score_range %}
   <div class="form-collection">
     <div class="form-container">
         <table>
