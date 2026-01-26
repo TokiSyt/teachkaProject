@@ -1,12 +1,12 @@
-from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
-from .services.group_split import group_split as group_split_f
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404, render
+from django.views.generic import TemplateView
+
 from apps.group_maker.models import GroupCreationModel
-from django.shortcuts import render, get_object_or_404
+
 from .forms import GroupMakerForm
+from .services.group_split import group_split as group_split_f
 
-
-from django.urls import reverse_lazy
 
 class GroupDividerHome(LoginRequiredMixin, TemplateView):
     template_name = "group_divider/home.html"

@@ -1,6 +1,7 @@
-from django.forms import ModelForm
 from django import forms
-from .models import Member, FieldDefinition
+from django.forms import ModelForm
+
+from .models import FieldDefinition, Member
 
 
 class GroupForm(ModelForm):
@@ -35,13 +36,13 @@ class GroupForm(ModelForm):
 
         for key in self.fields:
             if key not in ["name", "positive_data", "negative_data"]:
-                value = cleaned_data.get(key) 
+                value = cleaned_data.get(key)
                 if key.startswith("pos_"):
                     positive_data[key[4:]] = value
                 elif key.startswith("neg_"):
-                    positive_data[key[4:]] = value
-                
-                
+                    negative_data[key[4:]] = value
+
+
         cleaned_data["positive_data"] = positive_data
         cleaned_data["negative_data"] = negative_data
         return cleaned_data
@@ -59,13 +60,13 @@ class AddFieldForm(ModelForm):
 
 class RemoveFieldForm(forms.Form):
     field_name = forms.ChoiceField(choices=[])
-    
+
     def __init__(self, *args, **kwargs):
         field_choices = kwargs.pop("field_choices", [])
         super().__init__(*args, **kwargs)
         self.fields["field_name"].choices = [(c, c) for c in field_choices]
-        
-        
+
+
 class EditColumnForm(forms.Form):
     new_name = forms.CharField(max_length=50)
     old_name = forms.CharField(max_length=50)

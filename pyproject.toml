@@ -1,0 +1,53 @@
+[tool.mypy]
+python_version = "3.12"
+plugins = ["mypy_django_plugin.main"]
+strict = false
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+explicit_package_bases = true
+exclude = [
+    "migrations",
+    "venv",
+    "staticfiles",
+    "theme/static_src",
+]
+
+[tool.django-stubs]
+django_settings_module = "stellaxBaseProject.settings"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+exclude = [
+    "migrations",
+    "venv",
+    "staticfiles",
+    "theme/static_src",
+    "__pycache__",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "I",      # isort
+    "B",      # flake8-bugbear
+    "C4",     # flake8-comprehensions
+    "UP",     # pyupgrade
+    "DJ",     # flake8-django
+]
+ignore = [
+    "E501",   # line too long (handled by formatter)
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["apps", "stellaxBaseProject"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "stellaxBaseProject.settings"
+env = ["DJANGO_ENV=test"]
+python_files = ["test_*.py", "*_test.py"]
+addopts = "-v --tb=short"
+testpaths = ["apps"]

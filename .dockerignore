@@ -1,0 +1,47 @@
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Git
+.git/
+.gitignore
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Database
+*.sqlite3
+db.sqlite3
+
+# Static files (collected)
+staticfiles/
+
+# Node
+node_modules/
+
+# Misc
+*.log
+*.pot
+*.pyc
+.DS_Store
+Thumbs.db
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/

@@ -1,9 +1,11 @@
-from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
-from django.utils.http import url_has_allowed_host_and_scheme
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import GroupCreationModel
-from .forms import GroupCreationForm
 from django.urls import reverse
+from django.utils.http import url_has_allowed_host_and_scheme
+from django.views.generic import CreateView, DeleteView, TemplateView, UpdateView
+
+from .forms import GroupCreationForm
+from .models import GroupCreationModel
+
 
 class GroupHome(LoginRequiredMixin, TemplateView):
     template_name = "group_maker/home.html"
@@ -23,9 +25,8 @@ class GroupCreate(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        response = super().form_valid(form)
-        self.object.sync_members()
-        return response
+        # Note: sync_members is handled automatically by post_save signal
+        return super().form_valid(form)
 
     def get_success_url(self):
         next_url = self.request.POST.get("next") or self.request.GET.get("next")
@@ -51,7 +52,7 @@ class GroupUpdate(LoginRequiredMixin, UpdateView):
         return context
 
 
-class GroupDelete(LoginRequiredMixin, DeleteView):
+class GroupDelete(LoginRequiredMixin, DeleteView):  # type: ignore[misc]
     model = GroupCreationModel
     template_name = "group_maker/confirm_delete.html"
 
