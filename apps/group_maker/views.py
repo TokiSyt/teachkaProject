@@ -1,15 +1,13 @@
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
-from .services.group_split import group_split as group_split_f
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, get_object_or_404
-from .forms import GroupCreationForm, GroupMakerForm
 from .models import GroupCreationModel
-from django.urls import reverse_lazy
+from .forms import GroupCreationForm
+from urllib.parse import urlparse, parse_qs
 
-
-class GroupMakerHome(LoginRequiredMixin, TemplateView):
+class GroupHome(LoginRequiredMixin, TemplateView):
     template_name = "group_maker/home.html"
-    form_class = GroupMakerForm
+    form_class = GroupCreationModel
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -17,35 +15,7 @@ class GroupMakerHome(LoginRequiredMixin, TemplateView):
         context["form"] = self.form_class()
         return context
 
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-
-        if form.is_valid():
-            selected_group_id = request.POST.get(
-                "group_id"
-            )  # tag: select, field: name="group_id"
-            selected_group_size = form.cleaned_data["size"]
-            selected_group = get_object_or_404(
-                GroupCreationModel, id=selected_group_id, user=request.user
-            )
-            selected_group_members = selected_group.get_members_list()
-            splitted_group = group_split_f(selected_group_members, selected_group_size)
-            groups = GroupCreationModel.objects.filter(user=self.request.user)
-
-            return render(
-                request,
-                "group_maker/home.html",
-                {
-                    "form": form,
-                    "splitted_group": splitted_group,
-                    "selected_group": selected_group,
-                    "groups": groups,
-                },
-            )
-        return render(request, "group_maker/home.html", {"form": form})
-
-
-class GroupMakerListCreate(LoginRequiredMixin, CreateView):
+class GroupCreate(LoginRequiredMixin, CreateView):
     model = GroupCreationModel
     template_name = "group_maker/list_create.html"
     form_class = GroupCreationForm
@@ -55,16 +25,22 @@ class GroupMakerListCreate(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy("home")
+        next_url = self.request.POST.get("next") or self.request.GET.get("next")
+        if next_url and url_has_allowed_host_and_scheme(next_url, allowed_hosts={self.request.get_host()}):
+            return next_url
+        return "/"
 
 
-class GroupMakerListUpdate(LoginRequiredMixin, UpdateView):
+class GroupUpdate(LoginRequiredMixin, UpdateView):
     model = GroupCreationModel
     template_name = "group_maker/list_edit.html"
     form_class = GroupCreationForm
 
     def get_success_url(self):
-        return reverse_lazy("home")
+        next_url = self.request.POST.get("next") or self.request.GET.get("next")
+        if next_url and url_has_allowed_host_and_scheme(next_url, allowed_hosts={self.request.get_host()}):
+            return next_url
+        return "/"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -72,12 +48,19 @@ class GroupMakerListUpdate(LoginRequiredMixin, UpdateView):
         return context
 
 
-class GroupMakerListDelete(LoginRequiredMixin, DeleteView):
+class GroupDelete(LoginRequiredMixin, DeleteView):
     model = GroupCreationModel
     template_name = "group_maker/confirm_delete.html"
 
     def get_success_url(self):
-        return reverse_lazy("home")
+        next_url = self.request.POST.get("next") or self.request.GET.get("next")
+        if next_url and url_has_allowed_host_and_scheme(next_url, allowed_hosts={self.request.get_host()}):
+            parsed = urlparse(next_url)
+            query = parse_qs(parsed.query)
+            query.pop("group_id", None)
+            cleaned_url = parsed._replace(query="").geturl()
+            return cleaned_url
+        return "/"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

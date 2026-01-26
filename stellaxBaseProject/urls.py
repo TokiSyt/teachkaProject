@@ -19,7 +19,8 @@ urlpatterns = [
     path("math_ops/", include("apps.math_ops.urls")),
     path("grade-calculator/", include("apps.grade_calculator.urls")),
     path("users/", include("apps.users.urls")),
-    path("group_maker/", include("apps.group_maker.urls")),
+    path("group_divider/", include("apps.group_divider.urls")),
+    path("group_maker/", include("apps.group_maker.urls", namespace="group_maker")),
     path("point_system/", include("apps.point_system.urls")),
 ]
 

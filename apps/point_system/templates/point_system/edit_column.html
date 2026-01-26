@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}New column{% endblock title %}
+
+{% block content %}
+<div class="form-wrapper">
+    <h1>Edit column</h1>
+    <hr>
+
+    <form method="POST" class="form">
+        {% csrf_token %}
+        <input type="hidden" name="group_id" value="{{ group_id }}">
+
+        <div class="form-group">
+            <label for="id_old_name" class="form-label">Column to edit:</label>
+            <select name="old_name" id="id_old_name" class="form-select" required>
+                {% for field in all_keys %}
+                    <option value="{{ field }}" {% if form.old_name.value == field %}selected{% endif %}>{{ field }}</option>
+                {% endfor %}
+            </select>
+            {% if form.old_name.errors %}
+                <ul class="text-red-600">
+                    {% for error in form.old_name.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_new_name" class="form-label">New column name:</label>
+            <input type="text" name="new_name" id="id_new_name" class="form-control" maxlength="25" value="{{ form.new_name.value }}" required>
+            {% if form.new_name.errors %}
+                <ul class="text-red-600">
+                    {% for error in form.new_name.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+
+        <div class="form-group">
+            <label for="id_definition" class="form-label">Table type:</label>
+            <span class="px-3 py-2 border rounded bg-gray-100">
+                {{ table_type }}
+            </span>
+            <input type="hidden" name="field_definition" value="{{ table_type }}">
+        </div>
+
+        <div class="form-container">
+            <button type="submit" class="primary-btn">Save column</button>
+            <a href="{% url 'karma:karma-home' %}?group_id={{ group_id }}" class="secondary-btn">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock content %}

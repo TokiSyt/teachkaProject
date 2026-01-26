@@ -10,15 +10,16 @@
 
     <form method="POST" class="form">
         {% csrf_token %}
-        
+        <input type="hidden" name="next" value="{{ request.GET.next|default:request.META.HTTP_REFERER|default:'/' }}">
+
         <div>
             {{form.as_p}}
         </div>
 
         <div class="form-container">
-            <a href="{% url 'list-home' %}" class="secondary-btn">Cancel</a>
-            <button type="submit" class="primary-btn">Save Changes</button>
-            <a href="{% url 'list-delete' selected_group.id %}" class="delete-btn">Delete</a>
+            <a href="{{request.META.HTTP_REFERER}}" class="secondary-btn">Cancel</a>
+            <button type="submit" class="primary-btn">Save changes</button>
+            <a href="{% url 'group_maker:group-maker-delete' selected_group.id %}" class="delete-btn">Delete</a>
         </div>
 
     </form>

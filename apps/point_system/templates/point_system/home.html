@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% load custom_tags %}
+
+{% block title %}Points system{% endblock title %}
+
+{% block content %}
+<div class="form-wrapper">
+    <h1>Points system</h1>
+    <hr>
+
+    <!-- Group selection form -->
+    <form method="GET" class="form">
+        <div class="form-group">
+            <label for="groupSelect" class="form-label">Select a group:</label>
+            <select id="groupSelect" name="group_id" class="form-select" required>
+                <option value="" disabled hidden selected>Select group</option>
+                {% for group in groups %}
+                    <option value="{{ group.id }}" {% if selected_group and selected_group.id == group.id %}selected{% endif %}>
+                        {{ group.title }} ({{ group.size }} members)
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-container">
+        {% if selected_group %}
+            <button type="submit" class="primary-btn">Show points</button>
+            <a href="{% url 'karma:karma-home' %}" class="secondary-btn">Reset</a>
+            <a id="editGroupsBtn" href="#" class="secondary-btn">Edit group</a>
+            <a href="{% url 'group_maker:group-maker-creation' %}" class="secondary-btn">Create a group</a>
+            <a id="deleteGroupBtn" href="#" class="delete-btn">Delete</a>
+        {% else %}
+            <button type="submit" class="primary-btn">Show points</button>
+            <a href="{% url 'group_maker:group-maker-creation' %}" class="secondary-btn">Create a group</a>
+        {% endif %}
+        </div>
+    </form>
+
+    {% if selected_group %}
+        <form method="POST" class="form mt-4">
+            {% csrf_token %}
+            <input type="hidden" name="group_id" value="{{ group_id }}">
+            <h3>Negative points table</h3>
+            <div class="form-container">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                {% for key in negative_data %}
+                                    <th>{{ key }}</th>
+                                {% endfor %}
+                                <th>Negative total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for member in members %}
+                            <tr class="{{ member.negative_total|negativity_class }}">
+                                <td><a href="{% url 'karma:karma-dashboard' member.id%}">{{ member.name }}</a></td>
+                                {% for column in negative_data %}
+                                    <td>
+                                        <input type="{{ column_type_negative|get_item:column}}" 
+                                            name="{{ member.id }}_negative_{{ column }}" 
+                                            value="{{ member.negative_data|get_item:column }}" 
+                                            class="form-control">
+                                    </td>
+                                {% endfor %}
+                                <td class="always-colored">
+                                    <strong>{{ member.negative_total }}</strong>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+
+            <div class="form-container">
+                {% if negative_data %}
+                    <button type="submit" name="negative_save" class="primary-btn">Save points</button>
+                    <a href="?group_id={{ group_id }}" class="secondary-btn">Cancel changes</a>
+                    <a href="{% url 'karma:new-column' selected_group.id %}?table=negative" class="secondary-btn">Add column</a>
+                    <a href="{% url 'karma:edit-column' selected_group.id %}?table=negative" class="secondary-btn">Edit column</a>
+                    <a href="{% url 'karma:delete-column' selected_group.id %}?table=negative" name="negative_data" class="delete-btn">Delete column</a>
+                {% else %}
+                    <a href="{% url 'karma:new-column' selected_group.id %}?table=negative" class="secondary-btn">Add column</a>
+                {% endif %}
+            </div>
+
+            <br>
+            <hr>
+            <h3>Positive points table</h3>
+            <div class="form-container">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                {% for key in positive_data %}
+                                    <th>{{ key }}</th>
+                                {% endfor %}
+                                <th>Positive total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for member in members %}
+                            <tr class="{{ member.positive_total|positivity_class }}">
+                                <td><a href="{% url 'karma:karma-dashboard' member.id%}">{{ member.name }}</a></td>
+                                {% for column in positive_data %}
+                                    <td>
+                                        <input type="{{ column_type_positive|get_item:column }}" 
+                                            name="{{ member.id }}_positive_{{ column }}"
+                                            value="{{ member.positive_data|get_item:column }}" 
+                                            class="form-control">
+                                    </td>
+                                {% endfor %}
+                                <td class="always-colored">
+                                    <strong>{{ member.positive_total }}</strong>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+
+            <div class="form-container">
+            {% if positive_data %}
+                <button type="submit" name="positive_save" class="primary-btn">Save points</button>
+                <a href="?group_id={{ group_id }}" class="secondary-btn">Cancel changes</a>
+                <a href="{% url 'karma:new-column' selected_group.id %}?table=positive" class="secondary-btn">Add column</a>
+                <a href="{% url 'karma:edit-column' selected_group.id %}?table=positive" class="secondary-btn">Edit column</a>
+                <a href="{% url 'karma:delete-column' selected_group.id %}?table=positive" name="positive_data" class="delete-btn">Delete column</a>
+                {% else %}
+                    <a href="{% url 'karma:new-column' selected_group.id %}?table=positive" class="secondary-btn">Add column</a>
+                {% endif %}
+            </div>
+
+        </form>
+    {% endif %}
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const groupSelect = document.getElementById("groupSelect");
+        const editBtn = document.getElementById("editGroupsBtn");
+        const deleteBtn = document.getElementById("deleteGroupBtn");
+
+        function updateEditLink() {
+            const groupId = groupSelect.value;
+            if (groupId) {
+                editBtn.href = `/group_maker/group_maker_edit/${groupId}`;
+                editBtn.classList.remove("disabled");
+                deleteBtn.href = `/group_maker/group_maker_delete/${groupId}`;
+                deleteBtn.classList.remove("disabled");
+
+            } else {
+                editBtn.href = "#";
+                editBtn.classList.add("disabled");
+                deleteBtn.href = "#";
+                deleteBtn.classList.add("disabled");
+            }
+        }
+
+        groupSelect.addEventListener("change", updateEditLink);
+
+        updateEditLink();
+    });
+</script>
+{% endblock content %}

@@ -11,10 +11,12 @@
     <div class="form-container">
         <form method="post" class="form">
         {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.GET.next|default:request.META.HTTP_REFERER|default:'/' }}">
+        
         <p>Are you sure you want to delete "{{ selected_group.title }}"?</p>
 
         <button type="submit" class="delete-btn">Confirm</button>
-        <a href="{% url 'list-edit' selected_group.id %}" class="secondary-btn">Cancel</a>
+        <a href="{{request.META.HTTP_REFERER}}" class="secondary-btn">Cancel</a>
         </form>
     </div>
 

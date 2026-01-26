@@ -1,14 +1,16 @@
 from django.urls import path
 from .views import (
-    GroupMakerHome,
-    GroupMakerListCreate,
-    GroupMakerListUpdate,
-    GroupMakerListDelete,
+    GroupHome,
+    GroupCreate,
+    GroupUpdate,
+    GroupDelete,
 )
 
+app_name = "group_maker"
+
 urlpatterns = [
-    path("", GroupMakerHome.as_view(), name="list-home"),
-    path("list-creation/", GroupMakerListCreate.as_view(), name="list-creation"),
-    path("list-edit/<int:pk>", GroupMakerListUpdate.as_view(), name="list-edit"),
-    path("list-delete/<int:pk>", GroupMakerListDelete.as_view(), name="list-delete"),
+    path("", GroupHome.as_view(), name="group-maker-home"),
+    path("group_maker_creation/", GroupCreate.as_view(), name="group-maker-creation"),
+    path("group_maker_edit/<int:pk>", GroupUpdate.as_view(), name="group-maker-edit"),
+    path("group_maker_delete/<int:pk>", GroupDelete.as_view(), name="group-maker-delete"),
 ]

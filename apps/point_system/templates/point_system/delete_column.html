@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Remove column{% endblock title %}
+
+{% block content %}
+<div class="form-wrapper">
+    <h1>Remove column</h1>
+    <hr>
+
+    <form method="POST" class="form">
+        {% csrf_token %}
+        <input type="hidden" name="group_id" value="{{ group_id }}">
+
+        <div class="form-group">
+            <label for="id_field_name" class="form-label">Column to remove:</label>
+            <select name="field_name" id="id_field_name" class="form-select" required>
+                {% for field in all_keys %}
+                    <option value="{{ field }}">{{ field }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="id_definition" class="form-label">Table type:</label>
+            <span class="px-3 py-2 border rounded bg-gray-100">
+                {{ table_type }}
+            </span>
+            <input type="hidden" name="field_definition" value="{{ table_type }}">
+
+        </div>
+
+        <div class="form-container">
+            <button type="submit" class="delete-btn">Remove column</button>
+            <a href="{% url 'karma:karma-home' %}?group_id={{ group_id }}" class="secondary-btn">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock content %}

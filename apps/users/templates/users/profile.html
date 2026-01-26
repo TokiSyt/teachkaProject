@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="form-wrapper">
-    <h1>Your Profile</h1>
+    <h1>Your profile</h1>
     <hr>
 
     <form class="form">
@@ -15,12 +15,12 @@
         </div>
 
         <div class="form-container">
-            <label class="form-label">First Name:</label>
+            <label class="form-label">First name:</label>
             <p class="form-text">{{ user_data.first_name }}</p>
         </div>
 
         <div class="form-container">
-            <label class="form-label">Last Name:</label>
+            <label class="form-label">Last name:</label>
             <p class="form-text">{{ user_data.last_name }}</p>
         </div>
 
@@ -30,7 +30,7 @@
         </div>
 
         <div class="form-container">
-            <a href="{% url 'edit_profile' %}" class="primary-btn">Edit Profile</a>
+            <a href="{% url 'edit_profile' %}" class="primary-btn">Edit profile</a>
         </div>
     </form>
 </div>

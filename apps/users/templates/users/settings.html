@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="form-wrapper">
-    <h1>Account Settings</h1>
+    <h1>Account settings</h1>
     <hr>
 
     <form method="POST" class="form">
@@ -19,13 +19,13 @@
         </div>
 
         <div class="form-container">
-            <label for="iconHoverColor" class="form-label">Icon Hover Color:</label>
+            <label for="iconHoverColor" class="form-label">Icon hover color:</label>
             <input type="color" id="iconHoverColor" name="icon_hover_color" value="{{ request.user.icon_hover_color|default:'#eff1f3' }}" class="form-control form-control-color">
         </div>
 
         <div class="form-container">
-            <button type="submit" name="save_settings" class="primary-btn">Save Settings</button>
-            <button type="submit" name="toggle_theme" class="secondary-btn">Switch Theme</button>
+            <button type="submit" name="save_settings" class="primary-btn">Save settings</button>
+            <button type="submit" name="toggle_theme" class="secondary-btn">Switch theme</button>
         </div>
     </form>
 </div>

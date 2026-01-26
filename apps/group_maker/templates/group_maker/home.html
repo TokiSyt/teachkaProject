@@ -26,56 +26,33 @@
         </div>
 
         <div class="form-container">
-            {{ form.size.label_tag }}
-            {{ form.size }}
-            <div class="form-text">{{ form.size.help_text }}</div>
-        </div>
-
-        <div class="form-container">
-            <button type="submit" class="primary-btn">Divide</button>
-            <a href="list-creation/" class="secondary-btn">List Creation</a>
-            <a href="{% url 'home' %}" class="secondary-btn">Reset</a>
+            <a href="{% url 'group_maker:group-maker-creation' %}" class="secondary-btn">Create a group</a>
             <a id="editGroupsBtn" href="#" class="secondary-btn">Edit Group</a>
+            <a href="{% url 'group_maker:group-maker-home' %}" class="secondary-btn">Reset</a>
+            <a id="deleteGroupBtn" href="#" class="delete-btn">Delete</a>
         </div>
     </form>
-
-    {% if splitted_group %}
-        <div class="collection-wrapper">
-            <h2>Divided Groups ({{ selected_group.title }})</h2>
-            <div class="card-collection">
-                {% for group in splitted_group %}
-                    <div class="card-item">
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-header fw-bold">
-                                Group {{ forloop.counter }}
-                            </div>
-                            <ul class="list-group">
-                                {% for member in group %}
-                                    <li class="list-group-item">{{ member }}</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-
-    {% endif %}
 
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const groupSelect = document.getElementById("groupSelect");
         const editBtn = document.getElementById("editGroupsBtn");
+        const deleteBtn = document.getElementById("deleteGroupBtn")
 
         function updateEditLink() {
             const groupId = groupSelect.value;
             if (groupId) {
-                editBtn.href = `/group_maker/list-edit/${groupId}`;
+                editBtn.href = `/group_maker/group_maker_edit/${groupId}`;
                 editBtn.classList.remove("disabled");
+                deleteBtn.href = `/group_maker/group_maker_delete/${groupId}`;
+                deleteBtn.classList.remove("disabled");
+
             } else {
                 editBtn.href = "#";
                 editBtn.classList.add("disabled");
+                deleteBtn.href = "#";
+                deleteBtn.classList.add("disabled");
             }
         }
 

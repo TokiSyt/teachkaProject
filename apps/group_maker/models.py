@@ -11,7 +11,7 @@ class GroupCreationModel(models.Model):
     title = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
     members_string = models.TextField(
-        help_text='Comma-separated list of names. (f.e.: "Toki, Tina, Alice")',
+        help_text='Comma-separated list of names. (f.e.: "Toki, Tina, Alice") |\n Avoid using the same name for different members',
         default="",
     )
     size = models.PositiveIntegerField(default=0)
@@ -29,3 +29,19 @@ class GroupCreationModel(models.Model):
             for member in self.members_string.replace("\n", ",").split(",")
             if member.strip()
         ]
+
+    def sync_members(self):
+
+        from apps.point_system.models import Member
+
+        current_names = self.get_members_list()
+        current_names_ordered = list(dict.fromkeys(current_names))
+        
+        existing_members = self.karma_members.all()
+
+        for member in existing_members:
+            if member.name not in current_names:
+                member.delete()
+
+        for name in current_names_ordered:
+            Member.objects.get_or_create(group=self, name=name)

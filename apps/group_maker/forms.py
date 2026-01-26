@@ -10,7 +10,3 @@ class GroupCreationForm(forms.ModelForm):
             "title": forms.TextInput(attrs={"class": "form-control"}),
             "members_string": forms.Textarea(attrs={"class": "form-control", "rows": 5}),
         }
-
-
-class GroupMakerForm(forms.Form):
-    size = forms.IntegerField(min_value=1, required=True, help_text="How many members per group?")
