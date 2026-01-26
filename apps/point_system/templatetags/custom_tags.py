@@ -30,11 +30,11 @@ def negativity_class(value):
 def positivity_class(value):
     """Return a CSS class name based on the total_positive value."""
     try:
-        val = int(value)
+        value = int(value)
     except (ValueError, TypeError):
         return "level-unknown"
-    
+
     if value >= 5:
         return "level-green"
-        
+
     return value

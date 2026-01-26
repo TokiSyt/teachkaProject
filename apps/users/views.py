@@ -1,11 +1,10 @@
-from django.contrib.auth import login, authenticate, update_session_auth_hash
-from .forms import RegisterForm, EditProfileForm, CustomPasswordChangeForm
-from django.views.generic import FormView, TemplateView, UpdateView
+from django.contrib.auth import authenticate, get_user_model, login, update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import get_user_model
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.views.generic import FormView, TemplateView, UpdateView
 
+from .forms import CustomPasswordChangeForm, EditProfileForm, RegisterForm
 
 User = get_user_model()
 
@@ -59,12 +58,12 @@ class SettingsView(LoginRequiredMixin, TemplateView):
         if "toggle_theme" in request.POST:
             profile.theme = "dark" if profile.theme == "light" else "light"
             updated = True
-            
+
         if updated:
             profile.save()
 
         return redirect(request.path)
-        
+
 
 class EditProfileView(LoginRequiredMixin, UpdateView):
     model = User
