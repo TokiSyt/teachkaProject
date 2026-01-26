@@ -11,7 +11,9 @@ These apps are fully functional and ready to use:
 
 - **Grade Calculator** – Quickly calculate and track grades.  
 - **Group Maker** – Easily create groups for projects or events.  
+- **Karma Points System** – Track and reward user actions or achievements. 
 - **Settings** – Manage app preferences and stellax configurations. 
+- **Name Wheel** – Randomly pops names from the selected group. 
 
 ---
 
@@ -20,10 +22,8 @@ These apps are fully functional and ready to use:
 These apps are in progress or planned for future releases:
 
 - **Timer** – A simple timer for tasks or events.  
-- **Math Ops** – Perform quick math operations.  
-- **Karma Points System** – Track and reward user actions or achievements.  
-- **User Shared To-Do List** – Keep track of daily tasks and priorities, both alone or with other users.   
-- **Name Wheel (with photos)** – Randomly select names with optional photos.  
+- **Math Ops** – Perform quick math operations.   
+- **User Shared To-Do List** – Keep track of daily tasks and priorities, both alone or with other users.    
 - **Currency Exchanger Rates** – Check and convert currency rates. 
 
 ---

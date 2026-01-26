@@ -1,8 +1,8 @@
-from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
+from .services.group_split import group_split as group_split_f
 from django.contrib.auth.mixins import LoginRequiredMixin
 from apps.group_maker.models import GroupCreationModel
-from .services.group_split import group_split as group_split_f
+from django.shortcuts import render, get_object_or_404
 from .forms import GroupMakerForm
 
 

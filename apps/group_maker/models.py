@@ -29,6 +29,9 @@ class GroupCreationModel(models.Model):
             for member in self.members_string.replace("\n", ",").split(",")
             if member.strip()
         ]
+        
+    def get_size(self):
+        return self.size
 
     def sync_members(self):
 
