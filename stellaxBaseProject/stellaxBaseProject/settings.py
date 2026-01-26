@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,22 +24,31 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-*e_9(hl6b+g6xb_vf4t52b_@(v*9w2j8oh43=5f7#8iu1sqhym"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+USE_MYSQL = os.getenv("USE_MYSQL", "false").lower() == "true"
 
-ALLOWED_HOSTS = ['stellax.pythonanywhere.com']
+if USE_MYSQL:
+    DEBUG = False
+else:
+    DEBUG = True
+
+if USE_MYSQL:
+    ALLOWED_HOSTS = ["stellax.pythonanywhere.com"]
+else:
+    ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    "lucide",
+    "crispy_forms",
+    "crispy_bootstrap4",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "crispy_forms",
-    "crispy_bootstrap4",
     "timer",
     "currencyCalculator",
     "quiz",
@@ -48,7 +58,6 @@ INSTALLED_APPS = [
     "mathOps",
     "maxGradeCal",
     "users",
-    "lucide"
 ]
 
 MIDDLEWARE = [
@@ -84,15 +93,25 @@ WSGI_APPLICATION = "stellaxBaseProject.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'stellax$default',
-        'USER': 'stellax',
-        'PASSWORD': 'tinaVeryPretty',
-        'HOST': 'stellax.mysql.pythonanywhere-services.com',
+if USE_MYSQL:
+    DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "stellax$default",
+        "USER": "stellax",
+        "PASSWORD": "NotTokiProject",
+        "HOST": "stellax.mysql.pythonanywhere-services.com",
+        "PORT": "3306",
     }
 }
+    
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -129,10 +148,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = "static/"
-MEDIA_URL = 'media/'
+MEDIA_URL = "media/"
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-MEDIA_ROOT = BASE_DIR/'mediafiles'
+STATIC_ROOT = BASE_DIR / "staticfiles"
+MEDIA_ROOT = BASE_DIR / "mediafiles"
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
@@ -147,3 +166,4 @@ LOGOUT_REDIRECT_URL = "/"
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
+AUTH_USER_MODEL = "users.CustomUser"

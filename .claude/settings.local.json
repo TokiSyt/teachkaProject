@@ -10,7 +10,10 @@
       "Bash(docker-compose up:*)",
       "Bash(docker info:*)",
       "Bash(netstat:*)",
-      "Bash(make ci:*)"
+      "Bash(make ci:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }

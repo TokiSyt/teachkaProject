@@ -9,7 +9,9 @@ def register(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
-            form.save()
+            new_user = form.save()
+            new_user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
+            login(request, new_user)
             return redirect("home")
     else:
         form = RegisterForm()
@@ -20,14 +22,14 @@ def register(request):
 
 
 @login_required
-def profileView(request):
+def profile_view(request):
 
     context = {}
     return render(request, "users/profile.html", context)
 
 
 @login_required
-def userSettings(request):
+def user_settings(request):
 
     context = {}
     return render(request, "wip.html", context)
