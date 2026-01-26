@@ -28,7 +28,6 @@
             <a href="{% url 'karma:karma-home' %}" class="secondary-btn">Reset</a>
             <a id="editGroupsBtn" href="#" class="secondary-btn">Edit group</a>
             <a href="{% url 'group_maker:group-maker-creation' %}" class="secondary-btn">Create a group</a>
-            <a id="deleteGroupBtn" href="#" class="delete-btn">Delete</a>
         {% else %}
             <button type="submit" class="primary-btn">Show points</button>
             <a href="{% url 'group_maker:group-maker-creation' %}" class="secondary-btn">Create a group</a>
@@ -146,21 +145,16 @@
     document.addEventListener("DOMContentLoaded", function() {
         const groupSelect = document.getElementById("groupSelect");
         const editBtn = document.getElementById("editGroupsBtn");
-        const deleteBtn = document.getElementById("deleteGroupBtn");
 
         function updateEditLink() {
             const groupId = groupSelect.value;
             if (groupId) {
                 editBtn.href = `/group_maker/group_maker_edit/${groupId}`;
                 editBtn.classList.remove("disabled");
-                deleteBtn.href = `/group_maker/group_maker_delete/${groupId}`;
-                deleteBtn.classList.remove("disabled");
 
             } else {
                 editBtn.href = "#";
                 editBtn.classList.add("disabled");
-                deleteBtn.href = "#";
-                deleteBtn.classList.add("disabled");
             }
         }
 

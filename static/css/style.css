@@ -9,13 +9,13 @@
   --icon-hover: #eff1f3;
   --icon-color: #1d1c1c;
 
-  --btn-padding-y: 0.375rem;
-  --btn-padding-x: 0.75rem;
-  --btn-border-radius: 0.40rem;
+  --btn-padding-y: 0.5rem;
+  --btn-padding-x: 1rem;
+  --btn-border-radius: 0.5rem;
 
   --form-border-color: #ced4da;
   --form-border-radius: 0.25rem;
-  --form-padding: 0.375rem 0.75rem;
+  --form-padding: 0.5rem 1rem;
 
   --background: #ffffff;
   --sidebar-background: #f8f9fa;
@@ -29,6 +29,7 @@
 
   --hr-color: 2px solid rgba(0, 0, 0, 0.5);
   --separator: #95a3bb;
+
 }
 
 :root.dark-theme {
@@ -43,8 +44,7 @@
   --icon-color: #ffffff;
 
   --form-border-color: #949799;
-  --form-border-radius: 0.25rem;
-  --form-padding: 0.375rem 0.75rem;
+  --form-padding: 0.5rem 1rem;
 
   --background: #292929;
   --sidebar-background: #1d1c1c;
@@ -66,74 +66,44 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   margin: 0;
+  font-size: 14px;
 }
 
-.primary-btn {
-  background-color: var(--primary-btn-color);
-  color: var(--btn-text-color);
-  border: none;
-  border-radius: var(--btn-border-radius);
-  padding: var(--btn-padding-y) var(--btn-padding-x);
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-  text-decoration: none;
-}
-
-.primary-btn:hover,
-.primary-btn:focus {
-  background-color: var(--primary-color-hover);
-  outline: none;
-}
-
-.secondary-btn {
-  display: inline-block;
-  padding: 0.375rem 0.75rem;
-  background-color: var(--secondary-color);
-  color: var(--btn-text-color);
-  border: none;
-  border-radius: var(--btn-border-radius);
-  padding: var(--btn-padding-y) var(--btn-padding-x);
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-  text-decoration: none;
-}
-
-.secondary-btn:hover,
-.secondary-btn:focus {
-  background-color: var(--secondary-color-hover);
-  outline: none;
-}
-
+.primary-btn,
+.secondary-btn,
 .delete-btn {
-  background-color: var(--danger-color);
-  color: var(--btn-text-color);
-  border: none;
-  border-radius: var(--btn-border-radius);
+  display: inline-block;
+  width: 100%; 
+  text-align: center;
   padding: var(--btn-padding-y) var(--btn-padding-x);
+  border-radius: var(--btn-border-radius);
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  border: none;
   text-decoration: none;
 }
 
-.delete-btn:hover,
-.delete-btn:focus {
-  background-color: var(--danger-color-hover);
-  outline: none;
-}
+.primary-btn { background-color: var(--primary-btn-color); color: var(--btn-text-color); }
+.primary-btn:hover, .primary-btn:focus { background-color: var(--primary-color-hover); outline: none; }
+
+.secondary-btn { background-color: var(--secondary-color); color: var(--btn-text-color); }
+.secondary-btn:hover, .secondary-btn:focus { background-color: var(--secondary-color-hover); outline: none; }
+
+.delete-btn { background-color: var(--danger-color); color: var(--btn-text-color); }
+.delete-btn:hover, .delete-btn:focus { background-color: var(--danger-color-hover); outline: none; }
 
 .bg {
   background-color: var(--background);
 }
 
 .form {
-  max-width: 800px;
-  margin: 20px auto;
+  max-width: 100%;
+  margin: 1rem;
   padding: 1rem;
   background: var(--form-background);
   border: 1px solid var(--form-border-color);
-  border-radius: 0.375rem;
+  border-radius: var(--form-border-radius);
   box-shadow: var(--form-shadow);
-  font-family: Arial, sans-serif;
 }
 
 form label {
@@ -143,10 +113,7 @@ form label {
   color: var(--text-color);
 }
 
-.form-wrapper {
-  max-width: 800px;
-  margin: 0 auto;
-}
+.form-wrapper { max-width: 100%; margin: 0 auto; }
 
 .form-wrapper hr {
   margin: 1rem 0;
@@ -155,39 +122,61 @@ form label {
 }
 
 .form-collection {
-  display: block;
-  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
 }
 
-@media (min-width: 768px) {
-  .form-collection {
-    grid-template-columns: repeat(2, 1fr);
-  }
+@media (min-width: 767px) {
+  .form-collection { grid-template-columns: repeat(2, 1fr); }
+  body { font-size: 15px; }
+  .primary-btn, .secondary-btn, .delete-btn { width: auto; }
 }
 
 @media (min-width: 992px) {
-  .form-collection {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  .form-collection { grid-template-columns: repeat(3, 1fr); }
+  body { font-size: 16px; }
 }
 
 .form-container {
-  background: var(--form-background);
-  border-radius: 0.5rem;
-  overflow: hidden;
-  border: none;
-  display: flex;
-  gap: 0.5rem;
-  text-align: center;
+  display: block;
+  width: 100%;
   margin-top: 1rem;
+  text-align: center; 
 }
+
+.form-container button,
+.form-container a {
+  margin-bottom: 0.5rem;
+}
+
+.form-container button:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 992px) {
+  .form-container {
+    text-align: left;   
+  }
+
+  .form-container button,
+  .form-container a,
+  .form-container select {
+    display: inline-block;
+    width: auto;     
+    margin-right: 0.5rem; 
+    vertical-align: middle;
+  }
+}
+
+form-container table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.form-container th, .form-container td { padding: 0.75rem; border: 1px solid #dee2e6; text-align: center; }
 
 .form-container td:first-child {
     text-align: left;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
 }
-
 
 .form-collection .form-container {
   display: block;
@@ -269,18 +258,8 @@ a:hover {
   grid-template-columns: 1fr;
   gap: 1rem;
 }
-
-@media (min-width: 768px) {
-  .card-collection {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 992px) {
-  .card-collection {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
+@media (min-width: 768px) { .card-collection { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 992px) { .card-collection { grid-template-columns: repeat(3, 1fr); } }
 
 .card {
   border-radius: 0.5rem;
@@ -404,8 +383,16 @@ button {
 .main-content {
   margin-left: 60px;
   padding: 1rem;
-  overflow-x: hidden;
   width: calc(100% - 60px);
+}
+
+@media (min-width: 992px) {
+  .main-content {
+    margin-left: 60px; 
+    width: calc(100% - 60px);
+    padding: 1rem;
+    text-align: left; 
+  }
 }
 
 .main-content>* {

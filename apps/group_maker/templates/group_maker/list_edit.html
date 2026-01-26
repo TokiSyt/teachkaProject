@@ -11,6 +11,7 @@
     <form method="POST" class="form">
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ request.GET.next|default:request.META.HTTP_REFERER|default:'/' }}">
+        <input type="hidden" name="origin_app" value="{{ origin_app }}">
 
         <div>
             {{form.as_p}}
@@ -19,7 +20,7 @@
         <div class="form-container">
             <a href="{{request.META.HTTP_REFERER}}" class="secondary-btn">Cancel</a>
             <button type="submit" class="primary-btn">Save changes</button>
-            <a href="{% url 'group_maker:group-maker-delete' selected_group.id %}" class="delete-btn">Delete</a>
+            <a href="{% url 'group_maker:group-maker-delete' selected_group.id %}?origin_app={{ request.GET.from|default:'group-divider' }}" class="delete-btn">Delete</a>
         </div>
 
     </form>
