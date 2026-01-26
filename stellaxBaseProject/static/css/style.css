@@ -1,0 +1,100 @@
+body {
+    margin: 0;
+    display: flex;
+    font-family: sans-serif;
+    background: #161616;
+    color: #fff;
+}
+
+nav {
+    background: #111111;
+    height: 100vh;
+    width: 65px;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 2px groove #fff;
+    transition: width 0.3s;
+    overflow: hidden;
+}
+
+nav a {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.3s;
+    margin: 0 auto;
+}
+
+nav .label {
+    white-space: nowrap;
+    overflow: hidden;
+    opacity: 1;
+    transition: opacity 0.3s, width 0.3s;
+}
+
+.icon, #logout-btn {
+    font-size: 20px;
+    text-align: center;
+    max-width: 50px;
+    width: 100%;
+    margin: 10px;
+}
+
+#logout-btn {
+    background-color: black;
+    color: white;
+}
+
+.main-content {
+    padding: 20px;
+}
+
+.grade-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.grade-table th,
+.grade-table td {
+    border: 1px solid #ccc;
+    padding: 12px 15px;
+    text-align: center;
+}
+
+.grade-table thead {
+    font-weight: bold;
+}
+
+.grade-table tbody tr:nth-child(even),
+.grade-table tbody tr:hover {
+    transition: background 0.3s;
+}
+
+#form-logout-btn {
+    margin: 0 auto;
+}
+
+button[type="submit"] {
+    padding: 5px 10px;
+    background: #373c41;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 5px;
+}
+
+button[type="submit"]:hover {
+    background: #242629;
+}
+
+.separator {
+    width: 60%;
+}

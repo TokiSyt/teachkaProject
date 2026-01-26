@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir /s /b /ad \"C:\\\\Users\\\\tiago\\\\Desktop\\\\Code\\\\Python\\\\DjangoProjects\\\\stellaxProject\")",
+      "Bash(findstr:*)",
+      "Skill(mgrep)",
+      "Bash(C:Userstiago.claudepluginscacheMixedbread-Grepmgrep0.0.0mgrep.exe \"sync_members\")",
+      "Bash(docker-compose logs:*)",
+      "Bash(docker-compose ps:*)",
+      "Bash(docker-compose up:*)",
+      "Bash(docker info:*)",
+      "Bash(netstat:*)",
+      "Bash(make ci:*)"
+    ]
+  }
+}
