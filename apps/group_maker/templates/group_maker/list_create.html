@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}List Creation{% endblock title %}
+
+{% block content %}
+<div class="form-wrapper">
+    <h1>Create New Group List</h1>
+    <hr>
+
+    <form method="POST" class="form">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            {{form.as_p}}
+        </div>
+
+        <div class="form-container">
+            <button type="submit" class="primary-btn">Save</button>
+            <a href="{% url 'list-home' %}" class="secondary-btn">Cancel</a>
+        </div>
+        
+    </form>
+</div>
+{% endblock content %}

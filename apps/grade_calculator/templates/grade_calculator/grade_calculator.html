@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Grade Calculator{% endblock title %}
+
+{% block content %}
+<div class="form-wrapper">
+  <h1 class="mb-4">Grade Calculator</h1>
+  <hr>
+
+  <form method="post" class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <div class="form-container">
+      <button type="submit" class="primary-btn">Calculate</button>
+      <a href="{% url 'grade_calculator' %}" class="secondary-btn">Reset</a>
+    </div>
+  </form>
+
+  {% if score_range %}
+  <div class="form-collection">
+    <div class="form-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Grade</th>
+                    <th>Score Range</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>{{ score_range.0 }} - {{ score_range.1 }}</td></tr>
+                <tr><td>2</td><td>{{ score_range.2 }} - {{ score_range.3 }}</td></tr>
+                <tr><td>3</td><td>{{ score_range.4 }} - {{ score_range.5 }}</td></tr>
+                <tr><td>4</td><td>{{ score_range.6 }} - {{ score_range.7 }}</td></tr>
+                <tr><td>5</td><td>{{ score_range.8 }} - {{ score_range.9 }}</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+  {% endif %}
+</div>
+{% endblock %}

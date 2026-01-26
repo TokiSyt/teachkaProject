@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Group Maker{% endblock title %}
+
+{% block content %}
+<div class="form-wrapper">
+    <h1>Group Maker</h1>
+    <hr>
+
+    <form method="POST" class="form">
+        {% csrf_token %}
+        
+        <div class="">
+            <label for="groupSelect" class="form-label">Select a group:</label>
+            <select id="groupSelect" name="group_id" id="group-select" class="form-select" required>
+
+                <option value="" disabled hidden selected>Select a group</option>
+
+                {% for group in groups %}
+                    <option value="{{ group.id }}" {% if selected_group and selected_group.id == group.id %}selected{% endif %}>
+                        {{ group.title }} ({{ group.size }} members)
+                    </option>
+                {% endfor %}
+                
+            </select>
+        </div>
+
+        <div class="form-container">
+            {{ form.size.label_tag }}
+            {{ form.size }}
+            <div class="form-text">{{ form.size.help_text }}</div>
+        </div>
+
+        <div class="form-container">
+            <button type="submit" class="primary-btn">Divide</button>
+            <a href="list-creation/" class="secondary-btn">List Creation</a>
+            <a href="{% url 'home' %}" class="secondary-btn">Reset</a>
+            <a id="editGroupsBtn" href="#" class="secondary-btn">Edit Group</a>
+        </div>
+    </form>
+
+    {% if splitted_group %}
+        <div class="collection-wrapper">
+            <h2>Divided Groups ({{ selected_group.title }})</h2>
+            <div class="card-collection">
+                {% for group in splitted_group %}
+                    <div class="card-item">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-header fw-bold">
+                                Group {{ forloop.counter }}
+                            </div>
+                            <ul class="list-group">
+                                {% for member in group %}
+                                    <li class="list-group-item">{{ member }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    {% endif %}
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const groupSelect = document.getElementById("groupSelect");
+        const editBtn = document.getElementById("editGroupsBtn");
+
+        function updateEditLink() {
+            const groupId = groupSelect.value;
+            if (groupId) {
+                editBtn.href = `/group_maker/list-edit/${groupId}`;
+                editBtn.classList.remove("disabled");
+            } else {
+                editBtn.href = "#";
+                editBtn.classList.add("disabled");
+            }
+        }
+
+        groupSelect.addEventListener("change", updateEditLink);
+
+        updateEditLink();
+    });
+</script>
+
+{% endblock content %}

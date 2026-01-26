@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Profile Edit
+{% endblock title %}
+
+{% block content %}
+<div class="form-wrapper">
+    <h1 class="mb-4">Edit Profile</h1>
+    <hr>
+
+    <form method="POST" class="form">
+        {% csrf_token %}
+
+        {{ form |crispy }}
+
+        <div class="mb-3">
+            <label class="form-label">Password</label>
+            <a href="{% url 'change-password' %}" class="secondary-btn">Reset password</a>
+        </div>
+
+        <hr>
+
+        <div class="form-con">
+            <a href="{% url 'profile' %}" class="secondary-btn">Cancel</a>
+            <button type="submit" class="primary-btn">Save</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}
