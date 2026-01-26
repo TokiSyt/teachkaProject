@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import HomeView, DashboardView, AddColumn, EditColumn, DeleteColumn
+
+from .views import AddColumn, DashboardView, DeleteColumn, EditColumn, HomeView
 
 app_name = "karma"
 

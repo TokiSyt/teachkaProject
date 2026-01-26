@@ -1,17 +1,44 @@
-__pycache__/
-*.py[cod]
-*.sqlite3
-*.env
-
-db.sqlite3
-*.log
-
-.vscode/
-
-venv/
-env/
-
+# Python
 __pycache__/
 **/__pycache__/
-
 *.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# Database
+*.sqlite3
+db.sqlite3
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+logs/*.log
+
+# Node
+node_modules/
+theme/static_src/node_modules/
+
+# Static files (collected)
+staticfiles/
+
+# Cache directories
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Environment files
+*.env
+.env.local
+
+# Claude Code
+.claude/
+CLAUDE.md

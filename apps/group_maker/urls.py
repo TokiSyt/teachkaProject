@@ -1,9 +1,10 @@
 from django.urls import path
+
 from .views import (
-    GroupHome,
     GroupCreate,
-    GroupUpdate,
     GroupDelete,
+    GroupHome,
+    GroupUpdate,
 )
 
 app_name = "group_maker"

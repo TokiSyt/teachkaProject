@@ -1,8 +1,10 @@
-from django.conf.urls.static import static
-from django.urls import path, include
-from apps.users import views as v
 from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
+from django.urls import include, path
+
+from apps.users import views as v
+
 from . import views
 
 app_name = "home"
@@ -12,16 +14,19 @@ urlpatterns = [
     path("", views.HomeView.as_view(), name="home"),
     path("", include("django.contrib.auth.urls")),
     path("register/", v.RegisterView.as_view(), name="register"),
-    path("todo_list/", include("apps.todo_list.urls")),
-    path("timer/", include("apps.timer.urls")),
-    path("currency_calculator/", include("apps.currency_calculator.urls")),
+    # Main apps with clean URL paths
+    path("grades/", include("apps.grade_calculator.urls")),
+    path("groups/", include("apps.group_maker.urls", namespace="group_maker")),
+    path("karma/", include("apps.point_system.urls")),
+    path("divider/", include("apps.group_divider.urls")),
     path("wheel/", include("apps.wheel.urls")),
+    path("timer/", include("apps.timer.urls")),
+    # WIP apps
+    path("todo/", include("apps.todo_list.urls")),
+    path("currency/", include("apps.currency_calculator.urls")),
     path("math_ops/", include("apps.math_ops.urls")),
-    path("grade-calculator/", include("apps.grade_calculator.urls")),
+    # Users
     path("users/", include("apps.users.urls")),
-    path("group_divider/", include("apps.group_divider.urls")),
-    path("group_maker/", include("apps.group_maker.urls", namespace="group_maker")),
-    path("point_system/", include("apps.point_system.urls")),
 ]
 
 if settings.DEBUG:

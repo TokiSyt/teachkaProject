@@ -12,5 +12,6 @@ import os
 from django.core.asgi import get_asgi_application
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "stellaxBaseProject.settings")
+# Note: The settings module auto-detects environment (dev/prod/test)
 
 application = get_asgi_application()

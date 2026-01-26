@@ -1,10 +1,10 @@
-from django.contrib.auth.forms import (
-    UserCreationForm,
-    UserChangeForm,
-    PasswordChangeForm,
-)
-from django.contrib.auth import get_user_model
 from django import forms
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import (
+    PasswordChangeForm,
+    UserChangeForm,
+    UserCreationForm,
+)
 
 User = get_user_model()
 
@@ -34,7 +34,7 @@ class EditProfileForm(UserChangeForm):
     class Meta:
         model = User
         fields = ("username", "first_name", "last_name", "email")
-        
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if 'password' in self.fields:
