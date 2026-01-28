@@ -1,33 +1,33 @@
 """
-Custom exceptions for Stellax applications.
+Custom exceptions for Teachka applications.
 """
 
 
-class StellaxError(Exception):
-    """Base exception for Stellax applications."""
+class TeachkaError(Exception):
+    """Base exception for Teachka applications."""
 
     pass
 
 
-class PermissionDeniedError(StellaxError):
+class PermissionDeniedError(TeachkaError):
     """Raised when a user tries to access a resource they don't own."""
 
     pass
 
 
-class ValidationError(StellaxError):
+class ValidationError(TeachkaError):
     """Raised when data validation fails in the service layer."""
 
     pass
 
 
-class NotFoundError(StellaxError):
+class NotFoundError(TeachkaError):
     """Raised when a requested resource is not found."""
 
     pass
 
 
-class ConfigurationError(StellaxError):
+class ConfigurationError(TeachkaError):
     """Raised when there's a configuration issue."""
 
     pass

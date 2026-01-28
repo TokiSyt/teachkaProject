@@ -2,11 +2,13 @@ from django import template
 
 register = template.Library()
 
+
 @register.filter
 def get_item(dictionary, key):
     if dictionary is None:
         return 0
     return dictionary.get(key, 0)
+
 
 @register.filter
 def negativity_class(value):
@@ -25,6 +27,7 @@ def negativity_class(value):
     elif val >= 20:
         return "level-red-dark"
     return "level-unknown"
+
 
 @register.filter
 def positivity_class(value):

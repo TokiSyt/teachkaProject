@@ -1,7 +1,7 @@
 
-# Stellax Project
+# Teachka Project
 
-Stellax is an app hub designed to bring together practical, real-life tools in one convenient platform. The goal is to create simple applications that help people solve everyday problems more efficiently. This project is modular, allowing for new apps to be added over time as needed.
+Teachka is an app hub designed to bring together practical, real-life tools in one convenient platform. The goal is to create simple applications that help people solve everyday problems more efficiently. This project is modular, allowing for new apps to be added over time as needed.
 
 ---
 
@@ -12,7 +12,7 @@ These apps are fully functional and ready to use:
 - **Grade Calculator** – Quickly calculate and track grades.  
 - **Group Maker** – Easily create groups for projects or events.  
 - **Karma Points System** – Track and reward user actions or achievements. 
-- **Settings** – Manage app preferences and stellax configurations. 
+- **Settings** – Manage app preferences and Teachka configurations. 
 - **Name Wheel** – Randomly pops names from the selected group. 
 
 ---

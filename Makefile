@@ -34,7 +34,7 @@ bash:
 
 # Open PostgreSQL shell
 dbshell:
-	docker compose exec db psql -U postgres -d stellaxdb
+	docker compose exec db psql -U postgres -d teachkadb
 
 # Run migrations
 migrate:
@@ -55,6 +55,10 @@ collectstatic:
 # Run tests with pytest
 test:
 	docker compose exec web pytest
+
+# Run tests with coverage report
+test-cov:
+	docker compose exec web pytest --cov=apps --cov-report=term-missing
 
 # Run specific test file
 test-file:
@@ -110,4 +114,8 @@ status:
 	docker compose ps
 
 # Run all CI checks (ruff, mypy, tests)
-ci: ruff-fix mypy test
+ci:
+	docker compose exec web ruff check .
+	docker compose exec web ruff format --check .
+	docker compose exec web mypy .
+	docker compose exec web pytest

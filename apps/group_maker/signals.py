@@ -44,12 +44,8 @@ def sync_karma_members_on_save(sender, instance, created, **kwargs):
         member, member_created = Member.objects.get_or_create(group=instance, name=name)
 
         if member_created:
-            positive_fields = FieldDefinition.objects.filter(
-                group=instance, definition="positive"
-            )
-            negative_fields = FieldDefinition.objects.filter(
-                group=instance, definition="negative"
-            )
+            positive_fields = FieldDefinition.objects.filter(group=instance, definition="positive")
+            negative_fields = FieldDefinition.objects.filter(group=instance, definition="negative")
 
             member.positive_data = {}
             for field in positive_fields:

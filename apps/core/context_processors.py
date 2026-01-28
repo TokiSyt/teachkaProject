@@ -1,5 +1,5 @@
 """
-Context processors for Stellax.
+Context processors for Teachka.
 
 Provides dynamic data to all templates.
 """

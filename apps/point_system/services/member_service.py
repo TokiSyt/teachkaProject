@@ -110,17 +110,13 @@ class MemberService:
             member.save()
 
         # Also delete the field definition
-        FieldDefinition.objects.filter(
-            group=group, name=field_name, definition=definition
-        ).delete()
+        FieldDefinition.objects.filter(group=group, name=field_name, definition=definition).delete()
 
         logger.info(f"Removed field '{field_name}' from group {group.title}")
 
     @staticmethod
     @transaction.atomic
-    def rename_field_for_members(
-        group, old_name: str, new_name: str, definition: str
-    ) -> None:
+    def rename_field_for_members(group, old_name: str, new_name: str, definition: str) -> None:
         """
         Rename a field for all members in a group.
 
@@ -142,8 +138,6 @@ class MemberService:
             member.save()
 
         # Update the field definition
-        FieldDefinition.objects.filter(
-            group=group, name=old_name, definition=definition
-        ).update(name=new_name)
+        FieldDefinition.objects.filter(group=group, name=old_name, definition=definition).update(name=new_name)
 
         logger.info(f"Renamed field '{old_name}' to '{new_name}' in group {group.title}")

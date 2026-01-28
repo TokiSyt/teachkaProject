@@ -27,11 +27,7 @@ class GroupCreationModel(models.Model):
         # Note: sync_members is handled by post_save signal in signals.py
 
     def get_members_list(self):
-        return [
-            member.strip()
-            for member in self.members_string.replace("\n", ",").split(",")
-            if member.strip()
-        ]
+        return [member.strip() for member in self.members_string.replace("\n", ",").split(",") if member.strip()]
 
     def get_size(self):
         return self.size
@@ -63,12 +59,8 @@ class GroupCreationModel(models.Model):
             member, created = Member.objects.get_or_create(group=self, name=name)
 
             if created:
-                positive_fields = FieldDefinition.objects.filter(
-                    group=self, definition="positive"
-                )
-                negative_fields = FieldDefinition.objects.filter(
-                    group=self, definition="negative"
-                )
+                positive_fields = FieldDefinition.objects.filter(group=self, definition="positive")
+                negative_fields = FieldDefinition.objects.filter(group=self, definition="negative")
 
                 member.positive_data = {}
                 for field in positive_fields:

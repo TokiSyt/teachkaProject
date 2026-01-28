@@ -14,7 +14,7 @@ exclude = [
 ]
 
 [tool.django-stubs]
-django_settings_module = "stellaxBaseProject.settings"
+django_settings_module = "teachkaBaseProject.settings"
 
 [tool.ruff]
 target-version = "py312"
@@ -43,11 +43,30 @@ ignore = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["apps", "stellaxBaseProject"]
+known-first-party = ["apps", "teachkaBaseProject"]
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "stellaxBaseProject.settings"
-env = ["DJANGO_ENV=test"]
+DJANGO_SETTINGS_MODULE = "teachkaBaseProject.settings"
 python_files = ["test_*.py", "*_test.py"]
 addopts = "-v --tb=short"
 testpaths = ["apps"]
+
+[tool.coverage.run]
+source = ["apps"]
+omit = [
+    "*/migrations/*",
+    "*/tests/*",
+    "*/__init__.py",
+    "*/admin.py",
+    "*/apps.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+]
+skip_empty = true

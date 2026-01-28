@@ -36,6 +36,7 @@ staticfiles/
 .pytest_cache/
 
 # Environment files
+.env
 *.env
 .env.local
 

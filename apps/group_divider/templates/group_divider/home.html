@@ -34,7 +34,7 @@
         <div class="form-container">
             <button type="submit" class="primary-btn">Divide</button>
             <a href="{% url 'group_maker:group-maker-creation' %}" class="secondary-btn">Create a group</a>
-            <a href="{% url 'group-divider-home' %}" class="secondary-btn">Reset</a>
+            <a href="{% url 'group_divider:home' %}" class="secondary-btn">Reset</a>
             {% if selected_group %}
                 <a id="editGroupsBtn" href="{% url 'group_maker:group-maker-edit' selected_group.id %}" class="secondary-btn">Edit group</a>
             {% else %}
