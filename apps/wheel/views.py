@@ -34,16 +34,11 @@ class HomeView(LoginRequiredMixin, TemplateView):
         return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
-
         groups = GroupCreationModel.objects.filter(user=self.request.user)
-        selected_group_id = request.POST.get(
-            "group_id"
-        )  # tag: select, field: name="group_id"
+        selected_group_id = request.POST.get("group_id")  # tag: select, field: name="group_id"
 
         if selected_group_id:
-            selected_group = get_object_or_404(
-                GroupCreationModel, id=selected_group_id, user=request.user
-            )
+            selected_group = get_object_or_404(GroupCreationModel, id=selected_group_id, user=request.user)
             selected_group_members = selected_group.get_members_list()
             selected_group_size = selected_group.get_size()
 
@@ -52,16 +47,16 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
             if len(already_chosen_names) >= selected_group_size:
                 return render(
-                request,
-                self.template_name,
-                {
-                    "chosen_name": None,
-                    "already_chosen_names": already_chosen_names,
-                    "selected_group": selected_group,
-                    "groups": groups,
-                    "message": "All names chosen!",
-                },
-            )
+                    request,
+                    self.template_name,
+                    {
+                        "chosen_name": None,
+                        "already_chosen_names": already_chosen_names,
+                        "selected_group": selected_group,
+                        "groups": groups,
+                        "message": "All names chosen!",
+                    },
+                )
 
             chosen_name, already_chosen_names = choose_a_random_name(selected_group_members, already_chosen_names)
             request.session[session_key] = already_chosen_names

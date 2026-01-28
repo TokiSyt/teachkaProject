@@ -15,9 +15,7 @@ class GradeCalculatorView(LoginRequiredMixin, FormView):
         rounding_option = form.cleaned_data["rounding_option"]
         grades = grade_calculator(max_points, rounding_option)
 
-        context = self.get_context_data(
-            form=form, score_range=grades
-        )  # /-> "form": form, "score_range": grades
+        context = self.get_context_data(form=form, score_range=grades)  # /-> "form": form, "score_range": grades
         return self.render_to_response(context)
 
     def form_invalid(self, form):

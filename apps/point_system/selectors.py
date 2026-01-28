@@ -62,13 +62,9 @@ def get_group_with_fields(group_id: int, user) -> tuple[GroupCreationModel, dict
     """
     group = get_object_or_404(GroupCreationModel, id=group_id, user=user)
 
-    positive_fields = FieldDefinition.objects.filter(
-        group=group, definition="positive"
-    ).order_by("created_at")
+    positive_fields = FieldDefinition.objects.filter(group=group, definition="positive").order_by("created_at")
 
-    negative_fields = FieldDefinition.objects.filter(
-        group=group, definition="negative"
-    ).order_by("created_at")
+    negative_fields = FieldDefinition.objects.filter(group=group, definition="negative").order_by("created_at")
 
     fields = {
         "positive": list(positive_fields),
@@ -111,5 +107,3 @@ def get_group_full_data(group_id: int, user) -> dict:
         "column_type_positive": fields["positive_types"],
         "column_type_negative": fields["negative_types"],
     }
-
-

@@ -31,14 +31,16 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
         if group_id:
             data = get_group_full_data(int(group_id), self.request.user)
-            context.update({
-                "selected_group": data["group"],
-                "members": data["members"],
-                "positive_data": data["positive_column_names"],
-                "negative_data": data["negative_column_names"],
-                "column_type_positive": data["column_type_positive"],
-                "column_type_negative": data["column_type_negative"],
-            })
+            context.update(
+                {
+                    "selected_group": data["group"],
+                    "members": data["members"],
+                    "positive_data": data["positive_column_names"],
+                    "negative_data": data["negative_column_names"],
+                    "column_type_positive": data["column_type_positive"],
+                    "column_type_negative": data["column_type_negative"],
+                }
+            )
 
         return context
 
@@ -83,10 +85,14 @@ class AddColumn(LoginRequiredMixin, TemplateView):
     def get(self, request, pk):
         group = get_object_or_404(GroupCreationModel, id=pk, user=request.user)
         table_type = request.GET.get("table")
-        return render(request, self.template_name, {
-            "group_id": group.id,
-            "table_type": table_type,
-        })
+        return render(
+            request,
+            self.template_name,
+            {
+                "group_id": group.id,
+                "table_type": table_type,
+            },
+        )
 
     def post(self, request, pk):
         group = get_object_or_404(GroupCreationModel, id=pk, user=request.user)
@@ -98,9 +104,7 @@ class AddColumn(LoginRequiredMixin, TemplateView):
             field_definition = form.cleaned_data["field_definition"]
 
             try:
-                if FieldDefinition.objects.filter(
-                    group=group, name=field_name, definition=field_definition
-                ).exists():
+                if FieldDefinition.objects.filter(group=group, name=field_name, definition=field_definition).exists():
                     raise IntegrityError("Field already exists")
 
                 FieldDefinition.objects.create(
@@ -120,10 +124,14 @@ class AddColumn(LoginRequiredMixin, TemplateView):
                     request,
                     f"A column named '{field_name}' already exists in {field_definition} table.",
                 )
-                return render(request, self.template_name, {
-                    "group_id": group.id,
-                    "table_type": field_definition,
-                })
+                return render(
+                    request,
+                    self.template_name,
+                    {
+                        "group_id": group.id,
+                        "table_type": field_definition,
+                    },
+                )
 
         return render(request, self.template_name, {"group_id": group.id})
 
@@ -133,9 +141,7 @@ class EditColumn(LoginRequiredMixin, TemplateView):
 
     def _get_field_keys(self, group, table_type):
         """Get field keys for the given table type."""
-        fields = FieldDefinition.objects.filter(
-            group=group, definition=table_type
-        ).values_list("name", flat=True)
+        fields = FieldDefinition.objects.filter(group=group, definition=table_type).values_list("name", flat=True)
         return list(fields)
 
     def get(self, request, pk):
@@ -143,11 +149,15 @@ class EditColumn(LoginRequiredMixin, TemplateView):
         table_type = request.GET.get("table")
         all_keys = self._get_field_keys(group, table_type)
 
-        return render(request, self.template_name, {
-            "group_id": group.id,
-            "all_keys": all_keys,
-            "table_type": table_type,
-        })
+        return render(
+            request,
+            self.template_name,
+            {
+                "group_id": group.id,
+                "all_keys": all_keys,
+                "table_type": table_type,
+            },
+        )
 
     def post(self, request, pk):
         group = get_object_or_404(GroupCreationModel, id=pk, user=request.user)
@@ -170,11 +180,15 @@ class EditColumn(LoginRequiredMixin, TemplateView):
             except IntegrityError:
                 messages.error(request, f"A column named '{new_name}' already exists.")
 
-        return render(request, self.template_name, {
-            "group_id": group.id,
-            "table_type": field_definition,
-            "all_keys": all_keys,
-        })
+        return render(
+            request,
+            self.template_name,
+            {
+                "group_id": group.id,
+                "table_type": field_definition,
+                "all_keys": all_keys,
+            },
+        )
 
 
 class DeleteColumn(LoginRequiredMixin, TemplateView):
@@ -182,9 +196,7 @@ class DeleteColumn(LoginRequiredMixin, TemplateView):
 
     def _get_field_keys(self, group, table_type):
         """Get field keys for the given table type."""
-        fields = FieldDefinition.objects.filter(
-            group=group, definition=table_type
-        ).values_list("name", flat=True)
+        fields = FieldDefinition.objects.filter(group=group, definition=table_type).values_list("name", flat=True)
         return list(fields)
 
     def get(self, request, pk):
@@ -192,11 +204,15 @@ class DeleteColumn(LoginRequiredMixin, TemplateView):
         table_type = request.GET.get("table")
         all_keys = self._get_field_keys(group, table_type)
 
-        return render(request, self.template_name, {
-            "group_id": group.id,
-            "all_keys": all_keys,
-            "table_type": table_type,
-        })
+        return render(
+            request,
+            self.template_name,
+            {
+                "group_id": group.id,
+                "all_keys": all_keys,
+                "table_type": table_type,
+            },
+        )
 
     def post(self, request, pk):
         group = get_object_or_404(GroupCreationModel, id=pk, user=request.user)
@@ -213,11 +229,15 @@ class DeleteColumn(LoginRequiredMixin, TemplateView):
 
             return redirect(f"{reverse('karma:karma-home')}?group_id={group.id}")
 
-        return render(request, self.template_name, {
-            "group_id": group.id,
-            "all_keys": all_keys,
-            "table_type": field_definition,
-        })
+        return render(
+            request,
+            self.template_name,
+            {
+                "group_id": group.id,
+                "all_keys": all_keys,
+                "table_type": field_definition,
+            },
+        )
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):

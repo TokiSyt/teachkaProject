@@ -18,6 +18,7 @@ class GroupHome(LoginRequiredMixin, TemplateView):
         context["form"] = self.form_class()
         return context
 
+
 class GroupCreate(LoginRequiredMixin, CreateView):
     model = GroupCreationModel
     template_name = "group_maker/list_create.html"
@@ -61,7 +62,7 @@ class GroupDelete(LoginRequiredMixin, DeleteView):  # type: ignore[misc]
 
         if origin_app == "points-system":
             return reverse("karma:karma-home")
-        return reverse("group-divider-home")
+        return reverse("group_divider:home")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

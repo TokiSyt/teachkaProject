@@ -1,6 +1,5 @@
 """Tests for core app mixins."""
 
-
 from apps.core.mixins import UserQuerySetMixin
 
 

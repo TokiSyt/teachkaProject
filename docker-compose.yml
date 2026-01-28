@@ -4,13 +4,13 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: stellaxdb
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: tokiefixe
+      POSTGRES_DB: ${POSTGRES_DB:-teachkadb}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5433:5432"  # Use 5433 externally to avoid conflict with local PostgreSQL
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d stellaxdb"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-teachkadb}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -24,10 +24,8 @@ services:
       - node_modules:/app/theme/static_src/node_modules
     ports:
       - "8000:8000"
-    environment:
-      DATABASE_URL: postgresql://postgres:tokiefixe@db:5432/stellaxdb
-      SECRET_KEY: dev-secret-key
-      DJANGO_ENV: development
+    env_file:
+      - .env
     depends_on:
       db:
         condition: service_healthy

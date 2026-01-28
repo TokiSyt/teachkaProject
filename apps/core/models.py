@@ -1,5 +1,5 @@
 """
-Base models for Stellax applications.
+Base models for Teachka applications.
 
 These abstract models provide common functionality across all apps.
 """

@@ -22,9 +22,7 @@ class TestSelectors:
 
     def test_get_group_with_members(self, user, group_with_fields):
         """Test getting group with members."""
-        group, members = selectors.get_group_with_members(
-            group_with_fields.id, user
-        )
+        group, members = selectors.get_group_with_members(group_with_fields.id, user)
         assert group == group_with_fields
         assert members.count() == 2
 
@@ -35,9 +33,7 @@ class TestSelectors:
 
     def test_get_group_with_fields(self, user, group_with_fields):
         """Test getting group with field definitions."""
-        group, fields = selectors.get_group_with_fields(
-            group_with_fields.id, user
-        )
+        group, fields = selectors.get_group_with_fields(group_with_fields.id, user)
         assert group == group_with_fields
         assert "homework" in fields["positive_names"]
         assert "tardiness" in fields["negative_names"]

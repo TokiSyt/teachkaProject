@@ -15,7 +15,6 @@ class RegisterView(FormView):
     success_url = reverse_lazy("home")
 
     def form_valid(self, form):
-
         new_user = form.save()
         new_user = authenticate(
             username=form.cleaned_data["username"],

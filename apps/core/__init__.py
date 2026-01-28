@@ -1,5 +1,5 @@
 """
-Core app for shared utilities across Stellax.
+Core app for shared utilities across Teachka.
 
 Contains:
 - Base models (TimestampedModel, UserOwnedModel)
