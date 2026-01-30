@@ -1,7 +1,19 @@
 # Python
+# Python
 __pycache__/
 **/__pycache__/
+**/__pycache__/
 *.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# Database
 *$py.class
 *.so
 
@@ -15,6 +27,7 @@ env/
 *.sqlite3
 db.sqlite3
 
+# IDE
 # IDE
 .vscode/
 .idea/
