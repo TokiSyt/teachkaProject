@@ -11,3 +11,8 @@ class GroupCreationForm(forms.ModelForm):
             "title": forms.TextInput(attrs={"class": "form-control"}),
             "members_string": forms.Textarea(attrs={"class": "form-control", "rows": 5}),
         }
+        error_messages = {
+            "title": {
+                "unique": "A group with this name already exists. Please choose a different name.",
+            },
+        }

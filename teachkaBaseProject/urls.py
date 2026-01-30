@@ -23,7 +23,6 @@ urlpatterns = [
     path("timer/", include("apps.timer.urls")),
     # WIP apps
     path("todo/", include("apps.todo_list.urls")),
-    path("currency/", include("apps.currency_calculator.urls")),
     path("math_ops/", include("apps.math_ops.urls")),
     # Users
     path("users/", include("apps.users.urls")),

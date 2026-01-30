@@ -32,4 +32,4 @@ RUN python manage.py collectstatic --no-input
 
 EXPOSE 8000
 
-CMD ["python", "-m", "gunicorn", "stellaxBaseProject.asgi:application", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000"]
+CMD ["python", "-m", "gunicorn", "teachkaBaseProject.asgi:application", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000"]

@@ -13,13 +13,17 @@ class GradeCalculatorView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         max_points = form.cleaned_data["max_points"]
         rounding_option = form.cleaned_data["rounding_option"]
-        grades = grade_calculator(max_points, rounding_option)
 
-        context = self.get_context_data(
-            form=form,
-            score_range=grades,
-            min_points_error=not grades,
-        )
+        if max_points < 4:
+            form.add_error("max_points", "Maximum points must be at least 4.")
+            return self.form_invalid(form)
+
+        # Track usage
+        self.request.user.calculator_uses += 1
+        self.request.user.save(update_fields=["calculator_uses"])
+
+        grades = grade_calculator(max_points, rounding_option)
+        context = self.get_context_data(form=form, score_range=grades)
         return self.render_to_response(context)
 
     def form_invalid(self, form):

@@ -32,37 +32,65 @@
 
 }
 
-:root.dark-theme {
-  --btn-text-color: #f5f5f5;
-  --primary-btn-color: #2a79b9;
-  --primary-color-hover: #14548b;
-  --secondary-color: #6f7c8a;
-  --secondary-color-hover: #575f68;
-  --danger-color: #ff6b6b;
-  --danger-color-hover: #fa5252;
+html.dark {
+  --btn-text-color: #ffffff;
+  --primary-btn-color: #3b82f6;
+  --primary-color-hover: #2563eb;
+  --secondary-color: #4b5563;
+  --secondary-color-hover: #374151;
+  --danger-color: #ef4444;
+  --danger-color-hover: #dc2626;
   --icon-hover: rgba(255, 255, 255, 0.1);
-  --icon-color: #ffffff;
+  --icon-color: #f9fafb;
 
-  --form-border-color: #949799;
+  --form-border-color: #374151;
   --form-padding: 0.5rem 1rem;
 
-  --background: #292929;
-  --sidebar-background: #1d1c1c;
-  --text-color: #f1f3f5;
-  --tr-text-color: #f1f3f5;
-  --tr-hover-color: #000000;
-  --form-shadow: 0 2px 6px rgba(71, 71, 71, 0.5);
-  --form-background: #1e1e1e;
-  --form-result-head: #383838;
-  --form-result-body: #9d9ea0;
-  --tbody-hover: #7a7b7c;
+  --background: #111827;
+  --sidebar-background: #1f2937;
+  --text-color: #f9fafb;
+  --tr-text-color: #f9fafb;
+  --tr-hover-color: #ffffff;
+  --form-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --form-background: #1f2937;
+  --form-result-head: #374151;
+  --form-result-body: #1f2937;
+  --tbody-hover: #374151;
 
-  --hr-color: 2px solid rgb(255, 255, 255);
+  --hr-color: 2px solid #374151;
+  --separator: #6b7280;
+}
+
+:root.pastel-theme {
+  --btn-text-color: #5a6a7a;
+  --primary-btn-color: #d4e9ff;
+  --primary-color-hover: #c0dfff;
+  --secondary-color: #e2dff5;
+  --secondary-color-hover: #d5d0ed;
+  --danger-color: #ffd6e0;
+  --danger-color-hover: #ffc4d1;
+  --icon-hover: rgba(212, 233, 255, 0.6);
+  --icon-color: #6a7a8a;
+
+  --form-border-color: #ffe8f0;
+  --form-padding: 0.5rem 1rem;
+
+  --background: #fff5f8;
+  --sidebar-background: #FDFADD;
+  --text-color: #5a6a7a;
+  --tr-text-color: #5a6a7a;
+  --tr-hover-color: #4a5a6a;
+  --form-shadow: 0 2px 8px rgba(255, 210, 220, 0.3);
+  --form-background: #fffef5;
+  --form-result-head: #fff0e8;
+  --form-result-body: #fffef8;
+  --tbody-hover: #fff8e8;
+
+  --hr-color: 2px solid rgba(255, 200, 215, 0.4);
+  --separator: #e0daf0;
 }
 
 body {
-  color: var(--text-color);
-  background-color: var(--background);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   margin: 0;
@@ -285,7 +313,6 @@ a:hover {
   align-items: center;
   width: 60px;
   height: 100vh;
-  background-color: var(--sidebar-background) !important;
   padding: 1rem 0;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   position: fixed;
@@ -313,7 +340,16 @@ a:hover {
   transition: background-color 0.2s ease-in-out;
   font-size: 1.25rem;
   line-height: 1;
-  color: var(--icon-color);
+  color: #374151;
+}
+
+html.dark .sidebar-icon,
+html.dark .sidebar-icon-separator,
+html.dark .logout-icon,
+html.dark .logout-button,
+html.dark .sidebar a,
+html.dark .sidebar form {
+  color: #f9fafb;
 }
 
 .sidebar-icon-separator:hover {
@@ -326,8 +362,11 @@ a:hover {
   color: var(--separator);
 }
 
-.logout-icon {
+.theme-toggle-icon {
   margin-top: auto;
+}
+
+.logout-icon {
   margin-bottom: 0.5rem;
 }
 
@@ -335,16 +374,30 @@ a:hover {
 .sidebar-icon:focus,
 .logout-icon:hover,
 .logout-button:hover {
-  background-color: var(--icon-hover);
+  background-color: #e5e7eb;
   color: var(--icon-hover-color);
   outline: none;
 }
 
+html.dark .sidebar-icon:hover,
+html.dark .sidebar-icon:focus,
+html.dark .logout-icon:hover,
+html.dark .logout-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--icon-hover-color);
+}
+
 .logout-icon:hover,
 .logout-icon:focus {
-  background-color: var(--icon-hover);
+  background-color: #e5e7eb;
   color: var(--icon-hover-color);
   outline: none;
+}
+
+html.dark .logout-icon:hover,
+html.dark .logout-icon:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--icon-hover-color);
 }
 
 .form .form-group {
@@ -420,8 +473,8 @@ button {
 
 .level-orange:hover td,
 .level-orange td.always-colored {
-  background-color: rgba(248, 192, 88, 0.836);
-  color: #9e5909;
+  background-color: rgba(255, 200, 200, 0.8);
+  color: #a04040;
 }
 
 .level-red td.always-colored,
@@ -440,4 +493,166 @@ button {
 .level-green:hover td {
   background-color: rgba(160, 218, 172, 0.904);
   color: #18742f;
+}
+
+/* Table rounded corners for last row */
+.last-row td:first-child {
+  border-bottom-left-radius: 0.5rem;
+}
+
+.last-row td:last-child {
+  border-bottom-right-radius: 0.5rem;
+}
+
+/* Pastel theme Tailwind overrides - soft pastel vibes */
+
+/* Main background - very soft pink */
+html.pastel-theme body.bg-gray-50,
+html.pastel-theme .bg-gray-50,
+html.pastel-theme .bg-gray-900 {
+  background-color: #fff5f8 !important;
+}
+
+/* Cards and boxes - soft cream/yellow */
+html.pastel-theme .bg-white {
+  background-color: #fffef5 !important;
+}
+
+html.pastel-theme .bg-gray-100 {
+  background-color: #fffdf0 !important;
+}
+
+/* Inputs and dropdowns - soft yellow tint */
+html.pastel-theme .bg-gray-800,
+html.pastel-theme .bg-gray-700 {
+  background-color: #fff8e8 !important;
+}
+
+/* Borders - soft pink */
+html.pastel-theme .border-gray-200,
+html.pastel-theme .border-gray-300 {
+  border-color: #ffe8f0 !important;
+}
+
+html.pastel-theme .border-gray-600,
+html.pastel-theme .border-gray-700 {
+  border-color: #ffd8e8 !important;
+}
+
+/* Text colors - soft slate */
+html.pastel-theme .text-gray-900,
+html.pastel-theme .text-white {
+  color: #5a6a7a !important;
+}
+
+html.pastel-theme .text-gray-100,
+html.pastel-theme .text-gray-200,
+html.pastel-theme .text-gray-300 {
+  color: #6a7a8a !important;
+}
+
+/* Primary buttons - soft baby blue */
+html.pastel-theme .bg-primary-600 {
+  background-color: #d4e9ff !important;
+  color: #4a6a8a !important;
+}
+
+html.pastel-theme .bg-primary-600:hover,
+html.pastel-theme .hover\:bg-primary-700:hover {
+  background-color: #c0dfff !important;
+}
+
+html.pastel-theme .text-primary-600,
+html.pastel-theme .text-primary-400 {
+  color: #6a9ac0 !important;
+}
+
+html.pastel-theme .hover\:text-primary-700:hover,
+html.pastel-theme .hover\:text-primary-300:hover {
+  color: #5a8ab0 !important;
+}
+
+/* Error/danger - soft pink */
+html.pastel-theme .bg-red-50 {
+  background-color: #fff5f5 !important;
+}
+
+html.pastel-theme .bg-red-600 {
+  background-color: #ffd6e0 !important;
+  color: #7a5a60 !important;
+}
+
+html.pastel-theme .hover\:bg-red-700:hover {
+  background-color: #ffc4d1 !important;
+}
+
+html.pastel-theme .border-red-200,
+html.pastel-theme .border-red-800 {
+  border-color: #ffe0e8 !important;
+}
+
+html.pastel-theme .text-red-600,
+html.pastel-theme .text-red-400 {
+  color: #c08090 !important;
+}
+
+/* Success - soft mint green */
+html.pastel-theme .bg-green-500 {
+  background-color: #d0f5d8 !important;
+}
+
+/* Hover states - soft yellow */
+html.pastel-theme .hover\:bg-gray-200:hover,
+html.pastel-theme .hover\:bg-gray-100:hover {
+  background-color: #fff5e0 !important;
+}
+
+html.pastel-theme .hover\:bg-gray-600:hover,
+html.pastel-theme .hover\:bg-gray-700:hover {
+  background-color: #fff0d8 !important;
+}
+
+html.pastel-theme .hover\:bg-red-900\/20:hover {
+  background-color: rgba(255, 210, 220, 0.3) !important;
+}
+
+html.pastel-theme .hover\:text-red-600:hover,
+html.pastel-theme .hover\:text-red-400:hover {
+  color: #b07080 !important;
+}
+
+/* Focus rings - soft blue */
+html.pastel-theme .ring-primary-500 {
+  --tw-ring-color: #d4e9ff !important;
+}
+
+html.pastel-theme .focus\:ring-primary-500:focus {
+  --tw-ring-color: #d4e9ff !important;
+}
+
+html.pastel-theme .focus\:border-primary-500:focus {
+  border-color: #c0dfff !important;
+}
+
+html.pastel-theme aside,
+html.pastel-theme aside.bg-white,
+html.pastel-theme aside.bg-gray-800 {
+  background-color: #fdfbe3 !important;
+  border-color: #f5f0c8 !important;
+}
+
+/* Card shadows - very subtle pink */
+html.pastel-theme .rounded-2xl,
+html.pastel-theme .rounded-lg {
+  box-shadow: 0 2px 8px rgba(255, 210, 220, 0.2) !important;
+}
+
+/* Secondary buttons - soft lavender */
+html.pastel-theme .bg-gray-100.hover\:bg-gray-200,
+html.pastel-theme [class*="bg-gray-100"][class*="hover:bg-gray-200"] {
+  background-color: #f0eef8 !important;
+}
+
+html.pastel-theme .bg-gray-100.hover\:bg-gray-200:hover {
+  background-color: #e8e4f5 !important;
 }

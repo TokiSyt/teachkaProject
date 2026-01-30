@@ -1,57 +1,142 @@
 {% extends "base.html" %}
+{% load custom_tags %}
 
-{% block title %}New column{% endblock title %}
+{% block title %}Edit Column{% endblock title %}
 
 {% block content %}
-<div class="form-wrapper">
-    <h1>Edit column</h1>
-    <hr>
+<div class="max-w-md mx-auto">
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Edit Column</h1>
+    <p class="mt-1 text-gray-600 dark:text-gray-400">Rename an existing column</p>
+  </div>
 
-    <form method="POST" class="form">
-        {% csrf_token %}
-        <input type="hidden" name="group_id" value="{{ group_id }}">
+  <!-- Error Messages -->
+  {% if messages %}
+  <div class="mb-6 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4">
+    {% for message in messages %}
+    <p class="text-sm text-red-600 dark:text-red-400">{{ message }}</p>
+    {% endfor %}
+  </div>
+  {% endif %}
 
-        <div class="form-group">
-            <label for="id_old_name" class="form-label">Column to edit:</label>
-            <select name="old_name" id="id_old_name" class="form-select" required>
-                {% for field in all_keys %}
-                    <option value="{{ field }}" {% if form.old_name.value == field %}selected{% endif %}>{{ field }}</option>
-                {% endfor %}
-            </select>
-            {% if form.old_name.errors %}
-                <ul class="text-red-600">
-                    {% for error in form.old_name.errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
+  <!-- Form Card -->
+  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+    <form method="POST" class="space-y-4">
+      {% csrf_token %}
+      <input type="hidden" name="group_id" value="{{ group_id }}">
+
+      <!-- Column to Edit -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Column to edit
+        </label>
+        <input type="hidden" name="old_name" id="columnInput" value="{% if form.old_name.value %}{{ form.old_name.value }}{% elif all_keys %}{{ all_keys.0 }}{% endif %}" required>
+        <div class="relative z-20" id="columnDropdown">
+          <button type="button" id="columnBtn" class="w-full px-4 py-2.5 pr-10 bg-gray-50 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-white transition-colors cursor-pointer text-left">
+            <span id="columnBtnText">{% if form.old_name.value %}{{ form.old_name.value }}{% elif all_keys %}{{ all_keys.0 }}{% else %}Select a column{% endif %}</span>
+          </button>
+          <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+            <svg id="columnChevron" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div id="columnOptions" class="hidden absolute z-50 w-full mt-1 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-lg overflow-hidden max-h-60 overflow-y-auto">
+            {% for field in all_keys %}
+            <div class="column-option px-4 py-2.5 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer {% if forloop.last %}rounded-b-lg{% endif %}" data-value="{{ field }}" data-type="{{ column_types|get_item:field }}">{{ field }}</div>
+            {% empty %}
+            <div class="px-4 py-2.5 text-gray-500 dark:text-gray-400">No columns available</div>
+            {% endfor %}
+          </div>
         </div>
+        {% if form.old_name.errors %}
+        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.old_name.errors.0 }}</p>
+        {% endif %}
+      </div>
 
-        <div class="form-group">
-            <label for="id_new_name" class="form-label">New column name:</label>
-            <input type="text" name="new_name" id="id_new_name" class="form-control" maxlength="25" value="{{ form.new_name.value }}" required>
-            {% if form.new_name.errors %}
-                <ul class="text-red-600">
-                    {% for error in form.new_name.errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
+      <!-- New Column Name -->
+      <div>
+        <label for="id_new_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          New column name
+        </label>
+        <input type="text"
+               name="new_name"
+               id="id_new_name"
+               maxlength="25"
+               value="{{ form.new_name.value|default:'' }}"
+               class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+               placeholder="Enter new name"
+               required>
+        {% if form.new_name.errors %}
+        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.new_name.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <!-- Table Type -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Table definition
+        </label>
+        <div class="px-4 py-2.5 bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg">
+          <span class="inline-flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full {% if table_type == 'negative' %}bg-red-500{% else %}bg-green-500{% endif %}"></span>
+            <span class="text-gray-900 dark:text-white capitalize">{{ table_definition }}</span>
+          </span>
         </div>
+        <input type="hidden" name="field_definition" value="{{ table_definition }}">
+      </div>
 
-
-        <div class="form-group">
-            <label for="id_definition" class="form-label">Table type:</label>
-            <span class="px-3 py-2 border rounded bg-gray-100">
-                {{ table_type }}
-            </span>
-            <input type="hidden" name="field_definition" value="{{ table_type }}">
+      <!-- Column Type (read-only) -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Column type
+        </label>
+        <div class="px-4 py-2.5 bg-gray-100 dark:bg-gray-700/50 rounded-lg">
+          <span id="columnTypeDisplay" class="text-gray-900 dark:text-white">{% if all_keys %}{% with first_type=column_types|get_item:all_keys.0 %}{% if first_type == 'int' %}Numerical{% else %}Text{% endif %}{% endwith %}{% else %}-{% endif %}</span>
         </div>
+      </div>
 
-        <div class="form-container">
-            <button type="submit" class="primary-btn">Save column</button>
-            <a href="{% url 'karma:karma-home' %}?group_id={{ group_id }}" class="secondary-btn">Cancel</a>
-        </div>
+      <script>
+        const columnBtn = document.getElementById('columnBtn');
+        const columnOptions = document.getElementById('columnOptions');
+        const columnInput = document.getElementById('columnInput');
+        const columnBtnText = document.getElementById('columnBtnText');
+        const columnChevron = document.getElementById('columnChevron');
+        const columnTypeDisplay = document.getElementById('columnTypeDisplay');
+
+        columnBtn.addEventListener('click', () => {
+          columnOptions.classList.toggle('hidden');
+          columnChevron.classList.toggle('rotate-180');
+        });
+
+        document.querySelectorAll('.column-option').forEach(option => {
+          option.addEventListener('click', () => {
+            columnInput.value = option.dataset.value;
+            columnBtnText.textContent = option.dataset.value;
+            columnTypeDisplay.textContent = option.dataset.type === 'int' ? 'Numerical' : 'Text';
+            columnOptions.classList.add('hidden');
+            columnChevron.classList.remove('rotate-180');
+          });
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!document.getElementById('columnDropdown').contains(e.target)) {
+            columnOptions.classList.add('hidden');
+            columnChevron.classList.remove('rotate-180');
+          }
+        });
+      </script>
+
+      <!-- Actions -->
+      <div class="flex flex-wrap gap-3 pt-4">
+        <button type="submit" class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
+          Save Changes
+        </button>
+        <a href="{% url 'karma:karma-home' %}?group_id={{ group_id }}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
+          Cancel
+        </a>
+      </div>
     </form>
+  </div>
 </div>
 {% endblock content %}

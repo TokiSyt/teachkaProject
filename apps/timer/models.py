@@ -3,6 +3,7 @@ from django.utils import timezone
 
 # Create your models here.
 
+
 class TimerSession(models.Model):
     start_time = models.DateTimeField(default=timezone.now)
     end_time = models.DateTimeField(null=True, blank=True)

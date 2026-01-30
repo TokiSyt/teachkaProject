@@ -1,14 +1,23 @@
 import random
 
 
-def choose_a_random_name(name_list, already_chosen_names):
-    remaining_names = [name for name in name_list if name not in already_chosen_names]
+def choose_random_member(members_queryset, already_chosen_ids):
+    """
+    Choose a random member from those not yet chosen.
 
-    if not remaining_names:
-        already_chosen_names = []
-        remaining_names = name_list
+    Args:
+        members_queryset: QuerySet of Member objects
+        already_chosen_ids: List of already chosen member IDs
 
-    new_choice = random.choice(remaining_names)
-    already_chosen_names.append(new_choice)
+    Returns:
+        Tuple of (chosen_member or None, updated already_chosen_ids list)
+    """
+    remaining = members_queryset.exclude(id__in=already_chosen_ids)
 
-    return new_choice, already_chosen_names
+    if not remaining.exists():
+        return None, already_chosen_ids
+
+    chosen = random.choice(list(remaining))
+    already_chosen_ids.append(chosen.id)
+
+    return chosen, already_chosen_ids
