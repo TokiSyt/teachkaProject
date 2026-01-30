@@ -1,4 +1,4 @@
-.PHONY: build up down restart logs shell dbshell migrate makemigrations createsuperuser collectstatic test clean lint typecheck format tailwind
+.PHONY: build up down restart logs shell dbshell migrate createsuperuser collectstatic test clean lint typecheck format tailwind
 
 # Build and start containers
 build:
@@ -36,13 +36,10 @@ bash:
 dbshell:
 	docker compose exec db psql -U postgres -d teachkadb
 
-# Run migrations
+# Run migrations (creates and applies)
 migrate:
-	docker compose exec web python manage.py migrate
-
-# Create migrations
-makemigrations:
 	docker compose exec web python manage.py makemigrations
+	docker compose exec web python manage.py migrate
 
 # Create superuser
 createsuperuser:
@@ -88,9 +85,9 @@ tailwind-build:
 tailwind-install:
 	docker compose exec web sh -c "cd /app/theme/static_src && npm install"
 
-# Start with Tailwind watch mode
+# Watch Tailwind CSS changes (development) 
 tailwind-dev:
-	docker compose --profile dev up -d
+	docker-compose run --rm web sh -c "cd theme/static_src && npm run dev"
 
 # Run all checks (lint, typecheck, test)
 check:

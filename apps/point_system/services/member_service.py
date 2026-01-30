@@ -18,6 +18,18 @@ class MemberService:
     """Service class for member-related operations."""
 
     @staticmethod
+    def _sanitize_data(data: dict[str, Any]) -> dict[str, Any]:
+        """Ensure numeric values are not negative."""
+        sanitized = {}
+        for key, value in data.items():
+            try:
+                num_value = int(value)
+                sanitized[key] = max(0, num_value)
+            except (ValueError, TypeError):
+                sanitized[key] = value
+        return sanitized
+
+    @staticmethod
     def update_member_data(
         member: Member,
         positive_data: dict[str, Any] | None = None,
@@ -35,9 +47,9 @@ class MemberService:
             Updated Member instance
         """
         if positive_data is not None:
-            member.positive_data = positive_data
+            member.positive_data = MemberService._sanitize_data(positive_data)
         if negative_data is not None:
-            member.negative_data = negative_data
+            member.negative_data = MemberService._sanitize_data(negative_data)
 
         # Recalculate totals
         member.positive_total = MemberService._calculate_total(member.positive_data)
