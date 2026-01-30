@@ -3,63 +3,87 @@
 {% block title %}Group Maker{% endblock title %}
 
 {% block content %}
-<div class="form-wrapper">
-    <h1>Group Maker</h1>
-    <hr>
+<div class="max-w-2xl mx-auto">
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Group Maker</h1>
+    <p class="mt-1 text-gray-600 dark:text-gray-400">Manage your groups and member lists</p>
+  </div>
 
-    <form method="POST" class="form">
-        {% csrf_token %}
-        
-        <div class="">
-            <label for="groupSelect" class="form-label">Select a group:</label>
-            <select id="groupSelect" name="group_id" id="group-select" class="form-select" required>
+  <!-- Main Card -->
+  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+    <form method="POST" class="space-y-6">
+      {% csrf_token %}
 
-                <option value="" disabled hidden selected>Select a group</option>
+      <!-- Group Selection -->
+      <div>
+        <label for="groupSelect" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          Select a group
+        </label>
+        <select id="groupSelect" name="group_id" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors" required>
+          <option value="" disabled hidden selected>Choose a group...</option>
+          {% for group in groups %}
+          <option value="{{ group.id }}" {% if selected_group and selected_group.id == group.id %}selected{% endif %}>
+            {{ group.title }} ({{ group.size }} members)
+          </option>
+          {% endfor %}
+        </select>
+      </div>
 
-                {% for group in groups %}
-                    <option value="{{ group.id }}" {% if selected_group and selected_group.id == group.id %}selected{% endif %}>
-                        {{ group.title }} ({{ group.size }} members)
-                    </option>
-                {% endfor %}
-                
-            </select>
-        </div>
-
-        <div class="form-container">
-            <a href="{% url 'group_maker:group-maker-creation' %}" class="secondary-btn">Create a group</a>
-            <a id="editGroupsBtn" href="#" class="secondary-btn">Edit Group</a>
-            <a href="{% url 'group_maker:group-maker-home' %}" class="secondary-btn">Reset</a>
-            <a id="deleteGroupBtn" href="#" class="delete-btn">Delete</a>
-        </div>
+      <!-- Actions -->
+      <div class="flex flex-wrap gap-3 pt-2">
+        <a href="{% url 'group_maker:group-maker-creation' %}" class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors inline-flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+          Create Group
+        </a>
+        <a id="editGroupsBtn" href="#" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+          Edit Group
+        </a>
+        <a href="{% url 'group_maker:group-maker-home' %}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
+          Reset
+        </a>
+        <a id="deleteGroupBtn" href="#" class="px-5 py-2.5 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 font-medium rounded-lg transition-colors ml-auto disabled:opacity-50 disabled:cursor-not-allowed">
+          Delete
+        </a>
+      </div>
     </form>
+  </div>
 
+  {% if not groups %}
+  <!-- Empty State -->
+  <div class="mt-8 text-center py-12">
+    <div class="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    </div>
+    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">No groups yet</h3>
+    <p class="text-gray-600 dark:text-gray-400 mb-4">Create your first group to get started</p>
+  </div>
+  {% endif %}
+</div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const groupSelect = document.getElementById("groupSelect");
-        const editBtn = document.getElementById("editGroupsBtn");
-        const deleteBtn = document.getElementById("deleteGroupBtn")
+  document.addEventListener("DOMContentLoaded", function() {
+    const groupSelect = document.getElementById("groupSelect");
+    const editBtn = document.getElementById("editGroupsBtn");
+    const deleteBtn = document.getElementById("deleteGroupBtn");
 
-        function updateEditLink() {
-            const groupId = groupSelect.value;
-            if (groupId) {
-                editBtn.href = `/groups/group_maker_edit/${groupId}`;
-                editBtn.classList.remove("disabled");
-                deleteBtn.href = `/groups/group_maker_delete/${groupId}`;
-                deleteBtn.classList.remove("disabled");
+    function updateEditLink() {
+      const groupId = groupSelect.value;
+      if (groupId) {
+        editBtn.href = "{% url 'group_maker:group-maker-edit' 0 %}".replace("0", groupId);
+        editBtn.classList.remove("opacity-50", "cursor-not-allowed", "pointer-events-none");
+        deleteBtn.href = "{% url 'group_maker:group-maker-delete' 0 %}".replace("0", groupId);
+        deleteBtn.classList.remove("opacity-50", "cursor-not-allowed", "pointer-events-none");
+      } else {
+        editBtn.href = "#";
+        editBtn.classList.add("opacity-50", "cursor-not-allowed", "pointer-events-none");
+        deleteBtn.href = "#";
+        deleteBtn.classList.add("opacity-50", "cursor-not-allowed", "pointer-events-none");
+      }
+    }
 
-            } else {
-                editBtn.href = "#";
-                editBtn.classList.add("disabled");
-                deleteBtn.href = "#";
-                deleteBtn.classList.add("disabled");
-            }
-        }
-
-        groupSelect.addEventListener("change", updateEditLink);
-
-        updateEditLink();
-    });
+    groupSelect.addEventListener("change", updateEditLink);
+    updateEditLink();
+  });
 </script>
-
 {% endblock content %}

@@ -1,9 +1,34 @@
 {% extends "base.html" %}
 
+{% block title %}Coming Soon{% endblock title %}
+
 {% block content %}
+<div class="max-w-2xl mx-auto text-center py-16 sm:py-24">
+  <!-- Icon -->
+  <br>
+  <div class="mx-auto w-20 h-20 bg-amber-100 dark:bg-amber-900/30 rounded-full flex items-center justify-center mb-8">
+    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-600 dark:text-amber-400">
+      <path d="M12 6v6l4 2"/>
+      <circle cx="12" cy="12" r="10"/>
+    </svg>
+  </div>
 
-<h1>
-    PAGE W.I.P
-</h1>
+  <!-- Title -->
+  <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+    Work in Progress
+  </h1>
 
+  <!-- Description -->
+  <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
+    This feature is currently under development. Check back soon for updates!
+  </p>
+
+  <!-- Back Button -->
+  <a href="/" class="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m15 18-6-6 6-6"/>
+    </svg>
+    Back to Home
+  </a>
+</div>
 {% endblock content %}

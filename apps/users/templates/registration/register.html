@@ -1,21 +1,59 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
 
-{% block title %}
-Register
-{% endblock title %}
+{% block title %}Register{% endblock title %}
 
 {% block content %}
-<div class="form-wrapper">
-    <h1 class="mb-4">Registration</h1>
-    <hr>
+<div class="max-w-md mx-auto mt-8">
+  <!-- Header -->
+  <div class="text-center mb-8">
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Create an account</h1>
+    <p class="mt-1 text-gray-600 dark:text-gray-400">Start using Teachka for free</p>
+  </div>
 
-    <form method="post" class="form">
-        {% csrf_token %}
-        {{ form|crispy }}
+  <!-- Register Card -->
+  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+    <form method="post" class="space-y-4">
+      {% csrf_token %}
 
-        <br>
-        <button type="submit" class="primary-btn">Register</button>
+      {% if form.non_field_errors %}
+      <div class="rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4">
+        {% for error in form.non_field_errors %}
+        <p class="text-sm text-red-600 dark:text-red-400">{{ error }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% for field in form %}
+      <div>
+        <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          {{ field.label }}{% if not field.field.required %} <span class="text-gray-400 font-normal">(optional)</span>{% endif %}
+        </label>
+        <input type="{% if 'password' in field.name %}password{% elif field.name == 'email' %}email{% else %}text{% endif %}"
+               name="{{ field.name }}"
+               id="{{ field.id_for_label }}"
+               value="{{ field.value|default:'' }}"
+               class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+               {% if field.field.required %}required{% endif %}>
+        {% if field.help_text %}
+        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ field.help_text|safe }}</p>
+        {% endif %}
+        {% if field.errors %}
+        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ field.errors.0 }}</p>
+        {% endif %}
+      </div>
+      {% endfor %}
+
+      <button type="submit" class="w-full px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
+        Create account
+      </button>
     </form>
+
+    <div class="mt-6 text-center">
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        Already have an account?
+        <a href="/login" class="font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">Sign in</a>
+      </p>
+    </div>
+  </div>
 </div>
 {% endblock content %}

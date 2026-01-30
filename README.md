@@ -1,35 +1,25 @@
+# Teachka
 
-# Teachka Project
+A web app hub built for teachers. Manage your classes, track participation, calculate grades, and more — all in one place.
 
-Teachka is an app hub designed to bring together practical, real-life tools in one convenient platform. The goal is to create simple applications that help people solve everyday problems more efficiently. This project is modular, allowing for new apps to be added over time as needed.
+**Link to project:** https://teachka.com
 
----
+## How It's Made
 
-## Current Apps
+**Tech used:** Python, Django, PostgreSQL, Tailwind CSS
 
-These apps are fully functional and ready to use:
+Teachka follows a modular architecture where each tool is its own Django app. They all share a core module for common functionality like user authentication and base models. This makes it easy to add new tools without touching existing ones.
 
-- **Grade Calculator** – Quickly calculate and track grades.  
-- **Group Maker** – Easily create groups for projects or events.  
-- **Karma Points System** – Track and reward user actions or achievements. 
-- **Settings** – Manage app preferences and Teachka configurations. 
-- **Name Wheel** – Randomly pops names from the selected group. 
+The app uses a service/selector pattern to keep business logic out of views — selectors handle database queries with proper optimization, while services handle the actual operations. Groups created in one tool automatically sync to others through Django signals.
 
----
+## Optimizations
 
-## Apps in Development / Planned
+- Queries are optimized with `select_related` and `prefetch_related` to minimize database hits
+- Static files are compressed and served efficiently in production
+- The modular structure means each tool only loads what it needs
 
-These apps are in progress or planned for future releases:
+## Lessons Learned
 
-- **Timer** – A simple timer for tasks or events.  
-- **Math Ops** – Perform quick math operations.   
-- **User Shared To-Do List** – Keep track of daily tasks and priorities, both alone or with other users.    
-- **Currency Exchanger Rates** – Check and convert currency rates. 
+Building this taught me a lot about structuring larger Django projects. Initially everything was tightly coupled, but refactoring into separate apps with a shared core made the codebase much cleaner and testable. Setting up proper CI/CD also forced me to write better tests and catch issues before they hit production.
 
----
-
-## Project Structure
-
-The project is built with Django and follows a modular app structure, where each app handles a distinct functionality. This approach makes it easy to add new apps or modify existing ones without affecting the rest of the system.
-
----
+I also gained hands-on experience with deployment — configuring production settings, managing environment variables, and setting up the infrastructure to serve the app reliably. On the git side, I learned the importance of proper branch organization, meaningful commits, and keeping a clean history through rebasing and squashing.

@@ -1,50 +1,118 @@
 {% extends "base.html" %}
 
-{% block title %}New column{% endblock title %}
+{% block title %}New Column{% endblock title %}
 
 {% block content %}
-<div class="form-wrapper">
-    <h1>New column</h1>
-    <hr>
+<div class="max-w-md mx-auto">
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Add New Column</h1>
+    <p class="mt-1 text-gray-600 dark:text-gray-400">Create a new column for tracking points</p>
+  </div>
 
-    <form method="POST" class="form">
-        {% csrf_token %}
-        <input type="hidden" name="group_id" value="{{ group_id }}">
+  <!-- Form Card -->
+  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+    <form method="POST" class="space-y-4">
+      {% csrf_token %}
+      <input type="hidden" name="group_id" value="{{ group_id }}">
 
-        <div class="form-group">
-            <label for="id_name" class="form-label">Column name:</label>
-            <input type="text" name="name" id="id_name" class="form-control" maxlength="25" required>
+      <!-- Column Name -->
+      <div>
+        <label for="id_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Column name
+        </label>
+        <input type="text"
+               name="name"
+               id="id_name"
+               maxlength="25"
+               class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+               placeholder="e.g., Homework, Participation"
+               required>
+      </div>
+
+      {% if messages %}
+      <div class="rounded-lg bg-red-50 dark:bg-red-900/20 p-4">
+        {% for message in messages %}
+        <p class="text-sm text-red-600 dark:text-red-400">{{ message }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- Column Type -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Column type
+        </label>
+        <input type="hidden" name="type" id="typeInput" value="int" required>
+        <div class="relative z-20" id="typeDropdown">
+          <button type="button" id="typeBtn" class="w-full px-4 py-2.5 pr-10 bg-gray-50 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-white transition-colors cursor-pointer text-left">
+            <span id="typeBtnText">Numerical</span>
+          </button>
+          <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+            <svg id="typeChevron" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div id="typeOptions" class="hidden absolute z-50 w-full mt-1 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-lg overflow-hidden">
+            <div class="type-option px-4 py-2.5 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer" data-value="int" data-text="Numerical">Numerical</div>
+            <div class="type-option px-4 py-2.5 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer rounded-b-lg" data-value="str" data-text="Text">Text</div>
+          </div>
         </div>
+        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Numerical columns will be summed in the total</p>
+      </div>
+      <script>
+        const typeBtn = document.getElementById('typeBtn');
+        const typeOptions = document.getElementById('typeOptions');
+        const typeInput = document.getElementById('typeInput');
+        const typeBtnText = document.getElementById('typeBtnText');
+        const typeChevron = document.getElementById('typeChevron');
 
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <li class="{{ message.tags }}">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+        typeBtn.addEventListener('click', () => {
+          typeOptions.classList.toggle('hidden');
+          typeChevron.classList.toggle('rotate-180');
+        });
 
+        document.querySelectorAll('.type-option').forEach(option => {
+          option.addEventListener('click', () => {
+            typeInput.value = option.dataset.value;
+            typeBtnText.textContent = option.dataset.text;
+            typeOptions.classList.add('hidden');
+            typeChevron.classList.remove('rotate-180');
+          });
+        });
 
-        <div class="form-group">
-            <label for="type" class="form-label">Column type:</label>
-            <select name="type" id="id_type" class="form-select" required>
-                <option value="int">Numerical</option>
-                <option value="str">Text</option>
-            </select>
+        document.addEventListener('click', (e) => {
+          if (!document.getElementById('typeDropdown').contains(e.target)) {
+            typeOptions.classList.add('hidden');
+            typeChevron.classList.remove('rotate-180');
+          }
+        });
+      </script>
+
+      <!-- Table Type -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Table definition
+        </label>
+        <div class="px-4 py-2.5 bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg">
+          <span class="inline-flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full {% if field_definition == 'negative' %}bg-red-500{% else %}bg-green-500{% endif %}"></span>
+            <span class="text-gray-900 dark:text-white capitalize">{{ field_definition }}</span>
+          </span>
         </div>
+        <input type="hidden" name="definition" value="{{ field_definition }}">
+      </div>
 
-        <div class="form-group">
-            <label for="id_definition" class="form-label">Table type:</label>
-            <span class="px-3 py-2 border rounded bg-gray-100">
-                {{ table_type }}
-            </span>
-            <input type="hidden" name="field_definition" value="{{ table_type }}">
-        </div>
-
-        <div class="form-container">
-            <button type="submit" class="primary-btn">Save column</button>
-            <a href="{% url 'karma:karma-home' %}?group_id={{ group_id }}" class="secondary-btn">Cancel</a>
-        </div>
+      <!-- Actions -->
+      <div class="flex flex-wrap gap-3 pt-4">
+        <button type="submit" class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
+          Create column
+        </button>
+        <a href="{% url 'karma:karma-home' %}?group_id={{ group_id }}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
+          Cancel
+        </a>
+      </div>
     </form>
+  </div>
 </div>
 {% endblock content %}
