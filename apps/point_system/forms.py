@@ -46,22 +46,11 @@ class GroupForm(ModelForm):
 class AddFieldForm(ModelForm):
     class Meta:
         model = FieldDefinition
-        fields = ["name", "type"]
-
-
-"""class AddFieldForm(forms.Form):
-    field_name = forms.CharField(max_length=25)
-    field_type = forms.ChoiceField(choices=[("int", "numerical"), ("str", "text")])
-    field_definition = forms.ChoiceField()"""
+        fields = ["name", "type", "definition"]
 
 
 class RemoveFieldForm(forms.Form):
     field_name = forms.ChoiceField(choices=[])
-
-    def __init__(self, *args, **kwargs):
-        field_choices = kwargs.pop("field_choices", [])
-        super().__init__(*args, **kwargs)
-        self.fields["field_name"].choices = [(c, c) for c in field_choices]
 
 
 class EditColumnForm(forms.Form):

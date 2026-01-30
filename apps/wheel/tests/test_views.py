@@ -31,7 +31,7 @@ class TestWheelHomeView:
 
     def test_get_with_reset_clears_session(self, authenticated_client, url, group):
         session = authenticated_client.session
-        session[f"already_chosen_names_{group.id}"] = ["Alice"]
+        session[f"already_chosen_members_{group.id}"] = [1]
         session.save()
 
         response = authenticated_client.get(url + "?reset=1")
@@ -40,22 +40,25 @@ class TestWheelHomeView:
     def test_post_spins_wheel(self, authenticated_client, url, group):
         response = authenticated_client.post(url, {"group_id": group.id})
         assert response.status_code == 200
-        assert "chosen_name" in response.context
-        assert response.context["chosen_name"] in ["Alice", "Bob", "Charlie"]
+        assert "chosen_member" in response.context
+        assert response.context["chosen_member"].name in ["Alice", "Bob", "Charlie"]
 
-    def test_post_tracks_chosen_names(self, authenticated_client, url, group):
+    def test_post_tracks_chosen_members(self, authenticated_client, url, group):
         response = authenticated_client.post(url, {"group_id": group.id})
-        assert "already_chosen_names" in response.context
-        assert len(response.context["already_chosen_names"]) == 1
+        assert "already_chosen_members" in response.context
+        assert response.context["already_chosen_members"].count() == 1
 
-    def test_post_all_names_chosen_shows_message(self, authenticated_client, url, group):
+    def test_post_all_members_chosen_shows_message(self, authenticated_client, url, group):
+        # Get all member IDs from the group
+        member_ids = list(group.members.values_list("id", flat=True))
+
         session = authenticated_client.session
-        session[f"already_chosen_names_{group.id}"] = ["Alice", "Bob", "Charlie"]
+        session[f"already_chosen_members_{group.id}"] = member_ids
         session.save()
 
         response = authenticated_client.post(url, {"group_id": group.id})
         assert response.status_code == 200
-        assert response.context.get("message") == "All names chosen!"
+        assert "All members chosen" in response.context.get("message", "")
 
     def test_post_without_group_id(self, authenticated_client, url):
         response = authenticated_client.post(url, {})
