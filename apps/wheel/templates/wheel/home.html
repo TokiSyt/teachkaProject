@@ -12,12 +12,14 @@
 
   <!-- Form Card -->
   <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-    <form method="POST">
+    <form method="POST" id="wheelForm">
       {% csrf_token %}
 
-      <div>
-        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Select a group</label>
-        <input type="hidden" name="group_id" id="groupSelect" value="{% if selected_group %}{{ selected_group.id }}{% endif %}" required>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <div class="flex-1">
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Select a group</label>
+          <input type="hidden" name="group_id" id="groupSelect" value="{% if selected_group %}{{ selected_group.id }}{% endif %}" required>
+          <input type="hidden" name="clear_session" id="clearSession" value="0">
         <div class="relative z-20" id="groupDropdown">
           <button type="button" id="groupBtn" class="w-full px-4 py-2.5 pr-10 bg-gray-50 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-white transition-colors cursor-pointer text-left">
             <span id="groupBtnText">{% if selected_group %}{{ selected_group.title }} ({{ selected_group.size }} members){% else %}Select a group{% endif %}</span>
@@ -35,30 +37,71 @@
             {% endfor %}
           </div>
         </div>
+        </div>
+
+        <div class="w-full sm:w-32">
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Members</label>
+          <input type="number" name="members_chosen" id="membersChosen" min="1" max="{% if selected_group %}{{ selected_group.size }}{% else %}99{% endif %}" value="{{ members_chosen|default:1 }}" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-white transition-colors">
+        </div>
+
       </div>
 
-      <div class="flex flex-wrap gap-3 pt-2">
-        <button type="submit" class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
+      <div class="flex flex-wrap items-center gap-3 pt-2">
+        <button type="button" id="spinBtn" class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
           Spin
         </button>
-        <a href="{% url 'wheel:home' %}?reset=1{% if selected_group %}&group_id={{ selected_group.id }}{% endif %}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
+        <a href="{% url 'group_maker:group-maker-creation' %}?next={% url 'wheel:home' %}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
+          Create Group
+        </a>
+        <a href="{% url 'wheel:home' %}?reset=1{% if selected_group %} {% endif %}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
           Reset
         </a>
         <a id="editGroupsBtn" href="{% if selected_group %}{% url 'group_maker:group-maker-edit' selected_group.id %}{% else %}#{% endif %}"
            class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors {% if not selected_group %}opacity-50 pointer-events-none{% endif %}">
           Edit Group
         </a>
+        <label class="flex items-center gap-2 cursor-pointer ml-auto">
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Remove after spin</span>
+          <div class="relative">
+            <input type="checkbox" name="remove_after_spin" id="removeAfterSpin" checked class="sr-only peer">
+            <div class="w-11 h-6 bg-red-500 rounded-full peer-checked:bg-green-500 transition-colors"></div>
+            <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform peer-checked:translate-x-5"></div>
+          </div>
+        </label>
       </div>
     </form>
   </div>
 
-  {% if chosen_member %}
-  <!-- Chosen Name Display -->
-  <div class="mt-8 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-8 sm:p-12 text-center shadow-lg">
-    <p class="text-gray-500 dark:text-gray-400 text-sm font-medium uppercase tracking-wider mb-2">Selected</p>
-    <p class="text-4xl sm:text-6xl md:text-8xl font-bold text-primary-600 dark:text-primary-400 break-words">{{ chosen_member.name }}</p>
+  <!-- Spinning Wheel -->
+  <div id="wheelSection" class="mt-8 flex flex-col items-center hidden">
+    <div class="relative">
+      <!-- Pointer -->
+      <div id="wheelPointer" class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 z-10 origin-bottom transition-transform duration-75">
+        <!-- Glass outline (behind) -->
+        <div class="absolute -top-[2px] -left-[4px] w-0 h-0 border-l-[19px] border-r-[19px] border-t-[29px] border-l-transparent border-r-transparent border-t-white/40"></div>
+        <!-- Main arrow -->
+        <div id="wheelArrow" class="relative w-0 h-0 border-l-[15px] border-r-[15px] border-t-[25px] border-l-transparent border-r-transparent" style="border-top-color: #6366f1;"></div>
+      </div>
+      <!-- Wheel Container -->
+      <div id="wheelContainer" class="w-[80vw] h-[80vw] max-w-[600px] max-h-[600px]">
+        <canvas id="wheelCanvas" class="w-full h-full"></canvas>
+      </div>
+    </div>
   </div>
-  {% endif %}
+
+  <!-- Chosen Members Popup (dynamic) -->
+  <div id="chosenPopup" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+    <!-- Backdrop -->
+    <div id="popupBackdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300"></div>
+    <!-- Popup Content -->
+    <div id="popupContent" class="relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-8 sm:p-12 text-center shadow-2xl max-w-lg mx-4 transform transition-all duration-300 scale-100 opacity-100">
+      <p id="popupTitle" class="text-gray-500 dark:text-gray-400 text-sm font-medium uppercase tracking-wider mb-4">Selected</p>
+      <div id="popupNames" class="flex flex-wrap justify-center gap-3 mb-6"></div>
+      <button id="popupOkBtn" class="px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
+        OK
+      </button>
+    </div>
+  </div>
 
   {% if message %}
   <!-- Message Display -->
@@ -67,19 +110,18 @@
   </div>
   {% endif %}
 
-  {% if already_chosen_members %}
   <!-- Already Chosen List -->
-  <div class="mt-8">
-    <h2 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Already Chosen ({{ already_chosen_members|length }})</h2>
-    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-      <ul class="divide-y divide-gray-200 dark:divide-gray-700">
-        {% for member in already_chosen_members %}
-        <li class="px-4 py-2.5 text-sm text-gray-600 dark:text-gray-400">{{ member.name }}</li>
-        {% endfor %}
-      </ul>
+  <div id="alreadyChosenSection" class="mt-8 {% if not already_chosen_members %}hidden{% endif %}">
+    <h2 id="alreadyChosenTitle" class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Already Chosen ({{ already_chosen_members|length|default:0 }})</h2>
+    <div id="alreadyChosenList" class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2">
+      {% for member in already_chosen_members %}
+      <div class="flex items-center justify-between gap-2 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <span class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 truncate">{{ member.name }}</span>
+        <span class="w-4 sm:w-5 h-2 rounded-full flex-shrink-0" style="background-color: {{ member.color|default:'#6366f1' }}"></span>
+      </div>
+      {% endfor %}
     </div>
   </div>
-  {% endif %}
 </div>
 
 <script>
@@ -90,29 +132,341 @@ document.addEventListener("DOMContentLoaded", function() {
   const groupBtnText = document.getElementById("groupBtnText");
   const groupChevron = document.getElementById("groupChevron");
   const editBtn = document.getElementById("editGroupsBtn");
+  const wheelSection = document.getElementById("wheelSection");
+  const canvas = document.getElementById("wheelCanvas");
+  const spinBtn = document.getElementById("spinBtn");
+  const form = document.getElementById("wheelForm");
   const baseUrl = "{% url 'group_maker:group-maker-edit' 0 %}?from=name-wheel";
 
-  groupBtn.addEventListener("click", () => {
-    groupOptions.classList.toggle("hidden");
-    groupChevron.classList.toggle("rotate-180");
-  });
+  const groupsData = {
+    {% for group in groups %}
+    "{{ group.id }}": [{% for member in group.get_members %}{name: "{{ member.name }}", color: "{{ member.color|default:'#6366f1' }}"}{% if not forloop.last %}, {% endif %}{% endfor %}]{% if not forloop.last %},{% endif %}
+    {% endfor %}
+  };
 
-  document.querySelectorAll(".group-option").forEach(option => {
-    option.addEventListener("click", () => {
-      groupSelect.value = option.dataset.value;
-      groupBtnText.textContent = option.dataset.text;
-      groupOptions.classList.add("hidden");
-      groupChevron.classList.remove("rotate-180");
-      updateEditLink();
-    });
-  });
+  const alreadyChosenByGroup = {
+    {% if selected_group %}
+    "{{ selected_group.id }}": [{% if already_chosen_members %}{% for member in already_chosen_members %}"{{ member.name }}"{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}]
+    {% endif %}
+  };
 
-  document.addEventListener("click", (e) => {
-    if (!document.getElementById("groupDropdown").contains(e.target)) {
-      groupOptions.classList.add("hidden");
-      groupChevron.classList.remove("rotate-180");
+  let members = [];
+  let currentRotation = 0;
+  let isSpinning = false;
+  let idleAnimationId = null;
+  let ctx = null;
+
+  if (canvas) {
+    ctx = canvas.getContext("2d");
+  }
+
+  function resizeCanvas() {
+    if (!canvas) return;
+    const container = canvas.parentElement;
+    let size = Math.min(container.offsetWidth, container.offsetHeight);
+
+    if (size === 0) {
+      size = 400;
     }
-  });
+    canvas.width = size;
+    canvas.height = size;
+  }
+
+  function drawWheel(rotation) {
+    if (!canvas || !ctx) return;
+    resizeCanvas();
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const borderWidth = 4;
+    const borderGap = 4;
+    const radius = Math.min(centerX, centerY) - borderWidth - borderGap - 2;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (members.length === 0) return;
+
+    const sliceAngle = (2 * Math.PI) / members.length;
+
+    // Helper to convert hex to rgba
+    function hexToRgba(hex, alpha) {
+      const r = parseInt(hex.slice(1, 3), 16);
+      const g = parseInt(hex.slice(3, 5), 16);
+      const b = parseInt(hex.slice(5, 7), 16);
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
+    // Find which segment is at the arrow (top, -PI/2)
+    const arrowAngle = -Math.PI / 2;
+    let normalizedArrow = arrowAngle - rotation;
+    while (normalizedArrow < 0) normalizedArrow += Math.PI * 2;
+    while (normalizedArrow >= Math.PI * 2) normalizedArrow -= Math.PI * 2;
+    const segmentAtArrow = Math.floor(normalizedArrow / sliceAngle);
+
+    // Update arrow color
+    const arrow = document.getElementById("wheelArrow");
+    if (arrow && members[segmentAtArrow]) {
+      arrow.style.borderTopColor = members[segmentAtArrow].color;
+    }
+
+    members.forEach((member, i) => {
+      const startAngle = rotation + (i * sliceAngle);
+      const endAngle = startAngle + sliceAngle;
+
+      // Draw slice
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY);
+      ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+      ctx.closePath();
+      ctx.fillStyle = member.color;
+      ctx.fill();
+      ctx.strokeStyle = "#fff";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Draw colored border segment (with gap and lower opacity)
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius + borderGap + borderWidth / 2, startAngle, endAngle);
+      ctx.strokeStyle = hexToRgba(member.color, 0.5);
+      ctx.lineWidth = borderWidth;
+      ctx.stroke();
+
+      // Draw text
+      ctx.save();
+      ctx.translate(centerX, centerY);
+      ctx.rotate(startAngle + sliceAngle / 2);
+      ctx.textAlign = "right";
+      ctx.fillStyle = "#fff";
+      ctx.font = `bold ${Math.max(12, radius / 10)}px sans-serif`;
+      ctx.shadowColor = "rgba(0,0,0,0.5)";
+      ctx.shadowBlur = 2;
+
+      // Truncate long names
+      let displayName = member.name;
+      if (displayName.length > 12) {
+        displayName = displayName.substring(0, 10) + "...";
+      }
+      ctx.fillText(displayName, radius - 15, 5);
+      ctx.restore();
+    });
+
+    // Draw center circle
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius * 0.15, 0, 2 * Math.PI);
+    ctx.fillStyle = "#1f2937";
+    ctx.fill();
+    ctx.strokeStyle = "#fff";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+  }
+
+  function idleSpin() {
+    if (isSpinning) return;
+    currentRotation += 0.005;
+    drawWheel(currentRotation);
+    idleAnimationId = requestAnimationFrame(idleSpin);
+  }
+
+  function stopIdleSpin() {
+    if (idleAnimationId) {
+      cancelAnimationFrame(idleAnimationId);
+      idleAnimationId = null;
+    }
+  }
+
+  function spinWheelToTarget(targetMemberIndex, callback) {
+    isSpinning = true;
+    stopIdleSpin();
+
+    const spinDuration = 3500;
+    const startRotation = currentRotation;
+    const pointer = document.getElementById("wheelPointer");
+
+    // Calculate where the target slice needs to end up
+    // Arrow points to top (-PI/2), wheel draws slices starting from rotation angle
+    const sliceAngle = (2 * Math.PI) / members.length;
+
+    // The center of the target slice
+    const targetSliceCenter = targetMemberIndex * sliceAngle + sliceAngle / 2;
+
+    // We need the wheel rotated so that targetSliceCenter aligns with top (-PI/2)
+    // rotation + targetSliceCenter = -PI/2 + n*2*PI (for some n)
+    // rotation = -PI/2 - targetSliceCenter + n*2*PI
+    let targetAngle = -Math.PI / 2 - targetSliceCenter;
+
+    // Normalize to positive and add full spins (5-7 rotations)
+    const fullSpins = (Math.floor(Math.random() * 3) + 5) * Math.PI * 2;
+
+    // Make sure we always spin forward from current position
+    while (targetAngle < startRotation) {
+      targetAngle += Math.PI * 2;
+    }
+    targetAngle += fullSpins;
+
+    const totalRotation = targetAngle - startRotation;
+    const startTime = performance.now();
+
+    // Track which segment the arrow was last in (for click detection)
+    let lastSegmentIndex = -1;
+
+    function getSegmentAtArrow(rotation) {
+      // Arrow is at top (-PI/2). Find which segment is there.
+      // Segment i spans from rotation + i*sliceAngle to rotation + (i+1)*sliceAngle
+      // We need to find i where: rotation + i*sliceAngle <= -PI/2 < rotation + (i+1)*sliceAngle
+      const arrowAngle = -Math.PI / 2;
+      let normalizedArrow = arrowAngle - rotation;
+      // Normalize to [0, 2*PI)
+      while (normalizedArrow < 0) normalizedArrow += Math.PI * 2;
+      while (normalizedArrow >= Math.PI * 2) normalizedArrow -= Math.PI * 2;
+      return Math.floor(normalizedArrow / sliceAngle);
+    }
+
+    function bouncePointer() {
+      if (!pointer) return;
+      pointer.style.transform = "translateX(-50%) translateY(-8px) rotate(8deg)";
+      setTimeout(() => {
+        pointer.style.transform = "translateX(-50%) translateY(-8px) rotate(-4deg)";
+        setTimeout(() => {
+          pointer.style.transform = "translateX(-50%) translateY(-8px) rotate(0deg)";
+        }, 40);
+      }, 40);
+    }
+
+    function animate(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / spinDuration, 1);
+
+      // Ease out quintic for slower finish
+      const easeOut = 1 - Math.pow(1 - progress, 5);
+
+      currentRotation = startRotation + (totalRotation * easeOut);
+      drawWheel(currentRotation);
+
+      // Check if we crossed a segment boundary (arrow clicked a peg)
+      const currentSegment = getSegmentAtArrow(currentRotation);
+      if (lastSegmentIndex !== -1 && currentSegment !== lastSegmentIndex) {
+        bouncePointer();
+      }
+      lastSegmentIndex = currentSegment;
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        isSpinning = false;
+        // Reset pointer position
+        if (pointer) pointer.style.transform = "translateX(-50%) translateY(-8px)";
+        if (callback) callback();
+      }
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  function updateAlreadyChosenList(alreadyChosenNames, groupId) {
+    const section = document.getElementById("alreadyChosenSection");
+    const title = document.getElementById("alreadyChosenTitle");
+    const list = document.getElementById("alreadyChosenList");
+
+    if (!section || !title || !list) return;
+
+    if (alreadyChosenNames.length === 0) {
+      section.classList.add("hidden");
+      return;
+    }
+
+    // Update title
+    title.textContent = `Already Chosen (${alreadyChosenNames.length})`;
+
+    // Look up colors from groupsData
+    const allMembers = groupsData[groupId] || [];
+    const getColor = (name) => {
+      const member = allMembers.find(m => m.name === name);
+      return member ? member.color : '#6366f1';
+    };
+
+    // Update list with color bars
+    list.innerHTML = alreadyChosenNames.map(name =>
+      `<div class="flex items-center justify-between gap-2 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <span class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 truncate">${name}</span>
+        <span class="w-4 sm:w-5 h-2 rounded-full flex-shrink-0" style="background-color: ${getColor(name)}"></span>
+      </div>`
+    ).join('');
+
+    // Show section
+    section.classList.remove("hidden");
+  }
+
+  function showPopup(chosenNames) {
+    const popup = document.getElementById("chosenPopup");
+    const popupTitle = document.getElementById("popupTitle");
+    const popupNames = document.getElementById("popupNames");
+    const popupContent = document.getElementById("popupContent");
+    const popupBackdrop = document.getElementById("popupBackdrop");
+
+    if (!popup || !popupTitle || !popupNames) {
+      console.error("Popup elements not found");
+      return;
+    }
+
+    // Set title
+    popupTitle.textContent = `Selected (${chosenNames.length})`;
+
+    // Set names
+    popupNames.innerHTML = chosenNames.map((name, i) =>
+      `<p class="text-3xl sm:text-4xl md:text-5xl font-bold text-primary-600 dark:text-primary-400 break-words">${name}${i < chosenNames.length - 1 ? ',' : ''}</p>`
+    ).join('');
+
+    // Show popup with slight delay to ensure DOM is ready
+    setTimeout(() => {
+      popup.classList.remove("hidden");
+      popupContent.classList.remove("scale-95", "opacity-0");
+      popupBackdrop.classList.remove("opacity-0");
+    }, 50);
+  }
+
+  function showMessage(message) {
+    const popup = document.getElementById("chosenPopup");
+    const popupTitle = document.getElementById("popupTitle");
+    const popupNames = document.getElementById("popupNames");
+    const popupContent = document.getElementById("popupContent");
+    const popupBackdrop = document.getElementById("popupBackdrop");
+
+    if (!popup || !popupTitle || !popupNames) return;
+
+    popupTitle.textContent = "Notice";
+    popupNames.innerHTML = `<p class="text-xl sm:text-2xl font-medium text-amber-600 dark:text-amber-400">${message}</p>`;
+
+    setTimeout(() => {
+      popup.classList.remove("hidden");
+      popupContent.classList.remove("scale-95", "opacity-0");
+      popupBackdrop.classList.remove("opacity-0");
+    }, 50);
+  }
+
+  function updateWheel(groupId) {
+    if (groupId && groupsData[groupId]) {
+      const allMembers = groupsData[groupId];
+      const alreadyChosen = alreadyChosenByGroup[groupId] || [];
+      members = allMembers.filter(m => !alreadyChosen.includes(m.name));
+
+      if (members.length === 0) {
+        wheelSection.classList.add("hidden");
+        stopIdleSpin();
+        return;
+      }
+
+      wheelSection.classList.remove("hidden");
+      stopIdleSpin();
+      // Wait for DOM to update layout after unhiding
+      requestAnimationFrame(() => {
+        resizeCanvas();
+        drawWheel(currentRotation);
+        idleSpin();
+      });
+    } else {
+      wheelSection.classList.add("hidden");
+      stopIdleSpin();
+    }
+  }
 
   function updateEditLink() {
     const groupId = groupSelect.value;
@@ -125,7 +479,186 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
+  groupBtn.addEventListener("click", () => {
+    groupOptions.classList.toggle("hidden");
+    groupChevron.classList.toggle("rotate-180");
+  });
+
+  const membersChosenInput = document.getElementById("membersChosen");
+  const alreadyChosenSection = document.getElementById("alreadyChosenSection");
+  const clearSessionInput = document.getElementById("clearSession");
+
+  document.querySelectorAll(".group-option").forEach(option => {
+    option.addEventListener("click", () => {
+      const newGroupId = option.dataset.value;
+      groupSelect.value = newGroupId;
+      groupBtnText.textContent = option.dataset.text;
+      groupOptions.classList.add("hidden");
+      groupChevron.classList.remove("rotate-180");
+      updateEditLink();
+      updateWheel(newGroupId);
+
+      if (membersChosenInput) {
+        membersChosenInput.value = 1;
+      }
+
+      if (alreadyChosenSection) {
+        alreadyChosenSection.classList.add("hidden");
+      }
+
+      if (clearSessionInput) {
+        clearSessionInput.value = "1";
+      }
+
+      // Update URL so refresh preserves selected group
+      const newUrl = `${window.location.pathname}?group_id=${newGroupId}`;
+      window.history.pushState({groupId: newGroupId}, '', newUrl);
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!document.getElementById("groupDropdown").contains(e.target)) {
+      groupOptions.classList.add("hidden");
+      groupChevron.classList.remove("rotate-180");
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    if (!wheelSection.classList.contains("hidden")) {
+      drawWheel(currentRotation);
+    }
+  });
+
+  spinBtn.addEventListener("click", function() {
+    const groupId = groupSelect.value;
+
+    if (!groupId) {
+      showMessage("Please select a group first.");
+      return;
+    }
+
+    if (isSpinning) {
+      return;
+    }
+
+    // Make sure members are loaded for this group
+    if (members.length === 0 && groupsData[groupId]) {
+      const allMembers = groupsData[groupId];
+      const alreadyChosen = alreadyChosenByGroup[groupId] || [];
+      members = allMembers.filter(m => !alreadyChosen.includes(m.name));
+    }
+
+    if (members.length === 0) {
+      showMessage("All members chosen! Click Reset to start over.");
+      return;
+    }
+
+    // Disable button and start
+    stopIdleSpin();
+    spinBtn.disabled = true;
+    spinBtn.textContent = "Spinning...";
+    wheelSection.classList.remove("hidden");
+
+    // Get form data
+    const formData = new FormData(form);
+
+    // Make AJAX request to get chosen member
+    fetch("{% url 'wheel:home' %}", {
+      method: "POST",
+      body: formData,
+      headers: {
+        "X-CSRFToken": formData.get("csrfmiddlewaretoken"),
+        "X-Requested-With": "XMLHttpRequest",
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.error) {
+        showMessage(data.error);
+        spinBtn.disabled = false;
+        spinBtn.textContent = "Spin";
+        if (data.all_chosen) {
+          wheelSection.classList.add("hidden");
+        }
+        idleSpin();
+        return;
+      }
+
+      const chosenNames = data.chosen_members;
+      const targetName = chosenNames[0]; // Land on first chosen member
+
+      // Find the index of the target member in the wheel
+      const targetIndex = members.findIndex(m => m.name === targetName);
+      if (targetIndex === -1) {
+        console.error("Target member not found in wheel:", targetName);
+        console.error("Available members:", members.map(m => m.name));
+        spinBtn.disabled = false;
+        spinBtn.textContent = "Spin";
+        idleSpin();
+        return;
+      }
+
+      // Animate to land on chosen member
+      setTimeout(() => {
+        resizeCanvas();
+        // Reset clear_session flag after first spin with new group
+        if (clearSessionInput) {
+          clearSessionInput.value = "0";
+        }
+
+        spinWheelToTarget(targetIndex, () => {
+          const removeAfterSpin = document.getElementById("removeAfterSpin").checked;
+
+          // Update local state only if removing after spin
+          if (removeAfterSpin) {
+            alreadyChosenByGroup[groupId] = data.already_chosen;
+            members = members.filter(m => !chosenNames.includes(m.name));
+            updateAlreadyChosenList(data.already_chosen, groupId);
+            updateWheel(groupId);
+          }
+
+          // Show popup with results
+          showPopup(chosenNames);
+
+          // Reset button
+          spinBtn.disabled = false;
+          spinBtn.textContent = "Spin";
+
+          // Restart idle spin if wheel still visible
+          if (!removeAfterSpin || members.length > 0) {
+            idleSpin();
+          }
+        });
+      }, 100);
+    })
+    .catch(error => {
+      console.error("Spin error:", error);
+      spinBtn.disabled = false;
+      spinBtn.textContent = "Spin";
+      idleSpin();
+    });
+  });
+
   updateEditLink();
+  updateWheel(groupSelect.value);
+
+  const popup = document.getElementById("chosenPopup");
+  const popupOkBtn = document.getElementById("popupOkBtn");
+  const popupBackdrop = document.getElementById("popupBackdrop");
+  const popupContent = document.getElementById("popupContent");
+
+  if (popup && popupOkBtn) {
+    function closePopup() {
+      popupContent.classList.add("scale-95", "opacity-0");
+      popupBackdrop.classList.add("opacity-0");
+      setTimeout(() => {
+        popup.classList.add("hidden");
+      }, 300);
+    }
+
+    popupOkBtn.addEventListener("click", closePopup);
+    popupBackdrop.addEventListener("click", closePopup);
+  }
 });
 </script>
 {% endblock content %}

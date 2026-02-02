@@ -94,5 +94,6 @@ class GroupCreationModel(models.Model):
                 for field in negative_fields:
                     member.negative_data[field.name] = 0 if field.type == "int" else ""
 
+                member.assign_color()
                 member.save()
                 existing_name_counts[name] = have + 1

@@ -1,5 +1,5 @@
-from django.forms import forms
+from django import forms
 
 
 class NameWheelForm(forms.Form):
-    pass
+    members_chosen = forms.IntegerField(label="Members chosen", min_value=1, initial=1)
