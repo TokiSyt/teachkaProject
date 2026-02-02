@@ -1,5 +1,5 @@
 """
-View and QuerySet mixins for Stellax applications.
+View and QuerySet mixins for Teachka applications.
 """
 
 from django.contrib.auth.mixins import LoginRequiredMixin

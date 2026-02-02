@@ -1,5 +1,5 @@
 """
-Root pytest configuration for Stellax.
+Root pytest configuration for Teachka.
 
 Contains fixtures shared across all apps.
 """

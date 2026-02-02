@@ -1,26 +1,64 @@
 {% extends "base.html" %}
 
-{% block title %}List Creation{% endblock title %}
+{% block title %}Create Group{% endblock title %}
 
 {% block content %}
-<div class="form-wrapper">
-    <h1>Create New Group List</h1>
-    <hr>
+<div class="max-w-2xl mx-auto">
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Create New Group</h1>
+    <p class="mt-1 text-gray-600 dark:text-gray-400">Add a group that you can use across all tools</p>
+  </div>
 
-    <form method="POST" class="form">
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{ request.GET.next|default:request.META.HTTP_REFERER|default:'/' }}">
+  <!-- Form Card -->
+  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+    <form method="POST" class="space-y-4">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.GET.next|default:request.META.HTTP_REFERER|default:'/' }}">
 
-        <div class="mb-3">
-            {{form.as_p}}
-        </div>
-        
-        
-        <div class="form-container">
-            <button type="submit" class="primary-btn">Save</button>
-            <a href="{{request.META.HTTP_REFERER}}" class="secondary-btn">Cancel</a>
-        </div>
-        
+      <div>
+        <label for="{{ form.title.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          {{ form.title.label }}
+        </label>
+        <input type="text"
+               name="title"
+               id="{{ form.title.id_for_label }}"
+               value="{{ form.title.value|default:'' }}"
+               placeholder="e.g., Class 10A, Project Team"
+               class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+               required>
+        {% if form.title.errors %}
+        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.title.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <div>
+        <label for="{{ form.members_string.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          {{ form.members_string.label }}
+        </label>
+        <textarea name="members_string"
+                  id="{{ form.members_string.id_for_label }}"
+                  rows="6"
+                  placeholder="Enter names separated by commas or new lines"
+                  class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-y"
+                  required>{{ form.members_string.value|default:'' }}</textarea>
+        {% if form.members_string.help_text %}
+        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ form.members_string.help_text }}</p>
+        {% endif %}
+        {% if form.members_string.errors %}
+        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.members_string.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <div class="flex gap-3 pt-2">
+        <button type="submit" class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
+          Create Group
+        </button>
+        <a href="{{ request.META.HTTP_REFERER|default:'/' }}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
+          Cancel
+        </a>
+      </div>
     </form>
+  </div>
 </div>
 {% endblock content %}

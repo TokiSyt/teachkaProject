@@ -7,6 +7,12 @@ pip install -r requirements.txt
 find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
 find . -type f -name "*.pyc" -delete 2>/dev/null || true
 
+# Build Tailwind CSS
+cd theme/static_src
+npm install
+npm run build
+cd ../..
+
 rm -rf staticfiles
 python manage.py collectstatic --no-input
 python manage.py migrate

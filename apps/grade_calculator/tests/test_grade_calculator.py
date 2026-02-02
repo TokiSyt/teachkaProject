@@ -109,14 +109,14 @@ class TestGradeCalculatorNoDuplicates:
         """Consecutive grades should not be equal (rounding option 1)."""
         result = grade_calculator(max_points, 1)
         for i in range(len(result) - 1):
-            assert result[i] >= result[i + 1], f"Grade {i} should be >= grade {i+1}"
+            assert result[i] >= result[i + 1], f"Grade {i} should be >= grade {i + 1}"
 
     @pytest.mark.parametrize("max_points", [10, 15, 20, 25, 30, 50, 100])
     def test_no_consecutive_duplicates_rounding_option_2(self, max_points):
         """Consecutive grades should not be equal (rounding option 2)."""
         result = grade_calculator(max_points, 2)
         for i in range(len(result) - 1):
-            assert result[i] >= result[i + 1], f"Grade {i} should be >= grade {i+1}"
+            assert result[i] >= result[i + 1], f"Grade {i} should be >= grade {i + 1}"
 
 
 class TestGradeCalculatorStructure:

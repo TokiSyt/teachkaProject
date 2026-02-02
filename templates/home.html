@@ -1,92 +1,190 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock title %}
+{% block title %}Teachka - Tools for Teachers{% endblock title %}
 
 {% block content %}
-<div class="main-content">
-    <h1>Welcome to the Stellax Project</h1>
-    <hr>
-    
-    <div class="collection-wrapper">
-        <h2>Apps Currently Working</h2>
-        <div class="card-collection">
-            <div class="card">
-                <div class="card-header">Grade Calculator</div>
-                <div class="card-body">
-                    Calculate grades based on max points.
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header">Group Maker</div>
-                <div class="card-body">
-                    Easily create and divide groups by size.
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header">Settings</div>
-                <div class="card-body">
-                    Customize your app preferences.
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header">Karma Points System</div>
-                <div class="card-body">
-                    Reward members actions with a points system.
-                </div>
-            </div>
-            <div class="card">
-                    <div class="card-header">Name Wheel</div>
-                    <div class="card-body">
-                        Randomly pops a name from the selected group.
-                    </div>
-                </div>
-        </div>
-    </div>
-
-    <div class="collection-wrapper">
-        <h2>Apps in Development / Coming Soon</h2>
-
-            <div class="card-collection">
-
-                <div class="card">
-                    <div class="card-header">Dashboard for Points System</div>
-                    <div class="card-body">
-                        Track members notes and points progress.
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">Timer</div>
-                    <div class="card-body">
-                        Simple timer for tasks and events.
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">To-Do List</div>
-                    <div class="card-body">
-                        Track your tasks and priorities.
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">Currency Exchanger Rates</div>
-                    <div class="card-body">
-                        Convert and check currency rates.
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">Member models photos.</div>
-                    <div class="card-body">
-                        To update: being able to asssociate photos with each member.
-                        Name wheel would display those, f.e.
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">Math Ops</div>
-                    <div class="card-body">
-                        Quick math operations made simple.
-                    </div>
-                </div>
-
-            </div>
-    </div>
+<!-- Hero Section -->
+<div class="text-center py-12 sm:py-12">
+  <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
+    Welcome to <span class="text-primary-600 dark:text-primary-400">Teachka</span>
+  </h1>
+  <p class="mt-4 text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+    A collection of simple tools designed to make your teaching day easier.
+  </p>
 </div>
+
+<!-- Tools Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+
+  <!-- Point System -->
+  <a href="/karma" class="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300">
+    <div class="flex items-start gap-4">
+      <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-xl flex items-center justify-center text-primary-600 dark:text-primary-400 group-hover:scale-110 transition-transform duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V7"/><path d="m16 12 2 2 4-4"/><path d="M22 6V4a1 1 0 0 0-1-1h-5a4 4 0 0 0-4 4 4 4 0 0 0-4-4H3a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h6a3 3 0 0 1 3 3 3 3 0 0 1 3-3h6a1 1 0 0 0 1-1v-1.3"/></svg>
+      </div>
+      <div class="flex-1 min-w-0">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+          Point System
+        </h3>
+        <p class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
+          Track participation and behavior with customizable point categories.
+        </p>
+      </div>
+      <div class="flex-shrink-0 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </div>
+    </div>
+  </a>
+
+  <!-- Group Divider -->
+  <a href="/divider" class="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300">
+    <div class="flex items-start gap-4">
+      <div class="flex-shrink-0 w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
+      </div>
+      <div class="flex-1 min-w-0">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+          Group Divider
+        </h3>
+        <p class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
+          Randomly split your class into teams of any size.
+        </p>
+      </div>
+      <div class="flex-shrink-0 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </div>
+    </div>
+  </a>
+
+  <!-- Grade Calculator -->
+  <a href="/grades" class="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300">
+    <div class="flex items-start gap-4">
+      <div class="flex-shrink-0 w-12 h-12 bg-amber-100 dark:bg-amber-900/30 rounded-xl flex items-center justify-center text-amber-600 dark:text-amber-400 group-hover:scale-110 transition-transform duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+      </div>
+      <div class="flex-1 min-w-0">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+          Grade Calculator
+        </h3>
+        <p class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
+          Generate score ranges for any maximum points value.
+        </p>
+      </div>
+      <div class="flex-shrink-0 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </div>
+    </div>
+  </a>
+
+  <!-- Name Wheel -->
+  <a href="/wheel" class="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300">
+    <div class="flex items-start gap-4">
+      <div class="flex-shrink-0 w-12 h-12 bg-violet-100 dark:bg-violet-900/30 rounded-xl flex items-center justify-center text-violet-600 dark:text-violet-400 group-hover:scale-110 transition-transform duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12a1 1 0 0 1-10 0 1 1 0 0 0-10 0"/><path d="M7 20.7a1 1 0 1 1 5-8.7 1 1 0 1 0 5-8.6"/><path d="M7 3.3a1 1 0 1 1 5 8.6 1 1 0 1 0 5 8.6"/><circle cx="12" cy="12" r="10"/></svg>
+      </div>
+      <div class="flex-1 min-w-0">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+          Name Wheel
+        </h3>
+        <p class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
+          Randomly pick members to ensure everyone gets a turn.
+        </p>
+      </div>
+      <div class="flex-shrink-0 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </div>
+    </div>
+  </a>
+
+</div>
+
+<!-- Stats Section -->
+{% if user.is_authenticated %}
+<div class="mt-16 mb-8 bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-800/50 rounded-2xl p-8">
+  <h2 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-6">Your Activity</h2>
+  <div class="grid grid-cols-2 sm:grid-cols-5 gap-4">
+    <!-- Groups & Members -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 shadow-sm">
+      <div class="flex items-center gap-2 mb-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-500"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Groups</span>
+      </div>
+      <p class="text-xl font-bold text-gray-900 dark:text-white"><span class="counter" data-target="{{ user_groups_count }}">0</span> <span class="text-sm font-normal text-gray-400">({{ user_members_count }} members)</span></p>
+    </div>
+
+    <!-- Points -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 shadow-sm">
+      <div class="flex items-center gap-2 mb-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-500"><path d="M12 21V7"/><path d="m16 12 2 2 4-4"/><path d="M22 6V4a1 1 0 0 0-1-1h-5a4 4 0 0 0-4 4 4 4 0 0 0-4-4H3a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h6a3 3 0 0 1 3 3 3 3 0 0 1 3-3h6a1 1 0 0 0 1-1v-1.3"/></svg>
+        <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Points</span>
+      </div>
+      <p class="text-xl font-bold"><span class="text-green-600 dark:text-green-400">+<span class="counter" data-target="{{ user_positive_points }}">0</span></span> <span class="text-gray-400 mx-1">/</span> <span class="text-red-600 dark:text-red-400">-<span class="counter" data-target="{{ user_negative_points }}">0</span></span></p>
+    </div>
+
+    <!-- Calculator -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 shadow-sm">
+      <div class="flex items-center gap-2 mb-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-500"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+        <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Calculator</span>
+      </div>
+      <p class="text-xl font-bold text-gray-900 dark:text-white"><span class="counter" data-target="{{ calculator_uses }}">0</span> <span class="text-sm font-normal text-gray-400">uses</span></p>
+    </div>
+
+    <!-- Wheel -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 shadow-sm">
+      <div class="flex items-center gap-2 mb-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-violet-500"><path d="M22 12a1 1 0 0 1-10 0 1 1 0 0 0-10 0"/><path d="M7 20.7a1 1 0 1 1 5-8.7 1 1 0 1 0 5-8.6"/><path d="M7 3.3a1 1 0 1 1 5 8.6 1 1 0 1 0 5 8.6"/><circle cx="12" cy="12" r="10"/></svg>
+        <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Wheel</span>
+      </div>
+      <p class="text-xl font-bold text-gray-900 dark:text-white"><span class="counter" data-target="{{ wheel_spins }}">0</span> <span class="text-sm font-normal text-gray-400">spins</span></p>
+    </div>
+
+    <!-- Divider -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 shadow-sm">
+      <div class="flex items-center gap-2 mb-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-500"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
+        <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Divider</span>
+      </div>
+      <p class="text-xl font-bold text-gray-900 dark:text-white"><span class="counter" data-target="{{ divider_uses }}">0</span> <span class="text-sm font-normal text-gray-400">splits</span></p>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<!-- Animated Counter Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const counters = document.querySelectorAll('.counter');
+    const speed = 50;
+
+    const animateCounter = (counter) => {
+      const target = +counter.getAttribute('data-target');
+      const increment = target / speed;
+      let current = 0;
+
+      const updateCount = () => {
+        current += increment;
+        if (current < target) {
+          counter.innerText = Math.ceil(current);
+          requestAnimationFrame(updateCount);
+        } else {
+          counter.innerText = target;
+        }
+      };
+      updateCount();
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => observer.observe(counter));
+  });
+</script>
+
 {% endblock content %}

@@ -22,9 +22,7 @@ def grade_calculator(max_points: float, rounding_option: int) -> list[float]:
     if rounded_max in static_grades:
         return static_grades[rounded_max]
 
-    grades: list[float] = [
-        max_points * x for x in [1, 0.90, 0.89, 0.75, 0.74, 0.50, 0.49, 0.35, 0.34, 0]
-    ]
+    grades: list[float] = [max_points * x for x in [1, 0.90, 0.89, 0.75, 0.74, 0.50, 0.49, 0.35, 0.34, 0]]
     grades = [round(grade) for grade in grades]
 
     for grade_index in range(1, len(grades)):

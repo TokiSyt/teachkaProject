@@ -59,13 +59,15 @@ class CalculationService:
         member_scores: list[dict[str, Any]] = []
         for member in members:
             net = (member.positive_total or 0) - (member.negative_total or 0)
-            member_scores.append({
-                "id": member.id,
-                "name": member.name,
-                "positive_total": member.positive_total or 0,
-                "negative_total": member.negative_total or 0,
-                "net_total": net,
-            })
+            member_scores.append(
+                {
+                    "id": member.id,
+                    "name": member.name,
+                    "positive_total": member.positive_total or 0,
+                    "negative_total": member.negative_total or 0,
+                    "net_total": net,
+                }
+            )
 
         # Sort based on order_by
         if order_by == "positive":

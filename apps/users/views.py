@@ -1,7 +1,9 @@
 from django.contrib.auth import authenticate, get_user_model, login, update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import FormView, TemplateView, UpdateView
 
 from .forms import CustomPasswordChangeForm, EditProfileForm, RegisterForm
@@ -15,7 +17,6 @@ class RegisterView(FormView):
     success_url = reverse_lazy("home")
 
     def form_valid(self, form):
-
         new_user = form.save()
         new_user = authenticate(
             username=form.cleaned_data["username"],
@@ -56,7 +57,8 @@ class SettingsView(LoginRequiredMixin, TemplateView):
             updated = True
 
         if "toggle_theme" in request.POST:
-            profile.theme = "dark" if profile.theme == "light" else "light"
+            theme_cycle = {"light": "dark", "dark": "pastel", "pastel": "light"}
+            profile.theme = theme_cycle.get(profile.theme, "light")
             updated = True
 
         if updated:
@@ -89,3 +91,15 @@ class ChangePassword(LoginRequiredMixin, FormView):
         form.save()
         update_session_auth_hash(self.request, form.user)
         return super().form_valid(form)
+
+
+class ThemeUpdateView(LoginRequiredMixin, View):
+    """AJAX endpoint for updating user theme."""
+
+    def post(self, request):
+        theme = request.POST.get("theme")
+        if theme in ["light", "dark", "pastel"]:
+            request.user.theme = theme
+            request.user.save(update_fields=["theme"])
+            return JsonResponse({"status": "ok", "theme": theme})
+        return JsonResponse({"status": "error", "message": "Invalid theme"}, status=400)
