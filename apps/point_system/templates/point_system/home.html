@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% load custom_tags %}
 
-{% block title %}Points System{% endblock title %}
+{% block title %}Points system{% endblock title %}
 
 {% block content %}
 <div class="max-w-6xl mx-auto">
   <!-- Header -->
   <div class="mb-8">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Points System</h1>
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Points system</h1>
     <p class="mt-1 text-gray-600 dark:text-gray-400">Track positive and negative points for group members</p>
   </div>
 
@@ -38,21 +38,29 @@
         </div>
       </div>
 
-      <div class="flex flex-wrap gap-3">
-        <button type="submit" class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
-          Show Points
-        </button>
-        {% if selected_group %}
-        <a href="{% url 'karma:karma-home' %}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
-          Reset
-        </a>
-        <a id="editGroupsBtn" href="#" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
-          Edit Group
-        </a>
-        {% endif %}
-        <a href="{% url 'group_maker:group-maker-creation' %}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
-          Create Group
-        </a>
+      <div class="flex flex-col gap-3">
+        <!-- Main action row -->
+        <div class="flex flex-wrap gap-2 sm:gap-3">
+          <button type="submit" class="flex-1 sm:flex-none px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
+            Show points
+          </button>
+          {% if selected_group %}
+          <a href="{% url 'karma:karma-home' %}" class="flex-1 sm:flex-none px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-center">
+            Reset
+          </a>
+          {% endif %}
+        </div>
+        <!-- Secondary actions row -->
+        <div class="flex flex-wrap gap-2 sm:gap-3">
+          {% if selected_group %}
+          <a id="editGroupsBtn" href="#" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-sm">
+            Edit group
+          </a>
+          {% endif %}
+          <a href="{% url 'group_maker:group-maker-creation' %}" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-sm">
+            Create group
+          </a>
+        </div>
       </div>
     </form>
   </div>
@@ -66,7 +74,7 @@
     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-6">
       <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
         <span class="w-3 h-3 bg-red-500 rounded-full"></span>
-        Negative Points
+        Negative points
       </h2>
 
       <div class="overflow-x-auto">
@@ -111,23 +119,23 @@
       <div class="flex flex-wrap gap-3 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
         {% if negative_data %}
         <button type="submit" name="negative_save" class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors text-sm">
-          Save Points
+          Save points
         </button>
         <a href="?group_id={{ group_id }}" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-sm">
           Cancel
         </a>
         <a href="{% url 'karma:new-column' selected_group.id %}?table=negative" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-sm">
-          Add Column
+          Add column
         </a>
         <a href="{% url 'karma:edit-column' selected_group.id %}?table=negative" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-sm">
-          Edit Column
+          Edit column
         </a>
         <a href="{% url 'karma:delete-column' selected_group.id %}?table=negative" class="px-4 py-2 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 font-medium rounded-lg transition-colors text-sm">
-          Delete Column
+          Delete column
         </a>
         {% else %}
         <a href="{% url 'karma:new-column' selected_group.id %}?table=negative" class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors text-sm">
-          Add First Column
+          Add first column
         </a>
         {% endif %}
       </div>
@@ -137,7 +145,7 @@
     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
       <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
         <span class="w-3 h-3 bg-green-500 rounded-full"></span>
-        Positive Points
+        Positive points
       </h2>
 
       <div class="overflow-x-auto">
@@ -182,23 +190,23 @@
       <div class="flex flex-wrap gap-3 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
         {% if positive_data %}
         <button type="submit" name="positive_save" class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors text-sm">
-          Save Points
+          Save points
         </button>
         <a href="?group_id={{ group_id }}" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-sm">
           Cancel
         </a>
         <a href="{% url 'karma:new-column' selected_group.id %}?table=positive" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-sm">
-          Add Column
+          Add column
         </a>
         <a href="{% url 'karma:edit-column' selected_group.id %}?table=positive" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-sm">
-          Edit Column
+          Edit column
         </a>
         <a href="{% url 'karma:delete-column' selected_group.id %}?table=positive" class="px-4 py-2 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 font-medium rounded-lg transition-colors text-sm">
-          Delete Column
+          Delete column
         </a>
         {% else %}
         <a href="{% url 'karma:new-column' selected_group.id %}?table=positive" class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors text-sm">
-          Add First Column
+          Add first column
         </a>
         {% endif %}
       </div>
@@ -242,7 +250,7 @@
       if (editBtn) {
         const groupId = groupSelect.value;
         if (groupId) {
-          editBtn.href = "{% url 'group_maker:group-maker-edit' 0 %}".replace("0", groupId) + "?from=point-system";
+          editBtn.href = "{% url 'group_maker:group-maker-edit' 0 %}".replace("0", groupId) + "?origin_app=karma";
           editBtn.classList.remove("opacity-50", "cursor-not-allowed", "pointer-events-none");
         } else {
           editBtn.href = "#";

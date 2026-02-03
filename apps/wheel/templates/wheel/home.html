@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}Name Wheel{% endblock title %}
+{% block title %}Name wheel{% endblock title %}
 
 {% block content %}
 <div class="max-w-4xl mx-auto">
   <!-- Header -->
   <div class="mb-8">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Name Wheel</h1>
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Name wheel</h1>
     <p class="mt-1 text-gray-600 dark:text-gray-400">Randomly select a name from your group</p>
   </div>
 
@@ -45,29 +45,35 @@
         </div>
 
       </div>
-
-      <div class="flex flex-wrap items-center gap-3 pt-2">
-        <button type="button" id="spinBtn" class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-          Spin
-        </button>
-        <a href="{% url 'group_maker:group-maker-creation' %}?next={% url 'wheel:home' %}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
-          Create Group
-        </a>
-        <a href="{% url 'wheel:home' %}?reset=1{% if selected_group %} {% endif %}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
-          Reset
-        </a>
-        <a id="editGroupsBtn" href="{% if selected_group %}{% url 'group_maker:group-maker-edit' selected_group.id %}{% else %}#{% endif %}"
-           class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors {% if not selected_group %}opacity-50 pointer-events-none{% endif %}">
-          Edit Group
-        </a>
-        <label class="flex items-center gap-2 cursor-pointer ml-auto">
-          <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Remove after spin</span>
-          <div class="relative">
-            <input type="checkbox" name="remove_after_spin" id="removeAfterSpin" checked class="sr-only peer">
-            <div class="w-11 h-6 bg-red-500 rounded-full peer-checked:bg-green-500 transition-colors"></div>
-            <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform peer-checked:translate-x-5"></div>
-          </div>
-        </label>
+      <br>
+      <div class="flex flex-col gap-3 pt-2">
+        <!-- Main action row -->
+        <div class="flex flex-wrap gap-2 sm:gap-3">
+          <button type="button" id="spinBtn" class="flex-1 sm:flex-none px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+            Spin
+          </button>
+          <a id="resetBtn" href="{% url 'wheel:home' %}?reset=1{% if selected_group %}&group_id={{ selected_group.id }}{% endif %}" class="flex-1 sm:flex-none px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-center">
+            Reset
+          </a>
+        </div>
+        <!-- Secondary actions row -->
+        <div class="flex flex-wrap gap-2 sm:gap-3">
+          <a href="{% url 'group_maker:group-maker-creation' %}?next={% url 'wheel:home' %}" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-sm">
+            Create group
+          </a>
+          <a id="editGroupsBtn" href="{% if selected_group %}{% url 'group_maker:group-maker-edit' selected_group.id %}{% else %}#{% endif %}"
+             class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-sm {% if not selected_group %}opacity-50 pointer-events-none{% endif %}">
+            Edit group
+          </a>
+          <label class="flex items-center gap-2 cursor-pointer sm:ml-auto">
+            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Remove after spin</span>
+            <div class="relative">
+              <input type="checkbox" name="remove_after_spin" id="removeAfterSpin" checked class="sr-only peer">
+              <div class="w-11 h-6 bg-red-500 rounded-full peer-checked:bg-green-500 transition-colors"></div>
+              <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform peer-checked:translate-x-5"></div>
+            </div>
+          </label>
+        </div>
       </div>
     </form>
   </div>
@@ -90,16 +96,18 @@
   </div>
 
   <!-- Chosen Members Popup (dynamic) -->
-  <div id="chosenPopup" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+  <div id="chosenPopup" class="fixed inset-0 z-[900] hidden">
     <!-- Backdrop -->
     <div id="popupBackdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300"></div>
-    <!-- Popup Content -->
-    <div id="popupContent" class="relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-8 sm:p-12 text-center shadow-2xl max-w-lg mx-4 transform transition-all duration-300 scale-100 opacity-100">
-      <p id="popupTitle" class="text-gray-500 dark:text-gray-400 text-sm font-medium uppercase tracking-wider mb-4">Selected</p>
-      <div id="popupNames" class="flex flex-wrap justify-center gap-3 mb-6"></div>
-      <button id="popupOkBtn" class="px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
+    <!-- Popup Content - positioned over the content area (offset by 60px sidebar) -->
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none left-[60px]">
+      <div id="popupContent" class="pointer-events-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-5 sm:p-8 text-center shadow-2xl max-w-[90vw] sm:max-w-lg mx-4 max-h-[85vh] flex flex-col transform transition-all duration-300 scale-100 opacity-100">
+      <p id="popupTitle" class="text-gray-500 dark:text-gray-400 text-sm font-medium uppercase tracking-wider mb-3 sm:mb-4 flex-shrink-0">Selected</p>
+      <div id="popupNames" class="grid grid-cols-2 gap-2 sm:gap-3 mb-4 sm:mb-6 overflow-y-auto flex-1 min-h-0"></div>
+      <button id="popupOkBtn" class="px-6 sm:px-8 py-2.5 sm:py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors flex-shrink-0">
         OK
       </button>
+      </div>
     </div>
   </div>
 
@@ -132,11 +140,13 @@ document.addEventListener("DOMContentLoaded", function() {
   const groupBtnText = document.getElementById("groupBtnText");
   const groupChevron = document.getElementById("groupChevron");
   const editBtn = document.getElementById("editGroupsBtn");
+  const resetBtn = document.getElementById("resetBtn");
   const wheelSection = document.getElementById("wheelSection");
   const canvas = document.getElementById("wheelCanvas");
   const spinBtn = document.getElementById("spinBtn");
   const form = document.getElementById("wheelForm");
-  const baseUrl = "{% url 'group_maker:group-maker-edit' 0 %}?from=name-wheel";
+  const baseUrl = "{% url 'group_maker:group-maker-edit' 0 %}?origin_app=wheel";
+  const resetBaseUrl = "{% url 'wheel:home' %}?reset=1&group_id=";
 
   const groupsData = {
     {% for group in groups %}
@@ -410,10 +420,20 @@ document.addEventListener("DOMContentLoaded", function() {
     // Set title
     popupTitle.textContent = `Selected (${chosenNames.length})`;
 
-    // Set names
-    popupNames.innerHTML = chosenNames.map((name, i) =>
-      `<p class="text-3xl sm:text-4xl md:text-5xl font-bold text-primary-600 dark:text-primary-400 break-words">${name}${i < chosenNames.length - 1 ? ',' : ''}</p>`
-    ).join('');
+    // Set names as soft cards - centered for single, grid for multiple
+    if (chosenNames.length === 1) {
+      popupNames.className = "flex justify-center mb-4 sm:mb-6";
+      popupNames.innerHTML = `<div class="px-6 py-4 bg-primary-50 dark:bg-primary-900/30 border border-primary-200 dark:border-primary-700 rounded-xl">
+        <p class="text-2xl sm:text-4xl font-bold text-primary-600 dark:text-primary-400">${chosenNames[0]}</p>
+      </div>`;
+    } else {
+      popupNames.className = "grid grid-cols-2 gap-2 sm:gap-3 mb-4 sm:mb-6 overflow-y-auto flex-1 min-h-0";
+      popupNames.innerHTML = chosenNames.map(name =>
+        `<div class="px-4 py-3 bg-primary-50 dark:bg-primary-900/30 border border-primary-200 dark:border-primary-700 rounded-xl">
+          <p class="text-lg sm:text-2xl font-bold text-primary-600 dark:text-primary-400">${name}</p>
+        </div>`
+      ).join('');
+    }
 
     // Show popup with slight delay to ensure DOM is ready
     setTimeout(() => {
@@ -433,7 +453,8 @@ document.addEventListener("DOMContentLoaded", function() {
     if (!popup || !popupTitle || !popupNames) return;
 
     popupTitle.textContent = "Notice";
-    popupNames.innerHTML = `<p class="text-xl sm:text-2xl font-medium text-amber-600 dark:text-amber-400">${message}</p>`;
+    popupNames.className = "flex justify-center mb-4 sm:mb-6";
+    popupNames.innerHTML = `<p class="text-lg sm:text-xl font-medium text-amber-600 dark:text-amber-400 text-center">${message}</p>`;
 
     setTimeout(() => {
       popup.classList.remove("hidden");
@@ -473,9 +494,11 @@ document.addEventListener("DOMContentLoaded", function() {
     if (groupId) {
       editBtn.href = baseUrl.replace("0", groupId);
       editBtn.classList.remove("opacity-50", "pointer-events-none");
+      resetBtn.href = resetBaseUrl + groupId;
     } else {
       editBtn.href = "#";
       editBtn.classList.add("opacity-50", "pointer-events-none");
+      resetBtn.href = "{% url 'wheel:home' %}?reset=1";
     }
   }
 

@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% load custom_tags %}
 
-{% block title %}Delete Column{% endblock title %}
+{% block title %}Delete column{% endblock title %}
 
 {% block content %}
 <div class="max-w-md mx-auto">
   <!-- Header -->
   <div class="mb-8">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Delete Column</h1>
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Delete column</h1>
     <p class="mt-1 text-gray-600 dark:text-gray-400">Remove a column from the points table</p>
   </div>
 
@@ -109,7 +109,7 @@
       <!-- Actions -->
       <div class="flex flex-wrap gap-3 pt-4">
         <button type="submit" class="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors">
-          Delete Column
+          Delete column
         </button>
         <a href="{% url 'karma:karma-home' %}?group_id={{ group_id }}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
           Cancel
