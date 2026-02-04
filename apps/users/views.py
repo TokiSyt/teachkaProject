@@ -1,10 +1,22 @@
-from django.contrib.auth import authenticate, get_user_model, login, update_session_auth_hash
+from django.contrib import messages
+from django.contrib.auth import (
+    get_user_model,
+    login,
+    update_session_auth_hash,
+)
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
 from django.http import JsonResponse
 from django.shortcuts import redirect
-from django.urls import reverse_lazy
+from django.template.loader import render_to_string
+from django.urls import reverse, reverse_lazy
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views import View
 from django.views.generic import FormView, TemplateView, UpdateView
+
+from teachkaBaseProject.tokens import account_activation_token
 
 from .forms import CustomPasswordChangeForm, EditProfileForm, RegisterForm
 
@@ -17,19 +29,48 @@ class RegisterView(FormView):
     success_url = reverse_lazy("home")
 
     def form_valid(self, form):
-        new_user = form.save()
-        new_user = authenticate(
-            username=form.cleaned_data["username"],
-            password=form.cleaned_data["password1"],
+        new_user = form.save(commit=False)
+        new_user.is_active = False
+        new_user.save()
+
+        current_site = get_current_site(self.request)
+        mail_subject = "Welcome to Teachka!"
+        message = render_to_string(
+            "registration/account_activation_email.html",
+            {
+                "user": new_user,
+                "domain": current_site.domain,
+                "uid": urlsafe_base64_encode(force_bytes(new_user.pk)),
+                "token": account_activation_token.make_token(new_user),
+            },
         )
-
-        login(self.request, new_user)
-
-        context = self.get_context_data(form=form)
-        return super().form_valid(context)
+        to_email = form.cleaned_data.get("email")
+        email = EmailMessage(mail_subject, message, to=[to_email])
+        email.send()
+        messages.success(self.request, "Welcome, please check your email to complete your registration.")
+        return redirect("home")
 
     def form_invalid(self, form):
         return super().form_invalid(form)
+
+
+class ActivateAccountView(View):
+    def get(self, request, uidb64, token):
+        try:
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+
+        if user is not None and account_activation_token.check_token(user, token):
+            user.is_active = True
+            user.save()
+            login(request, user)
+            messages.success(request, "Your account has been successfully activated!")
+            return redirect(reverse("home"))
+        else:
+            messages.error(request, "Activation link is invalid or expired.")
+            return redirect("home")
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):

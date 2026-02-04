@@ -5,6 +5,7 @@ from django.contrib.auth.forms import (
     UserChangeForm,
     UserCreationForm,
 )
+from django.core.exceptions import ValidationError
 
 User = get_user_model()
 
@@ -25,6 +26,18 @@ class RegisterForm(UserCreationForm):
             "password1",
             "password2",
         ]
+
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("An account with this email address already exists.")
+        return email
+
+    def clean_username(self):
+        username = self.cleaned_data.get("username")
+        if User.objects.filter(username=username).exists():
+            raise ValidationError("An account with this username already exists.")
+        return username
 
 
 class EditProfileForm(UserChangeForm):

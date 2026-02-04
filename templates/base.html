@@ -176,6 +176,27 @@
   </nav>
 
   <div class="main-content container-fluid">
+    {% if messages %}
+    <div class="mx-auto max-w-2xl mt-4 space-y-2">
+      {% for message in messages %}
+      <div class="flex items-center justify-between rounded-lg border p-4
+        {% if message.tags == 'success' %}
+          bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 text-green-700 dark:text-green-300
+        {% elif message.tags == 'error' %}
+          bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 text-red-700 dark:text-red-300
+        {% elif message.tags == 'warning' %}
+          bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800 text-yellow-700 dark:text-yellow-300
+        {% else %}
+          bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300
+        {% endif %}
+      ">
+        <p class="text-sm font-medium">{{ message }}</p>
+        <button onclick="this.parentElement.remove()" class="ml-4 opacity-50 hover:opacity-100">&times;</button>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
     {% block content %}
     {% endblock content %}
   </div>
