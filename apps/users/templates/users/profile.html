@@ -41,10 +41,10 @@
 
       <!-- Actions -->
       <div class="flex flex-wrap gap-3">
-        <a href="{% url 'edit_profile' %}" class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
+        <a href="{% url 'profile:edit_profile' %}" class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
           Edit profile
         </a>
-        <a href="{% url 'settings' %}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
+        <a href="{% url 'profile:settings' %}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
           Settings
         </a>
       </div>

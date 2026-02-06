@@ -145,7 +145,7 @@
         localStorage.setItem('theme', newTheme);
 
         {% if user.is_authenticated %}
-        fetch('{% url "theme-update" %}', {
+        fetch('{% url "profile:theme-update" %}', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',

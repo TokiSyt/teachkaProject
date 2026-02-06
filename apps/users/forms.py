@@ -47,13 +47,18 @@ class EditProfileForm(UserChangeForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if "password" in self.fields:
-            self.fields["password"].widget = forms.HiddenInput()
+        self.fields.pop("password", None)
+        self.fields["username"].disabled = True
 
 
 class CustomPasswordChangeForm(PasswordChangeForm):
-    new_password2 = forms.CharField(
+    new_password = forms.CharField(
         label="Confirm new password",
         widget=forms.PasswordInput,
-        help_text="",  # Removes the default message
+        help_text="",
     )
+
+
+class PasswordResetRequestForm(forms.Form):
+    # email for password change
+    send_to_email = forms.EmailField(required=True)
