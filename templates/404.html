@@ -1,0 +1,35 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found - Teachka</title>
+  <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon" />
+  <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+  <div class="flex flex-col items-center justify-center min-h-screen px-4">
+    <h1 class="text-8xl font-bold text-gray-300 dark:text-gray-700">404</h1>
+    <p class="mt-4 text-xl text-gray-600 dark:text-gray-400">Page not found</p>
+    <p class="mt-2 text-sm text-gray-500 dark:text-gray-500">The page you're looking for doesn't exist or has been moved.</p>
+    <a href="/" class="mt-6 px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-colors">
+      Go Home
+    </a>
+  </div>
+
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        document.documentElement.classList.remove('dark', 'pastel-theme');
+        if (savedTheme === 'dark') document.documentElement.classList.add('dark');
+        else if (savedTheme === 'pastel') document.documentElement.classList.add('pastel-theme');
+        else document.documentElement.classList.remove('dark');
+      }
+    })();
+  </script>
+</body>
+</html>

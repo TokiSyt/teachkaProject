@@ -10,7 +10,7 @@ from . import views
 app_name = "home"
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("manage-portal/", admin.site.urls),
     path("", views.HomeView.as_view(), name="home"),
     path("", include("django.contrib.auth.urls")),
     path("register/", v.RegisterView.as_view(), name="register"),
