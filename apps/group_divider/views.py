@@ -22,7 +22,7 @@ class GroupDividerHome(LoginRequiredMixin, TemplateView):
         form = self.form_class(request.POST)
 
         if form.is_valid():
-            selected_group_id = request.POST.get("group_id")  # tag: select, field: name="group_id"
+            selected_group_id = form.cleaned_data["group_id"]
             selected_group_size = form.cleaned_data["size"]
             selected_group = get_object_or_404(GroupCreationModel, id=selected_group_id, user=request.user)
             members = list(selected_group.get_members())
@@ -43,4 +43,5 @@ class GroupDividerHome(LoginRequiredMixin, TemplateView):
                     "groups": groups,
                 },
             )
-        return render(request, "group_divider/home.html", {"form": form})
+        groups = GroupCreationModel.objects.filter(user=request.user)
+        return render(request, "group_divider/home.html", {"form": form, "groups": groups})
