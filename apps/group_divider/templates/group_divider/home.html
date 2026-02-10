@@ -82,18 +82,22 @@
     <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
       Divided groups <span class="text-gray-500 dark:text-gray-400 font-normal">({{ selected_group.title }})</span>
     </h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
       {% for group in splitted_group %}
-      <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-        <div class="px-4 py-3 bg-gray-50 dark:bg-gray-700/50 border-b border-gray-200 dark:border-gray-700">
-          <h3 class="font-semibold text-gray-900 dark:text-white">Group {{ forloop.counter }}</h3>
+      {% with color=group|last %}
+      <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden h-fit">
+        <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700" style="background-color: {{ color }}99;">
+          <h3 class="font-semibold" style="color: white;">Group {{ forloop.counter }}</h3>
         </div>
-        <ul class="divide-y divide-gray-200 dark:divide-gray-700">
+        <ul class="divide-y divide-gray-200/30 dark:divide-gray-700/30" style="background-color: {{ color }}15;">
           {% for member in group %}
+          {% if not forloop.last %}
           <li class="px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300">{{ member.name }}</li>
+          {% endif %}
           {% endfor %}
         </ul>
       </div>
+      {% endwith %}
       {% endfor %}
     </div>
   </div>
