@@ -7,7 +7,7 @@ class GroupCreationModel(models.Model):
     """Model for creating and managing groups of members."""
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    title = models.CharField(max_length=100, unique=True)
+    title = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
     members_string = models.TextField(
         help_text='Comma-separated names. (f.e.: "Toki, Tina, Alice") | We recommend not using the same exact name for different members',
@@ -16,7 +16,7 @@ class GroupCreationModel(models.Model):
     size = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return self.title
+        return f"{self.title}_{self.user}"
 
     def save(self, *args, **kwargs):
         members = self.get_members_list()
