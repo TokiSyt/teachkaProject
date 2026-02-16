@@ -10,7 +10,13 @@ class CustomUser(AbstractUser):
         ("dark", "Dark"),
         ("pastel", "Pastel"),
     ]
+    LANGUAGE_CHOICES = [
+        ("en", "English"),
+        ("pt", "Português"),
+        ("cs", "Čeština"),
+    ]
     theme = models.CharField(max_length=10, choices=THEME_CHOICES, default="light")
+    language = models.CharField(max_length=10, choices=LANGUAGE_CHOICES, default="en")
     icon_hover_color = models.CharField(max_length=20, default="#1779db")
 
     # Usage tracking

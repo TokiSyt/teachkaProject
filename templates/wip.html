@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Coming Soon{% endblock title %}
+{% block title %}{% trans "Coming Soon" %}{% endblock title %}
 
 {% block content %}
 <div class="max-w-2xl mx-auto text-center py-16 sm:py-24">
@@ -15,12 +16,12 @@
 
   <!-- Title -->
   <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-    Work in Progress
+    {% trans "Work in Progress" %}
   </h1>
 
   <!-- Description -->
   <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
-    This feature is currently under development. Check back soon for updates!
+    {% trans "This feature is currently under development. Check back soon for updates!" %}
   </p>
 
   <!-- Back Button -->
@@ -28,7 +29,7 @@
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="m15 18-6-6 6-6"/>
     </svg>
-    Back to Home
+    {% trans "Back to Home" %}
   </a>
 </div>
 {% endblock content %}

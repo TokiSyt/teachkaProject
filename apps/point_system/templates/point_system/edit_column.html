@@ -1,14 +1,15 @@
 {% extends "base.html" %}
 {% load custom_tags %}
+{% load i18n %}
 
-{% block title %}Edit column{% endblock title %}
+{% block title %}{% trans "Edit column" %}{% endblock title %}
 
 {% block content %}
 <div class="max-w-md mx-auto">
   <!-- Header -->
   <div class="mb-8">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Edit column</h1>
-    <p class="mt-1 text-gray-600 dark:text-gray-400">Rename an existing column</p>
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{% trans "Edit column" %}</h1>
+    <p class="mt-1 text-gray-600 dark:text-gray-400">{% trans "Rename an existing column" %}</p>
   </div>
 
   <!-- Error Messages -->
@@ -29,12 +30,12 @@
       <!-- Column to Edit -->
       <div>
         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          Column to edit
+          {% trans "Column to edit" %}
         </label>
         <input type="hidden" name="old_name" id="columnInput" value="{% if form.old_name.value %}{{ form.old_name.value }}{% elif all_keys %}{{ all_keys.0 }}{% endif %}" required>
         <div class="relative z-20" id="columnDropdown">
           <button type="button" id="columnBtn" class="w-full px-4 py-2.5 pr-10 bg-gray-50 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-white transition-colors cursor-pointer text-left">
-            <span id="columnBtnText">{% if form.old_name.value %}{{ form.old_name.value }}{% elif all_keys %}{{ all_keys.0 }}{% else %}Select a column{% endif %}</span>
+            <span id="columnBtnText">{% if form.old_name.value %}{{ form.old_name.value }}{% elif all_keys %}{{ all_keys.0 }}{% else %}{% trans "Select a column" %}{% endif %}</span>
           </button>
           <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
             <svg id="columnChevron" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -45,7 +46,7 @@
             {% for field in all_keys %}
             <div class="column-option px-4 py-2.5 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer {% if forloop.last %}rounded-b-lg{% endif %}" data-value="{{ field }}" data-type="{{ column_types|get_item:field }}">{{ field }}</div>
             {% empty %}
-            <div class="px-4 py-2.5 text-gray-500 dark:text-gray-400">No columns available</div>
+            <div class="px-4 py-2.5 text-gray-500 dark:text-gray-400">{% trans "No columns available" %}</div>
             {% endfor %}
           </div>
         </div>
@@ -57,7 +58,7 @@
       <!-- New Column Name -->
       <div>
         <label for="id_new_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          New column name
+          {% trans "New column name" %}
         </label>
         <input type="text"
                name="new_name"
@@ -75,7 +76,7 @@
       <!-- Table Type -->
       <div>
         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          Table definition
+          {% trans "Table definition" %}
         </label>
         <div class="px-4 py-2.5 bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg">
           <span class="inline-flex items-center gap-2">
@@ -89,7 +90,7 @@
       <!-- Column Type (read-only) -->
       <div>
         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          Column type
+          {% trans "Column type" %}
         </label>
         <div class="px-4 py-2.5 bg-gray-100 dark:bg-gray-700/50 rounded-lg">
           <span id="columnTypeDisplay" class="text-gray-900 dark:text-white">{% if all_keys %}{% with first_type=column_types|get_item:all_keys.0 %}{% if first_type == 'int' %}Numerical{% else %}Text{% endif %}{% endwith %}{% else %}-{% endif %}</span>
@@ -130,10 +131,10 @@
       <!-- Actions -->
       <div class="flex flex-wrap gap-3 pt-4">
         <button type="submit" class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
-          Save changes
+          {% trans "Save changes" %}
         </button>
         <a href="{% url 'karma:karma-home' %}?group_id={{ group_id }}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
-          Cancel
+          {% trans "Cancel" %}
         </a>
       </div>
     </form>

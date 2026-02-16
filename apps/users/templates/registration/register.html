@@ -1,13 +1,14 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Register{% endblock title %}
+{% block title %}{% trans "Register" %}{% endblock title %}
 
 {% block content %}
 <div class="max-w-md mx-auto mt-8">
   <!-- Header -->
   <div class="text-center mb-8">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Create an account</h1>
-    <p class="mt-1 text-gray-600 dark:text-gray-400">Start using Teachka for free</p>
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{% trans "Create an account" %}</h1>
+    <p class="mt-1 text-gray-600 dark:text-gray-400">{% trans "Start using Teachka for free" %}</p>
   </div>
 
   <!-- Register Card -->
@@ -26,7 +27,7 @@
       {% for field in form %}
       <div>
         <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          {{ field.label }}{% if not field.field.required %} <span class="text-gray-400 font-normal">(optional)</span>{% endif %}
+          {{ field.label }}{% if not field.field.required %} <span class="text-gray-400 font-normal">({% trans "optional" %})</span>{% endif %}
         </label>
         <input type="{% if 'password' in field.name %}password{% elif field.name == 'email' %}email{% else %}text{% endif %}"
                name="{{ field.name }}"
@@ -44,14 +45,14 @@
       {% endfor %}
 
       <button type="submit" class="w-full px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
-        Create account
+        {% trans "Create account" %}
       </button>
     </form>
 
     <div class="mt-6 text-center">
       <p class="text-sm text-gray-600 dark:text-gray-400">
-        Already have an account?
-        <a href="/login" class="font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">Sign in</a>
+        {% trans "Already have an account?" %}
+        <a href="{% url 'login' %}" class="font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">{% trans "Sign in" %}</a>
       </p>
     </div>
   </div>

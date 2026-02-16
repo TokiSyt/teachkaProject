@@ -4,6 +4,7 @@ from .views import (
     ActivateAccountView,
     ChangePassword,
     EditProfileView,
+    LanguageUpdateView,
     PasswordResetView,
     ProfileView,
     SettingsView,
@@ -19,5 +20,6 @@ urlpatterns = [
     path("reset/password/<str:uidb64>/<str:token>/", PasswordResetView.as_view(), name="password-reset"),
     path("settings/", SettingsView.as_view(), name="settings"),
     path("theme/", ThemeUpdateView.as_view(), name="theme-update"),
+    path("language/", LanguageUpdateView.as_view(), name="language-update"),
     path("activate/<str:uidb64>/<str:token>/", ActivateAccountView.as_view(), name="activate"),
 ]
