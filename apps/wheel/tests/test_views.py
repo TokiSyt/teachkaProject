@@ -277,7 +277,7 @@ class TestHomeViewPostAjax:
         assert response["Content-Type"] == "application/json"
 
     def test_ajax_post_returns_chosen_members(self, authenticated_client, url, group):
-        """AJAX response includes chosen member names."""
+        """AJAX response includes chosen member names and IDs."""
         response = self.ajax_post(
             authenticated_client,
             url,
@@ -285,19 +285,21 @@ class TestHomeViewPostAjax:
         )
         data = json.loads(response.content)
         assert "chosen_members" in data
+        assert "chosen_ids" in data
         assert len(data["chosen_members"]) == 1
+        assert len(data["chosen_ids"]) == 1
         assert data["chosen_members"][0] in ["Alice", "Bob", "Charlie"]
 
     def test_ajax_post_returns_already_chosen(self, authenticated_client, url, group):
-        """AJAX response includes already chosen member names."""
+        """AJAX response includes already chosen member IDs."""
         response = self.ajax_post(
             authenticated_client,
             url,
             {"group_id": group.id, "remove_after_spin": "on"},
         )
         data = json.loads(response.content)
-        assert "already_chosen" in data
-        assert len(data["already_chosen"]) == 1
+        assert "already_chosen_ids" in data
+        assert len(data["already_chosen_ids"]) == 1
 
     def test_ajax_post_without_group_id_returns_error(self, authenticated_client, url):
         """AJAX POST without group_id returns error JSON."""
@@ -358,8 +360,9 @@ class TestHomeViewPostAjax:
         data = json.loads(response.content)
         # The response includes the just-chosen member (for JS wheel update)
         # but session is not updated
-        assert len(data["already_chosen"]) == 1
-        assert data["already_chosen"][0] in ["Alice", "Bob", "Charlie"]
+        assert len(data["already_chosen_ids"]) == 1
+        member_ids = list(group.members.values_list("id", flat=True))
+        assert data["already_chosen_ids"][0] in member_ids
 
     def test_ajax_post_increments_wheel_spins(self, authenticated_client, url, group, user):
         """AJAX POST increments wheel_spins counter."""
@@ -390,7 +393,7 @@ class TestHomeViewPostAjax:
             {"group_id": group.id, "remove_after_spin": "on"},
         )
         data = json.loads(response.content)
-        assert len(data["already_chosen"]) == 2
+        assert len(data["already_chosen_ids"]) == 2
 
     def test_ajax_post_cannot_choose_more_than_available(self, authenticated_client, url, group):
         """Requesting more members than available returns only available."""

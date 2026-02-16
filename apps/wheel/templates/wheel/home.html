@@ -151,13 +151,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
   const groupsData = {
     {% for group in groups %}
-    "{{ group.id }}": [{% for member in group.get_members %}{name: "{{ member.name }}", color: "{{ member.color|default:'#6366f1' }}"}{% if not forloop.last %}, {% endif %}{% endfor %}]{% if not forloop.last %},{% endif %}
+    "{{ group.id }}": [{% for member in group.get_members %}{id: {{ member.id }}, name: "{{ member.name }}", color: "{{ member.color|default:'#6366f1' }}"}{% if not forloop.last %}, {% endif %}{% endfor %}]{% if not forloop.last %},{% endif %}
     {% endfor %}
   };
 
   const alreadyChosenByGroup = {
     {% if selected_group %}
-    "{{ selected_group.id }}": [{% if already_chosen_members %}{% for member in already_chosen_members %}"{{ member.name }}"{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}]
+    "{{ selected_group.id }}": [{% if already_chosen_members %}{% for member in already_chosen_members %}{{ member.id }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}]
     {% endif %}
   };
 
@@ -166,108 +166,157 @@ document.addEventListener("DOMContentLoaded", function() {
   let isSpinning = false;
   let idleAnimationId = null;
   let ctx = null;
+  let cachedWheel = null;  // Offscreen canvas cache
+  let cachedSize = 0;
 
   if (canvas) {
     ctx = canvas.getContext("2d");
   }
 
+  function getCanvasSize() {
+    if (!canvas) return 0;
+    const container = canvas.parentElement;
+    return Math.min(container.offsetWidth, container.offsetHeight) || 400;
+  }
+
   function resizeCanvas() {
     if (!canvas) return;
-    const container = canvas.parentElement;
-    let size = Math.min(container.offsetWidth, container.offsetHeight);
-
-    if (size === 0) {
-      size = 400;
+    const size = getCanvasSize();
+    if (canvas.width !== size) {
+      canvas.width = size;
+      canvas.height = size;
     }
-    canvas.width = size;
-    canvas.height = size;
+  }
+
+  function hexToRgba(hex, alpha) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
+
+  // Build the static wheel image once
+  function buildWheelCache() {
+    const size = getCanvasSize();
+    if (!size || members.length === 0) { cachedWheel = null; return; }
+
+    cachedSize = size;
+    const offscreen = document.createElement("canvas");
+    offscreen.width = size;
+    offscreen.height = size;
+    const offCtx = offscreen.getContext("2d");
+
+    const center = size / 2;
+    const borderWidth = 4;
+    const borderGap = 4;
+    const radius = center - borderWidth - borderGap - 2;
+    const sliceAngle = (2 * Math.PI) / members.length;
+
+    // Pre-compute font size and truncated names once
+    const maxFontSize = radius / 13
+    ;
+    const arcHeight = sliceAngle * radius * 0.6;
+    const fontSize = Math.max(10, Math.min(maxFontSize, arcHeight));
+    offCtx.font = `bold ${fontSize}px sans-serif`;
+
+    const displayNames = members.map(member => {
+      const maxTextWidth = radius * 0.65;
+      let name = member.name;
+      if (offCtx.measureText(name).width > maxTextWidth) {
+        while (name.length > 1 && offCtx.measureText(name + "…").width > maxTextWidth) {
+          name = name.slice(0, -1);
+        }
+        name += "…";
+      }
+      return name;
+    });
+
+    // Draw all slices (centered at 0 rotation, rotated at render time)
+    members.forEach((member, i) => {
+      const startAngle = i * sliceAngle;
+      const endAngle = startAngle + sliceAngle;
+
+      // Slice fill
+      offCtx.beginPath();
+      offCtx.moveTo(center, center);
+      offCtx.arc(center, center, radius, startAngle, endAngle);
+      offCtx.closePath();
+      offCtx.fillStyle = member.color;
+      offCtx.fill();
+      offCtx.strokeStyle = "#fff";
+      offCtx.lineWidth = 2;
+      offCtx.stroke();
+
+      // Colored border segment
+      offCtx.beginPath();
+      offCtx.arc(center, center, radius + borderGap + borderWidth / 2, startAngle, endAngle);
+      offCtx.strokeStyle = hexToRgba(member.color, 0.5);
+      offCtx.lineWidth = borderWidth;
+      offCtx.stroke();
+
+      // Text with stroke outline (much faster than shadowBlur)
+      offCtx.save();
+      offCtx.translate(center, center);
+      offCtx.rotate(startAngle + sliceAngle / 2);
+      offCtx.textAlign = "right";
+      offCtx.font = `bold ${fontSize}px sans-serif`;
+      offCtx.lineWidth = 3;
+      offCtx.strokeStyle = "rgba(0,0,0,0.4)";
+      offCtx.strokeText(displayNames[i], radius - 15, fontSize / 3);
+      offCtx.fillStyle = "#fff";
+      offCtx.fillText(displayNames[i], radius - 15, fontSize / 3);
+      offCtx.restore();
+    });
+
+    // Center circle
+    offCtx.beginPath();
+    offCtx.arc(center, center, radius * 0.15, 0, 2 * Math.PI);
+    offCtx.fillStyle = "#1f2937";
+    offCtx.fill();
+    offCtx.strokeStyle = "#fff";
+    offCtx.lineWidth = 3;
+    offCtx.stroke();
+
+    cachedWheel = offscreen;
   }
 
   function drawWheel(rotation) {
     if (!canvas || !ctx) return;
     resizeCanvas();
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-    const borderWidth = 4;
-    const borderGap = 4;
-    const radius = Math.min(centerX, centerY) - borderWidth - borderGap - 2;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    if (members.length === 0) return;
-
-    const sliceAngle = (2 * Math.PI) / members.length;
-
-    // Helper to convert hex to rgba
-    function hexToRgba(hex, alpha) {
-      const r = parseInt(hex.slice(1, 3), 16);
-      const g = parseInt(hex.slice(3, 5), 16);
-      const b = parseInt(hex.slice(5, 7), 16);
-      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    if (members.length === 0) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      return;
     }
 
-    // Find which segment is at the arrow (top, -PI/2)
+    // Rebuild cache if missing or canvas resized
+    if (!cachedWheel || cachedSize !== canvas.width) {
+      buildWheelCache();
+    }
+    if (!cachedWheel) return;
+
+    const center = canvas.width / 2;
+
+    // Draw rotated cached wheel
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.save();
+    ctx.translate(center, center);
+    ctx.rotate(rotation);
+    ctx.drawImage(cachedWheel, -center, -center);
+    ctx.restore();
+
+    // Update arrow color (cheap — runs once per frame)
+    const sliceAngle = (2 * Math.PI) / members.length;
     const arrowAngle = -Math.PI / 2;
     let normalizedArrow = arrowAngle - rotation;
     while (normalizedArrow < 0) normalizedArrow += Math.PI * 2;
     while (normalizedArrow >= Math.PI * 2) normalizedArrow -= Math.PI * 2;
     const segmentAtArrow = Math.floor(normalizedArrow / sliceAngle);
 
-    // Update arrow color
     const arrow = document.getElementById("wheelArrow");
     if (arrow && members[segmentAtArrow]) {
       arrow.style.borderTopColor = members[segmentAtArrow].color;
     }
-
-    members.forEach((member, i) => {
-      const startAngle = rotation + (i * sliceAngle);
-      const endAngle = startAngle + sliceAngle;
-
-      // Draw slice
-      ctx.beginPath();
-      ctx.moveTo(centerX, centerY);
-      ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-      ctx.closePath();
-      ctx.fillStyle = member.color;
-      ctx.fill();
-      ctx.strokeStyle = "#fff";
-      ctx.lineWidth = 2;
-      ctx.stroke();
-
-      // Draw colored border segment (with gap and lower opacity)
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, radius + borderGap + borderWidth / 2, startAngle, endAngle);
-      ctx.strokeStyle = hexToRgba(member.color, 0.5);
-      ctx.lineWidth = borderWidth;
-      ctx.stroke();
-
-      // Draw text
-      ctx.save();
-      ctx.translate(centerX, centerY);
-      ctx.rotate(startAngle + sliceAngle / 2);
-      ctx.textAlign = "right";
-      ctx.fillStyle = "#fff";
-      ctx.font = `bold ${Math.max(12, radius / 10)}px sans-serif`;
-      ctx.shadowColor = "rgba(0,0,0,0.5)";
-      ctx.shadowBlur = 2;
-
-      // Truncate long names
-      let displayName = member.name;
-      if (displayName.length > 12) {
-        displayName = displayName.substring(0, 10) + "...";
-      }
-      ctx.fillText(displayName, radius - 15, 5);
-      ctx.restore();
-    });
-
-    // Draw center circle
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, radius * 0.15, 0, 2 * Math.PI);
-    ctx.fillStyle = "#1f2937";
-    ctx.fill();
-    ctx.strokeStyle = "#fff";
-    ctx.lineWidth = 3;
-    ctx.stroke();
   }
 
   function idleSpin() {
@@ -372,33 +421,30 @@ document.addEventListener("DOMContentLoaded", function() {
     requestAnimationFrame(animate);
   }
 
-  function updateAlreadyChosenList(alreadyChosenNames, groupId) {
+  function updateAlreadyChosenList(alreadyChosenIds, groupId) {
     const section = document.getElementById("alreadyChosenSection");
     const title = document.getElementById("alreadyChosenTitle");
     const list = document.getElementById("alreadyChosenList");
 
     if (!section || !title || !list) return;
 
-    if (alreadyChosenNames.length === 0) {
+    if (alreadyChosenIds.length === 0) {
       section.classList.add("hidden");
       return;
     }
 
     // Update title
-    title.textContent = `Already Chosen (${alreadyChosenNames.length})`;
+    title.textContent = `Already Chosen (${alreadyChosenIds.length})`;
 
-    // Look up colors from groupsData
+    // Look up name and color from groupsData by ID
     const allMembers = groupsData[groupId] || [];
-    const getColor = (name) => {
-      const member = allMembers.find(m => m.name === name);
-      return member ? member.color : '#6366f1';
-    };
+    const chosenMembers = alreadyChosenIds.map(id => allMembers.find(m => m.id === id)).filter(Boolean);
 
     // Update list with color bars
-    list.innerHTML = alreadyChosenNames.map(name =>
+    list.innerHTML = chosenMembers.map(member =>
       `<div class="flex items-center justify-between gap-2 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-        <span class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 truncate">${name}</span>
-        <span class="w-4 sm:w-5 h-2 rounded-full flex-shrink-0" style="background-color: ${getColor(name)}"></span>
+        <span class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 truncate">${member.name}</span>
+        <span class="w-4 sm:w-5 h-2 rounded-full flex-shrink-0" style="background-color: ${member.color}"></span>
       </div>`
     ).join('');
 
@@ -465,10 +511,11 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function updateWheel(groupId) {
+    cachedWheel = null;
     if (groupId && groupsData[groupId]) {
       const allMembers = groupsData[groupId];
-      const alreadyChosen = alreadyChosenByGroup[groupId] || [];
-      members = allMembers.filter(m => !alreadyChosen.includes(m.name));
+      const alreadyChosenIds = alreadyChosenByGroup[groupId] || [];
+      members = allMembers.filter(m => !alreadyChosenIds.includes(m.id));
 
       if (members.length === 0) {
         wheelSection.classList.add("hidden");
@@ -478,12 +525,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
       wheelSection.classList.remove("hidden");
       stopIdleSpin();
-      // Wait for DOM to update layout after unhiding
-      requestAnimationFrame(() => {
-        resizeCanvas();
-        drawWheel(currentRotation);
-        idleSpin();
-      });
+      // Force layout calculation and draw immediately (no blank frame)
+      resizeCanvas();
+      drawWheel(currentRotation);
+      idleSpin();
     } else {
       wheelSection.classList.add("hidden");
       stopIdleSpin();
@@ -549,6 +594,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   window.addEventListener("resize", () => {
     if (!wheelSection.classList.contains("hidden")) {
+      cachedWheel = null;  // Rebuild at new size
       drawWheel(currentRotation);
     }
   });
@@ -568,8 +614,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // Make sure members are loaded for this group
     if (members.length === 0 && groupsData[groupId]) {
       const allMembers = groupsData[groupId];
-      const alreadyChosen = alreadyChosenByGroup[groupId] || [];
-      members = allMembers.filter(m => !alreadyChosen.includes(m.name));
+      const alreadyChosenIds = alreadyChosenByGroup[groupId] || [];
+      members = allMembers.filter(m => !alreadyChosenIds.includes(m.id));
     }
 
     if (members.length === 0) {
@@ -609,13 +655,14 @@ document.addEventListener("DOMContentLoaded", function() {
       }
 
       const chosenNames = data.chosen_members;
-      const targetName = chosenNames[0]; // Land on first chosen member
+      const chosenIds = data.chosen_ids;
+      const targetId = chosenIds[0]; // Land on first chosen member
 
       // Find the index of the target member in the wheel
-      const targetIndex = members.findIndex(m => m.name === targetName);
+      const targetIndex = members.findIndex(m => m.id === targetId);
       if (targetIndex === -1) {
-        console.error("Target member not found in wheel:", targetName);
-        console.error("Available members:", members.map(m => m.name));
+        console.error("Target member not found in wheel:", targetId);
+        console.error("Available members:", members.map(m => `${m.name}(${m.id})`));
         spinBtn.disabled = false;
         spinBtn.textContent = "Spin";
         idleSpin();
@@ -625,6 +672,7 @@ document.addEventListener("DOMContentLoaded", function() {
       // Animate to land on chosen member
       setTimeout(() => {
         resizeCanvas();
+        drawWheel(currentRotation);  // Redraw immediately to avoid blank frame
         // Reset clear_session flag after first spin with new group
         if (clearSessionInput) {
           clearSessionInput.value = "0";
@@ -635,9 +683,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
           // Update local state only if removing after spin
           if (removeAfterSpin) {
-            alreadyChosenByGroup[groupId] = data.already_chosen;
-            members = members.filter(m => !chosenNames.includes(m.name));
-            updateAlreadyChosenList(data.already_chosen, groupId);
+            alreadyChosenByGroup[groupId] = data.already_chosen_ids;
+            members = members.filter(m => !data.chosen_ids.includes(m.id));
+            updateAlreadyChosenList(data.already_chosen_ids, groupId);
             updateWheel(groupId);
           }
 

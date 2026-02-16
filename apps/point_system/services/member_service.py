@@ -86,20 +86,20 @@ class MemberService:
             definition: 'positive' or 'negative'
         """
         default_value = 0 if field_type == "int" else ""
-        members = Member.objects.filter(group=group)
+        members = list(Member.objects.filter(group=group))
+        update_field = "positive_data" if definition == "positive" else "negative_data"
 
         for member in members:
-            if definition == "positive":
-                if member.positive_data is None:
-                    member.positive_data = {}
-                member.positive_data[field_name] = default_value
-            else:
-                if member.negative_data is None:
-                    member.negative_data = {}
-                member.negative_data[field_name] = default_value
-            member.save()
+            data = getattr(member, update_field)
+            if data is None:
+                data = {}
+                setattr(member, update_field, data)
+            data[field_name] = default_value
 
-        logger.info(f"Added field '{field_name}' to {members.count()} members in group {group.title}")
+        if members:
+            Member.objects.bulk_update(members, [update_field])
+
+        logger.info(f"Added field '{field_name}' to {len(members)} members in group {group.title}")
 
     @staticmethod
     @transaction.atomic
@@ -112,14 +112,16 @@ class MemberService:
             field_name: Name of the field to remove
             definition: 'positive' or 'negative'
         """
-        members = Member.objects.filter(group=group)
+        members = list(Member.objects.filter(group=group))
+        update_field = "positive_data" if definition == "positive" else "negative_data"
 
         for member in members:
-            if definition == "positive" and member.positive_data:
-                member.positive_data.pop(field_name, None)
-            elif definition == "negative" and member.negative_data:
-                member.negative_data.pop(field_name, None)
-            member.save()
+            data = getattr(member, update_field)
+            if data:
+                data.pop(field_name, None)
+
+        if members:
+            Member.objects.bulk_update(members, [update_field])
 
         # Also delete the field definition
         FieldDefinition.objects.filter(group=group, name=field_name, definition=definition).delete()
@@ -138,16 +140,16 @@ class MemberService:
             new_name: New field name
             definition: 'positive' or 'negative'
         """
-        members = Member.objects.filter(group=group)
+        members = list(Member.objects.filter(group=group))
+        update_field = "positive_data" if definition == "positive" else "negative_data"
 
         for member in members:
-            if definition == "positive" and member.positive_data:
-                if old_name in member.positive_data:
-                    member.positive_data[new_name] = member.positive_data.pop(old_name)
-            elif definition == "negative" and member.negative_data:
-                if old_name in member.negative_data:
-                    member.negative_data[new_name] = member.negative_data.pop(old_name)
-            member.save()
+            data = getattr(member, update_field)
+            if data and old_name in data:
+                data[new_name] = data.pop(old_name)
+
+        if members:
+            Member.objects.bulk_update(members, [update_field])
 
         # Update the field definition
         FieldDefinition.objects.filter(group=group, name=old_name, definition=definition).update(name=new_name)

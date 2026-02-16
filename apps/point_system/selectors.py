@@ -62,13 +62,12 @@ def get_group_with_fields(group_id: int, user) -> tuple[GroupCreationModel, dict
     """
     group = get_object_or_404(GroupCreationModel, id=group_id, user=user)
 
-    positive_fields = FieldDefinition.objects.filter(group=group, definition="positive").order_by("created_at")
-
-    negative_fields = FieldDefinition.objects.filter(group=group, definition="negative").order_by("created_at")
+    positive_fields = list(FieldDefinition.objects.filter(group=group, definition="positive").order_by("created_at"))
+    negative_fields = list(FieldDefinition.objects.filter(group=group, definition="negative").order_by("created_at"))
 
     fields = {
-        "positive": list(positive_fields),
-        "negative": list(negative_fields),
+        "positive": positive_fields,
+        "negative": negative_fields,
         "positive_names": [f.name for f in positive_fields],
         "negative_names": [f.name for f in negative_fields],
         "positive_types": {f.name: "number" if f.type == "int" else "text" for f in positive_fields},
@@ -92,7 +91,16 @@ def get_group_full_data(group_id: int, user) -> dict:
         Dict with group, members, and field information
     """
     group, members = get_group_with_members(group_id, user)
-    _, fields = get_group_with_fields(group_id, user)
+
+    # Reuse the group object instead of fetching it again
+    positive_fields = list(FieldDefinition.objects.filter(group=group, definition="positive").order_by("created_at"))
+    negative_fields = list(FieldDefinition.objects.filter(group=group, definition="negative").order_by("created_at"))
+    fields = {
+        "positive_names": [f.name for f in positive_fields],
+        "negative_names": [f.name for f in negative_fields],
+        "positive_types": {f.name: "number" if f.type == "int" else "text" for f in positive_fields},
+        "negative_types": {f.name: "number" if f.type == "int" else "text" for f in negative_fields},
+    }
 
     # Calculate totals for each member
     for member in members:

@@ -17,7 +17,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["groups"] = GroupCreationModel.objects.filter(user=self.request.user)
+        context["groups"] = GroupCreationModel.objects.filter(user=self.request.user).prefetch_related("members")
         return context
 
     def get(self, request, *args, **kwargs):
@@ -71,12 +71,9 @@ class HomeView(LoginRequiredMixin, TemplateView):
         if not selected_group_id:
             if is_ajax:
                 return JsonResponse({"error": "No group selected"}, status=400)
-            groups = GroupCreationModel.objects.filter(user=self.request.user)
-            return render(
-                request,
-                self.template_name,
-                {"groups": groups, "message": "Please select a group first."},
-            )
+            context = self.get_context_data()
+            context["message"] = "Please select a group first."
+            return render(request, self.template_name, context)
 
         selected_group = get_object_or_404(GroupCreationModel, id=selected_group_id, user=request.user)
         members = selected_group.get_members()
@@ -139,7 +136,8 @@ class HomeView(LoginRequiredMixin, TemplateView):
             return JsonResponse(
                 {
                     "chosen_members": [m.name for m in chosen_members],
-                    "already_chosen": [m.name for m in Member.objects.filter(id__in=already_chosen_ids)],
+                    "chosen_ids": [m.id for m in chosen_members],
+                    "already_chosen_ids": already_chosen_ids,
                 }
             )
 

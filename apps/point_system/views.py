@@ -53,26 +53,30 @@ class HomeView(LoginRequiredMixin, TemplateView):
         group_id = request.POST.get("group_id")
         _, members = get_group_with_members(int(group_id), request.user)
 
+        # Pre-index POST data by member ID in a single pass: O(m) instead of O(n*m)
+        post_data = {}
+        for key, value in request.POST.items():
+            for sep in ("_positive_", "_negative_"):
+                if sep in key:
+                    member_id, col_name = key.split(sep, 1)
+                    kind = sep.strip("_")  # "positive" or "negative"
+                    post_data.setdefault(member_id, {}).setdefault(kind, {})[col_name] = value
+                    break
+
         for member in members:
-            positive_data = member.positive_data.copy() if member.positive_data else {}
-            negative_data = member.negative_data.copy() if member.negative_data else {}
+            member_post = post_data.get(str(member.id), {})
 
-            # Extract form data for this member
-            for key, value in request.POST.items():
-                if key.startswith(f"{member.id}_positive_"):
-                    col_name = key.split("_positive_", 1)[1]
-                    if col_name in positive_data:
-                        positive_data[col_name] = value
-
-                elif key.startswith(f"{member.id}_negative_"):
-                    col_name = key.split("_negative_", 1)[1]
+            if "negative_save" in request.POST:
+                negative_data = member.negative_data.copy() if member.negative_data else {}
+                for col_name, value in member_post.get("negative", {}).items():
                     if col_name in negative_data:
                         negative_data[col_name] = value
-
-            # Use service to update member data
-            if "negative_save" in request.POST:
                 MemberService.update_member_data(member, negative_data=negative_data)
             elif "positive_save" in request.POST:
+                positive_data = member.positive_data.copy() if member.positive_data else {}
+                for col_name, value in member_post.get("positive", {}).items():
+                    if col_name in positive_data:
+                        positive_data[col_name] = value
                 MemberService.update_member_data(member, positive_data=positive_data)
 
         context = self.get_context_data(group_id)
@@ -131,22 +135,21 @@ class AddColumn(LoginRequiredMixin, TemplateView):
         return render(request, self.template_name, {"group_id": group.id})
 
 
+def _get_field_data(group, table_definition):
+    """Get field names and types for the given table definition (positive/negative)."""
+    fields = list(FieldDefinition.objects.filter(group=group, definition=table_definition).values_list("name", "type"))
+    all_keys = [f[0] for f in fields]
+    column_types = {f[0]: f[1] for f in fields}
+    return all_keys, column_types
+
+
 class EditColumn(LoginRequiredMixin, TemplateView):
     template_name = "point_system/edit_column.html"
-
-    def _get_field_data(self, group, table_definition):
-        """Get field names and types for the given table definition (positive/negative)."""
-        fields = list(
-            FieldDefinition.objects.filter(group=group, definition=table_definition).values_list("name", "type")
-        )
-        all_keys = [f[0] for f in fields]
-        column_types = {f[0]: f[1] for f in fields}
-        return all_keys, column_types
 
     def get(self, request, pk):
         group = get_object_or_404(GroupCreationModel, id=pk, user=request.user)
         table_definition = request.GET.get("table")  # "positive" or "negative"
-        all_keys, column_types = self._get_field_data(group, table_definition)
+        all_keys, column_types = _get_field_data(group, table_definition)
 
         return render(
             request,
@@ -163,7 +166,7 @@ class EditColumn(LoginRequiredMixin, TemplateView):
         group = get_object_or_404(GroupCreationModel, id=pk, user=request.user)
         table_definition = request.POST.get("field_definition")
         form = EditColumnForm(request.POST)
-        all_keys, column_types = self._get_field_data(group, table_definition)
+        all_keys, column_types = _get_field_data(group, table_definition)
 
         if form.is_valid():
             new_name = form.cleaned_data["new_name"]
@@ -196,21 +199,10 @@ class EditColumn(LoginRequiredMixin, TemplateView):
 class DeleteColumn(LoginRequiredMixin, TemplateView):
     template_name = "point_system/delete_column.html"
 
-    def _get_field_data(self, group, table_definition):
-        """Get field names and types for the given table definition (positive/negative)."""
-        fields = list(
-            FieldDefinition.objects.filter(group=group, definition=table_definition).values_list("name", "type")
-        )
-        all_keys = [f[0] for f in fields]
-        column_types = {f[0]: f[1] for f in fields}
-        return all_keys, column_types
-
     def get(self, request, pk):
         group = get_object_or_404(GroupCreationModel, id=pk, user=request.user)
         table_definition = request.GET.get("table")  # "positive" or "negative"
-        all_keys, column_types = self._get_field_data(group, table_definition)
-
-        print(f"DEBUG DeleteColumn: table={table_definition}, keys={all_keys}, types={column_types}")
+        all_keys, column_types = _get_field_data(group, table_definition)
 
         return render(
             request,
@@ -228,7 +220,7 @@ class DeleteColumn(LoginRequiredMixin, TemplateView):
         table_definition = request.POST.get("definition")
         field_name = request.POST.get("field_name")
 
-        all_keys, column_types = self._get_field_data(group, table_definition)
+        all_keys, column_types = _get_field_data(group, table_definition)
 
         if field_name and field_name in all_keys:
             # Use service to remove field

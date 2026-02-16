@@ -77,8 +77,7 @@ class GroupCreationModel(models.Model):
         positive_fields = list(FieldDefinition.objects.filter(group=self, definition="positive"))
         negative_fields = list(FieldDefinition.objects.filter(group=self, definition="negative"))
 
-        # Create new members where needed (including duplicates)
-        existing_name_counts = Counter(m.name for m in self.members.all())
+        # existing_name_counts is already up-to-date from the deletion loop above
         for name in current_names:
             needed = current_name_counts[name]
             have = existing_name_counts.get(name, 0)
