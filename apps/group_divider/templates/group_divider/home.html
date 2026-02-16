@@ -1,13 +1,14 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Group divider{% endblock title %}
+{% block title %}{% trans "Group divider" %}{% endblock title %}
 
 {% block content %}
 <div class="max-w-4xl mx-auto">
   <!-- Header -->
   <div class="mb-8">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Group divider</h1>
-    <p class="mt-1 text-gray-600 dark:text-gray-400">Split your group into smaller teams</p>
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{% trans "Group divider" %}</h1>
+    <p class="mt-1 text-gray-600 dark:text-gray-400">{% trans "Split your group into smaller teams" %}</p>
   </div>
 
   <!-- Form Card -->
@@ -16,11 +17,11 @@
       {% csrf_token %}
 
       <div>
-        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Select a group</label>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{% trans "Select a group" %}</label>
         <input type="hidden" name="group_id" id="groupSelect" value="{% if selected_group %}{{ selected_group.id }}{% endif %}" required>
         <div class="relative z-20" id="groupDropdown">
           <button type="button" id="groupBtn" class="w-full px-4 py-2.5 pr-10 bg-gray-50 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-white transition-colors cursor-pointer text-left">
-            <span id="groupBtnText">{% if selected_group %}{{ selected_group.title }} ({{ selected_group.size }} members){% else %}Select a group{% endif %}</span>
+            <span id="groupBtnText">{% if selected_group %}{{ selected_group.title }} ({{ selected_group.size }} {% trans "members" %}){% else %}{% trans "Select a group" %}{% endif %}</span>
           </button>
           <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
             <svg id="groupChevron" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -31,7 +32,7 @@
             {% for group in groups %}
             <div class="group-option px-4 py-2.5 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer {% if forloop.last %}rounded-b-lg{% endif %}" data-value="{{ group.id }}" data-text="{{ group.title }} ({{ group.size }} members)">{{ group.title }} ({{ group.size }} members)</div>
             {% empty %}
-            <div class="px-4 py-2.5 text-gray-500 dark:text-gray-400">No groups available</div>
+            <div class="px-4 py-2.5 text-gray-500 dark:text-gray-400">{% trans "No groups available" %}</div>
             {% endfor %}
           </div>
         </div>
@@ -56,20 +57,20 @@
         <!-- Main action row -->
         <div class="flex flex-wrap gap-2 sm:gap-3">
           <button type="submit" class="flex-1 sm:flex-none px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
-            Divide
+            {% trans "Divide" %}
           </button>
           <a href="{% url 'group_divider:home' %}" class="flex-1 sm:flex-none px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-center">
-            Reset
+            {% trans "Reset" %}
           </a>
         </div>
         <!-- Secondary actions row -->
         <div class="flex flex-wrap gap-2 sm:gap-3">
           <a href="{% url 'group_maker:group-maker-creation' %}?next={% url 'group_divider:home' %}" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-sm">
-            Create group
+            {% trans "Create group" %}
           </a>
           <a id="editGroupsBtn" href="{% if selected_group %}{% url 'group_maker:group-maker-edit' selected_group.id %}{% else %}#{% endif %}"
              class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-sm {% if not selected_group %}opacity-50 pointer-events-none{% endif %}">
-            Edit group
+            {% trans "Edit group" %}
           </a>
         </div>
       </div>
@@ -80,14 +81,14 @@
   <!-- Results -->
   <div class="mt-8">
     <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-      Divided groups <span class="text-gray-500 dark:text-gray-400 font-normal">({{ selected_group.title }})</span>
+      {% trans "Divided groups" %} <span class="text-gray-500 dark:text-gray-400 font-normal">({{ selected_group.title }})</span>
     </h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
       {% for group in splitted_group %}
       {% with color=group|last %}
       <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden h-fit">
         <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700" style="background-color: {{ color }}99;">
-          <h3 class="font-semibold" style="color: white;">Group {{ forloop.counter }}</h3>
+          <h3 class="font-semibold" style="color: white;">{% trans "Group" %} {{ forloop.counter }}</h3>
         </div>
         <ul class="divide-y divide-gray-200/30 dark:divide-gray-700/30" style="background-color: {{ color }}15;">
           {% for member in group %}

@@ -1,0 +1,505 @@
+# Teachka Czech translations.
+# Copyright (C) 2026
+# This file is distributed under the same license as the Teachka package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Teachka\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-14 20:33+0000\n"
+"PO-Revision-Date: 2026-02-14 21:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Czech\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
+"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+
+msgid "Grade calculator"
+msgstr "Kalkulačka známek"
+
+msgid "Calculate grade ranges based on maximum points"
+msgstr "Vypočítat rozsahy známek na základě maximálního počtu bodů"
+
+msgid "Calculate"
+msgstr "Vypočítat"
+
+msgid "Reset"
+msgstr "Obnovit"
+
+msgid "Grade ranges"
+msgstr "Rozsahy známek"
+
+msgid "Grade"
+msgstr "Známka"
+
+msgid "Score Range"
+msgstr "Rozsah bodů"
+
+msgid "Grade thresholds"
+msgstr "Hranice známek"
+
+msgid "Percentage"
+msgstr "Procenta"
+
+msgid ""
+"From 4 to 9 max points, grades do not follow specific percentage thresholds."
+msgstr ""
+"Od 4 do 9 maximálních bodů známky neodpovídají konkrétním procentuálním hranicím."
+
+msgid "Group divider"
+msgstr "Rozdělovač skupin"
+
+msgid "Split your group into smaller teams"
+msgstr "Rozdělte skupinu na menší týmy"
+
+msgid "Select a group"
+msgstr "Vybrat skupinu"
+
+msgid "members"
+msgstr "členů"
+
+msgid "No groups available"
+msgstr "Žádné skupiny nejsou k dispozici"
+
+msgid "Divide"
+msgstr "Rozdělit"
+
+msgid "Create group"
+msgstr "Vytvořit skupinu"
+
+msgid "Edit group"
+msgstr "Upravit skupinu"
+
+msgid "Divided groups"
+msgstr "Rozdělené skupiny"
+
+msgid "Group"
+msgstr "Skupina"
+
+msgid "Delete group"
+msgstr "Smazat skupinu"
+
+msgid "Are you sure you want to delete"
+msgstr "Opravdu chcete smazat"
+
+msgid "This action cannot be undone."
+msgstr "Tuto akci nelze vrátit zpět."
+
+msgid "Cancel"
+msgstr "Zrušit"
+
+msgid "Delete"
+msgstr "Smazat"
+
+msgid "Group Maker"
+msgstr "Tvůrce skupin"
+
+msgid "Manage your groups and member lists"
+msgstr "Spravujte své skupiny a seznamy členů"
+
+msgid "Choose a group..."
+msgstr "Vyberte skupinu..."
+
+msgid "Create Group"
+msgstr "Vytvořit skupinu"
+
+msgid "Edit Group"
+msgstr "Upravit skupinu"
+
+msgid "No groups yet"
+msgstr "Zatím žádné skupiny"
+
+msgid "Create your first group to get started"
+msgstr "Vytvořte svou první skupinu a začněte"
+
+msgid "Create new group"
+msgstr "Vytvořit novou skupinu"
+
+msgid "Add a group that you can use across all tools"
+msgstr "Přidejte skupinu, kterou můžete používat ve všech nástrojích"
+
+msgid "Update group details and member colors"
+msgstr "Aktualizovat údaje skupiny a barvy členů"
+
+msgid "Member colors"
+msgstr "Barvy členů"
+
+msgid "Save changes"
+msgstr "Uložit změny"
+
+msgid "Math Operations"
+msgstr "Matematické operace"
+
+msgid "Mathematical tools and calculators"
+msgstr "Matematické nástroje a kalkulačky"
+
+msgid "Under Development"
+msgstr "Ve vývoji"
+
+msgid "This tool is currently being built. Check back soon!"
+msgstr "Tento nástroj se právě vyvíjí. Brzy se vraťte!"
+
+msgid "Back to Home"
+msgstr "Zpět na úvod"
+
+msgid "Delete column"
+msgstr "Smazat sloupec"
+
+msgid "Remove a column from the points table"
+msgstr "Odebrat sloupec z tabulky bodů"
+
+msgid "This action cannot be undone"
+msgstr "Tuto akci nelze vrátit zpět"
+
+msgid "All data in this column will be permanently deleted for all members."
+msgstr "Všechna data v tomto sloupci budou trvale smazána pro všechny členy."
+
+msgid "Column to delete"
+msgstr "Sloupec ke smazání"
+
+msgid "Select a column"
+msgstr "Vybrat sloupec"
+
+msgid "No columns available"
+msgstr "Žádné sloupce nejsou k dispozici"
+
+msgid "Table definition"
+msgstr "Definice tabulky"
+
+msgid "Column type"
+msgstr "Typ sloupce"
+
+msgid "Edit column"
+msgstr "Upravit sloupec"
+
+msgid "Rename an existing column"
+msgstr "Přejmenovat existující sloupec"
+
+msgid "Column to edit"
+msgstr "Sloupec k úpravě"
+
+msgid "New column name"
+msgstr "Nový název sloupce"
+
+msgid "Points system"
+msgstr "Bodový systém"
+
+msgid "Track positive and negative points for group members"
+msgstr "Sledujte kladné a záporné body členů skupiny"
+
+msgid "Show points"
+msgstr "Zobrazit body"
+
+msgid "Negative points"
+msgstr "Záporné body"
+
+msgid "Name"
+msgstr "Jméno"
+
+msgid "Total"
+msgstr "Celkem"
+
+msgid "Save points"
+msgstr "Uložit body"
+
+msgid "Add column"
+msgstr "Přidat sloupec"
+
+msgid "Add first column"
+msgstr "Přidat první sloupec"
+
+msgid "Positive points"
+msgstr "Kladné body"
+
+msgid "Dashboard"
+msgstr "Přehled"
+
+msgid "Back to Points"
+msgstr "Zpět na body"
+
+msgid "Individual member dashboard"
+msgstr "Individuální přehled člena"
+
+msgid "Negative Points"
+msgstr "Záporné body"
+
+msgid "Positive Points"
+msgstr "Kladné body"
+
+msgid "Net Score"
+msgstr "Čisté skóre"
+
+msgid "Negative Points Breakdown"
+msgstr "Rozpis záporných bodů"
+
+msgid "No negative points recorded"
+msgstr "Žádné záporné body zaznamenány"
+
+msgid "Positive Points Breakdown"
+msgstr "Rozpis kladných bodů"
+
+msgid "No positive points recorded"
+msgstr "Žádné kladné body zaznamenány"
+
+msgid "New column"
+msgstr "Nový sloupec"
+
+msgid "Add new column"
+msgstr "Přidat nový sloupec"
+
+msgid "Create a new column for tracking points"
+msgstr "Vytvořit nový sloupec pro sledování bodů"
+
+msgid "Column name"
+msgstr "Název sloupce"
+
+msgid "Numerical"
+msgstr "Číselný"
+
+msgid "Text"
+msgstr "Textový"
+
+msgid "Numerical columns will be summed in the total"
+msgstr "Číselné sloupce budou sečteny v celkovém součtu"
+
+msgid "Create column"
+msgstr "Vytvořit sloupec"
+
+msgid "Timer"
+msgstr "Časovač"
+
+msgid "Countdown timers and stopwatches"
+msgstr "Odpočítávací časovače a stopky"
+
+msgid "To-Do List"
+msgstr "Seznam úkolů"
+
+msgid "Task management and organization"
+msgstr "Správa a organizace úkolů"
+
+msgid "Login"
+msgstr "Přihlásit se"
+
+msgid "Welcome back"
+msgstr "Vítejte zpět"
+
+msgid "Sign in to your account"
+msgstr "Přihlaste se ke svému účtu"
+
+msgid "Sign in"
+msgstr "Přihlásit se"
+
+msgid "Don't have an account?"
+msgstr "Nemáte účet?"
+
+msgid "Create one"
+msgstr "Vytvořte si ho"
+
+msgid "Register"
+msgstr "Registrovat se"
+
+msgid "Create an account"
+msgstr "Vytvořit účet"
+
+msgid "Start using Teachka for free"
+msgstr "Začněte používat Teachka zdarma"
+
+msgid "optional"
+msgstr "volitelné"
+
+msgid "Create account"
+msgstr "Vytvořit účet"
+
+msgid "Already have an account?"
+msgstr "Již máte účet?"
+
+msgid "Change Password"
+msgstr "Změnit heslo"
+
+msgid "We'll send a reset link to your email"
+msgstr "Pošleme vám odkaz pro obnovení na email"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Send"
+msgstr "Odeslat"
+
+msgid "Edit profile"
+msgstr "Upravit profil"
+
+msgid "Update your account information"
+msgstr "Aktualizovat informace o účtu"
+
+msgid "Password"
+msgstr "Heslo"
+
+msgid "Change password"
+msgstr "Změnit heslo"
+
+msgid "Reset Password"
+msgstr "Obnovit heslo"
+
+msgid "Enter your new password"
+msgstr "Zadejte své nové heslo"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Not set"
+msgstr "Nenastaveno"
+
+msgid "Your profile"
+msgstr "Váš profil"
+
+msgid "View and manage your account information"
+msgstr "Zobrazit a spravovat informace o účtu"
+
+msgid "Username"
+msgstr "Uživatelské jméno"
+
+msgid "First name"
+msgstr "Jméno"
+
+msgid "Last name"
+msgstr "Příjmení"
+
+msgid "Settings"
+msgstr "Nastavení"
+
+msgid "Account settings"
+msgstr "Nastavení účtu"
+
+msgid "Theme"
+msgstr "Motiv"
+
+msgid "Light"
+msgstr "Světlý"
+
+msgid "Dark"
+msgstr "Tmavý"
+
+msgid "Pastel"
+msgstr "Pastelový"
+
+msgid "Language"
+msgstr "Jazyk"
+
+msgid "Accent color"
+msgstr "Barva zvýraznění"
+
+msgid "Save settings"
+msgstr "Uložit nastavení"
+
+msgid "Quick toggle theme"
+msgstr "Rychle přepnout motiv"
+
+msgid "Name wheel"
+msgstr "Kolo jmen"
+
+msgid "Randomly select a name from your group"
+msgstr "Náhodně vyberte jméno z vaší skupiny"
+
+msgid "Members"
+msgstr "Členové"
+
+msgid "Spin"
+msgstr "Točit"
+
+msgid "Remove after spin"
+msgstr "Odebrat po otočení"
+
+msgid "Selected"
+msgstr "Vybráno"
+
+msgid "Already Chosen"
+msgstr "Již vybráni"
+
+msgid "Page not found"
+msgstr "Stránka nenalezena"
+
+msgid "The page you're looking for doesn't exist or has been moved."
+msgstr "Stránka, kterou hledáte, neexistuje nebo byla přesunuta."
+
+msgid "Go Home"
+msgstr "Zpět na úvod"
+
+msgid "Home"
+msgstr "Domů"
+
+msgid "Change language"
+msgstr "Změnit jazyk"
+
+msgid "Karma System"
+msgstr "Systém karmy"
+
+msgid "Karma system"
+msgstr "Systém karmy"
+
+msgid "Grade Calculator"
+msgstr "Kalkulačka známek"
+
+msgid "Wheel"
+msgstr "Kolo"
+
+msgid "Tools for Teachers"
+msgstr "Nástroje pro učitele"
+
+msgid "Welcome to"
+msgstr "Vítejte na"
+
+msgid "A collection of tools designed to make your teaching day easier."
+msgstr "Sbírka nástrojů navržených pro usnadnění vašeho vyučovacího dne."
+
+msgid "Point system"
+msgstr "Bodový systém"
+
+msgid "Track participation and behavior with customizable point categories."
+msgstr "Sledujte účast a chování pomocí vlastních bodových kategorií."
+
+msgid "Randomly split your class into teams of any size."
+msgstr "Náhodně rozdělte třídu do skupin libovolné velikosti."
+
+msgid "Generate score ranges for any maximum points value."
+msgstr "Vygenerujte rozsahy hodnocení pro libovolný maximální počet bodů."
+
+msgid "Randomly pick students from a group."
+msgstr "Náhodně vyberte studenty ze skupiny."
+
+msgid "Your Activity"
+msgstr "Vaše aktivita"
+
+msgid "Groups"
+msgstr "Skupiny"
+
+msgid "Points"
+msgstr "Body"
+
+msgid "Calculator"
+msgstr "Kalkulačka"
+
+msgid "uses"
+msgstr "použití"
+
+msgid "spins"
+msgstr "otočení"
+
+msgid "Divider"
+msgstr "Rozdělovač"
+
+msgid "splits"
+msgstr "rozdělení"
+
+msgid "Coming Soon"
+msgstr "Již brzy"
+
+msgid "Work in Progress"
+msgstr "Ve vývoji"
+
+msgid ""
+"This feature is currently under development. Check back soon for updates!"
+msgstr ""
+"Tato funkce je momentálně ve vývoji. Brzy se vraťte pro novinky!"

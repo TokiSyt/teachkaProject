@@ -1,13 +1,14 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}New column{% endblock title %}
+{% block title %}{% trans "New column" %}{% endblock title %}
 
 {% block content %}
 <div class="max-w-md mx-auto">
   <!-- Header -->
   <div class="mb-8">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Add new column</h1>
-    <p class="mt-1 text-gray-600 dark:text-gray-400">Create a new column for tracking points</p>
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{% trans "Add new column" %}</h1>
+    <p class="mt-1 text-gray-600 dark:text-gray-400">{% trans "Create a new column for tracking points" %}</p>
   </div>
 
   <!-- Form Card -->
@@ -19,7 +20,7 @@
       <!-- Column Name -->
       <div>
         <label for="id_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          Column name
+          {% trans "Column name" %}
         </label>
         <input type="text"
                name="name"
@@ -41,7 +42,7 @@
       <!-- Column Type -->
       <div>
         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          Column type
+          {% trans "Column type" %}
         </label>
         <input type="hidden" name="type" id="typeInput" value="int" required>
         <div class="relative z-20" id="typeDropdown">
@@ -54,11 +55,11 @@
             </svg>
           </div>
           <div id="typeOptions" class="hidden absolute z-50 w-full mt-1 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-lg overflow-hidden">
-            <div class="type-option px-4 py-2.5 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer" data-value="int" data-text="Numerical">Numerical</div>
-            <div class="type-option px-4 py-2.5 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer rounded-b-lg" data-value="str" data-text="Text">Text</div>
+            <div class="type-option px-4 py-2.5 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer" data-value="int" data-text="{% trans "Numerical" %}">{% trans "Numerical" %}</div>
+            <div class="type-option px-4 py-2.5 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer rounded-b-lg" data-value="str" data-text="{% trans "Text" %}">{% trans "Text" %}</div>
           </div>
         </div>
-        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Numerical columns will be summed in the total</p>
+        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{% trans "Numerical columns will be summed in the total" %}</p>
       </div>
       <script>
         const typeBtn = document.getElementById('typeBtn');
@@ -92,7 +93,7 @@
       <!-- Table Type -->
       <div>
         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          Table definition
+          {% trans "Table definition" %}
         </label>
         <div class="px-4 py-2.5 bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg">
           <span class="inline-flex items-center gap-2">
@@ -106,10 +107,10 @@
       <!-- Actions -->
       <div class="flex flex-wrap gap-3 pt-4">
         <button type="submit" class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
-          Create column
+          {% trans "Create column" %}
         </button>
         <a href="{% url 'karma:karma-home' %}?group_id={{ group_id }}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
-          Cancel
+          {% trans "Cancel" %}
         </a>
       </div>
     </form>

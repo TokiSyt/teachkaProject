@@ -1,0 +1,506 @@
+# Teachka Portuguese translations.
+# Copyright (C) 2026
+# This file is distributed under the same license as the Teachka package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Teachka\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-14 20:33+0000\n"
+"PO-Revision-Date: 2026-02-14 21:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Portuguese\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Grade calculator"
+msgstr "Calculadora de notas"
+
+msgid "Calculate grade ranges based on maximum points"
+msgstr "Calcular intervalos de notas com base na pontuação máxima"
+
+msgid "Calculate"
+msgstr "Calcular"
+
+msgid "Reset"
+msgstr "Reiniciar"
+
+msgid "Grade ranges"
+msgstr "Intervalos de notas"
+
+msgid "Grade"
+msgstr "Nota"
+
+msgid "Score Range"
+msgstr "Intervalo de pontuação"
+
+msgid "Grade thresholds"
+msgstr "Limites de notas"
+
+msgid "Percentage"
+msgstr "Percentagem"
+
+msgid ""
+"From 4 to 9 max points, grades do not follow specific percentage thresholds."
+msgstr ""
+"De 4 a 9 pontos máximos, as notas não seguem limites percentuais específicos."
+
+msgid "Group divider"
+msgstr "Divisor de grupos"
+
+msgid "Split your group into smaller teams"
+msgstr "Divida o seu grupo em equipas mais pequenas"
+
+msgid "Select a group"
+msgstr "Selecionar um grupo"
+
+msgid "members"
+msgstr "membros"
+
+msgid "No groups available"
+msgstr "Nenhum grupo disponível"
+
+msgid "Divide"
+msgstr "Dividir"
+
+msgid "Create group"
+msgstr "Criar grupo"
+
+msgid "Edit group"
+msgstr "Editar grupo"
+
+msgid "Divided groups"
+msgstr "Grupos divididos"
+
+msgid "Group"
+msgstr "Grupo"
+
+msgid "Delete group"
+msgstr "Eliminar grupo"
+
+msgid "Are you sure you want to delete"
+msgstr "Tem a certeza que deseja eliminar"
+
+msgid "This action cannot be undone."
+msgstr "Esta ação não pode ser revertida."
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Delete"
+msgstr "Eliminar"
+
+msgid "Group Maker"
+msgstr "Criador de grupos"
+
+msgid "Manage your groups and member lists"
+msgstr "Gerir os seus grupos e listas de membros"
+
+msgid "Choose a group..."
+msgstr "Escolher um grupo..."
+
+msgid "Create Group"
+msgstr "Criar Grupo"
+
+msgid "Edit Group"
+msgstr "Editar Grupo"
+
+msgid "No groups yet"
+msgstr "Ainda sem grupos"
+
+msgid "Create your first group to get started"
+msgstr "Crie o seu primeiro grupo para começar"
+
+msgid "Create new group"
+msgstr "Criar novo grupo"
+
+msgid "Add a group that you can use across all tools"
+msgstr "Adicione um grupo que pode usar em todas as ferramentas"
+
+msgid "Update group details and member colors"
+msgstr "Atualizar detalhes do grupo e cores dos membros"
+
+msgid "Member colors"
+msgstr "Cores dos membros"
+
+msgid "Save changes"
+msgstr "Guardar alterações"
+
+msgid "Math Operations"
+msgstr "Operações Matemáticas"
+
+msgid "Mathematical tools and calculators"
+msgstr "Ferramentas matemáticas e calculadoras"
+
+msgid "Under Development"
+msgstr "Em Desenvolvimento"
+
+msgid "This tool is currently being built. Check back soon!"
+msgstr "Esta ferramenta está a ser desenvolvida. Volte em breve!"
+
+msgid "Back to Home"
+msgstr "Voltar ao Início"
+
+msgid "Delete column"
+msgstr "Eliminar coluna"
+
+msgid "Remove a column from the points table"
+msgstr "Remover uma coluna da tabela de pontos"
+
+msgid "This action cannot be undone"
+msgstr "Esta ação não pode ser revertida"
+
+msgid "All data in this column will be permanently deleted for all members."
+msgstr "Todos os dados desta coluna serão permanentemente eliminados para todos os membros."
+
+msgid "Column to delete"
+msgstr "Coluna a eliminar"
+
+msgid "Select a column"
+msgstr "Selecionar uma coluna"
+
+msgid "No columns available"
+msgstr "Nenhuma coluna disponível"
+
+msgid "Table definition"
+msgstr "Definição da tabela"
+
+msgid "Column type"
+msgstr "Tipo de coluna"
+
+msgid "Edit column"
+msgstr "Editar coluna"
+
+msgid "Rename an existing column"
+msgstr "Renomear uma coluna existente"
+
+msgid "Column to edit"
+msgstr "Coluna a editar"
+
+msgid "New column name"
+msgstr "Novo nome da coluna"
+
+msgid "Points system"
+msgstr "Sistema de pontos"
+
+msgid "Track positive and negative points for group members"
+msgstr "Acompanhe pontos positivos e negativos dos membros do grupo"
+
+msgid "Show points"
+msgstr "Mostrar pontos"
+
+msgid "Negative points"
+msgstr "Pontos negativos"
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Save points"
+msgstr "Guardar pontos"
+
+msgid "Add column"
+msgstr "Adicionar coluna"
+
+msgid "Add first column"
+msgstr "Adicionar primeira coluna"
+
+msgid "Positive points"
+msgstr "Pontos positivos"
+
+msgid "Dashboard"
+msgstr "Painel"
+
+msgid "Back to Points"
+msgstr "Voltar aos Pontos"
+
+msgid "Individual member dashboard"
+msgstr "Painel individual do membro"
+
+msgid "Negative Points"
+msgstr "Pontos Negativos"
+
+msgid "Positive Points"
+msgstr "Pontos Positivos"
+
+msgid "Net Score"
+msgstr "Pontuação Líquida"
+
+msgid "Negative Points Breakdown"
+msgstr "Detalhes dos Pontos Negativos"
+
+msgid "No negative points recorded"
+msgstr "Nenhum ponto negativo registado"
+
+msgid "Positive Points Breakdown"
+msgstr "Detalhes dos Pontos Positivos"
+
+msgid "No positive points recorded"
+msgstr "Nenhum ponto positivo registado"
+
+msgid "New column"
+msgstr "Nova coluna"
+
+msgid "Add new column"
+msgstr "Adicionar nova coluna"
+
+msgid "Create a new column for tracking points"
+msgstr "Criar uma nova coluna para acompanhar pontos"
+
+msgid "Column name"
+msgstr "Nome da coluna"
+
+msgid "Numerical"
+msgstr "Numérico"
+
+msgid "Text"
+msgstr "Texto"
+
+msgid "Numerical columns will be summed in the total"
+msgstr "Colunas numéricas serão somadas no total"
+
+msgid "Create column"
+msgstr "Criar coluna"
+
+msgid "Timer"
+msgstr "Temporizador"
+
+msgid "Countdown timers and stopwatches"
+msgstr "Temporizadores e cronómetros"
+
+msgid "To-Do List"
+msgstr "Lista de Tarefas"
+
+msgid "Task management and organization"
+msgstr "Gestão e organização de tarefas"
+
+msgid "Login"
+msgstr "Entrar"
+
+msgid "Welcome back"
+msgstr "Bem-vindo de volta"
+
+msgid "Sign in to your account"
+msgstr "Inicie sessão na sua conta"
+
+msgid "Sign in"
+msgstr "Entrar"
+
+msgid "Don't have an account?"
+msgstr "Não tem uma conta?"
+
+msgid "Create one"
+msgstr "Criar uma"
+
+msgid "Register"
+msgstr "Registar"
+
+msgid "Create an account"
+msgstr "Criar uma conta"
+
+msgid "Start using Teachka for free"
+msgstr "Comece a usar o Teachka gratuitamente"
+
+msgid "optional"
+msgstr "opcional"
+
+msgid "Create account"
+msgstr "Criar conta"
+
+msgid "Already have an account?"
+msgstr "Já tem uma conta?"
+
+msgid "Change Password"
+msgstr "Alterar Palavra-passe"
+
+msgid "We'll send a reset link to your email"
+msgstr "Enviaremos um link de recuperação para o seu email"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Send"
+msgstr "Enviar"
+
+msgid "Edit profile"
+msgstr "Editar perfil"
+
+msgid "Update your account information"
+msgstr "Atualizar as informações da sua conta"
+
+msgid "Password"
+msgstr "Palavra-passe"
+
+msgid "Change password"
+msgstr "Alterar palavra-passe"
+
+msgid "Reset Password"
+msgstr "Redefinir Palavra-passe"
+
+msgid "Enter your new password"
+msgstr "Introduza a sua nova palavra-passe"
+
+msgid "Profile"
+msgstr "Perfil"
+
+msgid "Not set"
+msgstr "Não definido"
+
+msgid "Your profile"
+msgstr "O seu perfil"
+
+msgid "View and manage your account information"
+msgstr "Ver e gerir as informações da sua conta"
+
+msgid "Username"
+msgstr "Nome de utilizador"
+
+msgid "First name"
+msgstr "Primeiro nome"
+
+msgid "Last name"
+msgstr "Último nome"
+
+msgid "Settings"
+msgstr "Definições"
+
+msgid "Account settings"
+msgstr "Definições da conta"
+
+msgid "Theme"
+msgstr "Tema"
+
+msgid "Light"
+msgstr "Claro"
+
+msgid "Dark"
+msgstr "Escuro"
+
+msgid "Pastel"
+msgstr "Pastel"
+
+msgid "Language"
+msgstr "Idioma"
+
+msgid "Accent color"
+msgstr "Cor de destaque"
+
+msgid "Save settings"
+msgstr "Guardar definições"
+
+msgid "Quick toggle theme"
+msgstr "Alternar tema rapidamente"
+
+msgid "Name wheel"
+msgstr "Roleta de nomes"
+
+msgid "Randomly select a name from your group"
+msgstr "Selecione aleatoriamente um nome do seu grupo"
+
+msgid "Members"
+msgstr "Membros"
+
+msgid "Spin"
+msgstr "Girar"
+
+msgid "Remove after spin"
+msgstr "Remover após girar"
+
+msgid "Selected"
+msgstr "Selecionado"
+
+msgid "Already Chosen"
+msgstr "Já Escolhidos"
+
+msgid "Page not found"
+msgstr "Página não encontrada"
+
+msgid "The page you're looking for doesn't exist or has been moved."
+msgstr "A página que procura não existe ou foi movida."
+
+msgid "Go Home"
+msgstr "Ir para o Início"
+
+msgid "Home"
+msgstr "Início"
+
+msgid "Change language"
+msgstr "Mudar idioma"
+
+msgid "Karma System"
+msgstr "Sistema de Karma"
+
+msgid "Karma system"
+msgstr "Sistema de karma"
+
+msgid "Grade Calculator"
+msgstr "Calculadora de Notas"
+
+msgid "Wheel"
+msgstr "Roleta"
+
+msgid "Tools for Teachers"
+msgstr "Ferramentas para Professores"
+
+msgid "Welcome to"
+msgstr "Bem-vindo ao"
+
+msgid "A collection of tools designed to make your teaching day easier."
+msgstr "Uma coleção de ferramentas para facilitar o seu dia como professor."
+
+msgid "Point system"
+msgstr "Sistema de pontos"
+
+msgid "Track participation and behavior with customizable point categories."
+msgstr ""
+"Acompanhe a participação e o comportamento com categorias de pontos "
+"personalizáveis."
+
+msgid "Randomly split your class into teams of any size."
+msgstr "Divida a sua turma aleatoriamente em equipas de qualquer tamanho."
+
+msgid "Generate score ranges for any maximum points value."
+msgstr "Gere intervalos de pontuação para qualquer valor máximo de pontos."
+
+msgid "Randomly pick students from a group."
+msgstr "Escolha alunos aleatoriamente de um grupo."
+
+msgid "Your Activity"
+msgstr "A sua Atividade"
+
+msgid "Groups"
+msgstr "Grupos"
+
+msgid "Points"
+msgstr "Pontos"
+
+msgid "Calculator"
+msgstr "Calculadora"
+
+msgid "uses"
+msgstr "utilizações"
+
+msgid "spins"
+msgstr "giros"
+
+msgid "Divider"
+msgstr "Divisor"
+
+msgid "splits"
+msgstr "divisões"
+
+msgid "Coming Soon"
+msgstr "Em Breve"
+
+msgid "Work in Progress"
+msgstr "Em Desenvolvimento"
+
+msgid ""
+"This feature is currently under development. Check back soon for updates!"
+msgstr ""
+"Esta funcionalidade está em desenvolvimento. Volte em breve para novidades!"

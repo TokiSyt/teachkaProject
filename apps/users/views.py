@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import (
     get_user_model,
@@ -102,6 +103,12 @@ class SettingsView(LoginRequiredMixin, TemplateView):
         if "theme" in request.POST:
             profile.theme = request.POST["theme"]
             updated = True
+
+        if "language" in request.POST:
+            lang = request.POST["language"]
+            if lang in ["en", "pt", "cs"]:
+                profile.language = lang
+                updated = True
 
         if "toggle_theme" in request.POST:
             theme_cycle = {"light": "dark", "dark": "pastel", "pastel": "light"}
@@ -212,3 +219,29 @@ class ThemeUpdateView(LoginRequiredMixin, View):
             request.user.save(update_fields=["theme"])
             return JsonResponse({"status": "ok", "theme": theme})
         return JsonResponse({"status": "error", "message": "Invalid theme"}, status=400)
+
+
+class LanguageUpdateView(View):
+    """AJAX endpoint for updating user language."""
+
+    def post(self, request):
+        lang = request.POST.get("language")
+        if lang not in ["en", "pt", "cs"]:
+            return JsonResponse({"status": "error", "message": "Invalid language"}, status=400)
+
+        if request.user.is_authenticated:
+            request.user.language = lang
+            request.user.save(update_fields=["language"])
+
+        response = JsonResponse({"status": "ok", "language": lang})
+        response.set_cookie(
+            settings.LANGUAGE_COOKIE_NAME,
+            lang,
+            max_age=365 * 24 * 60 * 60,
+            path=settings.LANGUAGE_COOKIE_PATH,
+            domain=settings.LANGUAGE_COOKIE_DOMAIN,
+            secure=settings.LANGUAGE_COOKIE_SECURE,
+            httponly=settings.LANGUAGE_COOKIE_HTTPONLY,
+            samesite=settings.LANGUAGE_COOKIE_SAMESITE,
+        )
+        return response

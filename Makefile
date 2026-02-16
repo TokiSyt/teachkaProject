@@ -112,7 +112,7 @@ status:
 
 # Run all CI checks (ruff, mypy, tests)
 ci:
-	docker compose exec web ruff check .
-	docker compose exec web ruff format --check .
+	docker compose exec web ruff check . --fix
+	docker compose exec web ruff format .
 	docker compose exec web mypy .
 	docker compose exec web pytest

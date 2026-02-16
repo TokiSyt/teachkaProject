@@ -1,13 +1,14 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Name wheel{% endblock title %}
+{% block title %}{% trans "Name wheel" %}{% endblock title %}
 
 {% block content %}
 <div class="max-w-4xl mx-auto">
   <!-- Header -->
   <div class="mb-8">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Name wheel</h1>
-    <p class="mt-1 text-gray-600 dark:text-gray-400">Randomly select a name from your group</p>
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{% trans "Name wheel" %}</h1>
+    <p class="mt-1 text-gray-600 dark:text-gray-400">{% trans "Randomly select a name from your group" %}</p>
   </div>
 
   <!-- Form Card -->
@@ -17,12 +18,12 @@
 
       <div class="flex flex-col sm:flex-row gap-4">
         <div class="flex-1">
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Select a group</label>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{% trans "Select a group" %}</label>
           <input type="hidden" name="group_id" id="groupSelect" value="{% if selected_group %}{{ selected_group.id }}{% endif %}" required>
           <input type="hidden" name="clear_session" id="clearSession" value="0">
         <div class="relative z-20" id="groupDropdown">
           <button type="button" id="groupBtn" class="w-full px-4 py-2.5 pr-10 bg-gray-50 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-white transition-colors cursor-pointer text-left">
-            <span id="groupBtnText">{% if selected_group %}{{ selected_group.title }} ({{ selected_group.size }} members){% else %}Select a group{% endif %}</span>
+            <span id="groupBtnText">{% if selected_group %}{{ selected_group.title }} ({{ selected_group.size }} {% trans "members" %}){% else %}{% trans "Select a group" %}{% endif %}</span>
           </button>
           <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
             <svg id="groupChevron" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -33,14 +34,14 @@
             {% for group in groups %}
             <div class="group-option px-4 py-2.5 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer {% if forloop.last %}rounded-b-lg{% endif %}" data-value="{{ group.id }}" data-text="{{ group.title }} ({{ group.size }} members)">{{ group.title }} ({{ group.size }} members)</div>
             {% empty %}
-            <div class="px-4 py-2.5 text-gray-500 dark:text-gray-400">No groups available</div>
+            <div class="px-4 py-2.5 text-gray-500 dark:text-gray-400">{% trans "No groups available" %}</div>
             {% endfor %}
           </div>
         </div>
         </div>
 
         <div class="w-full sm:w-32">
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Members</label>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{% trans "Members" %}</label>
           <input type="number" name="members_chosen" id="membersChosen" min="1" max="{% if selected_group %}{{ selected_group.size }}{% else %}99{% endif %}" value="{{ members_chosen|default:1 }}" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-white transition-colors">
         </div>
 
@@ -50,23 +51,23 @@
         <!-- Main action row -->
         <div class="flex flex-wrap gap-2 sm:gap-3">
           <button type="button" id="spinBtn" class="flex-1 sm:flex-none px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-            Spin
+            {% trans "Spin" %}
           </button>
           <a id="resetBtn" href="{% url 'wheel:home' %}?reset=1{% if selected_group %}&group_id={{ selected_group.id }}{% endif %}" class="flex-1 sm:flex-none px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-center">
-            Reset
+            {% trans "Reset" %}
           </a>
         </div>
         <!-- Secondary actions row -->
         <div class="flex flex-wrap gap-2 sm:gap-3">
           <a href="{% url 'group_maker:group-maker-creation' %}?next={% url 'wheel:home' %}" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-sm">
-            Create group
+            {% trans "Create group" %}
           </a>
           <a id="editGroupsBtn" href="{% if selected_group %}{% url 'group_maker:group-maker-edit' selected_group.id %}{% else %}#{% endif %}"
              class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-sm {% if not selected_group %}opacity-50 pointer-events-none{% endif %}">
-            Edit group
+            {% trans "Edit group" %}
           </a>
           <label class="flex items-center gap-2 cursor-pointer sm:ml-auto">
-            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Remove after spin</span>
+            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{% trans "Remove after spin" %}</span>
             <div class="relative">
               <input type="checkbox" name="remove_after_spin" id="removeAfterSpin" checked class="sr-only peer">
               <div class="w-11 h-6 bg-red-500 rounded-full peer-checked:bg-green-500 transition-colors"></div>
@@ -102,7 +103,7 @@
     <!-- Popup Content - positioned over the content area (offset by 60px sidebar) -->
     <div class="absolute inset-0 flex items-center justify-center pointer-events-none left-[60px]">
       <div id="popupContent" class="pointer-events-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-5 sm:p-8 text-center shadow-2xl max-w-[90vw] sm:max-w-lg mx-4 max-h-[85vh] flex flex-col transform transition-all duration-300 scale-100 opacity-100">
-      <p id="popupTitle" class="text-gray-500 dark:text-gray-400 text-sm font-medium uppercase tracking-wider mb-3 sm:mb-4 flex-shrink-0">Selected</p>
+      <p id="popupTitle" class="text-gray-500 dark:text-gray-400 text-sm font-medium uppercase tracking-wider mb-3 sm:mb-4 flex-shrink-0">{% trans "Selected" %}</p>
       <div id="popupNames" class="grid grid-cols-2 gap-2 sm:gap-3 mb-4 sm:mb-6 overflow-y-auto flex-1 min-h-0"></div>
       <button id="popupOkBtn" class="px-6 sm:px-8 py-2.5 sm:py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors flex-shrink-0">
         OK
@@ -120,7 +121,7 @@
 
   <!-- Already Chosen List -->
   <div id="alreadyChosenSection" class="mt-8 {% if not already_chosen_members %}hidden{% endif %}">
-    <h2 id="alreadyChosenTitle" class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Already Chosen ({{ already_chosen_members|length|default:0 }})</h2>
+    <h2 id="alreadyChosenTitle" class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">{% trans "Already Chosen" %} ({{ already_chosen_members|length|default:0 }})</h2>
     <div id="alreadyChosenList" class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2">
       {% for member in already_chosen_members %}
       <div class="flex items-center justify-between gap-2 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">

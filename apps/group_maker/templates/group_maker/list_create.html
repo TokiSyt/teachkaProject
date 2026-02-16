@@ -1,13 +1,14 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Create group{% endblock title %}
+{% block title %}{% trans "Create group" %}{% endblock title %}
 
 {% block content %}
 <div class="max-w-2xl mx-auto">
   <!-- Header -->
   <div class="mb-8">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Create new group</h1>
-    <p class="mt-1 text-gray-600 dark:text-gray-400">Add a group that you can use across all tools</p>
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{% trans "Create new group" %}</h1>
+    <p class="mt-1 text-gray-600 dark:text-gray-400">{% trans "Add a group that you can use across all tools" %}</p>
   </div>
 
   <!-- Form Card -->
@@ -52,10 +53,10 @@
 
       <div class="flex gap-3 pt-2">
         <button type="submit" class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
-          Create group
+          {% trans "Create group" %}
         </button>
         <a href="{{ request.META.HTTP_REFERER|default:'/' }}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
-          Cancel
+          {% trans "Cancel" %}
         </a>
       </div>
     </form>
