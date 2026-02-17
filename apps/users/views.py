@@ -100,20 +100,11 @@ class SettingsView(LoginRequiredMixin, TemplateView):
             profile.icon_hover_color = request.POST["icon_hover_color"]
             updated = True
 
-        if "theme" in request.POST:
-            profile.theme = request.POST["theme"]
-            updated = True
-
         if "language" in request.POST:
             lang = request.POST["language"]
             if lang in ["en", "pt", "cs"]:
                 profile.language = lang
                 updated = True
-
-        if "toggle_theme" in request.POST:
-            theme_cycle = {"light": "dark", "dark": "pastel", "pastel": "light"}
-            profile.theme = theme_cycle.get(profile.theme, "light")
-            updated = True
 
         if updated:
             profile.save()

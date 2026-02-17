@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views.generic import TemplateView
 
 from apps.group_maker.models import GroupCreationModel
+from apps.users.models import UserStats
 
 from .forms import GroupMakerForm
 from .services.group_split import get_split_group_color
@@ -30,9 +31,9 @@ class GroupDividerHome(LoginRequiredMixin, TemplateView):
             raw_splitted_group = group_split_f(members, selected_group_size)
             groups = GroupCreationModel.objects.filter(user=self.request.user)
 
-            # Track usage
-            request.user.divider_uses += 1
-            request.user.save(update_fields=["divider_uses"])
+            stats, _ = UserStats.objects.get_or_create(user=request.user)
+            stats.divider_uses += 1
+            stats.save(update_fields=["divider_uses"])
             colored_splitted_groups = get_split_group_color(raw_splitted_group)
             return render(
                 request,
