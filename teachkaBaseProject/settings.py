@@ -27,7 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key")
+SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key" if "RENDER" not in os.environ else None)
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY environment variable is required in production")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
@@ -65,7 +67,7 @@ INSTALLED_APPS = [
     "apps.core",
     "apps.timer",
     "apps.wheel",
-    "apps.todo_list",
+    "apps.calendar",
     "apps.math_ops",
     "apps.grade_calculator",
     "apps.users",
@@ -108,7 +110,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "apps.core.context_processors.navigation",
             ],
         },
     },
@@ -224,6 +225,10 @@ if not DEBUG:
     X_FRAME_OPTIONS = "DENY"
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 mail = os.environ.get("MAIL")
 mail_pass = os.environ.get("MAIL_PASSWORD")

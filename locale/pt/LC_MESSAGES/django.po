@@ -273,11 +273,53 @@ msgstr "Temporizador"
 msgid "Countdown timers and stopwatches"
 msgstr "Temporizadores e cronómetros"
 
+msgid "Stopwatch"
+msgstr "Cronómetro"
+
+msgid "Mark your times with flags"
+msgstr "Marca os teus tempos com bandeiras"
+
+msgid "Count up with lap flags"
+msgstr "Contagem crescente com marcações"
+
+msgid "Countdown"
+msgstr "Contagem decrescente"
+
+msgid "Set a duration and count down to zero"
+msgstr "Define uma duração e conta até zero"
+
+msgid "Hours"
+msgstr "Horas"
+
+msgid "Minutes"
+msgstr "Minutos"
+
+msgid "Seconds"
+msgstr "Segundos"
+
+msgid "Flags"
+msgstr "Marcações"
+
+msgid "Week"
+msgstr "Semana"
+
+msgid "Even week"
+msgstr "Semana par"
+
+msgid "Odd week"
+msgstr "Semana ímpar"
+
 msgid "To-Do List"
 msgstr "Lista de Tarefas"
 
 msgid "Task management and organization"
 msgstr "Gestão e organização de tarefas"
+
+msgid "Calendar"
+msgstr "Calendário"
+
+msgid "Plan and organize your teaching schedule."
+msgstr "Planeie e organize o seu horário de ensino."
 
 msgid "Login"
 msgstr "Entrar"
@@ -461,6 +503,9 @@ msgstr ""
 "Acompanhe a participação e o comportamento com categorias de pontos "
 "personalizáveis."
 
+msgid "Track performance with customizable point categories."
+msgstr "Acompanhe o desempenho com categorias de pontos personalizáveis."
+
 msgid "Randomly split your class into teams of any size."
 msgstr "Divida a sua turma aleatoriamente em equipas de qualquer tamanho."
 
@@ -493,6 +538,21 @@ msgstr "Divisor"
 
 msgid "splits"
 msgstr "divisões"
+
+msgid "Max Points"
+msgstr "Pontuação Máxima"
+
+msgid "Rounding option"
+msgstr "Opção de arredondamento"
+
+msgid "Full number"
+msgstr "Número inteiro"
+
+msgid "Decimal number"
+msgstr "Número decimal"
+
+msgid "min"
+msgstr "min"
 
 msgid "Coming Soon"
 msgstr "Em Breve"

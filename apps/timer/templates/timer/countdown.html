@@ -1,0 +1,284 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Countdown" %}{% endblock title %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+  <!-- Header -->
+  <div class="mb-8">
+    <a href="{% url 'timer:home' %}" class="inline-flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors mb-2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      {% trans "Timer" %}
+    </a>
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{% trans "Countdown" %}</h1>
+    <p class="mt-1 text-gray-600 dark:text-gray-400">{% trans "Set a duration and count down to zero" %}</p>
+  </div>
+
+  <!-- Setup Card -->
+  <div id="setupCard" class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8">
+    <div class="flex items-center justify-center gap-2">
+      <div class="text-center">
+        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">{% trans "Hours" %}</label>
+        <div class="relative w-16">
+          <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-10 bg-gray-100 dark:bg-gray-700 rounded-lg pointer-events-none z-0"></div>
+          <div class="absolute inset-x-0 top-0 h-10 picker-fade-top pointer-events-none z-10"></div>
+          <div class="absolute inset-x-0 bottom-0 h-10 picker-fade-bottom pointer-events-none z-10"></div>
+          <div id="scrollH" class="scroll-picker relative z-[1]"><div class="scroll-picker-item"></div></div>
+        </div>
+      </div>
+      <span class="text-2xl font-bold text-gray-400 dark:text-gray-500 mt-5">:</span>
+      <div class="text-center">
+        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">{% trans "Minutes" %}</label>
+        <div class="relative w-16">
+          <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-10 bg-gray-100 dark:bg-gray-700 rounded-lg pointer-events-none z-0"></div>
+          <div class="absolute inset-x-0 top-0 h-10 picker-fade-top pointer-events-none z-10"></div>
+          <div class="absolute inset-x-0 bottom-0 h-10 picker-fade-bottom pointer-events-none z-10"></div>
+          <div id="scrollM" class="scroll-picker relative z-[1]"><div class="scroll-picker-item"></div></div>
+        </div>
+      </div>
+      <span class="text-2xl font-bold text-gray-400 dark:text-gray-500 mt-5">:</span>
+      <div class="text-center">
+        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">{% trans "Seconds" %}</label>
+        <div class="relative w-16">
+          <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-10 bg-gray-100 dark:bg-gray-700 rounded-lg pointer-events-none z-0"></div>
+          <div class="absolute inset-x-0 top-0 h-10 picker-fade-top pointer-events-none z-10"></div>
+          <div class="absolute inset-x-0 bottom-0 h-10 picker-fade-bottom pointer-events-none z-10"></div>
+          <div id="scrollS" class="scroll-picker relative z-[1]"><div class="scroll-picker-item"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-center mt-6">
+      <button id="startBtn" type="button" class="w-12 h-12 flex items-center justify-center bg-primary-600 hover:bg-primary-700 text-white rounded-full transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Timer Card (hidden until start) -->
+  <div id="timerCard" class="hidden bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8">
+    <div class="mb-6">
+      <div class="relative flex justify-center">
+        <div class="relative w-56 h-56 sm:w-72 sm:h-72">
+          <svg class="w-full h-full -rotate-90" viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="90" fill="none" stroke-width="8" class="countdown-ring-bg"/>
+            <circle id="progressRing" cx="100" cy="100" r="90" fill="none" stroke-width="8" stroke-linecap="round" class="countdown-ring-fill" style="stroke-dasharray: 565.49; stroke-dashoffset: 0;"/>
+          </svg>
+          <div class="absolute inset-0 flex flex-col items-center justify-center">
+            <div class="flex items-baseline font-mono font-bold tabular-nums tracking-tight">
+              <span id="timerMain" class="text-4xl sm:text-5xl text-gray-900 dark:text-white" data-hours="0">00:00</span>
+              <span id="timerMs" class="text-lg sm:text-xl text-gray-400 dark:text-gray-500 ml-0.5">.00</span>
+            </div>
+            <span id="totalLabel" class="text-xs text-gray-400 dark:text-gray-500 font-mono mt-1"></span>
+          </div>
+        </div>
+        <div class="absolute right-0 top-1/2 -translate-y-1/2 flex flex-col gap-2 max-sm:hidden">
+          <button type="button" class="add-time-btn px-3 py-2 rounded-lg text-sm font-semibold bg-primary-600/80 hover:bg-primary-600 text-white transition-colors" data-seconds="5">+5s</button>
+          <button type="button" class="add-time-btn px-3 py-2 rounded-lg text-sm font-semibold bg-primary-600/80 hover:bg-primary-600 text-white transition-colors" data-seconds="10">+10s</button>
+          <button type="button" class="add-time-btn px-3 py-2 rounded-lg text-sm font-semibold bg-primary-600/80 hover:bg-primary-600 text-white transition-colors" data-seconds="20">+20s</button>
+        </div>
+      </div>
+      <div class="flex justify-center gap-2 mt-3 sm:hidden">
+        <button type="button" class="add-time-btn px-4 py-2 rounded-lg text-sm font-semibold bg-primary-600/80 hover:bg-primary-600 text-white transition-colors" data-seconds="5">+5s</button>
+        <button type="button" class="add-time-btn px-4 py-2 rounded-lg text-sm font-semibold bg-primary-600/80 hover:bg-primary-600 text-white transition-colors" data-seconds="10">+10s</button>
+        <button type="button" class="add-time-btn px-4 py-2 rounded-lg text-sm font-semibold bg-primary-600/80 hover:bg-primary-600 text-white transition-colors" data-seconds="20">+20s</button>
+      </div>
+    </div>
+
+    <div class="flex justify-center gap-3">
+      <button id="pauseBtn" type="button" class="w-12 h-12 flex items-center justify-center bg-primary-600 hover:bg-primary-700 text-white rounded-full transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="5" y="3" width="4" height="18" rx="1"/><rect x="15" y="3" width="4" height="18" rx="1"/></svg>
+      </button>
+      <button id="playBtn" type="button" class="hidden w-12 h-12 flex items-center justify-center bg-primary-600 hover:bg-primary-700 text-white rounded-full transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+      </button>
+      <button id="stopBtn" type="button" class="hidden w-12 h-12 flex items-center justify-center bg-red-500 hover:bg-red-600 text-white rounded-full transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+      </button>
+      <button id="pipBtn" type="button" class="w-12 h-12 flex items-center justify-center bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300 rounded-full transition-colors" title="Picture-in-Picture">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><rect x="12" y="9" width="8" height="6" rx="1"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+{% csrf_token %}
+<script src="{% static 'js/timer.js' %}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var main = document.getElementById("timerMain"),
+      ms = document.getElementById("timerMs"),
+      setup = document.getElementById("setupCard"),
+      timer = document.getElementById("timerCard"),
+      btns = ["playBtn","pauseBtn","stopBtn"].map(function(id) { return document.getElementById(id); }),
+      play = btns[0], pause = btns[1], stop = btns[2],
+      scrollH = document.getElementById("scrollH"),
+      scrollM = document.getElementById("scrollM"),
+      scrollS = document.getElementById("scrollS"),
+      ring = document.getElementById("progressRing"),
+      totalLabel = document.getElementById("totalLabel"),
+      CIRC = 565.49,
+      state = "idle", remaining = 0, lastTick = null, afId = null;
+
+  initPicker(scrollH, 99, 0);
+  initPicker(scrollM, 59, 5);
+  initPicker(scrollS, 59, 0);
+
+  function updateRing() {
+    var progress = totalSet > 0 ? remaining / totalSet : 1;
+    ring.style.strokeDashoffset = CIRC * (1 - progress);
+    if (progress > 0.5) ring.style.stroke = "";
+    else if (progress > 0.2) ring.style.stroke = "#eab308";
+    else ring.style.stroke = "#ef4444";
+    totalLabel.textContent = formatTime(totalSet).main;
+  }
+
+  function tick(ts) {
+    if (state !== "running") return;
+    if (lastTick !== null) remaining -= ts - lastTick;
+    lastTick = ts;
+    if (remaining <= 0) { remaining = 0; updateTimerDisplay(main, ms, 0); updateRing(); track("stop", totalSet); state = "idle"; lastTick = null; showButtons(btns, stop); return; }
+    updateTimerDisplay(main, ms, remaining);
+    updateRing();
+    afId = requestAnimationFrame(tick);
+  }
+
+  var totalSet = 0;
+
+  document.getElementById("startBtn").onclick = function() {
+    remaining = (getPickerValue(scrollH, 99) * 3600 + getPickerValue(scrollM, 59) * 60 + getPickerValue(scrollS, 59)) * 1000;
+    if (remaining <= 0) return;
+    totalSet = remaining;
+    setup.classList.add("hidden"); timer.classList.remove("hidden");
+    updateTimerDisplay(main, ms, remaining);
+    ring.style.strokeDashoffset = 0;
+    ring.style.stroke = "";
+    totalLabel.textContent = formatTime(totalSet).main;
+    state = "running"; lastTick = null; afId = requestAnimationFrame(tick);
+    showButtons(btns, pause);
+    track("start");
+  };
+
+  document.querySelectorAll(".add-time-btn").forEach(function(btn) {
+    btn.onclick = function() {
+      var extra = parseInt(btn.dataset.seconds) * 1000;
+      remaining += extra;
+      totalSet += extra;
+      updateTimerDisplay(main, ms, remaining);
+      updateRing();
+    };
+  });
+
+  play.onclick = function() {
+    state = "running"; lastTick = null; afId = requestAnimationFrame(tick);
+    showButtons(btns, pause);
+  };
+
+  pause.onclick = function() {
+    state = "paused"; lastTick = null; if (afId) cancelAnimationFrame(afId);
+    showButtons(btns, play, stop);
+  };
+
+  stop.onclick = function() {
+    var elapsed = totalSet - remaining;
+    if (elapsed > 0) track("stop", elapsed);
+    state = "idle"; lastTick = null; if (afId) cancelAnimationFrame(afId);
+    main.dataset.hours = "0";
+    timer.classList.add("hidden"); setup.classList.remove("hidden");
+  };
+
+  // Picture-in-Picture
+  var pipBtn = document.getElementById("pipBtn");
+  var pipWindow = null;
+
+  if (!("documentPictureInPicture" in window)) {
+    pipBtn.style.display = "none";
+  }
+
+  pipBtn.onclick = async function() {
+    if (pipWindow) { pipWindow.close(); pipWindow = null; return; }
+
+    pipWindow = await documentPictureInPicture.requestWindow({ width: 420, height: 340 });
+
+    var pipDoc = pipWindow.document;
+    pipDoc.head.innerHTML = '<style>' +
+      'body { margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; background: #111827; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; overflow: hidden; }' +
+      '.wrap { text-align: center; }' +
+      'svg { width: 220px; height: 220px; }' +
+      '.ring-bg { stroke: #374151; }' +
+      '.ring-fill { stroke: #2563eb; transition: stroke-dashoffset 0.1s linear; }' +
+      '.time { font-family: ui-monospace, monospace; font-weight: bold; font-size: 40px; color: #fff; }' +
+      '.time-ms { font-size: 20px; color: #9ca3af; }' +
+      '.total { font-size: 14px; color: #6b7280; font-family: ui-monospace, monospace; margin-top: 4px; }' +
+      '.controls { margin-top: 12px; display: flex; gap: 10px; justify-content: center; }' +
+      '.controls button { width: 44px; height: 44px; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }' +
+      '.btn-primary { background: #2563eb; color: #fff; }' +
+      '.btn-primary:hover { background: #1d4ed8; }' +
+      '.btn-stop { background: #ef4444; color: #fff; display: none; }' +
+      '.btn-stop:hover { background: #dc2626; }' +
+      '</style>';
+
+    pipDoc.body.innerHTML =
+      '<div class="wrap">' +
+        '<svg viewBox="0 0 200 200" style="transform: rotate(-90deg);">' +
+          '<circle cx="100" cy="100" r="90" fill="none" stroke-width="10" class="ring-bg"/>' +
+          '<circle id="pipRing" cx="100" cy="100" r="90" fill="none" stroke-width="10" stroke-linecap="round" class="ring-fill" style="stroke-dasharray:565.49;stroke-dashoffset:0"/>' +
+        '</svg>' +
+        '<div style="margin-top:-165px;position:relative;">' +
+          '<div><span id="pipMain" class="time">00:00</span><span id="pipMs" class="time-ms">.00</span></div>' +
+          '<div id="pipTotal" class="total"></div>' +
+        '</div>' +
+        '<div class="controls">' +
+          '<button id="pipPause" class="btn-primary"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="3" width="4" height="18" rx="1"/><rect x="15" y="3" width="4" height="18" rx="1"/></svg></button>' +
+          '<button id="pipPlay" class="btn-primary" style="display:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg></button>' +
+          '<button id="pipStop" class="btn-stop"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></button>' +
+        '</div>' +
+      '</div>';
+
+    var pipRing = pipDoc.getElementById("pipRing"),
+        pipMain = pipDoc.getElementById("pipMain"),
+        pipMs = pipDoc.getElementById("pipMs"),
+        pipTotal = pipDoc.getElementById("pipTotal"),
+        pipPause = pipDoc.getElementById("pipPause"),
+        pipPlay = pipDoc.getElementById("pipPlay"),
+        pipStop = pipDoc.getElementById("pipStop");
+
+    function syncPip() {
+      if (!pipWindow) return;
+      var t = formatTime(remaining);
+      pipMain.textContent = t.main;
+      pipMs.textContent = "." + t.cs;
+      pipTotal.textContent = formatTime(totalSet).main;
+      var progress = totalSet > 0 ? remaining / totalSet : 1;
+      pipRing.style.strokeDashoffset = CIRC * (1 - progress);
+      if (progress > 0.5) pipRing.style.stroke = "";
+      else if (progress > 0.2) pipRing.style.stroke = "#eab308";
+      else pipRing.style.stroke = "#ef4444";
+
+      if (state === "running") { pipPause.style.display = ""; pipPlay.style.display = "none"; pipStop.style.display = "none"; }
+      else if (state === "paused") { pipPause.style.display = "none"; pipPlay.style.display = ""; pipStop.style.display = ""; }
+      else { pipPause.style.display = "none"; pipPlay.style.display = "none"; pipStop.style.display = "none"; }
+    }
+
+    pipPause.onclick = function() { pause.onclick(); syncPip(); };
+    pipPlay.onclick = function() { play.onclick(); syncPip(); };
+    pipStop.onclick = function() { stop.onclick(); if (pipWindow) { pipWindow.close(); pipWindow = null; } };
+
+    // Sync loop
+    var pipAf;
+    function pipTick() {
+      if (!pipWindow) return;
+      syncPip();
+      pipAf = requestAnimationFrame(pipTick);
+    }
+    pipTick();
+
+    pipWindow.addEventListener("pagehide", function() {
+      pipWindow = null;
+      if (pipAf) cancelAnimationFrame(pipAf);
+    });
+  };
+});
+</script>
+{% endblock content %}

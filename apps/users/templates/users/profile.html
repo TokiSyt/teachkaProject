@@ -49,6 +49,12 @@
         <a href="{% url 'profile:settings' %}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
           {% trans "Settings" %}
         </a>
+        <form action="{% url 'logout' %}" method="post" class="inline">
+          {% csrf_token %}
+          <button type="submit" class="px-5 py-2.5 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg transition-colors">
+            {% trans "Logout" %}
+          </button>
+        </form>
       </div>
     </div>
   </div>

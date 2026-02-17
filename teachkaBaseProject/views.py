@@ -1,8 +1,11 @@
+from datetime import date
+
 from django.db.models import Sum
 from django.views.generic import TemplateView
 
 from apps.group_maker.models import GroupCreationModel
 from apps.point_system.models import Member
+from apps.users.models import UserStats
 
 
 class HomeView(TemplateView):
@@ -31,8 +34,19 @@ class HomeView(TemplateView):
             context["user_negative_points"] = user_totals["total_negative"] or 0
 
             # Usage stats
-            context["calculator_uses"] = user.calculator_uses
-            context["wheel_spins"] = user.wheel_spins
-            context["divider_uses"] = user.divider_uses
+            stats, _ = UserStats.objects.get_or_create(user=user)
+            context["calculator_uses"] = stats.calculator_uses
+            context["wheel_spins"] = stats.wheel_spins
+            context["divider_uses"] = stats.divider_uses
+            total_timer_ms = stats.stopwatch_total_ms + stats.countdown_total_ms
+            context["timer_total_hours"] = round(total_timer_ms / 3_600_000, 1)
+            context["timer_total_minutes"] = round(total_timer_ms / 60_000)
+
+        # Date info
+        today = date.today()
+        week_number = today.isocalendar()[1]
+        context["today"] = today
+        context["week_number"] = week_number
+        context["week_parity"] = "even" if week_number % 2 == 0 else "odd"
 
         return context

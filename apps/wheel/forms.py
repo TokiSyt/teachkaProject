@@ -2,4 +2,4 @@ from django import forms
 
 
 class NameWheelForm(forms.Form):
-    members_chosen = forms.IntegerField(label="Members chosen", min_value=1, initial=1)
+    chosen_members_amount = forms.IntegerField(label="Members chosen", min_value=1, initial=1)

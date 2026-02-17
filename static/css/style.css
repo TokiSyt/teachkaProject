@@ -639,9 +639,18 @@ html.pastel-theme .bg-red-50 {
   background-color: #fff5f5 !important;
 }
 
+html.pastel-theme .bg-red-500 {
+  background-color: #ffdde5 !important;
+  color: #7a5a60 !important;
+}
+
 html.pastel-theme .bg-red-600 {
   background-color: #ffd6e0 !important;
   color: #7a5a60 !important;
+}
+
+html.pastel-theme .hover\:bg-red-600:hover {
+  background-color: #ffccd8 !important;
 }
 
 html.pastel-theme .hover\:bg-red-700:hover {
@@ -718,3 +727,38 @@ html.pastel-theme [class*="bg-gray-100"][class*="hover:bg-gray-200"] {
 html.pastel-theme .bg-gray-100.hover\:bg-gray-200:hover {
   background-color: #e8e4f5 !important;
 }
+
+/* ── Countdown progress ring ── */
+.countdown-ring-bg { stroke: #e5e7eb; }
+.countdown-ring-fill { stroke: #2563eb; transition: stroke-dashoffset 0.1s linear; }
+.dark .countdown-ring-bg { stroke: #374151; }
+.dark .countdown-ring-fill { stroke: #3b82f6; }
+html.pastel-theme .countdown-ring-bg { stroke: #ffe8f0; }
+html.pastel-theme .countdown-ring-fill { stroke: #6a9ac0; }
+
+/* ── Scroll picker (countdown timer) ── */
+.scroll-picker {
+  height: 120px;
+  overflow-y: scroll;
+  scroll-snap-type: y proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  cursor: grab;
+}
+.scroll-picker:active { cursor: grabbing; }
+.scroll-picker::-webkit-scrollbar { display: none; }
+.scroll-picker-item {
+  height: 40px;
+  scroll-snap-align: center;
+  user-select: none;
+}
+.picker-fade-top {
+  background: linear-gradient(to bottom, var(--picker-bg, white), transparent);
+}
+.picker-fade-bottom {
+  background: linear-gradient(to top, var(--picker-bg, white), transparent);
+}
+.dark .picker-fade-top,
+.dark .picker-fade-bottom { --picker-bg: rgb(31 41 55); }
+html.pastel-theme .picker-fade-top,
+html.pastel-theme .picker-fade-bottom { --picker-bg: #fffef5; }

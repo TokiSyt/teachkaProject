@@ -106,7 +106,7 @@ class TestHomeViewGet:
         session = authenticated_client.session
         session[f"spin_result_{group.id}"] = {
             "chosen_member_ids": [member.id],
-            "members_chosen": 1,
+            "chosen_members_amount": 1,
         }
         session.save()
 
@@ -187,14 +187,14 @@ class TestHomeViewPostNonAjax:
         """Multiple members can be chosen in one spin."""
         authenticated_client.post(
             url,
-            {"group_id": group.id, "members_chosen": 2, "remove_after_spin": "on"},
+            {"group_id": group.id, "chosen_members_amount": 2, "remove_after_spin": "on"},
         )
 
         session = authenticated_client.session
         spin_result = session.get(f"spin_result_{group.id}", {})
         assert len(spin_result.get("chosen_member_ids", [])) == 2
 
-    def test_post_all_members_chosen_redirects_with_message(self, authenticated_client, url, group):
+    def test_post_all_chosen_members_amount_redirects_with_message(self, authenticated_client, url, group):
         """When all members chosen, redirects with message."""
         member_ids = list(group.members.values_list("id", flat=True))
 
@@ -229,15 +229,18 @@ class TestHomeViewPostNonAjax:
 
     def test_post_increments_wheel_spins_counter(self, authenticated_client, url, group, user):
         """User's wheel_spins counter is incremented."""
-        initial_spins = user.wheel_spins
+        from apps.users.models import UserStats
+
+        stats, _ = UserStats.objects.get_or_create(user=user)
+        initial_spins = stats.wheel_spins
 
         authenticated_client.post(
             url,
             {"group_id": group.id, "remove_after_spin": "on"},
         )
 
-        user.refresh_from_db()
-        assert user.wheel_spins == initial_spins + 1
+        stats.refresh_from_db()
+        assert stats.wheel_spins == initial_spins + 1
 
     def test_post_cannot_access_other_user_group(self, authenticated_client, url, other_user):
         """Cannot spin wheel for other user's group."""
@@ -332,7 +335,7 @@ class TestHomeViewPostAjax:
         response = self.ajax_post(
             authenticated_client,
             url,
-            {"group_id": group.id, "members_chosen": 2, "remove_after_spin": "on"},
+            {"group_id": group.id, "chosen_members_amount": 2, "remove_after_spin": "on"},
         )
         data = json.loads(response.content)
         assert len(data["chosen_members"]) == 2
@@ -366,7 +369,10 @@ class TestHomeViewPostAjax:
 
     def test_ajax_post_increments_wheel_spins(self, authenticated_client, url, group, user):
         """AJAX POST increments wheel_spins counter."""
-        initial_spins = user.wheel_spins
+        from apps.users.models import UserStats
+
+        stats, _ = UserStats.objects.get_or_create(user=user)
+        initial_spins = stats.wheel_spins
 
         self.ajax_post(
             authenticated_client,
@@ -374,8 +380,8 @@ class TestHomeViewPostAjax:
             {"group_id": group.id, "remove_after_spin": "on"},
         )
 
-        user.refresh_from_db()
-        assert user.wheel_spins == initial_spins + 1
+        stats.refresh_from_db()
+        assert stats.wheel_spins == initial_spins + 1
 
     def test_ajax_post_consecutive_spins_track_all(self, authenticated_client, url, group):
         """Multiple AJAX spins track all chosen members."""
@@ -400,7 +406,7 @@ class TestHomeViewPostAjax:
         response = self.ajax_post(
             authenticated_client,
             url,
-            {"group_id": group.id, "members_chosen": 10, "remove_after_spin": "on"},
+            {"group_id": group.id, "chosen_members_amount": 10, "remove_after_spin": "on"},
         )
         data = json.loads(response.content)
         # Group has 3 members, so max 3 can be chosen
@@ -443,21 +449,21 @@ class TestHomeViewEdgeCases:
         session = authenticated_client.session
         assert len(session.get(f"already_chosen_members_{group.id}", [])) == 3
 
-    def test_large_members_chosen_value(self, authenticated_client, url, user):
-        """Large members_chosen value is handled gracefully."""
+    def test_large_chosen_members_amount_value(self, authenticated_client, url, user):
+        """Large chosen_members_amount value is handled gracefully."""
         group = GroupCreationModelFactory(user=user, members_string="A, B")
 
         response = authenticated_client.post(
             url,
-            {"group_id": group.id, "members_chosen": 999, "remove_after_spin": "on"},
+            {"group_id": group.id, "chosen_members_amount": 999, "remove_after_spin": "on"},
             HTTP_X_REQUESTED_WITH="XMLHttpRequest",
         )
         data = json.loads(response.content)
         # Should only return 2 (all available)
         assert len(data["chosen_members"]) == 2
 
-    def test_members_chosen_default_value(self, authenticated_client, url, user):
-        """members_chosen defaults to 1 if not provided."""
+    def test_chosen_members_amount_default_value(self, authenticated_client, url, user):
+        """chosen_members_amount defaults to 1 if not provided."""
         group = GroupCreationModelFactory(user=user, members_string="A, B, C")
 
         response = authenticated_client.post(
