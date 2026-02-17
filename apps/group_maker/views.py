@@ -6,6 +6,8 @@ from django.views.generic import CreateView, DeleteView, TemplateView, UpdateVie
 from .forms import GroupCreationForm
 from .models import GroupCreationModel
 
+ALLOWED_ORIGIN_APPS = {"group_maker", "karma", "group_divider", "wheel"}
+
 
 class GroupHome(LoginRequiredMixin, TemplateView):
     template_name = "group_maker/home.html"
@@ -41,10 +43,13 @@ class GroupUpdate(LoginRequiredMixin, UpdateView):
     template_name = "group_maker/list_edit.html"
     form_class = GroupCreationForm
 
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
+
     def get_success_url(self):
         origin_app = self.request.POST.get("origin_app") or self.request.GET.get("origin_app")
-        if origin_app and origin_app.strip():
-            return reverse(f"{origin_app}:home")
+        if origin_app and origin_app.strip() in ALLOWED_ORIGIN_APPS:
+            return reverse(f"{origin_app.strip()}:home")
         return reverse("home")
 
     def get_context_data(self, **kwargs):
@@ -53,8 +58,8 @@ class GroupUpdate(LoginRequiredMixin, UpdateView):
         context["members"] = self.object.members.all()
         origin_app = self.request.GET.get("origin_app")
         context["origin_app"] = origin_app
-        if origin_app and origin_app.strip():
-            context["cancel_url"] = reverse(f"{origin_app}:home")
+        if origin_app and origin_app.strip() in ALLOWED_ORIGIN_APPS:
+            context["cancel_url"] = reverse(f"{origin_app.strip()}:home")
         else:
             context["cancel_url"] = self.request.META.get("HTTP_REFERER") or reverse("home")
         return context
@@ -75,10 +80,13 @@ class GroupDelete(LoginRequiredMixin, DeleteView):  # type: ignore[misc]
     model = GroupCreationModel
     template_name = "group_maker/confirm_delete.html"
 
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
+
     def get_success_url(self):
         origin_app = self.request.POST.get("origin_app") or self.request.GET.get("origin_app")
-        if origin_app and origin_app.strip():
-            return reverse(f"{origin_app}:home")
+        if origin_app and origin_app.strip() in ALLOWED_ORIGIN_APPS:
+            return reverse(f"{origin_app.strip()}:home")
         return reverse("home")
 
     def get_context_data(self, **kwargs):
@@ -86,7 +94,7 @@ class GroupDelete(LoginRequiredMixin, DeleteView):  # type: ignore[misc]
         context["selected_group"] = self.object
         origin_app = self.request.GET.get("origin_app")
         context["origin_app"] = origin_app
-        if origin_app and origin_app.strip():
+        if origin_app and origin_app.strip() in ALLOWED_ORIGIN_APPS:
             # Came from edit page, cancel goes back to edit
             edit_url = reverse("group_maker:group-maker-edit", args=[self.object.id])
             context["cancel_url"] = f"{edit_url}?origin_app={origin_app}"

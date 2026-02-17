@@ -1,3 +1,5 @@
+import re
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import (
@@ -97,8 +99,10 @@ class SettingsView(LoginRequiredMixin, TemplateView):
         updated = False
 
         if "icon_hover_color" in request.POST:
-            profile.icon_hover_color = request.POST["icon_hover_color"]
-            updated = True
+            color = request.POST["icon_hover_color"]
+            if re.fullmatch(r"#[0-9a-fA-F]{3,6}", color):
+                profile.icon_hover_color = color
+                updated = True
 
         if "language" in request.POST:
             lang = request.POST["language"]

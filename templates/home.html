@@ -14,96 +14,144 @@
   </p>
 </div>
 
-<!-- Tools Grid -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-
-  <!-- Point System -->
-  <a href="{% url 'karma:karma-home' %}" class="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300">
-    <div class="flex items-start gap-4">
-      <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-xl flex items-center justify-center text-primary-600 dark:text-primary-400 group-hover:scale-110 transition-transform duration-300">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V7"/><path d="m16 12 2 2 4-4"/><path d="M22 6V4a1 1 0 0 0-1-1h-5a4 4 0 0 0-4 4 4 4 0 0 0-4-4H3a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h6a3 3 0 0 1 3 3 3 3 0 0 1 3-3h6a1 1 0 0 0 1-1v-1.3"/></svg>
+<!-- Date Info -->
+<div class="mt-10 bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+  <div class="flex items-center justify-between flex-wrap gap-4">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background-color: rgba(250, 185, 235, 0.25); color: #fab9eb;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
       </div>
-      <div class="flex-1 min-w-0">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-          {% trans "Point system" %}
-        </h3>
-        <p class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
-          {% trans "Track participation and behavior with customizable point categories." %}
-        </p>
-      </div>
-      <div class="flex-shrink-0 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      <div>
+        <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ today|date:"l, j F Y" }}</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">{% trans "Week" %} {{ week_number }}</p>
       </div>
     </div>
-  </a>
-
-  <!-- Group Divider -->
-  <a href="{% url 'group_divider:home' %}" class="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300">
-    <div class="flex items-start gap-4">
-      <div class="flex-shrink-0 w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform duration-300">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
-      </div>
-      <div class="flex-1 min-w-0">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-          {% trans "Group divider" %}
-        </h3>
-        <p class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
-          {% trans "Randomly split your class into teams of any size." %}
-        </p>
-      </div>
-      <div class="flex-shrink-0 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-      </div>
+    <div class="px-4 py-1.5 rounded-full text-sm font-semibold {% if week_parity == 'even' %}bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300{% else %}bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300{% endif %}">
+      {% if week_parity == "even" %}{% trans "Even week" %}{% else %}{% trans "Odd week" %}{% endif %}
     </div>
-  </a>
+  </div>
+</div>
 
-  <!-- Grade Calculator -->
-  <a href="{% url 'grade_calculator:grade_calculator' %}" class="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300">
-    <div class="flex items-start gap-4">
-      <div class="flex-shrink-0 w-12 h-12 bg-amber-100 dark:bg-amber-900/30 rounded-xl flex items-center justify-center text-amber-600 dark:text-amber-400 group-hover:scale-110 transition-transform duration-300">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+<!-- Tools Carousel -->
+<div class="mt-8 relative">
+  <button id="toolsPrev" type="button" class="absolute left-2 md:-left-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white/90 dark:bg-gray-800/90 md:bg-white md:dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600 transition-colors shadow-sm backdrop-blur-sm md:backdrop-blur-none">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+  </button>
+
+  <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+    <div class="overflow-hidden">
+    <div id="toolsTrack" class="flex items-stretch" style="gap: 1rem;">
+
+      <!-- Column 0: Point System + Grade Calculator -->
+      <div class="tools-col flex-shrink-0 flex flex-col gap-4" style="width: calc(50% - 0.5rem);" data-tools-col>
+        <a href="{% url 'karma:karma-home' %}" class="tool-card flex-1 group relative bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300 min-h-[120px]">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-xl flex items-center justify-center text-primary-600 dark:text-primary-400 group-hover:scale-110 transition-transform duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V7"/><path d="m16 12 2 2 4-4"/><path d="M22 6V4a1 1 0 0 0-1-1h-5a4 4 0 0 0-4 4 4 4 0 0 0-4-4H3a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h6a3 3 0 0 1 3 3 3 3 0 0 1 3-3h6a1 1 0 0 0 1-1v-1.3"/></svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{% trans "Point system" %}</h3>
+              <p class="mt-1 text-gray-600 dark:text-gray-400 text-sm">{% trans "Track performance with customizable point categories." %}</p>
+            </div>
+            <div class="flex-shrink-0 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+          </div>
+        </a>
+        <a href="{% url 'grade_calculator:grade_calculator' %}" class="tool-card flex-1 group relative bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300 min-h-[120px]">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-amber-100 dark:bg-amber-900/30 rounded-xl flex items-center justify-center text-amber-600 dark:text-amber-400 group-hover:scale-110 transition-transform duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{% trans "Grade calculator" %}</h3>
+              <p class="mt-1 text-gray-600 dark:text-gray-400 text-sm">{% trans "Generate score ranges for any maximum points value." %}</p>
+            </div>
+            <div class="flex-shrink-0 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+          </div>
+        </a>
       </div>
-      <div class="flex-1 min-w-0">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-          {% trans "Grade calculator" %}
-        </h3>
-        <p class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
-          {% trans "Generate score ranges for any maximum points value." %}
-        </p>
+
+      <!-- Column 1: Group Divider + Name Wheel -->
+      <div class="tools-col flex-shrink-0 flex flex-col gap-4" style="width: calc(50% - 0.5rem);" data-tools-col>
+        <a href="{% url 'group_divider:home' %}" class="tool-card flex-1 group relative bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300 min-h-[120px]">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{% trans "Group divider" %}</h3>
+              <p class="mt-1 text-gray-600 dark:text-gray-400 text-sm">{% trans "Randomly split your class into teams of any size." %}</p>
+            </div>
+            <div class="flex-shrink-0 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+          </div>
+        </a>
+        <a href="{% url 'wheel:home' %}" class="tool-card flex-1 group relative bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300 min-h-[120px]">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-violet-100 dark:bg-violet-900/30 rounded-xl flex items-center justify-center text-violet-600 dark:text-violet-400 group-hover:scale-110 transition-transform duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12a1 1 0 0 1-10 0 1 1 0 0 0-10 0"/><path d="M7 20.7a1 1 0 1 1 5-8.7 1 1 0 1 0 5-8.6"/><path d="M7 3.3a1 1 0 1 1 5 8.6 1 1 0 1 0 5 8.6"/><circle cx="12" cy="12" r="10"/></svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{% trans "Name wheel" %}</h3>
+              <p class="mt-1 text-gray-600 dark:text-gray-400 text-sm">{% trans "Randomly pick students from a group." %}</p>
+            </div>
+            <div class="flex-shrink-0 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+          </div>
+        </a>
       </div>
-      <div class="flex-shrink-0 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+
+      <!-- Column 2: Timer + To-Do List -->
+      <div class="tools-col flex-shrink-0 flex flex-col gap-4" style="width: calc(50% - 0.5rem);" data-tools-col>
+        <a href="{% url 'timer:home' %}" class="tool-card flex-1 group relative bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300 min-h-[120px]">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-rose-100 dark:bg-rose-900/30 rounded-xl flex items-center justify-center text-rose-600 dark:text-rose-400 group-hover:scale-110 transition-transform duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{% trans "Timer" %}</h3>
+              <p class="mt-1 text-gray-600 dark:text-gray-400 text-sm">{% trans "Countdown timers and stopwatches" %}</p>
+            </div>
+            <div class="flex-shrink-0 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+          </div>
+        </a>
+        <a href="{% url 'todo:home' %}" class="tool-card flex-1 group relative bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300 min-h-[120px]">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-cyan-100 dark:bg-cyan-900/30 rounded-xl flex items-center justify-center text-cyan-600 dark:text-cyan-400 group-hover:scale-110 transition-transform duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{% trans "Calendar" %}</h3>
+              <p class="mt-1 text-gray-600 dark:text-gray-400 text-sm">{% trans "Plan and organize your teaching schedule." %}</p>
+            </div>
+            <div class="flex-shrink-0 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+          </div>
+        </a>
       </div>
+
     </div>
-  </a>
-
-  <!-- Name Wheel -->
-  <a href="{% url 'wheel:home' %}" class="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300">
-    <div class="flex items-start gap-4">
-      <div class="flex-shrink-0 w-12 h-12 bg-violet-100 dark:bg-violet-900/30 rounded-xl flex items-center justify-center text-violet-600 dark:text-violet-400 group-hover:scale-110 transition-transform duration-300">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12a1 1 0 0 1-10 0 1 1 0 0 0-10 0"/><path d="M7 20.7a1 1 0 1 1 5-8.7 1 1 0 1 0 5-8.6"/><path d="M7 3.3a1 1 0 1 1 5 8.6 1 1 0 1 0 5 8.6"/><circle cx="12" cy="12" r="10"/></svg>
-      </div>
-      <div class="flex-1 min-w-0">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-          {% trans "Name wheel" %}
-        </h3>
-        <p class="mt-1 text-gray-600 dark:text-gray-400 text-sm">
-          {% trans "Randomly pick students from a group." %}
-        </p>
-      </div>
-      <div class="flex-shrink-0 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-      </div>
     </div>
-  </a>
+  </div>
 
+  <button id="toolsNext" type="button" class="absolute right-2 md:-right-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white/90 dark:bg-gray-800/90 md:bg-white md:dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600 transition-colors shadow-sm backdrop-blur-sm md:backdrop-blur-none">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+  </button>
 </div>
 
 <!-- Stats Section -->
 {% if user.is_authenticated %}
 <div class="mt-16 mb-8 bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-800/50 rounded-2xl p-8">
   <h2 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-6">{% trans "Your Activity" %}</h2>
-  <div class="grid grid-cols-2 sm:grid-cols-5 gap-4">
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
     <!-- Groups & Members -->
     <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 shadow-sm">
       <div class="flex items-center gap-2 mb-2">
@@ -149,9 +197,85 @@
       </div>
       <p class="text-xl font-bold text-gray-900 dark:text-white"><span class="counter" data-target="{{ divider_uses }}">0</span> <span class="text-sm font-normal text-gray-400">{% trans "splits" %}</span></p>
     </div>
+
+    <!-- Timer -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 shadow-sm">
+      <div class="flex items-center gap-2 mb-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-rose-500"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span class="text-xs font-medium text-gray-500 dark:text-gray-400">{% trans "Timer" %}</span>
+      </div>
+      <p class="text-xl font-bold text-gray-900 dark:text-white">{{ timer_total_minutes }} <span class="text-sm font-normal text-gray-400">{% trans "min" %}</span></p>
+    </div>
   </div>
 </div>
 {% endif %}
+
+<!-- Tools Carousel Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const track = document.getElementById('toolsTrack');
+    const container = track.parentElement; // overflow-hidden wrapper
+    const prevBtn = document.getElementById('toolsPrev');
+    const nextBtn = document.getElementById('toolsNext');
+    const GAP = 16;
+    let sliding = false;
+
+    function isMobile() {
+      return window.innerWidth < 768;
+    }
+
+    function sizeCols() {
+      const visible = isMobile() ? 1 : 2;
+      const colWidth = (container.clientWidth - GAP * (visible - 1)) / visible;
+      track.querySelectorAll('.tools-col').forEach(col => {
+        col.style.width = colWidth + 'px';
+      });
+      return colWidth;
+    }
+
+    function getStep() {
+      return sizeCols() + GAP;
+    }
+
+    sizeCols();
+    window.addEventListener('resize', () => sizeCols());
+
+    nextBtn.addEventListener('click', () => {
+      if (sliding) return;
+      sliding = true;
+      const step = getStep();
+      track.style.transition = 'transform 300ms ease-in-out';
+      track.style.transform = 'translateX(-' + step + 'px)';
+      track.addEventListener('transitionend', function handler() {
+        track.removeEventListener('transitionend', handler);
+        track.style.transition = 'none';
+        track.style.transform = 'translateX(0)';
+        track.appendChild(track.querySelector('.tools-col'));
+        sliding = false;
+      });
+    });
+
+    prevBtn.addEventListener('click', () => {
+      if (sliding) return;
+      sliding = true;
+      const step = getStep();
+      const last = track.querySelector('.tools-col:last-child');
+      track.insertBefore(last, track.firstChild);
+      track.style.transition = 'none';
+      track.style.transform = 'translateX(-' + step + 'px)';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          track.style.transition = 'transform 300ms ease-in-out';
+          track.style.transform = 'translateX(0)';
+          track.addEventListener('transitionend', function handler() {
+            track.removeEventListener('transitionend', handler);
+            sliding = false;
+          });
+        });
+      });
+    });
+  });
+</script>
 
 <!-- Animated Counter Script -->
 <script>

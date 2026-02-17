@@ -642,16 +642,8 @@ video {
   bottom: 0px;
 }
 
-.-left-5 {
-  left: -1.25rem;
-}
-
 .-left-\[4px\] {
   left: -4px;
-}
-
-.-right-5 {
-  right: -1.25rem;
 }
 
 .-top-\[2px\] {
@@ -670,12 +662,20 @@ video {
   left: 50%;
 }
 
+.left-2 {
+  left: 0.5rem;
+}
+
 .left-\[60px\] {
   left: 60px;
 }
 
 .right-0 {
   right: 0px;
+}
+
+.right-2 {
+  right: 0.5rem;
 }
 
 .top-0 {
@@ -791,6 +791,10 @@ video {
 
 .mt-2 {
   margin-top: 0.5rem;
+}
+
+.mt-3 {
+  margin-top: 0.75rem;
 }
 
 .mt-4 {
@@ -912,6 +916,10 @@ video {
 
 .min-h-0 {
   min-height: 0px;
+}
+
+.min-h-\[120px\] {
+  min-height: 120px;
 }
 
 .min-h-screen {
@@ -1478,6 +1486,10 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+}
+
+.bg-white\/90 {
+  background-color: rgb(255 255 255 / 0.9);
 }
 
 .bg-yellow-50 {
@@ -2178,6 +2190,10 @@ video {
   background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1));
 }
 
+.dark\:bg-gray-800\/90:is(.dark *) {
+  background-color: rgb(31 41 55 / 0.9);
+}
+
 .dark\:bg-gray-900:is(.dark *) {
   --tw-bg-opacity: 1;
   background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1));
@@ -2387,6 +2403,12 @@ video {
   color: rgb(96 165 250 / var(--tw-text-opacity, 1));
 }
 
+@media not all and (min-width: 640px) {
+  .max-sm\:hidden {
+    display: none;
+  }
+}
+
 @media (min-width: 640px) {
   .sm\:mx-1 {
     margin-left: 0.25rem;
@@ -2542,12 +2564,35 @@ video {
 }
 
 @media (min-width: 768px) {
+  .md\:-left-5 {
+    left: -1.25rem;
+  }
+
+  .md\:-right-5 {
+    right: -1.25rem;
+  }
+
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .md\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .md\:bg-white {
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+  }
+
+  .md\:backdrop-blur-none {
+    --tw-backdrop-blur:  ;
+    backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+  }
+
+  .md\:dark\:bg-gray-800:is(.dark *) {
+    --tw-bg-opacity: 1;
+    background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1));
   }
 }
 

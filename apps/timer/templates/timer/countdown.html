@@ -58,8 +58,8 @@
 
   <!-- Timer Card (hidden until start) -->
   <div id="timerCard" class="hidden bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8">
-    <div class="relative mb-6">
-      <div class="flex justify-center">
+    <div class="mb-6">
+      <div class="relative flex justify-center">
         <div class="relative w-56 h-56 sm:w-72 sm:h-72">
           <svg class="w-full h-full -rotate-90" viewBox="0 0 200 200">
             <circle cx="100" cy="100" r="90" fill="none" stroke-width="8" class="countdown-ring-bg"/>
@@ -73,11 +73,16 @@
             <span id="totalLabel" class="text-xs text-gray-400 dark:text-gray-500 font-mono mt-1"></span>
           </div>
         </div>
+        <div class="absolute right-0 top-1/2 -translate-y-1/2 flex flex-col gap-2 max-sm:hidden">
+          <button type="button" class="add-time-btn px-3 py-2 rounded-lg text-sm font-semibold bg-primary-600/80 hover:bg-primary-600 text-white transition-colors" data-seconds="5">+5s</button>
+          <button type="button" class="add-time-btn px-3 py-2 rounded-lg text-sm font-semibold bg-primary-600/80 hover:bg-primary-600 text-white transition-colors" data-seconds="10">+10s</button>
+          <button type="button" class="add-time-btn px-3 py-2 rounded-lg text-sm font-semibold bg-primary-600/80 hover:bg-primary-600 text-white transition-colors" data-seconds="20">+20s</button>
+        </div>
       </div>
-      <div class="absolute right-0 top-1/2 -translate-y-1/2 flex flex-col gap-2">
-        <button type="button" class="add-time-btn px-3 py-2 rounded-lg text-sm font-semibold bg-primary-600/80 hover:bg-primary-600 text-white transition-colors" data-seconds="5">+5s</button>
-        <button type="button" class="add-time-btn px-3 py-2 rounded-lg text-sm font-semibold bg-primary-600/80 hover:bg-primary-600 text-white transition-colors" data-seconds="10">+10s</button>
-        <button type="button" class="add-time-btn px-3 py-2 rounded-lg text-sm font-semibold bg-primary-600/80 hover:bg-primary-600 text-white transition-colors" data-seconds="20">+20s</button>
+      <div class="flex justify-center gap-2 mt-3 sm:hidden">
+        <button type="button" class="add-time-btn px-4 py-2 rounded-lg text-sm font-semibold bg-primary-600/80 hover:bg-primary-600 text-white transition-colors" data-seconds="5">+5s</button>
+        <button type="button" class="add-time-btn px-4 py-2 rounded-lg text-sm font-semibold bg-primary-600/80 hover:bg-primary-600 text-white transition-colors" data-seconds="10">+10s</button>
+        <button type="button" class="add-time-btn px-4 py-2 rounded-lg text-sm font-semibold bg-primary-600/80 hover:bg-primary-600 text-white transition-colors" data-seconds="20">+20s</button>
       </div>
     </div>
 

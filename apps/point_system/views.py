@@ -51,6 +51,8 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
     def post(self, request):
         group_id = request.POST.get("group_id")
+        if not group_id:
+            return redirect(reverse("karma:karma-home"))
         _, members = get_group_with_members(int(group_id), request.user)
 
         # Pre-index POST data by member ID in a single pass: O(m) instead of O(n*m)

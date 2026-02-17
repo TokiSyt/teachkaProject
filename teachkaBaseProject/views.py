@@ -38,6 +38,9 @@ class HomeView(TemplateView):
             context["calculator_uses"] = stats.calculator_uses
             context["wheel_spins"] = stats.wheel_spins
             context["divider_uses"] = stats.divider_uses
+            total_timer_ms = stats.stopwatch_total_ms + stats.countdown_total_ms
+            context["timer_total_hours"] = round(total_timer_ms / 3_600_000, 1)
+            context["timer_total_minutes"] = round(total_timer_ms / 60_000)
 
         # Date info
         today = date.today()
