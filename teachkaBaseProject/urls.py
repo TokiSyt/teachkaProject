@@ -25,7 +25,7 @@ urlpatterns += i18n_patterns(
     path("wheel/", include("apps.wheel.urls")),
     path("timer/", include("apps.timer.urls")),
     # WIP apps
-    path("todo/", include("apps.todo_list.urls")),
+    path("calendar/", include("apps.calendar.urls")),
     path("math_ops/", include("apps.math_ops.urls")),
     # Users
     path("users/", include("apps.users.urls")),
