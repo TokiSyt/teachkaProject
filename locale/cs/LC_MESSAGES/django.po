@@ -274,11 +274,53 @@ msgstr "Časovač"
 msgid "Countdown timers and stopwatches"
 msgstr "Odpočítávací časovače a stopky"
 
+msgid "Stopwatch"
+msgstr "Stopky"
+
+msgid "Mark your times with flags"
+msgstr "Označte si časy pomocí vlajek"
+
+msgid "Count up with lap flags"
+msgstr "Počítání nahoru s označením kol"
+
+msgid "Countdown"
+msgstr "Odpočítávání"
+
+msgid "Set a duration and count down to zero"
+msgstr "Nastavte dobu a odpočítávejte do nuly"
+
+msgid "Hours"
+msgstr "Hodiny"
+
+msgid "Minutes"
+msgstr "Minuty"
+
+msgid "Seconds"
+msgstr "Sekundy"
+
+msgid "Flags"
+msgstr "Označení"
+
+msgid "Week"
+msgstr "Týden"
+
+msgid "Even week"
+msgstr "Sudý týden"
+
+msgid "Odd week"
+msgstr "Lichý týden"
+
 msgid "To-Do List"
 msgstr "Seznam úkolů"
 
 msgid "Task management and organization"
 msgstr "Správa a organizace úkolů"
+
+msgid "Calendar"
+msgstr "Kalendář"
+
+msgid "Plan and organize your teaching schedule."
+msgstr "Plánujte a organizujte svůj rozvrh výuky."
 
 msgid "Login"
 msgstr "Přihlásit se"
@@ -459,6 +501,9 @@ msgstr "Bodový systém"
 
 msgid "Track participation and behavior with customizable point categories."
 msgstr "Sledujte účast a chování pomocí vlastních bodových kategorií."
+
+msgid "Track performance with customizable point categories."
+msgstr "Sledujte výkon pomocí vlastních bodových kategorií."
 
 msgid "Randomly split your class into teams of any size."
 msgstr "Náhodně rozdělte třídu do skupin libovolné velikosti."

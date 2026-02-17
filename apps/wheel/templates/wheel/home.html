@@ -42,7 +42,7 @@
 
         <div class="w-full sm:w-32">
           <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{% trans "Members" %}</label>
-          <input type="number" name="members_chosen" id="membersChosen" min="1" max="{% if selected_group %}{{ selected_group.size }}{% else %}99{% endif %}" value="{{ members_chosen|default:1 }}" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-white transition-colors">
+          <input type="number" name="chosen_members_amount" id="membersChosen" min="1" max="{% if selected_group %}{{ selected_group.size }}{% else %}99{% endif %}" value="{{ chosen_members_amount|default:1 }}" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-white transition-colors">
         </div>
 
       </div>
@@ -182,9 +182,12 @@ document.addEventListener("DOMContentLoaded", function() {
   function resizeCanvas() {
     if (!canvas) return;
     const size = getCanvasSize();
-    if (canvas.width !== size) {
-      canvas.width = size;
-      canvas.height = size;
+    const dpr = window.devicePixelRatio || 1;
+    const pixelSize = Math.round(size * dpr);
+    if (canvas.width !== pixelSize) {
+      canvas.width = pixelSize;
+      canvas.height = pixelSize;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
   }
 
@@ -201,10 +204,12 @@ document.addEventListener("DOMContentLoaded", function() {
     if (!size || members.length === 0) { cachedWheel = null; return; }
 
     cachedSize = size;
+    const dpr = window.devicePixelRatio || 1;
     const offscreen = document.createElement("canvas");
-    offscreen.width = size;
-    offscreen.height = size;
+    offscreen.width = Math.round(size * dpr);
+    offscreen.height = Math.round(size * dpr);
     const offCtx = offscreen.getContext("2d");
+    offCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     const center = size / 2;
     const borderWidth = 4;
@@ -283,26 +288,27 @@ document.addEventListener("DOMContentLoaded", function() {
   function drawWheel(rotation) {
     if (!canvas || !ctx) return;
     resizeCanvas();
+    const size = getCanvasSize();
 
     if (members.length === 0) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, size, size);
       return;
     }
 
     // Rebuild cache if missing or canvas resized
-    if (!cachedWheel || cachedSize !== canvas.width) {
+    if (!cachedWheel || cachedSize !== size) {
       buildWheelCache();
     }
     if (!cachedWheel) return;
 
-    const center = canvas.width / 2;
+    const center = size / 2;
 
     // Draw rotated cached wheel
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, size, size);
     ctx.save();
     ctx.translate(center, center);
     ctx.rotate(rotation);
-    ctx.drawImage(cachedWheel, -center, -center);
+    ctx.drawImage(cachedWheel, -center, -center, size, size);
     ctx.restore();
 
     // Update arrow color (cheap — runs once per frame)

@@ -1,4 +1,4 @@
-.PHONY: build up down restart logs shell dbshell migrate createsuperuser collectstatic test clean lint typecheck format tailwind
+.PHONY: build up down restart logs shell dbshell migrate createsuperuser translations collectstatic test clean lint typecheck format tailwind
 
 # Build and start containers
 build:
@@ -44,6 +44,10 @@ migrate:
 # Create superuser
 createsuperuser:
 	docker compose exec web python manage.py createsuperuser
+
+# Compile translation files (.po -> .mo)
+translations:
+	docker compose exec web python manage.py compilemessages
 
 # Collect static files
 collectstatic:

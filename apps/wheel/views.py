@@ -6,6 +6,7 @@ from django.views.generic import TemplateView
 
 from apps.core.models import Member
 from apps.group_maker.models import GroupCreationModel
+from apps.users.models import UserStats
 
 from .forms import NameWheelForm
 from .services.utils import choose_random_member
@@ -35,7 +36,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
         context = self.get_context_data(**kwargs)
 
-        # Check for message from POST redirect
+        # Check for message from POST redirect ("All members chosen! Click Reset to start over.")
         message = request.session.pop("wheel_message", None)
         if message:
             context["message"] = message
@@ -49,8 +50,10 @@ class HomeView(LoginRequiredMixin, TemplateView):
             spin_result = request.session.pop(spin_result_key, None)
             if spin_result:
                 chosen_member_ids = spin_result.get("chosen_member_ids", [])
-                context["chosen_members"] = Member.objects.filter(id__in=chosen_member_ids)
-                context["members_chosen"] = spin_result.get("members_chosen", 1)
+                context["chosen_members"] = Member.objects.filter(id__in=chosen_member_ids)  # members that were picked
+                context["chosen_members_amount"] = spin_result.get(
+                    "chosen_members_amount", 1
+                )  # members to pick per spin
                 request.session.modified = True
 
             # Get already chosen members
@@ -100,13 +103,9 @@ class HomeView(LoginRequiredMixin, TemplateView):
             request.session.modified = True
             return redirect(f"{reverse('wheel:home')}?group_id={selected_group.id}")
 
-        # Reset already_chosen_ids if not removing after spin
-        if not remove_after_spin:
-            already_chosen_ids = []
-
         chosen_members = []
-        members_chosen_amount = int(request.POST.get("members_chosen", 1))
-        for _ in range(members_chosen_amount):
+        chosen_members_amount_amount = int(request.POST.get("chosen_members_amount", 1))
+        for _ in range(chosen_members_amount_amount):
             chosen_member, already_chosen_ids = choose_random_member(members, already_chosen_ids)
             if chosen_member:
                 chosen_members.append(chosen_member)
@@ -129,8 +128,9 @@ class HomeView(LoginRequiredMixin, TemplateView):
             request.session.modified = True
 
         # Track usage
-        request.user.wheel_spins += 1
-        request.user.save(update_fields=["wheel_spins"])
+        stats, _ = UserStats.objects.get_or_create(user=request.user)
+        stats.wheel_spins += 1
+        stats.save(update_fields=["wheel_spins"])
 
         if is_ajax:
             return JsonResponse(
@@ -145,7 +145,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
         spin_result_key = f"spin_result_{selected_group.id}"
         request.session[spin_result_key] = {
             "chosen_member_ids": [m.id for m in chosen_members],
-            "members_chosen": members_chosen_amount,
+            "chosen_members_amount": chosen_members_amount_amount,
         }
         request.session.modified = True
         return redirect(f"{reverse('wheel:home')}?group_id={selected_group.id}")
