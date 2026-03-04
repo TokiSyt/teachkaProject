@@ -56,6 +56,10 @@
           <a id="resetBtn" href="{% url 'wheel:home' %}?reset=1{% if selected_group %}&group_id={{ selected_group.id }}{% endif %}" class="flex-1 sm:flex-none px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-center">
             {% trans "Reset" %}
           </a>
+          </button>
+          <button type="button" id="shuffleBtn" class="flex-1 sm:flex-none px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+            {% trans "Shuffle" %}
+          </button>
         </div>
         <!-- Secondary actions row -->
         <div class="flex flex-wrap gap-2 sm:gap-3">
@@ -90,7 +94,7 @@
         <div id="wheelArrow" class="relative w-0 h-0 border-l-[15px] border-r-[15px] border-t-[25px] border-l-transparent border-r-transparent" style="border-top-color: #6366f1;"></div>
       </div>
       <!-- Wheel Container -->
-      <div id="wheelContainer" class="w-[80vw] h-[80vw] max-w-[600px] max-h-[600px]">
+      <div id="wheelContainer" class="relative w-[80vw] h-[80vw] max-w-[600px] max-h-[600px]">
         <canvas id="wheelCanvas" class="w-full h-full"></canvas>
       </div>
     </div>
@@ -605,7 +609,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
-  spinBtn.addEventListener("click", function() {
+  function handleSpin() {
     const groupId = groupSelect.value;
 
     if (!groupId) {
@@ -715,7 +719,42 @@ document.addEventListener("DOMContentLoaded", function() {
       spinBtn.textContent = "Spin";
       idleSpin();
     });
+  }
+
+  spinBtn.addEventListener("click", handleSpin);
+
+  // Make wheel center circle clickable as a spin button
+  function isInCenter(e) {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const size = rect.width;
+    const center = size / 2;
+    const radius = (center - 10) * 0.15;
+    return Math.sqrt((x - center) ** 2 + (y - center) ** 2) <= radius;
+  }
+
+  canvas.addEventListener("click", function(e) {
+    if (isInCenter(e)) handleSpin();
   });
+
+  canvas.addEventListener("mousemove", function(e) {
+    canvas.style.cursor = isInCenter(e) ? "pointer" : "default";
+  });
+
+  // Shuffle button - reorder wheel segments
+  const shuffleBtn = document.getElementById("shuffleBtn");
+  if (shuffleBtn) {
+    shuffleBtn.addEventListener("click", function() {
+      if (!groupSelect.value || isSpinning || members.length === 0) return;
+      for (let i = members.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [members[i], members[j]] = [members[j], members[i]];
+      }
+      cachedWheel = null;
+      drawWheel(currentRotation);
+    });
+  }
 
   updateEditLink();
   updateWheel(groupSelect.value);
