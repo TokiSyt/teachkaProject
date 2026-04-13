@@ -35,7 +35,7 @@ if not SECRET_KEY:
 
 DEBUG = "RENDER" not in os.environ
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "teachka.com", "www.teachka.com"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "teachka.com", "www.teachka.com", "dev.teachka.com"]
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
 if RENDER_EXTERNAL_HOSTNAME:
@@ -44,6 +44,7 @@ if RENDER_EXTERNAL_HOSTNAME:
 CSRF_TRUSTED_ORIGINS = [
     "https://teachka.com",
     "https://www.teachka.com",
+    "https://dev.teachka.com",
 ]
 if RENDER_EXTERNAL_HOSTNAME:
     CSRF_TRUSTED_ORIGINS.append(f"https://{RENDER_EXTERNAL_HOSTNAME}")
