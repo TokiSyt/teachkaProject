@@ -209,7 +209,7 @@ class ThemeUpdateView(LoginRequiredMixin, View):
 
     def post(self, request):
         theme = request.POST.get("theme")
-        if theme in ["light", "dark", "pastel"]:
+        if theme in ["light", "dark", "pastel", "lemonade", "fantasy"]:
             request.user.theme = theme
             request.user.save(update_fields=["theme"])
             return JsonResponse({"status": "ok", "theme": theme})

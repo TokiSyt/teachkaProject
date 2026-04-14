@@ -7,6 +7,8 @@ class CustomUser(AbstractUser):
         ("light", "Light"),
         ("dark", "Dark"),
         ("pastel", "Pastel"),
+        ("lemonade", "Editorial"),
+        ("fantasy", "Palette"),
     ]
     LANGUAGE_CHOICES = [
         ("en", "English"),

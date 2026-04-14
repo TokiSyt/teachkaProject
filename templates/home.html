@@ -1,316 +1,530 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
 {% load i18n %}
 
-{% block title %}Teachka - {% trans "Tools for Teachers" %}{% endblock title %}
+{% block title %}Teachka — Toolkit for Educators{% endblock %}
+
+{% block breadcrumb %}Home{% endblock %}
+
+{% block extra_css %}
+<style>
+  /* Tool card hover arrow */
+  .tool-card:hover .arrow-icon { transform: translateX(4px); }
+  .arrow-icon { transition: transform 0.15s; }
+
+/* Mobile hero/grid adjustments */
+  @media (max-width: 768px) {
+    .hero-section { padding: 40px 20px 48px !important; }
+    .about-grid { grid-template-columns: 1fr !important; }
+  }
+
+  /* Brand title follows theme primary color */
+  .brand-title { color: var(--color-primary); }
+
+  /* Artistic welcome — drift-up entrance */
+  @keyframes drift-up {
+    from { opacity: 0; transform: translateY(9px); }
+    to   { opacity: 1; transform: translateY(0);   }
+  }
+  .drift { animation: drift-up 0.55s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .drift-1 { animation-delay: 0.04s; }
+  .drift-2 { animation-delay: 0.13s; }
+  .drift-3 { animation-delay: 0.22s; }
+  .drift-4 { animation-delay: 0.31s; }
+
+  /* Stat index rows — revealed on scroll */
+  .stat-row {
+    opacity: 0;
+    transform: translateY(5px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+  }
+  .stat-row.visible { opacity: 1; transform: translateY(0); }
+</style>
+{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<div class="text-center py-12 sm:py-12">
-  <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
-    {% trans "Welcome to" %} <span class="text-primary-600 dark:text-primary-400">Teachka</span>
-  </h1>
-  <p class="mt-4 text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-    {% trans "A collection of tools designed to make your teaching day easier." %}
-  </p>
-</div>
 
-<!-- Date Info -->
-<div class="mt-10 bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
-  <div class="flex items-center justify-between flex-wrap gap-4">
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background-color: rgba(250, 185, 235, 0.25); color: #fab9eb;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+  {% if not user.is_authenticated %}
+  <!-- ── HERO ── -->
+  <section class="relative overflow-hidden px-14 pt-20 pb-18 border-b border-base-300">
+
+    <!-- Deco panel -->
+    <div class="absolute top-0 right-0 bottom-0 w-[42%] bg-base-200"
+         style="clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%)"></div>
+
+    <!-- Deco cluster -->
+    <svg class="absolute pointer-events-none select-none brand-title"
+         aria-hidden="true"
+         style="top:50%;right:10%;transform:translate(50%,-50%)"
+         width="480" height="530" viewBox="0 0 480 530">
+
+      <!-- large filled backdrop -->
+      <circle cx="175" cy="205" r="100" fill="currentColor" opacity="0.07"/>
+
+      <!-- medium filled, upper-right -->
+      <circle cx="300" cy="142" r="68"  fill="currentColor" opacity="0.10"/>
+
+      <!-- medium filled, upper-right -->
+      <circle cx="200" cy="342" r="68"  fill="currentColor" opacity="0.10"/>
+
+      <!-- small filled, lower-right -->
+      <circle cx="308" cy="315" r="42"  fill="currentColor" opacity="0.13"/>
+
+      <!-- tiny filled, far lower-right -->
+      <circle cx="318" cy="385" r="22"  fill="currentColor" opacity="0.20"/>
+
+      <!-- small filled, upper-left -->
+      <circle cx="60"  cy="66"  r="30"  fill="currentColor" opacity="0.09"/>
+
+      <!-- outline ring, medium -->
+      <circle cx="190" cy="146" r="90"  fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.22"/>
+
+      <!-- outline ring, small -->
+      <circle cx="70"  cy="100" r="40"  fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.14"/>
+
+      <!-- partial arc — large -->
+      <path d="M 200,292.8 A 88,88 0 1 1 171.6,202.6"
+            fill="none" stroke="currentColor" stroke-width="1.3" opacity="0.20" stroke-linecap="round"/>
+
+      <!-- partial arc — medium -->
+      <path d="M 213.6,361 A 60,60 0 1 1 180,290"
+            fill="none" stroke="currentColor" stroke-width="1" opacity="0.17" stroke-linecap="round"/>
+
+      <!-- partial arc — small -->
+      <path d="M 135,330 A 40,40 0 1 1 70,360"
+            fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.15" stroke-linecap="round"/>
+
+    </svg>
+
+    <!-- Eyebrow -->
+    <div class="hero-child relative z-10 flex items-center gap-3 mb-6">
+      <div class="w-7 h-0.5 rounded bg-primary"></div>
+      <span class="text-[11px] font-semibold tracking-[2px] uppercase text-primary">Toolkit for educators</span>
+    </div>
+
+    <!-- Heading -->
+    <h1 class="hero-child relative z-10 serif font-medium text-[clamp(44px,5.5vw,72px)] leading-[1.03] tracking-tight max-w-[580px] mb-5 text-base-content">
+      Teaching made<br>
+      <em class="text-primary font-light">effortlessly</em><br>
+      organised
+    </h1>
+
+    <!-- Subtext -->
+    <p class="hero-child relative z-10 text-base text-base-content/60 max-w-[420px] leading-[1.75] font-light mb-10">
+      One calm, clean hub for all your classroom tools. Grades, groups, points, timers — connected, not cluttered.
+    </p>
+
+    <!-- Actions -->
+    <div class="hero-child relative z-10 flex items-center gap-4 flex-wrap mb-10">
+      <a href="{% url 'register' %}" class="btn btn-primary rounded-xl gap-2 font-medium text-white">
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        Start for free
+      </a>
+      <a href="#tools" class="btn btn-ghost rounded-xl gap-1.5 text-base-content/60 font-normal hover:text-base-content">
+        See the tools
+        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+      </a>
+      <br>
+    </div>
+  </section>
+  <br>
+
+  <!-- ── STATS ── -->
+  <div class="grid grid-cols-3 divide-x divide-base-300 border-b border-base-300">
+    <div class="stat py-6 px-10">
+      <div class="stat-value serif font-medium text-4xl tracking-tight">7</div>
+      <div class="stat-desc text-xs font-medium mt-1">Built-in classroom tools</div>
+    </div>
+    <div class="stat py-6 px-10">
+      <div class="stat-value serif font-medium text-4xl tracking-tight">1</div>
+      <div class="stat-desc text-xs font-medium mt-1">Place for everything</div>
+    </div>
+    <div class="stat py-6 px-10">
+      <div class="stat-value serif font-medium text-4xl tracking-tight">Free</div>
+      <div class="stat-desc text-xs font-medium mt-1">Always &amp; forever</div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- ── WELCOME ── -->
+  {% if user.is_authenticated %}
+  <section class="relative px-14 pt-14 pb-13 border-b border-base-300 overflow-hidden">
+
+    <!-- Fused bubble cluster + ghost day number -->
+    <svg class="absolute pointer-events-none select-none brand-title"
+         aria-hidden="true"
+         style="right:0;top:50%;transform:translateY(-50%)"
+         width="420" height="340" viewBox="0 0 420 340">
+
+      <!-- Day number — ghost backdrop -->
+      <text x="195" y="268" text-anchor="middle"
+            font-family="Fraunces, serif" font-size="220" font-weight="500"
+            fill="currentColor" opacity="0.038" letter-spacing="-8">{{ today|date:"j" }}</text>
+
+      <!-- Right side — clustered near the number -->
+      <circle cx="318" cy="88"  r="56" fill="currentColor" opacity="0.09"/>
+      <circle cx="348" cy="186" r="38" fill="currentColor" opacity="0.12"/>
+      <circle cx="330" cy="270" r="24" fill="currentColor" opacity="0.16"/>
+      <circle cx="310" cy="314" r="14" fill="currentColor" opacity="0.20"/>
+      <path d="M 257.5,100.6 A 44,44 0 1 1 303.8,155.8"
+            fill="none" stroke="currentColor" stroke-width="1" opacity="0.19" stroke-linecap="round"/>
+      <circle cx="328" cy="220" r="30" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.15"/>
+
+      <!-- Partial arc — upper sweep near number -->
+      <path d="M 248,44 A 68,68 0 1 1 368,172"
+            fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.17" stroke-linecap="round"/>
+
+      <!-- Partial arc — lower sweep -->
+      <path d="M 296,238 A 40,40 0 1 1 338,306"
+            fill="none" stroke="currentColor" stroke-width="0.9" opacity="0.14" stroke-linecap="round"/>
+
+    </svg>
+
+    <div class="relative">
+
+      <!-- Eyebrow -->
+      <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-7">Welcome back to</p>
+
+      <!-- Brand -->
+      <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-9" style="font-size: clamp(50px, 6.5vw, 84px);">
+        <span class="brand-title">Teachka</span>
+      </h1>
+
+      <!-- Date -->
+      <div class="drift drift-3 flex items-baseline gap-5 mb-3">
+        <span class="serif font-medium text-base-content leading-none" style="font-size: clamp(20px, 2.4vw, 30px);">{{ today|date:"l" }}</span>
+        <span class="text-base-content/20 text-xl font-light">·</span>
+        <span class="serif font-medium text-base-content leading-none tabular-nums" style="font-size: clamp(20px, 2.4vw, 30px);">{{ today|date:"j F Y" }}</span>
       </div>
+
+      <!-- Week + parity toggle -->
+      <div class="drift drift-4 flex items-center gap-4">
+        <span class="text-[11px] tracking-[2.5px] uppercase text-base-content/30">Week {{ week_number }}</span>
+        <span class="text-base-content/15 text-sm">—</span>
+        <span class="text-[11px] tracking-[2.5px] uppercase font-semibold text-primary">{{ week_parity|capfirst }}</span>
+      </div>
+
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- ── TOOLS GRID ── -->
+  <section class="px-14 py-16" id="tools">
+    <div class="flex items-end justify-between mb-9">
       <div>
-        <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ today|date:"l, j F Y" }}</p>
-        <p class="text-sm text-gray-500 dark:text-gray-400">{% trans "Week" %} {{ week_number }}</p>
+        <p class="text-[10px] font-semibold tracking-[2.5px] uppercase text-base-content/40 mb-2">The toolkit</p>
+        <h2 class="serif text-[34px] font-medium tracking-tight leading-[1.1] text-base-content">
+          Seven tools,<br><em class="text-base-content/40 font-light">one home</em>
+        </h2>
       </div>
+      <a href="{% url 'login' %}" class="link link-primary text-sm font-medium flex items-center gap-1">
+        View all <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+      </a>
     </div>
-    <div class="px-4 py-1.5 rounded-full text-sm font-semibold {% if week_parity == 'even' %}bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300{% else %}bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300{% endif %}">
-      {% if week_parity == "even" %}{% trans "Even week" %}{% else %}{% trans "Odd week" %}{% endif %}
-    </div>
-  </div>
-</div>
 
-<!-- Tools Carousel -->
-<div class="mt-8 relative">
-  <button id="toolsPrev" type="button" class="absolute left-2 md:-left-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white/90 dark:bg-gray-800/90 md:bg-white md:dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600 transition-colors shadow-sm backdrop-blur-sm md:backdrop-blur-none">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-  </button>
+    <div class="grid grid-cols-3 gap-3.5">
 
-  <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
-    <div class="overflow-hidden">
-    <div id="toolsTrack" class="flex items-stretch" style="gap: 1rem;">
-
-      <!-- Column 0: Point System + Grade Calculator -->
-      <div class="tools-col flex-shrink-0 flex flex-col gap-4" style="width: calc(50% - 0.5rem);" data-tools-col>
-        <a href="{% url 'karma:karma-home' %}" class="tool-card flex-1 group relative bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300 min-h-[120px]">
-          <div class="flex items-start gap-4">
-            <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-xl flex items-center justify-center text-primary-600 dark:text-primary-400 group-hover:scale-110 transition-transform duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V7"/><path d="m16 12 2 2 4-4"/><path d="M22 6V4a1 1 0 0 0-1-1h-5a4 4 0 0 0-4 4 4 4 0 0 0-4-4H3a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h6a3 3 0 0 1 3 3 3 3 0 0 1 3-3h6a1 1 0 0 0 1-1v-1.3"/></svg>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{% trans "Point system" %}</h3>
-              <p class="mt-1 text-gray-600 dark:text-gray-400 text-sm">{% trans "Track performance with customizable point categories." %}</p>
-            </div>
-            <div class="flex-shrink-0 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-            </div>
+      <div class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md hover:border-primary transition-all duration-200 cursor-pointer">
+        <div class="card-body p-6 flex flex-col gap-0">
+          <p class="text-[11px] font-medium text-base-content/30 tracking-wide mb-4 serif">01</p>
+          <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
+            <i data-lucide="bar-chart-2" class="w-[18px] h-[18px]"></i>
           </div>
-        </a>
-        <a href="{% url 'grade_calculator:grade_calculator' %}" class="tool-card flex-1 group relative bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300 min-h-[120px]">
-          <div class="flex items-start gap-4">
-            <div class="flex-shrink-0 w-12 h-12 bg-amber-100 dark:bg-amber-900/30 rounded-xl flex items-center justify-center text-amber-600 dark:text-amber-400 group-hover:scale-110 transition-transform duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{% trans "Grade calculator" %}</h3>
-              <p class="mt-1 text-gray-600 dark:text-gray-400 text-sm">{% trans "Generate score ranges for any maximum points value." %}</p>
-            </div>
-            <div class="flex-shrink-0 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-            </div>
+          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Grade Calculator</h3>
+          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Weighted averages, bulk grading, instant export to your records.</p>
+          <div class="arrow-icon mt-4 text-base-content/25 flex items-center">
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </div>
-        </a>
+        </div>
       </div>
 
-      <!-- Column 1: Group Divider + Name Wheel -->
-      <div class="tools-col flex-shrink-0 flex flex-col gap-4" style="width: calc(50% - 0.5rem);" data-tools-col>
-        <a href="{% url 'group_divider:home' %}" class="tool-card flex-1 group relative bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300 min-h-[120px]">
-          <div class="flex items-start gap-4">
-            <div class="flex-shrink-0 w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{% trans "Group divider" %}</h3>
-              <p class="mt-1 text-gray-600 dark:text-gray-400 text-sm">{% trans "Randomly split your class into teams of any size." %}</p>
-            </div>
-            <div class="flex-shrink-0 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-            </div>
+      <div class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md hover:border-primary transition-all duration-200 cursor-pointer">
+        <div class="card-body p-6 flex flex-col gap-0">
+          <p class="text-[11px] font-medium text-base-content/30 tracking-wide mb-4 serif">02</p>
+          <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
+            <i data-lucide="users" class="w-[18px] h-[18px]"></i>
           </div>
-        </a>
-        <a href="{% url 'wheel:home' %}" class="tool-card flex-1 group relative bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300 min-h-[120px]">
-          <div class="flex items-start gap-4">
-            <div class="flex-shrink-0 w-12 h-12 bg-violet-100 dark:bg-violet-900/30 rounded-xl flex items-center justify-center text-violet-600 dark:text-violet-400 group-hover:scale-110 transition-transform duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12a1 1 0 0 1-10 0 1 1 0 0 0-10 0"/><path d="M7 20.7a1 1 0 1 1 5-8.7 1 1 0 1 0 5-8.6"/><path d="M7 3.3a1 1 0 1 1 5 8.6 1 1 0 1 0 5 8.6"/><circle cx="12" cy="12" r="10"/></svg>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{% trans "Name wheel" %}</h3>
-              <p class="mt-1 text-gray-600 dark:text-gray-400 text-sm">{% trans "Randomly pick students from a group." %}</p>
-            </div>
-            <div class="flex-shrink-0 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-            </div>
+          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Group Maker</h3>
+          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Smart grouping by skill level or fully randomised in one click.</p>
+          <div class="arrow-icon mt-4 text-base-content/25 flex items-center">
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </div>
-        </a>
+        </div>
       </div>
 
-      <!-- Column 2: Timer + To-Do List -->
-      <div class="tools-col flex-shrink-0 flex flex-col gap-4" style="width: calc(50% - 0.5rem);" data-tools-col>
-        <a href="{% url 'timer:home' %}" class="tool-card flex-1 group relative bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300 min-h-[120px]">
-          <div class="flex items-start gap-4">
-            <div class="flex-shrink-0 w-12 h-12 bg-rose-100 dark:bg-rose-900/30 rounded-xl flex items-center justify-center text-rose-600 dark:text-rose-400 group-hover:scale-110 transition-transform duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{% trans "Timer" %}</h3>
-              <p class="mt-1 text-gray-600 dark:text-gray-400 text-sm">{% trans "Countdown timers and stopwatches" %}</p>
-            </div>
-            <div class="flex-shrink-0 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-            </div>
+      <div class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md hover:border-primary transition-all duration-200 cursor-pointer">
+        <div class="card-body p-6 flex flex-col gap-0">
+          <p class="text-[11px] font-medium text-base-content/30 tracking-wide mb-4 serif">03</p>
+          <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
+            <i data-lucide="git-branch" class="w-[18px] h-[18px]"></i>
           </div>
-        </a>
-        <a href="{% url 'todo:home' %}" class="tool-card flex-1 group relative bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6 border border-gray-200 dark:border-gray-600 hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300 min-h-[120px]">
-          <div class="flex items-start gap-4">
-            <div class="flex-shrink-0 w-12 h-12 bg-cyan-100 dark:bg-cyan-900/30 rounded-xl flex items-center justify-center text-cyan-600 dark:text-cyan-400 group-hover:scale-110 transition-transform duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{% trans "Calendar" %}</h3>
-              <p class="mt-1 text-gray-600 dark:text-gray-400 text-sm">{% trans "Plan and organize your teaching schedule." %}</p>
-            </div>
-            <div class="flex-shrink-0 text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-            </div>
+          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Group Divider</h3>
+          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Split your class into equal teams with custom constraints.</p>
+          <div class="arrow-icon mt-4 text-base-content/25 flex items-center">
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </div>
-        </a>
+        </div>
+      </div>
+
+      <div class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md hover:border-primary transition-all duration-200 cursor-pointer">
+        <div class="card-body p-6 flex flex-col gap-0">
+          <p class="text-[11px] font-medium text-base-content/30 tracking-wide mb-4 serif">04</p>
+          <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
+            <i data-lucide="star" class="w-[18px] h-[18px]"></i>
+          </div>
+          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Point System</h3>
+          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Live participation tracker that keeps every student engaged.</p>
+          <div class="arrow-icon mt-4 text-base-content/25 flex items-center">
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md hover:border-primary transition-all duration-200 cursor-pointer">
+        <div class="card-body p-6 flex flex-col gap-0">
+          <p class="text-[11px] font-medium text-base-content/30 tracking-wide mb-4 serif">05</p>
+          <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
+            <i data-lucide="timer" class="w-[18px] h-[18px]"></i>
+          </div>
+          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Timer</h3>
+          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Visual countdowns for tests, group work, and transitions.</p>
+          <div class="arrow-icon mt-4 text-base-content/25 flex items-center">
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md hover:border-primary transition-all duration-200 cursor-pointer">
+        <div class="card-body p-6 flex flex-col gap-0">
+          <p class="text-[11px] font-medium text-base-content/30 tracking-wide mb-4 serif">06</p>
+          <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
+            <i data-lucide="calendar" class="w-[18px] h-[18px]"></i>
+          </div>
+          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Calendar</h3>
+          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Lesson planning and deadline tracking in one clean weekly view.</p>
+          <div class="arrow-icon mt-4 text-base-content/25 flex items-center">
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md hover:border-primary transition-all duration-200 cursor-pointer">
+        <div class="card-body p-6 flex flex-col gap-0">
+          <p class="text-[11px] font-medium text-base-content/30 tracking-wide mb-4 serif">07</p>
+          <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
+            <i data-lucide="sigma" class="w-[18px] h-[18px]"></i>
+          </div>
+          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Math Ops</h3>
+          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Quick classroom-specific calculation utilities, always on hand.</p>
+          <div class="arrow-icon mt-4 text-base-content/25 flex items-center">
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </div>
+        </div>
       </div>
 
     </div>
-    </div>
-  </div>
+  </section>
 
-  <button id="toolsNext" type="button" class="absolute right-2 md:-right-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white/90 dark:bg-gray-800/90 md:bg-white md:dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600 transition-colors shadow-sm backdrop-blur-sm md:backdrop-blur-none">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-  </button>
-</div>
+  <!-- ── YOUR ACTIVITY ── -->
+  {% if user.is_authenticated %}
+  <section class="px-14 pt-10 pb-12 border-t border-base-300">
 
-<!-- Stats Section -->
-{% if user.is_authenticated %}
-<div class="mt-16 mb-8 bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-800/50 rounded-2xl p-8">
-  <h2 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-6">{% trans "Your Activity" %}</h2>
-  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-    <!-- Groups & Members -->
-    <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 shadow-sm">
-      <div class="flex items-center gap-2 mb-2">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-500"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        <span class="text-xs font-medium text-gray-500 dark:text-gray-400">{% trans "Groups" %}</span>
+    <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-8">Your activity</p>
+
+    <div>
+
+      <div class="stat-row border-t border-base-300/50 py-4 flex items-baseline justify-between">
+        <span class="text-[11px] tracking-[2px] uppercase text-base-content/35">Groups</span>
+        <div class="text-right leading-none">
+          <span class="serif font-medium text-base-content tabular-nums stat-num" style="font-size:28px" data-target="{{ user_groups_count }}">{{ user_groups_count }}</span>
+          <span class="text-[11px] text-base-content/30 ml-2 tabular-nums">{{ user_members_count }} members</span>
+        </div>
       </div>
-      <p class="text-xl font-bold text-gray-900 dark:text-white"><span class="counter" data-target="{{ user_groups_count }}">0</span> <span class="hidden sm:inline text-sm font-normal text-gray-400">({{ user_members_count }} {% trans "members" %})</span></p>
-      <p class="sm:hidden text-sm font-normal text-gray-400">{{ user_members_count }} {% trans "members" %}</p>
-    </div>
 
-    <!-- Points -->
-    <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 shadow-sm">
-      <div class="flex items-center gap-2 mb-2">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-500"><path d="M12 21V7"/><path d="m16 12 2 2 4-4"/><path d="M22 6V4a1 1 0 0 0-1-1h-5a4 4 0 0 0-4 4 4 4 0 0 0-4-4H3a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h6a3 3 0 0 1 3 3 3 3 0 0 1 3-3h6a1 1 0 0 0 1-1v-1.3"/></svg>
-        <span class="text-xs font-medium text-gray-500 dark:text-gray-400">{% trans "Points" %}</span>
+      <div class="stat-row border-t border-base-300/50 py-4 flex items-baseline justify-between">
+        <span class="text-[11px] tracking-[2px] uppercase text-base-content/35">Points</span>
+        <div class="text-right leading-none">
+          <span class="serif font-medium tabular-nums" style="font-size:28px; color:oklch(58% .17 145)">+<span class="stat-num" data-target="{{ user_positive_points }}">{{ user_positive_points }}</span></span>
+          <span class="text-base-content/20 mx-2 text-lg font-light">/</span>
+          <span class="serif font-medium tabular-nums" style="font-size:28px; color:oklch(58% .17 25)">−<span class="stat-num" data-target="{{ user_negative_points }}">{{ user_negative_points }}</span></span>
+        </div>
       </div>
-      <p class="text-lg sm:text-xl font-bold whitespace-nowrap"><span class="text-green-600 dark:text-green-400">+<span class="counter" data-target="{{ user_positive_points }}">0</span></span> <span class="text-gray-400 mx-0.5 sm:mx-1">/</span> <span class="text-red-600 dark:text-red-400">-<span class="counter" data-target="{{ user_negative_points }}">0</span></span></p>
-    </div>
 
-    <!-- Calculator -->
-    <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 shadow-sm">
-      <div class="flex items-center gap-2 mb-2">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-500"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
-        <span class="text-xs font-medium text-gray-500 dark:text-gray-400">{% trans "Calculator" %}</span>
+      <div class="stat-row border-t border-base-300/50 py-4 flex items-baseline justify-between">
+        <span class="text-[11px] tracking-[2px] uppercase text-base-content/35">Calculator</span>
+        <div class="text-right leading-none">
+          <span class="serif font-medium text-base-content tabular-nums stat-num" style="font-size:28px" data-target="{{ calculator_uses }}">{{ calculator_uses }}</span>
+          <span class="text-[11px] text-base-content/30 ml-2">uses</span>
+        </div>
       </div>
-      <p class="text-xl font-bold text-gray-900 dark:text-white"><span class="counter" data-target="{{ calculator_uses }}">0</span> <span class="text-sm font-normal text-gray-400">{% trans "uses" %}</span></p>
-    </div>
 
-    <!-- Wheel -->
-    <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 shadow-sm">
-      <div class="flex items-center gap-2 mb-2">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-violet-500"><path d="M22 12a1 1 0 0 1-10 0 1 1 0 0 0-10 0"/><path d="M7 20.7a1 1 0 1 1 5-8.7 1 1 0 1 0 5-8.6"/><path d="M7 3.3a1 1 0 1 1 5 8.6 1 1 0 1 0 5 8.6"/><circle cx="12" cy="12" r="10"/></svg>
-        <span class="text-xs font-medium text-gray-500 dark:text-gray-400">{% trans "Wheel" %}</span>
+      <div class="stat-row border-t border-base-300/50 py-4 flex items-baseline justify-between">
+        <span class="text-[11px] tracking-[2px] uppercase text-base-content/35">Wheel</span>
+        <div class="text-right leading-none">
+          <span class="serif font-medium text-base-content tabular-nums stat-num" style="font-size:28px" data-target="{{ wheel_spins }}">{{ wheel_spins }}</span>
+          <span class="text-[11px] text-base-content/30 ml-2">spins</span>
+        </div>
       </div>
-      <p class="text-xl font-bold text-gray-900 dark:text-white"><span class="counter" data-target="{{ wheel_spins }}">0</span> <span class="text-sm font-normal text-gray-400">{% trans "spins" %}</span></p>
-    </div>
 
-    <!-- Divider -->
-    <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 shadow-sm">
-      <div class="flex items-center gap-2 mb-2">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-500"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
-        <span class="text-xs font-medium text-gray-500 dark:text-gray-400">{% trans "Divider" %}</span>
+      <div class="stat-row border-t border-base-300/50 py-4 flex items-baseline justify-between">
+        <span class="text-[11px] tracking-[2px] uppercase text-base-content/35">Divider</span>
+        <div class="text-right leading-none">
+          <span class="serif font-medium text-base-content tabular-nums stat-num" style="font-size:28px" data-target="{{ divider_uses }}">{{ divider_uses }}</span>
+          <span class="text-[11px] text-base-content/30 ml-2">splits</span>
+        </div>
       </div>
-      <p class="text-xl font-bold text-gray-900 dark:text-white"><span class="counter" data-target="{{ divider_uses }}">0</span> <span class="text-sm font-normal text-gray-400">{% trans "splits" %}</span></p>
-    </div>
 
-    <!-- Timer -->
-    <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 shadow-sm">
-      <div class="flex items-center gap-2 mb-2">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-rose-500"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        <span class="text-xs font-medium text-gray-500 dark:text-gray-400">{% trans "Timer" %}</span>
+      <div class="stat-row border-t border-base-300/50 py-4 flex items-baseline justify-between">
+        <span class="text-[11px] tracking-[2px] uppercase text-base-content/35">Timer</span>
+        <div class="text-right leading-none">
+          <span class="serif font-medium text-base-content tabular-nums stat-num" style="font-size:28px" data-target="{{ timer_total_minutes }}">{{ timer_total_minutes }}</span>
+          <span class="text-[11px] text-base-content/30 ml-2">minutes</span>
+        </div>
       </div>
-      <p class="text-xl font-bold text-gray-900 dark:text-white">{{ timer_total_minutes }} <span class="text-sm font-normal text-gray-400">{% trans "min" %}</span></p>
+
+      <div class="border-t border-base-300/50"></div>
     </div>
-  </div>
-</div>
-{% endif %}
 
-<!-- Tools Carousel Script -->
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const track = document.getElementById('toolsTrack');
-    const container = track.parentElement; // overflow-hidden wrapper
-    const prevBtn = document.getElementById('toolsPrev');
-    const nextBtn = document.getElementById('toolsNext');
-    const GAP = 16;
-    let sliding = false;
-
-    function isMobile() {
-      return window.innerWidth < 768;
-    }
-
-    function sizeCols() {
-      const visible = isMobile() ? 1 : 2;
-      const colWidth = (container.clientWidth - GAP * (visible - 1)) / visible;
-      track.querySelectorAll('.tools-col').forEach(col => {
-        col.style.width = colWidth + 'px';
-      });
-      return colWidth;
-    }
-
-    function getStep() {
-      return sizeCols() + GAP;
-    }
-
-    sizeCols();
-    window.addEventListener('resize', () => sizeCols());
-
-    nextBtn.addEventListener('click', () => {
-      if (sliding) return;
-      sliding = true;
-      const step = getStep();
-      track.style.transition = 'transform 300ms ease-in-out';
-      track.style.transform = 'translateX(-' + step + 'px)';
-      track.addEventListener('transitionend', function handler() {
-        track.removeEventListener('transitionend', handler);
-        track.style.transition = 'none';
-        track.style.transform = 'translateX(0)';
-        track.appendChild(track.querySelector('.tools-col'));
-        sliding = false;
-      });
-    });
-
-    prevBtn.addEventListener('click', () => {
-      if (sliding) return;
-      sliding = true;
-      const step = getStep();
-      const last = track.querySelector('.tools-col:last-child');
-      track.insertBefore(last, track.firstChild);
-      track.style.transition = 'none';
-      track.style.transform = 'translateX(-' + step + 'px)';
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          track.style.transition = 'transform 300ms ease-in-out';
-          track.style.transform = 'translateX(0)';
-          track.addEventListener('transitionend', function handler() {
-            track.removeEventListener('transitionend', handler);
-            sliding = false;
+    <script>
+      (function () {
+        // Count-up
+        const ease = t => t < .5 ? 2*t*t : -1+(4-2*t)*t;
+        const numObs = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            numObs.unobserve(entry.target);
+            const el = entry.target;
+            const target = +el.dataset.target;
+            if (!target) return;
+            const start = performance.now();
+            const tick = now => {
+              const p = Math.min((now - start) / 800, 1);
+              el.textContent = Math.round(ease(p) * target);
+              if (p < 1) requestAnimationFrame(tick); else el.textContent = target;
+            };
+            requestAnimationFrame(tick);
           });
-        });
-      });
-    });
-  });
-</script>
+        }, { threshold: 0.4 });
+        document.querySelectorAll('.stat-num[data-target]').forEach(el => numObs.observe(el));
 
-<!-- Animated Counter Script -->
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const counters = document.querySelectorAll('.counter');
-    const speed = 50;
+        // Row reveal
+        const rowObs = new IntersectionObserver(entries => {
+          entries.forEach((entry, i) => {
+            if (!entry.isIntersecting) return;
+            setTimeout(() => entry.target.classList.add('visible'), i * 60);
+            rowObs.unobserve(entry.target);
+          });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.stat-row').forEach(el => rowObs.observe(el));
+      })();
+    </script>
+  </section>
+  {% endif %}
 
-    const animateCounter = (counter) => {
-      const target = +counter.getAttribute('data-target');
-      const increment = target / speed;
-      let current = 0;
+  {% if not user.is_authenticated %}
+  <!-- ── ABOUT + HOW IT WORKS ── -->
+  <section class="grid grid-cols-2 border-t border-base-300 about-grid" id="about">
 
-      const updateCount = () => {
-        current += increment;
-        if (current < target) {
-          counter.innerText = Math.ceil(current);
-          requestAnimationFrame(updateCount);
-        } else {
-          counter.innerText = target;
-        }
-      };
-      updateCount();
-    };
+    <!-- Left: built with -->
+    <div class="px-14 py-16 border-r border-base-300">
+      <p class="text-[10px] font-semibold tracking-[2.5px] uppercase text-base-content/40 mb-2">Built with care</p>
+      <h2 class="serif text-[32px] font-medium tracking-tight leading-[1.1] mb-6 text-base-content">
+        How it's<br><em class="text-base-content/40 font-light">made</em>
+      </h2>
+      <p class="text-[15px] text-base-content/60 leading-[1.8] font-light mb-4">
+        Teachka follows a modular Django architecture — each tool is its own app, sharing a core module for auth and data. Adding a new tool never touches existing ones.
+      </p>
+      <p class="text-[15px] text-base-content/60 leading-[1.8] font-light">
+        A service/selector pattern keeps business logic clean. Groups sync across all tools automatically through Django signals.
+      </p>
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateCounter(entry.target);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
+      <div class="flex flex-wrap gap-2 mt-7">
+        <div class="badge badge-outline gap-1.5 py-3 px-3 font-medium text-xs rounded-xl">
+          <i data-lucide="code-2" class="w-3 h-3 text-primary"></i> Python
+        </div>
+        <div class="badge badge-outline gap-1.5 py-3 px-3 font-medium text-xs rounded-xl">
+          <i data-lucide="layers" class="w-3 h-3 text-primary"></i> Django 5.2
+        </div>
+        <div class="badge badge-outline gap-1.5 py-3 px-3 font-medium text-xs rounded-xl">
+          <i data-lucide="database" class="w-3 h-3 text-primary"></i> PostgreSQL
+        </div>
+        <div class="badge badge-outline gap-1.5 py-3 px-3 font-medium text-xs rounded-xl">
+          <i data-lucide="wind" class="w-3 h-3 text-primary"></i> Tailwind CSS
+        </div>
+        <div class="badge badge-outline gap-1.5 py-3 px-3 font-medium text-xs rounded-xl">
+          <i data-lucide="server" class="w-3 h-3 text-primary"></i> Gunicorn
+        </div>
+        <div class="badge badge-outline gap-1.5 py-3 px-3 font-medium text-xs rounded-xl">
+          <i data-lucide="box" class="w-3 h-3 text-primary"></i> Docker
+        </div>
+      </div>
+    </div>
 
-    counters.forEach(counter => observer.observe(counter));
-  });
-</script>
+    <!-- Right: steps -->
+    <div class="px-14 py-16 bg-base-200">
+      <p class="text-[10px] font-semibold tracking-[2.5px] uppercase text-base-content/40 mb-2">How it works</p>
+      <h2 class="serif text-[32px] font-medium tracking-tight leading-[1.1] mb-8 text-base-content">
+        Three steps<br>to start
+      </h2>
 
-{% endblock content %}
+      <ul class="steps steps-vertical">
+        <li class="step step-primary">
+          <div class="text-left pl-4 pb-6">
+            <p class="font-medium text-sm text-base-content mb-1">Create your account</p>
+            <p class="text-xs text-base-content/55 font-light leading-relaxed">Free signup, no credit card. Ready in under a minute.</p>
+          </div>
+        </li>
+        <li class="step step-primary">
+          <div class="text-left pl-4 pb-6">
+            <p class="font-medium text-sm text-base-content mb-1">Add your class</p>
+            <p class="text-xs text-base-content/55 font-light leading-relaxed">Import or type your students. All tools sync from this one list automatically.</p>
+          </div>
+        </li>
+        <li class="step step-primary">
+          <div class="text-left pl-4">
+            <p class="font-medium text-sm text-base-content mb-1">Open a tool and go</p>
+            <p class="text-xs text-base-content/55 font-light leading-relaxed">No duplicate data entry, no per-tool setup. It all just works.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if not user.is_authenticated %}
+  <!-- ── CTA ── -->
+  <section class="px-14 py-20 text-center relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none"
+         style="background: radial-gradient(ellipse 60% 60% at 50% 50%, hsl(var(--p)/0.06), transparent)"></div>
+    <div class="relative z-10 max-w-lg mx-auto">
+      <p class="serif italic text-sm text-primary mb-4">— Start today</p>
+      <h2 class="serif text-[48px] font-medium tracking-tight leading-[1.08] mb-4 text-base-content">
+        Your classroom,<br>finally in one place
+      </h2>
+      <p class="text-[15px] text-base-content/55 font-light leading-[1.7] mb-9">
+        Free forever. No credit card. Built by a developer who cares about clean code and good tools.
+      </p>
+      <a href="{% url 'register' %}" class="btn btn-primary btn-lg rounded-xl gap-2 font-medium">
+        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+        Create free account
+      </a>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- ── FOOTER ── -->
+  <footer class="px-14 py-7 border-t border-base-300 flex items-center justify-between">
+    <p class="serif italic text-sm text-base-content/40">Teachka, 2026</p>
+    <div class="flex gap-5">
+      <a href="https://github.com/TokiSyt/teachkaProject" target="_blank"
+         class="link link-hover text-sm text-base-content/50 flex items-center gap-1.5 font-medium">
+        <i data-lucide="github" class="w-3.5 h-3.5"></i> GitHub
+      </a>
+      <a href="https://teachka.com" target="_blank"
+         class="link link-hover text-sm text-base-content/50 flex items-center gap-1.5 font-medium">
+        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> teachka.com
+      </a>
+    </div>
+  </footer>
+
+{% endblock %}

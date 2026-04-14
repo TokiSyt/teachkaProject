@@ -192,6 +192,8 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 if not DEBUG:
     STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+else:
+    WHITENOISE_AUTOREFRESH = True
 
 
 # Default primary key field type
@@ -235,9 +237,10 @@ mail = os.environ.get("MAIL")
 mail_pass = os.environ.get("MAIL_PASSWORD")
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_HOST = "smtp.seznam.cz"
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_USE_TLS = False
 EMAIL_HOST_USER = mail
 EMAIL_HOST_PASSWORD = mail_pass
-DEFAULT_FROM_EMAIL = mail
+DEFAULT_FROM_EMAIL = f"Teachka <{mail}>"

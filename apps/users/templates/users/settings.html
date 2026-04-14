@@ -23,7 +23,7 @@
         <input type="hidden" id="themeInput" value="{{ request.user.theme|default:'dark' }}">
         <div class="relative z-20" id="themeDropdown">
           <button type="button" id="themeBtn" class="w-full px-4 py-2.5 pr-10 bg-gray-50 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-white transition-colors cursor-pointer text-left">
-            <span id="themeBtnText">{{ request.user.theme|default:'dark'|capfirst }}</span>
+            <span id="themeBtnText">{% if request.user.theme == 'lemonade' %}{% trans "Editorial" %}{% elif request.user.theme == 'fantasy' %}{% trans "Palette" %}{% else %}{{ request.user.theme|default:'light'|capfirst }}{% endif %}</span>
           </button>
           <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
             <svg id="themeChevron" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -33,7 +33,9 @@
           <div id="themeOptions" class="hidden absolute z-50 w-full mt-1 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-lg overflow-hidden">
             <div class="theme-option px-4 py-2.5 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer" data-value="light">{% trans "Light" %}</div>
             <div class="theme-option px-4 py-2.5 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer" data-value="dark">{% trans "Dark" %}</div>
-            <div class="theme-option px-4 py-2.5 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer rounded-b-lg" data-value="pastel">{% trans "Pastel" %}</div>
+            <div class="theme-option px-4 py-2.5 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer" data-value="pastel">{% trans "Pastel" %}</div>
+            <div class="theme-option px-4 py-2.5 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer" data-value="lemonade">{% trans "Editorial" %}</div>
+            <div class="theme-option px-4 py-2.5 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer rounded-b-lg" data-value="fantasy">{% trans "Palette" %}</div>
           </div>
         </div>
       </div>
@@ -49,14 +51,16 @@
           themeChevron.classList.toggle('rotate-180');
         });
 
-        const themeLabels = { light: '{% trans "Light" %}', dark: '{% trans "Dark" %}', pastel: '{% trans "Pastel" %}' };
+        const themeLabels = {
+          light: '{% trans "Light" %}',
+          dark: '{% trans "Dark" %}',
+          pastel: '{% trans "Pastel" %}',
+          lemonade: '{% trans "Editorial" %}',
+          fantasy: '{% trans "Palette" %}'
+        };
 
         function applyThemeToPage(theme) {
-          const html = document.documentElement;
-          html.classList.remove('dark', 'pastel-theme');
-          if (theme === 'dark') html.classList.add('dark');
-          else if (theme === 'pastel') html.classList.add('pastel-theme');
-          localStorage.setItem('theme', theme);
+          setTheme(theme);
         }
 
         function syncThemeDropdown(theme) {
@@ -71,26 +75,15 @@
             applyThemeToPage(theme);
             themeOptions.classList.add('hidden');
             themeChevron.classList.remove('rotate-180');
-
-            fetch('{% url "profile:theme-update" %}', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRFToken': '{{ csrf_token }}'
-              },
-              body: 'theme=' + theme
-            });
           });
         });
 
-        // Sync dropdown when sidebar toggle changes the theme
+        // Sync dropdown when theme changes via sidebar buttons
         const observer = new MutationObserver(() => {
-          const html = document.documentElement;
-          const current = html.classList.contains('dark') ? 'dark' :
-                          html.classList.contains('pastel-theme') ? 'pastel' : 'light';
+          const current = document.documentElement.getAttribute('data-theme') || 'light';
           syncThemeDropdown(current);
         });
-        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
         document.addEventListener('click', (e) => {
           if (!document.getElementById('themeDropdown').contains(e.target)) {

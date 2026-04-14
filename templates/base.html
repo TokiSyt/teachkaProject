@@ -4,254 +4,434 @@
 {% load i18n_extras %}
 
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE }}" class="{% if request.user.is_authenticated %}{% if request.user.theme == 'dark' %}dark{% elif request.user.theme == 'pastel' %}pastel-theme{% endif %}{% else %}dark{% endif %}">
-
+<html lang="{{ LANGUAGE_CODE }}"
+  data-theme="{% if request.user.is_authenticated %}{% if request.user.theme == 'dark' %}dark{% elif request.user.theme == 'pastel' %}pastel{% elif request.user.theme == 'lemonade' %}lemonade{% elif request.user.theme == 'fantasy' %}fantasy{% else %}light{% endif %}{% else %}light{% endif %}">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>
-    {% block title %}
-    Teachka App
-    {% endblock %}
-  </title>
-
+  <title>{% block title %}Teachka{% endblock %}</title>
   <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon" />
   <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300;1,9..144,500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+  {% block extra_css %}{% endblock %}
+  <style>
+    body { font-family: 'Epilogue', system-ui, sans-serif; }
+    .serif { font-family: 'Fraunces', serif; }
+
+    /* Sidebar layout */
+    #sidebar { transition: width 0.28s cubic-bezier(0.4,0,0.2,1); overflow: hidden; width: 180px; }
+    #main    { transition: margin-left 0.28s cubic-bezier(0.4,0,0.2,1); margin-left: 180px; }
+    .fade-label { transition: opacity 0.18s, width 0.18s; }
+    #theme-row { transition: opacity 0.18s, height 0.18s, margin 0.18s; }
+
+    /* Force all sidebar menu icons to the same size always */
+    #sidebar .menu a svg {
+      width: 1.5rem !important;
+      height: 1.5rem !important;
+      min-width: 1.5rem;
+      min-height: 1.5rem;
+      max-width: 1.5rem;
+      max-height: 1.5rem;
+    }
+    /* Make all sidebar li flex containers so <a> becomes a flex item (constrains height) */
+    #sidebar .menu li {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    /* Mobile overlay */
+    #drawer-overlay {
+      display: none; position: fixed; inset: 0; z-index: 40;
+      background: rgba(0,0,0,0.45);
+    }
+    #drawer-overlay.show { display: block; }
+
+    @media (max-width: 768px) {
+      #sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.28s cubic-bezier(0.4,0,0.2,1) !important;
+        width: 180px !important;
+      }
+      #sidebar.mobile-open { transform: translateX(0); }
+      #main { margin-left: 0 !important; }
+      #desktop-toggle { display: none !important; }
+    }
+
+    /* Landing page animations */
+    @keyframes ticker { to { transform: translateX(-50%); } }
+    .ticker-track { animation: ticker 22s linear infinite; width: max-content; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
+    .hero-child { animation: fadeUp 0.55s ease both; }
+    .hero-child:nth-child(1) { animation-delay: 0.05s; }
+    .hero-child:nth-child(2) { animation-delay: 0.13s; }
+    .hero-child:nth-child(3) { animation-delay: 0.21s; }
+    .hero-child:nth-child(4) { animation-delay: 0.29s; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .blink { animation: blink 2s infinite; }
+    .lp-tool-card:hover .lp-arrow { transform: translateX(4px); }
+    .lp-arrow { transition: transform 0.15s; }
+
+    /* Center toggle button when sidebar collapsed */
+    #sidebar.collapsed #sidebar-header {
+      justify-content: center;
+    }
+
+    /* User accent / hover color for sidebar menu items */
+    :root {
+      --sidebar-hover-color: {% if user.is_authenticated %}{{ user.icon_hover_color|default:"#1779db" }}{% else %}#1779db{% endif %};
+    }
+    #sidebar .menu li > a:not(.active):hover {
+      background-color: color-mix(in srgb, var(--sidebar-hover-color) 10%, transparent) !important;
+      color: var(--sidebar-hover-color) !important;
+    }
+    #sidebar .menu li > a:not(.active):hover svg {
+      color: var(--sidebar-hover-color) !important;
+    }
+
+  </style>
 </head>
 
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+<body class="flex min-h-screen bg-base-200">
 
-  <style>
-    :root {
-      --icon-hover-color: {{ request.user.icon_hover_color }};
-    }
-  </style>
-  
-  
-  <nav class="sidebar bg-gray-100 dark:bg-gray-800">
-    <a href="{% url 'home' %}" title="{% trans 'Home' %}" class="sidebar-icon">
-      <span class="icon" role="img" aria-label="Home">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-      </span>
+<div id="drawer-overlay" onclick="closeMobileSidebar()"></div>
+
+<!-- ══ SIDEBAR ══ -->
+<aside id="sidebar" class="fixed top-0 left-0 bottom-0 z-50 flex flex-col bg-base-100 border-r border-base-300">
+
+  <!-- Logo -->
+  <div id="sidebar-header" class="flex items-center justify-between h-[60px] px-3.5 border-b border-base-300 shrink-0">
+    <a href="{% url 'home' %}" class="flex items-center gap-2.5 overflow-hidden whitespace-nowrap">
+      <div class="w-8 h-8 rounded-xl bg-primary flex items-center justify-center shrink-0 text-primary-content text-lg font-medium serif">T</div>
+      <span id="logo-text" class="fade-label text-base font-medium text-base-content serif">Teachka</span>
     </a>
-    
+    <button id="desktop-toggle" onclick="toggleSidebar()"
+      class="btn btn-ghost btn-xs btn-square border border-base-300 text-base-content/40 hover:text-base-content shrink-0">
+      <i id="toggle-icon" data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
+    </button>
+  </div>
+
+  <!-- Nav -->
+  <div class="flex-1 overflow-y-auto overflow-x-hidden p-2.5" style="scrollbar-width:none">
+
+    <div class="mb-4">
+      <ul class="menu menu-sm p-0 gap-0.5">
+        <li>
+          <a href="{% url 'home' %}" class="rounded-lg {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+            <i data-lucide="home" class="w-6 h-6 shrink-0"></i>
+            <span class="fade-label nav-label">{% trans "Home" %}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
     {% if user.is_authenticated %}
-      <a href="{% url 'profile:profile' %}" title="{% trans 'Profile' %}" class="sidebar-icon">
-        <span class="icon" role="img" aria-label="{% trans 'Profile' %}" title="{% trans 'Profile' %}">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        </span>
-      </a>
-      
-      <a href="{% url 'profile:settings' %}" title="{% trans 'Settings' %}" class="sidebar-icon">
-        <span class="icon" role="img" aria-label="{% trans 'Settings' %}" title="{% trans 'Settings' %}">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-icon lucide-settings"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg>
-        </span>
-      </a>
-
-      <div class="language-switcher">
-        <button type="button" class="sidebar-icon" id="language-toggle" aria-label="{% trans 'Change language' %}" title="{% trans 'Change language' %}">
-          <span class="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-          </span>
-        </button>
-        <div class="language-dropdown" id="language-dropdown">
-          <form action="{% url 'set_language' %}" method="post">
-            {% csrf_token %}
-            {% strip_lang_prefix request.path as clean_path %}
-            <input type="hidden" name="next" value="{{ clean_path }}">
-            <button type="submit" name="language" value="en" class="language-option {% if LANGUAGE_CODE == 'en' %}active{% endif %}">English</button>
-            <button type="submit" name="language" value="pt" class="language-option {% if LANGUAGE_CODE == 'pt' %}active{% endif %}">Português</button>
-            <button type="submit" name="language" value="cs" class="language-option {% if LANGUAGE_CODE == 'cs' %}active{% endif %}">Čeština</button>
-          </form>
-        </div>
-      </div>
-
-      <a class="sidebar-icon-separator">
-        <span class="sidebar-icon-separator" role="img" aria-label="separator">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus-icon lucide-minus"><path d="M5 12h14"/></svg>
-        </span>
-      </a>
-      
-      <a href="{% url 'karma:karma-home' %}" class="sidebar-icon">
-        <span class="icon" role="img" aria-label="{% trans 'Karma System' %}" title="{% trans 'Karma system' %}">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open-check-icon lucide-book-open-check"><path d="M12 21V7"/><path d="m16 12 2 2 4-4"/><path d="M22 6V4a1 1 0 0 0-1-1h-5a4 4 0 0 0-4 4 4 4 0 0 0-4-4H3a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h6a3 3 0 0 1 3 3 3 3 0 0 1 3-3h6a1 1 0 0 0 1-1v-1.3"/></svg>
-        </span>
-      </a>
-      
-      <a href="{% url 'group_divider:home' %}" class="sidebar-icon">
-        <span class="icon" role="img" aria-label="{% trans 'Group divider' %}" title="{% trans 'Group divider' %}">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
-        </span>
-      </a>
-
-      <a href="{% url 'grade_calculator:grade_calculator' %}" class="sidebar-icon">
-        <span class="icon" role="img" aria-label="{% trans 'Grade Calculator' %}" title="{% trans 'Grade Calculator' %}">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calculator-icon lucide-calculator"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
-        </span>
-      </a>
-      
-      <a href="{% url 'wheel:home' %}" class="sidebar-icon">
-        <span class="icon" role="img" aria-label="{% trans 'Wheel' %}" title="{% trans 'Wheel' %}">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-pinwheel-icon lucide-loader-pinwheel"><path d="M22 12a1 1 0 0 1-10 0 1 1 0 0 0-10 0"/><path d="M7 20.7a1 1 0 1 1 5-8.7 1 1 0 1 0 5-8.6"/><path d="M7 3.3a1 1 0 1 1 5 8.6 1 1 0 1 0 5 8.6"/><circle cx="12" cy="12" r="10"/></svg>
-        </span>
-      </a>
-      
-      <a href="{% url 'timer:home' %}" class="sidebar-icon">
-        <span role="img" aria-label="Timer" title="Timer">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </span>
-      </a>
-      <!--
-      <a href="{% url 'todo:home' %}" class="sidebar-icon">
-        <span class="icon" role="img" aria-label="To-Do List" title="To-Do List">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-check-icon lucide-list-check"><path d="M11 18H3"/><path d="m15 18 2 2 4-4"/><path d="M16 12H3"/><path d="M16 6H3"/></svg>
-        </span>
-      </a>
-
-
-      <a href="{% url 'math_ops:home' %}" class="sidebar-icon">
-        <span class="icon" role="img" aria-label="Math Ops" title="Math Ops">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-divide-icon lucide-circle-divide"><line x1="8" x2="16" y1="12" y2="12"/><line x1="12" x2="12" y1="16" y2="16"/><line x1="12" x2="12" y1="8" y2="8"/><circle cx="12" cy="12" r="10"/></svg>
-        </span>
-      </a>
-      -->
-
-      <button type="button" id="theme-toggle-auth" aria-label="Toggle theme" title="Toggle theme" class="theme-toggle-icon logout-button">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-      </button>
-
-      <form action="{% url 'logout' %}" method="post" class="logout-icon">
-        {% csrf_token %}
-        <button type="submit" aria-label="logout" title="Logout" class="logout-button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
-        </button>
-      </form>
-
-    {% else %}
-      <a href="{% url 'login' %}" class="sidebar-icon">
-        <span class="icon" role="img" aria-label="{% trans 'Login' %}" title="{% trans 'Login' %}">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        </span>
-      </a>
-
-      <a href="{% url 'register' %}" class="sidebar-icon">
-        <span class="icon" role="img" aria-label="{% trans 'Register' %}" title="{% trans 'Register' %}">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-plus-icon lucide-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
-        </span>
-      </a>
-
-      <div class="language-switcher">
-        <button type="button" class="sidebar-icon" id="language-toggle-anon" aria-label="{% trans 'Change language' %}" title="{% trans 'Change language' %}">
-          <span class="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-          </span>
-        </button>
-        <div class="language-dropdown" id="language-dropdown-anon">
-          <form action="{% url 'set_language' %}" method="post">
-            {% csrf_token %}
-            {% strip_lang_prefix request.path as clean_path %}
-            <input type="hidden" name="next" value="{{ clean_path }}">
-            <button type="submit" name="language" value="en" class="language-option {% if LANGUAGE_CODE == 'en' %}active{% endif %}">English</button>
-            <button type="submit" name="language" value="pt" class="language-option {% if LANGUAGE_CODE == 'pt' %}active{% endif %}">Português</button>
-            <button type="submit" name="language" value="cs" class="language-option {% if LANGUAGE_CODE == 'cs' %}active{% endif %}">Čeština</button>
-          </form>
-        </div>
-      </div>
-
-      <button type="button" id="theme-toggle-anon" aria-label="Toggle theme" title="Toggle theme" class="theme-toggle-icon logout-button">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-      </button>
-
-      {% endif %}
-
-    <script>
-      function toggleTheme() {
-        const html = document.documentElement;
-        const currentTheme = html.classList.contains('dark') ? 'dark' :
-                             html.classList.contains('pastel-theme') ? 'pastel' : 'light';
-        const themeMap = { light: 'dark', dark: 'pastel', pastel: 'light' };
-        const newTheme = themeMap[currentTheme];
-
-        html.classList.remove('dark', 'pastel-theme');
-        if (newTheme === 'dark') html.classList.add('dark');
-        else if (newTheme === 'pastel') html.classList.add('pastel-theme');
-
-        localStorage.setItem('theme', newTheme);
-
-        {% if user.is_authenticated %}
-        fetch('{% url "profile:theme-update" %}', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRFToken': '{{ csrf_token }}'
-          },
-          body: 'theme=' + newTheme
-        });
-        {% endif %}
-      }
-
-      const authBtn = document.getElementById('theme-toggle-auth');
-      const anonBtn = document.getElementById('theme-toggle-anon');
-      if (authBtn) authBtn.addEventListener('click', toggleTheme);
-      if (anonBtn) anonBtn.addEventListener('click', toggleTheme);
-
-      // Language dropdown toggle
-      document.querySelectorAll('.language-switcher button[id^="language-toggle"]').forEach(btn => {
-        const dropdown = btn.nextElementSibling;
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const wasOpen = dropdown.classList.contains('open');
-          document.querySelectorAll('.language-dropdown.open').forEach(d => d.classList.remove('open'));
-          if (!wasOpen) dropdown.classList.add('open');
-        });
-      });
-      document.addEventListener('click', () => {
-        document.querySelectorAll('.language-dropdown.open').forEach(d => d.classList.remove('open'));
-      });
-
-      // Apply saved theme for non-authenticated users on page load
-      {% if not user.is_authenticated %}
-      (function() {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-          document.documentElement.classList.remove('dark', 'pastel-theme');
-          if (savedTheme === 'dark') document.documentElement.classList.add('dark');
-          else if (savedTheme === 'pastel') document.documentElement.classList.add('pastel-theme');
-        }
-      })();
-      {% endif %}
-    </script>
-  </nav>
-
-  <div class="main-content container-fluid">
-    {% if messages %}
-    <div class="mx-auto max-w-2xl mt-4 space-y-2">
-      {% for message in messages %}
-      <div class="flex items-center justify-between rounded-lg border p-4
-        {% if message.tags == 'success' %}
-          bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 text-green-700 dark:text-green-300
-        {% elif message.tags == 'error' %}
-          bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 text-red-700 dark:text-red-300
-        {% elif message.tags == 'warning' %}
-          bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800 text-yellow-700 dark:text-yellow-300
-        {% else %}
-          bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300
-        {% endif %}
-      ">
-        <p class="text-sm font-medium">{{ message }}</p>
-        <button onclick="this.parentElement.remove()" class="ml-4 opacity-50 hover:opacity-100">&times;</button>
-      </div>
-      {% endfor %}
+    <div class="mb-4">
+      <p id="lbl-main" class="text-[9px] font-semibold tracking-[2px] uppercase text-base-content/30 px-2.5 mb-1.5 overflow-hidden" style="height:18px">{% trans "Account" %}</p>
+      <ul class="menu menu-sm p-0 gap-0.5">
+        <li><a href="{% url 'profile:profile' %}" class="rounded-lg"><i data-lucide="user" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Profile" %}</span></a></li>
+        <li><a href="{% url 'profile:settings' %}" class="rounded-lg"><i data-lucide="settings" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Settings" %}</span></a></li>
+      </ul>
     </div>
     {% endif %}
 
-    {% block content %}
-    {% endblock content %}
+    <div class="mb-4">
+      <p id="lbl-tools" class="text-[9px] font-semibold tracking-[2px] uppercase text-base-content/30 px-2.5 mb-1.5 overflow-hidden" style="height:18px">{% trans "Tools" %}</p>
+      <ul class="menu menu-sm p-0 gap-0.5">
+        {% if user.is_authenticated %}
+        <li>
+          <a href="{% url 'karma:karma-home' %}" class="rounded-lg">
+            <i data-lucide="book-open-check" class="w-6 h-6 shrink-0"></i>
+            <span class="fade-label nav-label">{% trans "Point system" %}</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'group_divider:home' %}" class="rounded-lg">
+            <i data-lucide="git-branch" class="w-6 h-6 shrink-0"></i>
+            <span class="fade-label nav-label">{% trans "Group divider" %}</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'grade_calculator:grade_calculator' %}" class="rounded-lg">
+            <i data-lucide="calculator" class="w-6 h-6 shrink-0"></i>
+            <span class="fade-label nav-label">{% trans "Grade calculator" %}</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'wheel:home' %}" class="rounded-lg">
+            <i data-lucide="loader-pinwheel" class="w-6 h-6 shrink-0"></i>
+            <span class="fade-label nav-label">{% trans "Name wheel" %}</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'timer:home' %}" class="rounded-lg">
+            <i data-lucide="timer" class="w-6 h-6 shrink-0"></i>
+            <span class="fade-label nav-label">{% trans "Timer" %}</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'todo:home' %}" class="rounded-lg">
+            <i data-lucide="calendar-check" class="w-6 h-6 shrink-0"></i>
+            <span class="fade-label nav-label">{% trans "Calendar" %}</span>
+          </a>
+        </li>
+        {% else %}
+        <li><a href="{% url 'login' %}" class="rounded-lg"><i data-lucide="book-open-check" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Point system" %}</span></a></li>
+        <li><a href="{% url 'login' %}" class="rounded-lg"><i data-lucide="git-branch" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Group divider" %}</span></a></li>
+        <li><a href="{% url 'login' %}" class="rounded-lg"><i data-lucide="calculator" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Grade calculator" %}</span></a></li>
+        <li><a href="{% url 'login' %}" class="rounded-lg"><i data-lucide="loader-pinwheel" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Name wheel" %}</span></a></li>
+        <li><a href="{% url 'login' %}" class="rounded-lg"><i data-lucide="timer" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Timer" %}</span></a></li>
+        <li><a href="{% url 'login' %}" class="rounded-lg"><i data-lucide="calendar-check" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Calendar" %}</span></a></li>
+        {% endif %}
+      </ul>
+    </div>
+
   </div>
 
-</body>
+  <!-- Footer -->
+  <div class="p-2.5 border-t border-base-300 shrink-0 flex flex-col gap-2">
 
+    <!-- Theme swatches -->
+    <div id="theme-row" class="fade-label flex gap-1 px-1 flex-wrap">
+      <div class="tooltip tooltip-top flex-1" data-tip="{% trans 'Light' %}">
+        <button onclick="setTheme('light')" data-swatch="light"
+          class="theme-swatch w-full h-7 rounded-lg border-2 border-base-300 hover:scale-105 transition-transform"
+          style="background:conic-gradient(#f8f9fb 0% 50%,#3b6cf5 50%)"></button>
+      </div>
+      <div class="tooltip tooltip-top flex-1" data-tip="{% trans 'Dark' %}">
+        <button onclick="setTheme('dark')" data-swatch="dark"
+          class="theme-swatch w-full h-7 rounded-lg border-2 border-base-300 hover:scale-105 transition-transform"
+          style="background:conic-gradient(#131929 0% 50%,#38bdf8 50%)"></button>
+      </div>
+      <div class="tooltip tooltip-top flex-1" data-tip="{% trans 'Pastel' %}">
+        <button onclick="setTheme('pastel')" data-swatch="pastel"
+          class="theme-swatch w-full h-7 rounded-lg border-2 border-base-300 hover:scale-105 transition-transform"
+          style="background:conic-gradient(#fff5f8 0% 50%,#6a9ac0 50%)"></button>
+      </div>
+      <div class="tooltip tooltip-top flex-1" data-tip="{% trans 'Editorial' %}">
+        <button onclick="setTheme('lemonade')" data-swatch="lemonade"
+          class="theme-swatch w-full h-7 rounded-lg border-2 border-base-300 hover:scale-105 transition-transform"
+          style="background:conic-gradient(#f5f0e8 0% 50%,#c4622a 50%)"></button>
+      </div>
+      <div class="tooltip tooltip-top flex-1" data-tip="{% trans 'Palette' %}">
+        <button onclick="setTheme('fantasy')" data-swatch="fantasy"
+          class="theme-swatch w-full h-7 rounded-lg border-2 border-base-300 hover:scale-105 transition-transform"
+          style="background:conic-gradient(#fdf4ff 0% 50%,#9333ea 50%)"></button>
+      </div>
+    </div>
+
+    <!-- Language -->
+    <div class="relative language-switcher">
+      <button type="button" id="language-toggle-sb"
+        class="rounded-lg py-1 px-2 w-full flex items-center gap-2 text-base-content/60 hover:bg-base-200 active:bg-base-300 transition-colors">
+        <i data-lucide="globe" class="w-6 h-6 shrink-0"></i>
+        <span class="fade-label nav-label">{% trans "Language" %}</span>
+      </button>
+      <div class="language-dropdown" id="lang-dd-sidebar">
+        <form action="{% url 'set_language' %}" method="post">
+          {% csrf_token %}
+          {% strip_lang_prefix request.path as clean_path %}
+          <input type="hidden" name="next" value="{{ clean_path }}">
+          <button type="submit" name="language" value="en" class="language-option {% if LANGUAGE_CODE == 'en' %}active{% endif %}">English</button>
+          <button type="submit" name="language" value="pt" class="language-option {% if LANGUAGE_CODE == 'pt' %}active{% endif %}">Português</button>
+          <button type="submit" name="language" value="cs" class="language-option {% if LANGUAGE_CODE == 'cs' %}active{% endif %}">Čeština</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="flex flex-col gap-1">
+      <button id="theme-compact" onclick="cycleTheme()"
+        class="rounded-lg py-1 px-2 w-full flex items-center gap-2 text-base-content/60 hover:bg-base-200 active:bg-base-300 transition-colors">
+        <i data-lucide="palette" class="w-6 h-6 shrink-0"></i>
+        <span class="fade-label nav-label">{% trans "Theme" %}</span>
+      </button>
+      {% if user.is_authenticated %}
+      <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-ghost btn-sm w-full gap-2 rounded-xl text-base-content/60 hover:text-error">
+          <i data-lucide="log-out" class="w-4 h-4 shrink-0"></i>
+          <span id="cta-label" class="fade-label">{% trans "Logout" %}</span>
+        </button>
+      </form>
+      {% else %}
+      <a href="{% url 'register' %}" class="btn btn-primary btn-sm w-full gap-2 rounded-xl">
+        <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
+        <span id="cta-label" class="fade-label">{% trans "Get started" %}</span>
+      </a>
+      {% endif %}
+    </div>
+
+  </div>
+</aside>
+
+<!-- ══ MAIN ══ -->
+<main id="main" class="flex-1 min-w-0 flex flex-col">
+
+  <!-- Messages -->
+  {% if messages %}
+  <div class="px-5 pt-4 space-y-2">
+    {% for message in messages %}
+    <div role="alert" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-error{% elif message.tags == 'warning' %}alert-warning{% else %}alert-info{% endif %}">
+      <span>{{ message }}</span>
+      <button onclick="this.parentElement.remove()" class="btn btn-ghost btn-xs">✕</button>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Design WIP banner -->
+  <div id="wip-banner" class="mx-4 mt-4 flex items-center gap-2 rounded-xl border border-warning/40 bg-warning/10 px-4 py-2.5 text-sm text-warning-content/80">
+    <i data-lucide="paintbrush" class="w-5 h-5 shrink-0 text-warning"></i>
+    <span>{% trans "Design is currently being worked on — some pages or items may look incomplete." %}</span>
+    <button onclick="document.getElementById('wip-banner').remove()" class="ml-auto btn btn-ghost btn-xs text-warning/60 hover:text-warning">✕</button>
+  </div>
+
+  {% block content %}{% endblock content %}
+
+</main>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>
+lucide.createIcons();
+
+// Normalize all sidebar menu icon sizes on every icon render
+function normalizeSidebarIcons() {
+  document.querySelectorAll('#sidebar .menu a svg').forEach(svg => {
+    svg.setAttribute('width', '24');
+    svg.setAttribute('height', '24');
+    svg.style.setProperty('width', '1.5rem', 'important');
+    svg.style.setProperty('height', '1.5rem', 'important');
+  });
+}
+normalizeSidebarIcons();
+
+// ── Sidebar
+let sbOpen = true;
+
+function toggleSidebar() {
+  sbOpen = !sbOpen;
+  const sb = document.getElementById('sidebar');
+  const mn = document.getElementById('main');
+  const icon = document.getElementById('toggle-icon');
+
+  sb.style.width = sbOpen ? '180px' : '60px';
+  mn.style.marginLeft = sbOpen ? '180px' : '60px';
+  icon.setAttribute('data-lucide', sbOpen ? 'chevron-left' : 'chevron-right');
+
+  document.querySelectorAll('.nav-label, .nav-badge').forEach(el => {
+    el.style.opacity    = sbOpen ? '1' : '0';
+    el.style.width      = sbOpen ? '' : '0';
+    el.style.height     = sbOpen ? '' : '0';
+    el.style.lineHeight = sbOpen ? '' : '0';
+    el.style.overflow   = sbOpen ? '' : 'hidden';
+  });
+  ['logo-text','cta-label'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.opacity = sbOpen ? '1' : '0';
+    el.style.width   = sbOpen ? '' : '0';
+    el.style.overflow = sbOpen ? '' : 'hidden';
+  });
+  const themeRow = document.getElementById('theme-row');
+  if (themeRow) {
+    themeRow.style.opacity  = sbOpen ? '1' : '0';
+    themeRow.style.height   = sbOpen ? '' : '0';
+    themeRow.style.overflow = sbOpen ? '' : 'hidden';
+    themeRow.style.marginBottom = sbOpen ? '' : '0';
+  }
+  ['lbl-main','lbl-tools'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.height = sbOpen ? '18px' : '0';
+    el.style.opacity = sbOpen ? '1' : '0';
+    el.style.marginBottom = sbOpen ? '' : '0';
+  });
+  document.getElementById('sidebar').classList.toggle('collapsed', !sbOpen);
+
+  lucide.createIcons();
+  normalizeSidebarIcons();
+}
+
+function openMobileSidebar() {
+  document.getElementById('sidebar').classList.add('mobile-open');
+  document.getElementById('drawer-overlay').classList.add('show');
+}
+function closeMobileSidebar() {
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('drawer-overlay').classList.remove('show');
+}
+
+// ── Theme
+function setTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  localStorage.setItem('theme', t);
+  {% if user.is_authenticated %}
+  fetch('{% url "profile:theme-update" %}', {
+    method: 'POST',
+    headers: {'Content-Type':'application/x-www-form-urlencoded','X-CSRFToken':'{{ csrf_token }}'},
+    body: 'theme=' + t
+  });
+  {% endif %}
+  updateThemeUI(t);
+}
+
+function updateThemeUI(t) {
+  document.querySelectorAll('[data-swatch]').forEach(btn => {
+    btn.style.borderColor = btn.dataset.swatch === t ? 'hsl(var(--p))' : '';
+  });
+}
+
+const THEMES = ['light','dark','pastel','lemonade','fantasy'];
+function cycleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme') || 'light';
+  const next = THEMES[(THEMES.indexOf(cur) + 1) % THEMES.length];
+  setTheme(next);
+}
+
+{% if not user.is_authenticated %}
+(function(){
+  const s = localStorage.getItem('theme');
+  if (['light','dark','pastel','lemonade','fantasy'].includes(s)) {
+    document.documentElement.setAttribute('data-theme', s);
+    updateThemeUI(s);
+  } else { updateThemeUI('light'); }
+})();
+{% else %}
+updateThemeUI('{% if request.user.theme == "dark" %}dark{% elif request.user.theme == "pastel" %}pastel{% elif request.user.theme == "lemonade" %}lemonade{% elif request.user.theme == "fantasy" %}fantasy{% else %}light{% endif %}');
+{% endif %}
+
+// ── Language dropdown
+document.addEventListener('DOMContentLoaded', function() {
+  const dd = document.getElementById('lang-dd-sidebar');
+  if (!dd) return;
+
+  // Move to body so sidebar overflow:hidden doesn't clip it
+  document.body.appendChild(dd);
+  dd.style.position = 'fixed';
+  dd.style.zIndex   = '9999';
+
+  document.querySelectorAll('[id^="language-toggle"]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const wasOpen = dd.classList.contains('open');
+      document.querySelectorAll('.language-dropdown.open').forEach(d => d.classList.remove('open'));
+      if (!wasOpen) {
+        const rect = btn.getBoundingClientRect();
+        dd.style.left   = rect.left + 'px';
+        dd.style.bottom = (window.innerHeight - rect.top + 4) + 'px';
+        dd.style.top    = 'auto';
+        dd.classList.add('open');
+      }
+    });
+  });
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.language-dropdown.open').forEach(d => d.classList.remove('open'));
+  });
+});
+</script>
+
+{% block extra_js %}{% endblock %}
+</body>
 </html>
