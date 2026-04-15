@@ -233,10 +233,32 @@ if not DEBUG:
 mail = os.environ.get("MAIL")
 mail_pass = os.environ.get("MAIL_PASSWORD")
 
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "WARNING",
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+    },
+}
+
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_HOST = "smtp.seznam.cz"
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_USE_TLS = False
 EMAIL_HOST_USER = mail
 EMAIL_HOST_PASSWORD = mail_pass
-DEFAULT_FROM_EMAIL = mail
+DEFAULT_FROM_EMAIL = f"Teachka <{mail}>"
