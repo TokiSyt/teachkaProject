@@ -1,6 +1,9 @@
+import logging
 import re
 
 from django.conf import settings
+
+logger = logging.getLogger(__name__)
 from django.contrib import messages
 from django.contrib.auth import (
     get_user_model,
@@ -52,11 +55,20 @@ class RegisterView(FormView):
         )
         to_email = form.cleaned_data.get("email")
         email = EmailMessage(mail_subject, message, to=[to_email])
-        email.send()
-        messages.success(
-            self.request,
-            "Welcome, please check your email to complete your registration.",
-        )
+        try:
+            email.send()
+            messages.success(
+                self.request,
+                "Welcome, please check your email to complete your registration.",
+            )
+        except Exception:
+            logger.exception("Failed to send registration email to %s", to_email)
+            new_user.delete()
+            messages.error(
+                self.request,
+                "Registration failed due to an email error. Please try again later.",
+            )
+            return redirect("register")
         return redirect("home")
 
     def form_invalid(self, form):
