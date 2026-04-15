@@ -80,13 +80,17 @@
 
     /* User accent / hover color for sidebar menu items */
     :root {
-      --sidebar-hover-color: {% if user.is_authenticated %}{{ user.icon_hover_color|default:"#1779db" }}{% else %}#1779db{% endif %};
+      --sidebar-hover-color: {% if user.is_authenticated and user.icon_hover_color %}{{ user.icon_hover_color }}{% else %}var(--color-primary){% endif %};
     }
-    #sidebar .menu li > a:not(.active):hover {
+    #sidebar .menu li > a:hover,
+    #sidebar #language-toggle-sb:hover,
+    #sidebar #theme-compact:hover {
       background-color: color-mix(in srgb, var(--sidebar-hover-color) 10%, transparent) !important;
       color: var(--sidebar-hover-color) !important;
     }
-    #sidebar .menu li > a:not(.active):hover svg {
+    #sidebar .menu li > a:hover svg,
+    #sidebar #language-toggle-sb:hover svg,
+    #sidebar #theme-compact:hover svg {
       color: var(--sidebar-hover-color) !important;
     }
 
@@ -103,7 +107,7 @@
   <!-- Logo -->
   <div id="sidebar-header" class="flex items-center justify-between h-[60px] px-3.5 border-b border-base-300 shrink-0">
     <a href="{% url 'home' %}" class="flex items-center gap-2.5 overflow-hidden whitespace-nowrap">
-      <div class="w-8 h-8 rounded-xl bg-primary flex items-center justify-center shrink-0 text-primary-content text-lg font-medium serif">T</div>
+      <div class="w-8 h-8 flex items-center justify-center shrink-0 text-2xl font-semibold serif text-primary">T</div>
       <span id="logo-text" class="fade-label text-base font-medium text-base-content serif">Teachka</span>
     </a>
     <button id="desktop-toggle" onclick="toggleSidebar()"
@@ -123,6 +127,20 @@
             <span class="fade-label nav-label">{% trans "Home" %}</span>
           </a>
         </li>
+        {% if not user.is_authenticated %}
+        <li>
+          <a href="{% url 'login' %}" class="rounded-lg {% if request.resolver_match.url_name == 'login' %}active{% endif %}">
+            <i data-lucide="key-round" class="w-6 h-6 shrink-0"></i>
+            <span class="fade-label nav-label">{% trans "Login" %}</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'register' %}" class="rounded-lg {% if request.resolver_match.url_name == 'register' %}active{% endif %}">
+            <i data-lucide="user-plus" class="w-6 h-6 shrink-0"></i>
+            <span class="fade-label nav-label">{% trans "Register" %}</span>
+          </a>
+        </li>
+        {% endif %}
       </ul>
     </div>
 
@@ -148,7 +166,7 @@
         </li>
         <li>
           <a href="{% url 'group_divider:home' %}" class="rounded-lg">
-            <i data-lucide="git-branch" class="w-6 h-6 shrink-0"></i>
+            <i data-lucide="users" class="w-6 h-6 shrink-0"></i>
             <span class="fade-label nav-label">{% trans "Group divider" %}</span>
           </a>
         </li>
@@ -166,7 +184,7 @@
         </li>
         <li>
           <a href="{% url 'timer:home' %}" class="rounded-lg">
-            <i data-lucide="timer" class="w-6 h-6 shrink-0"></i>
+            <i data-lucide="clock" class="w-6 h-6 shrink-0"></i>
             <span class="fade-label nav-label">{% trans "Timer" %}</span>
           </a>
         </li>
@@ -177,12 +195,12 @@
           </a>
         </li>
         {% else %}
-        <li><a href="{% url 'login' %}" class="rounded-lg"><i data-lucide="book-open-check" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Point system" %}</span></a></li>
-        <li><a href="{% url 'login' %}" class="rounded-lg"><i data-lucide="git-branch" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Group divider" %}</span></a></li>
-        <li><a href="{% url 'login' %}" class="rounded-lg"><i data-lucide="calculator" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Grade calculator" %}</span></a></li>
-        <li><a href="{% url 'login' %}" class="rounded-lg"><i data-lucide="loader-pinwheel" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Name wheel" %}</span></a></li>
-        <li><a href="{% url 'login' %}" class="rounded-lg"><i data-lucide="timer" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Timer" %}</span></a></li>
-        <li><a href="{% url 'login' %}" class="rounded-lg"><i data-lucide="calendar-check" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Calendar" %}</span></a></li>
+        <li><a href="{% url 'karma:karma-home' %}" class="rounded-lg"><i data-lucide="book-open-check" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Point system" %}</span></a></li>
+        <li><a href="{% url 'group_divider:home' %}" class="rounded-lg"><i data-lucide="users" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Group divider" %}</span></a></li>
+        <li><a href="{% url 'grade_calculator:grade_calculator' %}" class="rounded-lg"><i data-lucide="calculator" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Grade calculator" %}</span></a></li>
+        <li><a href="{% url 'wheel:home' %}" class="rounded-lg"><i data-lucide="loader-pinwheel" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Name wheel" %}</span></a></li>
+        <li><a href="{% url 'timer:home' %}" class="rounded-lg"><i data-lucide="clock" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Timer" %}</span></a></li>
+        <li><a href="{% url 'todo:home' %}" class="rounded-lg"><i data-lucide="calendar-check" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Calendar" %}</span></a></li>
         {% endif %}
       </ul>
     </div>
@@ -197,34 +215,34 @@
       <div class="tooltip tooltip-top flex-1" data-tip="{% trans 'Light' %}">
         <button onclick="setTheme('light')" data-swatch="light"
           class="theme-swatch w-full h-7 rounded-lg border-2 border-base-300 hover:scale-105 transition-transform"
-          style="background:conic-gradient(#f8f9fb 0% 50%,#3b6cf5 50%)"></button>
+          style="background:conic-gradient(#ffffff 0% 50%,#ddc8f8 50%)"></button>
       </div>
       <div class="tooltip tooltip-top flex-1" data-tip="{% trans 'Dark' %}">
         <button onclick="setTheme('dark')" data-swatch="dark"
           class="theme-swatch w-full h-7 rounded-lg border-2 border-base-300 hover:scale-105 transition-transform"
-          style="background:conic-gradient(#131929 0% 50%,#38bdf8 50%)"></button>
+          style="background:conic-gradient(#0c1221 0% 50%,#d46ea4 50%)"></button>
       </div>
       <div class="tooltip tooltip-top flex-1" data-tip="{% trans 'Pastel' %}">
         <button onclick="setTheme('pastel')" data-swatch="pastel"
           class="theme-swatch w-full h-7 rounded-lg border-2 border-base-300 hover:scale-105 transition-transform"
-          style="background:conic-gradient(#fff5f8 0% 50%,#6a9ac0 50%)"></button>
+          style="background:conic-gradient(#fff2f5 0% 50%,#e07898 50%)"></button>
       </div>
       <div class="tooltip tooltip-top flex-1" data-tip="{% trans 'Editorial' %}">
         <button onclick="setTheme('lemonade')" data-swatch="lemonade"
           class="theme-swatch w-full h-7 rounded-lg border-2 border-base-300 hover:scale-105 transition-transform"
-          style="background:conic-gradient(#f5f0e8 0% 50%,#c4622a 50%)"></button>
+          style="background:conic-gradient(#f4faf0 0% 50%,#4a9b55 50%)"></button>
       </div>
       <div class="tooltip tooltip-top flex-1" data-tip="{% trans 'Palette' %}">
         <button onclick="setTheme('fantasy')" data-swatch="fantasy"
           class="theme-swatch w-full h-7 rounded-lg border-2 border-base-300 hover:scale-105 transition-transform"
-          style="background:conic-gradient(#fdf4ff 0% 50%,#9333ea 50%)"></button>
+          style="background:conic-gradient(#ffffff 0% 50%,#7a2b68 50%)"></button>
       </div>
     </div>
 
     <!-- Language -->
     <div class="relative language-switcher">
       <button type="button" id="language-toggle-sb"
-        class="rounded-lg py-1 px-2 w-full flex items-center gap-2 text-base-content/60 hover:bg-base-200 active:bg-base-300 transition-colors">
+        class="rounded-lg py-1 px-2 w-full flex items-center gap-2 text-base-content/60 active:bg-base-300 transition-colors">
         <i data-lucide="globe" class="w-6 h-6 shrink-0"></i>
         <span class="fade-label nav-label">{% trans "Language" %}</span>
       </button>
@@ -243,7 +261,7 @@
     <!-- CTA -->
     <div class="flex flex-col gap-1">
       <button id="theme-compact" onclick="cycleTheme()"
-        class="rounded-lg py-1 px-2 w-full flex items-center gap-2 text-base-content/60 hover:bg-base-200 active:bg-base-300 transition-colors">
+        class="rounded-lg py-1 px-2 w-full flex items-center gap-2 text-base-content/60 active:bg-base-300 transition-colors">
         <i data-lucide="palette" class="w-6 h-6 shrink-0"></i>
         <span class="fade-label nav-label">{% trans "Theme" %}</span>
       </button>
@@ -269,6 +287,17 @@
 <!-- ══ MAIN ══ -->
 <main id="main" class="flex-1 min-w-0 flex flex-col">
 
+  <!-- Mobile top bar -->
+  <div class="md:hidden sticky top-0 z-40 flex items-center h-[60px] px-4 bg-base-100 border-b border-base-300 shrink-0">
+    <button onclick="openMobileSidebar()" class="btn btn-ghost btn-sm btn-square">
+      <i data-lucide="menu" class="w-5 h-5"></i>
+    </button>
+    <a href="{% url 'home' %}" class="flex items-center gap-2 ml-3">
+      <div class="w-7 h-7 flex items-center justify-center text-xl font-semibold serif text-primary">T</div>
+      <span class="text-base font-medium text-base-content serif">Teachka</span>
+    </a>
+  </div>
+
   <!-- Messages -->
   {% if messages %}
   <div class="px-5 pt-4 space-y-2">
@@ -284,7 +313,7 @@
   <!-- Design WIP banner -->
   <div id="wip-banner" class="mx-4 mt-4 flex items-center gap-2 rounded-xl border border-warning/40 bg-warning/10 px-4 py-2.5 text-sm text-warning-content/80">
     <i data-lucide="paintbrush" class="w-5 h-5 shrink-0 text-warning"></i>
-    <span>{% trans "Design is currently being worked on — some pages or items may look incomplete." %}</span>
+    <span>{% trans "This is a development server. Some pages or items might be incomplete." %}</span>
     <button onclick="document.getElementById('wip-banner').remove()" class="ml-auto btn btn-ghost btn-xs text-warning/60 hover:text-warning">✕</button>
   </div>
 
@@ -379,7 +408,7 @@ function setTheme(t) {
 
 function updateThemeUI(t) {
   document.querySelectorAll('[data-swatch]').forEach(btn => {
-    btn.style.borderColor = btn.dataset.swatch === t ? 'hsl(var(--p))' : '';
+    btn.style.borderColor = btn.dataset.swatch === t ? 'var(--color-primary)' : '';
   });
 }
 

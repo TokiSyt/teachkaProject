@@ -125,8 +125,8 @@
 }
 
 [data-theme="light"] {
-  --color-base-100: oklch(95% 0.002 247);
-  --color-base-200: oklch(91% 0.002 247);
+  --color-base-100: oklch(96.472% 0.00276 285.759);
+  --color-base-200: oklch(100% 0.00011 271.152);
   --color-base-300: oklch(86% 0.002 247);
 }
 

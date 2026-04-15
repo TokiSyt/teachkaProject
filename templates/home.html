@@ -2,19 +2,18 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}Teachka — Toolkit for Educators{% endblock %}
+{% block title %}Teachka: Toolkit for Educators{% endblock %}
 
 {% block breadcrumb %}Home{% endblock %}
 
 {% block extra_css %}
 <style>
-  /* Tool card hover arrow */
+  /* Tool card hover arrow + border */
   .tool-card:hover .arrow-icon { transform: translateX(4px); }
   .arrow-icon { transition: transform 0.15s; }
+  .tool-card:hover { outline: 2px solid var(--sidebar-hover-color) !important; }
 
-/* Mobile hero/grid adjustments */
   @media (max-width: 768px) {
-    .hero-section { padding: 40px 20px 48px !important; }
     .about-grid { grid-template-columns: 1fr !important; }
   }
 
@@ -46,14 +45,14 @@
 
   {% if not user.is_authenticated %}
   <!-- ── HERO ── -->
-  <section class="relative overflow-hidden px-14 pt-20 pb-18 border-b border-base-300">
+  <section class="relative overflow-hidden px-5 pt-16 pb-16 md:px-14 md:pt-20 md:pb-18 border-b border-base-300">
 
     <!-- Deco panel -->
-    <div class="absolute top-0 right-0 bottom-0 w-[42%] bg-base-200"
+    <div class="absolute top-0 right-0 bottom-0 w-[42%] bg-base-200 hidden md:block"
          style="clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%)"></div>
 
     <!-- Deco cluster -->
-    <svg class="absolute pointer-events-none select-none brand-title"
+    <svg class="absolute pointer-events-none select-none brand-title hidden md:block"
          aria-hidden="true"
          style="top:50%;right:10%;transform:translate(50%,-50%)"
          width="480" height="530" viewBox="0 0 480 530">
@@ -96,6 +95,14 @@
 
     </svg>
 
+    <!-- Mobile deco — compact bubble cluster -->
+    <div class="absolute top-0 right-0 overflow-hidden pointer-events-none select-none md:hidden" style="width:200px;height:280px">
+      <div class="absolute rounded-full brand-title" style="top:-40px;right:-40px;width:160px;height:160px;background:currentColor;opacity:0.08"></div>
+      <div class="absolute rounded-full brand-title" style="top:30px;right:60px;width:88px;height:88px;background:currentColor;opacity:0.11"></div>
+      <div class="absolute rounded-full brand-title" style="top:110px;right:-10px;width:54px;height:54px;background:currentColor;opacity:0.15"></div>
+      <div class="absolute rounded-full brand-title" style="top:168px;right:54px;width:30px;height:30px;background:currentColor;opacity:0.19"></div>
+    </div>
+
     <!-- Eyebrow -->
     <div class="hero-child relative z-10 flex items-center gap-3 mb-6">
       <div class="w-7 h-0.5 rounded bg-primary"></div>
@@ -111,47 +118,45 @@
 
     <!-- Subtext -->
     <p class="hero-child relative z-10 text-base text-base-content/60 max-w-[420px] leading-[1.75] font-light mb-10">
-      One calm, clean hub for all your classroom tools. Grades, groups, points, timers — connected, not cluttered.
+      One calm, clean hub for all your classroom tools.
     </p>
 
     <!-- Actions -->
     <div class="hero-child relative z-10 flex items-center gap-4 flex-wrap mb-10">
       <a href="{% url 'register' %}" class="btn btn-primary rounded-xl gap-2 font-medium text-white">
         <i data-lucide="arrow-right" class="w-4 h-4"></i>
-        Start for free
+        Get started
       </a>
       <a href="#tools" class="btn btn-ghost rounded-xl gap-1.5 text-base-content/60 font-normal hover:text-base-content">
         See the tools
         <i data-lucide="chevron-down" class="w-4 h-4"></i>
       </a>
-      <br>
     </div>
   </section>
-  <br>
 
   <!-- ── STATS ── -->
-  <div class="grid grid-cols-3 divide-x divide-base-300 border-b border-base-300">
-    <div class="stat py-6 px-10">
-      <div class="stat-value serif font-medium text-4xl tracking-tight">7</div>
+  <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-base-300 border-b border-base-300">
+    <div class="stat py-8 px-4 md:py-8 md:px-10">
+      <div class="stat-value serif font-medium text-3xl md:text-4xl tracking-tight">6</div>
       <div class="stat-desc text-xs font-medium mt-1">Built-in classroom tools</div>
     </div>
-    <div class="stat py-6 px-10">
-      <div class="stat-value serif font-medium text-4xl tracking-tight">1</div>
+    <div class="stat py-8 px-4 md:py-8 md:px-10">
+      <div class="stat-value serif font-medium text-3xl md:text-4xl tracking-tight">1</div>
       <div class="stat-desc text-xs font-medium mt-1">Place for everything</div>
     </div>
-    <div class="stat py-6 px-10">
-      <div class="stat-value serif font-medium text-4xl tracking-tight">Free</div>
-      <div class="stat-desc text-xs font-medium mt-1">Always &amp; forever</div>
+    <div class="stat py-8 px-4 md:py-8 md:px-10">
+      <div class="stat-value serif font-medium text-3xl md:text-4xl tracking-tight">Free</div>
+      <div class="stat-desc text-xs font-medium mt-1">No strings attached</div>
     </div>
   </div>
   {% endif %}
 
   <!-- ── WELCOME ── -->
   {% if user.is_authenticated %}
-  <section class="relative px-14 pt-14 pb-13 border-b border-base-300 overflow-hidden">
+  <section class="relative px-5 pt-14 pb-14 md:px-14 md:pt-14 md:pb-13 border-b border-base-300 overflow-hidden">
 
     <!-- Fused bubble cluster + ghost day number -->
-    <svg class="absolute pointer-events-none select-none brand-title"
+    <svg class="absolute pointer-events-none select-none brand-title hidden md:block"
          aria-hidden="true"
          style="right:0;top:50%;transform:translateY(-50%)"
          width="420" height="340" viewBox="0 0 420 340">
@@ -180,6 +185,11 @@
 
     </svg>
 
+    <!-- Mobile deco — ghost day number -->
+    <div class="absolute right-0 top-0 bottom-0 overflow-hidden pointer-events-none select-none md:hidden flex items-center">
+      <span class="serif brand-title font-medium" style="font-size:190px;opacity:0.05;line-height:1;letter-spacing:-8px;display:block">{{ today|date:"j" }}</span>
+    </div>
+
     <div class="relative">
 
       <!-- Eyebrow -->
@@ -191,7 +201,7 @@
       </h1>
 
       <!-- Date -->
-      <div class="drift drift-3 flex items-baseline gap-5 mb-3">
+      <div class="drift drift-3 flex flex-wrap items-baseline gap-3 md:gap-5 mb-3">
         <span class="serif font-medium text-base-content leading-none" style="font-size: clamp(20px, 2.4vw, 30px);">{{ today|date:"l" }}</span>
         <span class="text-base-content/20 text-xl font-light">·</span>
         <span class="serif font-medium text-base-content leading-none tabular-nums" style="font-size: clamp(20px, 2.4vw, 30px);">{{ today|date:"j F Y" }}</span>
@@ -200,7 +210,7 @@
       <!-- Week + parity toggle -->
       <div class="drift drift-4 flex items-center gap-4">
         <span class="text-[11px] tracking-[2.5px] uppercase text-base-content/30">Week {{ week_number }}</span>
-        <span class="text-base-content/15 text-sm">—</span>
+        <span class="text-base-content/15 text-sm">·</span>
         <span class="text-[11px] tracking-[2.5px] uppercase font-semibold text-primary">{{ week_parity|capfirst }}</span>
       </div>
 
@@ -209,26 +219,28 @@
   {% endif %}
 
   <!-- ── TOOLS GRID ── -->
-  <section class="px-14 py-16" id="tools">
-    <div class="flex items-end justify-between mb-9">
+  <section class="px-5 py-14 md:px-14 md:py-16" id="tools">
+    <div class="flex items-end justify-between mb-6 md:mb-9">
       <div>
         <p class="text-[10px] font-semibold tracking-[2.5px] uppercase text-base-content/40 mb-2">The toolkit</p>
         <h2 class="serif text-[34px] font-medium tracking-tight leading-[1.1] text-base-content">
-          Seven tools,<br><em class="text-base-content/40 font-light">one home</em>
+          Six tools,<br><em class="text-base-content/40 font-light">one home</em>
         </h2>
+        {% if not user.is_authenticated %}
+        <p class="text-[11px] text-base-content/40 font-light mt-3">
+          <a href="{% url 'login' %}" class="underline underline-offset-2 hover:text-base-content transition-colors">Sign in</a> to start using any tool.
+        </p>
+        {% endif %}
       </div>
-      <a href="{% url 'login' %}" class="link link-primary text-sm font-medium flex items-center gap-1">
-        View all <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-      </a>
     </div>
 
-    <div class="grid grid-cols-3 gap-3.5">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5">
 
-      <div class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md hover:border-primary transition-all duration-200 cursor-pointer">
+      <a href="{% url 'grade_calculator:grade_calculator' %}" class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md transition-all duration-200">
         <div class="card-body p-6 flex flex-col gap-0">
           <p class="text-[11px] font-medium text-base-content/30 tracking-wide mb-4 serif">01</p>
           <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
-            <i data-lucide="bar-chart-2" class="w-[18px] h-[18px]"></i>
+            <i data-lucide="calculator" class="w-[18px] h-[18px]"></i>
           </div>
           <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Grade Calculator</h3>
           <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Weighted averages, bulk grading, instant export to your records.</p>
@@ -236,55 +248,41 @@
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </div>
         </div>
-      </div>
+      </a>
 
-      <div class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md hover:border-primary transition-all duration-200 cursor-pointer">
+      <a href="{% url 'group_divider:home' %}" class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md transition-all duration-200">
         <div class="card-body p-6 flex flex-col gap-0">
           <p class="text-[11px] font-medium text-base-content/30 tracking-wide mb-4 serif">02</p>
           <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
             <i data-lucide="users" class="w-[18px] h-[18px]"></i>
           </div>
-          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Group Maker</h3>
-          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Smart grouping by skill level or fully randomised in one click.</p>
+          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Group Divider</h3>
+          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Split your class into balanced teams in seconds.</p>
           <div class="arrow-icon mt-4 text-base-content/25 flex items-center">
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </div>
         </div>
-      </div>
+      </a>
 
-      <div class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md hover:border-primary transition-all duration-200 cursor-pointer">
+      <a href="{% url 'karma:karma-home' %}" class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md transition-all duration-200">
         <div class="card-body p-6 flex flex-col gap-0">
           <p class="text-[11px] font-medium text-base-content/30 tracking-wide mb-4 serif">03</p>
           <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
-            <i data-lucide="git-branch" class="w-[18px] h-[18px]"></i>
+            <i data-lucide="book-open-check" class="w-[18px] h-[18px]"></i>
           </div>
-          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Group Divider</h3>
-          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Split your class into equal teams with custom constraints.</p>
+          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Point System</h3>
+          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Track participation and reward students with points in real time.</p>
           <div class="arrow-icon mt-4 text-base-content/25 flex items-center">
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </div>
         </div>
-      </div>
+      </a>
 
-      <div class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md hover:border-primary transition-all duration-200 cursor-pointer">
+      <a href="{% url 'timer:home' %}" class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md transition-all duration-200">
         <div class="card-body p-6 flex flex-col gap-0">
           <p class="text-[11px] font-medium text-base-content/30 tracking-wide mb-4 serif">04</p>
           <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
-            <i data-lucide="star" class="w-[18px] h-[18px]"></i>
-          </div>
-          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Point System</h3>
-          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Live participation tracker that keeps every student engaged.</p>
-          <div class="arrow-icon mt-4 text-base-content/25 flex items-center">
-            <i data-lucide="arrow-right" class="w-4 h-4"></i>
-          </div>
-        </div>
-      </div>
-
-      <div class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md hover:border-primary transition-all duration-200 cursor-pointer">
-        <div class="card-body p-6 flex flex-col gap-0">
-          <p class="text-[11px] font-medium text-base-content/30 tracking-wide mb-4 serif">05</p>
-          <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
-            <i data-lucide="timer" class="w-[18px] h-[18px]"></i>
+            <i data-lucide="clock" class="w-[18px] h-[18px]"></i>
           </div>
           <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Timer</h3>
           <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Visual countdowns for tests, group work, and transitions.</p>
@@ -292,13 +290,13 @@
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </div>
         </div>
-      </div>
+      </a>
 
-      <div class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md hover:border-primary transition-all duration-200 cursor-pointer">
+      <a href="{% url 'todo:home' %}" class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md transition-all duration-200">
         <div class="card-body p-6 flex flex-col gap-0">
-          <p class="text-[11px] font-medium text-base-content/30 tracking-wide mb-4 serif">06</p>
+          <p class="text-[11px] font-medium text-base-content/30 tracking-wide mb-4 serif">05</p>
           <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
-            <i data-lucide="calendar" class="w-[18px] h-[18px]"></i>
+            <i data-lucide="calendar-check" class="w-[18px] h-[18px]"></i>
           </div>
           <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Calendar</h3>
           <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Lesson planning and deadline tracking in one clean weekly view.</p>
@@ -306,43 +304,43 @@
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </div>
         </div>
-      </div>
+      </a>
 
-      <div class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md hover:border-primary transition-all duration-200 cursor-pointer">
+      <a href="{% url 'wheel:home' %}" class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md transition-all duration-200">
         <div class="card-body p-6 flex flex-col gap-0">
-          <p class="text-[11px] font-medium text-base-content/30 tracking-wide mb-4 serif">07</p>
+          <p class="text-[11px] font-medium text-base-content/30 tracking-wide mb-4 serif">06</p>
           <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
-            <i data-lucide="sigma" class="w-[18px] h-[18px]"></i>
+            <i data-lucide="loader-pinwheel" class="w-[18px] h-[18px]"></i>
           </div>
-          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Math Ops</h3>
-          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Quick classroom-specific calculation utilities, always on hand.</p>
+          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Name Wheel</h3>
+          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Spin to pick a random student — fair, fun, and instant.</p>
           <div class="arrow-icon mt-4 text-base-content/25 flex items-center">
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </div>
         </div>
-      </div>
+      </a>
 
     </div>
   </section>
 
   <!-- ── YOUR ACTIVITY ── -->
   {% if user.is_authenticated %}
-  <section class="px-14 pt-10 pb-12 border-t border-base-300">
+  <section class="px-5 pt-14 pb-14 md:px-14 md:pt-10 md:pb-12 border-t border-base-300">
 
     <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-8">Your activity</p>
 
     <div>
 
-      <div class="stat-row border-t border-base-300/50 py-4 flex items-baseline justify-between">
-        <span class="text-[11px] tracking-[2px] uppercase text-base-content/35">Groups</span>
+      <div class="stat-row border-t border-base-300/50 py-6 flex items-baseline justify-between">
+        <span class="text-xs tracking-[2px] uppercase text-base-content/35">Groups</span>
         <div class="text-right leading-none">
           <span class="serif font-medium text-base-content tabular-nums stat-num" style="font-size:28px" data-target="{{ user_groups_count }}">{{ user_groups_count }}</span>
           <span class="text-[11px] text-base-content/30 ml-2 tabular-nums">{{ user_members_count }} members</span>
         </div>
       </div>
 
-      <div class="stat-row border-t border-base-300/50 py-4 flex items-baseline justify-between">
-        <span class="text-[11px] tracking-[2px] uppercase text-base-content/35">Points</span>
+      <div class="stat-row border-t border-base-300/50 py-6 flex items-baseline justify-between">
+        <span class="text-xs tracking-[2px] uppercase text-base-content/35">Points</span>
         <div class="text-right leading-none">
           <span class="serif font-medium tabular-nums" style="font-size:28px; color:oklch(58% .17 145)">+<span class="stat-num" data-target="{{ user_positive_points }}">{{ user_positive_points }}</span></span>
           <span class="text-base-content/20 mx-2 text-lg font-light">/</span>
@@ -350,32 +348,32 @@
         </div>
       </div>
 
-      <div class="stat-row border-t border-base-300/50 py-4 flex items-baseline justify-between">
-        <span class="text-[11px] tracking-[2px] uppercase text-base-content/35">Calculator</span>
+      <div class="stat-row border-t border-base-300/50 py-6 flex items-baseline justify-between">
+        <span class="text-xs tracking-[2px] uppercase text-base-content/35">Calculator</span>
         <div class="text-right leading-none">
           <span class="serif font-medium text-base-content tabular-nums stat-num" style="font-size:28px" data-target="{{ calculator_uses }}">{{ calculator_uses }}</span>
           <span class="text-[11px] text-base-content/30 ml-2">uses</span>
         </div>
       </div>
 
-      <div class="stat-row border-t border-base-300/50 py-4 flex items-baseline justify-between">
-        <span class="text-[11px] tracking-[2px] uppercase text-base-content/35">Wheel</span>
+      <div class="stat-row border-t border-base-300/50 py-6 flex items-baseline justify-between">
+        <span class="text-xs tracking-[2px] uppercase text-base-content/35">Wheel</span>
         <div class="text-right leading-none">
           <span class="serif font-medium text-base-content tabular-nums stat-num" style="font-size:28px" data-target="{{ wheel_spins }}">{{ wheel_spins }}</span>
           <span class="text-[11px] text-base-content/30 ml-2">spins</span>
         </div>
       </div>
 
-      <div class="stat-row border-t border-base-300/50 py-4 flex items-baseline justify-between">
-        <span class="text-[11px] tracking-[2px] uppercase text-base-content/35">Divider</span>
+      <div class="stat-row border-t border-base-300/50 py-6 flex items-baseline justify-between">
+        <span class="text-xs tracking-[2px] uppercase text-base-content/35">Divider</span>
         <div class="text-right leading-none">
           <span class="serif font-medium text-base-content tabular-nums stat-num" style="font-size:28px" data-target="{{ divider_uses }}">{{ divider_uses }}</span>
           <span class="text-[11px] text-base-content/30 ml-2">splits</span>
         </div>
       </div>
 
-      <div class="stat-row border-t border-base-300/50 py-4 flex items-baseline justify-between">
-        <span class="text-[11px] tracking-[2px] uppercase text-base-content/35">Timer</span>
+      <div class="stat-row border-t border-base-300/50 py-6 flex items-baseline justify-between">
+        <span class="text-xs tracking-[2px] uppercase text-base-content/35">Timer</span>
         <div class="text-right leading-none">
           <span class="serif font-medium text-base-content tabular-nums stat-num" style="font-size:28px" data-target="{{ timer_total_minutes }}">{{ timer_total_minutes }}</span>
           <span class="text-[11px] text-base-content/30 ml-2">minutes</span>
@@ -421,110 +419,242 @@
   </section>
   {% endif %}
 
+  {% if user.is_authenticated %}
+  <!-- ── ACCENT COLOUR ── -->
+  <style>
+    .ac-btn {
+      flex: 1 1 0;
+      position: relative;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      transition: flex 0.24s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .ac-btn:hover { flex: 2.4 1 0; }
+    .ac-btn .ac-label {
+      position: absolute;
+      bottom: 7px; left: 0; right: 0;
+      text-align: center;
+      font-size: 7.5px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.92);
+      text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+      opacity: 0;
+      transition: opacity 0.14s;
+      pointer-events: none;
+    }
+    .ac-btn:hover .ac-label { opacity: 1; }
+    .ac-btn .ac-sel {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: rgba(255,255,255,0.6);
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    .ac-btn.ac-active .ac-sel { opacity: 1; }
+
+    /* Preview: apply accent to sidebar links directly so it's visible without hover */
+    .ac-previewing #sidebar .menu li > a {
+      color: var(--sidebar-hover-color) !important;
+    }
+    .ac-previewing #sidebar .menu li > a svg {
+      color: var(--sidebar-hover-color) !important;
+    }
+    .ac-previewing #sidebar #language-toggle-sb,
+    .ac-previewing #sidebar #theme-compact {
+      color: var(--sidebar-hover-color) !important;
+    }
+  </style>
+  <section class="px-5 py-12 md:px-14 md:py-10 border-t border-base-300">
+    <div class="flex items-end justify-between mb-5">
+      <div>
+        <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-1">Accent colour</p>
+        <p class="text-[13px] text-base-content/45 font-light">Sidebar highlight colour.</p>
+      </div>
+      <p class="text-[10px] text-base-content/25 tracking-wide hidden sm:block serif italic">hover to preview · click to save</p>
+    </div>
+
+    <div class="flex rounded-2xl overflow-hidden h-11 ring-1 ring-base-300" id="accent-swatches">
+      {% for hex, label in accent_palette %}
+      <button
+        class="ac-btn{% if user.icon_hover_color == hex %} ac-active{% endif %}"
+        data-color="{{ hex }}"
+        onclick="setAccentColor('{{ hex }}')"
+        onmouseenter="previewAccent('{{ hex }}')"
+        onmouseleave="revertAccent()">
+        <span class="ac-sel"></span>
+        <span class="ac-label">{{ label }}</span>
+      </button>
+      {% endfor %}
+    </div>
+
+    <!-- Live colour fill bar -->
+    <div id="ac-preview-bar" class="mt-2 h-1.5 rounded-full"
+         style="background:{{ user.icon_hover_color }};transition:background 0.12s ease"></div>
+  </section>
+
+  <script>
+  (function () {
+    let _saved = null;
+
+    const bar = () => document.getElementById('ac-preview-bar');
+
+    window.previewAccent = function (hex) {
+      if (_saved === null)
+        _saved = getComputedStyle(document.documentElement).getPropertyValue('--sidebar-hover-color').trim();
+      document.documentElement.style.setProperty('--sidebar-hover-color', hex);
+      document.body.classList.add('ac-previewing');
+      bar().style.background = hex;
+    };
+
+    window.revertAccent = function () {
+      document.body.classList.remove('ac-previewing');
+      if (_saved !== null) {
+        document.documentElement.style.setProperty('--sidebar-hover-color', _saved);
+        bar().style.background = _saved;
+      }
+    };
+
+    window.setAccentColor = function (hex) {
+      _saved = hex;
+      document.documentElement.style.setProperty('--sidebar-hover-color', hex);
+      bar().style.background = hex;
+      fetch('{% url "profile:settings" %}', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-CSRFToken': '{{ csrf_token }}' },
+        body: 'icon_hover_color=' + encodeURIComponent(hex)
+      });
+      document.querySelectorAll('.ac-btn').forEach(el => {
+        el.classList.toggle('ac-active', el.dataset.color === hex);
+      });
+    };
+  })();
+  </script>
+  {% endif %}
+
   {% if not user.is_authenticated %}
   <!-- ── ABOUT + HOW IT WORKS ── -->
   <section class="grid grid-cols-2 border-t border-base-300 about-grid" id="about">
 
-    <!-- Left: built with -->
-    <div class="px-14 py-16 border-r border-base-300">
-      <p class="text-[10px] font-semibold tracking-[2.5px] uppercase text-base-content/40 mb-2">Built with care</p>
-      <h2 class="serif text-[32px] font-medium tracking-tight leading-[1.1] mb-6 text-base-content">
-        How it's<br><em class="text-base-content/40 font-light">made</em>
+    <!-- Left: why teachers use it -->
+    <div class="px-5 py-14 md:px-14 md:py-16 border-b md:border-b-0 md:border-r border-base-300">
+      <p class="text-[10px] font-semibold tracking-[2.5px] uppercase text-base-content/40 mb-2">Built for teachers</p>
+      <h2 class="serif text-[32px] font-medium tracking-tight leading-[1.1] mb-8 text-base-content">
+        Why teachers<br><em class="text-base-content/40 font-light">use it</em>
       </h2>
-      <p class="text-[15px] text-base-content/60 leading-[1.8] font-light mb-4">
-        Teachka follows a modular Django architecture — each tool is its own app, sharing a core module for auth and data. Adding a new tool never touches existing ones.
-      </p>
-      <p class="text-[15px] text-base-content/60 leading-[1.8] font-light">
-        A service/selector pattern keeps business logic clean. Groups sync across all tools automatically through Django signals.
-      </p>
 
-      <div class="flex flex-wrap gap-2 mt-7">
-        <div class="badge badge-outline gap-1.5 py-3 px-3 font-medium text-xs rounded-xl">
-          <i data-lucide="code-2" class="w-3 h-3 text-primary"></i> Python
+      <div class="flex flex-col gap-6">
+        <div class="flex gap-4">
+          <div class="w-9 h-9 rounded-[10px] bg-base-200 flex items-center justify-center shrink-0 text-primary">
+            <i data-lucide="zap" class="w-[18px] h-[18px]"></i>
+          </div>
+          <div>
+            <p class="font-medium text-sm text-base-content mb-1">Ready in under a minute</p>
+            <p class="text-[13px] text-base-content/55 font-light leading-relaxed">No installation, no training, no IT department needed. Sign up and start using your tools straight away.</p>
+          </div>
         </div>
-        <div class="badge badge-outline gap-1.5 py-3 px-3 font-medium text-xs rounded-xl">
-          <i data-lucide="layers" class="w-3 h-3 text-primary"></i> Django 5.2
+
+        <div class="flex gap-4">
+          <div class="w-9 h-9 rounded-[10px] bg-base-200 flex items-center justify-center shrink-0 text-primary">
+            <i data-lucide="users" class="w-[18px] h-[18px]"></i>
+          </div>
+          <div>
+            <p class="font-medium text-sm text-base-content mb-1">One class list, every tool access</p>
+            <p class="text-[13px] text-base-content/55 font-light leading-relaxed">Add your students once. All the tools use the same list; no duplicate entry.</p>
+          </div>
         </div>
-        <div class="badge badge-outline gap-1.5 py-3 px-3 font-medium text-xs rounded-xl">
-          <i data-lucide="database" class="w-3 h-3 text-primary"></i> PostgreSQL
-        </div>
-        <div class="badge badge-outline gap-1.5 py-3 px-3 font-medium text-xs rounded-xl">
-          <i data-lucide="wind" class="w-3 h-3 text-primary"></i> Tailwind CSS
-        </div>
-        <div class="badge badge-outline gap-1.5 py-3 px-3 font-medium text-xs rounded-xl">
-          <i data-lucide="server" class="w-3 h-3 text-primary"></i> Gunicorn
-        </div>
-        <div class="badge badge-outline gap-1.5 py-3 px-3 font-medium text-xs rounded-xl">
-          <i data-lucide="box" class="w-3 h-3 text-primary"></i> Docker
+
+        <div class="flex gap-4">
+          <div class="w-9 h-9 rounded-[10px] bg-base-200 flex items-center justify-center shrink-0 text-primary">
+            <i data-lucide="smile" class="w-[18px] h-[18px]"></i>
+          </div>
+          <div>
+            <p class="font-medium text-sm text-base-content mb-1">No learning curve</p>
+            <p class="text-[13px] text-base-content/55 font-light leading-relaxed">Every tool is designed to work the first time you open it, with no setup or manual needed.</p>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Right: steps -->
-    <div class="px-14 py-16 bg-base-200">
+    <div class="px-5 py-14 md:px-14 md:py-16 bg-base-200">
       <p class="text-[10px] font-semibold tracking-[2.5px] uppercase text-base-content/40 mb-2">How it works</p>
       <h2 class="serif text-[32px] font-medium tracking-tight leading-[1.1] mb-8 text-base-content">
         Three steps<br>to start
       </h2>
 
-      <ul class="steps steps-vertical">
-        <li class="step step-primary">
-          <div class="text-left pl-4 pb-6">
+      <div class="flex flex-col">
+
+        <div class="flex gap-4">
+          <div class="flex flex-col items-center shrink-0">
+            <div class="w-9 h-9 rounded-full border-2 border-primary text-primary flex items-center justify-center font-semibold serif text-base shrink-0">1</div>
+            <div class="w-px flex-1 bg-primary/30 my-1.5"></div>
+          </div>
+          <div class="pb-7 pt-1">
             <p class="font-medium text-sm text-base-content mb-1">Create your account</p>
-            <p class="text-xs text-base-content/55 font-light leading-relaxed">Free signup, no credit card. Ready in under a minute.</p>
+            <p class="text-xs text-base-content/55 font-light leading-relaxed">Free signup. Ready in under a minute.</p>
           </div>
-        </li>
-        <li class="step step-primary">
-          <div class="text-left pl-4 pb-6">
+        </div>
+
+        <div class="flex gap-4">
+          <div class="flex flex-col items-center shrink-0">
+            <div class="w-9 h-9 rounded-full border-2 border-primary text-primary flex items-center justify-center font-semibold serif text-base shrink-0">2</div>
+            <div class="w-px flex-1 bg-primary/30 my-1.5"></div>
+          </div>
+          <div class="pb-7 pt-1">
             <p class="font-medium text-sm text-base-content mb-1">Add your class</p>
-            <p class="text-xs text-base-content/55 font-light leading-relaxed">Import or type your students. All tools sync from this one list automatically.</p>
+            <p class="text-xs text-base-content/55 font-light leading-relaxed">Create your classes. All tools sync from these lists automatically.</p>
           </div>
-        </li>
-        <li class="step step-primary">
-          <div class="text-left pl-4">
+        </div>
+
+        <div class="flex gap-4">
+          <div class="flex flex-col items-center shrink-0">
+            <div class="w-9 h-9 rounded-full border-2 border-primary text-primary flex items-center justify-center font-semibold serif text-base shrink-0">3</div>
+          </div>
+          <div class="pt-1">
             <p class="font-medium text-sm text-base-content mb-1">Open a tool and go</p>
-            <p class="text-xs text-base-content/55 font-light leading-relaxed">No duplicate data entry, no per-tool setup. It all just works.</p>
+            <p class="text-xs text-base-content/55 font-light leading-relaxed">No duplicate data entry, no per-tool setup. It just works.</p>
           </div>
-        </li>
-      </ul>
+        </div>
+
+      </div>
     </div>
   </section>
   {% endif %}
 
   {% if not user.is_authenticated %}
   <!-- ── CTA ── -->
-  <section class="px-14 py-20 text-center relative overflow-hidden">
+  <section class="px-5 py-16 md:px-14 md:py-20 text-center relative overflow-hidden">
     <div class="absolute inset-0 pointer-events-none"
-         style="background: radial-gradient(ellipse 60% 60% at 50% 50%, hsl(var(--p)/0.06), transparent)"></div>
+         style="background: radial-gradient(ellipse 60% 60% at 50% 50%, color-mix(in srgb, var(--color-primary) 6%, transparent), transparent)"></div>
     <div class="relative z-10 max-w-lg mx-auto">
-      <p class="serif italic text-sm text-primary mb-4">— Start today</p>
-      <h2 class="serif text-[48px] font-medium tracking-tight leading-[1.08] mb-4 text-base-content">
+      <p class="serif italic text-sm text-primary mb-4">Start today</p>
+      <h2 class="serif text-[clamp(32px,5vw,48px)] font-medium tracking-tight leading-[1.08] mb-4 text-base-content">
         Your classroom,<br>finally in one place
       </h2>
-      <p class="text-[15px] text-base-content/55 font-light leading-[1.7] mb-9">
-        Free forever. No credit card. Built by a developer who cares about clean code and good tools.
-      </p>
-      <a href="{% url 'register' %}" class="btn btn-primary btn-lg rounded-xl gap-2 font-medium">
-        <i data-lucide="arrow-right" class="w-5 h-5"></i>
-        Create free account
-      </a>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a href="{% url 'register' %}" class="btn btn-primary btn-lg rounded-xl gap-2 font-medium w-full sm:w-auto">
+          <i data-lucide="arrow-right" class="w-5 h-5"></i>
+          Create an account
+        </a>
+        <a href="{% url 'login' %}" class="btn btn-ghost btn-lg rounded-xl gap-2 font-medium text-base-content/60 w-full sm:w-auto">
+          Sign in
+        </a>
+      </div>
     </div>
   </section>
   {% endif %}
 
   <!-- ── FOOTER ── -->
-  <footer class="px-14 py-7 border-t border-base-300 flex items-center justify-between">
+  <footer class="px-5 py-8 md:px-14 md:py-7 border-t border-base-300 flex items-center justify-between">
     <p class="serif italic text-sm text-base-content/40">Teachka, 2026</p>
-    <div class="flex gap-5">
-      <a href="https://github.com/TokiSyt/teachkaProject" target="_blank"
-         class="link link-hover text-sm text-base-content/50 flex items-center gap-1.5 font-medium">
-        <i data-lucide="github" class="w-3.5 h-3.5"></i> GitHub
-      </a>
-      <a href="https://teachka.com" target="_blank"
-         class="link link-hover text-sm text-base-content/50 flex items-center gap-1.5 font-medium">
-        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> teachka.com
-      </a>
-    </div>
+    <a href="https://teachka.com" target="_blank"
+       class="link link-hover text-sm text-base-content/50 flex items-center gap-1.5 font-medium">
+      <i data-lucide="external-link" class="w-3.5 h-3.5"></i> teachka.com
+    </a>
   </footer>
 
 {% endblock %}
