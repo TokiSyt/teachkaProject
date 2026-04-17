@@ -42,6 +42,18 @@ class HomeView(TemplateView):
             context["timer_total_hours"] = round(total_timer_ms / 3_600_000, 1)
             context["timer_total_minutes"] = round(total_timer_ms / 60_000)
 
+        # Accent colour palette
+        context["accent_palette"] = [
+            ("#1779db", "Blue"),
+            ("#7c3aed", "Violet"),
+            ("#be185d", "Pink"),
+            ("#047857", "Green"),
+            ("#b45309", "Amber"),
+            ("#b91c1c", "Red"),
+            ("#0e7490", "Cyan"),
+            ("#475569", "Slate"),
+        ]
+
         # Date info
         today = date.today()
         week_number = today.isocalendar()[1]

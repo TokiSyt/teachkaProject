@@ -6,7 +6,7 @@ module.exports = {
     "../../apps/**/*.html",
     "../../apps/**/*.py",
   ],
-  darkMode: "class",
+  darkMode: ['class', '[data-theme="dark"]'],
   theme: {
     fontFamily: {
       body: ["Poppins", "system-ui", "sans-serif"],
@@ -28,5 +28,18 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui").default ?? require("daisyui")],
+  daisyui: {
+    themes: [
+      "light",
+      "dark",
+      "lemonade",
+      "fantasy",
+      "pastel",
+    ],
+    darkTheme: "dark",
+    base: true,
+    styled: true,
+    utils: true,
+  },
 };

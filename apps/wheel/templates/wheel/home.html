@@ -1,149 +1,140 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Name wheel" %}{% endblock title %}
+{% block title %}{% trans "Name wheel" %} · Teachka{% endblock title %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto">
-  <!-- Header -->
-  <div class="mb-8">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{% trans "Name wheel" %}</h1>
-    <p class="mt-1 text-gray-600 dark:text-gray-400">{% trans "Randomly select a name from your group" %}</p>
+
+<section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
+  <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+    <span class="serif font-medium text-primary" style="font-size:180px;line-height:1">◎</span>
   </div>
+  <div class="relative z-10">
+    <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">
+      {% trans "Tools" %} · {% trans "Name wheel" %}
+    </p>
+    <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
+      <span class="text-primary">{% trans "Name" %}</span> {% trans "wheel" %}
+    </h1>
+    <p class="drift drift-3 text-[11px] tracking-[2px] uppercase text-base-content/30">
+      {% trans "Spin to pick a random student" %}
+    </p>
+  </div>
+</section>
 
-  <!-- Form Card -->
-  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-    <form method="POST" id="wheelForm">
-      {% csrf_token %}
+<section class="px-5 py-8 md:px-14 border-b border-base-300">
 
-      <div class="flex flex-col sm:flex-row gap-4">
-        <div class="flex-1">
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{% trans "Select a group" %}</label>
-          <input type="hidden" name="group_id" id="groupSelect" value="{% if selected_group %}{{ selected_group.id }}{% endif %}" required>
-          <input type="hidden" name="clear_session" id="clearSession" value="0">
-        <div class="relative z-20" id="groupDropdown">
-          <button type="button" id="groupBtn" class="w-full px-4 py-2.5 pr-10 bg-gray-50 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-white transition-colors cursor-pointer text-left">
-            <span id="groupBtnText">{% if selected_group %}{{ selected_group.title }} ({{ selected_group.size }} {% trans "members" %}){% else %}{% trans "Select a group" %}{% endif %}</span>
-          </button>
-          <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-            <svg id="groupChevron" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </div>
-          <div id="groupOptions" class="hidden absolute z-50 w-full mt-1 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-lg overflow-hidden max-h-60 overflow-y-auto">
+  <form method="POST" id="wheelForm">
+    {% csrf_token %}
+    <input type="hidden" name="clear_session" id="clearSession" value="0">
+
+    <div class="card bg-base-100 border border-base-300 max-w-lg">
+      <div class="card-body p-0 divide-y divide-base-300">
+
+        <div class="px-5 py-4">
+          <p class="text-xs text-base-content/40 mb-1.5">{% trans "Group" %}</p>
+          <select name="group_id" id="groupSelect" class="select w-full">
+            <option value="" disabled {% if not selected_group %}selected{% endif %}>{% trans "Choose a group..." %}</option>
             {% for group in groups %}
-            <div class="group-option px-4 py-2.5 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer {% if forloop.last %}rounded-b-lg{% endif %}" data-value="{{ group.id }}" data-text="{{ group.title }} ({{ group.size }} members)">{{ group.title }} ({{ group.size }} members)</div>
+            <option value="{{ group.id }}" {% if selected_group.id == group.id %}selected{% endif %}>{{ group.title }} — {{ group.size }} {% trans "members" %}</option>
             {% empty %}
-            <div class="px-4 py-2.5 text-gray-500 dark:text-gray-400">{% trans "No groups available" %}</div>
+            <option disabled>{% trans "No groups available" %}</option>
             {% endfor %}
+          </select>
+        </div>
+
+        <div class="px-5 py-4">
+          <p class="text-xs text-base-content/40 mb-1.5">{% trans "Members to pick" %}</p>
+          <div class="join w-full items-center">
+            <input type="number" name="chosen_members_amount" id="membersChosen"
+                   min="1" max="{% if selected_group %}{{ selected_group.size }}{% else %}99{% endif %}"
+                   value="{{ chosen_members_amount|default:1 }}"
+                   step="1"
+                   class="input input-ghost join-item p-0 h-auto focus:bg-transparent focus:outline-none w-full text-3xl font-bold text-primary placeholder:opacity-20 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                   placeholder="1">
+            <div class="join-item flex flex-col justify-center gap-2 px-3 border-l border-base-300/50">
+              <button type="button" onclick="document.getElementById('membersChosen').stepUp()" class="hover:text-primary transition-colors">
+                <i data-lucide="triangle" class="w-2.5 h-2.5 fill-current"></i>
+              </button>
+              <button type="button" onclick="document.getElementById('membersChosen').stepDown()" class="hover:text-primary transition-colors rotate-180">
+                <i data-lucide="triangle" class="w-2.5 h-2.5 fill-current"></i>
+              </button>
+            </div>
           </div>
         </div>
+
+        <div class="px-5 py-4 flex items-center justify-between gap-4">
+          <div>
+            <p class="text-xs text-base-content/40 mb-0.5">{% trans "Remove after spin" %}</p>
+            <p class="text-[11px] text-base-content/25 font-light">{% trans "Each student picked only once" %}</p>
+          </div>
+          <input type="checkbox" name="remove_after_spin" id="removeAfterSpin" checked class="toggle toggle-primary toggle-sm shrink-0">
         </div>
 
-        <div class="w-full sm:w-32">
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{% trans "Members" %}</label>
-          <input type="number" name="chosen_members_amount" id="membersChosen" min="1" max="{% if selected_group %}{{ selected_group.size }}{% else %}99{% endif %}" value="{{ chosen_members_amount|default:1 }}" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-white transition-colors">
-        </div>
-
-      </div>
-      <br>
-      <div class="flex flex-col gap-3 pt-2">
-        <!-- Main action row -->
-        <div class="flex flex-wrap gap-2 sm:gap-3">
-          <button type="button" id="spinBtn" class="flex-1 sm:flex-none px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-            {% trans "Spin" %}
-          </button>
-          <a id="resetBtn" href="{% url 'wheel:home' %}?reset=1{% if selected_group %}&group_id={{ selected_group.id }}{% endif %}" class="flex-1 sm:flex-none px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-center">
-            {% trans "Reset" %}
-          </a>
-          </button>
-          <button type="button" id="shuffleBtn" class="flex-1 sm:flex-none px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-            {% trans "Shuffle" %}
-          </button>
-        </div>
-        <!-- Secondary actions row -->
-        <div class="flex flex-wrap gap-2 sm:gap-3">
-          <a href="{% url 'group_maker:group-maker-creation' %}?next={% url 'wheel:home' %}" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-sm">
-            {% trans "Create group" %}
-          </a>
-          <a id="editGroupsBtn" href="{% if selected_group %}{% url 'group_maker:group-maker-edit' selected_group.id %}{% else %}#{% endif %}"
-             class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-sm {% if not selected_group %}opacity-50 pointer-events-none{% endif %}">
-            {% trans "Edit group" %}
-          </a>
-          <label class="flex items-center gap-2 cursor-pointer sm:ml-auto">
-            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{% trans "Remove after spin" %}</span>
-            <div class="relative">
-              <input type="checkbox" name="remove_after_spin" id="removeAfterSpin" checked class="sr-only peer">
-              <div class="w-11 h-6 bg-red-500 rounded-full peer-checked:bg-green-500 transition-colors"></div>
-              <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform peer-checked:translate-x-5"></div>
-            </div>
-          </label>
-        </div>
-      </div>
-    </form>
-  </div>
-
-  <!-- Spinning Wheel -->
-  <div id="wheelSection" class="mt-8 flex flex-col items-center hidden">
-    <div class="relative">
-      <!-- Pointer -->
-      <div id="wheelPointer" class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 z-10 origin-bottom transition-transform duration-75">
-        <!-- Glass outline (behind) -->
-        <div class="absolute -top-[2px] -left-[4px] w-0 h-0 border-l-[19px] border-r-[19px] border-t-[29px] border-l-transparent border-r-transparent border-t-white/40"></div>
-        <!-- Main arrow -->
-        <div id="wheelArrow" class="relative w-0 h-0 border-l-[15px] border-r-[15px] border-t-[25px] border-l-transparent border-r-transparent" style="border-top-color: #6366f1;"></div>
-      </div>
-      <!-- Wheel Container -->
-      <div id="wheelContainer" class="relative w-[80vw] h-[80vw] max-w-[600px] max-h-[600px]">
-        <canvas id="wheelCanvas" class="w-full h-full"></canvas>
       </div>
     </div>
-  </div>
 
-  <!-- Chosen Members Popup (dynamic) -->
-  <div id="chosenPopup" class="fixed inset-0 z-[900] hidden">
-    <!-- Backdrop -->
-    <div id="popupBackdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300"></div>
-    <!-- Popup Content - positioned over the content area (offset by 60px sidebar) -->
-    <div class="absolute inset-0 flex items-center justify-center pointer-events-none left-[60px]">
-      <div id="popupContent" class="pointer-events-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-5 sm:p-8 text-center shadow-2xl max-w-[90vw] sm:max-w-lg mx-4 max-h-[85vh] flex flex-col transform transition-all duration-300 scale-100 opacity-100">
-      <p id="popupTitle" class="text-gray-500 dark:text-gray-400 text-sm font-medium uppercase tracking-wider mb-3 sm:mb-4 flex-shrink-0">{% trans "Selected" %}</p>
-      <div id="popupNames" class="grid grid-cols-2 gap-2 sm:gap-3 mb-4 sm:mb-6 overflow-y-auto flex-1 min-h-0"></div>
-      <button id="popupOkBtn" class="px-6 sm:px-8 py-2.5 sm:py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors flex-shrink-0">
-        OK
-      </button>
-      </div>
+    <div class="flex flex-wrap gap-2 mt-6">
+      <a id="spinBtn" href="javascript:void(0)" class="btn btn-primary btn-sm cursor-pointer">{% trans "Spin" %}</a>
+      <a id="resetBtn" href="{% url 'wheel:home' %}?reset=1{% if selected_group %}&group_id={{ selected_group.id }}{% endif %}" class="btn btn-ghost btn-sm">{% trans "Reset" %}</a>
+      <a id="shuffleBtn" href="javascript:void(0)" class="btn btn-ghost btn-sm cursor-pointer">{% trans "Shuffle" %}</a>
+      <a href="{% url 'group_maker:group-maker-creation' %}?next={% url 'wheel:home' %}" class="btn btn-ghost btn-sm">{% trans "New group" %}</a>
+      <a id="editGroupsBtn"
+         href="{% if selected_group %}{% url 'group_maker:group-maker-edit' selected_group.id %}{% else %}#{% endif %}"
+         class="btn btn-ghost btn-sm {% if not selected_group %}opacity-50 pointer-events-none{% endif %}">{% trans "Edit group" %}</a>
+    </div>
+  </form>
+</section>
+
+<div id="wheelSection" class="px-5 py-10 md:px-14 border-b border-base-300 flex flex-col items-center hidden">
+  <div class="relative">
+    <div id="wheelPointer" class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 z-10 origin-bottom transition-transform duration-75">
+      <div class="absolute -top-[2px] -left-[4px] w-0 h-0 border-l-[19px] border-r-[19px] border-t-[29px] border-l-transparent border-r-transparent border-t-white/40"></div>
+      <div id="wheelArrow" class="relative w-0 h-0 border-l-[15px] border-r-[15px] border-t-[25px] border-l-transparent border-r-transparent" style="border-top-color: #6366f1;"></div>
+    </div>
+    <div id="wheelContainer" class="relative w-[80vw] h-[80vw] max-w-[540px] max-h-[540px]">
+      <canvas id="wheelCanvas" class="w-full h-full"></canvas>
     </div>
   </div>
+</div>
 
-  {% if message %}
-  <!-- Message Display -->
-  <div class="mt-8 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl p-8 text-center">
-    <p class="text-lg font-medium text-amber-800 dark:text-amber-200">{{ message }}</p>
+{% if message %}
+<div class="px-5 py-8 md:px-14 border-b border-base-300">
+  <div class="alert alert-warning max-w-lg">
+    <i data-lucide="info" class="w-4 h-4 shrink-0"></i>
+    <span>{{ message }}</span>
   </div>
-  {% endif %}
+</div>
+{% endif %}
 
-  <!-- Already Chosen List -->
-  <div id="alreadyChosenSection" class="mt-8 {% if not already_chosen_members %}hidden{% endif %}">
-    <h2 id="alreadyChosenTitle" class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">{% trans "Already Chosen" %} ({{ already_chosen_members|length|default:0 }})</h2>
-    <div id="alreadyChosenList" class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2">
-      {% for member in already_chosen_members %}
-      <div class="flex items-center justify-between gap-2 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-        <span class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 truncate">{{ member.name }}</span>
-        <span class="w-4 sm:w-5 h-2 rounded-full flex-shrink-0" style="background-color: {{ member.color|default:'#6366f1' }}"></span>
-      </div>
-      {% endfor %}
+<div id="alreadyChosenSection" class="px-5 py-8 md:px-14 {% if not already_chosen_members %}hidden{% endif %}">
+  <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">
+    <span id="alreadyChosenTitle">{% trans "Already chosen" %} ({{ already_chosen_members|length|default:0 }})</span>
+  </p>
+  <div id="alreadyChosenList" class="flex flex-wrap gap-2">
+    {% for member in already_chosen_members %}
+    <div class="flex items-center gap-2 px-3 py-1.5 bg-base-100 border border-base-300 rounded-lg">
+      <span class="w-2 h-2 rounded-full shrink-0" style="background-color: {{ member.color|default:'#6366f1' }}"></span>
+      <span class="text-sm text-base-content/60">{{ member.name }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div id="chosenPopup" class="fixed inset-0 z-[900] hidden">
+  <div id="popupBackdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300"></div>
+  <div class="absolute inset-0 flex items-center justify-center pointer-events-none" style="padding-left:60px">
+    <div id="popupContent" class="pointer-events-auto bg-base-100 border border-base-300 rounded-2xl p-6 sm:p-8 text-center shadow-2xl max-w-[90vw] sm:max-w-lg mx-4 max-h-[85vh] flex flex-col transform transition-all duration-300">
+      <p id="popupTitle" class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-6 flex-shrink-0">{% trans "Selected" %}</p>
+      <div id="popupNames" class="flex justify-center mb-6 overflow-y-auto flex-1 min-h-0"></div>
+      <button id="popupOkBtn" class="btn btn-primary flex-shrink-0">OK</button>
     </div>
   </div>
 </div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  const groupBtn = document.getElementById("groupBtn");
-  const groupOptions = document.getElementById("groupOptions");
   const groupSelect = document.getElementById("groupSelect");
-  const groupBtnText = document.getElementById("groupBtnText");
-  const groupChevron = document.getElementById("groupChevron");
   const editBtn = document.getElementById("editGroupsBtn");
   const resetBtn = document.getElementById("resetBtn");
   const wheelSection = document.getElementById("wheelSection");
@@ -170,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function() {
   let isSpinning = false;
   let idleAnimationId = null;
   let ctx = null;
-  let cachedWheel = null;  // Offscreen canvas cache
+  let cachedWheel = null;
   let cachedSize = 0;
 
   if (canvas) {
@@ -202,7 +193,6 @@ document.addEventListener("DOMContentLoaded", function() {
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   }
 
-  // Build the static wheel image once
   function buildWheelCache() {
     const size = getCanvasSize();
     if (!size || members.length === 0) { cachedWheel = null; return; }
@@ -221,9 +211,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const radius = center - borderWidth - borderGap - 2;
     const sliceAngle = (2 * Math.PI) / members.length;
 
-    // Pre-compute font size and truncated names once
-    const maxFontSize = radius / 13
-    ;
+    const maxFontSize = radius / 13;
     const arcHeight = sliceAngle * radius * 0.6;
     const fontSize = Math.max(10, Math.min(maxFontSize, arcHeight));
     offCtx.font = `bold ${fontSize}px sans-serif`;
@@ -240,12 +228,10 @@ document.addEventListener("DOMContentLoaded", function() {
       return name;
     });
 
-    // Draw all slices (centered at 0 rotation, rotated at render time)
     members.forEach((member, i) => {
       const startAngle = i * sliceAngle;
       const endAngle = startAngle + sliceAngle;
 
-      // Slice fill
       offCtx.beginPath();
       offCtx.moveTo(center, center);
       offCtx.arc(center, center, radius, startAngle, endAngle);
@@ -256,14 +242,12 @@ document.addEventListener("DOMContentLoaded", function() {
       offCtx.lineWidth = 2;
       offCtx.stroke();
 
-      // Colored border segment
       offCtx.beginPath();
       offCtx.arc(center, center, radius + borderGap + borderWidth / 2, startAngle, endAngle);
       offCtx.strokeStyle = hexToRgba(member.color, 0.5);
       offCtx.lineWidth = borderWidth;
       offCtx.stroke();
 
-      // Text with stroke outline (much faster than shadowBlur)
       offCtx.save();
       offCtx.translate(center, center);
       offCtx.rotate(startAngle + sliceAngle / 2);
@@ -277,7 +261,6 @@ document.addEventListener("DOMContentLoaded", function() {
       offCtx.restore();
     });
 
-    // Center circle
     offCtx.beginPath();
     offCtx.arc(center, center, radius * 0.15, 0, 2 * Math.PI);
     offCtx.fillStyle = "#1f2937";
@@ -299,15 +282,12 @@ document.addEventListener("DOMContentLoaded", function() {
       return;
     }
 
-    // Rebuild cache if missing or canvas resized
     if (!cachedWheel || cachedSize !== size) {
       buildWheelCache();
     }
     if (!cachedWheel) return;
 
     const center = size / 2;
-
-    // Draw rotated cached wheel
     ctx.clearRect(0, 0, size, size);
     ctx.save();
     ctx.translate(center, center);
@@ -315,7 +295,6 @@ document.addEventListener("DOMContentLoaded", function() {
     ctx.drawImage(cachedWheel, -center, -center, size, size);
     ctx.restore();
 
-    // Update arrow color (cheap — runs once per frame)
     const sliceAngle = (2 * Math.PI) / members.length;
     const arrowAngle = -Math.PI / 2;
     let normalizedArrow = arrowAngle - rotation;
@@ -351,40 +330,21 @@ document.addEventListener("DOMContentLoaded", function() {
     const startRotation = currentRotation;
     const pointer = document.getElementById("wheelPointer");
 
-    // Calculate where the target slice needs to end up
-    // Arrow points to top (-PI/2), wheel draws slices starting from rotation angle
     const sliceAngle = (2 * Math.PI) / members.length;
-
-    // The center of the target slice
     const targetSliceCenter = targetMemberIndex * sliceAngle + sliceAngle / 2;
-
-    // We need the wheel rotated so that targetSliceCenter aligns with top (-PI/2)
-    // rotation + targetSliceCenter = -PI/2 + n*2*PI (for some n)
-    // rotation = -PI/2 - targetSliceCenter + n*2*PI
     let targetAngle = -Math.PI / 2 - targetSliceCenter;
-
-    // Normalize to positive and add full spins (5-7 rotations)
     const fullSpins = (Math.floor(Math.random() * 3) + 5) * Math.PI * 2;
 
-    // Make sure we always spin forward from current position
-    while (targetAngle < startRotation) {
-      targetAngle += Math.PI * 2;
-    }
+    while (targetAngle < startRotation) targetAngle += Math.PI * 2;
     targetAngle += fullSpins;
 
     const totalRotation = targetAngle - startRotation;
     const startTime = performance.now();
-
-    // Track which segment the arrow was last in (for click detection)
     let lastSegmentIndex = -1;
 
     function getSegmentAtArrow(rotation) {
-      // Arrow is at top (-PI/2). Find which segment is there.
-      // Segment i spans from rotation + i*sliceAngle to rotation + (i+1)*sliceAngle
-      // We need to find i where: rotation + i*sliceAngle <= -PI/2 < rotation + (i+1)*sliceAngle
       const arrowAngle = -Math.PI / 2;
       let normalizedArrow = arrowAngle - rotation;
-      // Normalize to [0, 2*PI)
       while (normalizedArrow < 0) normalizedArrow += Math.PI * 2;
       while (normalizedArrow >= Math.PI * 2) normalizedArrow -= Math.PI * 2;
       return Math.floor(normalizedArrow / sliceAngle);
@@ -404,14 +364,11 @@ document.addEventListener("DOMContentLoaded", function() {
     function animate(currentTime) {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / spinDuration, 1);
-
-      // Ease out quintic for slower finish
       const easeOut = 1 - Math.pow(1 - progress, 5);
 
       currentRotation = startRotation + (totalRotation * easeOut);
       drawWheel(currentRotation);
 
-      // Check if we crossed a segment boundary (arrow clicked a peg)
       const currentSegment = getSegmentAtArrow(currentRotation);
       if (lastSegmentIndex !== -1 && currentSegment !== lastSegmentIndex) {
         bouncePointer();
@@ -422,7 +379,6 @@ document.addEventListener("DOMContentLoaded", function() {
         requestAnimationFrame(animate);
       } else {
         isSpinning = false;
-        // Reset pointer position
         if (pointer) pointer.style.transform = "translateX(-50%) translateY(-8px)";
         if (callback) callback();
       }
@@ -443,22 +399,18 @@ document.addEventListener("DOMContentLoaded", function() {
       return;
     }
 
-    // Update title
-    title.textContent = `Already Chosen (${alreadyChosenIds.length})`;
+    title.textContent = `Already chosen (${alreadyChosenIds.length})`;
 
-    // Look up name and color from groupsData by ID
     const allMembers = groupsData[groupId] || [];
     const chosenMembers = alreadyChosenIds.map(id => allMembers.find(m => m.id === id)).filter(Boolean);
 
-    // Update list with color bars
     list.innerHTML = chosenMembers.map(member =>
-      `<div class="flex items-center justify-between gap-2 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-        <span class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 truncate">${member.name}</span>
-        <span class="w-4 sm:w-5 h-2 rounded-full flex-shrink-0" style="background-color: ${member.color}"></span>
+      `<div class="flex items-center gap-2 px-3 py-1.5 bg-base-100 border border-base-300 rounded-lg">
+        <span class="w-2 h-2 rounded-full shrink-0" style="background-color: ${member.color}"></span>
+        <span class="text-sm text-base-content/60">${member.name}</span>
       </div>`
     ).join('');
 
-    // Show section
     section.classList.remove("hidden");
   }
 
@@ -469,30 +421,24 @@ document.addEventListener("DOMContentLoaded", function() {
     const popupContent = document.getElementById("popupContent");
     const popupBackdrop = document.getElementById("popupBackdrop");
 
-    if (!popup || !popupTitle || !popupNames) {
-      console.error("Popup elements not found");
-      return;
-    }
+    if (!popup || !popupTitle || !popupNames) return;
 
-    // Set title
     popupTitle.textContent = `Selected (${chosenNames.length})`;
 
-    // Set names as soft cards - centered for single, grid for multiple
     if (chosenNames.length === 1) {
-      popupNames.className = "flex justify-center mb-4 sm:mb-6";
-      popupNames.innerHTML = `<div class="px-6 py-4 bg-primary-50 dark:bg-primary-900/30 border border-primary-200 dark:border-primary-700 rounded-xl">
-        <p class="text-2xl sm:text-4xl font-bold text-primary-600 dark:text-primary-400">${chosenNames[0]}</p>
+      popupNames.className = "flex justify-center mb-6";
+      popupNames.innerHTML = `<div class="px-8 py-5 bg-primary/10 border border-primary/20 rounded-xl">
+        <p class="serif text-4xl sm:text-5xl font-medium text-primary">${chosenNames[0]}</p>
       </div>`;
     } else {
-      popupNames.className = "grid grid-cols-2 gap-2 sm:gap-3 mb-4 sm:mb-6 overflow-y-auto flex-1 min-h-0";
+      popupNames.className = "grid grid-cols-2 gap-2 sm:gap-3 mb-6 overflow-y-auto flex-1 min-h-0";
       popupNames.innerHTML = chosenNames.map(name =>
-        `<div class="px-4 py-3 bg-primary-50 dark:bg-primary-900/30 border border-primary-200 dark:border-primary-700 rounded-xl">
-          <p class="text-lg sm:text-2xl font-bold text-primary-600 dark:text-primary-400">${name}</p>
+        `<div class="px-4 py-3 bg-primary/10 border border-primary/20 rounded-xl">
+          <p class="serif text-xl sm:text-2xl font-medium text-primary">${name}</p>
         </div>`
       ).join('');
     }
 
-    // Show popup with slight delay to ensure DOM is ready
     setTimeout(() => {
       popup.classList.remove("hidden");
       popupContent.classList.remove("scale-95", "opacity-0");
@@ -510,8 +456,8 @@ document.addEventListener("DOMContentLoaded", function() {
     if (!popup || !popupTitle || !popupNames) return;
 
     popupTitle.textContent = "Notice";
-    popupNames.className = "flex justify-center mb-4 sm:mb-6";
-    popupNames.innerHTML = `<p class="text-lg sm:text-xl font-medium text-amber-600 dark:text-amber-400 text-center">${message}</p>`;
+    popupNames.className = "flex justify-center mb-6";
+    popupNames.innerHTML = `<p class="text-base text-base-content/60 text-center font-light">${message}</p>`;
 
     setTimeout(() => {
       popup.classList.remove("hidden");
@@ -535,7 +481,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
       wheelSection.classList.remove("hidden");
       stopIdleSpin();
-      // Force layout calculation and draw immediately (no blank frame)
       resizeCanvas();
       drawWheel(currentRotation);
       idleSpin();
@@ -558,53 +503,26 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  groupBtn.addEventListener("click", () => {
-    groupOptions.classList.toggle("hidden");
-    groupChevron.classList.toggle("rotate-180");
-  });
-
   const membersChosenInput = document.getElementById("membersChosen");
   const alreadyChosenSection = document.getElementById("alreadyChosenSection");
   const clearSessionInput = document.getElementById("clearSession");
 
-  document.querySelectorAll(".group-option").forEach(option => {
-    option.addEventListener("click", () => {
-      const newGroupId = option.dataset.value;
-      groupSelect.value = newGroupId;
-      groupBtnText.textContent = option.dataset.text;
-      groupOptions.classList.add("hidden");
-      groupChevron.classList.remove("rotate-180");
-      updateEditLink();
-      updateWheel(newGroupId);
+  groupSelect.addEventListener("change", () => {
+    const newGroupId = groupSelect.value;
+    updateEditLink();
+    updateWheel(newGroupId);
 
-      if (membersChosenInput) {
-        membersChosenInput.value = 1;
-      }
+    if (membersChosenInput) membersChosenInput.value = 1;
+    if (alreadyChosenSection) alreadyChosenSection.classList.add("hidden");
+    if (clearSessionInput) clearSessionInput.value = "1";
 
-      if (alreadyChosenSection) {
-        alreadyChosenSection.classList.add("hidden");
-      }
-
-      if (clearSessionInput) {
-        clearSessionInput.value = "1";
-      }
-
-      // Update URL so refresh preserves selected group
-      const newUrl = `${window.location.pathname}?group_id=${newGroupId}`;
-      window.history.pushState({groupId: newGroupId}, '', newUrl);
-    });
-  });
-
-  document.addEventListener("click", (e) => {
-    if (!document.getElementById("groupDropdown").contains(e.target)) {
-      groupOptions.classList.add("hidden");
-      groupChevron.classList.remove("rotate-180");
-    }
+    const newUrl = `${window.location.pathname}?group_id=${newGroupId}`;
+    window.history.pushState({groupId: newGroupId}, '', newUrl);
   });
 
   window.addEventListener("resize", () => {
     if (!wheelSection.classList.contains("hidden")) {
-      cachedWheel = null;  // Rebuild at new size
+      cachedWheel = null;
       drawWheel(currentRotation);
     }
   });
@@ -617,11 +535,8 @@ document.addEventListener("DOMContentLoaded", function() {
       return;
     }
 
-    if (isSpinning) {
-      return;
-    }
+    if (isSpinning) return;
 
-    // Make sure members are loaded for this group
     if (members.length === 0 && groupsData[groupId]) {
       const allMembers = groupsData[groupId];
       const alreadyChosenIds = alreadyChosenByGroup[groupId] || [];
@@ -633,16 +548,13 @@ document.addEventListener("DOMContentLoaded", function() {
       return;
     }
 
-    // Disable button and start
     stopIdleSpin();
-    spinBtn.disabled = true;
+    spinBtn.classList.add("btn-disabled", "pointer-events-none");
     spinBtn.textContent = "Spinning...";
     wheelSection.classList.remove("hidden");
 
-    // Get form data
     const formData = new FormData(form);
 
-    // Make AJAX request to get chosen member
     fetch("{% url 'wheel:home' %}", {
       method: "POST",
       body: formData,
@@ -655,43 +567,33 @@ document.addEventListener("DOMContentLoaded", function() {
     .then(data => {
       if (data.error) {
         showMessage(data.error);
-        spinBtn.disabled = false;
+        spinBtn.classList.remove("btn-disabled", "pointer-events-none");
         spinBtn.textContent = "Spin";
-        if (data.all_chosen) {
-          wheelSection.classList.add("hidden");
-        }
+        if (data.all_chosen) wheelSection.classList.add("hidden");
         idleSpin();
         return;
       }
 
       const chosenNames = data.chosen_members;
       const chosenIds = data.chosen_ids;
-      const targetId = chosenIds[0]; // Land on first chosen member
-
-      // Find the index of the target member in the wheel
+      const targetId = chosenIds[0];
       const targetIndex = members.findIndex(m => m.id === targetId);
+
       if (targetIndex === -1) {
-        console.error("Target member not found in wheel:", targetId);
-        console.error("Available members:", members.map(m => `${m.name}(${m.id})`));
-        spinBtn.disabled = false;
+        spinBtn.classList.remove("btn-disabled", "pointer-events-none");
         spinBtn.textContent = "Spin";
         idleSpin();
         return;
       }
 
-      // Animate to land on chosen member
       setTimeout(() => {
         resizeCanvas();
-        drawWheel(currentRotation);  // Redraw immediately to avoid blank frame
-        // Reset clear_session flag after first spin with new group
-        if (clearSessionInput) {
-          clearSessionInput.value = "0";
-        }
+        drawWheel(currentRotation);
+        if (clearSessionInput) clearSessionInput.value = "0";
 
         spinWheelToTarget(targetIndex, () => {
           const removeAfterSpin = document.getElementById("removeAfterSpin").checked;
 
-          // Update local state only if removing after spin
           if (removeAfterSpin) {
             alreadyChosenByGroup[groupId] = data.already_chosen_ids;
             members = members.filter(m => !data.chosen_ids.includes(m.id));
@@ -699,23 +601,16 @@ document.addEventListener("DOMContentLoaded", function() {
             updateWheel(groupId);
           }
 
-          // Show popup with results
           showPopup(chosenNames);
-
-          // Reset button
-          spinBtn.disabled = false;
+          spinBtn.classList.remove("btn-disabled", "pointer-events-none");
           spinBtn.textContent = "Spin";
 
-          // Restart idle spin if wheel still visible
-          if (!removeAfterSpin || members.length > 0) {
-            idleSpin();
-          }
+          if (!removeAfterSpin || members.length > 0) idleSpin();
         });
       }, 100);
     })
-    .catch(error => {
-      console.error("Spin error:", error);
-      spinBtn.disabled = false;
+    .catch(() => {
+      spinBtn.classList.remove("btn-disabled", "pointer-events-none");
       spinBtn.textContent = "Spin";
       idleSpin();
     });
@@ -723,7 +618,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
   spinBtn.addEventListener("click", handleSpin);
 
-  // Make wheel center circle clickable as a spin button
   function isInCenter(e) {
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -742,7 +636,6 @@ document.addEventListener("DOMContentLoaded", function() {
     canvas.style.cursor = isInCenter(e) ? "pointer" : "default";
   });
 
-  // Shuffle button - reorder wheel segments
   const shuffleBtn = document.getElementById("shuffleBtn");
   if (shuffleBtn) {
     shuffleBtn.addEventListener("click", function() {
@@ -768,14 +661,12 @@ document.addEventListener("DOMContentLoaded", function() {
     function closePopup() {
       popupContent.classList.add("scale-95", "opacity-0");
       popupBackdrop.classList.add("opacity-0");
-      setTimeout(() => {
-        popup.classList.add("hidden");
-      }, 300);
+      setTimeout(() => popup.classList.add("hidden"), 300);
     }
-
     popupOkBtn.addEventListener("click", closePopup);
     popupBackdrop.addEventListener("click", closePopup);
   }
 });
 </script>
+
 {% endblock content %}

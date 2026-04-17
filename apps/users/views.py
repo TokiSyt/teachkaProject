@@ -1,3 +1,4 @@
+import logging
 import re
 
 from django.conf import settings
@@ -25,6 +26,7 @@ from teachkaBaseProject.tokens import account_activation_token
 
 from .forms import EditProfileForm, PasswordResetRequestForm, RegisterForm
 
+logger = logging.getLogger(__name__)
 User = get_user_model()
 password_reset_token = PasswordResetTokenGenerator()
 
@@ -52,11 +54,21 @@ class RegisterView(FormView):
         )
         to_email = form.cleaned_data.get("email")
         email = EmailMessage(mail_subject, message, to=[to_email])
-        email.send()
-        messages.success(
-            self.request,
-            "Welcome, please check your email to complete your registration.",
-        )
+        email.content_subtype = "html"
+        try:
+            email.send()
+            messages.success(
+                self.request,
+                "Welcome, please check your email to complete your registration.",
+            )
+        except Exception:
+            logger.exception("Failed to send registration email to %s", to_email)
+            new_user.delete()
+            messages.error(
+                self.request,
+                "Registration failed due to an email error. Please try again later.",
+            )
+            return redirect("register")
         return redirect("home")
 
     def form_invalid(self, form):
@@ -93,6 +105,12 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
 class SettingsView(LoginRequiredMixin, TemplateView):
     template_name = "users/settings.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["theme_choices"] = User.THEME_CHOICES
+        context["language_choices"] = User.LANGUAGE_CHOICES
+        return context
 
     def post(self, request):
         profile = request.user
@@ -156,6 +174,7 @@ class ChangePassword(LoginRequiredMixin, FormView):
                 },
             )
             email = EmailMessage(mail_subject, message, to=[to_email])
+            email.content_subtype = "html"
             email.send()
         messages.success(
             self.request,
@@ -204,12 +223,53 @@ class PasswordResetView(View):
         return render(request, "users/password_reset.html", {"form": form, "uidb64": uidb64, "token": token})
 
 
+class ForgotPasswordPublicView(FormView):
+    """Public view — lets unauthenticated users request a password reset link."""
+
+    form_class = PasswordResetRequestForm
+    template_name = "users/forgot_password.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect("home")
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        email = form.cleaned_data["send_to_email"]
+        try:
+            user = User.objects.get(email=email, is_active=True)
+            current_site = get_current_site(self.request)
+            mail_subject = "Reset your Teachka password"
+            message = render_to_string(
+                "users/password_reset_email.html",
+                {
+                    "user": user,
+                    "domain": current_site.domain,
+                    "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                    "token": password_reset_token.make_token(user),
+                },
+            )
+            email_msg = EmailMessage(mail_subject, message, to=[email])
+            email_msg.content_subtype = "html"
+            try:
+                email_msg.send()
+            except Exception:
+                logger.exception("Failed to send password reset email to %s", email)
+        except User.DoesNotExist:
+            pass  # Don't reveal whether the email exists
+        messages.success(
+            self.request,
+            "If that email is registered you'll receive a reset link shortly.",
+        )
+        return redirect("login")
+
+
 class ThemeUpdateView(LoginRequiredMixin, View):
     """AJAX endpoint for updating user theme."""
 
     def post(self, request):
         theme = request.POST.get("theme")
-        if theme in ["light", "dark", "pastel"]:
+        if theme in ["light", "dark", "pastel", "lemonade", "fantasy"]:
             request.user.theme = theme
             request.user.save(update_fields=["theme"])
             return JsonResponse({"status": "ok", "theme": theme})

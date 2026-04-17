@@ -2,34 +2,76 @@
 {% load i18n %}
 
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" data-theme="pastel">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% trans "Page not found" %} - Teachka</title>
+  <title>{% trans "Page not found" %} · Teachka</title>
   <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon" />
   <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  
+  <style>
+    /* Match the homepage drift animation */
+    @keyframes drift-up {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .drift { animation: drift-up 0.55s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .drift-1 { animation-delay: 0.05s; }
+    .drift-2 { animation-delay: 0.15s; }
+    .drift-3 { animation-delay: 0.25s; }
+
+    /* Custom Serif if not loaded via styles.css */
+    .serif { font-family: "Fraunces", serif; }
+  </style>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-  <div class="flex flex-col items-center justify-center min-h-screen px-4">
-    <h1 class="text-8xl font-bold text-gray-300 dark:text-gray-700">404</h1>
-    <p class="mt-4 text-xl text-gray-600 dark:text-gray-400">{% trans "Page not found" %}</p>
-    <p class="mt-2 text-sm text-gray-500 dark:text-gray-500">{% trans "The page you're looking for doesn't exist or has been moved." %}</p>
-    <a href="/" class="mt-6 px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-colors">
-      {% trans "Go Home" %}
-    </a>
+
+<body class="bg-base-100 text-base-content min-h-screen overflow-hidden">
+  
+  <div class="flex flex-col items-center justify-center min-h-screen px-5 text-center relative">
+    
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+        <span class="serif font-medium text-primary" 
+              style="font-size: clamp(200px, 30vw, 500px); opacity: 0.04; line-height: 1; letter-spacing: -0.05em;">
+            404
+        </span>
+    </div>
+
+    <div class="relative z-10">
+      
+      <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-6">
+        {% trans "Error" %}
+      </p>
+
+      <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-5 text-base-content" 
+          style="font-size: clamp(48px, 6vw, 84px);">
+        {% trans "Lost in" %} <br>
+        <em class="text-primary font-light">{% trans "thought" %}?</em>
+      </h1>
+
+      <p class="drift drift-3 text-base text-base-content/50 max-w-[380px] leading-relaxed font-light mb-10 mx-auto">
+        {% trans "The page you're looking for doesn't exist or has moved to a quieter corner of the toolkit." %}
+      </p>
+
+      <div class="drift drift-3">
+        <a href="/" class="btn btn-primary rounded-xl px-8 gap-2 font-medium">
+          <i data-lucide="home" class="w-4 h-4"></i>
+          {% trans "Return Home" %}
+        </a>
+      </div>
+    </div>
+
   </div>
 
+  <script src="https://unpkg.com/lucide@latest"></script>
   <script>
+    lucide.createIcons();
+    
+    // Theme script
     (function() {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        document.documentElement.classList.remove('dark', 'pastel-theme');
-        if (savedTheme === 'dark') document.documentElement.classList.add('dark');
-        else if (savedTheme === 'pastel') document.documentElement.classList.add('pastel-theme');
-        else document.documentElement.classList.remove('dark');
-      }
+      const savedTheme = localStorage.getItem('theme') || 'pastel';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      if (savedTheme === 'dark') document.documentElement.classList.add('dark');
     })();
   </script>
 </body>

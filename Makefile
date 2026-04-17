@@ -1,4 +1,4 @@
-.PHONY: build up down restart logs shell dbshell migrate createsuperuser translations collectstatic test clean lint typecheck format tailwind
+.PHONY: build up down restart logs shell dbshell migrate createsuperuser translations collectstatic test clean lint typecheck format tailwind deploy-check ci
 
 # Build and start containers
 build:
@@ -57,6 +57,10 @@ collectstatic:
 test:
 	docker compose exec web pytest
 
+# Run JavaScript tests with Vitest
+test-js:
+	docker compose exec web sh -c "cd /app && npm install --silent && npm test"
+
 # Run tests with coverage report
 test-cov:
 	docker compose exec web pytest --cov=apps --cov-report=term-missing
@@ -99,6 +103,14 @@ check:
 	docker compose exec web mypy .
 	docker compose exec web pytest
 
+# Django production deployment checklist (requires stack up: make up / up-d).
+# Uses a placeholder SECRET_KEY only to validate settings; never use in production.
+deploy-check:
+	docker compose exec web env DEBUG=false \
+		SECRET_KEY=ci-deploy-check-not-for-production-use-50chars-minimum-xxxxx \
+		DATABASE_URL=sqlite:////tmp/teachka_deploy_check.sqlite3 \
+		python manage.py check --deploy
+
 # Clean up containers, volumes, and cached files
 clean:
 	docker compose --profile dev down -v
@@ -114,9 +126,10 @@ rebuild:
 status:
 	docker compose ps
 
-# Run all CI checks (ruff, mypy, tests)
+# Run all CI checks (ruff, mypy, tests, Django deploy checklist)
 ci:
 	docker compose exec web ruff check . --fix
 	docker compose exec web ruff format .
 	docker compose exec web mypy .
 	docker compose exec web pytest
+	$(MAKE) deploy-check

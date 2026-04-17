@@ -1,60 +1,241 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
 {% load i18n %}
 
-{% block title %}{% trans "Register" %}{% endblock title %}
+{% block title %}{% trans "Create account" %} · Teachka{% endblock %}
+
 
 {% block content %}
-<div class="max-w-md mx-auto mt-8">
-  <!-- Header -->
-  <div class="text-center mb-8">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{% trans "Create an account" %}</h1>
-    <p class="mt-1 text-gray-600 dark:text-gray-400">{% trans "Start using Teachka for free" %}</p>
+<div class="flex flex-col flex-1 min-h-0">
+<section class="relative overflow-hidden px-5 py-8 md:px-14 border-b border-base-300 flex-1 flex items-center">
+
+  <!-- Right deco panel -->
+  <div class="absolute top-0 right-0 bottom-0 w-[42%] bg-base-200 hidden md:block"
+       style="clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%)"></div>
+
+  <!-- Deco bubble cluster -->
+  <svg class="absolute pointer-events-none select-none brand-title hidden md:block"
+       aria-hidden="true"
+       style="top:50%;right:10%;transform:translate(50%,-50%)"
+       width="480" height="530" viewBox="0 0 480 530">
+    <circle cx="175" cy="205" r="100" fill="currentColor" opacity="0.07"/>
+    <circle cx="300" cy="142" r="68"  fill="currentColor" opacity="0.10"/>
+    <circle cx="200" cy="342" r="68"  fill="currentColor" opacity="0.10"/>
+    <circle cx="308" cy="315" r="42"  fill="currentColor" opacity="0.13"/>
+    <circle cx="318" cy="385" r="22"  fill="currentColor" opacity="0.20"/>
+    <circle cx="60"  cy="66"  r="30"  fill="currentColor" opacity="0.09"/>
+    <circle cx="190" cy="146" r="90"  fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.22"/>
+    <circle cx="70"  cy="100" r="40"  fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.14"/>
+    <path d="M 200,292.8 A 88,88 0 1 1 171.6,202.6"
+          fill="none" stroke="currentColor" stroke-width="1.3" opacity="0.20" stroke-linecap="round"/>
+    <path d="M 213.6,361 A 60,60 0 1 1 180,290"
+          fill="none" stroke="currentColor" stroke-width="1"   opacity="0.17" stroke-linecap="round"/>
+    <path d="M 135,330 A 40,40 0 1 1 70,360"
+          fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.15" stroke-linecap="round"/>
+  </svg>
+
+  <!-- Mobile deco -->
+  <div class="absolute top-0 right-0 overflow-hidden pointer-events-none select-none md:hidden"
+       style="width:200px;height:280px">
+    <div class="absolute rounded-full brand-title" style="top:-40px;right:-40px;width:160px;height:160px;background:currentColor;opacity:0.08"></div>
+    <div class="absolute rounded-full brand-title" style="top:30px;right:60px;width:88px;height:88px;background:currentColor;opacity:0.11"></div>
+    <div class="absolute rounded-full brand-title" style="top:110px;right:-10px;width:54px;height:54px;background:currentColor;opacity:0.15"></div>
+    <div class="absolute rounded-full brand-title" style="top:168px;right:54px;width:30px;height:30px;background:currentColor;opacity:0.19"></div>
   </div>
 
-  <!-- Register Card -->
-  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-    <form method="post" class="space-y-4">
-      {% csrf_token %}
+  <div class="relative z-10 w-full max-w-[440px]">
 
-      {% if form.non_field_errors %}
-      <div class="rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4">
-        {% for error in form.non_field_errors %}
-        <p class="text-sm text-red-600 dark:text-red-400">{{ error }}</p>
-        {% endfor %}
-      </div>
-      {% endif %}
-
-      {% for field in form %}
-      <div>
-        <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          {{ field.label }}{% if not field.field.required %} <span class="text-gray-400 font-normal">({% trans "optional" %})</span>{% endif %}
-        </label>
-        <input type="{% if 'password' in field.name %}password{% elif field.name == 'email' %}email{% else %}text{% endif %}"
-               name="{{ field.name }}"
-               id="{{ field.id_for_label }}"
-               value="{{ field.value|default:'' }}"
-               class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-               {% if field.field.required %}required{% endif %}>
-        {% if field.help_text %}
-        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ field.help_text|safe }}</p>
-        {% endif %}
-        {% if field.errors %}
-        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ field.errors.0 }}</p>
-        {% endif %}
-      </div>
-      {% endfor %}
-
-      <button type="submit" class="w-full px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
-        {% trans "Create account" %}
-      </button>
-    </form>
-
-    <div class="mt-6 text-center">
-      <p class="text-sm text-gray-600 dark:text-gray-400">
-        {% trans "Already have an account?" %}
-        <a href="{% url 'login' %}" class="font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">{% trans "Sign in" %}</a>
-      </p>
+    <!-- Eyebrow -->
+    <div class="drift drift-1 flex items-center gap-3 mb-5">
+      <div class="w-7 h-0.5 rounded bg-primary"></div>
+      <span class="text-[11px] font-semibold tracking-[2px] uppercase text-primary">{% trans "Get started" %}</span>
     </div>
+
+    <!-- Heading -->
+    <h1 class="drift drift-2 serif font-medium leading-[1.05] tracking-tight mb-7 text-base-content"
+        style="font-size: clamp(32px, 4vw, 48px);">
+      {% trans "Create your" %}<br>
+      <em class="text-primary font-light">{% trans "account" %}</em>
+    </h1>
+
+    <!-- Non-field errors -->
+    {% if form.non_field_errors %}
+    <div role="alert" class="alert alert-error mb-4 text-sm">
+      <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
+      <span>{{ form.non_field_errors.0 }}</span>
+    </div>
+    {% endif %}
+
+    <!-- Form -->
+    <div class="drift drift-3">
+      <form id="register-form" method="post" class="flex flex-col gap-4" novalidate>
+        {% csrf_token %}
+
+        <!-- Name row -->
+        <div class="grid grid-cols-2 gap-3">
+          <!-- First name -->
+          <div class="flex flex-col gap-1.5">
+            <label for="id_first_name"
+                   class="text-[11px] font-semibold tracking-[1.5px] uppercase text-base-content/45">
+              {% trans "First name" %}
+            </label>
+            <input type="text"
+                   name="first_name"
+                   id="id_first_name"
+                   value="{{ form.first_name.value|default:'' }}"
+                   autocomplete="given-name"
+                   autofocus
+                   class="input w-full"
+                   {% if form.first_name.field.required %}required{% endif %}>
+            {% if form.first_name.errors %}
+            <p class="text-xs text-error">{{ form.first_name.errors.0 }}</p>
+            {% endif %}
+          </div>
+
+          <!-- Last name -->
+          <div class="flex flex-col gap-1.5">
+            <label for="id_last_name"
+                   class="text-[11px] font-semibold tracking-[1.5px] uppercase text-base-content/45">
+              {% trans "Last name" %} <span class="normal-case tracking-normal text-base-content/30">({% trans "optional" %})</span>
+            </label>
+            <input type="text"
+                   name="last_name"
+                   id="id_last_name"
+                   value="{{ form.last_name.value|default:'' }}"
+                   autocomplete="family-name"
+                   class="input w-full">
+            {% if form.last_name.errors %}
+            <p class="text-xs text-error">{{ form.last_name.errors.0 }}</p>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Username -->
+        <div class="flex flex-col gap-1.5">
+          <label for="id_username"
+                 class="text-[11px] font-semibold tracking-[1.5px] uppercase text-base-content/45">
+            {% trans "Username" %}
+          </label>
+          <input type="text"
+                 name="username"
+                 id="id_username"
+                 value="{{ form.username.value|default:'' }}"
+                 autocomplete="username"
+                 class="input w-full"
+                 {% if form.username.field.required %}required{% endif %}>
+          {% if form.username.errors %}
+          <p class="text-xs text-error">{{ form.username.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Email -->
+        <div class="flex flex-col gap-1.5">
+          <label for="id_email"
+                 class="text-[11px] font-semibold tracking-[1.5px] uppercase text-base-content/45">
+            {% trans "Email" %}
+          </label>
+          <input type="email"
+                 name="email"
+                 id="id_email"
+                 value="{{ form.email.value|default:'' }}"
+                 autocomplete="email"
+                 class="input w-full"
+                 {% if form.email.field.required %}required{% endif %}>
+          {% if form.email.errors %}
+          <p class="text-xs text-error">{{ form.email.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Password row -->
+        <div class="grid grid-cols-2 gap-3">
+          <!-- Password -->
+          <div class="flex flex-col gap-1.5">
+            <label for="id_password1"
+                   class="text-[11px] font-semibold tracking-[1.5px] uppercase text-base-content/45">
+              {% trans "Password" %}
+            </label>
+            <div class="relative">
+              <input type="password"
+                     name="password1"
+                     id="id_password1"
+                     autocomplete="new-password"
+                     class="input w-full pr-10"
+                     {% if form.password1.field.required %}required{% endif %}>
+              <button type="button"
+                      onclick="toggleRegPassword('id_password1','pw-eye-1')"
+                      tabindex="-1"
+                      aria-label="{% trans 'Toggle password visibility' %}"
+                      class="btn btn-ghost btn-xs btn-square absolute right-1 top-1/2 -translate-y-1/2">
+                <i id="pw-eye-1" data-lucide="eye" class="w-4 h-4"></i>
+              </button>
+            </div>
+            {% if form.password1.errors %}
+            <p class="text-xs text-error">{{ form.password1.errors.0 }}</p>
+            {% endif %}
+          </div>
+
+          <!-- Confirm password -->
+          <div class="flex flex-col gap-1.5">
+            <label for="id_password2"
+                   class="text-[11px] font-semibold tracking-[1.5px] uppercase text-base-content/45">
+              {% trans "Confirm password" %}
+            </label>
+            <div class="relative">
+              <input type="password"
+                     name="password2"
+                     id="id_password2"
+                     autocomplete="new-password"
+                     class="input w-full pr-10"
+                     {% if form.password2.field.required %}required{% endif %}>
+              <button type="button"
+                      onclick="toggleRegPassword('id_password2','pw-eye-2')"
+                      tabindex="-1"
+                      aria-label="{% trans 'Toggle password visibility' %}"
+                      class="btn btn-ghost btn-xs btn-square absolute right-1 top-1/2 -translate-y-1/2">
+                <i id="pw-eye-2" data-lucide="eye" class="w-4 h-4"></i>
+              </button>
+            </div>
+            {% if form.password2.errors %}
+            <p class="text-xs text-error">{{ form.password2.errors.0 }}</p>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <a onclick="document.getElementById('register-form').submit()"
+           class="btn btn-primary w-full gap-2 cursor-pointer mt-1">
+          <i data-lucide="user-plus" class="w-4 h-4"></i>
+          {% trans "Create account" %}
+        </a>
+      </form>
+
+      <!-- Login link -->
+      <div class="mt-5 pt-4 border-t border-base-300 text-center">
+        <p class="text-sm text-base-content/50">
+          {% trans "Already have an account?" %}
+          <a href="{% url 'login' %}"
+             class="font-medium text-primary hover:underline underline-offset-2">
+            {% trans "Sign in" %}
+          </a>
+        </p>
+      </div>
+    </div>
+
   </div>
+</section>
+
 </div>
-{% endblock content %}
+
+{% block extra_js %}
+<script>
+function toggleRegPassword(inputId, iconId) {
+  const input = document.getElementById(inputId);
+  const icon  = document.getElementById(iconId);
+  const hidden = input.type === 'password';
+  input.type = hidden ? 'text' : 'password';
+  icon.setAttribute('data-lucide', hidden ? 'eye-off' : 'eye');
+  lucide.createIcons();
+}
+</script>
+{% endblock %}
+{% endblock %}

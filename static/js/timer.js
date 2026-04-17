@@ -52,7 +52,7 @@ function initPicker(container, max, initial) {
   for (let r = 0; r < 3; r++) {
     for (let i = 0; i <= max; i++) {
       const item = document.createElement("div");
-      item.className = "scroll-picker-item flex items-center justify-center text-2xl font-mono font-bold text-gray-900 dark:text-white";
+      item.className = "scroll-picker-item flex items-center justify-center text-2xl font-mono font-bold text-base-content";
       item.textContent = String(i).padStart(2, "0");
       container.appendChild(item);
     }
