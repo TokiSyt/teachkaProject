@@ -23,17 +23,35 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+def _env_truthy(name: str) -> bool | None:
+    """Return True/False if env var is set, else None."""
+    v = os.environ.get(name)
+    if v is None:
+        return None
+    return v.strip().lower() in ("1", "true", "yes", "on")
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key" if "RENDER" not in os.environ else None)
-if not SECRET_KEY:
-    raise ValueError("SECRET_KEY environment variable is required in production")
-
 # SECURITY WARNING: don't run with debug turned on in production!
+# Explicit DEBUG wins. If unset, Render sets RENDER → assume production (DEBUG off).
+# Any other host must set DEBUG=1 for local dev or DEBUG=0 for production.
+_dbg = _env_truthy("DEBUG")
+if _dbg is not None:
+    DEBUG = _dbg
+elif "RENDER" in os.environ:
+    DEBUG = False
+else:
+    DEBUG = True
 
-DEBUG = "RENDER" not in os.environ
+# SECURITY WARNING: keep the secret key used in production secret!
+if not DEBUG:
+    SECRET_KEY = os.environ.get("SECRET_KEY")
+    if not SECRET_KEY:
+        raise ValueError("SECRET_KEY environment variable is required when DEBUG=False")
+else:
+    SECRET_KEY = os.environ.get("SECRET_KEY") or "dev-secret-key"
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "teachka.com", "www.teachka.com", "dev.teachka.com"]
 
@@ -232,6 +250,7 @@ if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
 
 mail = os.environ.get("MAIL")
 mail_pass = os.environ.get("MAIL_PASSWORD")

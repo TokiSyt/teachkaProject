@@ -2,8 +2,6 @@ import logging
 import re
 
 from django.conf import settings
-
-logger = logging.getLogger(__name__)
 from django.contrib import messages
 from django.contrib.auth import (
     get_user_model,
@@ -28,6 +26,7 @@ from teachkaBaseProject.tokens import account_activation_token
 
 from .forms import EditProfileForm, PasswordResetRequestForm, RegisterForm
 
+logger = logging.getLogger(__name__)
 User = get_user_model()
 password_reset_token = PasswordResetTokenGenerator()
 
