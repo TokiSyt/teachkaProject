@@ -1,65 +1,81 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Create group" %}{% endblock title %}
+{% block title %}{% trans "Create group" %} · Teachka{% endblock title %}
 
 {% block content %}
-<div class="max-w-2xl mx-auto">
-  <!-- Header -->
-  <div class="mb-8">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{% trans "Create new group" %}</h1>
-    <p class="mt-1 text-gray-600 dark:text-gray-400">{% trans "Add a group that you can use across all tools" %}</p>
+
+<section class="px-5 pt-8 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
+  <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+    <i data-lucide="users" class="text-primary" style="width: 180px; height: 180px;"></i>
   </div>
-
-  <!-- Form Card -->
-  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-    <form method="POST" class="space-y-4">
-      {% csrf_token %}
-      <input type="hidden" name="next" value="{{ request.GET.next|default:request.META.HTTP_REFERER|default:'/' }}">
-
-      <div>
-        <label for="{{ form.title.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          {{ form.title.label }}
-        </label>
-        <input type="text"
-               name="title"
-               id="{{ form.title.id_for_label }}"
-               value="{{ form.title.value|default:'' }}"
-               placeholder="e.g., Class 10A, Project Team"
-               class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-               required>
-        {% if form.title.errors %}
-        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.title.errors.0 }}</p>
-        {% endif %}
-      </div>
-
-      <div>
-        <label for="{{ form.members_string.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          {{ form.members_string.label }}
-        </label>
-        <textarea name="members_string"
-                  id="{{ form.members_string.id_for_label }}"
-                  rows="6"
-                  placeholder="Enter names separated by commas or new lines"
-                  class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-y"
-                  required>{{ form.members_string.value|default:'' }}</textarea>
-        {% if form.members_string.help_text %}
-        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ form.members_string.help_text }}</p>
-        {% endif %}
-        {% if form.members_string.errors %}
-        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.members_string.errors.0 }}</p>
-        {% endif %}
-      </div>
-
-      <div class="flex gap-3 pt-2">
-        <button type="submit" class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
-          {% trans "Create group" %}
-        </button>
-        <a href="{{ request.META.HTTP_REFERER|default:'/' }}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
-          {% trans "Cancel" %}
-        </a>
-      </div>
-    </form>
+  <div class="relative z-10">
+    <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">
+      {% trans "Organization" %} · {% trans "Management" %}
+    </p>
+    <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
+      {% trans "Create" %} <span class="text-primary">{% trans "group" %}</span>
+    </h1>
+    <p class="drift drift-3 text-[11px] tracking-[2px] uppercase text-base-content/30">
+      {% trans "Add a group that you can use across all tools" %}
+    </p>
   </div>
-</div>
+</section>
+
+<section class="px-5 py-6 md:px-14">
+  <form method="POST" id="create-form" class="max-w-2xl">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.GET.next|default:request.META.HTTP_REFERER|default:'/' }}">
+
+    <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Group details" %}</p>
+
+    <div class="card bg-base-100 border border-base-300 overflow-hidden shadow-sm">
+      <div class="card-body p-0 divide-y divide-base-300">
+
+        <div class="px-6 py-5">
+          <p class="text-[10px] tracking-[2px] text-base-content/40 mb-3 font-bold uppercase ml-1">{% trans "Group name" %}</p>
+          <input type="text"
+                 name="title"
+                 id="{{ form.title.id_for_label }}"
+                 value="{{ form.title.value|default:'' }}"
+                 placeholder="{% trans 'e.g. Class 10A, Project Team' %}"
+                 class="input input-bordered w-full text-2xl font-bold text-primary bg-base-200/40 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none h-14 rounded-xl transition-all px-4 placeholder:text-sm placeholder:font-normal placeholder:text-base-content/30"
+                 required>
+          {% if form.title.errors %}
+          <p class="text-[10px] text-error mt-2 uppercase font-bold tracking-wider ml-1">{{ form.title.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <div class="px-6 py-6">
+          <p class="text-[10px] tracking-[2px] text-base-content/40 mb-3 font-bold uppercase ml-1">{% trans "Members" %}</p>
+          <textarea name="members_string"
+                    id="{{ form.members_string.id_for_label }}"
+                    rows="6"
+                    placeholder="{% trans 'Enter names separated by commas or new lines' %}"
+                    class="textarea textarea-bordered w-full text-base font-medium leading-relaxed bg-base-200/40 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none rounded-xl transition-all resize-none px-4 py-3"
+                    required>{{ form.members_string.value|default:'' }}</textarea>
+          {% if form.members_string.help_text %}
+          <p class="text-[11px] text-base-content/40 mt-2 ml-1">{{ form.members_string.help_text }}</p>
+          {% endif %}
+          {% if form.members_string.errors %}
+          <p class="text-[10px] text-error mt-1 uppercase font-bold tracking-wider ml-1">{{ form.members_string.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-3 mt-8">
+      <a href="javascript:void(0)"
+         onclick="document.getElementById('create-form').submit();"
+         class="btn btn-primary btn-sm px-8 rounded-xl shadow-md border-none">
+        {% trans "Create group" %}
+      </a>
+      <a href="{{ request.META.HTTP_REFERER|default:'/' }}" class="btn btn-ghost btn-sm rounded-xl text-base-content/40 hover:text-base-content">
+        {% trans "Cancel" %}
+      </a>
+    </div>
+  </form>
+</section>
+
 {% endblock content %}

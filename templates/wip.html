@@ -1,35 +1,69 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Coming Soon" %}{% endblock title %}
+{% block title %}{% trans "Coming Soon" %} · Teachka{% endblock title %}
 
 {% block content %}
-<div class="max-w-2xl mx-auto text-center py-16 sm:py-24">
-  <!-- Icon -->
-  <br>
-  <div class="mx-auto w-20 h-20 bg-amber-100 dark:bg-amber-900/30 rounded-full flex items-center justify-center mb-8">
-    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-600 dark:text-amber-400">
-      <path d="M12 6v6l4 2"/>
-      <circle cx="12" cy="12" r="10"/>
-    </svg>
+<section class="relative overflow-hidden px-5 py-24 md:px-14 md:py-32 min-h-[70vh] flex flex-col items-center justify-center text-center">
+  
+  <svg class="absolute pointer-events-none select-none text-primary hidden md:block" 
+       aria-hidden="true" 
+       style="top:50%; left:50%; transform:translate(-50%,-50%); z-index: 0;" 
+       width="600" height="600" viewBox="0 0 600 600">
+    <circle cx="300" cy="300" r="180" fill="currentColor" opacity="0.03"/>
+    <circle cx="300" cy="300" r="250" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.1" stroke-dasharray="10 10"/>
+    <path d="M 300,120 A 180,180 0 0 1 480,300" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.15" stroke-linecap="round"/>
+  </svg>
+
+  <div class="relative z-10 max-w-xl">
+    
+    <div class="drift drift-1 flex items-center justify-center gap-3 mb-8">
+      <div class="w-6 h-px bg-base-content/20"></div>
+      <span class="text-[10px] font-semibold tracking-[3px] uppercase text-base-content/40">{% trans "Under Construction" %}</span>
+      <div class="w-6 h-px bg-base-content/20"></div>
+    </div>
+
+    <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-6 text-base-content" style="font-size: clamp(40px, 6vw, 72px);">
+      {% trans "Something" %} <br>
+      <em class="text-primary font-light">{% trans "new" %}</em> {% trans "is brewing" %}
+    </h1>
+
+    <p class="drift drift-3 text-base text-base-content/50 leading-relaxed font-light mb-12 max-w-md mx-auto">
+      {% trans "We're currently refining this tool to ensure it meets the Teachka standard of calm, effortless organization." %}
+    </p>
+
+    <div class="drift drift-4 inline-flex items-center gap-4 px-5 py-3 bg-base-200/50 rounded-2xl border border-base-300">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+      </span>
+      <span class="text-[11px] tracking-[1.5px] uppercase font-medium text-base-content/60">
+        {% trans "Currently in development" %}
+      </span>
+    </div>
+
+    <div class="drift drift-4 mt-14 flex items-center justify-center gap-4">
+      <a href="{% url 'home' %}" class="btn btn-primary btn-sm px-6">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        {% trans "Back to Dashboard" %}
+      </a>
+      <button onclick="history.back()" class="btn btn-ghost btn-sm text-base-content/40 hover:text-base-content">
+        {% trans "Go Back" %}
+      </button>
+    </div>
+
   </div>
+</section>
 
-  <!-- Title -->
-  <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-    {% trans "Work in Progress" %}
-  </h1>
-
-  <!-- Description -->
-  <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
-    {% trans "This feature is currently under development. Check back soon for updates!" %}
-  </p>
-
-  <!-- Back Button -->
-  <a href="/" class="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="m15 18-6-6 6-6"/>
-    </svg>
-    {% trans "Back to Home" %}
-  </a>
-</div>
+<style>
+  @keyframes drift-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .drift { animation: drift-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .drift-1 { animation-delay: 0.1s; }
+  .drift-2 { animation-delay: 0.2s; }
+  .drift-3 { animation-delay: 0.3s; }
+  .drift-4 { animation-delay: 0.4s; }
+</style>
 {% endblock content %}

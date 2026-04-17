@@ -57,6 +57,10 @@ collectstatic:
 test:
 	docker compose exec web pytest
 
+# Run JavaScript tests with Vitest
+test-js:
+	docker compose exec web sh -c "cd /app && npm install --silent && npm test"
+
 # Run tests with coverage report
 test-cov:
 	docker compose exec web pytest --cov=apps --cov-report=term-missing

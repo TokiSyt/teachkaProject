@@ -1,32 +1,65 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Delete group" %}{% endblock title %}
+{% block title %}{% trans "Delete group" %} · Teachka{% endblock title %}
 
 {% block content %}
-<div class="px-4 sm:px-0 max-w-md mx-auto mt-8">
-  <!-- Delete Confirmation Card -->
-  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 sm:p-6 text-center">
-    <div class="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-600 dark:text-red-400"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+<section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
+  <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+    <i data-lucide="trash-2" class="text-error" style="width: 180px; height: 180px;"></i>
+  </div>
+
+  <div class="relative z-10">
+    <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-error/50 mb-5">
+      {% trans "Danger Zone" %} · {% trans "Management" %}
+    </p>
+    <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
+      {% trans "Delete" %} <span class="text-error">{% trans "group" %}</span>
+    </h1>
+    <p class="drift drift-3 text-[11px] tracking-[2px] uppercase text-base-content/30">
+      {% trans "This action is permanent and cannot be undone" %}
+    </p>
+  </div>
+</section>
+
+<section class="px-5 py-12 md:px-14 flex justify-start">
+  <div class="max-w-md w-full">
+    
+    <div class="card bg-base-100 border border-base-300 overflow-hidden shadow-sm">
+      <div class="card-body p-0 divide-y divide-base-300">
+        
+        <div class="px-6 py-8 text-center bg-error/5">
+          <div class="w-12 h-12 bg-error/10 text-error rounded-full flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+          </div>
+          <h2 class="serif text-2xl font-medium mb-2">"{{ selected_group.title }}"</h2>
+          <p class="text-xs text-base-content/50 leading-relaxed px-4">
+            {% trans "Are you sure you want to remove this group and all its associated data from your account?" %}
+          </p>
+        </div>
+
+        <div class="px-6 py-4 flex items-center justify-between bg-base-100">
+          <span class="text-[10px] tracking-widest uppercase font-bold text-base-content/30">{% trans "Group Size" %}</span>
+          <span class="badge badge-ghost font-mono text-xs">{{ selected_group.size }} {% trans "Members" %}</span>
+        </div>
+
+      </div>
     </div>
 
-    <h1 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{% trans "Delete group" %}</h1>
-    <p class="text-gray-600 dark:text-gray-400 mb-6">
-      {% trans "Are you sure you want to delete" %} <span class="font-semibold text-gray-900 dark:text-white">"{{ selected_group.title }}"</span>? {% trans "This action cannot be undone." %}
-    </p>
-
-    <form method="post" class="flex flex-col sm:flex-row gap-3 justify-center">
+    <form method="post" id="delete-form" class="flex items-center gap-3 mt-8">
       {% csrf_token %}
       <input type="hidden" name="origin_app" value="{{ origin_app }}">
 
-      <a href="{{ cancel_url }}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
+      <a href="javascript:void(0)" 
+         onclick="document.getElementById('delete-form').submit();"
+         class="btn btn-error btn-sm px-8 rounded-xl shadow-md border-none text-white hover:bg-red-700">
+        {% trans "Delete permanently" %}
+      </a>
+      
+      <a href="{{ cancel_url }}" class="btn btn-ghost btn-sm rounded-xl text-base-content/40 hover:text-base-content">
         {% trans "Cancel" %}
       </a>
-      <button type="submit" class="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors">
-        {% trans "Delete" %}
-      </button>
     </form>
   </div>
-</div>
+</section>
 {% endblock content %}

@@ -123,7 +123,7 @@
 
     <!-- Actions -->
     <div class="hero-child relative z-10 flex items-center gap-4 flex-wrap mb-10">
-      <a href="{% url 'register' %}" class="btn btn-primary rounded-xl gap-2 font-medium text-white">
+      <a href="{% url 'register' %}" class="btn btn-primary rounded-xl gap-2 font-medium">
         <i data-lucide="arrow-right" class="w-4 h-4"></i>
         Get started
       </a>
@@ -647,14 +647,5 @@
     </div>
   </section>
   {% endif %}
-
-  <!-- ── FOOTER ── -->
-  <footer class="px-5 py-8 md:px-14 md:py-7 border-t border-base-300 flex items-center justify-between">
-    <p class="serif italic text-sm text-base-content/40">Teachka, 2026</p>
-    <a href="https://teachka.com" target="_blank"
-       class="link link-hover text-sm text-base-content/50 flex items-center gap-1.5 font-medium">
-      <i data-lucide="external-link" class="w-3.5 h-3.5"></i> teachka.com
-    </a>
-  </footer>
 
 {% endblock %}

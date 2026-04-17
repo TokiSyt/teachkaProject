@@ -61,13 +61,18 @@
   --separator: #6b7280;
 }
 
+[data-theme="lemonade"] {
+  color-scheme: editorial;
+  --color-error: oklch(61.684% 0.24397 18.701 / 0.664);
+}
+
 [data-theme="pastel"] {
   /* DaisyUI color variables — unlayered override beats built-in pastel theme in @layer */
   color-scheme: light;
-  --color-base-100: oklch(97% 0.014 343.198);
+  --color-base-100: oklch(100% 0.00011 271.152);
   --color-base-200: oklch(94% 0.028 342.258);
   --color-base-300: oklch(94.555% 0.03266 339.651);
-  --color-base-content: oklch(47.86% 0.06858 347.957); /*LETTERS COLOR IN GENERAL */
+  --color-base-content: oklch(36.645% 0.05703 348.074); /*LETTERS COLOR IN GENERAL */
   --color-primary: oklch(62.74% 0.19633 348.414); /* THIS HERE IS THE TEACHKA AND BUTTONS COLORS CHANGE*/
   --color-primary-content: oklch(98% 0.031 120.757);
   --color-secondary: oklch(79% 0.184 86.047);
@@ -82,7 +87,7 @@
   --color-success-content: oklch(97% 0.021 166.113);
   --color-warning: oklch(66% 0.179 58.318);
   --color-warning-content: oklch(98% 0.022 95.277);
-  --color-error: oklch(57% 0.245 27.325);
+  --color-error: oklch(61.684% 0.24397 18.701 / 0.664);
   --color-error-content: oklch(97% 0.013 17.38);
   --radius-selector: 2rem;
   --radius-field: 2rem;
@@ -125,9 +130,22 @@
 }
 
 [data-theme="light"] {
-  --color-base-100: oklch(96.472% 0.00276 285.759);
+  --color-base-100: oklch(100% 0.00011 271.152);
   --color-base-200: oklch(100% 0.00011 271.152);
   --color-base-300: oklch(86% 0.002 247);
+}
+
+[data-theme="fantasy"] {
+  --color-primary-content: oklch(100% 0 0);
+}
+
+[data-theme="fantasy"] .btn-primary {
+  color: #fff;
+}
+
+[data-theme] {
+  --radius-field: 0.5rem;
+  --radius-box: 0.75rem;
 }
 
 body {
@@ -175,7 +193,7 @@ body {
   box-shadow: var(--form-shadow);
 }
 
-form label {
+form label:not(.input):not(.btn):not(.label) {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 600;
@@ -488,9 +506,24 @@ form-container table { width: 100%; border-collapse: collapse; font-size: 0.95re
   transition: color 0.2s;
 }
 
-button {
+button:not(.btn) {
   background: none;
 }
+
+
+/* ── Auth pages (login / forgot-password) ── */
+@keyframes drift-up {
+  from { opacity: 0; transform: translateY(9px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.drift   { animation: drift-up 0.55s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.drift-1 { animation-delay: 0.04s; }
+.drift-2 { animation-delay: 0.13s; }
+.drift-3 { animation-delay: 0.22s; }
+
+.input,
+.select { padding-inline: 1rem !important; }
+
 
 .list-group {
   list-style: none;
@@ -717,21 +750,19 @@ button {
 }
 
 /* ── Countdown progress ring ── */
-.countdown-ring-bg { stroke: #e5e7eb; }
-.countdown-ring-fill { stroke: #2563eb; transition: stroke-dashoffset 0.1s linear; }
-.dark .countdown-ring-bg { stroke: #374151; }
-.dark .countdown-ring-fill { stroke: #3b82f6; }
-[data-theme="pastel"] .countdown-ring-bg { stroke: oklch(87% 0.045 343); }
-[data-theme="pastel"] .countdown-ring-fill { stroke: oklch(74.6% 0.167 354); }
+.countdown-ring-bg { stroke: var(--color-base-300); }
+.countdown-ring-fill { stroke: var(--color-primary); transition: stroke-dashoffset 0.1s linear; }
 
 /* ── Scroll picker (countdown timer) ── */
 .scroll-picker {
   height: 120px;
   overflow-y: scroll;
-  scroll-snap-type: y proximity;
+  scroll-snap-type: y mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   cursor: grab;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 33%, black 67%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 33%, black 67%, transparent 100%);
 }
 .scroll-picker:active { cursor: grabbing; }
 .scroll-picker::-webkit-scrollbar { display: none; }
@@ -740,13 +771,29 @@ button {
   scroll-snap-align: center;
   user-select: none;
 }
-.picker-fade-top {
-  background: linear-gradient(to bottom, var(--picker-bg, white), transparent);
+
+/* ── Toggle + field visibility for light-palette themes ── */
+
+/* Unchecked toggle: swap near-black base-content for a soft gray indicator */
+[data-theme="light"] .toggle,
+[data-theme="lemonade"] .toggle,
+[data-theme="pastel"] .toggle {
+  color: var(--color-base-300);
+  border-color: var(--color-base-300);
 }
-.picker-fade-bottom {
-  background: linear-gradient(to top, var(--picker-bg, white), transparent);
+
+/* Checked toggle-primary: fill with the theme's primary color */
+[data-theme="light"] .toggle-primary:checked,
+[data-theme="lemonade"] .toggle-primary:checked,
+[data-theme="pastel"] .toggle-primary:checked {
+  color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
 }
-.dark .picker-fade-top,
-.dark .picker-fade-bottom { --picker-bg: rgb(31 41 55); }
-[data-theme="pastel"] .picker-fade-top,
-[data-theme="pastel"] .picker-fade-bottom { --picker-bg: oklch(97% 0.014 343); }
+
+/* Select and non-ghost inputs: ensure a visible border against light backgrounds */
+[data-theme="light"] .select,
+[data-theme="light"] .input:not(.input-ghost),
+[data-theme="lemonade"] .select,
+[data-theme="lemonade"] .input:not(.input-ghost) {
+  border-color: var(--color-base-300) !important;
+}

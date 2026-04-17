@@ -59,6 +59,9 @@
       #desktop-toggle { display: none !important; }
     }
 
+    /* Toast messages */
+    @keyframes fadeDown { from { opacity:0; transform:translateY(-12px); } to { opacity:1; transform:none; } }
+
     /* Landing page animations */
     @keyframes ticker { to { transform: translateX(-50%); } }
     .ticker-track { animation: ticker 22s linear infinite; width: max-content; }
@@ -298,11 +301,11 @@
     </a>
   </div>
 
-  <!-- Messages -->
+  <!-- Messages (floating overlay) -->
   {% if messages %}
-  <div class="px-5 pt-4 space-y-2">
+  <div id="toast-container" class="fixed top-[72px] md:top-4 left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center gap-2 w-[calc(100%-2rem)] max-w-md pointer-events-none">
     {% for message in messages %}
-    <div role="alert" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-error{% elif message.tags == 'warning' %}alert-warning{% else %}alert-info{% endif %}">
+    <div role="alert" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-error{% elif message.tags == 'warning' %}alert-warning{% else %}alert-info{% endif %} shadow-lg pointer-events-auto animate-[fadeDown_0.3s_ease_both]">
       <span>{{ message }}</span>
       <button onclick="this.parentElement.remove()" class="btn btn-ghost btn-xs">✕</button>
     </div>
@@ -310,14 +313,16 @@
   </div>
   {% endif %}
 
-  <!-- Design WIP banner -->
-  <div id="wip-banner" class="mx-4 mt-4 flex items-center gap-2 rounded-xl border border-warning/40 bg-warning/10 px-4 py-2.5 text-sm text-warning-content/80">
-    <i data-lucide="paintbrush" class="w-5 h-5 shrink-0 text-warning"></i>
-    <span>{% trans "This is a development server. Some pages or items might be incomplete." %}</span>
-    <button onclick="document.getElementById('wip-banner').remove()" class="ml-auto btn btn-ghost btn-xs text-warning/60 hover:text-warning">✕</button>
-  </div>
-
   {% block content %}{% endblock content %}
+
+  <!-- ── FOOTER ── -->
+  <footer class="mt-auto px-5 py-8 md:px-14 md:py-7 border-t border-base-300 flex items-center justify-between shrink-0">
+    <p class="serif italic text-sm text-base-content/40">Teachka, 2026</p>
+    <a href="https://teachka.com" target="_blank"
+       class="link link-hover text-sm text-base-content/50 flex items-center gap-1.5 font-medium">
+      <i data-lucide="external-link" class="w-3.5 h-3.5"></i> teachka.com
+    </a>
+  </footer>
 
 </main>
 

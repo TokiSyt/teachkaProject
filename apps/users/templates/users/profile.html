@@ -1,62 +1,79 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans "Profile" %}{% endblock title %}
+{% block title %}{% trans "Profile" %} · Teachka{% endblock %}
 
 {% block content %}
-{% trans "Not set" as not_set %}
-<div class="max-w-2xl mx-auto">
-  <!-- Header -->
-  <div class="mb-8">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{% trans "Your profile" %}</h1>
-    <p class="mt-1 text-gray-600 dark:text-gray-400">{% trans "View and manage your account information" %}</p>
-  </div>
 
-  <!-- Profile Card -->
-  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-    <div class="space-y-6">
-      <!-- Username -->
-      <div class="flex flex-col sm:flex-row sm:items-center gap-2">
-        <span class="text-sm font-medium text-gray-500 dark:text-gray-400 sm:w-32">{% trans "Username" %}</span>
-        <span class="text-gray-900 dark:text-white font-medium">{{ user_data.username }}</span>
-      </div>
+  <!-- ── HEADER ── -->
+  <section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
+    <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+      <i data-lucide="user" class="text-primary" style="width:180px;height:180px;"></i>
+    </div>
+    <div class="relative z-10">
+      <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Your profile" %}</p>
 
-      <!-- First Name -->
-      <div class="flex flex-col sm:flex-row sm:items-center gap-2">
-        <span class="text-sm font-medium text-gray-500 dark:text-gray-400 sm:w-32">{% trans "First name" %}</span>
-        <span class="text-gray-900 dark:text-white">{{ user_data.first_name|default:not_set }}</span>
-      </div>
+      <h1 class="serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
+        <span class="text-primary">{{ user_data.first_name|default:user_data.username }}</span>
+        {% if user_data.last_name %}
+        <span class="text-base-content/25">{{ user_data.last_name }}</span>
+        {% endif %}
+      </h1>
 
-      <!-- Last Name -->
-      <div class="flex flex-col sm:flex-row sm:items-center gap-2">
-        <span class="text-sm font-medium text-gray-500 dark:text-gray-400 sm:w-32">{% trans "Last name" %}</span>
-        <span class="text-gray-900 dark:text-white">{{ user_data.last_name|default:not_set }}</span>
-      </div>
-
-      <!-- Email -->
-      <div class="flex flex-col sm:flex-row sm:items-center gap-2">
-        <span class="text-sm font-medium text-gray-500 dark:text-gray-400 sm:w-32">{% trans "Email" %}</span>
-        <span class="text-gray-900 dark:text-white">{{ user_data.email|default:not_set }}</span>
-      </div>
-
-      <hr class="border-gray-200 dark:border-gray-700">
-
-      <!-- Actions -->
-      <div class="flex flex-wrap gap-3">
-        <a href="{% url 'profile:edit_profile' %}" class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
-          {% trans "Edit profile" %}
-        </a>
-        <a href="{% url 'profile:settings' %}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
-          {% trans "Settings" %}
-        </a>
-        <form action="{% url 'logout' %}" method="post" class="inline">
-          {% csrf_token %}
-          <button type="submit" class="px-5 py-2.5 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg transition-colors">
-            {% trans "Logout" %}
-          </button>
-        </form>
+      <div class="flex flex-wrap items-center gap-3">
+        <span class="text-[11px] tracking-[2px] uppercase text-base-content/30">@{{ user_data.username }}</span>
+        <span class="text-base-content/15 text-sm">·</span>
+        <span class="text-[11px] tracking-[2px] uppercase text-base-content/30">{% trans "Member since" %} {{ user_data.date_joined|date:"F Y" }}</span>
       </div>
     </div>
-  </div>
-</div>
-{% endblock content %}
+  </section>
+
+  <!-- ── ACCOUNT DETAILS ── -->
+  <section class="px-5 py-8 md:px-14">
+
+    <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Account details" %}</p>
+
+    <div class="card bg-base-100 border border-base-300 max-w-lg">
+      <div class="card-body p-0 divide-y divide-base-300">
+
+        <div class="px-5 py-4">
+          <p class="text-xs text-base-content/40 mb-0.5">{% trans "Username" %}</p>
+          <p class="font-medium text-base-content">{{ user_data.username }}</p>
+        </div>
+
+        <div class="px-5 py-4">
+          <p class="text-xs text-base-content/40 mb-0.5">{% trans "First name" %}</p>
+          <p class="font-medium text-base-content">{{ user_data.first_name|default:"—" }}</p>
+        </div>
+
+        <div class="px-5 py-4">
+          <p class="text-xs text-base-content/40 mb-0.5">{% trans "Last name" %}</p>
+          <p class="font-medium text-base-content">{{ user_data.last_name|default:"—" }}</p>
+        </div>
+
+        <div class="px-5 py-4">
+          <p class="text-xs text-base-content/40 mb-0.5">{% trans "Email" %}</p>
+          <p class="font-medium text-base-content">{{ user_data.email|default:"—" }}</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex flex-wrap gap-2 mt-6">
+      <a href="{% url 'profile:edit_profile' %}" class="btn btn-primary btn-sm">
+        <i data-lucide="pen-line" class="w-4 h-4"></i>
+        {% trans "Edit profile" %}
+      </a>
+      <a href="{% url 'profile:settings' %}" class="btn btn-outline btn-sm">
+        <i data-lucide="settings" class="w-4 h-4"></i>
+        {% trans "Settings" %}
+      </a>
+      <a href="{% url 'profile:change-password' %}" class="btn btn-outline btn-sm">
+        <i data-lucide="lock" class="w-4 h-4"></i>
+        {% trans "Change password" %}
+      </a>
+    </div>
+  </section>
+
+{% endblock %}

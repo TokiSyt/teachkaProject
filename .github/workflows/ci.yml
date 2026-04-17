@@ -57,3 +57,24 @@ jobs:
         run: pytest
         env:
           SECRET_KEY: ci-test-secret-key
+
+  deploy-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Django deployment checklist
+        run: python manage.py check --deploy
+        env:
+          DJANGO_SETTINGS_MODULE: teachkaBaseProject.settings
+          DEBUG: "false"
+          SECRET_KEY: "ci-deploy-check-not-for-production-use-50chars-minimum-xxxxx"
+          DATABASE_URL: "sqlite:////tmp/teachka_deploy_check.sqlite3"

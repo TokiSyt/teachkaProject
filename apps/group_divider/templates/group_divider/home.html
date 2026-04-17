@@ -1,154 +1,128 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Group divider" %}{% endblock title %}
+{% block title %}{% trans "Group divider" %} · Teachka{% endblock title %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto">
-  <!-- Header -->
-  <div class="mb-8">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{% trans "Group divider" %}</h1>
-    <p class="mt-1 text-gray-600 dark:text-gray-400">{% trans "Split your group into smaller teams" %}</p>
+<section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
+  <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+    <i data-lucide="git-fork" class="text-primary" style="width:180px;height:180px;"></i>
   </div>
+  <div class="relative z-10">
+    <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">
+      {% trans "Tools" %} · {% trans "Organization" %}
+    </p>
+    <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
+      <span class="text-primary">{% trans "Group" %}</span> {% trans "divider" %}
+    </h1>
+    <p class="drift drift-3 text-[11px] tracking-[2px] uppercase text-base-content/30">
+      {% trans "Split your group into smaller teams effortlessly" %}
+    </p>
+  </div>
+</section>
 
-  <!-- Form Card -->
-  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-    <form method="POST">
-      {% csrf_token %}
+<section class="px-5 py-8 md:px-14 {% if splitted_group %}border-b border-base-300{% endif %}">
+  <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Configuration" %}</p>
 
-      <div>
-        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{% trans "Select a group" %}</label>
-        <input type="hidden" name="group_id" id="groupSelect" value="{% if selected_group %}{{ selected_group.id }}{% endif %}" required>
-        <div class="relative z-20" id="groupDropdown">
-          <button type="button" id="groupBtn" class="w-full px-4 py-2.5 pr-10 bg-gray-50 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-white transition-colors cursor-pointer text-left">
-            <span id="groupBtnText">{% if selected_group %}{{ selected_group.title }} ({{ selected_group.size }} {% trans "members" %}){% else %}{% trans "Select a group" %}{% endif %}</span>
-          </button>
-          <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-            <svg id="groupChevron" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </div>
-          <div id="groupOptions" class="hidden absolute z-50 w-full mt-1 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-lg overflow-hidden max-h-60 overflow-y-auto">
+  <form method="POST" id="divider-form">
+    {% csrf_token %}
+
+    <div class="card bg-base-100 border border-base-300 max-w-lg">
+      <div class="card-body p-0 divide-y divide-base-300">
+
+        <div class="px-5 py-4">
+          <p class="text-xs text-base-content/40 mb-1.5">{% trans "Group" %}</p>
+          <select name="group_id" id="groupSelect" class="select select-bordered w-full" required>
+            <option value="" disabled {% if not selected_group %}selected{% endif %}>{% trans "Choose a group..." %}</option>
             {% for group in groups %}
-            <div class="group-option px-4 py-2.5 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer {% if forloop.last %}rounded-b-lg{% endif %}" data-value="{{ group.id }}" data-text="{{ group.title }} ({{ group.size }} members)">{{ group.title }} ({{ group.size }} members)</div>
+            <option value="{{ group.id }}" {% if selected_group.id == group.id %}selected{% endif %}>{{ group.title }} — {{ group.size }} {% trans "members" %}</option>
             {% empty %}
-            <div class="px-4 py-2.5 text-gray-500 dark:text-gray-400">{% trans "No groups available" %}</div>
+            <option disabled>{% trans "No groups available" %}</option>
             {% endfor %}
-          </div>
+          </select>
         </div>
-      </div>
-      <br>
-      <div>
-        <label for="{{ form.size.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          {{ form.size.label }}
-        </label>
-        <input type="number" name="size" id="{{ form.size.id_for_label }}" value="{{ form.size.value|default:'' }}"
-               class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-               min="1" required>
-        {% if form.size.help_text %}
-        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ form.size.help_text }}</p>
-        {% endif %}
-        {% if form.size.errors %}
-        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.size.errors.0 }}</p>
-        {% endif %}
-      </div>
 
-      <div class="flex flex-col gap-3 pt-4">
-        <!-- Main action row -->
-        <div class="flex flex-wrap gap-2 sm:gap-3">
-          <button type="submit" class="flex-1 sm:flex-none px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
-            {% trans "Divide" %}
-          </button>
-          <a href="{% url 'group_divider:home' %}" class="flex-1 sm:flex-none px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-center">
-            {% trans "Reset" %}
-          </a>
+        <div class="px-5 py-4">
+          <p class="text-xs text-base-content/40 mb-1.5">{% trans "Team size" %}</p>
+          <input type="number" name="size" id="{{ form.size.id_for_label }}"
+                 value="{{ form.size.value|default:'' }}"
+                 class="input input-bordered w-full"
+                 placeholder="0" min="1" required>
         </div>
-        <!-- Secondary actions row -->
-        <div class="flex flex-wrap gap-2 sm:gap-3">
-          <a href="{% url 'group_maker:group-maker-creation' %}?next={% url 'group_divider:home' %}" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-sm">
-            {% trans "Create group" %}
-          </a>
-          <a id="editGroupsBtn" href="{% if selected_group %}{% url 'group_maker:group-maker-edit' selected_group.id %}{% else %}#{% endif %}"
-             class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-sm {% if not selected_group %}opacity-50 pointer-events-none{% endif %}">
-            {% trans "Edit group" %}
-          </a>
-        </div>
-      </div>
-    </form>
-  </div>
 
-  {% if splitted_group %}
-  <!-- Results -->
-  <div class="mt-8">
-    <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-      {% trans "Divided groups" %} <span class="text-gray-500 dark:text-gray-400 font-normal">({{ selected_group.title }})</span>
-    </h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
-      {% for group in splitted_group %}
-      {% with color=group|last %}
-      <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden h-fit">
-        <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700" style="background-color: {{ color }}99;">
-          <h3 class="font-semibold" style="color: white;">{% trans "Group" %} {{ forloop.counter }}</h3>
-        </div>
-        <ul class="divide-y divide-gray-200/30 dark:divide-gray-700/30" style="background-color: {{ color }}15;">
-          {% for member in group %}
-          {% if not forloop.last %}
-          <li class="px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300">{{ member.name }}</li>
-          {% endif %}
-          {% endfor %}
-        </ul>
       </div>
-      {% endwith %}
-      {% endfor %}
+    </div>
+
+    <div class="flex flex-wrap gap-2 mt-6">
+      <a href="javascript:void(0)"
+         onclick="document.getElementById('divider-form').submit();"
+         class="btn btn-primary btn-sm">
+        <i data-lucide="git-fork" class="w-4 h-4"></i>
+        {% trans "Divide" %}
+      </a>
+      <a href="{% url 'group_divider:home' %}" class="btn btn-ghost btn-sm">
+        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+        {% trans "Reset" %}
+      </a>
+      <a href="{% url 'group_maker:group-maker-creation' %}?next={% url 'group_divider:home' %}" class="btn btn-ghost btn-sm">
+        <i data-lucide="plus" class="w-4 h-4"></i>
+        {% trans "New group" %}
+      </a>
+      {% if selected_group %}
+      <a href="{% url 'group_maker:group-maker-edit' selected_group.id %}?origin_app=group_divider" class="btn btn-ghost btn-sm">
+        <i data-lucide="pen-line" class="w-4 h-4"></i>
+        {% trans "Edit group" %}
+      </a>
+      {% endif %}
+    </div>
+  </form>
+</section>
+
+{% if splitted_group %}
+<section class="px-5 py-12 md:px-14 bg-base-200/40 min-h-[40vh]">
+  <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+    <div>
+      <h2 class="serif text-3xl font-medium mb-1">{% trans "Selected teams" %}</h2>
+      <p class="text-[11px] tracking-[2px] uppercase text-base-content/30 italic">{% trans "Source" %}: {{ selected_group.title }}</p>
+    </div>
+    <div class="stats shadow-sm border border-base-300 bg-base-100">
+      <div class="stat py-2 px-4">
+        <div class="stat-title text-[10px] uppercase tracking-widest">{% trans "Total Teams" %}</div>
+        <div class="stat-value text-xl serif text-primary">{{ splitted_group|length }}</div>
+      </div>
     </div>
   </div>
-  {% endif %}
-</div>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const groupBtn = document.getElementById("groupBtn");
-  const groupOptions = document.getElementById("groupOptions");
-  const groupSelect = document.getElementById("groupSelect");
-  const groupBtnText = document.getElementById("groupBtnText");
-  const groupChevron = document.getElementById("groupChevron");
-  const editBtn = document.getElementById("editGroupsBtn");
-  const baseUrl = "{% url 'group_maker:group-maker-edit' 0 %}?origin_app=group_divider";
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for group in splitted_group %}
+      {% with color=group|last %}
+      <div class="card bg-base-100 border border-base-300 shadow-sm hover:shadow-md transition-all drift"
+           style="animation-delay: {% widthratio forloop.counter0 1 100 %}ms">
 
-  groupBtn.addEventListener("click", () => {
-    groupOptions.classList.toggle("hidden");
-    groupChevron.classList.toggle("rotate-180");
-  });
+        <div class="p-4 border-b border-base-200 flex items-center justify-between" style="background-color: {{ color }}10;">
+          <h3 class="serif font-semibold text-lg" style="color: {{ color }};">{% trans "Team" %} {{ forloop.counter }}</h3>
+          <div class="badge badge-outline border-base-300 text-[10px] font-bold opacity-60 uppercase">
+            {{ group|length|add:"-1" }} {% trans "Members" %}
+          </div>
+        </div>
 
-  document.querySelectorAll(".group-option").forEach(option => {
-    option.addEventListener("click", () => {
-      groupSelect.value = option.dataset.value;
-      groupBtnText.textContent = option.dataset.text;
-      groupOptions.classList.add("hidden");
-      groupChevron.classList.remove("rotate-180");
-      updateEditLink();
-    });
-  });
+        <div class="p-2">
+          <ul class="menu menu-sm w-full">
+            {% for member in group %}
+              {% if not forloop.last %}
+              <li class="flex flex-row items-center gap-3 px-4 py-2 hover:bg-transparent">
+                <span class="w-1.5 h-1.5 rounded-full" style="background-color: {{ color }};"></span>
+                <span class="font-medium text-base-content/80">{{ member.name }}</span>
+              </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endwith %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
 
-  document.addEventListener("click", (e) => {
-    if (!document.getElementById("groupDropdown").contains(e.target)) {
-      groupOptions.classList.add("hidden");
-      groupChevron.classList.remove("rotate-180");
-    }
-  });
-
-  function updateEditLink() {
-    const groupId = groupSelect.value;
-    if (groupId) {
-      editBtn.href = baseUrl.replace("0", groupId);
-      editBtn.classList.remove("opacity-50", "pointer-events-none");
-    } else {
-      editBtn.href = "#";
-      editBtn.classList.add("opacity-50", "pointer-events-none");
-    }
-  }
-
-  updateEditLink();
-});
-</script>
 {% endblock content %}

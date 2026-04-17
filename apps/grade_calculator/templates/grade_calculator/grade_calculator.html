@@ -1,150 +1,145 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Grade calculator" %}{% endblock title %}
+{% block title %}{% trans "Grade calculator" %} · Teachka{% endblock title %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto">
-  <!-- Header -->
-  <div class="mb-8">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{% trans "Grade calculator" %}</h1>
-    <p class="mt-1 text-gray-600 dark:text-gray-400">{% trans "Calculate grade ranges based on maximum points" %}</p>
+<section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
+  <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+    <span class="serif font-medium text-primary text-[180px] leading-none">%</span>
   </div>
 
-  <!-- Form Card -->
-  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-    <form method="post">
-      {% csrf_token %}
+  <div class="relative z-10">
+    <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">
+      {% trans "Tools" %} · {% trans "Grading" %}
+    </p>
+    <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
+      <span class="text-primary">{% trans "Grade" %}</span> {% trans "calculator" %}
+    </h1>
+    <p class="drift drift-3 text-[11px] tracking-[2px] uppercase text-base-content/30">
+      {% trans "Calculate grade ranges based on maximum points" %}
+    </p>
+  </div>
+</section>
 
-      <!-- Max Points Field -->
-      <div>
-        <label for="{{ form.max_points.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          {{ form.max_points.label }}
-        </label>
-        <input type="number"
-               name="{{ form.max_points.name }}"
-               id="{{ form.max_points.id_for_label }}"
-               value="{{ form.max_points.value|default:'' }}"
-               step="any"
-               min="0"
-               class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-               {% if form.max_points.field.required %}required{% endif %}>
-        {% if form.max_points.errors %}
-        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.max_points.errors.0 }}</p>
-        {% endif %}
-      </div>
-
-      <!-- Rounding Option Field -->
-      <div class="pt-4">
-        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 y-2">
-          {{ form.rounding_option.label }}
-        </label>
-        <div class="flex flex-wrap gap-4">
-          {% for radio in form.rounding_option %}
-          <label class="inline-flex items-center cursor-pointer">
-            <input type="radio"
-                   name="{{ form.rounding_option.name }}"
-                   value="{{ radio.data.value }}"
-                   {% if radio.data.selected %}checked{% endif %}
-                   class="w-4 h-4 text-primary-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-primary-500 focus:ring-2">
-            <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ radio.choice_label }}</span>
-          </label>
-          {% endfor %}
+<section class="px-5 py-10 md:px-14 border-b border-base-300">
+  <form method="post" id="calc-form" class="max-w-lg">
+    {% csrf_token %}
+    
+    <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Configuration" %}</p>
+    
+    <div class="card bg-base-100 border border-base-300">
+      <div class="card-body p-0 divide-y divide-base-300">
+        
+        <div class="px-5 py-5">
+          <p class="text-xs text-base-content/40 mb-1.5">{% trans "Maximum points available" %}</p>
+          <input type="number"
+                 name="{{ form.max_points.name }}"
+                 id="{{ form.max_points.id_for_label }}"
+                 value="{{ form.max_points.value|default:'' }}"
+                 step="1" min="0"
+                 class="input input-bordered w-full"
+                 placeholder="0"
+                 {% if form.max_points.field.required %}required{% endif %}>
+          
+          {% if form.max_points.errors %}
+            <p class="text-[10px] text-error mt-2 uppercase font-bold tracking-wider">{{ form.max_points.errors.0 }}</p>
+          {% endif %}
         </div>
-        {% if form.rounding_option.errors %}
-        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.rounding_option.errors.0 }}</p>
-        {% endif %}
-      </div>
 
-      <div class="flex gap-2 sm:gap-3 pt-4">
-        <button type="submit" class="flex-1 sm:flex-none px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
-          {% trans "Calculate" %}
-        </button>
-        <a href="{% url 'grade_calculator:grade_calculator' %}" class="flex-1 sm:flex-none px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors text-center">
-          {% trans "Reset" %}
-        </a>
-      </div>
-    </form>
-  </div>
+        <div class="px-5 py-5 bg-base-200/10">
+          <p class="text-[10px] tracking-[2px] text-base-content/40 mb-4 uppercase font-bold">{% trans "Rounding strategy" %}</p>
+          <div class="space-y-3">
+            {% for radio in form.rounding_option %}
+            <label class="flex items-center gap-3 cursor-pointer group">
+              <input type="radio"
+                     name="{{ form.rounding_option.name }}"
+                     value="{{ radio.data.value }}"
+                     {% if radio.data.selected %}checked{% endif %}
+                     class="radio radio-primary radio-xs">
+              <span class="text-sm font-medium text-base-content/60 group-hover:text-base-content transition-colors">{{ radio.choice_label }}</span>
+            </label>
+            {% endfor %}
+          </div>
+        </div>
 
-  {% if score_range %}
-  <!-- Results Grid -->
-  <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-    <!-- Grade Ranges -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-      <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 text-center">
-        <h2 class="font-semibold text-gray-900 dark:text-white">{% trans "Grade ranges" %}</h2>
       </div>
-      <table class="w-full">
-        <thead class="bg-gray-50 dark:bg-gray-700/50">
-          <tr>
-            <th class="w-1/2 px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{% trans "Grade" %}</th>
-            <th class="w-1/2 px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{% trans "Score Range" %}</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-          <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
-            <td class="px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-white">1</td>
-            <td class="px-4 py-3 text-center text-sm text-gray-600 dark:text-gray-400">{{ score_range.0 }} - {{ score_range.1 }}</td>
-          </tr>
-          <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
-            <td class="px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-white">2</td>
-            <td class="px-4 py-3 text-center text-sm text-gray-600 dark:text-gray-400">{{ score_range.2 }} - {{ score_range.3 }}</td>
-          </tr>
-          <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
-            <td class="px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-white">3</td>
-            <td class="px-4 py-3 text-center text-sm text-gray-600 dark:text-gray-400">{{ score_range.4 }} - {{ score_range.5 }}</td>
-          </tr>
-          <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
-            <td class="px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-white">4</td>
-            <td class="px-4 py-3 text-center text-sm text-gray-600 dark:text-gray-400">{{ score_range.6 }} - {{ score_range.7 }}</td>
-          </tr>
-          <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
-            <td class="px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-white">5</td>
-            <td class="px-4 py-3 text-center text-sm text-gray-600 dark:text-gray-400">{{ score_range.8 }} - {{ score_range.9 }}</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
 
-    <!-- Grade Thresholds -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-      <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 text-center">
-        <h2 class="font-semibold text-gray-900 dark:text-white">{% trans "Grade thresholds" %}</h2>
-      </div>
-      <table class="w-full">
-        <thead class="bg-gray-50 dark:bg-gray-700/50">
-          <tr>
-            <th class="w-1/2 px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{% trans "Grade" %}</th>
-            <th class="w-1/2 px-4 py-3 text-center text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{% trans "Percentage" %}</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-          <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
-            <td class="px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-white">1</td>
-            <td class="px-4 py-3 text-center text-sm text-gray-600 dark:text-gray-400">100% - 90%</td>
-          </tr>
-          <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
-            <td class="px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-white">2</td>
-            <td class="px-4 py-3 text-center text-sm text-gray-600 dark:text-gray-400">89% - 75%</td>
-          </tr>
-          <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
-            <td class="px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-white">3</td>
-            <td class="px-4 py-3 text-center text-sm text-gray-600 dark:text-gray-400">74% - 50%</td>
-          </tr>
-          <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
-            <td class="px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-white">4</td>
-            <td class="px-4 py-3 text-center text-sm text-gray-600 dark:text-gray-400">49% - 35%</td>
-          </tr>
-          <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
-            <td class="px-4 py-3 text-center text-sm font-medium text-gray-900 dark:text-white">5</td>
-            <td class="px-4 py-3 text-center text-sm text-gray-600 dark:text-gray-400">34% - 0%</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="flex items-center gap-3 mt-8">
+      <a href="javascript:void(0)" 
+         onclick="document.getElementById('calc-form').submit();"
+         class="btn btn-primary btn-sm px-8 rounded-xl shadow-md border-none">
+        {% trans "Calculate" %}
+      </a>
+      <a href="{% url 'grade_calculator:grade_calculator' %}" class="btn btn-ghost btn-sm rounded-xl text-base-content/40">
+        {% trans "Reset" %}
+      </a>
     </div>
-    <span class="text-xs text-gray-500 dark:text-gray-400">{% trans "From 4 to 9 max points, grades do not follow specific percentage thresholds." %}</span>
+  </form>
+</section>
+
+{% if score_range %}
+<section class="px-5 py-12 md:px-14 bg-base-200/30 min-h-[50vh]">
+  <div class="flex items-baseline gap-4 mb-10">
+    <h2 class="serif text-3xl font-medium italic text-base-content/80">{% trans "The results" %}</h2>
+    <span class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/20">Max: {{ form.max_points.value }}</span>
   </div>
-  {% endif %}
-</div>
-{% endblock %}
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl">
+    
+    <div class="drift">
+      <p class="text-[10px] tracking-[3px] uppercase font-bold text-base-content/30 mb-6">{% trans "Point ranges" %}</p>
+      <div class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-0">
+          <ul class="divide-y divide-base-300/50">
+            <li class="px-5 py-4 flex items-center justify-between">
+              <span class="serif text-xl font-bold text-primary italic">{% trans "Grade" %} 1</span>
+              <span class="font-bold">{{ score_range.0 }} — {{ score_range.1 }}</span>
+            </li>
+            <li class="px-5 py-4 flex items-center justify-between">
+              <span class="serif text-xl font-medium">{% trans "Grade" %} 2</span>
+              <span class="font-medium text-base-content/70">{{ score_range.2 }} — {{ score_range.3 }}</span>
+            </li>
+            <li class="px-5 py-4 flex items-center justify-between">
+              <span class="serif text-xl font-medium">{% trans "Grade" %} 3</span>
+              <span class="font-medium text-base-content/70">{{ score_range.4 }} — {{ score_range.5 }}</span>
+            </li>
+            <li class="px-5 py-4 flex items-center justify-between">
+              <span class="serif text-xl font-medium">{% trans "Grade" %} 4</span>
+              <span class="font-medium text-base-content/70">{{ score_range.6 }} — {{ score_range.7 }}</span>
+            </li>
+            <li class="px-5 py-4 flex items-center justify-between">
+              <span class="serif text-xl font-medium">{% trans "Grade" %} 5</span>
+              <span class="font-medium text-base-content/70">{{ score_range.8 }} — {{ score_range.9 }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="drift" style="animation-delay: 100ms">
+      <p class="text-[10px] tracking-[3px] uppercase font-bold text-base-content/30 mb-6">{% trans "Thresholds" %}</p>
+      <div class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-0">
+          <ul class="divide-y divide-base-300/50">
+            <li class="px-5 py-4 flex items-center justify-between"><span class="serif text-xl font-medium">1</span><span class="badge badge-ghost font-medium">100% - 90%</span></li>
+            <li class="px-5 py-4 flex items-center justify-between"><span class="serif text-xl font-medium">2</span><span class="badge badge-ghost font-medium">89% - 75%</span></li>
+            <li class="px-5 py-4 flex items-center justify-between"><span class="serif text-xl font-medium">3</span><span class="badge badge-ghost font-medium">74% - 50%</span></li>
+            <li class="px-5 py-4 flex items-center justify-between"><span class="serif text-xl font-medium">4</span><span class="badge badge-ghost font-medium">49% - 35%</span></li>
+            <li class="px-5 py-4 flex items-center justify-between"><span class="serif text-xl font-medium">5</span><span class="badge badge-ghost font-medium">34% - 0%</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="mt-12 p-4 bg-primary/5 border-l-2 border-primary max-w-lg">
+    <p class="text-[11px] serif italic leading-relaxed text-base-content/60">
+      {% trans "From 4 to 9 max points, grades do not follow specific percentage thresholds." %}
+    </p>
+  </div>
+</section>
+{% endif %}
+{% endblock content %}
