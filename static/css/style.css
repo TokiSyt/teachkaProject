@@ -524,6 +524,22 @@ button:not(.btn) {
 .input,
 .select { padding-inline: 1rem !important; }
 
+/* Hide native password field decorations that can overlap custom eye toggles */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+input[type="password"]::-webkit-credentials-auto-fill-button {
+  visibility: hidden;
+  display: none !important;
+  pointer-events: none;
+}
+
+input[type="password"]::-webkit-textfield-decoration-container {
+  display: none;
+}
+
 
 .list-group {
   list-style: none;

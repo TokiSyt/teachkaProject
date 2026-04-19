@@ -3,6 +3,7 @@ from django.urls import path
 from .views import (
     ActivateAccountView,
     ChangePassword,
+    DeleteAccountView,
     EditProfileView,
     ForgotPasswordPublicView,
     LanguageUpdateView,
@@ -24,4 +25,5 @@ urlpatterns = [
     path("theme/", ThemeUpdateView.as_view(), name="theme-update"),
     path("language/", LanguageUpdateView.as_view(), name="language-update"),
     path("activate/<str:uidb64>/<str:token>/", ActivateAccountView.as_view(), name="activate"),
+    path("delete/", DeleteAccountView.as_view(), name="delete-account"),
 ]

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Privacy Policy" %} · Teachka{% endblock %}
+
+{% block content %}
+
+  <!-- ── HEADER ── -->
+  <section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
+    <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+      <i data-lucide="shield" class="text-primary" style="width:180px;height:180px;"></i>
+    </div>
+    <div class="relative z-10">
+      <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Legal" %}</p>
+      <h1 class="serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
+        {% trans "Privacy" %} <em class="text-primary font-light">{% trans "Policy" %}</em>
+      </h1>
+      <p class="text-xs text-base-content/30">{% trans "Last updated" %}: 2026-04-19</p>
+    </div>
+  </section>
+
+  <!-- ── CONTENT ── -->
+  <section class="px-5 py-10 md:px-14">
+    <div class="prose prose-sm max-w-2xl text-base-content/80">
+
+      <h2>{% trans "What data we collect" %}</h2>
+      <p>{% trans "When you create an account we collect your username, email address, and password (stored as a bcrypt hash — never in plain text). As you use the tools we record usage statistics (e.g. wheel spins, timer duration) linked to your account." %}</p>
+
+      <h2>{% trans "How we use your data" %}</h2>
+      <p>{% trans "Your data is used solely to provide the Teachka service: authentication, personalisation (theme, language), and displaying your activity on the home dashboard. We do not sell or share your data with third parties." %}</p>
+
+      <h2>{% trans "Cookies" %}</h2>
+      <p>{% trans "We use one session cookie to keep you logged in (strictly necessary — no consent required under ePrivacy). We also store your theme preference in localStorage, which is not a cookie and does not leave your device." %}</p>
+      <p>{% trans "We use Sentry for error monitoring. Sentry may set its own cookies or use browser storage to deduplicate error reports. No personal data is intentionally forwarded to Sentry." %}</p>
+
+      <h2>{% trans "Data retention" %}</h2>
+      <p>{% trans "Your account and all associated data are retained for as long as your account is active. You can delete your account and all data at any time from the Settings page." %}</p>
+
+      <h2>{% trans "Your rights" %}</h2>
+      <p>{% trans "Under GDPR you have the right to access, correct, or erase your data. To delete your account and all data permanently, visit " %}<a href="{% url 'profile:settings' %}" class="link link-primary">{% trans "Settings → Delete account" %}</a>. {% trans "For other requests contact us at the address below." %}</p>
+
+      <h2>{% trans "Contact" %}</h2>
+      <p>{% trans "Questions about this policy: " %}<a href="mailto:tiagosyt@gmail.com" class="link link-primary">tiagosyt@gmail.com</a></p>
+
+    </div>
+  </section>
+
+{% endblock %}

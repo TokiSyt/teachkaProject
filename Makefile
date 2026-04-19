@@ -1,4 +1,4 @@
-.PHONY: build up down restart logs shell dbshell migrate createsuperuser translations collectstatic test clean lint typecheck format tailwind deploy-check ci
+.PHONY: build up down restart logs shell dbshell migrate createsuperuser translations collectstatic test clean lint typecheck format tailwind deploy-check audit ci
 
 # Build and start containers
 build:
@@ -126,10 +126,15 @@ rebuild:
 status:
 	docker compose ps
 
-# Run all CI checks (ruff, mypy, tests, Django deploy checklist)
+# Audit dependencies for known CVEs
+audit:
+	docker compose exec web pip-audit -r requirements.txt
+
+# Run all CI checks (ruff, mypy, tests, audit, Django deploy checklist)
 ci:
-	docker compose exec web ruff check . --fix
-	docker compose exec web ruff format .
+	docker compose exec web ruff check .
+	docker compose exec web ruff format --check .
 	docker compose exec web mypy .
-	docker compose exec web pytest
+	docker compose exec web pytest --cov --cov-fail-under=70
+	$(MAKE) audit
 	$(MAKE) deploy-check

@@ -30,7 +30,10 @@ class HomeView(LoginRequiredMixin, TemplateView):
         }
 
         if group_id:
-            data = get_group_full_data(int(group_id), self.request.user)
+            try:
+                data = get_group_full_data(int(group_id), self.request.user)
+            except (TypeError, ValueError):
+                return context
             context.update(
                 {
                     "selected_group": data["group"],
@@ -53,7 +56,10 @@ class HomeView(LoginRequiredMixin, TemplateView):
         group_id = request.POST.get("group_id")
         if not group_id:
             return redirect(reverse("karma:karma-home"))
-        _, members = get_group_with_members(int(group_id), request.user)
+        try:
+            _, members = get_group_with_members(int(group_id), request.user)
+        except (TypeError, ValueError):
+            return redirect(reverse("karma:karma-home"))
 
         # Pre-index POST data by member ID in a single pass: O(m) instead of O(n*m)
         post_data = {}

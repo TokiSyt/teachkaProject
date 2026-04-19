@@ -218,7 +218,7 @@ class PasswordResetView(View):
             form.save()
             logout(request)
             messages.success(request, "Your password was successfully reset. You may now login again.")
-            return redirect("home")
+            return redirect("login")
 
         return render(request, "users/password_reset.html", {"form": form, "uidb64": uidb64, "token": token})
 
@@ -261,6 +261,24 @@ class ForgotPasswordPublicView(FormView):
             self.request,
             "If that email is registered you'll receive a reset link shortly.",
         )
+        return redirect("login")
+
+
+class DeleteAccountView(LoginRequiredMixin, View):
+    template_name = "users/delete_account.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
+        password = request.POST.get("password", "")
+        user = request.user
+        if not user.check_password(password):
+            messages.error(request, "Incorrect password. Account not deleted.")
+            return render(request, self.template_name)
+        logout(request)
+        user.delete()
+        messages.success(request, "Your account and all associated data have been permanently deleted.")
         return redirect("login")
 
 

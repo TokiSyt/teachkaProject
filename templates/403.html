@@ -1,0 +1,73 @@
+{% load static %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="en" data-theme="pastel">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% trans "Access denied" %} · Teachka</title>
+  <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon" />
+  <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}">
+
+  <style>
+    @keyframes drift-up {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .drift { animation: drift-up 0.55s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .drift-1 { animation-delay: 0.05s; }
+    .drift-2 { animation-delay: 0.15s; }
+    .drift-3 { animation-delay: 0.25s; }
+    .serif { font-family: "Fraunces", serif; }
+  </style>
+</head>
+
+<body class="bg-base-100 text-base-content min-h-screen overflow-hidden">
+
+  <div class="flex flex-col items-center justify-center min-h-screen px-5 text-center relative">
+
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+      <span class="serif font-medium text-primary"
+            style="font-size: clamp(200px, 30vw, 500px); opacity: 0.04; line-height: 1; letter-spacing: -0.05em;">
+        403
+      </span>
+    </div>
+
+    <div class="relative z-10">
+
+      <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-6">
+        {% trans "Error" %}
+      </p>
+
+      <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-5 text-base-content"
+          style="font-size: clamp(48px, 6vw, 84px);">
+        {% trans "Access" %} <br>
+        <em class="text-primary font-light">{% trans "denied" %}.</em>
+      </h1>
+
+      <p class="drift drift-3 text-base text-base-content/50 max-w-[380px] leading-relaxed font-light mb-10 mx-auto">
+        {% trans "You don't have permission to view this page." %}
+      </p>
+
+      <div class="drift drift-3">
+        <a href="/" class="btn btn-primary rounded-xl px-8 gap-2 font-medium">
+          <i data-lucide="home" class="w-4 h-4"></i>
+          {% trans "Return Home" %}
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    lucide.createIcons();
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'pastel';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      if (savedTheme === 'dark') document.documentElement.classList.add('dark');
+    })();
+  </script>
+</body>
+</html>

@@ -113,11 +113,9 @@ class TestActivateAccount:
         url = self._build_activation_url(user)
 
         client.get(url)
-        # token should be invalid now since is_active changed
         response = client.get(url)
         assert response.status_code == 302
 
-        # user should still be active (not deactivated)
         user.refresh_from_db()
         assert user.is_active is True
 
@@ -184,7 +182,7 @@ class TestEditProfileView:
                 "email": other_user.email,
             },
         )
-        assert response.status_code == 200  # re-renders form with error
+        assert response.status_code == 200
 
 
 @pytest.mark.django_db
@@ -285,7 +283,6 @@ class TestPasswordReset:
                 "new_password2": "NewSecurePass456!",
             },
         )
-        # same link should no longer work
         response = client.get(url)
         assert response.status_code == 302
 
@@ -298,7 +295,7 @@ class TestPasswordReset:
                 "new_password2": "DifferentPass789!",
             },
         )
-        assert response.status_code == 200  # re-renders form with errors
+        assert response.status_code == 200
 
 
 @pytest.mark.django_db

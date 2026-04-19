@@ -87,11 +87,28 @@
           <i data-lucide="check" class="w-4 h-4"></i>
           {% trans "Save settings" %}
         </a>
-        <a href="{% url 'profile:profile' %}" class="btn btn-outline btn-sm">
+        <a href="{% url 'profile:profile' %}" class="btn btn-ghost btn-sm">
           {% trans "Back to profile" %}
         </a>
       </div>
     </form>
+
+    <!-- Danger zone -->
+    <div class="mt-12">
+      <p class="text-[10px] tracking-[3px] uppercase font-semibold text-error/60 mb-5">{% trans "Danger zone" %}</p>
+      <div class="card bg-base-100 border border-error/30 max-w-lg">
+        <div class="card-body p-5 flex-row items-center justify-between gap-4">
+          <div>
+            <p class="font-medium text-sm">{% trans "Delete account" %}</p>
+            <p class="text-xs text-base-content/40 mt-0.5">{% trans "Permanently remove your account and all data." %}</p>
+          </div>
+          <a href="{% url 'profile:delete-account' %}" class="btn btn-error btn-sm btn-outline shrink-0 gap-2">
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+            {% trans "Delete" %}
+          </a>
+        </div>
+      </div>
+    </div>
   </section>
 
 {% endblock %}

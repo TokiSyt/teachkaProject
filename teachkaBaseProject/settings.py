@@ -106,6 +106,8 @@ NPM_BIN_PATH = "/usr/bin/npm"
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "apps.core.middleware.RequestIdMiddleware",
+    "apps.core.middleware.SecurityHeadersMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -129,6 +131,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "apps.core.context_processors.site_flags",
             ],
         },
     },
@@ -150,6 +153,7 @@ if TESTING:
             "NAME": ":memory:",
         }
     }
+    EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
 else:
     DATABASES = {
         "default": dj_database_url.config(  # type: ignore[dict-item]
@@ -252,25 +256,53 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
 
+ENABLE_WIP_APPS = bool(_env_truthy("ENABLE_WIP_APPS") if _env_truthy("ENABLE_WIP_APPS") is not None else DEBUG)
+
+SENTRY_DSN = os.environ.get("SENTRY_DSN")
+if SENTRY_DSN and not DEBUG:
+    import sentry_sdk
+
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        traces_sample_rate=0.1,
+        send_default_pii=False,
+    )
+
 mail = os.environ.get("MAIL")
 mail_pass = os.environ.get("MAIL_PASSWORD")
+
+_log_level = "INFO" if not DEBUG else "DEBUG"
 
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
+    "formatters": {
+        "structured": {
+            "format": '{"time":"%(asctime)s","level":"%(levelname)s","logger":"%(name)s","message":"%(message)s"}',
+        },
+        "simple": {
+            "format": "%(levelname)s %(name)s %(message)s",
+        },
+    },
     "handlers": {
         "console": {
             "class": "logging.StreamHandler",
+            "formatter": "structured" if not DEBUG else "simple",
         },
     },
     "root": {
         "handlers": ["console"],
-        "level": "WARNING",
+        "level": _log_level,
     },
     "loggers": {
         "django": {
             "handlers": ["console"],
             "level": "ERROR",
+            "propagate": False,
+        },
+        "django.request": {
+            "handlers": ["console"],
+            "level": "WARNING",
             "propagate": False,
         },
     },

@@ -191,19 +191,21 @@
             <span class="fade-label nav-label">{% trans "Timer" %}</span>
           </a>
         </li>
+        {% if enable_wip_apps %}
         <li>
           <a href="{% url 'todo:home' %}" class="rounded-lg">
             <i data-lucide="calendar-check" class="w-6 h-6 shrink-0"></i>
             <span class="fade-label nav-label">{% trans "Calendar" %}</span>
           </a>
         </li>
+        {% endif %}
         {% else %}
         <li><a href="{% url 'karma:karma-home' %}" class="rounded-lg"><i data-lucide="book-open-check" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Point system" %}</span></a></li>
         <li><a href="{% url 'group_divider:home' %}" class="rounded-lg"><i data-lucide="users" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Group divider" %}</span></a></li>
         <li><a href="{% url 'grade_calculator:grade_calculator' %}" class="rounded-lg"><i data-lucide="calculator" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Grade calculator" %}</span></a></li>
         <li><a href="{% url 'wheel:home' %}" class="rounded-lg"><i data-lucide="loader-pinwheel" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Name wheel" %}</span></a></li>
         <li><a href="{% url 'timer:home' %}" class="rounded-lg"><i data-lucide="clock" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Timer" %}</span></a></li>
-        <li><a href="{% url 'todo:home' %}" class="rounded-lg"><i data-lucide="calendar-check" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Calendar" %}</span></a></li>
+        {% if enable_wip_apps %}<li><a href="{% url 'todo:home' %}" class="rounded-lg"><i data-lucide="calendar-check" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Calendar" %}</span></a></li>{% endif %}
         {% endif %}
       </ul>
     </div>
@@ -318,11 +320,27 @@
   <!-- ── FOOTER ── -->
   <footer class="mt-auto px-5 py-8 md:px-14 md:py-7 border-t border-base-300 flex items-center justify-between shrink-0">
     <p class="serif italic text-sm text-base-content/40">Teachka, 2026</p>
-    <a href="https://teachka.com" target="_blank"
-       class="link link-hover text-sm text-base-content/50 flex items-center gap-1.5 font-medium">
-      <i data-lucide="external-link" class="w-3.5 h-3.5"></i> teachka.com
-    </a>
+    <div class="flex items-center gap-4">
+      <a href="{% url 'privacy' %}" class="link link-hover text-xs text-base-content/40">{% trans "Privacy" %}</a>
+      <a href="https://teachka.com" target="_blank"
+         class="link link-hover text-sm text-base-content/50 flex items-center gap-1.5 font-medium">
+        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> teachka.com
+      </a>
+    </div>
   </footer>
+
+  <!-- ── COOKIE BANNER ── -->
+  <div id="cookie-banner"
+       class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[200] hidden w-[calc(100%-2rem)] max-w-lg">
+    <div class="bg-base-200 border border-base-300 rounded-2xl shadow-xl px-5 py-4 flex items-center gap-4">
+      <p class="text-xs text-base-content/60 flex-1 leading-relaxed">
+        {% trans "We use a session cookie to keep you logged in. No tracking. " %}
+        <a href="{% url 'privacy' %}" class="link link-primary">{% trans "Privacy policy" %}</a>
+      </p>
+      <a id="cookie-dismiss" onclick="dismissCookie()" role="button"
+         class="btn btn-primary btn-xs rounded-lg shrink-0 cursor-pointer">OK</a>
+    </div>
+  </div>
 
 </main>
 
@@ -467,5 +485,17 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 {% block extra_js %}{% endblock %}
+
+<script>
+(function() {
+  if (!localStorage.getItem('cookie_ok')) {
+    document.getElementById('cookie-banner').classList.remove('hidden');
+  }
+})();
+function dismissCookie() {
+  localStorage.setItem('cookie_ok', '1');
+  document.getElementById('cookie-banner').classList.add('hidden');
+}
+</script>
 </body>
 </html>
