@@ -98,7 +98,7 @@
             {% for key, value in member.negative_data.items %}
             <div class="px-5 py-4 flex items-center justify-between gap-4">
               <span class="text-sm text-base-content/70 font-light">{{ key }}</span>
-              <span class="font-medium text-base-content tabular-nums">{{ value|default:"—" }}</span>
+              <span class="font-medium text-base-content tabular-nums">{{ value|default:"-" }}</span>
             </div>
             {% endfor %}
           </div>
@@ -125,7 +125,7 @@
             {% for key, value in member.positive_data.items %}
             <div class="px-5 py-4 flex items-center justify-between gap-4">
               <span class="text-sm text-base-content/70 font-light">{{ key }}</span>
-              <span class="font-medium text-base-content tabular-nums">{{ value|default:"—" }}</span>
+              <span class="font-medium text-base-content tabular-nums">{{ value|default:"-" }}</span>
             </div>
             {% endfor %}
           </div>

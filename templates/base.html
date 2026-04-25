@@ -193,7 +193,7 @@
         </li>
         {% if enable_wip_apps %}
         <li>
-          <a href="{% url 'todo:home' %}" class="rounded-lg">
+          <a href="{% url 'calendar_app:home' %}" class="rounded-lg">
             <i data-lucide="calendar-check" class="w-6 h-6 shrink-0"></i>
             <span class="fade-label nav-label">{% trans "Calendar" %}</span>
           </a>
@@ -205,7 +205,7 @@
         <li><a href="{% url 'grade_calculator:grade_calculator' %}" class="rounded-lg"><i data-lucide="calculator" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Grade calculator" %}</span></a></li>
         <li><a href="{% url 'wheel:home' %}" class="rounded-lg"><i data-lucide="loader-pinwheel" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Name wheel" %}</span></a></li>
         <li><a href="{% url 'timer:home' %}" class="rounded-lg"><i data-lucide="clock" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Timer" %}</span></a></li>
-        {% if enable_wip_apps %}<li><a href="{% url 'todo:home' %}" class="rounded-lg"><i data-lucide="calendar-check" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Calendar" %}</span></a></li>{% endif %}
+        {% if enable_wip_apps %}<li><a href="{% url 'calendar_app:home' %}" class="rounded-lg"><i data-lucide="calendar-check" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Calendar" %}</span></a></li>{% endif %}
         {% endif %}
       </ul>
     </div>

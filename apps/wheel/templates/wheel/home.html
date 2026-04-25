@@ -36,7 +36,7 @@
           <select name="group_id" id="groupSelect" class="select w-full">
             <option value="" disabled {% if not selected_group %}selected{% endif %}>{% trans "Choose a group..." %}</option>
             {% for group in groups %}
-            <option value="{{ group.id }}" {% if selected_group.id == group.id %}selected{% endif %}>{{ group.title }} — {{ group.size }} {% trans "members" %}</option>
+            <option value="{{ group.id }}" {% if selected_group.id == group.id %}selected{% endif %}>{{ group.title }} - {{ group.size }} {% trans "members" %}</option>
             {% empty %}
             <option disabled>{% trans "No groups available" %}</option>
             {% endfor %}

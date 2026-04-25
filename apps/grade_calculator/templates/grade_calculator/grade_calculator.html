@@ -83,7 +83,7 @@
 <section class="px-5 py-12 md:px-14 bg-base-200/30 min-h-[50vh]">
   <div class="flex items-baseline gap-4 mb-10">
     <h2 class="serif text-3xl font-medium italic text-base-content/80">{% trans "The results" %}</h2>
-    <span class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/20">Max: {{ form.max_points.value }}</span>
+    <span class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/20">{% trans "Max" %}: {{ form.max_points.value }}</span>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl">
@@ -95,23 +95,23 @@
           <ul class="divide-y divide-base-300/50">
             <li class="px-5 py-4 flex items-center justify-between">
               <span class="serif text-xl font-bold text-primary italic">{% trans "Grade" %} 1</span>
-              <span class="font-bold">{{ score_range.0 }} — {{ score_range.1 }}</span>
+              <span class="font-bold">{{ score_range.0 }} -{{ score_range.1 }}</span>
             </li>
             <li class="px-5 py-4 flex items-center justify-between">
               <span class="serif text-xl font-medium">{% trans "Grade" %} 2</span>
-              <span class="font-medium text-base-content/70">{{ score_range.2 }} — {{ score_range.3 }}</span>
+              <span class="font-medium text-base-content/70">{{ score_range.2 }} -{{ score_range.3 }}</span>
             </li>
             <li class="px-5 py-4 flex items-center justify-between">
               <span class="serif text-xl font-medium">{% trans "Grade" %} 3</span>
-              <span class="font-medium text-base-content/70">{{ score_range.4 }} — {{ score_range.5 }}</span>
+              <span class="font-medium text-base-content/70">{{ score_range.4 }} -{{ score_range.5 }}</span>
             </li>
             <li class="px-5 py-4 flex items-center justify-between">
               <span class="serif text-xl font-medium">{% trans "Grade" %} 4</span>
-              <span class="font-medium text-base-content/70">{{ score_range.6 }} — {{ score_range.7 }}</span>
+              <span class="font-medium text-base-content/70">{{ score_range.6 }} -{{ score_range.7 }}</span>
             </li>
             <li class="px-5 py-4 flex items-center justify-between">
               <span class="serif text-xl font-medium">{% trans "Grade" %} 5</span>
-              <span class="font-medium text-base-content/70">{{ score_range.8 }} — {{ score_range.9 }}</span>
+              <span class="font-medium text-base-content/70">{{ score_range.8 }} -{{ score_range.9 }}</span>
             </li>
           </ul>
         </div>

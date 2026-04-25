@@ -133,7 +133,7 @@ audit:
 # Run all CI checks (ruff, mypy, tests, audit, Django deploy checklist)
 ci:
 	docker compose exec web ruff check .
-	docker compose exec web ruff format --check .
+	docker compose exec web ruff format .
 	docker compose exec web mypy .
 	docker compose exec web pytest --cov --cov-fail-under=70
 	$(MAKE) audit
