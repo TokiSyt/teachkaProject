@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ action }} {% trans "event" %} · Teachka{% endblock title %}
+
+{% block content %}
+
+<section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
+  <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+    <i data-lucide="calendar-plus" class="text-primary" style="width: 180px; height: 180px;"></i>
+  </div>
+  <div class="relative z-10">
+    <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">
+      {% trans "Calendar" %} · {% trans "Event" %}
+    </p>
+    <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
+      {% if action == "Edit" %}
+        {% trans "Edit" %} <span class="text-primary">{% trans "event" %}</span>
+      {% else %}
+        {% trans "New" %} <span class="text-primary">{% trans "event" %}</span>
+      {% endif %}
+    </h1>
+    <p class="drift drift-3 text-[11px] tracking-[2px] uppercase text-base-content/30">
+      {% trans "Fill in the details below" %}
+    </p>
+  </div>
+</section>
+
+<section class="px-5 py-6 md:px-14">
+  <form method="POST" id="event-form" class="max-w-2xl">
+    {% csrf_token %}
+    {% if request.GET.next %}<input type="hidden" name="next" value="{{ request.GET.next }}">{% endif %}
+
+    <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Event details" %}</p>
+
+    <div class="card bg-base-100 border border-base-300 overflow-hidden shadow-sm">
+      <div class="card-body p-0 divide-y divide-base-300">
+
+        <div class="px-6 py-5">
+          <p class="text-[10px] tracking-[2px] text-base-content/40 mb-3 font-bold uppercase ml-1">{% trans "Title" %}</p>
+          <input type="text"
+                 name="{{ form.title.html_name }}"
+                 id="{{ form.title.id_for_label }}"
+                 value="{{ form.title.value|default:'' }}"
+                 placeholder="{% trans 'e.g. Math lesson, Parent meeting' %}"
+                 class="input input-bordered w-full bg-base-200/40 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none rounded-xl transition-all px-4 placeholder:text-base-content/30"
+                 required>
+          {% if form.title.errors %}
+          <p class="text-[10px] text-error mt-2 uppercase font-bold tracking-wider ml-1">{{ form.title.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <div class="px-6 py-5">
+          <p class="text-[10px] tracking-[2px] text-base-content/40 mb-3 font-bold uppercase ml-1">
+            {% trans "Subject" %} <span class="normal-case font-normal opacity-60">({% trans "optional" %})</span>
+          </p>
+          <input type="text"
+                 name="{{ form.subject.html_name }}"
+                 id="{{ form.subject.id_for_label }}"
+                 value="{{ form.subject.value|default:'' }}"
+                 placeholder="{% trans 'e.g. Mathematics, History' %}"
+                 class="input input-bordered w-full bg-base-200/40 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none rounded-xl transition-all px-4 placeholder:text-base-content/30">
+        </div>
+
+        <input type="hidden" name="{{ form.start_datetime.html_name }}" id="id_start_datetime" value="{{ form.start_datetime.value|date:'Y-m-d\TH:i'|default:'' }}">
+        <input type="hidden" name="{{ form.end_datetime.html_name }}"   id="id_end_datetime"   value="{{ form.end_datetime.value|date:'Y-m-d\TH:i'|default:'' }}">
+
+        <div class="px-6 py-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <p class="text-[10px] tracking-[2px] text-base-content/40 mb-3 font-bold uppercase ml-1">{% trans "Start" %}</p>
+            <div class="flex gap-2">
+              <input type="date" id="start_d" required
+                     class="input input-bordered flex-1 bg-base-200/40 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none rounded-xl transition-all">
+              <div class="relative">
+                <input type="text" id="start_t" placeholder="--:--" maxlength="5" autocomplete="off" required
+                       class="input input-bordered w-28 bg-base-200/40 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none rounded-xl transition-all font-mono text-center">
+                <div id="start_t_drop" class="absolute left-0 top-full mt-1 z-50 hidden bg-base-100 border border-base-300 rounded-xl shadow-lg overflow-y-auto w-28" style="max-height:180px"></div>
+              </div>
+            </div>
+            {% if form.start_datetime.errors %}
+            <p class="text-[10px] text-error mt-2 uppercase font-bold tracking-wider ml-1">{{ form.start_datetime.errors.0 }}</p>
+            {% endif %}
+          </div>
+          <div>
+            <p class="text-[10px] tracking-[2px] text-base-content/40 mb-3 font-bold uppercase ml-1">
+              {% trans "End" %} <span class="normal-case font-normal opacity-60">({% trans "optional" %})</span>
+            </p>
+            <div class="flex gap-2">
+              <input type="date" id="end_d"
+                     class="input input-bordered flex-1 bg-base-200/40 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none rounded-xl transition-all">
+              <div class="relative">
+                <input type="text" id="end_t" placeholder="--:--" maxlength="5" autocomplete="off"
+                       class="input input-bordered w-28 bg-base-200/40 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none rounded-xl transition-all font-mono text-center">
+                <div id="end_t_drop" class="absolute left-0 top-full mt-1 z-50 hidden bg-base-100 border border-base-300 rounded-xl shadow-lg overflow-y-auto w-28" style="max-height:180px"></div>
+              </div>
+            </div>
+            {% if form.end_datetime.errors %}
+            <p class="text-[10px] text-error mt-2 uppercase font-bold tracking-wider ml-1">{{ form.end_datetime.errors.0 }}</p>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="px-6 py-4 flex items-center">
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="checkbox"
+                   name="{{ form.all_day.html_name }}"
+                   id="{{ form.all_day.id_for_label }}"
+                   {% if form.all_day.value %}checked{% endif %}
+                   class="toggle toggle-primary toggle-sm">
+            <span class="text-sm font-medium text-base-content/70">{% trans "All-day event" %}</span>
+          </label>
+        </div>
+
+        <div class="px-6 py-5">
+          <p class="text-[10px] tracking-[2px] text-base-content/40 mb-3 font-bold uppercase ml-1">{% trans "Recurrence" %}</p>
+          <select name="{{ form.recurrence.html_name }}"
+                  id="{{ form.recurrence.id_for_label }}"
+                  class="select select-bordered w-full bg-base-200/40 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none rounded-xl transition-all"
+                  onchange="toggleRecurrenceEnd(this.value)">
+            {% for value, label in form.fields.recurrence.choices %}
+            <option value="{{ value }}" {% if form.recurrence.value == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="px-6 py-5" id="recurrence-end-row"
+             {% if not form.recurrence.value or form.recurrence.value == 'none' %}style="display:none"{% endif %}>
+          <p class="text-[10px] tracking-[2px] text-base-content/40 mb-3 font-bold uppercase ml-1">
+            {% trans "Repeat until" %} <span class="normal-case font-normal opacity-60">({% trans "optional" %})</span>
+          </p>
+          <input type="date"
+                 name="{{ form.recurrence_end.html_name }}"
+                 id="{{ form.recurrence_end.id_for_label }}"
+                 value="{{ form.recurrence_end.value|default:'' }}"
+                 class="input input-bordered w-full bg-base-200/40 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none rounded-xl transition-all">
+        </div>
+
+        <div class="px-6 py-5">
+          <p class="text-[10px] tracking-[2px] text-base-content/40 mb-3 font-bold uppercase ml-1">
+            {% trans "Description" %} <span class="normal-case font-normal opacity-60">({% trans "optional" %})</span>
+          </p>
+          <textarea name="{{ form.description.html_name }}"
+                    id="{{ form.description.id_for_label }}"
+                    rows="3"
+                    placeholder="{% trans 'What is this event about?' %}"
+                    class="textarea textarea-bordered w-full bg-base-200/40 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none rounded-xl transition-all resize-none px-4 py-3">{{ form.description.value|default:'' }}</textarea>
+        </div>
+
+        <div class="px-6 py-5">
+          <p class="text-[10px] tracking-[2px] text-base-content/40 mb-3 font-bold uppercase ml-1">
+            {% trans "Lesson notes" %} <span class="normal-case font-normal opacity-60">({% trans "optional" %})</span>
+          </p>
+          <textarea name="{{ form.notes.html_name }}"
+                    id="{{ form.notes.id_for_label }}"
+                    rows="4"
+                    placeholder="{% trans 'Learning objectives, materials, homework...' %}"
+                    class="textarea textarea-bordered w-full bg-base-200/40 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none rounded-xl transition-all resize-none px-4 py-3">{{ form.notes.value|default:'' }}</textarea>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-3 mt-8">
+      <a href="javascript:void(0)"
+         onclick="document.getElementById('event-form').submit();"
+         class="btn btn-primary btn-sm px-8 rounded-xl shadow-md border-none">
+        {% if action == "Edit" %}{% trans "Save changes" %}{% else %}{% trans "Create event" %}{% endif %}
+      </a>
+      {% if action == "Edit" %}
+      <div class="divider divider-horizontal mx-1 hidden sm:flex"></div>
+      <a href="{% url 'calendar_app:event_delete' object.pk %}"
+         class="btn btn-ghost btn-sm rounded-xl text-error/60 hover:text-error hover:bg-error/10 uppercase text-[10px] tracking-widest font-bold">
+        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+        {% trans "Delete" %}
+      </a>
+      {% endif %}
+      <a href="{{ cancel_url }}" class="btn btn-ghost btn-sm rounded-xl text-base-content/40 hover:text-base-content">
+        {% trans "Cancel" %}
+      </a>
+    </div>
+  </form>
+</section>
+
+<script>
+function toggleRecurrenceEnd(val) {
+  document.getElementById('recurrence-end-row').style.display = (val && val !== 'none') ? '' : 'none';
+}
+
+(function () {
+  const sd = document.getElementById('start_d');
+  const st = document.getElementById('start_t');
+  const ed = document.getElementById('end_d');
+  const et = document.getElementById('end_t');
+  const startH = document.getElementById('id_start_datetime');
+  const endH   = document.getElementById('id_end_datetime');
+
+  function sync() {
+    if (sd.value) startH.value = sd.value + 'T' + (st.value || '00:00');
+    if (ed.value) endH.value   = ed.value + 'T' + (et.value || '23:59');
+  }
+
+  function init(iso, dEl, tEl) {
+    if (!iso) return;
+    const [d, t] = iso.replace(' ', 'T').split('T');
+    dEl.value = d || '';
+    tEl.value = t ? t.slice(0, 5) : '';
+  }
+
+  // Build custom 24h time dropdown
+  function buildTimePicker(inp, drop) {
+    const presets = [];
+    for (let h = 0; h < 24; h++) {
+      presets.push(String(h).padStart(2,'0') + ':00');
+      presets.push(String(h).padStart(2,'0') + ':30');
+    }
+    presets.push('23:59');
+
+    presets.forEach(t => {
+      const row = document.createElement('div');
+      row.textContent = t;
+      row.className = 'px-3 py-1.5 text-[12px] font-mono cursor-pointer hover:bg-primary\/10 hover:text-primary transition-colors';
+      row.addEventListener('mousedown', e => {
+        e.preventDefault();
+        inp.value = t;
+        drop.classList.add('hidden');
+        sync();
+      });
+      drop.appendChild(row);
+    });
+
+    function showDrop() {
+      drop.classList.remove('hidden');
+      const cur = [...drop.children].find(r => r.textContent === inp.value);
+      if (cur) cur.scrollIntoView({ block: 'nearest' });
+      else drop.scrollTop = 0;
+    }
+
+    function filterDrop() {
+      const q = inp.value.trim();
+      [...drop.children].forEach(r => {
+        r.style.display = (!q || r.textContent.startsWith(q)) ? '' : 'none';
+      });
+      drop.classList.remove('hidden');
+    }
+
+    inp.addEventListener('focus', showDrop);
+    inp.addEventListener('blur',  () => drop.classList.add('hidden'));
+    inp.addEventListener('input', function() {
+      if (/^\d{2}$/.test(this.value)) this.value += ':';
+      filterDrop();
+    });
+    inp.addEventListener('change', sync);
+  }
+
+  buildTimePicker(st, document.getElementById('start_t_drop'));
+  buildTimePicker(et, document.getElementById('end_t_drop'));
+
+  const allDay = document.getElementById('{{ form.all_day.id_for_label }}');
+
+  function toggleAllDay() {
+    const disabled = allDay.checked;
+    if (disabled) { st.value = '00:00'; et.value = '23:59'; sync(); }
+    else { st.value = ''; et.value = ''; sync(); }
+    [st, et].forEach(el => {
+      el.disabled = disabled;
+      el.classList.toggle('opacity-30', disabled);
+      el.classList.toggle('pointer-events-none', disabled);
+    });
+  }
+
+  allDay.addEventListener('change', toggleAllDay);
+  init(startH.value, sd, st);
+  init(endH.value,   ed, et);
+  toggleAllDay();
+
+  let prevDate = sd.value;
+  sd.addEventListener('change', function () {
+    if (!ed.value || ed.value === prevDate) { ed.value = sd.value; if (!et.value) et.value = '23:59'; }
+    prevDate = sd.value;
+    sync();
+  });
+  ed.addEventListener('change', sync);
+  document.getElementById('event-form').addEventListener('submit', sync);
+})();
+</script>
+
+{% endblock content %}

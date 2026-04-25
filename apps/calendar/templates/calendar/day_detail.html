@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ day|date:"l, j F Y" }} · Teachka{% endblock title %}
+
+{% block content %}
+
+<section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
+  <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+    <i data-lucide="calendar-check" class="text-primary" style="width: 180px; height: 180px;"></i>
+  </div>
+  <div class="relative z-10">
+    <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">
+      {% trans "Calendar" %} · {{ day|date:"F Y" }}
+    </p>
+    <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
+      <span class="text-primary">{{ day|date:"j" }}</span>
+      <span class="text-base-content/60">{{ day|date:"F" }}</span>
+    </h1>
+    <p class="drift drift-3 text-[11px] tracking-[2px] uppercase text-base-content/30">
+      {{ day|date:"l" }}{% if today == day %} · {% trans "Today" %}{% endif %}
+    </p>
+  </div>
+</section>
+
+<section class="px-5 py-8 md:px-14">
+
+  <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center gap-3">
+      <a href="{% url 'calendar_app:home' %}?year={{ day.year }}&month={{ day.month }}"
+         class="btn btn-ghost btn-sm rounded-xl px-3 text-[10px] tracking-[2px] uppercase font-bold text-base-content/40 hover:text-base-content">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        {% trans "Month" %}
+      </a>
+      <a href="{% url 'calendar_app:week_detail' day.year day.month day.day %}"
+         class="btn btn-ghost btn-sm rounded-xl px-3 text-[10px] tracking-[2px] uppercase font-bold text-base-content/40 hover:text-base-content">
+        {% trans "Week" %}
+      </a>
+      <div class="flex items-center gap-1">
+        <a href="{% url 'calendar_app:day_detail' prev_day.year prev_day.month prev_day.day %}"
+           class="btn btn-ghost btn-sm rounded-xl px-2.5"
+           title="{{ prev_day|date:'l, j F Y' }}">
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+        </a>
+        <a href="{% url 'calendar_app:day_detail' next_day.year next_day.month next_day.day %}"
+           class="btn btn-ghost btn-sm rounded-xl px-2.5"
+           title="{{ next_day|date:'l, j F Y' }}">
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+        </a>
+      </div>
+    </div>
+    <a href="{% url 'calendar_app:event_create' %}?next={{ request.get_full_path|urlencode }}"
+       class="btn btn-primary btn-sm rounded-xl px-5 shadow-sm border-none">
+      <i data-lucide="plus" class="w-4 h-4"></i>
+      {% trans "New event" %}
+    </a>
+  </div>
+
+  {% if events %}
+  <div class="flex flex-col gap-3">
+    {% for ev in events %}
+    <a href="{% url 'calendar_app:event_edit' ev.pk %}?next={{ request.get_full_path|urlencode }}"
+       class="card bg-base-100 border border-base-300 rounded-[14px] hover:border-primary hover:shadow-md transition-all duration-150">
+      <div class="card-body p-5 flex flex-row gap-5 items-start">
+
+        <div class="shrink-0 w-20 text-center">
+          {% if ev.all_day %}
+          <span class="text-[10px] tracking-[2px] uppercase font-bold text-primary">{% trans "All day" %}</span>
+          {% else %}
+          <div class="serif text-lg font-medium tabular-nums text-base-content leading-none">
+            {{ ev.start_datetime|time:"H:i" }}
+          </div>
+          <div class="text-[10px] text-base-content/40 tabular-nums mt-1">
+            {{ ev.end_datetime|time:"H:i" }}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="flex-1 min-w-0 border-l border-base-300 pl-5">
+          <div class="flex items-center gap-2 mb-1 flex-wrap">
+            <h3 class="serif text-[17px] font-medium tracking-tight text-base-content truncate">{{ ev.title }}</h3>
+            {% if ev.recurrence != 'none' %}
+            <span class="badge badge-ghost text-[10px] tracking-wide uppercase">{{ ev.get_recurrence_display }}</span>
+            {% endif %}
+          </div>
+          {% if ev.subject %}
+          <p class="text-[11px] tracking-[1.5px] uppercase text-base-content/40 font-medium mb-2">{{ ev.subject }}</p>
+          {% endif %}
+          {% if ev.description %}
+          <p class="text-[13px] text-base-content/60 leading-relaxed font-light">{{ ev.description|linebreaksbr }}</p>
+          {% endif %}
+          {% if ev.notes %}
+          <p class="text-[12px] text-base-content/45 leading-relaxed font-light italic mt-2">{{ ev.notes|linebreaksbr }}</p>
+          {% endif %}
+        </div>
+
+        <div class="shrink-0 text-base-content/25">
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="border border-dashed border-base-300 rounded-[14px] p-12 text-center">
+    <div class="w-12 h-12 rounded-full bg-base-200 text-base-content/30 flex items-center justify-center mx-auto mb-4">
+      <i data-lucide="calendar-x" class="w-6 h-6"></i>
+    </div>
+    <p class="serif text-lg font-medium text-base-content mb-1">{% trans "No events" %}</p>
+    <p class="text-[13px] text-base-content/45 font-light mb-5">{% trans "Nothing scheduled for this day." %}</p>
+    <a href="{% url 'calendar_app:event_create' %}?next={{ request.get_full_path|urlencode }}" class="btn btn-primary btn-sm rounded-xl px-5 shadow-sm border-none">
+      <i data-lucide="plus" class="w-4 h-4"></i>
+      {% trans "Add event" %}
+    </a>
+  </div>
+  {% endif %}
+
+</section>
+
+{% endblock content %}

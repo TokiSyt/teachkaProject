@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Calendar" %} · Teachka{% endblock title %}
+
+{% block content %}
+
+<section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
+  <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+    <i data-lucide="calendar-days" class="text-primary" style="width: 180px; height: 180px;"></i>
+  </div>
+  <div class="relative z-10">
+    <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">
+      {% trans "Tools" %} · {% trans "Planning" %}
+    </p>
+    <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
+      <span class="text-primary">{{ month_name }}</span> <span class="text-base-content/60">{{ year }}</span>
+    </h1>
+    <p class="drift drift-3 text-[11px] tracking-[2px] uppercase text-base-content/30">
+      {% trans "Plans and events" %}
+    </p>
+  </div>
+</section>
+
+<section class="px-5 py-8 md:px-14">
+
+  <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center gap-3">
+      <a href="?year={{ today.year }}&month={{ today.month }}"
+         class="btn btn-ghost btn-sm rounded-xl px-3 text-[10px] tracking-[2px] uppercase font-bold text-base-content/40 hover:text-base-content">
+        {% trans "Today" %}
+      </a>
+      <a href="{% url 'calendar_app:week_detail' today.year today.month today.day %}"
+         class="btn btn-ghost btn-sm rounded-xl px-3 text-[10px] tracking-[2px] uppercase font-bold text-base-content/40 hover:text-base-content">
+        {% trans "Week" %}
+      </a>
+      <div class="flex items-center gap-1">
+        <a href="?year={{ prev_year }}&month={{ prev_month }}"
+           class="btn btn-ghost btn-sm rounded-xl px-2.5">
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+        </a>
+        <a href="?year={{ next_year }}&month={{ next_month }}"
+           class="btn btn-ghost btn-sm rounded-xl px-2.5">
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+        </a>
+      </div>
+    </div>
+    <a href="{% url 'calendar_app:event_create' %}?next={{ request.get_full_path|urlencode }}"
+       class="btn btn-primary btn-sm rounded-xl px-5 shadow-sm border-none">
+      <i data-lucide="plus" class="w-4 h-4"></i>
+      {% trans "New event" %}
+    </a>
+  </div>
+
+  <div>
+    <div class="cal-grid card bg-base-100 border border-base-300 shadow-sm overflow-hidden" style="border-color: var(--cal-line)">
+
+      <div class="cal-header grid grid-cols-7 border-b bg-base-200/50">
+        {% for day_name in weekday_headers %}
+        <div class="py-2.5 text-center text-[10px] tracking-[2px] uppercase font-bold text-base-content/35
+          {% if not forloop.last %}border-r{% endif %}">{{ day_name }}</div>
+        {% endfor %}
+      </div>
+
+      <div>
+        {% for week in weeks %}
+        <div class="cal-week grid grid-cols-7 {% if not forloop.last %}border-b{% endif %}">
+          {% for cell_date, is_current, events in week %}
+          {% if is_current %}
+          <div class="cal-cell relative p-2 min-h-[130px] flex flex-col gap-1
+            {% if not forloop.last %}border-r{% endif %}
+            {% if today == cell_date %}bg-primary/5{% endif %}">
+            <a href="{% url 'calendar_app:day_detail' cell_date.year cell_date.month cell_date.day %}"
+               class="cal-cell-link" aria-label="{{ cell_date|date:'l, j F Y' }}"></a>
+            <div class="mb-0.5 relative z-10 pointer-events-none">
+              {% if today == cell_date %}
+              <span class="w-6 h-6 flex items-center justify-center rounded-full bg-primary/15 text-primary text-[11px] font-bold">{{ cell_date.day }}</span>
+              {% else %}
+              <span class="text-[11px] font-bold text-base-content/35 w-6 h-6 flex items-center justify-center">{{ cell_date.day }}</span>
+              {% endif %}
+            </div>
+            {% for ev in events %}
+            <a href="{% url 'calendar_app:event_edit' ev.pk %}?next={{ request.get_full_path|urlencode }}"
+               class="relative z-10 block truncate rounded-[6px] px-1.5 py-0.5 text-[10px] font-semibold bg-primary/12 text-primary hover:bg-primary/22 transition-colors leading-5 border-l-2 border-primary"
+               title="{{ ev.title }}{% if ev.subject %} · {{ ev.subject }}{% endif %}">
+              {% if ev.all_day %}<span class="opacity-50 mr-0.5">●</span>{% else %}<span class="opacity-50 font-normal mr-0.5">{{ ev.start_datetime|time:"H:i" }}</span>{% endif %}{{ ev.title }}{% if ev.subject %}<span class="font-normal"> · {{ ev.subject }}</span>{% endif %}
+            </a>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="p-2 min-h-[130px] flex flex-col gap-1 bg-base-200/20
+            {% if not forloop.last %}border-r{% endif %}">
+            <span class="text-[10px] font-medium text-base-content/20 leading-6">{{ cell_date|date:"M j" }}</span>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+{% endblock content %}
