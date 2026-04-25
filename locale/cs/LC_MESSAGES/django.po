@@ -1,12 +1,12 @@
 # Teachka Czech translations.
 # Copyright (C) 2026
 # This file is distributed under the same license as the Teachka package.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Teachka\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-14 20:33+0000\n"
+"POT-Creation-Date: 2026-04-24 15:01+0000\n"
 "PO-Revision-Date: 2026-02-14 21:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
@@ -17,11 +17,176 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
 "<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
+msgid "Calendar"
+msgstr "Kalendář"
+
+msgid "Today"
+msgstr "Dnes"
+
+msgid "Month"
+msgstr "Měsíc"
+
+msgid "Week"
+msgstr "Týden"
+
+msgid "New event"
+msgstr "Nová událost"
+
+msgid "All day"
+msgstr "Celý den"
+
+msgid "No events"
+msgstr "Žádné události"
+
+msgid "Nothing scheduled for this day."
+msgstr "Na tento den není nic naplánováno."
+
+msgid "Add event"
+msgstr "Přidat událost"
+
+msgid "Delete event"
+msgstr "Smazat"
+
+msgid "Danger Zone"
+msgstr "Nebezpečná zóna"
+
+msgid "Delete"
+msgstr "Smazat"
+
+msgid "event"
+msgstr "událost"
+
+msgid "This action is permanent and cannot be undone"
+msgstr "Tuto akci nelze vrátit zpět"
+
+msgid "Are you sure you want to delete this event?"
+msgstr "Opravdu chcete smazat"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Recurrence"
+msgstr "Opakování"
+
+msgid "Subject"
+msgstr "Předmět"
+
+msgid "Delete permanently"
+msgstr "Trvale smazat"
+
+msgid "Cancel"
+msgstr "Zrušit"
+
+msgid "Event"
+msgstr "Událost"
+
+msgid "Edit"
+msgstr "Upravit"
+
+msgid "New"
+msgstr "Nová"
+
+msgid "Fill in the details below"
+msgstr "Vyplň údaje níže"
+
+msgid "Event details"
+msgstr "Detaily události"
+
+msgid "Title"
+msgstr "Název"
+
+msgid "e.g. Math lesson, Parent meeting"
+msgstr "např. Hodina matematiky, Rodičovská schůzka"
+
+msgid "optional"
+msgstr "volitelné"
+
+msgid "e.g. Mathematics, History"
+msgstr "např. Matematika, Dějepis"
+
+msgid "Start"
+msgstr "Začátek"
+
+msgid "End"
+msgstr "Konec"
+
+msgid "All-day event"
+msgstr "Celodenní událost"
+
+msgid "Repeat until"
+msgstr "Opakovat do"
+
+msgid "Description"
+msgstr "Popis"
+
+msgid "What is this event about?"
+msgstr "O čem je tato událost?"
+
+msgid "Lesson notes"
+msgstr "Poznámky k hodině"
+
+msgid "Learning objectives, materials, homework..."
+msgstr "Cíle, materiály, domácí úkoly..."
+
+msgid "Save changes"
+msgstr "Uložit změny"
+
+msgid "Create event"
+msgstr "Vytvořte si ho"
+
+msgid "Tools"
+msgstr "Nástroje"
+
+msgid "Planning"
+msgstr "Plánování"
+
+msgid "Plans and events"
+msgstr "Plány a události"
+
+msgid "Even"
+msgstr "Sudý týden"
+
+msgid "Odd"
+msgstr "Lichý"
+
+msgid "This week"
+msgstr "Tento týden"
+
+msgid "Max Points"
+msgstr "Maximální body"
+
+msgid "Rounding option"
+msgstr "Možnost zaokrouhlení"
+
+msgid "Full number"
+msgstr "Celé číslo"
+
+msgid "Decimal number"
+msgstr "Desetinné číslo"
+
 msgid "Grade calculator"
 msgstr "Kalkulačka známek"
 
+msgid "Grading"
+msgstr "Známka"
+
+msgid "Grade"
+msgstr "Známka"
+
+msgid "calculator"
+msgstr "Kalkulačka"
+
 msgid "Calculate grade ranges based on maximum points"
 msgstr "Vypočítat rozsahy známek na základě maximálního počtu bodů"
+
+msgid "Configuration"
+msgstr "Nastavení"
+
+msgid "Maximum points available"
+msgstr "Žádné sloupce nejsou k dispozici"
+
+msgid "Rounding strategy"
+msgstr "Možnost zaokrouhlení"
 
 msgid "Calculate"
 msgstr "Vypočítat"
@@ -29,34 +194,41 @@ msgstr "Vypočítat"
 msgid "Reset"
 msgstr "Obnovit"
 
-msgid "Grade ranges"
-msgstr "Rozsahy známek"
+msgid "The results"
+msgstr "Výsledky"
 
-msgid "Grade"
-msgstr "Známka"
+msgid "Max"
+msgstr "Max"
 
-msgid "Score Range"
-msgstr "Rozsah bodů"
+msgid "Point ranges"
+msgstr "Body"
 
-msgid "Grade thresholds"
+msgid "Thresholds"
 msgstr "Hranice známek"
-
-msgid "Percentage"
-msgstr "Procenta"
 
 msgid ""
 "From 4 to 9 max points, grades do not follow specific percentage thresholds."
 msgstr ""
-"Od 4 do 9 maximálních bodů známky neodpovídají konkrétním procentuálním hranicím."
+"Od 4 do 9 maximálních bodů známky neodpovídají konkrétním procentuálním "
+"hranicím."
 
 msgid "Group divider"
 msgstr "Rozdělovač skupin"
 
-msgid "Split your group into smaller teams"
+msgid "Organization"
+msgstr "Organizace"
+
+msgid "Group"
+msgstr "Skupina"
+
+msgid "divider"
+msgstr "Rozdělovač"
+
+msgid "Split your group into smaller teams effortlessly"
 msgstr "Rozdělte skupinu na menší týmy"
 
-msgid "Select a group"
-msgstr "Vybrat skupinu"
+msgid "Choose a group..."
+msgstr "Vyberte skupinu..."
 
 msgid "members"
 msgstr "členů"
@@ -64,35 +236,49 @@ msgstr "členů"
 msgid "No groups available"
 msgstr "Žádné skupiny nejsou k dispozici"
 
+msgid "Team size"
+msgstr "Velikost týmu"
+
 msgid "Divide"
 msgstr "Rozdělit"
 
-msgid "Create group"
+msgid "New group"
 msgstr "Vytvořit skupinu"
 
 msgid "Edit group"
 msgstr "Upravit skupinu"
 
-msgid "Divided groups"
-msgstr "Rozdělené skupiny"
+msgid "Selected teams"
+msgstr "Vybráno"
 
-msgid "Group"
-msgstr "Skupina"
+msgid "Source"
+msgstr "Zdroj"
+
+msgid "Total Teams"
+msgstr "Celkem"
+
+msgid "Team"
+msgstr "Tým"
+
+msgid "Members"
+msgstr "Členové"
 
 msgid "Delete group"
 msgstr "Smazat skupinu"
 
-msgid "Are you sure you want to delete"
-msgstr "Opravdu chcete smazat"
+msgid "Management"
+msgstr "Správa"
 
-msgid "This action cannot be undone."
-msgstr "Tuto akci nelze vrátit zpět."
+msgid "group"
+msgstr "Skupina"
 
-msgid "Cancel"
-msgstr "Zrušit"
+msgid ""
+"Are you sure you want to remove this group and all its associated data from "
+"your account?"
+msgstr "Opravdu chceš odstranit tuto skupinu a všechna související data z účtu?"
 
-msgid "Delete"
-msgstr "Smazat"
+msgid "Group Size"
+msgstr "Rozdělovač skupin"
 
 msgid "Group Maker"
 msgstr "Tvůrce skupin"
@@ -100,8 +286,8 @@ msgstr "Tvůrce skupin"
 msgid "Manage your groups and member lists"
 msgstr "Spravujte své skupiny a seznamy členů"
 
-msgid "Choose a group..."
-msgstr "Vyberte skupinu..."
+msgid "Select a group"
+msgstr "Vybrat skupinu"
 
 msgid "Create Group"
 msgstr "Vytvořit skupinu"
@@ -115,20 +301,38 @@ msgstr "Zatím žádné skupiny"
 msgid "Create your first group to get started"
 msgstr "Vytvořte svou první skupinu a začněte"
 
-msgid "Create new group"
-msgstr "Vytvořit novou skupinu"
+msgid "Create group"
+msgstr "Vytvořit skupinu"
+
+msgid "Create"
+msgstr "Vytvořte si ho"
 
 msgid "Add a group that you can use across all tools"
 msgstr "Přidejte skupinu, kterou můžete používat ve všech nástrojích"
 
+msgid "Group details"
+msgstr "Skupiny"
+
+msgid "Group name"
+msgstr "Tvůrce skupin"
+
+msgid "e.g. Class 10A, Project Team"
+msgstr "např. Třída 10A, Projektový tým"
+
+msgid "Enter names separated by commas or new lines"
+msgstr "Zadej jména oddělená čárkami nebo novými řádky"
+
 msgid "Update group details and member colors"
 msgstr "Aktualizovat údaje skupiny a barvy členů"
 
+msgid "Group Details"
+msgstr "Skupiny"
+
+msgid "Enter names separated by commas or lines..."
+msgstr "Zadej jména oddělená čárkami nebo řádky..."
+
 msgid "Member colors"
 msgstr "Barvy členů"
-
-msgid "Save changes"
-msgstr "Uložit změny"
 
 msgid "Math Operations"
 msgstr "Matematické operace"
@@ -148,35 +352,44 @@ msgstr "Zpět na úvod"
 msgid "Delete column"
 msgstr "Smazat sloupec"
 
-msgid "Remove a column from the points table"
-msgstr "Odebrat sloupec z tabulky bodů"
+msgid "Back to points"
+msgstr "Zpět na body"
+
+msgid "column"
+msgstr "Přidat sloupec"
+
+msgid "table"
+msgstr "tabulka"
+
+msgid "Remove column"
+msgstr "Nový sloupec"
 
 msgid "This action cannot be undone"
 msgstr "Tuto akci nelze vrátit zpět"
 
-msgid "All data in this column will be permanently deleted for all members."
+msgid "All data in this column will be permanently deleted for every member."
 msgstr "Všechna data v tomto sloupci budou trvale smazána pro všechny členy."
 
 msgid "Column to delete"
 msgstr "Sloupec ke smazání"
 
-msgid "Select a column"
-msgstr "Vybrat sloupec"
-
 msgid "No columns available"
 msgstr "Žádné sloupce nejsou k dispozici"
-
-msgid "Table definition"
-msgstr "Definice tabulky"
 
 msgid "Column type"
 msgstr "Typ sloupce"
 
+msgid "Numerical"
+msgstr "Číselný"
+
+msgid "Text"
+msgstr "Textový"
+
 msgid "Edit column"
 msgstr "Upravit sloupec"
 
-msgid "Rename an existing column"
-msgstr "Přejmenovat existující sloupec"
+msgid "Rename column"
+msgstr "Vytvořit sloupec"
 
 msgid "Column to edit"
 msgstr "Sloupec k úpravě"
@@ -184,23 +397,41 @@ msgstr "Sloupec k úpravě"
 msgid "New column name"
 msgstr "Nový název sloupce"
 
-msgid "Points system"
+msgid "Enter new name"
+msgstr "Zadej nový název"
+
+msgid "Point system"
 msgstr "Bodový systém"
 
-msgid "Track positive and negative points for group members"
-msgstr "Sledujte kladné a záporné body členů skupiny"
+msgid "Points"
+msgstr "Body"
 
-msgid "Show points"
-msgstr "Zobrazit body"
+msgid "Track participation and behavior, group by group"
+msgstr "Sledujte účast a chování pomocí vlastních bodových kategorií."
+
+msgid "Choose group"
+msgstr "Vyberte skupinu..."
+
+msgid "Create a group"
+msgstr "Vytvořit skupinu"
 
 msgid "Negative points"
 msgstr "Záporné body"
+
+msgid "columns"
+msgstr "Přidat sloupec"
 
 msgid "Name"
 msgstr "Jméno"
 
 msgid "Total"
 msgstr "Celkem"
+
+msgid "No negative columns yet"
+msgstr "Žádné záporné body zaznamenány"
+
+msgid "Add one to start tracking."
+msgstr "Přidej jeden a začni sledovat."
 
 msgid "Save points"
 msgstr "Uložit body"
@@ -214,80 +445,86 @@ msgstr "Přidat první sloupec"
 msgid "Positive points"
 msgstr "Kladné body"
 
+msgid "No positive columns yet"
+msgstr "Žádné kladné body zaznamenány"
+
+msgid "Add one to start rewarding."
+msgstr "Přidej jeden a začni odměňovat."
+
 msgid "Dashboard"
 msgstr "Přehled"
 
-msgid "Back to Points"
-msgstr "Zpět na body"
-
-msgid "Individual member dashboard"
+msgid "Member dashboard"
 msgstr "Individuální přehled člena"
 
-msgid "Negative Points"
+msgid "Overview"
+msgstr "Přehled"
+
+msgid "Negative"
 msgstr "Záporné body"
 
-msgid "Positive Points"
+msgid "categor"
+msgstr "kategori"
+
+msgid "y"
+msgstr "e"
+
+msgid "ies"
+msgstr "Minuty"
+
+msgid "none recorded"
+msgstr "Žádné záporné body zaznamenány"
+
+msgid "Positive"
 msgstr "Kladné body"
 
-msgid "Net Score"
-msgstr "Čisté skóre"
+msgid "Net"
+msgstr "Nenastaveno"
 
-msgid "Negative Points Breakdown"
-msgstr "Rozpis záporných bodů"
+msgid "positive balance"
+msgstr "kladný zůstatek"
+
+msgid "Breakdown"
+msgstr "Rozpis"
 
 msgid "No negative points recorded"
 msgstr "Žádné záporné body zaznamenány"
 
-msgid "Positive Points Breakdown"
-msgstr "Rozpis kladných bodů"
-
 msgid "No positive points recorded"
 msgstr "Žádné kladné body zaznamenány"
+
+msgid "Back to group"
+msgstr "Zpět na úvod"
 
 msgid "New column"
 msgstr "Nový sloupec"
 
-msgid "Add new column"
-msgstr "Přidat nový sloupec"
-
-msgid "Create a new column for tracking points"
-msgstr "Vytvořit nový sloupec pro sledování bodů"
+msgid "Column details"
+msgstr "Sloupec ke smazání"
 
 msgid "Column name"
 msgstr "Název sloupce"
 
-msgid "Numerical"
-msgstr "Číselný"
+msgid "e.g., Homework, Participation"
+msgstr "např. Úkoly, Účast"
 
-msgid "Text"
-msgstr "Textový"
-
-msgid "Numerical columns will be summed in the total"
+msgid "Numerical columns are summed in the total."
 msgstr "Číselné sloupce budou sečteny v celkovém součtu"
 
 msgid "Create column"
 msgstr "Vytvořit sloupec"
 
-msgid "Timer"
-msgstr "Časovač"
-
-msgid "Countdown timers and stopwatches"
-msgstr "Odpočítávací časovače a stopky"
-
-msgid "Stopwatch"
-msgstr "Stopky"
-
-msgid "Mark your times with flags"
-msgstr "Označte si časy pomocí vlajek"
-
-msgid "Count up with lap flags"
-msgstr "Počítání nahoru s označením kol"
-
 msgid "Countdown"
 msgstr "Odpočítávání"
 
+msgid "Timer"
+msgstr "Časovač"
+
 msgid "Set a duration and count down to zero"
 msgstr "Nastavte dobu a odpočítávejte do nuly"
+
+msgid "Back to Timer"
+msgstr "Zpět na úvod"
 
 msgid "Hours"
 msgstr "Hodiny"
@@ -298,110 +535,94 @@ msgstr "Minuty"
 msgid "Seconds"
 msgstr "Sekundy"
 
+msgid "Countdown timers and stopwatches"
+msgstr "Odpočítávací časovače a stopky"
+
+msgid "Choose a mode"
+msgstr "Vyberte skupinu..."
+
+msgid "Stopwatch"
+msgstr "Stopky"
+
+msgid "Count up with lap flags"
+msgstr "Počítání nahoru s označením kol"
+
+msgid "Mark your times with flags"
+msgstr "Označte si časy pomocí vlajek"
+
 msgid "Flags"
 msgstr "Označení"
 
-msgid "Week"
-msgstr "Týden"
+msgid "Welcome to Teachka"
+msgstr "Vítejte zpět"
 
-msgid "Even week"
-msgstr "Sudý týden"
+msgid "Welcome aboard"
+msgstr "Vítejte zpět"
 
-msgid "Odd week"
-msgstr "Lichý týden"
+#, python-format
+msgid "Activate your<br>account, %(name)s"
+msgstr "Aktivuj svůj<br>účet, %(name)s"
 
-msgid "To-Do List"
-msgstr "Seznam úkolů"
+msgid ""
+"Thanks for signing up for Teachka. To get started with your classroom tools, "
+"confirm your email address by clicking below."
+msgstr ""
+"Děkujeme za registraci do Teachka. Pro začátek potvrď svůj e-mail kliknutím níže."
 
-msgid "Task management and organization"
-msgstr "Správa a organizace úkolů"
+msgid "Activate my account"
+msgstr "Vytvořit účet"
 
-msgid "Calendar"
-msgstr "Kalendář"
+msgid "If the button doesn't work, copy and paste this link into your browser:"
+msgstr "Pokud tlačítko nefunguje, zkopíruj a vlož tento odkaz do prohlížeče:"
 
-msgid "Plan and organize your teaching schedule."
-msgstr "Plánujte a organizujte svůj rozvrh výuky."
+msgid "Teachka, 2026"
+msgstr "Teachka, 2026"
 
-msgid "Login"
+msgid "Toolkit for educators"
+msgstr "Nástroje pro učitele"
+
+msgid ""
+"If you didn't create a Teachka account, you can safely ignore this email."
+msgstr "Pokud sis účet Teachka nevytvořil, tento e-mail můžeš ignorovat."
+
+msgid "Sign in"
 msgstr "Přihlásit se"
 
 msgid "Welcome back"
 msgstr "Vítejte zpět"
 
-msgid "Sign in to your account"
-msgstr "Přihlaste se ke svému účtu"
-
-msgid "Sign in"
+msgid "Sign in to"
 msgstr "Přihlásit se"
 
-msgid "Don't have an account?"
-msgstr "Nemáte účet?"
-
-msgid "Create one"
-msgstr "Vytvořte si ho"
-
-msgid "Register"
-msgstr "Registrovat se"
-
-msgid "Create an account"
-msgstr "Vytvořit účet"
-
-msgid "Start using Teachka for free"
-msgstr "Začněte používat Teachka zdarma"
-
-msgid "optional"
-msgstr "volitelné"
-
-msgid "Create account"
-msgstr "Vytvořit účet"
-
-msgid "Already have an account?"
-msgstr "Již máte účet?"
-
-msgid "Change Password"
-msgstr "Změnit heslo"
-
-msgid "We'll send a reset link to your email"
-msgstr "Pošleme vám odkaz pro obnovení na email"
-
-msgid "Email"
-msgstr "Email"
-
-msgid "Send"
-msgstr "Odeslat"
-
-msgid "Edit profile"
-msgstr "Upravit profil"
-
-msgid "Update your account information"
-msgstr "Aktualizovat informace o účtu"
+msgid "Username"
+msgstr "Uživatelské jméno"
 
 msgid "Password"
 msgstr "Heslo"
 
-msgid "Change password"
+msgid "Forgot password?"
 msgstr "Změnit heslo"
 
-msgid "Reset Password"
-msgstr "Obnovit heslo"
+msgid "Toggle password visibility"
+msgstr "Přepnout viditelnost hesla"
 
-msgid "Enter your new password"
-msgstr "Zadejte své nové heslo"
+msgid "New here?"
+msgstr "Nový zde?"
 
-msgid "Profile"
-msgstr "Profil"
+msgid "Create an account"
+msgstr "Vytvořit účet"
 
-msgid "Not set"
-msgstr "Nenastaveno"
+msgid "Create account"
+msgstr "Vytvořit účet"
 
-msgid "Your profile"
-msgstr "Váš profil"
+msgid "Get started"
+msgstr "Začít"
 
-msgid "View and manage your account information"
-msgstr "Zobrazit a spravovat informace o účtu"
+msgid "Create your"
+msgstr "Vytvořit skupinu"
 
-msgid "Username"
-msgstr "Uživatelské jméno"
+msgid "account"
+msgstr "Vytvořit účet"
 
 msgid "First name"
 msgstr "Jméno"
@@ -409,14 +630,263 @@ msgstr "Jméno"
 msgid "Last name"
 msgstr "Příjmení"
 
+msgid "Email"
+msgstr "Email"
+
+msgid "Confirm password"
+msgstr "Změnit heslo"
+
+msgid "Already have an account?"
+msgstr "Již máte účet?"
+
+msgid "Change Password"
+msgstr "Změnit heslo"
+
+msgid "Back to profile"
+msgstr "Zpět na úvod"
+
+msgid "Security"
+msgstr "Zabezpečení"
+
+msgid "Change your"
+msgstr "Změnit heslo"
+
+msgid "password"
+msgstr "Heslo"
+
+msgid "We'll send a reset link to your email."
+msgstr "Pošleme vám odkaz pro obnovení na email"
+
+msgid "Email address"
+msgstr "E-mailová adresa"
+
+msgid "Send reset link"
+msgstr "Odeslat odkaz pro obnovu"
+
+msgid "Delete account"
+msgstr "Smazat sloupec"
+
+msgid "Account"
+msgstr "Nastavení účtu"
+
+msgid ""
+"This will permanently delete your account and all associated data: groups, "
+"members, points, and usage stats. This action cannot be undone."
+msgstr ""
+"Toto trvale smaže tvůj účet a všechna související data: skupiny, členy, body a statistiky. Tuto akci nelze vrátit."
+
+msgid "Confirm with password"
+msgstr "Změnit heslo"
+
+msgid "Delete my account"
+msgstr "Smazat sloupec"
+
+msgid "Edit profile"
+msgstr "Upravit profil"
+
+msgid "profile"
+msgstr "Profil"
+
+msgid "Account details"
+msgstr "Nastavení účtu"
+
+msgid "Username cannot be changed"
+msgstr "Uživatelské jméno nelze změnit"
+
+msgid "Forgot password"
+msgstr "Změnit heslo"
+
+msgid "Back to sign in"
+msgstr "Zpět na body"
+
+msgid "Account recovery"
+msgstr "Obnovení účtu"
+
+msgid "Forgot your"
+msgstr "Zapomněl jsi"
+
+msgid "password?"
+msgstr "Heslo"
+
+msgid "Enter your registered email and we'll send you a reset link."
+msgstr "Zadej registrovaný e-mail a pošleme ti odkaz pro obnovu."
+
+msgid "Remember your password?"
+msgstr "Zadejte své nové heslo"
+
+msgid "Reset Password"
+msgstr "Obnovit heslo"
+
+msgid "Choose a new"
+msgstr "Vyberte skupinu..."
+
+msgid "Enter your new password below."
+msgstr "Zadejte své nové heslo"
+
+msgid "New password"
+msgstr "Změnit heslo"
+
+msgid "Password requirements"
+msgstr "Požadavky na heslo"
+
+msgid "Reset password"
+msgstr "Obnovit heslo"
+
+msgid "Reset your password"
+msgstr "Obnovit heslo"
+
+msgid "Password reset"
+msgstr "Heslo"
+
+#, python-format
+msgid "Reset your<br>password, %(name)s"
+msgstr "Obnov své<br>heslo, %(name)s"
+
+msgid ""
+"We received a request to reset the password for your Teachka account. Click "
+"the button below to choose a new one."
+msgstr ""
+"Obdrželi jsme žádost o obnovení hesla k tvému účtu Teachka. Kliknutím na tlačítko níže si zvol nové."
+
+msgid "Reset my password"
+msgstr "Obnovit heslo"
+
+msgid ""
+"This link will expire shortly. If you didn't request this, no action is "
+"needed, your password will stay the same."
+msgstr ""
+"Tento odkaz brzy vyprší. Pokud jsi o nic nežádal, nic nedělej, heslo zůstane stejné."
+
+msgid ""
+"You're receiving this because a password reset was requested for your "
+"Teachka account."
+msgstr ""
+"Dostáváš tento e-mail, protože byla požádána obnova hesla k tvému účtu Teachka."
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Your profile"
+msgstr "Váš profil"
+
+msgid "Member since"
+msgstr "Členové"
+
 msgid "Settings"
 msgstr "Nastavení"
 
-msgid "Account settings"
-msgstr "Nastavení účtu"
+msgid "Change password"
+msgstr "Změnit heslo"
+
+msgid "Preferences"
+msgstr "Předvolby"
 
 msgid "Theme"
 msgstr "Motiv"
+
+msgid "Language"
+msgstr "Jazyk"
+
+msgid "Accent colour"
+msgstr "Barva zvýraznění"
+
+msgid "Sidebar highlight"
+msgstr "Zvýraznění panelu"
+
+msgid "Save settings"
+msgstr "Uložit nastavení"
+
+msgid "Danger zone"
+msgstr "Nebezpečná zóna"
+
+msgid "Permanently remove your account and all data."
+msgstr "Trvale odeber svůj účet a všechna data."
+
+msgid "Name wheel"
+msgstr "Kolo jmen"
+
+msgid "wheel"
+msgstr "Kolo"
+
+msgid "Spin to pick a random student"
+msgstr "Zatoč a vyber náhodného studenta"
+
+msgid "Members to pick"
+msgstr "Členové"
+
+msgid "Remove after spin"
+msgstr "Odebrat po otočení"
+
+msgid "Each student picked only once"
+msgstr "Každý student vybrán pouze jednou"
+
+msgid "Spin"
+msgstr "Točit"
+
+msgid "Shuffle"
+msgstr "Zamíchat"
+
+msgid "Already chosen"
+msgstr "Již vybráni"
+
+msgid "Selected"
+msgstr "Vybráno"
+
+msgid "Access denied"
+msgstr "Přístup odepřen"
+
+msgid "Error"
+msgstr "Chyba"
+
+msgid "Access"
+msgstr "Přístup"
+
+msgid "denied"
+msgstr "odepřen"
+
+msgid "You don't have permission to view this page."
+msgstr "Nemáš oprávnění prohlížet tuto stránku."
+
+msgid "Return Home"
+msgstr "Zpět na úvod"
+
+msgid "Page not found"
+msgstr "Stránka nenalezena"
+
+msgid "Lost in"
+msgstr "Ztraceno v"
+
+msgid "thought"
+msgstr "myšlenkách"
+
+msgid ""
+"The page you're looking for doesn't exist or has moved to a quieter corner "
+"of the toolkit."
+msgstr "Stránka, kterou hledáte, neexistuje nebo byla přesunuta."
+
+msgid "Server error"
+msgstr "Chyba serveru"
+
+msgid "Something"
+msgstr "Něco"
+
+msgid "went wrong"
+msgstr "se pokazilo"
+
+msgid ""
+"An unexpected error occurred. Our team has been notified. Please try again "
+"in a moment."
+msgstr ""
+"Došlo k neočekávané chybě. Náš tým byl informován. Zkus to prosím za chvíli znovu."
+
+msgid "Home"
+msgstr "Domů"
+
+msgid "Login"
+msgstr "Přihlásit se"
+
+msgid "Register"
+msgstr "Registrovat se"
 
 msgid "Light"
 msgstr "Světlý"
@@ -427,107 +897,113 @@ msgstr "Tmavý"
 msgid "Pastel"
 msgstr "Pastelový"
 
-msgid "Language"
-msgstr "Jazyk"
+msgid "Editorial"
+msgstr "Upravit profil"
 
-msgid "Accent color"
-msgstr "Barva zvýraznění"
+msgid "Palette"
+msgstr "Paleta"
 
-msgid "Save settings"
-msgstr "Uložit nastavení"
+msgid "Logout"
+msgstr "Odhlásit se"
 
-msgid "Quick toggle theme"
-msgstr "Rychle přepnout motiv"
+msgid "Privacy"
+msgstr "Soukromí"
 
-msgid "Name wheel"
-msgstr "Kolo jmen"
+msgid "We use a session cookie to keep you logged in. No tracking. "
+msgstr "Používáme session cookie, abys zůstal přihlášený. Žádné sledování. "
 
-msgid "Randomly select a name from your group"
-msgstr "Náhodně vyberte jméno z vaší skupiny"
+msgid "Privacy policy"
+msgstr "Zásady ochrany osobních údajů"
 
-msgid "Members"
-msgstr "Členové"
+msgid "Teachka: Toolkit for Educators"
+msgstr "Teachka: Nástroje pro pedagogy"
 
-msgid "Spin"
-msgstr "Točit"
+msgid "Teaching made"
+msgstr "Výuka"
 
-msgid "Remove after spin"
-msgstr "Odebrat po otočení"
+msgid "effortlessly"
+msgstr "bez námahy"
 
-msgid "Selected"
-msgstr "Vybráno"
+msgid "organised"
+msgstr "organizovaná"
 
-msgid "Already Chosen"
-msgstr "Již vybráni"
+msgid "One calm, clean hub for all your classroom tools."
+msgstr "Jedno klidné a čisté místo pro všechny nástroje do třídy."
 
-msgid "Page not found"
-msgstr "Stránka nenalezena"
+msgid "See the tools"
+msgstr "Zobrazit nástroje"
 
-msgid "The page you're looking for doesn't exist or has been moved."
-msgstr "Stránka, kterou hledáte, neexistuje nebo byla přesunuta."
+msgid "Built-in classroom tools"
+msgstr "Vestavěné nástroje pro třídu"
 
-msgid "Go Home"
-msgstr "Zpět na úvod"
+msgid "Place for everything"
+msgstr "Místo pro vše"
 
-msgid "Home"
-msgstr "Domů"
+msgid "Free"
+msgstr "Zdarma"
 
-msgid "Change language"
-msgstr "Změnit jazyk"
+msgid "No strings attached"
+msgstr "Bez závazků"
 
-msgid "Karma System"
-msgstr "Systém karmy"
+msgid "Welcome back to"
+msgstr "Vítejte zpět"
 
-msgid "Karma system"
-msgstr "Systém karmy"
+msgid "The toolkit"
+msgstr "Nástroje"
+
+msgid "Six tools,"
+msgstr "Šest nástrojů,"
+
+msgid "one home"
+msgstr "jeden domov"
+
+msgid "to start using any tool."
+msgstr "pro používání nástrojů."
 
 msgid "Grade Calculator"
 msgstr "Kalkulačka známek"
 
-msgid "Wheel"
-msgstr "Kolo"
+msgid "Weighted averages, bulk grading, instant export to your records."
+msgstr "Vážené průměry, hromadné hodnocení, okamžitý export."
 
-msgid "Tools for Teachers"
-msgstr "Nástroje pro učitele"
+msgid "Group Divider"
+msgstr "Rozdělovač skupin"
 
-msgid "Welcome to"
-msgstr "Vítejte na"
-
-msgid "A collection of tools designed to make your teaching day easier."
-msgstr "Sbírka nástrojů navržených pro usnadnění vašeho vyučovacího dne."
-
-msgid "Point system"
-msgstr "Bodový systém"
-
-msgid "Track participation and behavior with customizable point categories."
-msgstr "Sledujte účast a chování pomocí vlastních bodových kategorií."
-
-msgid "Track performance with customizable point categories."
-msgstr "Sledujte výkon pomocí vlastních bodových kategorií."
-
-msgid "Randomly split your class into teams of any size."
+msgid "Split your class into balanced teams in seconds."
 msgstr "Náhodně rozdělte třídu do skupin libovolné velikosti."
 
-msgid "Generate score ranges for any maximum points value."
-msgstr "Vygenerujte rozsahy hodnocení pro libovolný maximální počet bodů."
+msgid "Point System"
+msgstr "Bodový systém"
 
-msgid "Randomly pick students from a group."
-msgstr "Náhodně vyberte studenty ze skupiny."
+msgid "Track participation and reward students with points in real time."
+msgstr "Sledujte účast a chování pomocí vlastních bodových kategorií."
 
-msgid "Your Activity"
+msgid "Visual countdowns for tests, group work, and transitions."
+msgstr "Vizuální odpočet pro testy, skupinovou práci a přechody."
+
+msgid "Lesson planning and deadline tracking in one clean weekly view."
+msgstr "Plánování hodin a sledování termínů v jednom čistém týdenním přehledu."
+
+msgid "Name Wheel"
+msgstr "Kolo jmen"
+
+msgid "Spin to pick a random student: fair, fun, and instant."
+msgstr "Zatoč a vyber náhodného studenta: férově, zábavně a okamžitě."
+
+msgid "Your activity"
 msgstr "Vaše aktivita"
 
 msgid "Groups"
 msgstr "Skupiny"
-
-msgid "Points"
-msgstr "Body"
 
 msgid "Calculator"
 msgstr "Kalkulačka"
 
 msgid "uses"
 msgstr "použití"
+
+msgid "Wheel"
+msgstr "Kolo"
 
 msgid "spins"
 msgstr "otočení"
@@ -538,28 +1014,323 @@ msgstr "Rozdělovač"
 msgid "splits"
 msgstr "rozdělení"
 
-msgid "Max Points"
-msgstr "Maximální body"
+msgid "minutes"
+msgstr "Minuty"
 
-msgid "Rounding option"
-msgstr "Možnost zaokrouhlení"
+msgid "Sidebar highlight colour."
+msgstr "Barva zvýraznění panelu."
 
-msgid "Full number"
-msgstr "Celé číslo"
+msgid "hover to preview · click to save"
+msgstr "najeď pro náhled · klikni pro uložení"
 
-msgid "Decimal number"
-msgstr "Desetinné číslo"
+msgid "Built for teachers"
+msgstr "Nástroje pro učitele"
 
-msgid "min"
-msgstr "min"
+msgid "Why teachers"
+msgstr "Proč učitelé"
+
+msgid "use it"
+msgstr "ho používají"
+
+msgid "Ready in under a minute"
+msgstr "Připraveno za méně než minutu"
+
+msgid ""
+"No installation, no training, no IT department needed. Sign up and start "
+"using your tools straight away."
+msgstr ""
+"Žádná instalace, žádné školení, žádné IT oddělení. Zaregistruj se a začni ihned."
+
+msgid "One class list, every tool access"
+msgstr "Jeden seznam třídy, přístup ke všem nástrojům"
+
+msgid ""
+"Add your students once. All the tools use the same list; no duplicate entry."
+msgstr ""
+"Přidej studenty jednou. Všechny nástroje používají stejný seznam; bez duplicit."
+
+msgid "No learning curve"
+msgstr "Bez složitého učení"
+
+msgid ""
+"Every tool is designed to work the first time you open it, with no setup or "
+"manual needed."
+msgstr "Každý nástroj funguje hned napoprvé, bez nastavení či návodu."
+
+msgid "How it works"
+msgstr "Jak to funguje"
+
+msgid "Three steps"
+msgstr "Tři kroky"
+
+msgid "to start"
+msgstr "k začátku"
+
+msgid "Create your account"
+msgstr "Vytvořit účet"
+
+msgid "Free signup. Ready in under a minute."
+msgstr "Registrace zdarma. Připraveno za minutu."
+
+msgid "Add your class"
+msgstr "Přidej svou třídu"
+
+msgid "Create your classes. All tools sync from these lists automatically."
+msgstr "Vytvoř třídy. Všechny nástroje se synchronizují automaticky."
+
+msgid "Open a tool and go"
+msgstr "Otevři nástroj a jeď"
+
+msgid "No duplicate data entry, no per-tool setup. It just works."
+msgstr ""
+"Žádné duplicitní zadávání, žádné nastavení pro každý nástroj. Prostě to funguje."
+
+msgid "Start today"
+msgstr "Začni dnes"
+
+msgid "Your classroom,"
+msgstr "Tvá třída,"
+
+msgid "finally in one place"
+msgstr "konečně na jednom místě"
+
+msgid "Privacy Policy"
+msgstr "Zásady ochrany osobních údajů"
+
+msgid "Legal"
+msgstr "Právní"
+
+msgid "Policy"
+msgstr "Zásady"
+
+msgid "Last updated"
+msgstr "Příjmení"
+
+msgid "What data we collect"
+msgstr "Jaká data sbíráme"
+
+msgid ""
+"When you create an account we collect your username, email address, and "
+"password (stored as a bcrypt hash, never in plain text). As you use the "
+"tools we record usage statistics (e.g. wheel spins, timer duration) linked "
+"to your account."
+msgstr ""
+"Při vytvoření účtu shromažďujeme uživatelské jméno, e-mail a heslo (uloženo jako bcrypt hash, nikdy v čitelné podobě). Při používání nástrojů zaznamenáváme statistiky použití (např. zatočení rulety, doba časovače) spojené s tvým účtem."
+
+msgid "How we use your data"
+msgstr "Jak data používáme"
+
+msgid ""
+"Your data is used solely to provide the Teachka service: authentication, "
+"personalisation (theme, language), and displaying your activity on the home "
+"dashboard. We do not sell or share your data with third parties."
+msgstr ""
+"Data používáme výhradně pro službu Teachka: ověření, přizpůsobení (motiv, jazyk) a zobrazení tvé aktivity na domovském panelu. Data neprodáváme ani nesdílíme s třetími stranami."
+
+msgid "Cookies"
+msgstr "Cookies"
+
+msgid ""
+"We use one session cookie to keep you logged in (strictly necessary, no "
+"consent required under ePrivacy). We also store your theme preference in "
+"localStorage, which is not a cookie and does not leave your device."
+msgstr ""
+"Používáme jedno session cookie, aby sis zůstal přihlášený (striktně nezbytné, bez souhlasu dle ePrivacy). Předvolbu motivu ukládáme do localStorage, což není cookie a neopouští tvé zařízení."
+
+msgid ""
+"We use Sentry for error monitoring. Sentry may set its own cookies or use "
+"browser storage to deduplicate error reports. No personal data is "
+"intentionally forwarded to Sentry."
+msgstr ""
+"Pro sledování chyb používáme Sentry. Sentry může nastavovat vlastní cookies nebo využívat úložiště prohlížeče pro deduplikaci chybových hlášení. Do Sentry záměrně neposíláme žádná osobní data."
+
+msgid "Data retention"
+msgstr "Uchování dat"
+
+msgid ""
+"Your account and all associated data are retained for as long as your "
+"account is active. You can delete your account and all data at any time from "
+"the Settings page."
+msgstr ""
+"Tvůj účet a veškerá související data jsou uchovávána po dobu aktivity účtu. Účet a všechna data můžeš kdykoliv smazat v nastavení."
+
+msgid "Your rights"
+msgstr "Váš profil"
+
+msgid ""
+"Under GDPR you have the right to access, correct, or erase your data. To "
+"delete your account and all data permanently, visit "
+msgstr ""
+"Podle GDPR máš právo na přístup, opravu nebo výmaz svých dat. Pro trvalé smazání účtu a všech dat navštiv "
+
+msgid "Settings → Delete account"
+msgstr "Nastavení → Smazat účet"
+
+msgid "For other requests contact us at the address below."
+msgstr "Ohledně dalších žádostí nás kontaktuj na adrese níže."
+
+msgid "Contact"
+msgstr "Kontakt"
+
+msgid "Questions about this policy: "
+msgstr "Dotazy k těmto zásadám: "
 
 msgid "Coming Soon"
 msgstr "Již brzy"
 
-msgid "Work in Progress"
-msgstr "Ve vývoji"
+msgid "Under Construction"
+msgstr "Ve výstavbě"
+
+msgid "new"
+msgstr "nový"
+
+msgid "is brewing"
+msgstr "se vaří"
 
 msgid ""
-"This feature is currently under development. Check back soon for updates!"
+"We're currently refining this tool to ensure it meets the Teachka standard "
+"of calm, effortless organization."
 msgstr ""
-"Tato funkce je momentálně ve vývoji. Brzy se vraťte pro novinky!"
+"Tento nástroj aktuálně ladíme, aby splňoval standard Teachka: klidnou a snadnou organizaci."
+
+msgid "Currently in development"
+msgstr "Aktuálně ve vývoji"
+
+msgid "Back to Dashboard"
+msgstr "Přehled"
+
+msgid "Go Back"
+msgstr "Zpět"
+
+#~ msgid "Grade ranges"
+#~ msgstr "Rozsahy známek"
+
+#~ msgid "Score Range"
+#~ msgstr "Rozsah bodů"
+
+#~ msgid "Percentage"
+#~ msgstr "Procenta"
+
+#~ msgid "Divided groups"
+#~ msgstr "Rozdělené skupiny"
+
+#~ msgid "This action cannot be undone."
+#~ msgstr "Tuto akci nelze vrátit zpět."
+
+#~ msgid "Create new group"
+#~ msgstr "Vytvořit novou skupinu"
+
+#~ msgid "Remove a column from the points table"
+#~ msgstr "Odebrat sloupec z tabulky bodů"
+
+#~ msgid "Select a column"
+#~ msgstr "Vybrat sloupec"
+
+#~ msgid "Table definition"
+#~ msgstr "Definice tabulky"
+
+#~ msgid "Rename an existing column"
+#~ msgstr "Přejmenovat existující sloupec"
+
+#~ msgid "Points system"
+#~ msgstr "Bodový systém"
+
+#~ msgid "Track positive and negative points for group members"
+#~ msgstr "Sledujte kladné a záporné body členů skupiny"
+
+#~ msgid "Show points"
+#~ msgstr "Zobrazit body"
+
+#~ msgid "Negative Points"
+#~ msgstr "Záporné body"
+
+#~ msgid "Positive Points"
+#~ msgstr "Kladné body"
+
+#~ msgid "Net Score"
+#~ msgstr "Čisté skóre"
+
+#~ msgid "Negative Points Breakdown"
+#~ msgstr "Rozpis záporných bodů"
+
+#~ msgid "Positive Points Breakdown"
+#~ msgstr "Rozpis kladných bodů"
+
+#~ msgid "Add new column"
+#~ msgstr "Přidat nový sloupec"
+
+#~ msgid "Create a new column for tracking points"
+#~ msgstr "Vytvořit nový sloupec pro sledování bodů"
+
+#~ msgid "Odd week"
+#~ msgstr "Lichý týden"
+
+#~ msgid "To-Do List"
+#~ msgstr "Seznam úkolů"
+
+#~ msgid "Task management and organization"
+#~ msgstr "Správa a organizace úkolů"
+
+#~ msgid "Plan and organize your teaching schedule."
+#~ msgstr "Plánujte a organizujte svůj rozvrh výuky."
+
+#~ msgid "Sign in to your account"
+#~ msgstr "Přihlaste se ke svému účtu"
+
+#~ msgid "Don't have an account?"
+#~ msgstr "Nemáte účet?"
+
+#~ msgid "Start using Teachka for free"
+#~ msgstr "Začněte používat Teachka zdarma"
+
+#~ msgid "Send"
+#~ msgstr "Odeslat"
+
+#~ msgid "Update your account information"
+#~ msgstr "Aktualizovat informace o účtu"
+
+#~ msgid "View and manage your account information"
+#~ msgstr "Zobrazit a spravovat informace o účtu"
+
+#~ msgid "Quick toggle theme"
+#~ msgstr "Rychle přepnout motiv"
+
+#~ msgid "Randomly select a name from your group"
+#~ msgstr "Náhodně vyberte jméno z vaší skupiny"
+
+#~ msgid "Go Home"
+#~ msgstr "Zpět na úvod"
+
+#~ msgid "Change language"
+#~ msgstr "Změnit jazyk"
+
+#~ msgid "Karma System"
+#~ msgstr "Systém karmy"
+
+#~ msgid "Karma system"
+#~ msgstr "Systém karmy"
+
+#~ msgid "Welcome to"
+#~ msgstr "Vítejte na"
+
+#~ msgid "A collection of tools designed to make your teaching day easier."
+#~ msgstr "Sbírka nástrojů navržených pro usnadnění vašeho vyučovacího dne."
+
+#~ msgid "Track performance with customizable point categories."
+#~ msgstr "Sledujte výkon pomocí vlastních bodových kategorií."
+
+#~ msgid "Generate score ranges for any maximum points value."
+#~ msgstr "Vygenerujte rozsahy hodnocení pro libovolný maximální počet bodů."
+
+#~ msgid "Randomly pick students from a group."
+#~ msgstr "Náhodně vyberte studenty ze skupiny."
+
+#~ msgid "min"
+#~ msgstr "min"
+
+#~ msgid "Work in Progress"
+#~ msgstr "Ve vývoji"
+
+#~ msgid ""
+#~ "This feature is currently under development. Check back soon for updates!"
+#~ msgstr "Tato funkce je momentálně ve vývoji. Brzy se vraťte pro novinky!"

@@ -1,12 +1,12 @@
 # Teachka Portuguese translations.
 # Copyright (C) 2026
 # This file is distributed under the same license as the Teachka package.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Teachka\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-14 20:33+0000\n"
+"POT-Creation-Date: 2026-04-24 15:01+0000\n"
 "PO-Revision-Date: 2026-02-14 21:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
@@ -16,11 +16,176 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgid "Calendar"
+msgstr "Calendário"
+
+msgid "Today"
+msgstr "Hoje"
+
+msgid "Month"
+msgstr "Mês"
+
+msgid "Week"
+msgstr "Semana"
+
+msgid "New event"
+msgstr "Novo evento"
+
+msgid "All day"
+msgstr "Dia inteiro"
+
+msgid "No events"
+msgstr "Sem eventos"
+
+msgid "Nothing scheduled for this day."
+msgstr "Nada agendado para este dia."
+
+msgid "Add event"
+msgstr "Adicionar evento"
+
+msgid "Delete event"
+msgstr "Eliminar"
+
+msgid "Danger Zone"
+msgstr "Zona de perigo"
+
+msgid "Delete"
+msgstr "Eliminar"
+
+msgid "event"
+msgstr "evento"
+
+msgid "This action is permanent and cannot be undone"
+msgstr "Esta ação não pode ser revertida"
+
+msgid "Are you sure you want to delete this event?"
+msgstr "Tem a certeza que deseja eliminar"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Recurrence"
+msgstr "Recorrência"
+
+msgid "Subject"
+msgstr "Assunto"
+
+msgid "Delete permanently"
+msgstr "Apagar permanentemente"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Event"
+msgstr "Evento"
+
+msgid "Edit"
+msgstr "Editar"
+
+msgid "New"
+msgstr "Novo"
+
+msgid "Fill in the details below"
+msgstr "Preenche os detalhes abaixo"
+
+msgid "Event details"
+msgstr "Detalhes do evento"
+
+msgid "Title"
+msgstr "Título"
+
+msgid "e.g. Math lesson, Parent meeting"
+msgstr "ex. Aula de Matemática, Reunião de pais"
+
+msgid "optional"
+msgstr "opcional"
+
+msgid "e.g. Mathematics, History"
+msgstr "ex. Matemática, História"
+
+msgid "Start"
+msgstr "Início"
+
+msgid "End"
+msgstr "Fim"
+
+msgid "All-day event"
+msgstr "Evento de dia inteiro"
+
+msgid "Repeat until"
+msgstr "Repetir até"
+
+msgid "Description"
+msgstr "Descrição"
+
+msgid "What is this event about?"
+msgstr "Sobre o que é este evento?"
+
+msgid "Lesson notes"
+msgstr "Notas da aula"
+
+msgid "Learning objectives, materials, homework..."
+msgstr "Objetivos, materiais, trabalhos de casa..."
+
+msgid "Save changes"
+msgstr "Guardar alterações"
+
+msgid "Create event"
+msgstr "Criar uma"
+
+msgid "Tools"
+msgstr "Ferramentas"
+
+msgid "Planning"
+msgstr "Planeamento"
+
+msgid "Plans and events"
+msgstr "Planos e eventos"
+
+msgid "Even"
+msgstr "Semana par"
+
+msgid "Odd"
+msgstr "Ímpar"
+
+msgid "This week"
+msgstr "Esta semana"
+
+msgid "Max Points"
+msgstr "Pontuação Máxima"
+
+msgid "Rounding option"
+msgstr "Opção de arredondamento"
+
+msgid "Full number"
+msgstr "Número inteiro"
+
+msgid "Decimal number"
+msgstr "Número decimal"
+
 msgid "Grade calculator"
 msgstr "Calculadora de notas"
 
+msgid "Grading"
+msgstr "Nota"
+
+msgid "Grade"
+msgstr "Nota"
+
+msgid "calculator"
+msgstr "Calculadora"
+
 msgid "Calculate grade ranges based on maximum points"
 msgstr "Calcular intervalos de notas com base na pontuação máxima"
+
+msgid "Configuration"
+msgstr "Configuração"
+
+msgid "Maximum points available"
+msgstr "Nenhuma coluna disponível"
+
+msgid "Rounding strategy"
+msgstr "Opção de arredondamento"
 
 msgid "Calculate"
 msgstr "Calcular"
@@ -28,20 +193,17 @@ msgstr "Calcular"
 msgid "Reset"
 msgstr "Reiniciar"
 
-msgid "Grade ranges"
-msgstr "Intervalos de notas"
+msgid "The results"
+msgstr "Os resultados"
 
-msgid "Grade"
-msgstr "Nota"
+msgid "Max"
+msgstr "Máx"
 
-msgid "Score Range"
-msgstr "Intervalo de pontuação"
+msgid "Point ranges"
+msgstr "Pontos"
 
-msgid "Grade thresholds"
+msgid "Thresholds"
 msgstr "Limites de notas"
-
-msgid "Percentage"
-msgstr "Percentagem"
 
 msgid ""
 "From 4 to 9 max points, grades do not follow specific percentage thresholds."
@@ -51,11 +213,20 @@ msgstr ""
 msgid "Group divider"
 msgstr "Divisor de grupos"
 
-msgid "Split your group into smaller teams"
+msgid "Organization"
+msgstr "Organização"
+
+msgid "Group"
+msgstr "Grupo"
+
+msgid "divider"
+msgstr "Divisor"
+
+msgid "Split your group into smaller teams effortlessly"
 msgstr "Divida o seu grupo em equipas mais pequenas"
 
-msgid "Select a group"
-msgstr "Selecionar um grupo"
+msgid "Choose a group..."
+msgstr "Escolher um grupo..."
 
 msgid "members"
 msgstr "membros"
@@ -63,35 +234,50 @@ msgstr "membros"
 msgid "No groups available"
 msgstr "Nenhum grupo disponível"
 
+msgid "Team size"
+msgstr "Tamanho da equipa"
+
 msgid "Divide"
 msgstr "Dividir"
 
-msgid "Create group"
+msgid "New group"
 msgstr "Criar grupo"
 
 msgid "Edit group"
 msgstr "Editar grupo"
 
-msgid "Divided groups"
-msgstr "Grupos divididos"
+msgid "Selected teams"
+msgstr "Selecionado"
 
-msgid "Group"
-msgstr "Grupo"
+msgid "Source"
+msgstr "Origem"
+
+msgid "Total Teams"
+msgstr "Total"
+
+msgid "Team"
+msgstr "Equipa"
+
+msgid "Members"
+msgstr "Membros"
 
 msgid "Delete group"
 msgstr "Eliminar grupo"
 
-msgid "Are you sure you want to delete"
-msgstr "Tem a certeza que deseja eliminar"
+msgid "Management"
+msgstr "Gestão"
 
-msgid "This action cannot be undone."
-msgstr "Esta ação não pode ser revertida."
+msgid "group"
+msgstr "Grupo"
 
-msgid "Cancel"
-msgstr "Cancelar"
+msgid ""
+"Are you sure you want to remove this group and all its associated data from "
+"your account?"
+msgstr ""
+"Tens a certeza que queres remover este grupo e todos os seus dados associados da tua conta?"
 
-msgid "Delete"
-msgstr "Eliminar"
+msgid "Group Size"
+msgstr "Divisor de grupos"
 
 msgid "Group Maker"
 msgstr "Criador de grupos"
@@ -99,8 +285,8 @@ msgstr "Criador de grupos"
 msgid "Manage your groups and member lists"
 msgstr "Gerir os seus grupos e listas de membros"
 
-msgid "Choose a group..."
-msgstr "Escolher um grupo..."
+msgid "Select a group"
+msgstr "Selecionar um grupo"
 
 msgid "Create Group"
 msgstr "Criar Grupo"
@@ -114,20 +300,38 @@ msgstr "Ainda sem grupos"
 msgid "Create your first group to get started"
 msgstr "Crie o seu primeiro grupo para começar"
 
-msgid "Create new group"
-msgstr "Criar novo grupo"
+msgid "Create group"
+msgstr "Criar grupo"
+
+msgid "Create"
+msgstr "Criar uma"
 
 msgid "Add a group that you can use across all tools"
 msgstr "Adicione um grupo que pode usar em todas as ferramentas"
 
+msgid "Group details"
+msgstr "Grupos"
+
+msgid "Group name"
+msgstr "Criador de grupos"
+
+msgid "e.g. Class 10A, Project Team"
+msgstr "ex. Turma 10A, Equipa de projeto"
+
+msgid "Enter names separated by commas or new lines"
+msgstr "Introduz os nomes separados por vírgulas ou novas linhas"
+
 msgid "Update group details and member colors"
 msgstr "Atualizar detalhes do grupo e cores dos membros"
 
+msgid "Group Details"
+msgstr "Grupos"
+
+msgid "Enter names separated by commas or lines..."
+msgstr "Introduz nomes separados por vírgulas ou linhas..."
+
 msgid "Member colors"
 msgstr "Cores dos membros"
-
-msgid "Save changes"
-msgstr "Guardar alterações"
 
 msgid "Math Operations"
 msgstr "Operações Matemáticas"
@@ -147,35 +351,46 @@ msgstr "Voltar ao Início"
 msgid "Delete column"
 msgstr "Eliminar coluna"
 
-msgid "Remove a column from the points table"
-msgstr "Remover uma coluna da tabela de pontos"
+msgid "Back to points"
+msgstr "Voltar aos Pontos"
+
+msgid "column"
+msgstr "Adicionar coluna"
+
+msgid "table"
+msgstr "tabela"
+
+msgid "Remove column"
+msgstr "Nova coluna"
 
 msgid "This action cannot be undone"
 msgstr "Esta ação não pode ser revertida"
 
-msgid "All data in this column will be permanently deleted for all members."
-msgstr "Todos os dados desta coluna serão permanentemente eliminados para todos os membros."
+msgid "All data in this column will be permanently deleted for every member."
+msgstr ""
+"Todos os dados desta coluna serão permanentemente eliminados para todos os "
+"membros."
 
 msgid "Column to delete"
 msgstr "Coluna a eliminar"
 
-msgid "Select a column"
-msgstr "Selecionar uma coluna"
-
 msgid "No columns available"
 msgstr "Nenhuma coluna disponível"
-
-msgid "Table definition"
-msgstr "Definição da tabela"
 
 msgid "Column type"
 msgstr "Tipo de coluna"
 
+msgid "Numerical"
+msgstr "Numérico"
+
+msgid "Text"
+msgstr "Texto"
+
 msgid "Edit column"
 msgstr "Editar coluna"
 
-msgid "Rename an existing column"
-msgstr "Renomear uma coluna existente"
+msgid "Rename column"
+msgstr "Criar coluna"
 
 msgid "Column to edit"
 msgstr "Coluna a editar"
@@ -183,23 +398,43 @@ msgstr "Coluna a editar"
 msgid "New column name"
 msgstr "Novo nome da coluna"
 
-msgid "Points system"
+msgid "Enter new name"
+msgstr "Introduz o novo nome"
+
+msgid "Point system"
 msgstr "Sistema de pontos"
 
-msgid "Track positive and negative points for group members"
-msgstr "Acompanhe pontos positivos e negativos dos membros do grupo"
+msgid "Points"
+msgstr "Pontos"
 
-msgid "Show points"
-msgstr "Mostrar pontos"
+msgid "Track participation and behavior, group by group"
+msgstr ""
+"Acompanhe a participação e o comportamento com categorias de pontos "
+"personalizáveis."
+
+msgid "Choose group"
+msgstr "Escolher um grupo..."
+
+msgid "Create a group"
+msgstr "Criar grupo"
 
 msgid "Negative points"
 msgstr "Pontos negativos"
+
+msgid "columns"
+msgstr "Adicionar coluna"
 
 msgid "Name"
 msgstr "Nome"
 
 msgid "Total"
 msgstr "Total"
+
+msgid "No negative columns yet"
+msgstr "Nenhum ponto negativo registado"
+
+msgid "Add one to start tracking."
+msgstr "Adiciona uma para começar a registar."
 
 msgid "Save points"
 msgstr "Guardar pontos"
@@ -213,80 +448,86 @@ msgstr "Adicionar primeira coluna"
 msgid "Positive points"
 msgstr "Pontos positivos"
 
+msgid "No positive columns yet"
+msgstr "Nenhum ponto positivo registado"
+
+msgid "Add one to start rewarding."
+msgstr "Adiciona uma para começar a recompensar."
+
 msgid "Dashboard"
 msgstr "Painel"
 
-msgid "Back to Points"
-msgstr "Voltar aos Pontos"
-
-msgid "Individual member dashboard"
+msgid "Member dashboard"
 msgstr "Painel individual do membro"
 
-msgid "Negative Points"
-msgstr "Pontos Negativos"
+msgid "Overview"
+msgstr "Resumo"
 
-msgid "Positive Points"
-msgstr "Pontos Positivos"
+msgid "Negative"
+msgstr "Pontos negativos"
 
-msgid "Net Score"
-msgstr "Pontuação Líquida"
+msgid "categor"
+msgstr "categor"
 
-msgid "Negative Points Breakdown"
-msgstr "Detalhes dos Pontos Negativos"
+msgid "y"
+msgstr "ia"
+
+msgid "ies"
+msgstr "Minutos"
+
+msgid "none recorded"
+msgstr "Nenhum ponto negativo registado"
+
+msgid "Positive"
+msgstr "Pontos positivos"
+
+msgid "Net"
+msgstr "Não definido"
+
+msgid "positive balance"
+msgstr "saldo positivo"
+
+msgid "Breakdown"
+msgstr "Detalhe"
 
 msgid "No negative points recorded"
 msgstr "Nenhum ponto negativo registado"
 
-msgid "Positive Points Breakdown"
-msgstr "Detalhes dos Pontos Positivos"
-
 msgid "No positive points recorded"
 msgstr "Nenhum ponto positivo registado"
+
+msgid "Back to group"
+msgstr "Voltar ao Início"
 
 msgid "New column"
 msgstr "Nova coluna"
 
-msgid "Add new column"
-msgstr "Adicionar nova coluna"
-
-msgid "Create a new column for tracking points"
-msgstr "Criar uma nova coluna para acompanhar pontos"
+msgid "Column details"
+msgstr "Coluna a eliminar"
 
 msgid "Column name"
 msgstr "Nome da coluna"
 
-msgid "Numerical"
-msgstr "Numérico"
+msgid "e.g., Homework, Participation"
+msgstr "ex. Trabalhos, Participação"
 
-msgid "Text"
-msgstr "Texto"
-
-msgid "Numerical columns will be summed in the total"
+msgid "Numerical columns are summed in the total."
 msgstr "Colunas numéricas serão somadas no total"
 
 msgid "Create column"
 msgstr "Criar coluna"
 
-msgid "Timer"
-msgstr "Temporizador"
-
-msgid "Countdown timers and stopwatches"
-msgstr "Temporizadores e cronómetros"
-
-msgid "Stopwatch"
-msgstr "Cronómetro"
-
-msgid "Mark your times with flags"
-msgstr "Marca os teus tempos com bandeiras"
-
-msgid "Count up with lap flags"
-msgstr "Contagem crescente com marcações"
-
 msgid "Countdown"
 msgstr "Contagem decrescente"
 
+msgid "Timer"
+msgstr "Temporizador"
+
 msgid "Set a duration and count down to zero"
 msgstr "Define uma duração e conta até zero"
+
+msgid "Back to Timer"
+msgstr "Voltar ao Início"
 
 msgid "Hours"
 msgstr "Horas"
@@ -297,110 +538,94 @@ msgstr "Minutos"
 msgid "Seconds"
 msgstr "Segundos"
 
+msgid "Countdown timers and stopwatches"
+msgstr "Temporizadores e cronómetros"
+
+msgid "Choose a mode"
+msgstr "Escolher um grupo..."
+
+msgid "Stopwatch"
+msgstr "Cronómetro"
+
+msgid "Count up with lap flags"
+msgstr "Contagem crescente com marcações"
+
+msgid "Mark your times with flags"
+msgstr "Marca os teus tempos com bandeiras"
+
 msgid "Flags"
 msgstr "Marcações"
 
-msgid "Week"
-msgstr "Semana"
+msgid "Welcome to Teachka"
+msgstr "Bem-vindo de volta"
 
-msgid "Even week"
-msgstr "Semana par"
+msgid "Welcome aboard"
+msgstr "Bem-vindo de volta"
 
-msgid "Odd week"
-msgstr "Semana ímpar"
+#, python-format
+msgid "Activate your<br>account, %(name)s"
+msgstr "Ativa a tua<br>conta, %(name)s"
 
-msgid "To-Do List"
-msgstr "Lista de Tarefas"
+msgid ""
+"Thanks for signing up for Teachka. To get started with your classroom tools, "
+"confirm your email address by clicking below."
+msgstr ""
+"Obrigado por te inscreveres no Teachka. Para começares a usar as tuas ferramentas, confirma o teu email clicando abaixo."
 
-msgid "Task management and organization"
-msgstr "Gestão e organização de tarefas"
+msgid "Activate my account"
+msgstr "Criar uma conta"
 
-msgid "Calendar"
-msgstr "Calendário"
+msgid "If the button doesn't work, copy and paste this link into your browser:"
+msgstr "Se o botão não funcionar, copia e cola este link no teu navegador:"
 
-msgid "Plan and organize your teaching schedule."
-msgstr "Planeie e organize o seu horário de ensino."
+msgid "Teachka, 2026"
+msgstr "Teachka, 2026"
 
-msgid "Login"
+msgid "Toolkit for educators"
+msgstr "Ferramentas para Professores"
+
+msgid ""
+"If you didn't create a Teachka account, you can safely ignore this email."
+msgstr "Se não criaste uma conta Teachka, podes ignorar este email."
+
+msgid "Sign in"
 msgstr "Entrar"
 
 msgid "Welcome back"
 msgstr "Bem-vindo de volta"
 
-msgid "Sign in to your account"
-msgstr "Inicie sessão na sua conta"
-
-msgid "Sign in"
+msgid "Sign in to"
 msgstr "Entrar"
 
-msgid "Don't have an account?"
-msgstr "Não tem uma conta?"
-
-msgid "Create one"
-msgstr "Criar uma"
-
-msgid "Register"
-msgstr "Registar"
-
-msgid "Create an account"
-msgstr "Criar uma conta"
-
-msgid "Start using Teachka for free"
-msgstr "Comece a usar o Teachka gratuitamente"
-
-msgid "optional"
-msgstr "opcional"
-
-msgid "Create account"
-msgstr "Criar conta"
-
-msgid "Already have an account?"
-msgstr "Já tem uma conta?"
-
-msgid "Change Password"
-msgstr "Alterar Palavra-passe"
-
-msgid "We'll send a reset link to your email"
-msgstr "Enviaremos um link de recuperação para o seu email"
-
-msgid "Email"
-msgstr "Email"
-
-msgid "Send"
-msgstr "Enviar"
-
-msgid "Edit profile"
-msgstr "Editar perfil"
-
-msgid "Update your account information"
-msgstr "Atualizar as informações da sua conta"
+msgid "Username"
+msgstr "Nome de utilizador"
 
 msgid "Password"
 msgstr "Palavra-passe"
 
-msgid "Change password"
+msgid "Forgot password?"
 msgstr "Alterar palavra-passe"
 
-msgid "Reset Password"
-msgstr "Redefinir Palavra-passe"
+msgid "Toggle password visibility"
+msgstr "Alternar visibilidade da palavra-passe"
 
-msgid "Enter your new password"
-msgstr "Introduza a sua nova palavra-passe"
+msgid "New here?"
+msgstr "Novo por aqui?"
 
-msgid "Profile"
-msgstr "Perfil"
+msgid "Create an account"
+msgstr "Criar uma conta"
 
-msgid "Not set"
-msgstr "Não definido"
+msgid "Create account"
+msgstr "Criar conta"
 
-msgid "Your profile"
-msgstr "O seu perfil"
+msgid "Get started"
+msgstr "Começar"
 
-msgid "View and manage your account information"
-msgstr "Ver e gerir as informações da sua conta"
+msgid "Create your"
+msgstr "Criar grupo"
 
-msgid "Username"
-msgstr "Nome de utilizador"
+msgid "account"
+msgstr "Criar conta"
 
 msgid "First name"
 msgstr "Primeiro nome"
@@ -408,14 +633,263 @@ msgstr "Primeiro nome"
 msgid "Last name"
 msgstr "Último nome"
 
+msgid "Email"
+msgstr "Email"
+
+msgid "Confirm password"
+msgstr "Alterar palavra-passe"
+
+msgid "Already have an account?"
+msgstr "Já tem uma conta?"
+
+msgid "Change Password"
+msgstr "Alterar Palavra-passe"
+
+msgid "Back to profile"
+msgstr "Voltar ao Início"
+
+msgid "Security"
+msgstr "Segurança"
+
+msgid "Change your"
+msgstr "Alterar Palavra-passe"
+
+msgid "password"
+msgstr "Palavra-passe"
+
+msgid "We'll send a reset link to your email."
+msgstr "Enviaremos um link de recuperação para o seu email"
+
+msgid "Email address"
+msgstr "Endereço de email"
+
+msgid "Send reset link"
+msgstr "Enviar link de recuperação"
+
+msgid "Delete account"
+msgstr "Eliminar coluna"
+
+msgid "Account"
+msgstr "Definições da conta"
+
+msgid ""
+"This will permanently delete your account and all associated data: groups, "
+"members, points, and usage stats. This action cannot be undone."
+msgstr ""
+"Isto irá apagar permanentemente a tua conta e todos os dados associados: grupos, membros, pontos e estatísticas de uso. Esta ação não pode ser revertida."
+
+msgid "Confirm with password"
+msgstr "Alterar palavra-passe"
+
+msgid "Delete my account"
+msgstr "Eliminar coluna"
+
+msgid "Edit profile"
+msgstr "Editar perfil"
+
+msgid "profile"
+msgstr "Perfil"
+
+msgid "Account details"
+msgstr "Definições da conta"
+
+msgid "Username cannot be changed"
+msgstr "O nome de utilizador não pode ser alterado"
+
+msgid "Forgot password"
+msgstr "Alterar palavra-passe"
+
+msgid "Back to sign in"
+msgstr "Voltar aos Pontos"
+
+msgid "Account recovery"
+msgstr "Recuperação de conta"
+
+msgid "Forgot your"
+msgstr "Esqueceste-te da tua"
+
+msgid "password?"
+msgstr "Palavra-passe"
+
+msgid "Enter your registered email and we'll send you a reset link."
+msgstr "Introduz o email registado e enviaremos um link de recuperação."
+
+msgid "Remember your password?"
+msgstr "Introduza a sua nova palavra-passe"
+
+msgid "Reset Password"
+msgstr "Redefinir Palavra-passe"
+
+msgid "Choose a new"
+msgstr "Escolher um grupo..."
+
+msgid "Enter your new password below."
+msgstr "Introduza a sua nova palavra-passe"
+
+msgid "New password"
+msgstr "Alterar palavra-passe"
+
+msgid "Password requirements"
+msgstr "Requisitos da palavra-passe"
+
+msgid "Reset password"
+msgstr "Redefinir Palavra-passe"
+
+msgid "Reset your password"
+msgstr "Redefinir Palavra-passe"
+
+msgid "Password reset"
+msgstr "Palavra-passe"
+
+#, python-format
+msgid "Reset your<br>password, %(name)s"
+msgstr "Repõe a tua<br>palavra-passe, %(name)s"
+
+msgid ""
+"We received a request to reset the password for your Teachka account. Click "
+"the button below to choose a new one."
+msgstr ""
+"Recebemos um pedido para repor a palavra-passe da tua conta Teachka. Clica no botão abaixo para escolheres uma nova."
+
+msgid "Reset my password"
+msgstr "Redefinir Palavra-passe"
+
+msgid ""
+"This link will expire shortly. If you didn't request this, no action is "
+"needed, your password will stay the same."
+msgstr ""
+"Este link irá expirar em breve. Se não fizeste este pedido, não é preciso fazer nada, a tua palavra-passe permanece igual."
+
+msgid ""
+"You're receiving this because a password reset was requested for your "
+"Teachka account."
+msgstr ""
+"Estás a receber este email porque foi pedida a reposição da palavra-passe da tua conta Teachka."
+
+msgid "Profile"
+msgstr "Perfil"
+
+msgid "Your profile"
+msgstr "O seu perfil"
+
+msgid "Member since"
+msgstr "Membros"
+
 msgid "Settings"
 msgstr "Definições"
 
-msgid "Account settings"
-msgstr "Definições da conta"
+msgid "Change password"
+msgstr "Alterar palavra-passe"
+
+msgid "Preferences"
+msgstr "Preferências"
 
 msgid "Theme"
 msgstr "Tema"
+
+msgid "Language"
+msgstr "Idioma"
+
+msgid "Accent colour"
+msgstr "Cor de destaque"
+
+msgid "Sidebar highlight"
+msgstr "Destaque da barra lateral"
+
+msgid "Save settings"
+msgstr "Guardar definições"
+
+msgid "Danger zone"
+msgstr "Zona de perigo"
+
+msgid "Permanently remove your account and all data."
+msgstr "Remove permanentemente a tua conta e todos os dados."
+
+msgid "Name wheel"
+msgstr "Roleta de nomes"
+
+msgid "wheel"
+msgstr "Roleta"
+
+msgid "Spin to pick a random student"
+msgstr "Roda para escolher um aluno aleatório"
+
+msgid "Members to pick"
+msgstr "Membros"
+
+msgid "Remove after spin"
+msgstr "Remover após girar"
+
+msgid "Each student picked only once"
+msgstr "Cada aluno é escolhido apenas uma vez"
+
+msgid "Spin"
+msgstr "Girar"
+
+msgid "Shuffle"
+msgstr "Baralhar"
+
+msgid "Already chosen"
+msgstr "Já Escolhidos"
+
+msgid "Selected"
+msgstr "Selecionado"
+
+msgid "Access denied"
+msgstr "Acesso negado"
+
+msgid "Error"
+msgstr "Erro"
+
+msgid "Access"
+msgstr "Acesso"
+
+msgid "denied"
+msgstr "negado"
+
+msgid "You don't have permission to view this page."
+msgstr "Não tens permissão para ver esta página."
+
+msgid "Return Home"
+msgstr "Voltar ao início"
+
+msgid "Page not found"
+msgstr "Página não encontrada"
+
+msgid "Lost in"
+msgstr "Perdido em"
+
+msgid "thought"
+msgstr "pensamento"
+
+msgid ""
+"The page you're looking for doesn't exist or has moved to a quieter corner "
+"of the toolkit."
+msgstr "A página que procura não existe ou foi movida."
+
+msgid "Server error"
+msgstr "Erro do servidor"
+
+msgid "Something"
+msgstr "Algo"
+
+msgid "went wrong"
+msgstr "correu mal"
+
+msgid ""
+"An unexpected error occurred. Our team has been notified. Please try again "
+"in a moment."
+msgstr ""
+"Ocorreu um erro inesperado. A nossa equipa foi notificada. Tenta novamente daqui a pouco."
+
+msgid "Home"
+msgstr "Início"
+
+msgid "Login"
+msgstr "Entrar"
+
+msgid "Register"
+msgstr "Registar"
 
 msgid "Light"
 msgstr "Claro"
@@ -426,109 +900,116 @@ msgstr "Escuro"
 msgid "Pastel"
 msgstr "Pastel"
 
-msgid "Language"
-msgstr "Idioma"
+msgid "Editorial"
+msgstr "Editar perfil"
 
-msgid "Accent color"
-msgstr "Cor de destaque"
+msgid "Palette"
+msgstr "Paleta"
 
-msgid "Save settings"
-msgstr "Guardar definições"
+msgid "Logout"
+msgstr "Sair"
 
-msgid "Quick toggle theme"
-msgstr "Alternar tema rapidamente"
+msgid "Privacy"
+msgstr "Privacidade"
 
-msgid "Name wheel"
-msgstr "Roleta de nomes"
+msgid "We use a session cookie to keep you logged in. No tracking. "
+msgstr "Usamos um cookie de sessão para te manter ligado. Sem rastreio. "
 
-msgid "Randomly select a name from your group"
-msgstr "Selecione aleatoriamente um nome do seu grupo"
+msgid "Privacy policy"
+msgstr "Política de privacidade"
 
-msgid "Members"
-msgstr "Membros"
+msgid "Teachka: Toolkit for Educators"
+msgstr "Teachka: Ferramentas para educadores"
 
-msgid "Spin"
-msgstr "Girar"
+msgid "Teaching made"
+msgstr "Ensinar de forma"
 
-msgid "Remove after spin"
-msgstr "Remover após girar"
+msgid "effortlessly"
+msgstr "sem esforço"
 
-msgid "Selected"
-msgstr "Selecionado"
+msgid "organised"
+msgstr "organizada"
 
-msgid "Already Chosen"
-msgstr "Já Escolhidos"
+msgid "One calm, clean hub for all your classroom tools."
+msgstr "Um espaço calmo e limpo para todas as tuas ferramentas de sala de aula."
 
-msgid "Page not found"
-msgstr "Página não encontrada"
+msgid "See the tools"
+msgstr "Ver as ferramentas"
 
-msgid "The page you're looking for doesn't exist or has been moved."
-msgstr "A página que procura não existe ou foi movida."
+msgid "Built-in classroom tools"
+msgstr "Ferramentas de sala de aula integradas"
 
-msgid "Go Home"
-msgstr "Ir para o Início"
+msgid "Place for everything"
+msgstr "Lugar para tudo"
 
-msgid "Home"
-msgstr "Início"
+msgid "Free"
+msgstr "Grátis"
 
-msgid "Change language"
-msgstr "Mudar idioma"
+msgid "No strings attached"
+msgstr "Sem compromissos"
 
-msgid "Karma System"
-msgstr "Sistema de Karma"
+msgid "Welcome back to"
+msgstr "Bem-vindo de volta"
 
-msgid "Karma system"
-msgstr "Sistema de karma"
+msgid "The toolkit"
+msgstr "As ferramentas"
+
+msgid "Six tools,"
+msgstr "Seis ferramentas,"
+
+msgid "one home"
+msgstr "uma casa"
+
+msgid "to start using any tool."
+msgstr "para começares a usar qualquer ferramenta."
 
 msgid "Grade Calculator"
 msgstr "Calculadora de Notas"
 
-msgid "Wheel"
-msgstr "Roleta"
+msgid "Weighted averages, bulk grading, instant export to your records."
+msgstr "Médias ponderadas, avaliação em massa, exportação instantânea."
 
-msgid "Tools for Teachers"
-msgstr "Ferramentas para Professores"
+msgid "Group Divider"
+msgstr "Divisor de grupos"
 
-msgid "Welcome to"
-msgstr "Bem-vindo ao"
+msgid "Split your class into balanced teams in seconds."
+msgstr "Divida a sua turma aleatoriamente em equipas de qualquer tamanho."
 
-msgid "A collection of tools designed to make your teaching day easier."
-msgstr "Uma coleção de ferramentas para facilitar o seu dia como professor."
-
-msgid "Point system"
+msgid "Point System"
 msgstr "Sistema de pontos"
 
-msgid "Track participation and behavior with customizable point categories."
+msgid "Track participation and reward students with points in real time."
 msgstr ""
 "Acompanhe a participação e o comportamento com categorias de pontos "
 "personalizáveis."
 
-msgid "Track performance with customizable point categories."
-msgstr "Acompanhe o desempenho com categorias de pontos personalizáveis."
+msgid "Visual countdowns for tests, group work, and transitions."
+msgstr ""
+"Contagens decrescentes visuais para testes, trabalhos de grupo e transições."
 
-msgid "Randomly split your class into teams of any size."
-msgstr "Divida a sua turma aleatoriamente em equipas de qualquer tamanho."
+msgid "Lesson planning and deadline tracking in one clean weekly view."
+msgstr "Planeamento de aulas e prazos numa vista semanal limpa."
 
-msgid "Generate score ranges for any maximum points value."
-msgstr "Gere intervalos de pontuação para qualquer valor máximo de pontos."
+msgid "Name Wheel"
+msgstr "Roleta de nomes"
 
-msgid "Randomly pick students from a group."
-msgstr "Escolha alunos aleatoriamente de um grupo."
+msgid "Spin to pick a random student: fair, fun, and instant."
+msgstr "Roda para escolher um aluno aleatório: justo, divertido e instantâneo."
 
-msgid "Your Activity"
+msgid "Your activity"
 msgstr "A sua Atividade"
 
 msgid "Groups"
 msgstr "Grupos"
-
-msgid "Points"
-msgstr "Pontos"
 
 msgid "Calculator"
 msgstr "Calculadora"
 
 msgid "uses"
 msgstr "utilizações"
+
+msgid "Wheel"
+msgstr "Roleta"
 
 msgid "spins"
 msgstr "giros"
@@ -539,28 +1020,325 @@ msgstr "Divisor"
 msgid "splits"
 msgstr "divisões"
 
-msgid "Max Points"
-msgstr "Pontuação Máxima"
+msgid "minutes"
+msgstr "Minutos"
 
-msgid "Rounding option"
-msgstr "Opção de arredondamento"
+msgid "Sidebar highlight colour."
+msgstr "Cor de destaque da barra lateral."
 
-msgid "Full number"
-msgstr "Número inteiro"
+msgid "hover to preview · click to save"
+msgstr "passa para pré-visualizar · clica para guardar"
 
-msgid "Decimal number"
-msgstr "Número decimal"
+msgid "Built for teachers"
+msgstr "Ferramentas para Professores"
 
-msgid "min"
-msgstr "min"
+msgid "Why teachers"
+msgstr "Porque os professores"
+
+msgid "use it"
+msgstr "usam"
+
+msgid "Ready in under a minute"
+msgstr "Pronto em menos de um minuto"
+
+msgid ""
+"No installation, no training, no IT department needed. Sign up and start "
+"using your tools straight away."
+msgstr ""
+"Sem instalação, sem formação, sem departamento de TI. Regista-te e começa a usar as ferramentas imediatamente."
+
+msgid "One class list, every tool access"
+msgstr "Uma lista de turma, acesso a todas as ferramentas"
+
+msgid ""
+"Add your students once. All the tools use the same list; no duplicate entry."
+msgstr ""
+"Adiciona os alunos uma vez. Todas as ferramentas usam a mesma lista; sem entradas duplicadas."
+
+msgid "No learning curve"
+msgstr "Sem curva de aprendizagem"
+
+msgid ""
+"Every tool is designed to work the first time you open it, with no setup or "
+"manual needed."
+msgstr "Todas as ferramentas funcionam à primeira, sem configuração nem manual."
+
+msgid "How it works"
+msgstr "Como funciona"
+
+msgid "Three steps"
+msgstr "Três passos"
+
+msgid "to start"
+msgstr "para começar"
+
+msgid "Create your account"
+msgstr "Criar conta"
+
+msgid "Free signup. Ready in under a minute."
+msgstr "Registo gratuito. Pronto em menos de um minuto."
+
+msgid "Add your class"
+msgstr "Adiciona a tua turma"
+
+msgid "Create your classes. All tools sync from these lists automatically."
+msgstr "Cria as tuas turmas. Todas as ferramentas sincronizam automaticamente."
+
+msgid "Open a tool and go"
+msgstr "Abre uma ferramenta e avança"
+
+msgid "No duplicate data entry, no per-tool setup. It just works."
+msgstr ""
+"Sem duplicação de dados, sem configuração por ferramenta. Simplesmente funciona."
+
+msgid "Start today"
+msgstr "Começa hoje"
+
+msgid "Your classroom,"
+msgstr "A tua sala de aula,"
+
+msgid "finally in one place"
+msgstr "finalmente num só lugar"
+
+msgid "Privacy Policy"
+msgstr "Política de Privacidade"
+
+msgid "Legal"
+msgstr "Legal"
+
+msgid "Policy"
+msgstr "Política"
+
+msgid "Last updated"
+msgstr "Último nome"
+
+msgid "What data we collect"
+msgstr "Que dados recolhemos"
+
+msgid ""
+"When you create an account we collect your username, email address, and "
+"password (stored as a bcrypt hash, never in plain text). As you use the "
+"tools we record usage statistics (e.g. wheel spins, timer duration) linked "
+"to your account."
+msgstr ""
+"Quando crias uma conta recolhemos o teu nome de utilizador, endereço de email e palavra-passe (guardada como hash bcrypt, nunca em texto simples). À medida que usas as ferramentas registamos estatísticas de uso (ex. rodas giradas, duração do temporizador) associadas à tua conta."
+
+msgid "How we use your data"
+msgstr "Como usamos os teus dados"
+
+msgid ""
+"Your data is used solely to provide the Teachka service: authentication, "
+"personalisation (theme, language), and displaying your activity on the home "
+"dashboard. We do not sell or share your data with third parties."
+msgstr ""
+"Os teus dados são usados exclusivamente para fornecer o serviço Teachka: autenticação, personalização (tema, idioma) e mostrar a tua atividade no painel inicial. Não vendemos nem partilhamos os teus dados com terceiros."
+
+msgid "Cookies"
+msgstr "Cookies"
+
+msgid ""
+"We use one session cookie to keep you logged in (strictly necessary, no "
+"consent required under ePrivacy). We also store your theme preference in "
+"localStorage, which is not a cookie and does not leave your device."
+msgstr ""
+"Usamos um cookie de sessão para te manter ligado (estritamente necessário, sem consentimento exigido sob ePrivacy). Também guardamos a preferência de tema em localStorage, que não é um cookie e não sai do teu dispositivo."
+
+msgid ""
+"We use Sentry for error monitoring. Sentry may set its own cookies or use "
+"browser storage to deduplicate error reports. No personal data is "
+"intentionally forwarded to Sentry."
+msgstr ""
+"Usamos o Sentry para monitorizar erros. O Sentry pode definir os próprios cookies ou usar armazenamento do navegador para deduplicar relatórios. Não é enviado intencionalmente qualquer dado pessoal para o Sentry."
+
+msgid "Data retention"
+msgstr "Retenção de dados"
+
+msgid ""
+"Your account and all associated data are retained for as long as your "
+"account is active. You can delete your account and all data at any time from "
+"the Settings page."
+msgstr ""
+"A tua conta e todos os dados associados são mantidos enquanto a conta estiver ativa. Podes apagar a conta e todos os dados a qualquer momento na página de Definições."
+
+msgid "Your rights"
+msgstr "O seu perfil"
+
+msgid ""
+"Under GDPR you have the right to access, correct, or erase your data. To "
+"delete your account and all data permanently, visit "
+msgstr ""
+"Sob o RGPD tens o direito de aceder, corrigir ou apagar os teus dados. Para apagar a conta e todos os dados permanentemente, visita "
+
+msgid "Settings → Delete account"
+msgstr "Definições → Eliminar conta"
+
+msgid "For other requests contact us at the address below."
+msgstr "Para outros pedidos contacta-nos no endereço abaixo."
+
+msgid "Contact"
+msgstr "Contacto"
+
+msgid "Questions about this policy: "
+msgstr "Questões sobre esta política: "
 
 msgid "Coming Soon"
 msgstr "Em Breve"
 
-msgid "Work in Progress"
-msgstr "Em Desenvolvimento"
+msgid "Under Construction"
+msgstr "Em construção"
+
+msgid "new"
+msgstr "novo"
+
+msgid "is brewing"
+msgstr "a caminho"
 
 msgid ""
-"This feature is currently under development. Check back soon for updates!"
+"We're currently refining this tool to ensure it meets the Teachka standard "
+"of calm, effortless organization."
 msgstr ""
-"Esta funcionalidade está em desenvolvimento. Volte em breve para novidades!"
+"Estamos a refinar esta ferramenta para garantir que cumpre o padrão Teachka de organização calma e sem esforço."
+
+msgid "Currently in development"
+msgstr "Atualmente em desenvolvimento"
+
+msgid "Back to Dashboard"
+msgstr "Painel"
+
+msgid "Go Back"
+msgstr "Voltar"
+
+#~ msgid "Grade ranges"
+#~ msgstr "Intervalos de notas"
+
+#~ msgid "Score Range"
+#~ msgstr "Intervalo de pontuação"
+
+#~ msgid "Percentage"
+#~ msgstr "Percentagem"
+
+#~ msgid "Divided groups"
+#~ msgstr "Grupos divididos"
+
+#~ msgid "This action cannot be undone."
+#~ msgstr "Esta ação não pode ser revertida."
+
+#~ msgid "Create new group"
+#~ msgstr "Criar novo grupo"
+
+#~ msgid "Remove a column from the points table"
+#~ msgstr "Remover uma coluna da tabela de pontos"
+
+#~ msgid "Select a column"
+#~ msgstr "Selecionar uma coluna"
+
+#~ msgid "Table definition"
+#~ msgstr "Definição da tabela"
+
+#~ msgid "Rename an existing column"
+#~ msgstr "Renomear uma coluna existente"
+
+#~ msgid "Points system"
+#~ msgstr "Sistema de pontos"
+
+#~ msgid "Track positive and negative points for group members"
+#~ msgstr "Acompanhe pontos positivos e negativos dos membros do grupo"
+
+#~ msgid "Show points"
+#~ msgstr "Mostrar pontos"
+
+#~ msgid "Negative Points"
+#~ msgstr "Pontos Negativos"
+
+#~ msgid "Positive Points"
+#~ msgstr "Pontos Positivos"
+
+#~ msgid "Net Score"
+#~ msgstr "Pontuação Líquida"
+
+#~ msgid "Negative Points Breakdown"
+#~ msgstr "Detalhes dos Pontos Negativos"
+
+#~ msgid "Positive Points Breakdown"
+#~ msgstr "Detalhes dos Pontos Positivos"
+
+#~ msgid "Add new column"
+#~ msgstr "Adicionar nova coluna"
+
+#~ msgid "Create a new column for tracking points"
+#~ msgstr "Criar uma nova coluna para acompanhar pontos"
+
+#~ msgid "Odd week"
+#~ msgstr "Semana ímpar"
+
+#~ msgid "To-Do List"
+#~ msgstr "Lista de Tarefas"
+
+#~ msgid "Task management and organization"
+#~ msgstr "Gestão e organização de tarefas"
+
+#~ msgid "Plan and organize your teaching schedule."
+#~ msgstr "Planeie e organize o seu horário de ensino."
+
+#~ msgid "Sign in to your account"
+#~ msgstr "Inicie sessão na sua conta"
+
+#~ msgid "Don't have an account?"
+#~ msgstr "Não tem uma conta?"
+
+#~ msgid "Start using Teachka for free"
+#~ msgstr "Comece a usar o Teachka gratuitamente"
+
+#~ msgid "Send"
+#~ msgstr "Enviar"
+
+#~ msgid "Update your account information"
+#~ msgstr "Atualizar as informações da sua conta"
+
+#~ msgid "View and manage your account information"
+#~ msgstr "Ver e gerir as informações da sua conta"
+
+#~ msgid "Quick toggle theme"
+#~ msgstr "Alternar tema rapidamente"
+
+#~ msgid "Randomly select a name from your group"
+#~ msgstr "Selecione aleatoriamente um nome do seu grupo"
+
+#~ msgid "Go Home"
+#~ msgstr "Ir para o Início"
+
+#~ msgid "Change language"
+#~ msgstr "Mudar idioma"
+
+#~ msgid "Karma System"
+#~ msgstr "Sistema de Karma"
+
+#~ msgid "Karma system"
+#~ msgstr "Sistema de karma"
+
+#~ msgid "Welcome to"
+#~ msgstr "Bem-vindo ao"
+
+#~ msgid "A collection of tools designed to make your teaching day easier."
+#~ msgstr "Uma coleção de ferramentas para facilitar o seu dia como professor."
+
+#~ msgid "Track performance with customizable point categories."
+#~ msgstr "Acompanhe o desempenho com categorias de pontos personalizáveis."
+
+#~ msgid "Generate score ranges for any maximum points value."
+#~ msgstr "Gere intervalos de pontuação para qualquer valor máximo de pontos."
+
+#~ msgid "Randomly pick students from a group."
+#~ msgstr "Escolha alunos aleatoriamente de um grupo."
+
+#~ msgid "min"
+#~ msgstr "min"
+
+#~ msgid "Work in Progress"
+#~ msgstr "Em Desenvolvimento"
+
+#~ msgid ""
+#~ "This feature is currently under development. Check back soon for updates!"
+#~ msgstr ""
+#~ "Esta funcionalidade está em desenvolvimento. Volte em breve para "
+#~ "novidades!"
