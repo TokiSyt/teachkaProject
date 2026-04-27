@@ -27,6 +27,7 @@ urlpatterns += i18n_patterns(
     path("divider/", include("apps.group_divider.urls")),
     path("wheel/", include("apps.wheel.urls")),
     path("timer/", include("apps.timer.urls")),
+    path("quizzes/", include("apps.quizzmaker.urls")),
     # WIP apps (hidden in production; set ENABLE_WIP_APPS=true to expose)
     *(
         [
@@ -44,3 +45,4 @@ urlpatterns += i18n_patterns(
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

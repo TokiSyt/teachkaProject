@@ -1,0 +1,41 @@
+{% load i18n %}
+
+{% if current_url %}
+  <div class="mb-2 flex items-center gap-3">
+    <button type="button"
+            data-image-recut
+            data-input-id="{{ input_id }}"
+            data-current-url="{{ current_url }}"
+            data-focus-x="{{ focus_x|default:50 }}"
+            data-focus-y="{{ focus_y|default:50 }}"
+            title="{% trans 'Re-cut current image' %}"
+            class="group relative cursor-pointer">
+      <img src="{{ current_url }}" alt=""
+           class="h-12 w-20 object-cover rounded-lg border border-base-300 group-hover:opacity-80 transition"
+           style="object-position: {{ focus_x|default:50 }}% {{ focus_y|default:50 }}%;" />
+      <span class="absolute inset-0 rounded-lg bg-black/40 text-white text-[10px] tracking-[1px] uppercase font-bold flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+        {% trans "Re-cut" %}
+      </span>
+    </button>
+    {% if clear_name %}
+      <label class="flex items-center gap-1 text-xs text-base-content/60 cursor-pointer">
+        <input type="checkbox" name="{{ clear_name }}" class="checkbox checkbox-xs" />
+        {% trans "Remove" %}
+      </label>
+    {% endif %}
+  </div>
+{% endif %}
+
+<div class="flex items-center gap-2">
+  <input type="file" id="{{ input_id }}" name="{{ input_name }}" accept="image/*"
+         class="file-input file-input-bordered rounded-xl w-full flex-1" />
+  <button type="button" data-image-remove data-input-id="{{ input_id }}" class="btn-as-link-ghost" style="display:none;">
+    <i data-lucide="x" class="w-4 h-4"></i>
+    {% trans "Remove" %}
+  </button>
+</div>
+
+<input type="hidden" name="focus_x" value="{{ focus_x|default:50 }}" data-image-focus="x" data-input-id="{{ input_id }}">
+<input type="hidden" name="focus_y" value="{{ focus_y|default:50 }}" data-image-focus="y" data-input-id="{{ input_id }}">
+
+{% include "quizzmaker/_image_cropper.html" with input_id=input_id %}

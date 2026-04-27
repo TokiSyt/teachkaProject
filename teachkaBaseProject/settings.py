@@ -86,6 +86,7 @@ INSTALLED_APPS = [
     "apps.core",
     "apps.timer",
     "apps.wheel",
+    "apps.quizzmaker",
     "apps.calendar",
     "apps.math_ops",
     "apps.grade_calculator",
