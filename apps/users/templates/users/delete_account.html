@@ -38,10 +38,10 @@
       </div>
 
       <div class="flex flex-wrap gap-2">
-        <button type="submit" class="btn btn-error btn-sm gap-2">
+        <a href="#" onclick="event.preventDefault(); this.closest('form').submit();" class="btn btn-error btn-sm gap-2">
           <i data-lucide="trash-2" class="w-4 h-4"></i>
           {% trans "Delete my account" %}
-        </button>
+        </a>
         <a href="{% url 'profile:settings' %}" class="btn btn-ghost btn-sm">
           {% trans "Cancel" %}
         </a>
