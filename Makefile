@@ -127,8 +127,10 @@ status:
 	docker compose ps
 
 # Audit dependencies for known CVEs
+# Ignored:
+#   GHSA-6w46-j5rx-g56g: pytest 8 dev-tool CVE; bump to 9 blocked by apps.calendar shadowing stdlib calendar
 audit:
-	docker compose exec web pip-audit -r requirements.txt
+	docker compose exec -e XDG_CACHE_HOME=/tmp/pip-audit-cache web pip-audit -r requirements.txt --ignore-vuln GHSA-6w46-j5rx-g56g
 
 # Run all CI checks (ruff, mypy, tests, audit, Django deploy checklist)
 ci:
