@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Privacy Policy" %} · Teachka{% endblock %}
+
+{% block content %}
+
+  <!-- ── HEADER ── -->
+  <section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
+    <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+      <i data-lucide="shield" class="text-primary" style="width:180px;height:180px;"></i>
+    </div>
+    <div class="relative z-10">
+      <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Legal" %}</p>
+      <h1 class="serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
+        {% trans "Privacy" %} <em class="text-primary font-light">{% trans "Policy" %}</em>
+      </h1>
+      <p class="text-xs text-base-content/30">{% trans "Last updated" %}: 2026-04-19</p>
+    </div>
+  </section>
+
+  <!-- ── CONTENT ── -->
+  <section class="px-5 py-10 md:px-14">
+    <div class="max-w-2xl space-y-6">
+
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="database" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "What data we collect" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "When you create an account we collect your username, email address, and password (stored as a bcrypt hash, never in plain text). As you use the tools we record usage statistics (e.g. wheel spins, timer duration) linked to your account." %}</p>
+        </div>
+      </article>
+
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "How we use your data" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Your data is used solely to provide the Teachka service: authentication, personalisation (theme, language), and displaying your activity on the home dashboard. We do not sell or share your data with third parties." %}</p>
+        </div>
+      </article>
+
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="cookie" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "Cookies" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed mb-3">{% trans "We use one session cookie to keep you logged in (strictly necessary, no consent required under ePrivacy). We also store your theme preference in localStorage, which is not a cookie and does not leave your device." %}</p>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "We use Sentry for error monitoring. Sentry may set its own cookies or use browser storage to deduplicate error reports. No personal data is intentionally forwarded to Sentry." %}</p>
+        </div>
+      </article>
+
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "Data retention" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Your account and all associated data are retained for as long as your account is active. You can delete your account and all data at any time from the Settings page." %}</p>
+        </div>
+      </article>
+
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="scale" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "Your rights" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Under GDPR you have the right to access, correct, or erase your data. To delete your account and all data permanently, visit " %}<a href="{% url 'profile:settings' %}" class="link link-primary">{% trans "Settings → Delete account" %}</a>. {% trans "For other requests contact us at the address below." %}</p>
+        </div>
+      </article>
+
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "Contact" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Questions about this policy: " %}<a href="mailto:info@teachka.com" class="link link-primary">info@teachka.com</a></p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+{% endblock %}

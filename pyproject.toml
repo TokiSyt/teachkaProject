@@ -48,7 +48,7 @@ known-first-party = ["apps", "teachkaBaseProject"]
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "teachkaBaseProject.settings"
 python_files = ["test_*.py", "*_test.py"]
-addopts = "-v --tb=short"
+addopts = "-v --tb=short --import-mode=importlib"
 testpaths = ["apps"]
 
 [tool.coverage.run]

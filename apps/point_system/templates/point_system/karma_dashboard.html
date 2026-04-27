@@ -98,7 +98,7 @@
             {% for key, value in member.negative_data.items %}
             <div class="px-5 py-4 flex items-center justify-between gap-4">
               <span class="text-sm text-base-content/70 font-light">{{ key }}</span>
-              <span class="font-medium text-base-content tabular-nums">{{ value|default:"—" }}</span>
+              <span class="font-medium text-base-content tabular-nums">{{ value|default:"-" }}</span>
             </div>
             {% endfor %}
           </div>
@@ -106,7 +106,7 @@
         {% else %}
         <div class="card bg-base-100 border border-base-300 border-dashed">
           <div class="card-body items-center text-center py-8">
-            <p class="text-sm text-base-content/40 font-light italic serif">{% trans "No negative points recorded" %}</p>
+            <p class="text-sm text-base-content/40 font-light serif">{% trans "No negative points recorded" %}</p>
           </div>
         </div>
         {% endif %}
@@ -125,7 +125,7 @@
             {% for key, value in member.positive_data.items %}
             <div class="px-5 py-4 flex items-center justify-between gap-4">
               <span class="text-sm text-base-content/70 font-light">{{ key }}</span>
-              <span class="font-medium text-base-content tabular-nums">{{ value|default:"—" }}</span>
+              <span class="font-medium text-base-content tabular-nums">{{ value|default:"-" }}</span>
             </div>
             {% endfor %}
           </div>
@@ -133,7 +133,7 @@
         {% else %}
         <div class="card bg-base-100 border border-base-300 border-dashed">
           <div class="card-body items-center text-center py-8">
-            <p class="text-sm text-base-content/40 font-light italic serif">{% trans "No positive points recorded" %}</p>
+            <p class="text-sm text-base-content/40 font-light serif">{% trans "No positive points recorded" %}</p>
           </div>
         </div>
         {% endif %}

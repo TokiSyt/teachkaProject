@@ -1,0 +1,600 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}{{ quiz.title }} · {% trans "Rounds" %} · Teachka{% endblock title %}
+
+{% block content %}
+
+  <!-- ── HEADER ── -->
+  <section class="px-5 pt-10 pb-6 md:px-14 border-b border-base-300 relative overflow-hidden">
+    <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+      <i data-lucide="layers" class="text-primary" style="width:180px;height:180px;"></i>
+    </div>
+    <div class="relative z-10 flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-3">
+          {% trans "Quizzes" %} · {% trans "Rounds" %}
+        </p>
+        <h1 class="serif font-medium leading-none tracking-tight" style="font-size: clamp(32px, 4.2vw, 48px);">
+          <span class="text-base-content/60">{{ quiz.title }}</span>
+        </h1>
+      </div>
+      <div class="flex items-center gap-3">
+        <button type="button" class="btn-as-link-ghost"
+                onclick="document.getElementById('quiz-settings-modal').showModal()">
+          <i data-lucide="settings-2" class="w-4 h-4"></i>
+          {% trans "Quiz settings" %}
+        </button>
+        <a href="{% url 'quizzmaker:home' %}" class="btn-as-link-ghost">
+          <i data-lucide="x" class="w-4 h-4"></i>
+          {% trans "Close" %}
+        </a>
+        <form method="post" action="{% url 'quizzmaker:quiz_finalize' quiz.pk %}">
+          {% csrf_token %}
+          <button type="submit" class="btn-as-link">
+            <i data-lucide="check" class="w-4 h-4"></i>
+            {% trans "Save & leave" %}
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EDITOR ── -->
+  <section class="md:flex md:items-stretch flex-1 min-h-0 overflow-hidden">
+
+    <!-- LEFT RAIL: ROUNDS -->
+    <aside class="md:w-[260px] md:shrink-0 border-b md:border-b-0 md:border-r border-base-300 bg-base-200/40 overflow-hidden">
+      <div class="px-5 py-5 md:px-6 md:py-6 flex flex-col h-full min-h-0">
+        <div class="flex items-center justify-between mb-4">
+          <p class="text-[10px] tracking-[2px] uppercase font-bold text-base-content/50">
+            {% trans "Rounds" %}
+            <span class="text-base-content/30 ml-1">{{ rounds|length }}</span>
+          </p>
+          <button type="button"
+                  class="btn-as-link"
+                  style="padding: 0.4rem; border-radius: 9999px;"
+                  title="{% trans 'New round' %}"
+                  aria-label="{% trans 'New round' %}"
+                  onclick="document.getElementById('round-create-modal').showModal()">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        {% if rounds %}
+          <ul id="rounds-list"
+              data-reorder-url="{% url 'quizzmaker:round_reorder' quiz.pk %}"
+              class="space-y-1 overflow-y-auto pr-1 flex-1 min-h-0">
+            {% for round in rounds %}
+              {% if selected_round and selected_round.pk == round.pk %}
+                <li class="relative group" draggable="true" data-round-pk="{{ round.pk }}">
+                  <a href="?round={{ forloop.counter }}" draggable="false"
+                     class="w-full text-left rounded-xl px-3 py-2.5 border-2 bg-base-100 transition flex items-center gap-3"
+                     style="border-color: var(--color-primary);">
+                    <span class="serif text-primary text-sm w-6 text-center">
+                      {{ forloop.counter|stringformat:"02d" }}
+                    </span>
+                    <span class="flex-1 min-w-0">
+                      <span class="block text-sm truncate font-medium">{{ round.question|default:_("No question yet") }}</span>
+                      <span class="flex items-center gap-3 text-[10px] tracking-[1px] uppercase text-base-content/50 mt-0.5">
+                        <span class="flex items-center gap-1">
+                          <i data-lucide="award" class="w-3 h-3"></i>{{ round.points }}p
+                        </span>
+                        <span class="flex items-center gap-1">
+                          <i data-lucide="clock" class="w-3 h-3"></i>
+                          {% if round.time_limit %}{{ round.time_limit }}s{% else %}∞{% endif %}
+                        </span>
+                      </span>
+                    </span>
+                  </a>
+                  <button type="button"
+                          class="absolute bottom-1.5 right-1.5 btn btn-xs btn-circle btn-ghost text-base-content/40 hover:text-primary"
+                          title="{% trans 'Edit round' %}"
+                          aria-label="{% trans 'Edit round' %}"
+                          onclick="document.getElementById('round-edit-modal-{{ round.pk }}').showModal()">
+                    <i data-lucide="pencil" class="w-3 h-3"></i>
+                  </button>
+                  <button type="button"
+                          class="absolute bottom-1.5 right-9 btn btn-xs btn-circle btn-ghost text-base-content/40 hover:text-error"
+                          title="{% trans 'Delete round' %}"
+                          aria-label="{% trans 'Delete round' %}"
+                          onclick="document.getElementById('round-delete-modal-{{ round.pk }}').showModal()">
+                    <i data-lucide="trash-2" class="w-3 h-3"></i>
+                  </button>
+                </li>
+              {% else %}
+                <li class="relative group" draggable="true" data-round-pk="{{ round.pk }}">
+                  <a href="?round={{ forloop.counter }}" draggable="false"
+                     class="block w-full text-left rounded-xl px-3 py-2.5 border hover:bg-base-100 transition flex items-center gap-3"
+                     style="border-color: color-mix(in oklch, var(--color-primary) 50%, transparent);">
+                    <span class="serif text-base-content/40 text-sm w-6 text-center">
+                      {{ forloop.counter|stringformat:"02d" }}
+                    </span>
+                    <span class="flex-1 min-w-0">
+                      <span class="block text-sm truncate">{{ round.question|default:_("No question yet") }}</span>
+                      <span class="flex items-center gap-3 text-[10px] tracking-[1px] uppercase text-base-content/40 mt-0.5">
+                        <span class="flex items-center gap-1">
+                          <i data-lucide="award" class="w-3 h-3"></i>{{ round.points }}p
+                        </span>
+                        <span class="flex items-center gap-1">
+                          <i data-lucide="clock" class="w-3 h-3"></i>
+                          {% if round.time_limit %}{{ round.time_limit }}s{% else %}∞{% endif %}
+                        </span>
+                      </span>
+                    </span>
+                  </a>
+                  <button type="button"
+                          class="absolute bottom-1.5 right-1.5 btn btn-xs btn-circle btn-ghost text-base-content/40 hover:text-primary opacity-0 group-hover:opacity-100 transition"
+                          title="{% trans 'Edit round' %}"
+                          aria-label="{% trans 'Edit round' %}"
+                          onclick="event.preventDefault(); document.getElementById('round-edit-modal-{{ round.pk }}').showModal()">
+                    <i data-lucide="pencil" class="w-3 h-3"></i>
+                  </button>
+                  <button type="button"
+                          class="absolute bottom-1.5 right-9 btn btn-xs btn-circle btn-ghost text-base-content/40 hover:text-error opacity-0 group-hover:opacity-100 transition"
+                          title="{% trans 'Delete round' %}"
+                          aria-label="{% trans 'Delete round' %}"
+                          onclick="event.preventDefault(); document.getElementById('round-delete-modal-{{ round.pk }}').showModal()">
+                    <i data-lucide="trash-2" class="w-3 h-3"></i>
+                  </button>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        {% else %}
+          <div class="flex-1 flex items-center justify-center text-center py-10">
+            <div>
+              <div class="w-12 h-12 mx-auto mb-3 rounded-full border border-dashed border-base-300 flex items-center justify-center">
+                <i data-lucide="layers" class="w-5 h-5 text-base-content/30"></i>
+              </div>
+              <p class="text-[11px] tracking-[2px] uppercase text-base-content/40">
+                {% trans "No rounds yet" %}
+              </p>
+              <p class="text-[11px] text-base-content/30 mt-1">
+                {% trans "Tap" %} <span class="inline-flex items-center"><i data-lucide="plus" class="w-3 h-3"></i></span> {% trans "to add one" %}
+              </p>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </aside>
+
+    <!-- RIGHT: PREVIEW -->
+    <div class="flex-1 p-4 md:p-6 bg-base-200/40 overflow-hidden min-h-0">
+      {% if rounds %}
+        <article class="bg-base-100 border border-base-300 rounded-2xl shadow-sm h-full w-full overflow-hidden flex flex-col">
+          {% with selected_round as r %}
+            <header class="flex items-center justify-between px-6 py-3 border-b border-base-300 text-[10px] tracking-[2px] uppercase text-base-content/40">
+              <span>{% blocktrans with n=r.order %}Round {{ n }}{% endblocktrans %} · {% trans "Preview" %}</span>
+              <span>{{ r.get_question_type_display }}</span>
+            </header>
+            <div class="flex-1 px-6 py-5 flex flex-col gap-4 overflow-hidden min-h-0">
+              {% if r.image %}
+                <div class="text-center px-4 shrink-0">
+                  <h2 class="serif font-medium leading-tight mx-auto max-w-3xl" style="font-size: clamp(22px, 3vw, 36px);">
+                    {{ r.question|default:_("No question yet") }}
+                  </h2>
+                </div>
+                <figure class="flex-1 min-h-0 w-full max-w-5xl mx-auto flex items-center justify-center">
+                  <div class="w-full max-h-full aspect-video bg-base-200 rounded-xl overflow-hidden">
+                    <img src="{{ r.image.url }}" alt=""
+                         class="w-full h-full object-cover"
+                         style="object-position: {{ r.focus_x|default:50 }}% {{ r.focus_y|default:50 }}%;" />
+                  </div>
+                </figure>
+              {% else %}
+                <div class="flex-1 min-h-0 flex items-center justify-center text-center px-4">
+                  <h2 class="serif font-medium leading-tight max-w-4xl" style="font-size: clamp(36px, 6vw, 72px);">
+                    {{ r.question|default:_("No question yet") }}
+                  </h2>
+                </div>
+              {% endif %}
+              {% if r.question_type == "select_correct" %}
+                <div class="grid grid-cols-2 gap-4 shrink-0"
+                     data-answer-update-base="{% url 'quizzmaker:answer_update' quiz.pk 0 %}">
+                  {% for ans in r.answers.all %}
+                    {% if forloop.counter <= 4 %}
+                      <div class="border-2 border-base-300 rounded-xl px-7 py-6 flex items-center gap-5 hover:border-primary transition has-[:checked]:border-primary has-[:checked]:bg-primary/5"
+                           data-answer-pk="{{ ans.pk }}">
+                        <label class="relative flex items-center justify-center cursor-pointer shrink-0 w-7 h-7" title="{% trans 'Mark as correct' %}">
+                          <input type="checkbox"
+                                 class="peer sr-only"
+                                 data-answer-correct
+                                 {% if ans.is_correct %}checked{% endif %} />
+                          <span class="absolute inset-0 rounded-full border-2 border-base-300 transition peer-checked:border-primary"></span>
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                               class="relative w-4 h-4 opacity-0 peer-checked:opacity-100 transition pointer-events-none" style="color: var(--color-primary);">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                          </svg>
+                        </label>
+                        <span class="serif text-4xl text-primary w-9 text-center">{% if forloop.counter == 1 %}A{% elif forloop.counter == 2 %}B{% elif forloop.counter == 3 %}C{% else %}D{% endif %}</span>
+                        <input type="text"
+                               value="{{ ans.text }}"
+                               placeholder="{% trans 'Answer' %} {% if forloop.counter == 1 %}A{% elif forloop.counter == 2 %}B{% elif forloop.counter == 3 %}C{% else %}D{% endif %}"
+                               data-answer-text
+                               class="flex-1 bg-transparent text-xl text-base-content focus:outline-none placeholder:text-base-content/40" />
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              {% elif r.question_type == "type_input" %}
+                <div class="shrink-0 mb-16 w-full max-w-4xl mx-auto"
+                     data-answer-update-base="{% url 'quizzmaker:answer_update' quiz.pk 0 %}">
+                  {% with ans=r.answers.first %}
+                    {% if ans %}
+                      <div class="border-2 border-base-300 rounded-xl px-10 py-9 flex items-center gap-6 focus-within:border-primary transition"
+                           data-answer-pk="{{ ans.pk }}">
+                        <i data-lucide="pencil-line" class="w-7 h-7 text-base-content/40 shrink-0"></i>
+                        <input type="text"
+                               value="{{ ans.text }}"
+                               placeholder="{% trans 'Type the correct answer' %}"
+                               data-answer-text
+                               class="flex-1 bg-transparent text-3xl text-base-content focus:outline-none placeholder:text-base-content/40 text-center" />
+                      </div>
+                      <p class="text-[10px] tracking-[2px] uppercase text-base-content/40 mt-2 text-center">
+                        {% trans "Participants will type their answer here. Match is case-insensitive." %}
+                      </p>
+                    {% endif %}
+                  {% endwith %}
+                </div>
+              {% endif %}
+            </div>
+          {% endwith %}
+        </article>
+      {% else %}
+        <div class="bg-base-100 border border-base-300 rounded-2xl h-full w-full flex flex-col items-center justify-center text-center px-6 py-12">
+          <div class="w-20 h-20 mb-6 rounded-full bg-base-200 flex items-center justify-center">
+            <i data-lucide="square-mouse-pointer" class="w-9 h-9 text-base-content/30"></i>
+          </div>
+          <h3 class="serif text-2xl text-base-content/70 mb-2">{% trans "Nothing to preview" %}</h3>
+          <p class="text-[11px] tracking-[2px] uppercase text-base-content/40 mb-1">
+            {% trans "Create your first round" %}
+          </p>
+          <p class="text-sm text-base-content/40 max-w-sm">
+            {% trans "Use the plus button on the left to add a round. The live preview will appear here as you build." %}
+          </p>
+        </div>
+      {% endif %}
+    </div>
+
+  </section>
+
+  <!-- ── ROUND CREATE MODAL ── -->
+  <dialog id="round-create-modal" class="modal">
+    <div class="modal-box max-w-lg rounded-2xl border border-base-300 bg-base-100">
+      <form method="post" enctype="multipart/form-data" action="{% url 'quizzmaker:round_create' quiz.pk %}">
+        {% csrf_token %}
+
+        <header class="mb-6">
+          <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-2">
+            {% trans "Quiz" %} · {{ next_round_title }}
+          </p>
+          <h2 class="serif font-medium leading-none tracking-tight text-3xl">
+            <span class="text-primary">{% trans "New" %}</span> <span class="text-base-content/60">{% trans "question" %}</span>
+          </h2>
+        </header>
+
+        {% if round_form.non_field_errors %}
+          <div class="alert alert-error rounded-xl mb-4">{{ round_form.non_field_errors }}</div>
+        {% endif %}
+
+        <div class="space-y-5">
+          <div>
+            <label for="{{ round_form.question.id_for_label }}" class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">
+              {% trans "Question" %}
+            </label>
+            {{ round_form.question }}
+            {% if round_form.question.errors %}<p class="text-error text-xs mt-1">{{ round_form.question.errors|join:", " }}</p>{% endif %}
+          </div>
+
+          <div>
+            <label for="id_image" class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">
+              {% trans "Image" %} <span class="text-base-content/30 normal-case font-normal tracking-normal">({% trans "optional" %})</span>
+            </label>
+            {% include "quizzmaker/_image_field.html" with input_id="id_image" input_name="image" focus_x=50 focus_y=50 %}
+            {% if round_form.image.errors %}<p class="text-error text-xs mt-1">{{ round_form.image.errors|join:", " }}</p>{% endif %}
+          </div>
+
+          <div>
+            <label for="{{ round_form.question_type.id_for_label }}" class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">
+              {% trans "Question type" %}
+            </label>
+            {{ round_form.question_type }}
+            {% if round_form.question_type.errors %}<p class="text-error text-xs mt-1">{{ round_form.question_type.errors|join:", " }}</p>{% endif %}
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label for="{{ round_form.time_limit.id_for_label }}" class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">
+                {% trans "Duration" %} <span class="text-base-content/30 normal-case font-normal tracking-normal">(s)</span>
+              </label>
+              {{ round_form.time_limit }}
+              {% if round_form.time_limit.errors %}<p class="text-error text-xs mt-1">{{ round_form.time_limit.errors|join:", " }}</p>{% endif %}
+            </div>
+            <div>
+              <label for="{{ round_form.points.id_for_label }}" class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">
+                {% trans "Points" %}
+              </label>
+              {{ round_form.points }}
+              {% if round_form.points.errors %}<p class="text-error text-xs mt-1">{{ round_form.points.errors|join:", " }}</p>{% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 mt-7">
+          <button type="submit" class="btn-as-link">
+            {% trans "Create round" %}
+          </button>
+          <button type="button" class="btn-as-link-ghost"
+                  onclick="document.getElementById('round-create-modal').close()">
+            {% trans "Cancel" %}
+        </button>
+        </div>
+      </form>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+      <button>close</button>
+    </form>
+  </dialog>
+
+  <!-- ── ROUND EDIT MODALS ── -->
+  {% for round in rounds %}
+    <dialog id="round-edit-modal-{{ round.pk }}" class="modal">
+      <div class="modal-box max-w-lg rounded-2xl border border-base-300 bg-base-100">
+        <form method="post" enctype="multipart/form-data" action="{% url 'quizzmaker:round_edit' quiz.pk round.pk %}">
+          {% csrf_token %}
+
+          <header class="mb-6">
+            <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-2">
+              {% trans "Quiz" %} · {% blocktrans with n=round.order %}Round {{ n }}{% endblocktrans %}
+            </p>
+            <h2 class="serif font-medium leading-none tracking-tight text-3xl">
+              <span class="text-primary">{% trans "Edit" %}</span> <span class="text-base-content/60">{% trans "question" %}</span>
+            </h2>
+          </header>
+
+          <div class="space-y-5">
+            <div>
+              <label class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">
+                {% trans "Question" %}
+              </label>
+              <input type="text" name="question" value="{{ round.question }}"
+                     class="input input-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full" />
+            </div>
+
+            <div>
+              <label for="round-image-{{ round.pk }}" class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">
+                {% trans "Image" %} <span class="text-base-content/30 normal-case font-normal tracking-normal">({% trans "optional" %})</span>
+              </label>
+              {% with rid=round.pk|stringformat:"s" %}
+                {% if round.image %}
+                  {% include "quizzmaker/_image_field.html" with input_id="round-image-"|add:rid input_name="image" current_url=round.image.url clear_name="image-clear" focus_x=round.focus_x focus_y=round.focus_y %}
+                {% else %}
+                  {% include "quizzmaker/_image_field.html" with input_id="round-image-"|add:rid input_name="image" focus_x=round.focus_x focus_y=round.focus_y %}
+                {% endif %}
+              {% endwith %}
+            </div>
+
+            <div>
+              <label class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">
+                {% trans "Question type" %}
+              </label>
+              <select name="question_type"
+                      class="select select-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full">
+                {% for value, label in round.QUESTION_TYPE_CHOICES %}
+                  <option value="{{ value }}" {% if round.question_type == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">
+                  {% trans "Duration" %} <span class="text-base-content/30 normal-case font-normal tracking-normal">(s)</span>
+                </label>
+                <input type="number" name="time_limit" value="{{ round.time_limit }}" min="0"
+                       class="input input-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full" />
+              </div>
+              <div>
+                <label class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">
+                  {% trans "Points" %}
+                </label>
+                <input type="number" name="points" value="{{ round.points }}" min="0"
+                       class="input input-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full" />
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 mt-7">
+            <button type="submit" class="btn-as-link">
+              {% trans "Save changes" %}
+            </button>
+            <button type="button" class="btn-as-link-ghost"
+                    onclick="document.getElementById('round-edit-modal-{{ round.pk }}').close()">
+              {% trans "Cancel" %}
+            </button>
+          </div>
+        </form>
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
+
+    <dialog id="round-delete-modal-{{ round.pk }}" class="modal">
+      <div class="modal-box max-w-md rounded-2xl border border-base-300 bg-base-100">
+        <header class="mb-5">
+          <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-2">
+            {% trans "Quiz" %} · {% blocktrans with n=round.order %}Round {{ n }}{% endblocktrans %}
+          </p>
+          <h2 class="serif font-medium leading-none tracking-tight text-2xl">
+            <span class="text-error">{% trans "Delete" %}</span> <span class="text-base-content/60">{% trans "round" %}</span>
+          </h2>
+        </header>
+
+        <p class="text-sm text-base-content/70 mb-6">
+          {% trans "This will permanently remove the round and its answers. This cannot be undone." %}
+        </p>
+
+        <form method="post" action="{% url 'quizzmaker:round_delete' quiz.pk round.pk %}" class="flex items-center gap-3">
+          {% csrf_token %}
+          <button type="submit" class="btn-as-link">
+            {% trans "Delete round" %}
+          </button>
+          <button type="button" class="btn-as-link-ghost"
+                  onclick="document.getElementById('round-delete-modal-{{ round.pk }}').close()">
+            {% trans "Cancel" %}
+          </button>
+        </form>
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
+  {% endfor %}
+
+  <!-- ── QUIZ SETTINGS MODAL ── -->
+  <dialog id="quiz-settings-modal" class="modal">
+    <div class="modal-box max-w-lg rounded-2xl border border-base-300 bg-base-100">
+      <form method="post" enctype="multipart/form-data" action="{% url 'quizzmaker:edit' quiz.pk %}">
+        {% csrf_token %}
+
+        <header class="mb-6">
+          <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-2">
+            {% trans "Quiz" %} · {% trans "Settings" %}
+          </p>
+          <h2 class="serif font-medium leading-none tracking-tight text-3xl">
+            <span class="text-primary">{% trans "Edit" %}</span> <span class="text-base-content/60">{% trans "quiz" %}</span>
+          </h2>
+        </header>
+
+        <div class="space-y-5">
+          <div>
+            <label class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">
+              {% trans "Title" %}
+            </label>
+            <input type="text" name="title" value="{{ quiz.title }}" required
+                   class="input input-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full" />
+          </div>
+
+          <div>
+            <label for="qs-logo-input" class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">
+              {% trans "Logo" %} <span class="text-base-content/30 normal-case font-normal tracking-normal">({% trans "optional" %})</span>
+            </label>
+            {% if quiz.logo %}
+              {% include "quizzmaker/_image_field.html" with input_id="qs-logo-input" input_name="logo" current_url=quiz.logo.url clear_name="logo-clear" focus_x=quiz.focus_x focus_y=quiz.focus_y %}
+            {% else %}
+              {% include "quizzmaker/_image_field.html" with input_id="qs-logo-input" input_name="logo" focus_x=quiz.focus_x focus_y=quiz.focus_y %}
+            {% endif %}
+          </div>
+
+          <div>
+            <label class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">
+              {% trans "Visibility" %}
+            </label>
+            <select name="visibility"
+                    class="select select-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full">
+              <option value="public" {% if quiz.visibility == "public" %}selected{% endif %}>{% trans "Public" %}</option>
+              <option value="private" {% if quiz.visibility == "private" %}selected{% endif %}>{% trans "Private" %}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 mt-7">
+          <button type="submit" class="btn-as-link">
+            {% trans "Save changes" %}
+          </button>
+          <button type="button" class="btn-as-link-ghost"
+                  onclick="document.getElementById('quiz-settings-modal').close()">
+            {% trans "Cancel" %}
+          </button>
+        </div>
+      </form>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+      <button>close</button>
+    </form>
+  </dialog>
+
+  <script src="{% static 'js/image_cropper.js' %}"></script>
+  <script>
+    (function () {
+      const list = document.getElementById("rounds-list");
+      if (!list) return;
+      const url = list.dataset.reorderUrl;
+      const csrf = document.querySelector("[name=csrfmiddlewaretoken]")?.value;
+      let dragEl = null;
+
+      list.addEventListener("dragstart", (e) => {
+        const li = e.target.closest("li[data-round-pk]");
+        if (!li) return;
+        dragEl = li;
+        li.classList.add("opacity-50");
+        e.dataTransfer.effectAllowed = "move";
+      });
+
+      list.addEventListener("dragend", () => {
+        if (dragEl) dragEl.classList.remove("opacity-50");
+        dragEl = null;
+      });
+
+      list.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        const target = e.target.closest("li[data-round-pk]");
+        if (!target || target === dragEl) return;
+        const rect = target.getBoundingClientRect();
+        const after = (e.clientY - rect.top) > rect.height / 2;
+        list.insertBefore(dragEl, after ? target.nextSibling : target);
+      });
+
+      list.addEventListener("drop", (e) => {
+        e.preventDefault();
+        const order = [...list.querySelectorAll("li[data-round-pk]")].map(li => li.dataset.roundPk);
+        fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "X-CSRFToken": csrf },
+          body: JSON.stringify({ order }),
+        }).then(r => { if (r.ok) location.reload(); });
+      });
+    })();
+
+    (function () {
+      const grid = document.querySelector("[data-answer-update-base]");
+      if (!grid) return;
+      const baseUrl = grid.dataset.answerUpdateBase;
+      const csrf = document.querySelector("[name=csrfmiddlewaretoken]")?.value;
+
+      function urlFor(pk) { return baseUrl.replace(/\/0\/$/, `/${pk}/`); }
+
+      function send(pk, body) {
+        fetch(urlFor(pk), {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded", "X-CSRFToken": csrf },
+          body,
+        });
+      }
+
+      grid.querySelectorAll("[data-answer-pk]").forEach(card => {
+        const pk = card.dataset.answerPk;
+        const txt = card.querySelector("[data-answer-text]");
+        const chk = card.querySelector("[data-answer-correct]");
+
+        let saveTimer;
+        txt.addEventListener("input", () => {
+          clearTimeout(saveTimer);
+          saveTimer = setTimeout(() => send(pk, "text=" + encodeURIComponent(txt.value)), 400);
+        });
+        txt.addEventListener("blur", () => {
+          clearTimeout(saveTimer);
+          send(pk, "text=" + encodeURIComponent(txt.value));
+        });
+        if (chk) {
+          chk.addEventListener("change", () => {
+            send(pk, "is_correct=" + (chk.checked ? "1" : "0"));
+          });
+        }
+      });
+    })();
+  </script>
+
+{% endblock content %}

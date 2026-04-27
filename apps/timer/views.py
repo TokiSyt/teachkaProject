@@ -25,7 +25,10 @@ class StopwatchView(LoginRequiredMixin, TemplateView):
             stats.stopwatch_flags += 1
             stats.save(update_fields=["stopwatch_flags"])
         elif action == "stop":
-            elapsed = int(request.POST.get("elapsed", 0))
+            try:
+                elapsed = int(request.POST.get("elapsed", 0))
+            except (TypeError, ValueError):
+                return JsonResponse({"status": "error"}, status=400)
             if elapsed > 0:
                 stats.stopwatch_total_ms += elapsed
                 stats.save(update_fields=["stopwatch_total_ms"])
@@ -47,7 +50,10 @@ class TimerView(LoginRequiredMixin, FormView):
             stats.countdown_starts += 1
             stats.save(update_fields=["countdown_starts"])
         elif action == "stop":
-            elapsed = int(request.POST.get("elapsed", 0))
+            try:
+                elapsed = int(request.POST.get("elapsed", 0))
+            except (TypeError, ValueError):
+                return JsonResponse({"status": "error"}, status=400)
             if elapsed > 0:
                 stats.countdown_total_ms += elapsed
                 stats.save(update_fields=["countdown_total_ms"])

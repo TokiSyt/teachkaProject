@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Delete account" %} · Teachka{% endblock %}
+
+{% block content %}
+
+  <!-- ── HEADER ── -->
+  <section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
+    <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+      <i data-lucide="trash-2" class="text-error" style="width:180px;height:180px;"></i>
+    </div>
+    <div class="relative z-10">
+      <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Account" %}</p>
+      <h1 class="serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
+        {% trans "Delete" %} <em class="text-error font-light">{% trans "account" %}</em>
+      </h1>
+      <p class="text-sm text-base-content/50 max-w-md leading-relaxed">
+        {% trans "This will permanently delete your account and all associated data: groups, members, points, and usage stats. This action cannot be undone." %}
+      </p>
+    </div>
+  </section>
+
+  <!-- ── FORM ── -->
+  <section class="px-5 py-8 md:px-14">
+
+    <form method="post" class="max-w-sm">
+      {% csrf_token %}
+
+      <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Confirm with password" %}</p>
+
+      <div class="card bg-base-100 border border-base-300 mb-6">
+        <div class="card-body p-5">
+          <label class="text-xs text-base-content/40 mb-1 block">{% trans "Password" %}</label>
+          <input type="password" name="password" required autofocus
+                 class="input input-bordered w-full" placeholder="••••••••">
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-2">
+        <a href="#" onclick="event.preventDefault(); this.closest('form').submit();" class="btn btn-error btn-sm gap-2">
+          <i data-lucide="trash-2" class="w-4 h-4"></i>
+          {% trans "Delete my account" %}
+        </a>
+        <a href="{% url 'profile:settings' %}" class="btn btn-ghost btn-sm">
+          {% trans "Cancel" %}
+        </a>
+      </div>
+    </form>
+
+  </section>
+
+{% endblock %}

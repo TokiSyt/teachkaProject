@@ -65,7 +65,7 @@
           <div class="px-5 py-4">
             <p class="text-xs text-base-content/40 mb-0.5">{% trans "Column type" %}</p>
             <p id="columnTypeDisplay" class="font-medium text-base-content">
-              {% if all_keys %}{% with first_type=column_types|get_item:all_keys.0 %}{% if first_type == 'int' %}{% trans "Numerical" %}{% else %}{% trans "Text" %}{% endif %}{% endwith %}{% else %}—{% endif %}
+              {% if all_keys %}{% with first_type=column_types|get_item:all_keys.0 %}{% if first_type == 'int' %}{% trans "Numerical" %}{% else %}{% trans "Text" %}{% endif %}{% endwith %}{% else %}-{% endif %}
             </p>
           </div>
 
@@ -101,7 +101,7 @@
     select.addEventListener('change', function () {
       const opt = select.options[select.selectedIndex];
       const t = opt?.dataset.type;
-      display.textContent = labels[t] || '—';
+      display.textContent = labels[t] || '-';
     });
   })();
 </script>

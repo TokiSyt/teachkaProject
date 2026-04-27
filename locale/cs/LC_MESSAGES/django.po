@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Teachka\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-14 20:33+0000\n"
+"POT-Creation-Date: 2026-04-27 16:00+0000\n"
 "PO-Revision-Date: 2026-02-14 21:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
@@ -17,549 +17,2118 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
 "<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
-msgid "Grade calculator"
-msgstr "Kalkulačka známek"
-
-msgid "Calculate grade ranges based on maximum points"
-msgstr "Vypočítat rozsahy známek na základě maximálního počtu bodů"
-
-msgid "Calculate"
-msgstr "Vypočítat"
-
-msgid "Reset"
-msgstr "Obnovit"
-
-msgid "Grade ranges"
-msgstr "Rozsahy známek"
-
-msgid "Grade"
-msgstr "Známka"
-
-msgid "Score Range"
-msgstr "Rozsah bodů"
-
-msgid "Grade thresholds"
-msgstr "Hranice známek"
-
-msgid "Percentage"
-msgstr "Procenta"
-
-msgid ""
-"From 4 to 9 max points, grades do not follow specific percentage thresholds."
-msgstr ""
-"Od 4 do 9 maximálních bodů známky neodpovídají konkrétním procentuálním hranicím."
-
-msgid "Group divider"
-msgstr "Rozdělovač skupin"
-
-msgid "Split your group into smaller teams"
-msgstr "Rozdělte skupinu na menší týmy"
-
-msgid "Select a group"
-msgstr "Vybrat skupinu"
-
-msgid "members"
-msgstr "členů"
-
-msgid "No groups available"
-msgstr "Žádné skupiny nejsou k dispozici"
-
-msgid "Divide"
-msgstr "Rozdělit"
-
-msgid "Create group"
-msgstr "Vytvořit skupinu"
-
-msgid "Edit group"
-msgstr "Upravit skupinu"
-
-msgid "Divided groups"
-msgstr "Rozdělené skupiny"
-
-msgid "Group"
-msgstr "Skupina"
-
-msgid "Delete group"
-msgstr "Smazat skupinu"
-
-msgid "Are you sure you want to delete"
-msgstr "Opravdu chcete smazat"
-
-msgid "This action cannot be undone."
-msgstr "Tuto akci nelze vrátit zpět."
-
-msgid "Cancel"
-msgstr "Zrušit"
-
-msgid "Delete"
-msgstr "Smazat"
-
-msgid "Group Maker"
-msgstr "Tvůrce skupin"
-
-msgid "Manage your groups and member lists"
-msgstr "Spravujte své skupiny a seznamy členů"
-
-msgid "Choose a group..."
-msgstr "Vyberte skupinu..."
-
-msgid "Create Group"
-msgstr "Vytvořit skupinu"
-
-msgid "Edit Group"
-msgstr "Upravit skupinu"
-
-msgid "No groups yet"
-msgstr "Zatím žádné skupiny"
-
-msgid "Create your first group to get started"
-msgstr "Vytvořte svou první skupinu a začněte"
-
-msgid "Create new group"
-msgstr "Vytvořit novou skupinu"
-
-msgid "Add a group that you can use across all tools"
-msgstr "Přidejte skupinu, kterou můžete používat ve všech nástrojích"
-
-msgid "Update group details and member colors"
-msgstr "Aktualizovat údaje skupiny a barvy členů"
-
-msgid "Member colors"
-msgstr "Barvy členů"
-
-msgid "Save changes"
-msgstr "Uložit změny"
-
-msgid "Math Operations"
-msgstr "Matematické operace"
-
-msgid "Mathematical tools and calculators"
-msgstr "Matematické nástroje a kalkulačky"
-
-msgid "Under Development"
-msgstr "Ve vývoji"
-
-msgid "This tool is currently being built. Check back soon!"
-msgstr "Tento nástroj se právě vyvíjí. Brzy se vraťte!"
-
-msgid "Back to Home"
-msgstr "Zpět na úvod"
-
-msgid "Delete column"
-msgstr "Smazat sloupec"
-
-msgid "Remove a column from the points table"
-msgstr "Odebrat sloupec z tabulky bodů"
-
-msgid "This action cannot be undone"
-msgstr "Tuto akci nelze vrátit zpět"
-
-msgid "All data in this column will be permanently deleted for all members."
-msgstr "Všechna data v tomto sloupci budou trvale smazána pro všechny členy."
-
-msgid "Column to delete"
-msgstr "Sloupec ke smazání"
-
-msgid "Select a column"
-msgstr "Vybrat sloupec"
-
-msgid "No columns available"
-msgstr "Žádné sloupce nejsou k dispozici"
-
-msgid "Table definition"
-msgstr "Definice tabulky"
-
-msgid "Column type"
-msgstr "Typ sloupce"
-
-msgid "Edit column"
-msgstr "Upravit sloupec"
-
-msgid "Rename an existing column"
-msgstr "Přejmenovat existující sloupec"
-
-msgid "Column to edit"
-msgstr "Sloupec k úpravě"
-
-msgid "New column name"
-msgstr "Nový název sloupce"
-
-msgid "Points system"
-msgstr "Bodový systém"
-
-msgid "Track positive and negative points for group members"
-msgstr "Sledujte kladné a záporné body členů skupiny"
-
-msgid "Show points"
-msgstr "Zobrazit body"
-
-msgid "Negative points"
-msgstr "Záporné body"
-
-msgid "Name"
-msgstr "Jméno"
-
-msgid "Total"
-msgstr "Celkem"
-
-msgid "Save points"
-msgstr "Uložit body"
-
-msgid "Add column"
-msgstr "Přidat sloupec"
-
-msgid "Add first column"
-msgstr "Přidat první sloupec"
-
-msgid "Positive points"
-msgstr "Kladné body"
-
-msgid "Dashboard"
-msgstr "Přehled"
-
-msgid "Back to Points"
-msgstr "Zpět na body"
-
-msgid "Individual member dashboard"
-msgstr "Individuální přehled člena"
-
-msgid "Negative Points"
-msgstr "Záporné body"
-
-msgid "Positive Points"
-msgstr "Kladné body"
-
-msgid "Net Score"
-msgstr "Čisté skóre"
-
-msgid "Negative Points Breakdown"
-msgstr "Rozpis záporných bodů"
-
-msgid "No negative points recorded"
-msgstr "Žádné záporné body zaznamenány"
-
-msgid "Positive Points Breakdown"
-msgstr "Rozpis kladných bodů"
-
-msgid "No positive points recorded"
-msgstr "Žádné kladné body zaznamenány"
-
-msgid "New column"
-msgstr "Nový sloupec"
-
-msgid "Add new column"
-msgstr "Přidat nový sloupec"
-
-msgid "Create a new column for tracking points"
-msgstr "Vytvořit nový sloupec pro sledování bodů"
-
-msgid "Column name"
-msgstr "Název sloupce"
-
-msgid "Numerical"
-msgstr "Číselný"
-
-msgid "Text"
-msgstr "Textový"
-
-msgid "Numerical columns will be summed in the total"
-msgstr "Číselné sloupce budou sečteny v celkovém součtu"
-
-msgid "Create column"
-msgstr "Vytvořit sloupec"
-
-msgid "Timer"
-msgstr "Časovač"
-
-msgid "Countdown timers and stopwatches"
-msgstr "Odpočítávací časovače a stopky"
-
-msgid "Stopwatch"
-msgstr "Stopky"
-
-msgid "Mark your times with flags"
-msgstr "Označte si časy pomocí vlajek"
-
-msgid "Count up with lap flags"
-msgstr "Počítání nahoru s označením kol"
-
-msgid "Countdown"
-msgstr "Odpočítávání"
-
-msgid "Set a duration and count down to zero"
-msgstr "Nastavte dobu a odpočítávejte do nuly"
-
-msgid "Hours"
-msgstr "Hodiny"
-
-msgid "Minutes"
-msgstr "Minuty"
-
-msgid "Seconds"
-msgstr "Sekundy"
-
-msgid "Flags"
-msgstr "Označení"
-
-msgid "Week"
-msgstr "Týden"
-
-msgid "Even week"
-msgstr "Sudý týden"
-
-msgid "Odd week"
-msgstr "Lichý týden"
-
-msgid "To-Do List"
-msgstr "Seznam úkolů"
-
-msgid "Task management and organization"
-msgstr "Správa a organizace úkolů"
-
+#: apps/calendar/models.py:14
+msgid "One-time event"
+msgstr "Jednorázová událost"
+
+#: apps/calendar/models.py:15
+msgid "Daily"
+msgstr "Denně"
+
+#: apps/calendar/models.py:16
+msgid "Weekly"
+msgstr "Týdně"
+
+#: apps/calendar/models.py:17
+msgid "Monthly"
+msgstr "Měsíčně"
+
+#: apps/calendar/models.py:18
+msgid "Yearly"
+msgstr "Ročně"
+
+#: apps/calendar/templates/calendar/day_detail.html:14
+#: apps/calendar/templates/calendar/event_confirm_delete.html:14
+#: apps/calendar/templates/calendar/event_form.html:14
+#: apps/calendar/templates/calendar/home.html:4
+#: apps/calendar/templates/calendar/week_detail.html:15 templates/base.html:168
+#: templates/base.html:209 templates/home.html:301
 msgid "Calendar"
 msgstr "Kalendář"
 
-msgid "Plan and organize your teaching schedule."
-msgstr "Plánujte a organizujte svůj rozvrh výuky."
+#: apps/calendar/templates/calendar/day_detail.html:21
+#: apps/calendar/templates/calendar/home.html:31
+msgid "Today"
+msgstr "Dnes"
 
-msgid "Login"
-msgstr "Přihlásit se"
+#: apps/calendar/templates/calendar/day_detail.html:33
+#: apps/calendar/templates/calendar/week_detail.html:42
+msgid "Month"
+msgstr "Měsíc"
 
-msgid "Welcome back"
-msgstr "Vítejte zpět"
+#: apps/calendar/templates/calendar/day_detail.html:37
+#: apps/calendar/templates/calendar/home.html:35
+#: apps/calendar/templates/calendar/week_detail.html:4
+#: apps/calendar/templates/calendar/week_detail.html:24 templates/home.html:212
+msgid "Week"
+msgstr "Týden"
 
-msgid "Sign in to your account"
-msgstr "Přihlaste se ke svému účtu"
+#: apps/calendar/templates/calendar/day_detail.html:55
+#: apps/calendar/templates/calendar/home.html:51
+#: apps/calendar/templates/calendar/week_detail.html:58
+msgid "New event"
+msgstr "Nová událost"
 
-msgid "Sign in"
-msgstr "Přihlásit se"
+#: apps/calendar/templates/calendar/day_detail.html:68
+msgid "All day"
+msgstr "Celý den"
 
-msgid "Don't have an account?"
-msgstr "Nemáte účet?"
+#: apps/calendar/templates/calendar/day_detail.html:109
+#: apps/calendar/templates/calendar/week_detail.html:97
+msgid "No events"
+msgstr "Žádné události"
 
-msgid "Create one"
-msgstr "Vytvořte si ho"
+#: apps/calendar/templates/calendar/day_detail.html:110
+msgid "Nothing scheduled for this day."
+msgstr "Na tento den není nic naplánováno."
 
-msgid "Register"
-msgstr "Registrovat se"
+#: apps/calendar/templates/calendar/day_detail.html:113
+msgid "Add event"
+msgstr "Přidat událost"
 
-msgid "Create an account"
-msgstr "Vytvořit účet"
+#: apps/calendar/templates/calendar/event_confirm_delete.html:4
+msgid "Delete event"
+msgstr "Smazat"
 
-msgid "Start using Teachka for free"
-msgstr "Začněte používat Teachka zdarma"
+#: apps/calendar/templates/calendar/event_confirm_delete.html:14
+#: apps/group_maker/templates/group_maker/confirm_delete.html:14
+msgid "Danger Zone"
+msgstr "Nebezpečná zóna"
 
+#: apps/calendar/templates/calendar/event_confirm_delete.html:17
+#: apps/calendar/templates/calendar/event_form.html:174
+#: apps/group_maker/templates/group_maker/confirm_delete.html:17
+#: apps/group_maker/templates/group_maker/home.html:47
+#: apps/point_system/templates/point_system/delete_column.html:22
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:431
+#: apps/users/templates/users/delete_account.html:16
+#: apps/users/templates/users/settings.html:107
+msgid "Delete"
+msgstr "Smazat"
+
+#: apps/calendar/templates/calendar/event_confirm_delete.html:17
+#: apps/calendar/templates/calendar/event_form.html:4
+#: apps/calendar/templates/calendar/event_form.html:18
+#: apps/calendar/templates/calendar/event_form.html:20
+msgid "event"
+msgstr "událost"
+
+#: apps/calendar/templates/calendar/event_confirm_delete.html:20
+#: apps/group_maker/templates/group_maker/confirm_delete.html:20
+msgid "This action is permanent and cannot be undone"
+msgstr "Tuto akci nelze vrátit zpět"
+
+#: apps/calendar/templates/calendar/event_confirm_delete.html:37
+msgid "Are you sure you want to delete this event?"
+msgstr "Opravdu chcete smazat"
+
+#: apps/calendar/templates/calendar/event_confirm_delete.html:42
+msgid "Date"
+msgstr "Datum"
+
+#: apps/calendar/templates/calendar/event_confirm_delete.html:48
+#: apps/calendar/templates/calendar/event_form.html:115
+msgid "Recurrence"
+msgstr "Opakování"
+
+#: apps/calendar/templates/calendar/event_confirm_delete.html:55
+#: apps/calendar/templates/calendar/event_form.html:55
+msgid "Subject"
+msgstr "Předmět"
+
+#: apps/calendar/templates/calendar/event_confirm_delete.html:68
+#: apps/group_maker/templates/group_maker/confirm_delete.html:56
+msgid "Delete permanently"
+msgstr "Trvale smazat"
+
+#: apps/calendar/templates/calendar/event_confirm_delete.html:71
+#: apps/calendar/templates/calendar/event_form.html:178
+#: apps/group_maker/templates/group_maker/confirm_delete.html:60
+#: apps/group_maker/templates/group_maker/list_create.html:75
+#: apps/group_maker/templates/group_maker/list_edit.html:90
+#: apps/point_system/templates/point_system/delete_column.html:85
+#: apps/point_system/templates/point_system/edit_column.html:105
+#: apps/point_system/templates/point_system/home.html:163
+#: apps/point_system/templates/point_system/home.html:266
+#: apps/point_system/templates/point_system/new_column.html:88
+#: apps/quizzmaker/templates/quizzmaker/quiz_form.html:70
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:330
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:414
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:446
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:509
+#: apps/users/templates/users/delete_account.html:46
+#: apps/users/templates/users/edit_profile.html:109
+msgid "Cancel"
+msgstr "Zrušit"
+
+#: apps/calendar/templates/calendar/event_form.html:14
+msgid "Event"
+msgstr "Událost"
+
+#: apps/calendar/templates/calendar/event_form.html:18
+#: apps/group_maker/templates/group_maker/list_edit.html:17
+#: apps/point_system/templates/point_system/edit_column.html:22
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:352
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:467
+#: apps/users/templates/users/edit_profile.html:17
+msgid "Edit"
+msgstr "Upravit"
+
+#: apps/calendar/templates/calendar/event_form.html:20
+#: apps/calendar/templates/calendar/week_detail.html:59
+#: apps/point_system/templates/point_system/new_column.html:21
+#: apps/quizzmaker/templates/quizzmaker/quiz_form.html:15
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:273
+msgid "New"
+msgstr "Nová"
+
+#: apps/calendar/templates/calendar/event_form.html:24
+msgid "Fill in the details below"
+msgstr "Vyplň údaje níže"
+
+#: apps/calendar/templates/calendar/event_form.html:34
+msgid "Event details"
+msgstr "Detaily události"
+
+#: apps/calendar/templates/calendar/event_form.html:40
+#: apps/quizzmaker/templates/quizzmaker/quiz_form.html:40
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:474
+msgid "Title"
+msgstr "Název"
+
+#: apps/calendar/templates/calendar/event_form.html:45
+msgid "e.g. Math lesson, Parent meeting"
+msgstr "např. Hodina matematiky, Rodičovská schůzka"
+
+#: apps/calendar/templates/calendar/event_form.html:55
+#: apps/calendar/templates/calendar/event_form.html:86
+#: apps/calendar/templates/calendar/event_form.html:129
+#: apps/calendar/templates/calendar/event_form.html:140
+#: apps/calendar/templates/calendar/event_form.html:151
+#: apps/quizzmaker/templates/quizzmaker/quiz_form.html:48
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:292
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:367
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:482
+#: apps/users/templates/registration/register.html:98
+#: apps/users/templates/users/edit_profile.html:73
 msgid "optional"
 msgstr "volitelné"
 
-msgid "Create account"
-msgstr "Vytvořit účet"
+#: apps/calendar/templates/calendar/event_form.html:61
+msgid "e.g. Mathematics, History"
+msgstr "např. Matematika, Dějepis"
 
-msgid "Already have an account?"
-msgstr "Již máte účet?"
+#: apps/calendar/templates/calendar/event_form.html:70
+msgid "Start"
+msgstr "Začátek"
 
-msgid "Change Password"
-msgstr "Změnit heslo"
+#: apps/calendar/templates/calendar/event_form.html:86
+msgid "End"
+msgstr "Konec"
 
-msgid "We'll send a reset link to your email"
-msgstr "Pošleme vám odkaz pro obnovení na email"
+#: apps/calendar/templates/calendar/event_form.html:110
+msgid "All-day event"
+msgstr "Celodenní událost"
 
-msgid "Email"
-msgstr "Email"
+#: apps/calendar/templates/calendar/event_form.html:129
+msgid "Repeat until"
+msgstr "Opakovat do"
 
-msgid "Send"
-msgstr "Odeslat"
+#: apps/calendar/templates/calendar/event_form.html:140
+msgid "Description"
+msgstr "Popis"
 
-msgid "Edit profile"
-msgstr "Upravit profil"
+#: apps/calendar/templates/calendar/event_form.html:145
+msgid "What is this event about?"
+msgstr "O čem je tato událost?"
 
-msgid "Update your account information"
-msgstr "Aktualizovat informace o účtu"
+#: apps/calendar/templates/calendar/event_form.html:151
+msgid "Lesson notes"
+msgstr "Poznámky k hodině"
 
-msgid "Password"
-msgstr "Heslo"
+#: apps/calendar/templates/calendar/event_form.html:156
+msgid "Learning objectives, materials, homework..."
+msgstr "Cíle, materiály, domácí úkoly..."
 
-msgid "Change password"
-msgstr "Změnit heslo"
+#: apps/calendar/templates/calendar/event_form.html:167
+#: apps/group_maker/templates/group_maker/list_edit.html:86
+#: apps/point_system/templates/point_system/edit_column.html:100
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:410
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:505
+#: apps/users/templates/users/edit_profile.html:106
+msgid "Save changes"
+msgstr "Uložit změny"
 
-msgid "Reset Password"
-msgstr "Obnovit heslo"
+#: apps/calendar/templates/calendar/event_form.html:167
+msgid "Create event"
+msgstr "Vytvořte si ho"
 
-msgid "Enter your new password"
-msgstr "Zadejte své nové heslo"
+#: apps/calendar/templates/calendar/home.html:14
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:14
+#: apps/group_divider/templates/group_divider/home.html:13
+#: apps/point_system/templates/point_system/home.html:15
+#: apps/quizzmaker/templates/quizzmaker/home.html:15
+#: apps/timer/templates/timer/countdown.html:13
+#: apps/timer/templates/timer/home.html:14
+#: apps/timer/templates/timer/stopwatch.html:13
+#: apps/wheel/templates/wheel/home.html:14 templates/base.html:161
+msgid "Tools"
+msgstr "Nástroje"
 
-msgid "Profile"
-msgstr "Profil"
+#: apps/calendar/templates/calendar/home.html:14
+msgid "Planning"
+msgstr "Plánování"
 
-msgid "Not set"
-msgstr "Nenastaveno"
+#: apps/calendar/templates/calendar/home.html:20
+msgid "Plans and events"
+msgstr "Plány a události"
 
-msgid "Your profile"
-msgstr "Váš profil"
+#: apps/calendar/templates/calendar/week_detail.html:26
+msgid "Even"
+msgstr "Sudý"
 
-msgid "View and manage your account information"
-msgstr "Zobrazit a spravovat informace o účtu"
+#: apps/calendar/templates/calendar/week_detail.html:26
+msgid "Odd"
+msgstr "Lichý"
 
-msgid "Username"
-msgstr "Uživatelské jméno"
+#: apps/calendar/templates/calendar/week_detail.html:38
+msgid "This week"
+msgstr "Tento týden"
 
-msgid "First name"
-msgstr "Jméno"
-
-msgid "Last name"
-msgstr "Příjmení"
-
-msgid "Settings"
-msgstr "Nastavení"
-
-msgid "Account settings"
-msgstr "Nastavení účtu"
-
-msgid "Theme"
-msgstr "Motiv"
-
-msgid "Light"
-msgstr "Světlý"
-
-msgid "Dark"
-msgstr "Tmavý"
-
-msgid "Pastel"
-msgstr "Pastelový"
-
-msgid "Language"
-msgstr "Jazyk"
-
-msgid "Accent color"
-msgstr "Barva zvýraznění"
-
-msgid "Save settings"
-msgstr "Uložit nastavení"
-
-msgid "Quick toggle theme"
-msgstr "Rychle přepnout motiv"
-
-msgid "Name wheel"
-msgstr "Kolo jmen"
-
-msgid "Randomly select a name from your group"
-msgstr "Náhodně vyberte jméno z vaší skupiny"
-
-msgid "Members"
-msgstr "Členové"
-
-msgid "Spin"
-msgstr "Točit"
-
-msgid "Remove after spin"
-msgstr "Odebrat po otočení"
-
-msgid "Selected"
-msgstr "Vybráno"
-
-msgid "Already Chosen"
-msgstr "Již vybráni"
-
-msgid "Page not found"
-msgstr "Stránka nenalezena"
-
-msgid "The page you're looking for doesn't exist or has been moved."
-msgstr "Stránka, kterou hledáte, neexistuje nebo byla přesunuta."
-
-msgid "Go Home"
-msgstr "Zpět na úvod"
-
-msgid "Home"
-msgstr "Domů"
-
-msgid "Change language"
-msgstr "Změnit jazyk"
-
-msgid "Karma System"
-msgstr "Systém karmy"
-
-msgid "Karma system"
-msgstr "Systém karmy"
-
-msgid "Grade Calculator"
-msgstr "Kalkulačka známek"
-
-msgid "Wheel"
-msgstr "Kolo"
-
-msgid "Tools for Teachers"
-msgstr "Nástroje pro učitele"
-
-msgid "Welcome to"
-msgstr "Vítejte na"
-
-msgid "A collection of tools designed to make your teaching day easier."
-msgstr "Sbírka nástrojů navržených pro usnadnění vašeho vyučovacího dne."
-
-msgid "Point system"
-msgstr "Bodový systém"
-
-msgid "Track participation and behavior with customizable point categories."
-msgstr "Sledujte účast a chování pomocí vlastních bodových kategorií."
-
-msgid "Track performance with customizable point categories."
-msgstr "Sledujte výkon pomocí vlastních bodových kategorií."
-
-msgid "Randomly split your class into teams of any size."
-msgstr "Náhodně rozdělte třídu do skupin libovolné velikosti."
-
-msgid "Generate score ranges for any maximum points value."
-msgstr "Vygenerujte rozsahy hodnocení pro libovolný maximální počet bodů."
-
-msgid "Randomly pick students from a group."
-msgstr "Náhodně vyberte studenty ze skupiny."
-
-msgid "Your Activity"
-msgstr "Vaše aktivita"
-
-msgid "Groups"
-msgstr "Skupiny"
-
-msgid "Points"
-msgstr "Body"
-
-msgid "Calculator"
-msgstr "Kalkulačka"
-
-msgid "uses"
-msgstr "použití"
-
-msgid "spins"
-msgstr "otočení"
-
-msgid "Divider"
-msgstr "Rozdělovač"
-
-msgid "splits"
-msgstr "rozdělení"
-
+#: apps/grade_calculator/forms.py:6
 msgid "Max Points"
 msgstr "Maximální body"
 
+#: apps/grade_calculator/forms.py:9
 msgid "Rounding option"
 msgstr "Možnost zaokrouhlení"
 
+#: apps/grade_calculator/forms.py:10
 msgid "Full number"
 msgstr "Celé číslo"
 
+#: apps/grade_calculator/forms.py:10
 msgid "Decimal number"
 msgstr "Desetinné číslo"
 
-msgid "min"
-msgstr "min"
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:4
+#: templates/base.html:187 templates/base.html:212
+msgid "Grade calculator"
+msgstr "Kalkulačka známek"
 
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:14
+msgid "Grading"
+msgstr "Známka"
+
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:17
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:97
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:101
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:105
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:109
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:113
+msgid "Grade"
+msgstr "Známka"
+
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:17
+msgid "calculator"
+msgstr "Kalkulačka"
+
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:20
+msgid "Calculate grade ranges based on maximum points"
+msgstr "Vypočítat rozsahy známek na základě maximálního počtu bodů"
+
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:29
+#: apps/group_divider/templates/group_divider/home.html:25
+msgid "Configuration"
+msgstr "Nastavení"
+
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:35
+msgid "Maximum points available"
+msgstr "Žádné sloupce nejsou k dispozici"
+
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:51
+msgid "Rounding strategy"
+msgstr "Možnost zaokrouhlení"
+
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:73
+msgid "Calculate"
+msgstr "Vypočítat"
+
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:76
+#: apps/group_divider/templates/group_divider/home.html:65
+#: apps/group_maker/templates/group_maker/home.html:44
+#: apps/point_system/templates/point_system/home.html:64
+#: apps/wheel/templates/wheel/home.html:79
+msgid "Reset"
+msgstr "Obnovit"
+
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:85
+msgid "The results"
+msgstr "Výsledky"
+
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:86
+msgid "Max"
+msgstr "Max"
+
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:92
+msgid "Point ranges"
+msgstr "Body"
+
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:122
+msgid "Thresholds"
+msgstr "Hranice známek"
+
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:140
+msgid ""
+"From 4 to 9 max points, grades do not follow specific percentage thresholds."
+msgstr ""
+"Od 4 do 9 maximálních bodů známky neodpovídají konkrétním procentuálním "
+"hranicím."
+
+#: apps/group_divider/templates/group_divider/home.html:4
+#: templates/base.html:181 templates/base.html:211
+msgid "Group divider"
+msgstr "Rozdělovač skupin"
+
+#: apps/group_divider/templates/group_divider/home.html:13
+#: apps/group_maker/templates/group_maker/list_create.html:14
+#: apps/group_maker/templates/group_maker/list_edit.html:14
+msgid "Organization"
+msgstr "Organizace"
+
+#: apps/group_divider/templates/group_divider/home.html:16
+#: apps/group_divider/templates/group_divider/home.html:34
+#: apps/point_system/templates/point_system/home.html:42
+#: apps/wheel/templates/wheel/home.html:35
+msgid "Group"
+msgstr "Skupina"
+
+#: apps/group_divider/templates/group_divider/home.html:16
+msgid "divider"
+msgstr "Rozdělovač"
+
+#: apps/group_divider/templates/group_divider/home.html:19
+msgid "Split your group into smaller teams effortlessly"
+msgstr "Rozdělte skupinu na menší týmy"
+
+#: apps/group_divider/templates/group_divider/home.html:36
+#: apps/group_maker/templates/group_maker/home.html:25
+#: apps/point_system/templates/point_system/home.html:44
+#: apps/wheel/templates/wheel/home.html:37
+msgid "Choose a group..."
+msgstr "Vyberte skupinu..."
+
+#: apps/group_divider/templates/group_divider/home.html:38
+#: apps/group_maker/templates/group_maker/home.html:28
+#: apps/point_system/templates/point_system/home.html:26
+#: apps/point_system/templates/point_system/home.html:46
+#: apps/wheel/templates/wheel/home.html:39 templates/home.html:338
+msgid "members"
+msgstr "členů"
+
+#: apps/group_divider/templates/group_divider/home.html:40
+#: apps/point_system/templates/point_system/home.html:48
+#: apps/wheel/templates/wheel/home.html:41
+msgid "No groups available"
+msgstr "Žádné skupiny nejsou k dispozici"
+
+#: apps/group_divider/templates/group_divider/home.html:46
+msgid "Team size"
+msgstr "Velikost týmu"
+
+#: apps/group_divider/templates/group_divider/home.html:61
+msgid "Divide"
+msgstr "Rozdělit"
+
+#: apps/group_divider/templates/group_divider/home.html:69
+#: apps/point_system/templates/point_system/home.html:68
+#: apps/wheel/templates/wheel/home.html:81
+msgid "New group"
+msgstr "Vytvořit skupinu"
+
+#: apps/group_divider/templates/group_divider/home.html:74
+#: apps/group_maker/templates/group_maker/list_edit.html:4
+#: apps/point_system/templates/point_system/home.html:60
+#: apps/wheel/templates/wheel/home.html:84
+msgid "Edit group"
+msgstr "Upravit skupinu"
+
+#: apps/group_divider/templates/group_divider/home.html:85
+msgid "Selected teams"
+msgstr "Vybráno"
+
+#: apps/group_divider/templates/group_divider/home.html:86
+msgid "Source"
+msgstr "Zdroj"
+
+#: apps/group_divider/templates/group_divider/home.html:90
+msgid "Total Teams"
+msgstr "Celkem"
+
+#: apps/group_divider/templates/group_divider/home.html:103
+msgid "Team"
+msgstr "Tým"
+
+#: apps/group_divider/templates/group_divider/home.html:105
+#: apps/group_maker/templates/group_maker/confirm_delete.html:43
+#: apps/group_maker/templates/group_maker/list_create.html:50
+#: apps/group_maker/templates/group_maker/list_edit.html:50
+msgid "Members"
+msgstr "Členové"
+
+#: apps/group_maker/templates/group_maker/confirm_delete.html:4
+#: apps/group_maker/templates/group_maker/list_edit.html:98
+msgid "Delete group"
+msgstr "Smazat skupinu"
+
+#: apps/group_maker/templates/group_maker/confirm_delete.html:14
+#: apps/group_maker/templates/group_maker/list_create.html:14
+#: apps/group_maker/templates/group_maker/list_edit.html:14
+msgid "Management"
+msgstr "Správa"
+
+#: apps/group_maker/templates/group_maker/confirm_delete.html:17
+#: apps/group_maker/templates/group_maker/list_create.html:17
+#: apps/group_maker/templates/group_maker/list_edit.html:17
+msgid "group"
+msgstr "Skupina"
+
+#: apps/group_maker/templates/group_maker/confirm_delete.html:37
+msgid ""
+"Are you sure you want to remove this group and all its associated data from "
+"your account?"
+msgstr ""
+"Opravdu chceš odstranit tuto skupinu a všechna související data z účtu?"
+
+#: apps/group_maker/templates/group_maker/confirm_delete.html:42
+msgid "Group Size"
+msgstr "Rozdělovač skupin"
+
+#: apps/group_maker/templates/group_maker/home.html:4
+#: apps/group_maker/templates/group_maker/home.html:10
+msgid "Group Maker"
+msgstr "Tvůrce skupin"
+
+#: apps/group_maker/templates/group_maker/home.html:11
+msgid "Manage your groups and member lists"
+msgstr "Spravujte své skupiny a seznamy členů"
+
+#: apps/group_maker/templates/group_maker/home.html:22
+msgid "Select a group"
+msgstr "Vybrat skupinu"
+
+#: apps/group_maker/templates/group_maker/home.html:38
+msgid "Create Group"
+msgstr "Vytvořit skupinu"
+
+#: apps/group_maker/templates/group_maker/home.html:41
+msgid "Edit Group"
+msgstr "Upravit skupinu"
+
+#: apps/group_maker/templates/group_maker/home.html:59
+msgid "No groups yet"
+msgstr "Zatím žádné skupiny"
+
+#: apps/group_maker/templates/group_maker/home.html:60
+msgid "Create your first group to get started"
+msgstr "Vytvořte svou první skupinu a začněte"
+
+#: apps/group_maker/templates/group_maker/list_create.html:4
+#: apps/group_maker/templates/group_maker/list_create.html:72
+msgid "Create group"
+msgstr "Vytvořit skupinu"
+
+#: apps/group_maker/templates/group_maker/list_create.html:17
+#: apps/quizzmaker/templates/quizzmaker/quiz_form.html:18
+msgid "Create"
+msgstr "Vytvořte si ho"
+
+#: apps/group_maker/templates/group_maker/list_create.html:20
+msgid "Add a group that you can use across all tools"
+msgstr "Přidejte skupinu, kterou můžete používat ve všech nástrojích"
+
+#: apps/group_maker/templates/group_maker/list_create.html:30
+msgid "Group details"
+msgstr "Skupiny"
+
+#: apps/group_maker/templates/group_maker/list_create.html:36
+#: apps/group_maker/templates/group_maker/list_edit.html:36
+#: apps/group_maker/templates/group_maker/list_edit.html:42
+msgid "Group name"
+msgstr "Tvůrce skupin"
+
+#: apps/group_maker/templates/group_maker/list_create.html:41
+msgid "e.g. Class 10A, Project Team"
+msgstr "např. Třída 10A, Projektový tým"
+
+#: apps/group_maker/templates/group_maker/list_create.html:54
+msgid "Enter names separated by commas or new lines"
+msgstr "Zadej jména oddělená čárkami nebo novými řádky"
+
+#: apps/group_maker/templates/group_maker/list_edit.html:20
+msgid "Update group details and member colors"
+msgstr "Aktualizovat údaje skupiny a barvy členů"
+
+#: apps/group_maker/templates/group_maker/list_edit.html:30
+msgid "Group Details"
+msgstr "Skupiny"
+
+#: apps/group_maker/templates/group_maker/list_edit.html:55
+msgid "Enter names separated by commas or lines..."
+msgstr "Zadej jména oddělená čárkami nebo řádky..."
+
+#: apps/group_maker/templates/group_maker/list_edit.html:64
+msgid "Member colors"
+msgstr "Barvy členů"
+
+#: apps/math_ops/templates/math_ops/home.html:4
+#: apps/math_ops/templates/math_ops/home.html:10
+msgid "Math Operations"
+msgstr "Matematické operace"
+
+#: apps/math_ops/templates/math_ops/home.html:11
+msgid "Mathematical tools and calculators"
+msgstr "Matematické nástroje a kalkulačky"
+
+#: apps/math_ops/templates/math_ops/home.html:19
+msgid "Under Development"
+msgstr "Ve vývoji"
+
+#: apps/math_ops/templates/math_ops/home.html:21
+msgid "This tool is currently being built. Check back soon!"
+msgstr "Tento nástroj se právě vyvíjí. Brzy se vraťte!"
+
+#: apps/math_ops/templates/math_ops/home.html:25
+msgid "Back to Home"
+msgstr "Zpět na úvod"
+
+#: apps/point_system/templates/point_system/delete_column.html:5
+#: apps/point_system/templates/point_system/delete_column.html:80
+#: apps/point_system/templates/point_system/home.html:176
+#: apps/point_system/templates/point_system/home.html:278
+msgid "Delete column"
+msgstr "Smazat sloupec"
+
+#: apps/point_system/templates/point_system/delete_column.html:18
+#: apps/point_system/templates/point_system/edit_column.html:18
+#: apps/point_system/templates/point_system/karma_dashboard.html:14
+#: apps/point_system/templates/point_system/new_column.html:17
+msgid "Back to points"
+msgstr "Zpět na body"
+
+#: apps/point_system/templates/point_system/delete_column.html:23
+#: apps/point_system/templates/point_system/edit_column.html:23
+#: apps/point_system/templates/point_system/home.html:92
+#: apps/point_system/templates/point_system/home.html:195
+#: apps/point_system/templates/point_system/new_column.html:22
+msgid "column"
+msgstr "Přidat sloupec"
+
+#: apps/point_system/templates/point_system/delete_column.html:29
+#: apps/point_system/templates/point_system/edit_column.html:29
+#: apps/point_system/templates/point_system/new_column.html:28
+msgid "table"
+msgstr "tabulka"
+
+#: apps/point_system/templates/point_system/delete_column.html:36
+msgid "Remove column"
+msgstr "Nový sloupec"
+
+#: apps/point_system/templates/point_system/delete_column.html:41
+msgid "This action cannot be undone"
+msgstr "Tuto akci nelze vrátit zpět"
+
+#: apps/point_system/templates/point_system/delete_column.html:42
+msgid "All data in this column will be permanently deleted for every member."
+msgstr "Všechna data v tomto sloupci budou trvale smazána pro všechny členy."
+
+#: apps/point_system/templates/point_system/delete_column.html:55
+msgid "Column to delete"
+msgstr "Sloupec ke smazání"
+
+#: apps/point_system/templates/point_system/delete_column.html:60
+#: apps/point_system/templates/point_system/edit_column.html:61
+msgid "No columns available"
+msgstr "Žádné sloupce nejsou k dispozici"
+
+#: apps/point_system/templates/point_system/delete_column.html:66
+#: apps/point_system/templates/point_system/edit_column.html:86
+#: apps/point_system/templates/point_system/new_column.html:67
+msgid "Column type"
+msgstr "Typ sloupce"
+
+#: apps/point_system/templates/point_system/delete_column.html:68
+#: apps/point_system/templates/point_system/delete_column.html:100
+#: apps/point_system/templates/point_system/edit_column.html:88
+#: apps/point_system/templates/point_system/edit_column.html:120
+#: apps/point_system/templates/point_system/new_column.html:69
+msgid "Numerical"
+msgstr "Číselný"
+
+#: apps/point_system/templates/point_system/delete_column.html:68
+#: apps/point_system/templates/point_system/delete_column.html:100
+#: apps/point_system/templates/point_system/edit_column.html:88
+#: apps/point_system/templates/point_system/edit_column.html:120
+#: apps/point_system/templates/point_system/new_column.html:70
+msgid "Text"
+msgstr "Textový"
+
+#: apps/point_system/templates/point_system/edit_column.html:5
+#: apps/point_system/templates/point_system/home.html:171
+#: apps/point_system/templates/point_system/home.html:274
+msgid "Edit column"
+msgstr "Upravit sloupec"
+
+#: apps/point_system/templates/point_system/edit_column.html:36
+msgid "Rename column"
+msgstr "Vytvořit sloupec"
+
+#: apps/point_system/templates/point_system/edit_column.html:56
+msgid "Column to edit"
+msgstr "Sloupec k úpravě"
+
+#: apps/point_system/templates/point_system/edit_column.html:70
+msgid "New column name"
+msgstr "Nový název sloupce"
+
+#: apps/point_system/templates/point_system/edit_column.html:77
+msgid "Enter new name"
+msgstr "Zadej nový název"
+
+#: apps/point_system/templates/point_system/home.html:5
+#: apps/point_system/templates/point_system/home.html:15
+#: templates/base.html:175 templates/base.html:210
+msgid "Point system"
+msgstr "Bodový systém"
+
+#: apps/point_system/templates/point_system/home.html:19
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:316
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:400
+#: templates/home.html:343
+msgid "Points"
+msgstr "Body"
+
+#: apps/point_system/templates/point_system/home.html:28
+msgid "Track participation and behavior, group by group"
+msgstr "Sledujte účast a chování pomocí vlastních bodových kategorií."
+
+#: apps/point_system/templates/point_system/home.html:36
+msgid "Choose group"
+msgstr "Vyberte skupinu..."
+
+#: apps/point_system/templates/point_system/home.html:73
+msgid "Create a group"
+msgstr "Vytvořit skupinu"
+
+#: apps/point_system/templates/point_system/home.html:89
+#: apps/point_system/templates/point_system/karma_dashboard.html:92
+msgid "Negative points"
+msgstr "Záporné body"
+
+#: apps/point_system/templates/point_system/home.html:92
+#: apps/point_system/templates/point_system/home.html:195
+msgid "columns"
+msgstr "Přidat sloupec"
+
+#: apps/point_system/templates/point_system/home.html:102
+#: apps/point_system/templates/point_system/home.html:205
+#: apps/wheel/templates/wheel/home.html:17
+msgid "Name"
+msgstr "Jméno"
+
+#: apps/point_system/templates/point_system/home.html:106
+#: apps/point_system/templates/point_system/home.html:209
+msgid "Total"
+msgstr "Celkem"
+
+#: apps/point_system/templates/point_system/home.html:148
+msgid "No negative columns yet"
+msgstr "Žádné záporné body zaznamenány"
+
+#: apps/point_system/templates/point_system/home.html:149
+msgid "Add one to start tracking."
+msgstr "Přidej jeden a začni sledovat."
+
+#: apps/point_system/templates/point_system/home.html:159
+#: apps/point_system/templates/point_system/home.html:262
+msgid "Save points"
+msgstr "Uložit body"
+
+#: apps/point_system/templates/point_system/home.html:167
+#: apps/point_system/templates/point_system/home.html:270
+msgid "Add column"
+msgstr "Přidat sloupec"
+
+#: apps/point_system/templates/point_system/home.html:181
+#: apps/point_system/templates/point_system/home.html:283
+msgid "Add first column"
+msgstr "Přidat první sloupec"
+
+#: apps/point_system/templates/point_system/home.html:192
+#: apps/point_system/templates/point_system/karma_dashboard.html:119
+msgid "Positive points"
+msgstr "Kladné body"
+
+#: apps/point_system/templates/point_system/home.html:251
+msgid "No positive columns yet"
+msgstr "Žádné kladné body zaznamenány"
+
+#: apps/point_system/templates/point_system/home.html:252
+msgid "Add one to start rewarding."
+msgstr "Přidej jeden a začni odměňovat."
+
+#: apps/point_system/templates/point_system/karma_dashboard.html:4
+msgid "Dashboard"
+msgstr "Přehled"
+
+#: apps/point_system/templates/point_system/karma_dashboard.html:22
+msgid "Member dashboard"
+msgstr "Individuální přehled člena"
+
+#: apps/point_system/templates/point_system/karma_dashboard.html:28
+msgid "Overview"
+msgstr "Přehled"
+
+#: apps/point_system/templates/point_system/karma_dashboard.html:36
+msgid "Negative"
+msgstr "Záporné body"
+
+#: apps/point_system/templates/point_system/karma_dashboard.html:43
+#: apps/point_system/templates/point_system/karma_dashboard.html:59
+msgid "categor"
+msgstr "kategori"
+
+#: apps/point_system/templates/point_system/karma_dashboard.html:43
+#: apps/point_system/templates/point_system/karma_dashboard.html:59
+msgid "y"
+msgstr "e"
+
+#: apps/point_system/templates/point_system/karma_dashboard.html:43
+#: apps/point_system/templates/point_system/karma_dashboard.html:59
+msgid "ies"
+msgstr "Minuty"
+
+#: apps/point_system/templates/point_system/karma_dashboard.html:43
+#: apps/point_system/templates/point_system/karma_dashboard.html:59
+msgid "none recorded"
+msgstr "Žádné záporné body zaznamenány"
+
+#: apps/point_system/templates/point_system/karma_dashboard.html:52
+msgid "Positive"
+msgstr "Kladné body"
+
+#: apps/point_system/templates/point_system/karma_dashboard.html:69
+msgid "Net"
+msgstr "Nenastaveno"
+
+#: apps/point_system/templates/point_system/karma_dashboard.html:75
+msgid "positive balance"
+msgstr "kladný zůstatek"
+
+#: apps/point_system/templates/point_system/karma_dashboard.html:84
+msgid "Breakdown"
+msgstr "Rozpis"
+
+#: apps/point_system/templates/point_system/karma_dashboard.html:109
+msgid "No negative points recorded"
+msgstr "Žádné záporné body zaznamenány"
+
+#: apps/point_system/templates/point_system/karma_dashboard.html:136
+msgid "No positive points recorded"
+msgstr "Žádné kladné body zaznamenány"
+
+#: apps/point_system/templates/point_system/karma_dashboard.html:147
+msgid "Back to group"
+msgstr "Zpět na úvod"
+
+#: apps/point_system/templates/point_system/new_column.html:4
+msgid "New column"
+msgstr "Nový sloupec"
+
+#: apps/point_system/templates/point_system/new_column.html:35
+msgid "Column details"
+msgstr "Sloupec ke smazání"
+
+#: apps/point_system/templates/point_system/new_column.html:55
+msgid "Column name"
+msgstr "Název sloupce"
+
+#: apps/point_system/templates/point_system/new_column.html:61
+msgid "e.g., Homework, Participation"
+msgstr "např. Úkoly, Účast"
+
+#: apps/point_system/templates/point_system/new_column.html:72
+msgid "Numerical columns are summed in the total."
+msgstr "Číselné sloupce budou sečteny v celkovém součtu"
+
+#: apps/point_system/templates/point_system/new_column.html:83
+msgid "Create column"
+msgstr "Vytvořit sloupec"
+
+#: apps/quizzmaker/templates/quizzmaker/_image_cropper.html:6
+msgid "Original"
+msgstr "Originál"
+
+#: apps/quizzmaker/templates/quizzmaker/_image_cropper.html:6
+msgid "shaded = cut"
+msgstr "šedé = oříznuto"
+
+#: apps/quizzmaker/templates/quizzmaker/_image_cropper.html:14
+msgid "Drag the bright area to choose what is kept"
+msgstr "Přetáhněte světlou oblast pro výběr toho, co zachovat"
+
+#: apps/quizzmaker/templates/quizzmaker/_image_cropper.html:17
+msgid "Card preview"
+msgstr "Náhled karty"
+
+#: apps/quizzmaker/templates/quizzmaker/_image_field.html:11
+msgid "Re-cut current image"
+msgstr "Znovu oříznout aktuální obrázek"
+
+#: apps/quizzmaker/templates/quizzmaker/_image_field.html:17
+msgid "Re-cut"
+msgstr "Znovu oříznout"
+
+#: apps/quizzmaker/templates/quizzmaker/_image_field.html:23
+#: apps/quizzmaker/templates/quizzmaker/_image_field.html:34
+msgid "Remove"
+msgstr "Odstranit"
+
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:11
+msgid "Search Quizzes"
+msgstr "Hledat kvízy"
+
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:17
+msgid "My Quizz Library"
+msgstr "Moje knihovna kvízů"
+
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:23
+msgid "Search your quizzes..."
+msgstr "Hledat své kvízy..."
+
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:23
+msgid "Search by title..."
+msgstr "Hledat podle názvu..."
+
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:26
+msgid "Search"
+msgstr "Hledat"
+
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:33
+msgid "Create a Quizz"
+msgstr "Vytvořit kvíz"
+
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:46
+msgid "No quizzes match"
+msgstr "Žádné kvízy neodpovídají"
+
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:48
+msgid "Try a different search"
+msgstr "Zkuste jiné hledání"
+
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:51
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:56
+msgid "No quizzes yet"
+msgstr "Zatím žádné kvízy"
+
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:53
+msgid "Create your first quiz to get started"
+msgstr "Vytvoř svůj první kvíz a začni"
+
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:58
+msgid "Be the first to publish one"
+msgstr "Buďte první, kdo nějaký zveřejní"
+
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:69
+msgid "Edit quiz"
+msgstr "Upravit kvíz"
+
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:93
+msgid "pts"
+msgstr "b"
+
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:100
+#, python-format
+msgid "%(counter)s round has no time limit"
+msgid_plural "%(counter)s rounds have no time limit"
+msgstr[0] "%(counter)s kolo nemá časový limit"
+msgstr[1] "%(counter)s kola nemají časový limit"
+msgstr[2] "%(counter)s kol nemá časový limit"
+msgstr[3] "%(counter)s kol nemá časový limit"
+
+#: apps/quizzmaker/templates/quizzmaker/home.html:4
+#: apps/quizzmaker/templates/quizzmaker/home.html:18
+#: apps/quizzmaker/templates/quizzmaker/quiz_form.html:15
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:16
+#: templates/base.html:205 templates/base.html:215
+msgid "Quizzes"
+msgstr "Kvízy"
+
+#: apps/quizzmaker/templates/quizzmaker/home.html:15
+msgid "Quizz time"
+msgstr "Čas na kvíz"
+
+#: apps/quizzmaker/templates/quizzmaker/home.html:21
+msgid "Build and run quick quizzes"
+msgstr "Vytvářejte a používejte rychlé kvízy"
+
+#: apps/quizzmaker/templates/quizzmaker/quiz_form.html:4
+msgid "Create Quizz"
+msgstr "Vytvořit kvíz"
+
+#: apps/quizzmaker/templates/quizzmaker/quiz_form.html:18
+msgid "a Quizz"
+msgstr "kvíz"
+
+#: apps/quizzmaker/templates/quizzmaker/quiz_form.html:21
+msgid "Title, logo, visibility"
+msgstr "Název, logo, viditelnost"
+
+#: apps/quizzmaker/templates/quizzmaker/quiz_form.html:48
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:482
+msgid "Logo"
+msgstr "Logo"
+
+#: apps/quizzmaker/templates/quizzmaker/quiz_form.html:56
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:493
+msgid "Visibility"
+msgstr "Viditelnost"
+
+#: apps/quizzmaker/templates/quizzmaker/quiz_form.html:67
+msgid "Advance"
+msgstr "Pokračovat"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:4
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:16
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:51
+msgid "Rounds"
+msgstr "Kola"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:26
+msgid "Quiz settings"
+msgstr "Nastavení kvízu"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:30
+msgid "Close"
+msgstr "Zavřít"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:36
+msgid "Save & leave"
+msgstr "Uložit a odejít"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:57
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:58
+msgid "New round"
+msgstr "Nové kolo"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:78
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:114
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:175
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:188
+msgid "No question yet"
+msgstr "Zatím žádná otázka"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:92
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:93
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:128
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:129
+msgid "Edit round"
+msgstr "Upravit kolo"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:99
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:100
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:135
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:136
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:442
+msgid "Delete round"
+msgstr "Smazat kolo"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:151
+msgid "No rounds yet"
+msgstr "Zatím žádná kola"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:154
+msgid "Tap"
+msgstr "Klikni"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:154
+msgid "to add one"
+msgstr "pro přidání"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:168
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:349
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:428
+#, python-format
+msgid "Round %(n)s"
+msgstr "Kolo %(n)s"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:168
+msgid "Preview"
+msgstr "Náhled"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:199
+msgid "Mark as correct"
+msgstr "Označit jako správné"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:213
+msgid "Answer"
+msgstr "Odpověď"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:230
+msgid "Type the correct answer"
+msgstr "Zadejte správnou odpověď"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:235
+msgid "Participants will type their answer here. Match is case-insensitive."
+msgstr "Účastníci sem napíší svou odpověď. Nezáleží na velikosti písmen."
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:249
+msgid "Nothing to preview"
+msgstr "Není co zobrazit"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:251
+msgid "Create your first round"
+msgstr "Vytvoř své první kolo"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:254
+msgid ""
+"Use the plus button on the left to add a round. The live preview will appear "
+"here as you build."
+msgstr ""
+"Pomocí tlačítka + vlevo přidejte kolo. Živý náhled se zobrazí zde, jak "
+"budete tvořit."
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:270
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:349
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:428
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:464
+msgid "Quiz"
+msgstr "Kvíz"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:273
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:352
+msgid "question"
+msgstr "otázka"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:284
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:359
+msgid "Question"
+msgstr "Otázka"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:292
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:367
+msgid "Image"
+msgstr "Obrázek"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:300
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:380
+msgid "Question type"
+msgstr "Typ otázky"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:309
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:393
+msgid "Duration"
+msgstr "Doba trvání"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:326
+msgid "Create round"
+msgstr "Vytvořit kolo"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:431
+msgid "round"
+msgstr "kolo"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:436
+msgid ""
+"This will permanently remove the round and its answers. This cannot be "
+"undone."
+msgstr "Toto trvale odstraní kolo a jeho odpovědi. Tuto akci nelze vrátit zpět."
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:464
+#: apps/users/templates/users/profile.html:70
+#: apps/users/templates/users/settings.html:4
+#: apps/users/templates/users/settings.html:17 templates/base.html:155
+msgid "Settings"
+msgstr "Nastavení"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:467
+msgid "quiz"
+msgstr "kvíz"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:497
+msgid "Public"
+msgstr "Veřejný"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:498
+msgid "Private"
+msgstr "Soukromé"
+
+#: apps/timer/templates/timer/countdown.html:4
+#: apps/timer/templates/timer/countdown.html:13
+#: apps/timer/templates/timer/countdown.html:15
+#: apps/timer/templates/timer/home.html:47
+msgid "Countdown"
+msgstr "Odpočítávání"
+
+#: apps/timer/templates/timer/countdown.html:13
+#: apps/timer/templates/timer/home.html:4
+#: apps/timer/templates/timer/home.html:14
+#: apps/timer/templates/timer/home.html:17
+#: apps/timer/templates/timer/stopwatch.html:13 templates/base.html:199
+#: templates/base.html:214 templates/home.html:287 templates/home.html:376
+msgid "Timer"
+msgstr "Časovač"
+
+#: apps/timer/templates/timer/countdown.html:18
+#: apps/timer/templates/timer/home.html:48
+msgid "Set a duration and count down to zero"
+msgstr "Nastavte dobu a odpočítávejte do nuly"
+
+#: apps/timer/templates/timer/countdown.html:28
+#: apps/timer/templates/timer/stopwatch.html:28
+msgid "Back to Timer"
+msgstr "Zpět na úvod"
+
+#: apps/timer/templates/timer/countdown.html:37
+msgid "Hours"
+msgstr "Hodiny"
+
+#: apps/timer/templates/timer/countdown.html:45
+msgid "Minutes"
+msgstr "Minuty"
+
+#: apps/timer/templates/timer/countdown.html:53
+msgid "Seconds"
+msgstr "Sekundy"
+
+#: apps/timer/templates/timer/home.html:20
+msgid "Countdown timers and stopwatches"
+msgstr "Odpočítávací časovače a stopky"
+
+#: apps/timer/templates/timer/home.html:26
+msgid "Choose a mode"
+msgstr "Vyberte skupinu..."
+
+#: apps/timer/templates/timer/home.html:34
+#: apps/timer/templates/timer/stopwatch.html:4
+#: apps/timer/templates/timer/stopwatch.html:13
+#: apps/timer/templates/timer/stopwatch.html:15
+msgid "Stopwatch"
+msgstr "Stopky"
+
+#: apps/timer/templates/timer/home.html:35
+msgid "Count up with lap flags"
+msgstr "Počítání nahoru s označením kol"
+
+#: apps/timer/templates/timer/stopwatch.html:18
+msgid "Mark your times with flags"
+msgstr "Označte si časy pomocí vlajek"
+
+#: apps/timer/templates/timer/stopwatch.html:55
+msgid "Flags"
+msgstr "Označení"
+
+#: apps/users/templates/registration/account_activation_email.html:7
+msgid "Welcome to Teachka"
+msgstr "Vítejte zpět"
+
+#: apps/users/templates/registration/account_activation_email.html:49
+msgid "Welcome aboard"
+msgstr "Vítejte zpět"
+
+#: apps/users/templates/registration/account_activation_email.html:54
+#, python-format
+msgid "Activate your<br>account, %(name)s"
+msgstr "Aktivuj svůj<br>účet, %(name)s"
+
+#: apps/users/templates/registration/account_activation_email.html:59
+msgid ""
+"Thanks for signing up for Teachka. To get started with your classroom tools, "
+"confirm your email address by clicking below."
+msgstr ""
+"Děkujeme za registraci do Teachka. Pro začátek potvrď svůj e-mail kliknutím "
+"níže."
+
+#: apps/users/templates/registration/account_activation_email.html:69
+msgid "Activate my account"
+msgstr "Vytvořit účet"
+
+#: apps/users/templates/registration/account_activation_email.html:82
+#: apps/users/templates/users/password_reset_email.html:82
+msgid "If the button doesn't work, copy and paste this link into your browser:"
+msgstr "Pokud tlačítko nefunguje, zkopíruj a vlož tento odkaz do prohlížeče:"
+
+#: apps/users/templates/registration/account_activation_email.html:97
+#: apps/users/templates/users/password_reset_email.html:107
+msgid "Teachka, 2026"
+msgstr "Teachka, 2026"
+
+#: apps/users/templates/registration/account_activation_email.html:100
+#: apps/users/templates/users/password_reset_email.html:110
+#: templates/home.html:109
+msgid "Toolkit for educators"
+msgstr "Nástroje pro učitele"
+
+#: apps/users/templates/registration/account_activation_email.html:114
+msgid ""
+"If you didn't create a Teachka account, you can safely ignore this email."
+msgstr "Pokud sis účet Teachka nevytvořil, tento e-mail můžeš ignorovat."
+
+#: apps/users/templates/registration/login.html:5
+#: apps/users/templates/registration/login.html:128
+#: apps/users/templates/registration/register.html:217
+#: apps/users/templates/users/forgot_password.html:117
+#: apps/users/templates/users/password_reset.html:150 templates/home.html:231
+#: templates/home.html:644
+msgid "Sign in"
+msgstr "Přihlásit se"
+
+#: apps/users/templates/registration/login.html:50
+msgid "Welcome back"
+msgstr "Vítejte zpět"
+
+#: apps/users/templates/registration/login.html:56
+msgid "Sign in to"
+msgstr "Přihlásit se"
+
+#: apps/users/templates/registration/login.html:77
+#: apps/users/templates/registration/register.html:116
+#: apps/users/templates/users/edit_profile.html:47
+#: apps/users/templates/users/profile.html:40
+msgid "Username"
+msgstr "Uživatelské jméno"
+
+#: apps/users/templates/registration/login.html:97
+#: apps/users/templates/registration/register.html:154
+#: apps/users/templates/users/delete_account.html:34
+msgid "Password"
+msgstr "Heslo"
+
+#: apps/users/templates/registration/login.html:101
+msgid "Forgot password?"
+msgstr "Změnit heslo"
+
+#: apps/users/templates/registration/login.html:114
+#: apps/users/templates/registration/register.html:166
+#: apps/users/templates/registration/register.html:192
+#: apps/users/templates/users/password_reset.html:94
+#: apps/users/templates/users/password_reset.html:126
+msgid "Toggle password visibility"
+msgstr "Přepnout viditelnost hesla"
+
+#: apps/users/templates/registration/login.html:135
+msgid "New here?"
+msgstr "Nový zde?"
+
+#: apps/users/templates/registration/login.html:138 templates/home.html:641
+msgid "Create an account"
+msgstr "Vytvořit účet"
+
+#: apps/users/templates/registration/register.html:5
+#: apps/users/templates/registration/register.html:207
+msgid "Create account"
+msgstr "Vytvořit účet"
+
+#: apps/users/templates/registration/register.html:50 templates/base.html:291
+#: templates/home.html:128
+msgid "Get started"
+msgstr "Začít"
+
+#: apps/users/templates/registration/register.html:56
+msgid "Create your"
+msgstr "Vytvořit skupinu"
+
+#: apps/users/templates/registration/register.html:57
+#: apps/users/templates/users/delete_account.html:16
+msgid "account"
+msgstr "účet"
+
+#: apps/users/templates/registration/register.html:79
+#: apps/users/templates/users/edit_profile.html:59
+#: apps/users/templates/users/profile.html:45
+msgid "First name"
+msgstr "Jméno"
+
+#: apps/users/templates/registration/register.html:98
+#: apps/users/templates/users/edit_profile.html:73
+#: apps/users/templates/users/profile.html:50
+msgid "Last name"
+msgstr "Příjmení"
+
+#: apps/users/templates/registration/register.html:134
+#: apps/users/templates/users/edit_profile.html:87
+#: apps/users/templates/users/profile.html:55
+msgid "Email"
+msgstr "Email"
+
+#: apps/users/templates/registration/register.html:180
+#: apps/users/templates/users/password_reset.html:114
+msgid "Confirm password"
+msgstr "Změnit heslo"
+
+#: apps/users/templates/registration/register.html:214
+msgid "Already have an account?"
+msgstr "Již máte účet?"
+
+#: apps/users/templates/users/change_password.html:5
+msgid "Change Password"
+msgstr "Změnit heslo"
+
+#: apps/users/templates/users/change_password.html:53
+#: apps/users/templates/users/change_password.html:115
+#: apps/users/templates/users/settings.html:91
+msgid "Back to profile"
+msgstr "Zpět na úvod"
+
+#: apps/users/templates/users/change_password.html:59
+msgid "Security"
+msgstr "Zabezpečení"
+
+#: apps/users/templates/users/change_password.html:65
+msgid "Change your"
+msgstr "Změnit heslo"
+
+#: apps/users/templates/users/change_password.html:66
+#: apps/users/templates/users/password_reset.html:57
+msgid "password"
+msgstr "Heslo"
+
+#: apps/users/templates/users/change_password.html:70
+msgid "We'll send a reset link to your email."
+msgstr "Pošleme vám odkaz pro obnovení na email"
+
+#: apps/users/templates/users/change_password.html:89
+#: apps/users/templates/users/forgot_password.html:89
+msgid "Email address"
+msgstr "E-mailová adresa"
+
+#: apps/users/templates/users/change_password.html:107
+#: apps/users/templates/users/forgot_password.html:108
+msgid "Send reset link"
+msgstr "Odeslat odkaz pro obnovu"
+
+#: apps/users/templates/users/delete_account.html:4
+#: apps/users/templates/users/settings.html:102
+msgid "Delete account"
+msgstr "Smazat účet"
+
+#: apps/users/templates/users/delete_account.html:14
+#: apps/users/templates/users/edit_profile.html:14 templates/base.html:152
+msgid "Account"
+msgstr "Účet"
+
+#: apps/users/templates/users/delete_account.html:19
+msgid ""
+"This will permanently delete your account and all associated data: groups, "
+"members, points, and usage stats. This action cannot be undone."
+msgstr ""
+"Toto trvale smaže tvůj účet a všechna související data: skupiny, členy, body "
+"a statistiky. Tuto akci nelze vrátit."
+
+#: apps/users/templates/users/delete_account.html:30
+msgid "Confirm with password"
+msgstr "Potvrď heslem"
+
+#: apps/users/templates/users/delete_account.html:43
+msgid "Delete my account"
+msgstr "Smazat můj účet"
+
+#: apps/users/templates/users/edit_profile.html:4
+#: apps/users/templates/users/profile.html:66
+msgid "Edit profile"
+msgstr "Upravit profil"
+
+#: apps/users/templates/users/edit_profile.html:18
+msgid "profile"
+msgstr "Profil"
+
+#: apps/users/templates/users/edit_profile.html:40
+#: apps/users/templates/users/profile.html:34
+msgid "Account details"
+msgstr "Detaily účtu"
+
+#: apps/users/templates/users/edit_profile.html:54
+msgid "Username cannot be changed"
+msgstr "Uživatelské jméno nelze změnit"
+
+#: apps/users/templates/users/forgot_password.html:5
+msgid "Forgot password"
+msgstr "Změnit heslo"
+
+#: apps/users/templates/users/forgot_password.html:53
+msgid "Back to sign in"
+msgstr "Zpět na body"
+
+#: apps/users/templates/users/forgot_password.html:59
+#: apps/users/templates/users/password_reset.html:50
+msgid "Account recovery"
+msgstr "Obnovení účtu"
+
+#: apps/users/templates/users/forgot_password.html:65
+msgid "Forgot your"
+msgstr "Zapomněl jsi"
+
+#: apps/users/templates/users/forgot_password.html:66
+msgid "password?"
+msgstr "Heslo"
+
+#: apps/users/templates/users/forgot_password.html:70
+msgid "Enter your registered email and we'll send you a reset link."
+msgstr "Zadej registrovaný e-mail a pošleme ti odkaz pro obnovu."
+
+#: apps/users/templates/users/forgot_password.html:114
+#: apps/users/templates/users/password_reset.html:147
+msgid "Remember your password?"
+msgstr "Zadejte své nové heslo"
+
+#: apps/users/templates/users/password_reset.html:5
+msgid "Reset Password"
+msgstr "Obnovit heslo"
+
+#: apps/users/templates/users/password_reset.html:56
+msgid "Choose a new"
+msgstr "Vyberte skupinu..."
+
+#: apps/users/templates/users/password_reset.html:61
+msgid "Enter your new password below."
+msgstr "Zadejte své nové heslo"
+
+#: apps/users/templates/users/password_reset.html:81
+msgid "New password"
+msgstr "Změnit heslo"
+
+#: apps/users/templates/users/password_reset.html:104
+msgid "Password requirements"
+msgstr "Požadavky na heslo"
+
+#: apps/users/templates/users/password_reset.html:140
+msgid "Reset password"
+msgstr "Obnovit heslo"
+
+#: apps/users/templates/users/password_reset_email.html:7
+msgid "Reset your password"
+msgstr "Obnovit heslo"
+
+#: apps/users/templates/users/password_reset_email.html:49
+msgid "Password reset"
+msgstr "Heslo"
+
+#: apps/users/templates/users/password_reset_email.html:54
+#, python-format
+msgid "Reset your<br>password, %(name)s"
+msgstr "Obnov své<br>heslo, %(name)s"
+
+#: apps/users/templates/users/password_reset_email.html:59
+msgid ""
+"We received a request to reset the password for your Teachka account. Click "
+"the button below to choose a new one."
+msgstr ""
+"Obdrželi jsme žádost o obnovení hesla k tvému účtu Teachka. Kliknutím na "
+"tlačítko níže si zvol nové."
+
+#: apps/users/templates/users/password_reset_email.html:69
+msgid "Reset my password"
+msgstr "Obnovit heslo"
+
+#: apps/users/templates/users/password_reset_email.html:95
+msgid ""
+"This link will expire shortly. If you didn't request this, no action is "
+"needed, your password will stay the same."
+msgstr ""
+"Tento odkaz brzy vyprší. Pokud jsi o nic nežádal, nic nedělej, heslo zůstane "
+"stejné."
+
+#: apps/users/templates/users/password_reset_email.html:124
+msgid ""
+"You're receiving this because a password reset was requested for your "
+"Teachka account."
+msgstr ""
+"Dostáváš tento e-mail, protože byla požádána obnova hesla k tvému účtu "
+"Teachka."
+
+#: apps/users/templates/users/profile.html:4 templates/base.html:154
+msgid "Profile"
+msgstr "Profil"
+
+#: apps/users/templates/users/profile.html:14
+msgid "Your profile"
+msgstr "Váš profil"
+
+#: apps/users/templates/users/profile.html:26
+msgid "Member since"
+msgstr "Členem od"
+
+#: apps/users/templates/users/profile.html:74
+msgid "Change password"
+msgstr "Změnit heslo"
+
+#: apps/users/templates/users/settings.html:14
+#: apps/users/templates/users/settings.html:32
+msgid "Preferences"
+msgstr "Předvolby"
+
+#: apps/users/templates/users/settings.html:39 templates/base.html:278
+msgid "Theme"
+msgstr "Motiv"
+
+#: apps/users/templates/users/settings.html:52 templates/base.html:259
+msgid "Language"
+msgstr "Jazyk"
+
+#: apps/users/templates/users/settings.html:62 templates/home.html:474
+msgid "Accent colour"
+msgstr "Barva zvýraznění"
+
+#: apps/users/templates/users/settings.html:76
+msgid "Sidebar highlight"
+msgstr "Zvýraznění panelu"
+
+#: apps/users/templates/users/settings.html:88
+msgid "Save settings"
+msgstr "Uložit nastavení"
+
+#: apps/users/templates/users/settings.html:98
+msgid "Danger zone"
+msgstr "Nebezpečná zóna"
+
+#: apps/users/templates/users/settings.html:103
+msgid "Permanently remove your account and all data."
+msgstr "Trvale odeber svůj účet a všechna data."
+
+#: apps/wheel/templates/wheel/home.html:4
+#: apps/wheel/templates/wheel/home.html:14 templates/base.html:193
+#: templates/base.html:213
+msgid "Name wheel"
+msgstr "Kolo jmen"
+
+#: apps/wheel/templates/wheel/home.html:17
+msgid "wheel"
+msgstr "Kolo"
+
+#: apps/wheel/templates/wheel/home.html:20
+msgid "Spin to pick a random student"
+msgstr "Zatoč a vyber náhodného studenta"
+
+#: apps/wheel/templates/wheel/home.html:47
+msgid "Members to pick"
+msgstr "Členové"
+
+#: apps/wheel/templates/wheel/home.html:68
+msgid "Remove after spin"
+msgstr "Odebrat po otočení"
+
+#: apps/wheel/templates/wheel/home.html:69
+msgid "Each student picked only once"
+msgstr "Každý student vybrán pouze jednou"
+
+#: apps/wheel/templates/wheel/home.html:78
+msgid "Spin"
+msgstr "Točit"
+
+#: apps/wheel/templates/wheel/home.html:80
+msgid "Shuffle"
+msgstr "Zamíchat"
+
+#: apps/wheel/templates/wheel/home.html:112
+msgid "Already chosen"
+msgstr "Již vybráni"
+
+#: apps/wheel/templates/wheel/home.html:128
+msgid "Selected"
+msgstr "Vybráno"
+
+#: templates/403.html:9
+msgid "Access denied"
+msgstr "Přístup odepřen"
+
+#: templates/403.html:40 templates/404.html:43 templates/500.html:40
+msgid "Error"
+msgstr "Chyba"
+
+#: templates/403.html:45
+msgid "Access"
+msgstr "Přístup"
+
+#: templates/403.html:46
+msgid "denied"
+msgstr "odepřen"
+
+#: templates/403.html:50
+msgid "You don't have permission to view this page."
+msgstr "Nemáš oprávnění prohlížet tuto stránku."
+
+#: templates/403.html:56 templates/404.html:59 templates/500.html:56
+msgid "Return Home"
+msgstr "Zpět na úvod"
+
+#: templates/404.html:9
+msgid "Page not found"
+msgstr "Stránka nenalezena"
+
+#: templates/404.html:48
+msgid "Lost in"
+msgstr "Ztraceno v"
+
+#: templates/404.html:49
+msgid "thought"
+msgstr "myšlenkách"
+
+#: templates/404.html:53
+msgid ""
+"The page you're looking for doesn't exist or has moved to a quieter corner "
+"of the toolkit."
+msgstr "Stránka, kterou hledáte, neexistuje nebo byla přesunuta."
+
+#: templates/500.html:9
+msgid "Server error"
+msgstr "Chyba serveru"
+
+#: templates/500.html:45 templates/wip.html:27
+msgid "Something"
+msgstr "Něco"
+
+#: templates/500.html:46
+msgid "went wrong"
+msgstr "se pokazilo"
+
+#: templates/500.html:50
+msgid ""
+"An unexpected error occurred. Our team has been notified. Please try again "
+"in a moment."
+msgstr ""
+"Došlo k neočekávané chybě. Náš tým byl informován. Zkus to prosím za chvíli "
+"znovu."
+
+#: templates/base.html:130 templates/home.html:7
+msgid "Home"
+msgstr "Domů"
+
+#: templates/base.html:137
+msgid "Login"
+msgstr "Přihlásit se"
+
+#: templates/base.html:143
+msgid "Register"
+msgstr "Registrovat se"
+
+#: templates/base.html:227
+msgid "Light"
+msgstr "Světlý"
+
+#: templates/base.html:232
+msgid "Dark"
+msgstr "Tmavý"
+
+#: templates/base.html:237
+msgid "Pastel"
+msgstr "Pastelový"
+
+#: templates/base.html:242
+msgid "Editorial"
+msgstr "Upravit profil"
+
+#: templates/base.html:247
+msgid "Palette"
+msgstr "Paleta"
+
+#: templates/base.html:285
+msgid "Logout"
+msgstr "Odhlásit se"
+
+#: templates/base.html:331 templates/legal/privacy.html:16
+msgid "Privacy"
+msgstr "Soukromí"
+
+#: templates/base.html:344
+msgid "We use a session cookie to keep you logged in. No tracking. "
+msgstr "Používáme session cookie, abys zůstal přihlášený. Žádné sledování. "
+
+#: templates/base.html:345
+msgid "Privacy policy"
+msgstr "Zásady ochrany osobních údajů"
+
+#: templates/home.html:5
+msgid "Teachka: Toolkit for Educators"
+msgstr "Teachka: Nástroje pro pedagogy"
+
+#: templates/home.html:114
+msgid "Teaching made"
+msgstr "Výuka"
+
+#: templates/home.html:115
+msgid "effortlessly"
+msgstr "bez námahy"
+
+#: templates/home.html:116
+msgid "organised"
+msgstr "organizovaná"
+
+#: templates/home.html:121
+msgid "One calm, clean hub for all your classroom tools."
+msgstr "Jedno klidné a čisté místo pro všechny nástroje do třídy."
+
+#: templates/home.html:131
+msgid "See the tools"
+msgstr "Zobrazit nástroje"
+
+#: templates/home.html:141
+msgid "Built-in classroom tools"
+msgstr "Vestavěné nástroje pro třídu"
+
+#: templates/home.html:145
+msgid "Place for everything"
+msgstr "Místo pro vše"
+
+#: templates/home.html:148
+msgid "Free"
+msgstr "Zdarma"
+
+#: templates/home.html:149
+msgid "No strings attached"
+msgstr "Bez závazků"
+
+#: templates/home.html:196
+msgid "Welcome back to"
+msgstr "Vítejte zpět"
+
+#: templates/home.html:225
+msgid "The toolkit"
+msgstr "Nástroje"
+
+#: templates/home.html:227
+msgid "Six tools,"
+msgstr "Šest nástrojů,"
+
+#: templates/home.html:227
+msgid "one home"
+msgstr "jeden domov"
+
+#: templates/home.html:231
+msgid "to start using any tool."
+msgstr "pro používání nástrojů."
+
+#: templates/home.html:245
+msgid "Grade Calculator"
+msgstr "Kalkulačka známek"
+
+#: templates/home.html:246
+msgid "Weighted averages, bulk grading, instant export to your records."
+msgstr "Vážené průměry, hromadné hodnocení, okamžitý export."
+
+#: templates/home.html:259
+msgid "Group Divider"
+msgstr "Rozdělovač skupin"
+
+#: templates/home.html:260
+msgid "Split your class into balanced teams in seconds."
+msgstr "Náhodně rozdělte třídu do skupin libovolné velikosti."
+
+#: templates/home.html:273
+msgid "Point System"
+msgstr "Bodový systém"
+
+#: templates/home.html:274
+msgid "Track participation and reward students with points in real time."
+msgstr "Sledujte účast a chování pomocí vlastních bodových kategorií."
+
+#: templates/home.html:288
+msgid "Visual countdowns for tests, group work, and transitions."
+msgstr "Vizuální odpočet pro testy, skupinovou práci a přechody."
+
+#: templates/home.html:302
+msgid "Lesson planning and deadline tracking in one clean weekly view."
+msgstr "Plánování hodin a sledování termínů v jednom čistém týdenním přehledu."
+
+#: templates/home.html:315
+msgid "Name Wheel"
+msgstr "Kolo jmen"
+
+#: templates/home.html:316
+msgid "Spin to pick a random student: fair, fun, and instant."
+msgstr "Zatoč a vyber náhodného studenta: férově, zábavně a okamžitě."
+
+#: templates/home.html:330
+msgid "Your activity"
+msgstr "Vaše aktivita"
+
+#: templates/home.html:335
+msgid "Groups"
+msgstr "Skupiny"
+
+#: templates/home.html:352
+msgid "Calculator"
+msgstr "Kalkulačka"
+
+#: templates/home.html:355
+msgid "uses"
+msgstr "použití"
+
+#: templates/home.html:360
+msgid "Wheel"
+msgstr "Kolo"
+
+#: templates/home.html:363
+msgid "spins"
+msgstr "otočení"
+
+#: templates/home.html:368
+msgid "Divider"
+msgstr "Rozdělovač"
+
+#: templates/home.html:371
+msgid "splits"
+msgstr "rozdělení"
+
+#: templates/home.html:379
+msgid "minutes"
+msgstr "Minuty"
+
+#: templates/home.html:475
+msgid "Sidebar highlight colour."
+msgstr "Barva zvýraznění panelu."
+
+#: templates/home.html:477
+msgid "hover to preview · click to save"
+msgstr "najeď pro náhled · klikni pro uložení"
+
+#: templates/home.html:544
+msgid "Built for teachers"
+msgstr "Nástroje pro učitele"
+
+#: templates/home.html:546
+msgid "Why teachers"
+msgstr "Proč učitelé"
+
+#: templates/home.html:546
+msgid "use it"
+msgstr "ho používají"
+
+#: templates/home.html:555
+msgid "Ready in under a minute"
+msgstr "Připraveno za méně než minutu"
+
+#: templates/home.html:556
+msgid ""
+"No installation, no training, no IT department needed. Sign up and start "
+"using your tools straight away."
+msgstr ""
+"Žádná instalace, žádné školení, žádné IT oddělení. Zaregistruj se a začni "
+"ihned."
+
+#: templates/home.html:565
+msgid "One class list, every tool access"
+msgstr "Jeden seznam třídy, přístup ke všem nástrojům"
+
+#: templates/home.html:566
+msgid ""
+"Add your students once. All the tools use the same list; no duplicate entry."
+msgstr ""
+"Přidej studenty jednou. Všechny nástroje používají stejný seznam; bez "
+"duplicit."
+
+#: templates/home.html:575
+msgid "No learning curve"
+msgstr "Bez složitého učení"
+
+#: templates/home.html:576
+msgid ""
+"Every tool is designed to work the first time you open it, with no setup or "
+"manual needed."
+msgstr "Každý nástroj funguje hned napoprvé, bez nastavení či návodu."
+
+#: templates/home.html:584
+msgid "How it works"
+msgstr "Jak to funguje"
+
+#: templates/home.html:586
+msgid "Three steps"
+msgstr "Tři kroky"
+
+#: templates/home.html:586
+msgid "to start"
+msgstr "k začátku"
+
+#: templates/home.html:597
+msgid "Create your account"
+msgstr "Vytvořit účet"
+
+#: templates/home.html:598
+msgid "Free signup. Ready in under a minute."
+msgstr "Registrace zdarma. Připraveno za minutu."
+
+#: templates/home.html:608
+msgid "Add your class"
+msgstr "Přidej svou třídu"
+
+#: templates/home.html:609
+msgid "Create your classes. All tools sync from these lists automatically."
+msgstr "Vytvoř třídy. Všechny nástroje se synchronizují automaticky."
+
+#: templates/home.html:618
+msgid "Open a tool and go"
+msgstr "Otevři nástroj a jeď"
+
+#: templates/home.html:619
+msgid "No duplicate data entry, no per-tool setup. It just works."
+msgstr ""
+"Žádné duplicitní zadávání, žádné nastavení pro každý nástroj. Prostě to "
+"funguje."
+
+#: templates/home.html:634
+msgid "Start today"
+msgstr "Začni dnes"
+
+#: templates/home.html:636
+msgid "Your classroom,"
+msgstr "Tvá třída,"
+
+#: templates/home.html:636
+msgid "finally in one place"
+msgstr "konečně na jednom místě"
+
+#: templates/legal/privacy.html:4
+msgid "Privacy Policy"
+msgstr "Zásady ochrany osobních údajů"
+
+#: templates/legal/privacy.html:14
+msgid "Legal"
+msgstr "Právní"
+
+#: templates/legal/privacy.html:16
+msgid "Policy"
+msgstr "Zásady"
+
+#: templates/legal/privacy.html:18
+msgid "Last updated"
+msgstr "Příjmení"
+
+#: templates/legal/privacy.html:32
+msgid "What data we collect"
+msgstr "Jaká data sbíráme"
+
+#: templates/legal/privacy.html:34
+msgid ""
+"When you create an account we collect your username, email address, and "
+"password (stored as a bcrypt hash, never in plain text). As you use the "
+"tools we record usage statistics (e.g. wheel spins, timer duration) linked "
+"to your account."
+msgstr ""
+"Při vytvoření účtu shromažďujeme uživatelské jméno, e-mail a heslo (uloženo "
+"jako bcrypt hash, nikdy v čitelné podobě). Při používání nástrojů "
+"zaznamenáváme statistiky použití (např. zatočení rulety, doba časovače) "
+"spojené s tvým účtem."
+
+#: templates/legal/privacy.html:44
+msgid "How we use your data"
+msgstr "Jak data používáme"
+
+#: templates/legal/privacy.html:46
+msgid ""
+"Your data is used solely to provide the Teachka service: authentication, "
+"personalisation (theme, language), and displaying your activity on the home "
+"dashboard. We do not sell or share your data with third parties."
+msgstr ""
+"Data používáme výhradně pro službu Teachka: ověření, přizpůsobení (motiv, "
+"jazyk) a zobrazení tvé aktivity na domovském panelu. Data neprodáváme ani "
+"nesdílíme s třetími stranami."
+
+#: templates/legal/privacy.html:56
+msgid "Cookies"
+msgstr "Cookies"
+
+#: templates/legal/privacy.html:58
+msgid ""
+"We use one session cookie to keep you logged in (strictly necessary, no "
+"consent required under ePrivacy). We also store your theme preference in "
+"localStorage, which is not a cookie and does not leave your device."
+msgstr ""
+"Používáme jedno session cookie, aby sis zůstal přihlášený (striktně "
+"nezbytné, bez souhlasu dle ePrivacy). Předvolbu motivu ukládáme do "
+"localStorage, což není cookie a neopouští tvé zařízení."
+
+#: templates/legal/privacy.html:59
+msgid ""
+"We use Sentry for error monitoring. Sentry may set its own cookies or use "
+"browser storage to deduplicate error reports. No personal data is "
+"intentionally forwarded to Sentry."
+msgstr ""
+"Pro sledování chyb používáme Sentry. Sentry může nastavovat vlastní cookies "
+"nebo využívat úložiště prohlížeče pro deduplikaci chybových hlášení. Do "
+"Sentry záměrně neposíláme žádná osobní data."
+
+#: templates/legal/privacy.html:69
+msgid "Data retention"
+msgstr "Uchování dat"
+
+#: templates/legal/privacy.html:71
+msgid ""
+"Your account and all associated data are retained for as long as your "
+"account is active. You can delete your account and all data at any time from "
+"the Settings page."
+msgstr ""
+"Tvůj účet a veškerá související data jsou uchovávána po dobu aktivity účtu. "
+"Účet a všechna data můžeš kdykoliv smazat v nastavení."
+
+#: templates/legal/privacy.html:81
+msgid "Your rights"
+msgstr "Váš profil"
+
+#: templates/legal/privacy.html:83
+msgid ""
+"Under GDPR you have the right to access, correct, or erase your data. To "
+"delete your account and all data permanently, visit "
+msgstr ""
+"Podle GDPR máš právo na přístup, opravu nebo výmaz svých dat. Pro trvalé "
+"smazání účtu a všech dat navštiv "
+
+#: templates/legal/privacy.html:83
+msgid "Settings → Delete account"
+msgstr "Nastavení → Smazat účet"
+
+#: templates/legal/privacy.html:83
+msgid "For other requests contact us at the address below."
+msgstr "Ohledně dalších žádostí nás kontaktuj na adrese níže."
+
+#: templates/legal/privacy.html:93
+msgid "Contact"
+msgstr "Kontakt"
+
+#: templates/legal/privacy.html:95
+msgid "Questions about this policy: "
+msgstr "Dotazy k těmto zásadám: "
+
+#: templates/wip.html:4
 msgid "Coming Soon"
 msgstr "Již brzy"
 
-msgid "Work in Progress"
-msgstr "Ve vývoji"
+#: templates/wip.html:22
+msgid "Under Construction"
+msgstr "Ve výstavbě"
 
+#: templates/wip.html:28
+msgid "new"
+msgstr "nový"
+
+#: templates/wip.html:28
+msgid "is brewing"
+msgstr "se vaří"
+
+#: templates/wip.html:32
 msgid ""
-"This feature is currently under development. Check back soon for updates!"
+"We're currently refining this tool to ensure it meets the Teachka standard "
+"of calm, effortless organization."
 msgstr ""
-"Tato funkce je momentálně ve vývoji. Brzy se vraťte pro novinky!"
+"Tento nástroj aktuálně ladíme, aby splňoval standard Teachka: klidnou a "
+"snadnou organizaci."
+
+#: templates/wip.html:41
+msgid "Currently in development"
+msgstr "Aktuálně ve vývoji"
+
+#: templates/wip.html:48
+msgid "Back to Dashboard"
+msgstr "Přehled"
+
+#: templates/wip.html:51
+msgid "Go Back"
+msgstr "Zpět"

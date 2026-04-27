@@ -38,7 +38,7 @@
                  name="title"
                  id="{{ form.title.id_for_label }}"
                  value="{{ form.title.value|default:'' }}"
-                 class="input input-bordered w-full text-2xl font-bold text-primary bg-base-200/40 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none h-14 rounded-xl transition-all px-4" 
+                 class="input input-bordered w-full text-base font-medium text-primary bg-base-200/40 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none rounded-xl transition-all px-4"
                  placeholder="{% trans 'Group name' %}"
                  required>
           {% if form.title.errors %}

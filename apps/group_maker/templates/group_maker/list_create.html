@@ -39,7 +39,7 @@
                  id="{{ form.title.id_for_label }}"
                  value="{{ form.title.value|default:'' }}"
                  placeholder="{% trans 'e.g. Class 10A, Project Team' %}"
-                 class="input input-bordered w-full text-2xl font-bold text-primary bg-base-200/40 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none h-14 rounded-xl transition-all px-4 placeholder:text-sm placeholder:font-normal placeholder:text-base-content/30"
+                 class="input input-bordered w-full text-base font-medium text-primary bg-base-200/40 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none rounded-xl transition-all px-4 placeholder:font-normal placeholder:text-base-content/30"
                  required>
           {% if form.title.errors %}
           <p class="text-[10px] text-error mt-2 uppercase font-bold tracking-wider ml-1">{{ form.title.errors.0 }}</p>

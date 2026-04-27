@@ -2,9 +2,9 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}Teachka: Toolkit for Educators{% endblock %}
+{% block title %}{% trans "Teachka: Toolkit for Educators" %}{% endblock %}
 
-{% block breadcrumb %}Home{% endblock %}
+{% block breadcrumb %}{% trans "Home" %}{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -106,29 +106,29 @@
     <!-- Eyebrow -->
     <div class="hero-child relative z-10 flex items-center gap-3 mb-6">
       <div class="w-7 h-0.5 rounded bg-primary"></div>
-      <span class="text-[11px] font-semibold tracking-[2px] uppercase text-primary">Toolkit for educators</span>
+      <span class="text-[11px] font-semibold tracking-[2px] uppercase text-primary">{% trans "Toolkit for educators" %}</span>
     </div>
 
     <!-- Heading -->
     <h1 class="hero-child relative z-10 serif font-medium text-[clamp(44px,5.5vw,72px)] leading-[1.03] tracking-tight max-w-[580px] mb-5 text-base-content">
-      Teaching made<br>
-      <em class="text-primary font-light">effortlessly</em><br>
-      organised
+      {% trans "Teaching made" %}<br>
+      <em class="text-primary font-light">{% trans "effortlessly" %}</em><br>
+      {% trans "organised" %}
     </h1>
 
     <!-- Subtext -->
     <p class="hero-child relative z-10 text-base text-base-content/60 max-w-[420px] leading-[1.75] font-light mb-10">
-      One calm, clean hub for all your classroom tools.
+      {% trans "One calm, clean hub for all your classroom tools." %}
     </p>
 
     <!-- Actions -->
     <div class="hero-child relative z-10 flex items-center gap-4 flex-wrap mb-10">
       <a href="{% url 'register' %}" class="btn btn-primary rounded-xl gap-2 font-medium">
         <i data-lucide="arrow-right" class="w-4 h-4"></i>
-        Get started
+        {% trans "Get started" %}
       </a>
       <a href="#tools" class="btn btn-ghost rounded-xl gap-1.5 text-base-content/60 font-normal hover:text-base-content">
-        See the tools
+        {% trans "See the tools" %}
         <i data-lucide="chevron-down" class="w-4 h-4"></i>
       </a>
     </div>
@@ -138,15 +138,15 @@
   <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-base-300 border-b border-base-300">
     <div class="stat py-8 px-4 md:py-8 md:px-10">
       <div class="stat-value serif font-medium text-3xl md:text-4xl tracking-tight">6</div>
-      <div class="stat-desc text-xs font-medium mt-1">Built-in classroom tools</div>
+      <div class="stat-desc text-xs font-medium mt-1">{% trans "Built-in classroom tools" %}</div>
     </div>
     <div class="stat py-8 px-4 md:py-8 md:px-10">
       <div class="stat-value serif font-medium text-3xl md:text-4xl tracking-tight">1</div>
-      <div class="stat-desc text-xs font-medium mt-1">Place for everything</div>
+      <div class="stat-desc text-xs font-medium mt-1">{% trans "Place for everything" %}</div>
     </div>
     <div class="stat py-8 px-4 md:py-8 md:px-10">
-      <div class="stat-value serif font-medium text-3xl md:text-4xl tracking-tight">Free</div>
-      <div class="stat-desc text-xs font-medium mt-1">No strings attached</div>
+      <div class="stat-value serif font-medium text-3xl md:text-4xl tracking-tight">{% trans "Free" %}</div>
+      <div class="stat-desc text-xs font-medium mt-1">{% trans "No strings attached" %}</div>
     </div>
   </div>
   {% endif %}
@@ -193,7 +193,7 @@
     <div class="relative">
 
       <!-- Eyebrow -->
-      <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-7">Welcome back to</p>
+      <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-7">{% trans "Welcome back to" %}</p>
 
       <!-- Brand -->
       <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-9" style="font-size: clamp(50px, 6.5vw, 84px);">
@@ -209,7 +209,7 @@
 
       <!-- Week + parity toggle -->
       <div class="drift drift-4 flex items-center gap-4">
-        <span class="text-[11px] tracking-[2.5px] uppercase text-base-content/30">Week {{ week_number }}</span>
+        <span class="text-[11px] tracking-[2.5px] uppercase text-base-content/30">{% trans "Week" %} {{ week_number }}</span>
         <span class="text-base-content/15 text-sm">·</span>
         <span class="text-[11px] tracking-[2.5px] uppercase font-semibold text-primary">{{ week_parity|capfirst }}</span>
       </div>
@@ -222,13 +222,13 @@
   <section class="px-5 py-14 md:px-14 md:py-16" id="tools">
     <div class="flex items-end justify-between mb-6 md:mb-9">
       <div>
-        <p class="text-[10px] font-semibold tracking-[2.5px] uppercase text-base-content/40 mb-2">The toolkit</p>
+        <p class="text-[10px] font-semibold tracking-[2.5px] uppercase text-base-content/40 mb-2">{% trans "The toolkit" %}</p>
         <h2 class="serif text-[34px] font-medium tracking-tight leading-[1.1] text-base-content">
-          Six tools,<br><em class="text-base-content/40 font-light">one home</em>
+          {% trans "Six tools," %}<br><em class="text-base-content/40 font-light">{% trans "one home" %}</em>
         </h2>
         {% if not user.is_authenticated %}
         <p class="text-[11px] text-base-content/40 font-light mt-3">
-          <a href="{% url 'login' %}" class="underline underline-offset-2 hover:text-base-content transition-colors">Sign in</a> to start using any tool.
+          <a href="{% url 'login' %}" class="underline underline-offset-2 hover:text-base-content transition-colors">{% trans "Sign in" %}</a> {% trans "to start using any tool." %}
         </p>
         {% endif %}
       </div>
@@ -242,8 +242,8 @@
           <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
             <i data-lucide="calculator" class="w-[18px] h-[18px]"></i>
           </div>
-          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Grade Calculator</h3>
-          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Weighted averages, bulk grading, instant export to your records.</p>
+          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">{% trans "Grade Calculator" %}</h3>
+          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">{% trans "Weighted averages, bulk grading, instant export to your records." %}</p>
           <div class="arrow-icon mt-4 text-base-content/25 flex items-center">
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </div>
@@ -256,8 +256,8 @@
           <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
             <i data-lucide="users" class="w-[18px] h-[18px]"></i>
           </div>
-          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Group Divider</h3>
-          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Split your class into balanced teams in seconds.</p>
+          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">{% trans "Group Divider" %}</h3>
+          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">{% trans "Split your class into balanced teams in seconds." %}</p>
           <div class="arrow-icon mt-4 text-base-content/25 flex items-center">
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </div>
@@ -270,8 +270,8 @@
           <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
             <i data-lucide="book-open-check" class="w-[18px] h-[18px]"></i>
           </div>
-          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Point System</h3>
-          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Track participation and reward students with points in real time.</p>
+          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">{% trans "Point System" %}</h3>
+          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">{% trans "Track participation and reward students with points in real time." %}</p>
           <div class="arrow-icon mt-4 text-base-content/25 flex items-center">
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </div>
@@ -284,22 +284,22 @@
           <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
             <i data-lucide="clock" class="w-[18px] h-[18px]"></i>
           </div>
-          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Timer</h3>
-          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Visual countdowns for tests, group work, and transitions.</p>
+          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">{% trans "Timer" %}</h3>
+          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">{% trans "Visual countdowns for tests, group work, and transitions." %}</p>
           <div class="arrow-icon mt-4 text-base-content/25 flex items-center">
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </div>
         </div>
       </a>
 
-      <a href="{% url 'todo:home' %}" class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md transition-all duration-200">
+      <a href="{% url 'calendar_app:home' %}" class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md transition-all duration-200">
         <div class="card-body p-6 flex flex-col gap-0">
           <p class="text-[11px] font-medium text-base-content/30 tracking-wide mb-4 serif">05</p>
           <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
             <i data-lucide="calendar-check" class="w-[18px] h-[18px]"></i>
           </div>
-          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Calendar</h3>
-          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Lesson planning and deadline tracking in one clean weekly view.</p>
+          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">{% trans "Calendar" %}</h3>
+          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">{% trans "Lesson planning and deadline tracking in one clean weekly view." %}</p>
           <div class="arrow-icon mt-4 text-base-content/25 flex items-center">
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </div>
@@ -312,8 +312,8 @@
           <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
             <i data-lucide="loader-pinwheel" class="w-[18px] h-[18px]"></i>
           </div>
-          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">Name Wheel</h3>
-          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">Spin to pick a random student — fair, fun, and instant.</p>
+          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">{% trans "Name Wheel" %}</h3>
+          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">{% trans "Spin to pick a random student: fair, fun, and instant." %}</p>
           <div class="arrow-icon mt-4 text-base-content/25 flex items-center">
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </div>
@@ -327,20 +327,20 @@
   {% if user.is_authenticated %}
   <section class="px-5 pt-14 pb-14 md:px-14 md:pt-10 md:pb-12 border-t border-base-300">
 
-    <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-8">Your activity</p>
+    <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-8">{% trans "Your activity" %}</p>
 
     <div>
 
       <div class="stat-row border-t border-base-300/50 py-6 flex items-baseline justify-between">
-        <span class="text-xs tracking-[2px] uppercase text-base-content/35">Groups</span>
+        <span class="text-xs tracking-[2px] uppercase text-base-content/35">{% trans "Groups" %}</span>
         <div class="text-right leading-none">
           <span class="serif font-medium text-base-content tabular-nums stat-num" style="font-size:28px" data-target="{{ user_groups_count }}">{{ user_groups_count }}</span>
-          <span class="text-[11px] text-base-content/30 ml-2 tabular-nums">{{ user_members_count }} members</span>
+          <span class="text-[11px] text-base-content/30 ml-2 tabular-nums">{{ user_members_count }} {% trans "members" %}</span>
         </div>
       </div>
 
       <div class="stat-row border-t border-base-300/50 py-6 flex items-baseline justify-between">
-        <span class="text-xs tracking-[2px] uppercase text-base-content/35">Points</span>
+        <span class="text-xs tracking-[2px] uppercase text-base-content/35">{% trans "Points" %}</span>
         <div class="text-right leading-none">
           <span class="serif font-medium tabular-nums" style="font-size:28px; color:oklch(58% .17 145)">+<span class="stat-num" data-target="{{ user_positive_points }}">{{ user_positive_points }}</span></span>
           <span class="text-base-content/20 mx-2 text-lg font-light">/</span>
@@ -349,34 +349,34 @@
       </div>
 
       <div class="stat-row border-t border-base-300/50 py-6 flex items-baseline justify-between">
-        <span class="text-xs tracking-[2px] uppercase text-base-content/35">Calculator</span>
+        <span class="text-xs tracking-[2px] uppercase text-base-content/35">{% trans "Calculator" %}</span>
         <div class="text-right leading-none">
           <span class="serif font-medium text-base-content tabular-nums stat-num" style="font-size:28px" data-target="{{ calculator_uses }}">{{ calculator_uses }}</span>
-          <span class="text-[11px] text-base-content/30 ml-2">uses</span>
+          <span class="text-[11px] text-base-content/30 ml-2">{% trans "uses" %}</span>
         </div>
       </div>
 
       <div class="stat-row border-t border-base-300/50 py-6 flex items-baseline justify-between">
-        <span class="text-xs tracking-[2px] uppercase text-base-content/35">Wheel</span>
+        <span class="text-xs tracking-[2px] uppercase text-base-content/35">{% trans "Wheel" %}</span>
         <div class="text-right leading-none">
           <span class="serif font-medium text-base-content tabular-nums stat-num" style="font-size:28px" data-target="{{ wheel_spins }}">{{ wheel_spins }}</span>
-          <span class="text-[11px] text-base-content/30 ml-2">spins</span>
+          <span class="text-[11px] text-base-content/30 ml-2">{% trans "spins" %}</span>
         </div>
       </div>
 
       <div class="stat-row border-t border-base-300/50 py-6 flex items-baseline justify-between">
-        <span class="text-xs tracking-[2px] uppercase text-base-content/35">Divider</span>
+        <span class="text-xs tracking-[2px] uppercase text-base-content/35">{% trans "Divider" %}</span>
         <div class="text-right leading-none">
           <span class="serif font-medium text-base-content tabular-nums stat-num" style="font-size:28px" data-target="{{ divider_uses }}">{{ divider_uses }}</span>
-          <span class="text-[11px] text-base-content/30 ml-2">splits</span>
+          <span class="text-[11px] text-base-content/30 ml-2">{% trans "splits" %}</span>
         </div>
       </div>
 
       <div class="stat-row border-t border-base-300/50 py-6 flex items-baseline justify-between">
-        <span class="text-xs tracking-[2px] uppercase text-base-content/35">Timer</span>
+        <span class="text-xs tracking-[2px] uppercase text-base-content/35">{% trans "Timer" %}</span>
         <div class="text-right leading-none">
           <span class="serif font-medium text-base-content tabular-nums stat-num" style="font-size:28px" data-target="{{ timer_total_minutes }}">{{ timer_total_minutes }}</span>
-          <span class="text-[11px] text-base-content/30 ml-2">minutes</span>
+          <span class="text-[11px] text-base-content/30 ml-2">{% trans "minutes" %}</span>
         </div>
       </div>
 
@@ -471,10 +471,10 @@
   <section class="px-5 py-12 md:px-14 md:py-10 border-t border-base-300">
     <div class="flex items-end justify-between mb-5">
       <div>
-        <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-1">Accent colour</p>
-        <p class="text-[13px] text-base-content/45 font-light">Sidebar highlight colour.</p>
+        <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-1">{% trans "Accent colour" %}</p>
+        <p class="text-[13px] text-base-content/45 font-light">{% trans "Sidebar highlight colour." %}</p>
       </div>
-      <p class="text-[10px] text-base-content/25 tracking-wide hidden sm:block serif italic">hover to preview · click to save</p>
+      <p class="text-[10px] text-base-content/25 tracking-wide hidden sm:block serif italic">{% trans "hover to preview · click to save" %}</p>
     </div>
 
     <div class="flex rounded-2xl overflow-hidden h-11 ring-1 ring-base-300" id="accent-swatches">
@@ -541,9 +541,9 @@
 
     <!-- Left: why teachers use it -->
     <div class="px-5 py-14 md:px-14 md:py-16 border-b md:border-b-0 md:border-r border-base-300">
-      <p class="text-[10px] font-semibold tracking-[2.5px] uppercase text-base-content/40 mb-2">Built for teachers</p>
+      <p class="text-[10px] font-semibold tracking-[2.5px] uppercase text-base-content/40 mb-2">{% trans "Built for teachers" %}</p>
       <h2 class="serif text-[32px] font-medium tracking-tight leading-[1.1] mb-8 text-base-content">
-        Why teachers<br><em class="text-base-content/40 font-light">use it</em>
+        {% trans "Why teachers" %}<br><em class="text-base-content/40 font-light">{% trans "use it" %}</em>
       </h2>
 
       <div class="flex flex-col gap-6">
@@ -552,8 +552,8 @@
             <i data-lucide="zap" class="w-[18px] h-[18px]"></i>
           </div>
           <div>
-            <p class="font-medium text-sm text-base-content mb-1">Ready in under a minute</p>
-            <p class="text-[13px] text-base-content/55 font-light leading-relaxed">No installation, no training, no IT department needed. Sign up and start using your tools straight away.</p>
+            <p class="font-medium text-sm text-base-content mb-1">{% trans "Ready in under a minute" %}</p>
+            <p class="text-[13px] text-base-content/55 font-light leading-relaxed">{% trans "No installation, no training, no IT department needed. Sign up and start using your tools straight away." %}</p>
           </div>
         </div>
 
@@ -562,8 +562,8 @@
             <i data-lucide="users" class="w-[18px] h-[18px]"></i>
           </div>
           <div>
-            <p class="font-medium text-sm text-base-content mb-1">One class list, every tool access</p>
-            <p class="text-[13px] text-base-content/55 font-light leading-relaxed">Add your students once. All the tools use the same list; no duplicate entry.</p>
+            <p class="font-medium text-sm text-base-content mb-1">{% trans "One class list, every tool access" %}</p>
+            <p class="text-[13px] text-base-content/55 font-light leading-relaxed">{% trans "Add your students once. All the tools use the same list; no duplicate entry." %}</p>
           </div>
         </div>
 
@@ -572,8 +572,8 @@
             <i data-lucide="smile" class="w-[18px] h-[18px]"></i>
           </div>
           <div>
-            <p class="font-medium text-sm text-base-content mb-1">No learning curve</p>
-            <p class="text-[13px] text-base-content/55 font-light leading-relaxed">Every tool is designed to work the first time you open it, with no setup or manual needed.</p>
+            <p class="font-medium text-sm text-base-content mb-1">{% trans "No learning curve" %}</p>
+            <p class="text-[13px] text-base-content/55 font-light leading-relaxed">{% trans "Every tool is designed to work the first time you open it, with no setup or manual needed." %}</p>
           </div>
         </div>
       </div>
@@ -581,9 +581,9 @@
 
     <!-- Right: steps -->
     <div class="px-5 py-14 md:px-14 md:py-16 bg-base-200">
-      <p class="text-[10px] font-semibold tracking-[2.5px] uppercase text-base-content/40 mb-2">How it works</p>
+      <p class="text-[10px] font-semibold tracking-[2.5px] uppercase text-base-content/40 mb-2">{% trans "How it works" %}</p>
       <h2 class="serif text-[32px] font-medium tracking-tight leading-[1.1] mb-8 text-base-content">
-        Three steps<br>to start
+        {% trans "Three steps" %}<br>{% trans "to start" %}
       </h2>
 
       <div class="flex flex-col">
@@ -594,8 +594,8 @@
             <div class="w-px flex-1 bg-primary/30 my-1.5"></div>
           </div>
           <div class="pb-7 pt-1">
-            <p class="font-medium text-sm text-base-content mb-1">Create your account</p>
-            <p class="text-xs text-base-content/55 font-light leading-relaxed">Free signup. Ready in under a minute.</p>
+            <p class="font-medium text-sm text-base-content mb-1">{% trans "Create your account" %}</p>
+            <p class="text-xs text-base-content/55 font-light leading-relaxed">{% trans "Free signup. Ready in under a minute." %}</p>
           </div>
         </div>
 
@@ -605,8 +605,8 @@
             <div class="w-px flex-1 bg-primary/30 my-1.5"></div>
           </div>
           <div class="pb-7 pt-1">
-            <p class="font-medium text-sm text-base-content mb-1">Add your class</p>
-            <p class="text-xs text-base-content/55 font-light leading-relaxed">Create your classes. All tools sync from these lists automatically.</p>
+            <p class="font-medium text-sm text-base-content mb-1">{% trans "Add your class" %}</p>
+            <p class="text-xs text-base-content/55 font-light leading-relaxed">{% trans "Create your classes. All tools sync from these lists automatically." %}</p>
           </div>
         </div>
 
@@ -615,8 +615,8 @@
             <div class="w-9 h-9 rounded-full border-2 border-primary text-primary flex items-center justify-center font-semibold serif text-base shrink-0">3</div>
           </div>
           <div class="pt-1">
-            <p class="font-medium text-sm text-base-content mb-1">Open a tool and go</p>
-            <p class="text-xs text-base-content/55 font-light leading-relaxed">No duplicate data entry, no per-tool setup. It just works.</p>
+            <p class="font-medium text-sm text-base-content mb-1">{% trans "Open a tool and go" %}</p>
+            <p class="text-xs text-base-content/55 font-light leading-relaxed">{% trans "No duplicate data entry, no per-tool setup. It just works." %}</p>
           </div>
         </div>
 
@@ -631,17 +631,17 @@
     <div class="absolute inset-0 pointer-events-none"
          style="background: radial-gradient(ellipse 60% 60% at 50% 50%, color-mix(in srgb, var(--color-primary) 6%, transparent), transparent)"></div>
     <div class="relative z-10 max-w-lg mx-auto">
-      <p class="serif italic text-sm text-primary mb-4">Start today</p>
+      <p class="serif italic text-sm text-primary mb-4">{% trans "Start today" %}</p>
       <h2 class="serif text-[clamp(32px,5vw,48px)] font-medium tracking-tight leading-[1.08] mb-4 text-base-content">
-        Your classroom,<br>finally in one place
+        {% trans "Your classroom," %}<br>{% trans "finally in one place" %}
       </h2>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
         <a href="{% url 'register' %}" class="btn btn-primary btn-lg rounded-xl gap-2 font-medium w-full sm:w-auto">
           <i data-lucide="arrow-right" class="w-5 h-5"></i>
-          Create an account
+          {% trans "Create an account" %}
         </a>
         <a href="{% url 'login' %}" class="btn btn-ghost btn-lg rounded-xl gap-2 font-medium text-base-content/60 w-full sm:w-auto">
-          Sign in
+          {% trans "Sign in" %}
         </a>
       </div>
     </div>

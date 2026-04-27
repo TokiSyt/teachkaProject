@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Quizzes" %} · Teachka{% endblock title %}
+
+{% block content %}
+
+  <!-- ── HEADER ── -->
+  <section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
+    <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+      <i data-lucide="badge-question-mark" class="text-primary" style="width:180px;height:180px;"></i>
+    </div>
+    <div class="relative z-10">
+      <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">
+        {% trans "Tools" %} · {% trans "Quizz time" %}
+      </p>
+      <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
+        <span class="text-primary">{% trans "Quizzes" %}</span>
+      </h1>
+      <p>
+        {% trans "Build and run quick quizzes" %}
+      </p>
+    </div>
+  </section>
+
+  <div id="quiz-region">
+    {% include "quizzmaker/_quiz_region.html" %}
+  </div>
+
+  <script>
+    (function () {
+      const region = document.getElementById("quiz-region");
+      if (!region) return;
+
+      function setupGifHover(root) {
+        root.querySelectorAll('img[data-gif="1"]:not([data-gif-init])').forEach((img) => {
+          img.dataset.gifInit = "1";
+          const gifUrl = img.getAttribute("src");
+          const tmp = new Image();
+          tmp.crossOrigin = "anonymous";
+          tmp.onload = () => {
+            const c = document.createElement("canvas");
+            c.width = tmp.naturalWidth;
+            c.height = tmp.naturalHeight;
+            try {
+              c.getContext("2d").drawImage(tmp, 0, 0);
+              const poster = c.toDataURL("image/png");
+              img.src = poster;
+              const host = img.closest(".card") || img.parentElement;
+              host.addEventListener("mouseenter", () => { img.src = gifUrl; });
+              host.addEventListener("mouseleave", () => { img.src = poster; });
+            } catch (e) { /* CORS taint — leave gif playing */ }
+          };
+          tmp.src = gifUrl;
+        });
+      }
+
+      async function load(url, push) {
+        const sep = url.includes("?") ? "&" : "?";
+        const res = await fetch(url + sep + "partial=1", {
+          headers: { "X-Requested-With": "XMLHttpRequest" },
+        });
+        if (!res.ok) return;
+        const html = await res.text();
+        region.innerHTML = html;
+        if (window.lucide) lucide.createIcons();
+        setupGifHover(region);
+        if (push) history.pushState({}, "", url);
+      }
+
+      setupGifHover(region);
+
+      region.addEventListener("click", (e) => {
+        const a = e.target.closest("a[data-quiz-toggle]");
+        if (!a) return;
+        e.preventDefault();
+        load(a.getAttribute("href"), true);
+      });
+
+      region.addEventListener("submit", (e) => {
+        const f = e.target.closest("form[data-quiz-search]");
+        if (!f) return;
+        e.preventDefault();
+        const params = new URLSearchParams(new FormData(f));
+        load("?" + params.toString(), true);
+      });
+
+      window.addEventListener("popstate", () => {
+        load(location.search || "?", false);
+      });
+    })();
+  </script>
+
+{% endblock content %}

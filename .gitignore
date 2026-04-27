@@ -6,6 +6,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.so
+.coverage
 
 # Virtual environments
 venv/
@@ -43,6 +44,9 @@ theme/static_src/node_modules/
 # Static files (collected)
 staticfiles/
 
+# User-uploaded media (per-server, not committed)
+mediafiles/
+
 # Cache directories
 .mypy_cache/
 .ruff_cache/
@@ -53,6 +57,7 @@ staticfiles/
 *.env
 .env.local
 
-# Claude Code
+# Claude Code + cursor
 .claude/
 CLAUDE.md
+.cursor/

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Create Quizz" %} · Teachka{% endblock title %}
+
+{% block content %}
+
+  <!-- ── HEADER ── -->
+  <section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
+    <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+      <i data-lucide="badge-plus" class="text-primary" style="width:180px;height:180px;"></i>
+    </div>
+    <div class="relative z-10">
+      <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">
+        {% trans "Quizzes" %} · {% trans "New" %}
+      </p>
+      <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
+        <span class="text-primary">{% trans "Create" %}</span> <span class="text-base-content/60">{% trans "a Quizz" %}</span>
+      </h1>
+      <p class="drift drift-3 text-[11px] tracking-[2px] uppercase text-base-content/30">
+        {% trans "Title, logo, visibility" %}
+      </p>
+    </div>
+  </section>
+
+  <!-- ── FORM ── -->
+  <section class="px-5 py-8 md:px-14">
+    <form method="post" enctype="multipart/form-data" class="max-w-xl">
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+        <div class="alert alert-error rounded-xl mb-4">{{ form.non_field_errors }}</div>
+      {% endif %}
+
+      <div class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 space-y-5">
+
+          <div>
+            <label for="{{ form.title.id_for_label }}" class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">
+              {% trans "Title" %}
+            </label>
+            {{ form.title }}
+            {% if form.title.errors %}<p class="text-error text-xs mt-1">{{ form.title.errors|join:", " }}</p>{% endif %}
+          </div>
+
+          <div>
+            <label for="id_logo" class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">
+              {% trans "Logo" %} <span class="text-base-content/30 normal-case font-normal tracking-normal">({% trans "optional" %})</span>
+            </label>
+            {% include "quizzmaker/_image_field.html" with input_id="id_logo" input_name="logo" focus_x=50 focus_y=50 %}
+            {% if form.logo.errors %}<p class="text-error text-xs mt-1">{{ form.logo.errors|join:", " }}</p>{% endif %}
+          </div>
+
+          <div>
+            <label for="{{ form.visibility.id_for_label }}" class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">
+              {% trans "Visibility" %}
+            </label>
+            {{ form.visibility }}
+            {% if form.visibility.errors %}<p class="text-error text-xs mt-1">{{ form.visibility.errors|join:", " }}</p>{% endif %}
+          </div>
+
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 mt-6">
+        <button type="submit" class="btn-as-link">
+          {% trans "Advance" %}
+        </button>
+        <a href="{% url 'quizzmaker:home' %}" class="btn-as-link-ghost">
+          {% trans "Cancel" %}
+        </a>
+      </div>
+    </form>
+  </section>
+
+  <script src="{% static 'js/image_cropper.js' %}"></script>
+
+{% endblock content %}

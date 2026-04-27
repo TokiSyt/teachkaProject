@@ -54,9 +54,27 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run tests
-        run: pytest
+        run: pytest --cov --cov-fail-under=70
         env:
           SECRET_KEY: ci-test-secret-key
+
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pip-audit
+        run: pip install pip-audit
+
+      - name: Audit dependencies
+        # GHSA-6w46-j5rx-g56g (CVE-2025-71176): pytest 8 dev-tool CVE; bump to 9
+        # blocked by apps.calendar shadowing stdlib calendar under pytest 9 collection.
+        run: pip-audit -r requirements.txt --ignore-vuln GHSA-6w46-j5rx-g56g
 
   deploy-check:
     runs-on: ubuntu-latest

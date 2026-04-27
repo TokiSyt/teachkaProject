@@ -104,7 +104,14 @@ class HomeView(LoginRequiredMixin, TemplateView):
             return redirect(f"{reverse('wheel:home')}?group_id={selected_group.id}")
 
         chosen_members = []
-        chosen_members_amount_amount = int(request.POST.get("chosen_members_amount", 1))
+        try:
+            chosen_members_amount_amount = int(request.POST.get("chosen_members_amount", 1))
+        except (TypeError, ValueError):
+            if is_ajax:
+                return JsonResponse({"error": "Invalid amount"}, status=400)
+            context = self.get_context_data()
+            context["message"] = "Invalid amount specified."
+            return render(request, self.template_name, context)
         for _ in range(chosen_members_amount_amount):
             chosen_member, already_chosen_ids = choose_random_member(members, already_chosen_ids)
             if chosen_member:

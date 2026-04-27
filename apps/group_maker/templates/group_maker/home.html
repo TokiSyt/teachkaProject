@@ -25,7 +25,7 @@
           <option value="" disabled hidden selected>{% trans "Choose a group..." %}</option>
           {% for group in groups %}
           <option value="{{ group.id }}" {% if selected_group and selected_group.id == group.id %}selected{% endif %}>
-            {{ group.title }} ({{ group.size }} members)
+            {{ group.title }} ({{ group.size }} {% trans "members" %})
           </option>
           {% endfor %}
         </select>

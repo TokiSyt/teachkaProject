@@ -35,7 +35,7 @@
           <select name="group_id" id="groupSelect" class="select select-bordered w-full" required>
             <option value="" disabled {% if not selected_group %}selected{% endif %}>{% trans "Choose a group..." %}</option>
             {% for group in groups %}
-            <option value="{{ group.id }}" {% if selected_group.id == group.id %}selected{% endif %}>{{ group.title }} — {{ group.size }} {% trans "members" %}</option>
+            <option value="{{ group.id }}" {% if selected_group.id == group.id %}selected{% endif %}>{{ group.title }} - {{ group.size }} {% trans "members" %}</option>
             {% empty %}
             <option disabled>{% trans "No groups available" %}</option>
             {% endfor %}
@@ -83,7 +83,7 @@
   <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
     <div>
       <h2 class="serif text-3xl font-medium mb-1">{% trans "Selected teams" %}</h2>
-      <p class="text-[11px] tracking-[2px] uppercase text-base-content/30 italic">{% trans "Source" %}: {{ selected_group.title }}</p>
+      <p class="text-[11px] tracking-[2px] uppercase text-base-content/30">{% trans "Source" %}: {{ selected_group.title }}</p>
     </div>
     <div class="stats shadow-sm border border-base-300 bg-base-100">
       <div class="stat py-2 px-4">
