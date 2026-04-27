@@ -72,7 +72,9 @@ jobs:
         run: pip install pip-audit
 
       - name: Audit dependencies
-        run: pip-audit -r requirements.txt
+        # GHSA-6w46-j5rx-g56g (CVE-2025-71176): pytest 8 dev-tool CVE; bump to 9
+        # blocked by apps.calendar shadowing stdlib calendar under pytest 9 collection.
+        run: pip-audit -r requirements.txt --ignore-vuln GHSA-6w46-j5rx-g56g
 
   deploy-check:
     runs-on: ubuntu-latest
