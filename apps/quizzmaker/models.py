@@ -18,13 +18,9 @@ class Quiz(UserOwnedModel):
     logo = models.ImageField(upload_to="uploads/quizzmaker/logos/", blank=True, null=True)
     focus_x = models.PositiveSmallIntegerField(default=50)
     focus_y = models.PositiveSmallIntegerField(default=50)
-    visibility = models.CharField(
-        max_length=7, choices=VISIBILITY_CHOICES, default=PUBLIC
-    )
+    visibility = models.CharField(max_length=7, choices=VISIBILITY_CHOICES, default=PUBLIC)
     saved_count = models.IntegerField(default=0)
-    expected_duration = models.IntegerField(
-        default=1, help_text="Expected duration in minutes"
-    )
+    expected_duration = models.IntegerField(default=1, help_text="Expected duration in minutes")
 
     class Meta:
         verbose_name_plural = "Quizzes"
@@ -54,13 +50,9 @@ class Round(TimestampedModel):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name="rounds")
     question = models.CharField(max_length=500, blank=True)
     order = models.PositiveIntegerField(default=0)
-    question_type = models.CharField(
-        max_length=20, choices=QUESTION_TYPE_CHOICES, default=SELECT_CORRECT
-    )
+    question_type = models.CharField(max_length=20, choices=QUESTION_TYPE_CHOICES, default=SELECT_CORRECT)
     points = models.IntegerField(default=0)
-    time_limit = models.IntegerField(
-        default=0, help_text="Time limit in seconds (0 = no limit)"
-    )
+    time_limit = models.IntegerField(default=0, help_text="Time limit in seconds (0 = no limit)")
     image = models.ImageField(upload_to="uploads/quizzmaker/rounds/", blank=True, null=True)
     focus_x = models.PositiveSmallIntegerField(default=50)
     focus_y = models.PositiveSmallIntegerField(default=50)

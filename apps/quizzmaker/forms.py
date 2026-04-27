@@ -10,7 +10,10 @@ class QuizForm(forms.ModelForm):
         fields = ["title", "logo", "visibility", "focus_x", "focus_y"]
         widgets = {
             "title": forms.TextInput(
-                attrs={"class": "input input-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full", "placeholder": "e.g. Capitals of Europe"}
+                attrs={
+                    "class": "input input-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full",
+                    "placeholder": "e.g. Capitals of Europe",
+                }
             ),
             "logo": forms.ClearableFileInput(attrs={"class": "file-input file-input-bordered rounded-xl w-full"}),
             "visibility": forms.Select(attrs={"class": "select select-bordered rounded-xl w-full"}),
@@ -40,13 +43,21 @@ class RoundForm(forms.ModelForm):
                 attrs={"class": "file-input file-input-bordered rounded-xl w-full", "accept": "image/*"}
             ),
             "question_type": forms.Select(
-                attrs={"class": "select select-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full"}
+                attrs={
+                    "class": "select select-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full"
+                }
             ),
             "time_limit": forms.NumberInput(
-                attrs={"class": "input input-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full", "min": 0}
+                attrs={
+                    "class": "input input-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full",
+                    "min": 0,
+                }
             ),
             "points": forms.NumberInput(
-                attrs={"class": "input input-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full", "min": 0}
+                attrs={
+                    "class": "input input-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full",
+                    "min": 0,
+                }
             ),
             "focus_x": forms.HiddenInput(),
             "focus_y": forms.HiddenInput(),

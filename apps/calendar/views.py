@@ -4,6 +4,7 @@ from datetime import date, timedelta
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
 from django.urls import reverse_lazy
+from django.utils.dates import MONTHS, WEEKDAYS_ABBR
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.generic import CreateView, DeleteView, TemplateView, UpdateView
 
@@ -48,14 +49,14 @@ class CalendarView(LoginRequiredMixin, TemplateView):
             {
                 "year": year,
                 "month": month,
-                "month_name": calendar.month_name[month],
+                "month_name": MONTHS[month],
                 "weeks": weeks,
                 "today": today,
                 "prev_year": prev_year,
                 "prev_month": prev_month,
                 "next_year": next_year,
                 "next_month": next_month,
-                "weekday_headers": list(calendar.day_abbr),
+                "weekday_headers": [WEEKDAYS_ABBR[i] for i in range(7)],
             }
         )
         return ctx

@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from apps.core.models import UserOwnedModel
 
@@ -10,11 +11,11 @@ class Event(UserOwnedModel):
     RECURRENCE_MONTHLY = "monthly"
     RECURRENCE_YEARLY = "yearly"
     RECURRENCE_CHOICES = [
-        (RECURRENCE_NONE, "One-time event"),
-        (RECURRENCE_DAILY, "Daily"),
-        (RECURRENCE_WEEKLY, "Weekly"),
-        (RECURRENCE_MONTHLY, "Monthly"),
-        (RECURRENCE_YEARLY, "Yearly"),
+        (RECURRENCE_NONE, _("One-time event")),
+        (RECURRENCE_DAILY, _("Daily")),
+        (RECURRENCE_WEEKLY, _("Weekly")),
+        (RECURRENCE_MONTHLY, _("Monthly")),
+        (RECURRENCE_YEARLY, _("Yearly")),
     ]
 
     title = models.CharField(max_length=200)

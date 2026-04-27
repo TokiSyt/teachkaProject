@@ -1,7 +1,6 @@
 import json
 
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import redirect_to_login
 from django.db import transaction
 from django.db.models import Count, Q
@@ -11,13 +10,13 @@ from django.urls import reverse
 from django.views import View
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
-from apps.core.mixins import FormUserMixin, UserOwnedMixin
+from apps.core.mixins import AdminRequiredMixin, FormUserMixin, UserOwnedMixin
 
 from .forms import QuizForm, RoundForm
 from .models import Answer, Quiz, Round
 
 
-class HomeView(LoginRequiredMixin, ListView):
+class HomeView(ListView):
     model = Quiz
     template_name = "quizzmaker/home.html"
     context_object_name = "quizzes"
@@ -60,7 +59,7 @@ class HomeView(LoginRequiredMixin, ListView):
         return ctx
 
 
-class QuizCreateView(LoginRequiredMixin, FormUserMixin, CreateView):
+class QuizCreateView(AdminRequiredMixin, FormUserMixin, CreateView):
     model = Quiz
     form_class = QuizForm
     template_name = "quizzmaker/quiz_form.html"
@@ -69,7 +68,7 @@ class QuizCreateView(LoginRequiredMixin, FormUserMixin, CreateView):
         return reverse("quizzmaker:rounds", kwargs={"pk": self.object.pk})
 
 
-class QuizUpdateView(UserOwnedMixin, UpdateView):
+class QuizUpdateView(AdminRequiredMixin, UserOwnedMixin, UpdateView):
     model = Quiz
     form_class = QuizForm
     http_method_names = ["post"]
@@ -82,7 +81,7 @@ class QuizUpdateView(UserOwnedMixin, UpdateView):
         return redirect(self.get_success_url())
 
 
-class RoundEditorView(UserOwnedMixin, DetailView):
+class RoundEditorView(AdminRequiredMixin, UserOwnedMixin, DetailView):
     model = Quiz
     template_name = "quizzmaker/round_editor.html"
     context_object_name = "quiz"
@@ -134,7 +133,7 @@ def _flash_form_errors(request, form):
             messages.error(request, f"{label}: {err}")
 
 
-class RoundCreateView(LoginRequiredMixin, View):
+class RoundCreateView(AdminRequiredMixin, View):
     def post(self, request, pk):
         quiz = get_object_or_404(Quiz, pk=pk, user=request.user)
         form = RoundForm(request.POST, request.FILES)
@@ -156,7 +155,7 @@ class RoundCreateView(LoginRequiredMixin, View):
         return redirect(url)
 
 
-class RoundUpdateView(LoginRequiredMixin, View):
+class RoundUpdateView(AdminRequiredMixin, View):
     def post(self, request, pk, round_pk):
         quiz = get_object_or_404(Quiz, pk=pk, user=request.user)
         round_obj = get_object_or_404(quiz.rounds, pk=round_pk)
@@ -172,7 +171,7 @@ class RoundUpdateView(LoginRequiredMixin, View):
         return redirect(url)
 
 
-class RoundDeleteView(LoginRequiredMixin, View):
+class RoundDeleteView(AdminRequiredMixin, View):
     def post(self, request, pk, round_pk):
         quiz = get_object_or_404(Quiz, pk=pk, user=request.user)
         round_obj = get_object_or_404(quiz.rounds, pk=round_pk)
@@ -185,14 +184,14 @@ class RoundDeleteView(LoginRequiredMixin, View):
         return redirect("quizzmaker:rounds", pk=quiz.pk)
 
 
-class QuizFinalizeView(LoginRequiredMixin, View):
+class QuizFinalizeView(AdminRequiredMixin, View):
     def post(self, request, pk):
         quiz = get_object_or_404(Quiz, pk=pk, user=request.user)
         quiz.recalculate_totals()
         return redirect("quizzmaker:home")
 
 
-class AnswerUpdateView(LoginRequiredMixin, View):
+class AnswerUpdateView(AdminRequiredMixin, View):
     def post(self, request, pk, answer_pk):
         quiz = get_object_or_404(Quiz, pk=pk, user=request.user)
         answer = get_object_or_404(Answer, pk=answer_pk, round__quiz=quiz)
@@ -204,7 +203,7 @@ class AnswerUpdateView(LoginRequiredMixin, View):
         return JsonResponse({"ok": True})
 
 
-class RoundReorderView(LoginRequiredMixin, View):
+class RoundReorderView(AdminRequiredMixin, View):
     def post(self, request, pk):
         quiz = get_object_or_404(Quiz, pk=pk, user=request.user)
         try:

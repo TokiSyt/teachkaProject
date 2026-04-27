@@ -157,18 +157,16 @@
     </div>
     {% endif %}
 
+    {% if user.is_authenticated %}
     <div class="mb-4">
       <p id="lbl-tools" class="text-[9px] font-semibold tracking-[2px] uppercase text-base-content/30 px-2.5 mb-1.5 overflow-hidden" style="height:18px">{% trans "Tools" %}</p>
       <ul class="menu menu-sm p-0 gap-0.5">
-        {% if user.is_authenticated %}
-        {% if enable_wip_apps %}
         <li>
           <a href="{% url 'calendar_app:home' %}" class="rounded-lg">
             <i data-lucide="calendar-check" class="w-6 h-6 shrink-0"></i>
             <span class="fade-label nav-label">{% trans "Calendar" %}</span>
           </a>
         </li>
-        {% endif %}
         <li>
           <a href="{% url 'karma:karma-home' %}" class="rounded-lg">
             <i data-lucide="book-open-check" class="w-6 h-6 shrink-0"></i>
@@ -199,23 +197,17 @@
             <span class="fade-label nav-label">{% trans "Timer" %}</span>
           </a>
         </li>
+        {% comment %}
         <li>
           <a href="{% url 'quizzmaker:home' %}" class="rounded-lg">
             <i data-lucide="badge-question-mark" class="w-6 h-6 shrink-0"></i>
             <span class="fade-label nav-label">{% trans "Quizzes" %}</span>
           </a>
         </li>
-        {% else %}
-        {% if enable_wip_apps %}<li><a href="{% url 'calendar_app:home' %}" class="rounded-lg"><i data-lucide="calendar-check" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Calendar" %}</span></a></li>{% endif %}
-        <li><a href="{% url 'karma:karma-home' %}" class="rounded-lg"><i data-lucide="book-open-check" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Point system" %}</span></a></li>
-        <li><a href="{% url 'group_divider:home' %}" class="rounded-lg"><i data-lucide="users" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Group divider" %}</span></a></li>
-        <li><a href="{% url 'grade_calculator:grade_calculator' %}" class="rounded-lg"><i data-lucide="calculator" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Grade calculator" %}</span></a></li>
-        <li><a href="{% url 'wheel:home' %}" class="rounded-lg"><i data-lucide="loader-pinwheel" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Name wheel" %}</span></a></li>
-        <li><a href="{% url 'timer:home' %}" class="rounded-lg"><i data-lucide="clock" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Timer" %}</span></a></li>
-        <li><a href="{% url 'quizzmaker:home' %}" class="rounded-lg"><i data-lucide="badge-question-mark" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Quizzes" %}</span></a></li>
-        {% endif %}
+        {% endcomment %}
       </ul>
     </div>
+    {% endif %}
 
   </div>
 

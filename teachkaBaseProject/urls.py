@@ -27,16 +27,9 @@ urlpatterns += i18n_patterns(
     path("divider/", include("apps.group_divider.urls")),
     path("wheel/", include("apps.wheel.urls")),
     path("timer/", include("apps.timer.urls")),
+    path("calendar/", include("apps.calendar.urls")),
+    path("math_ops/", include("apps.math_ops.urls")),
     path("quizzes/", include("apps.quizzmaker.urls")),
-    # WIP apps (hidden in production; set ENABLE_WIP_APPS=true to expose)
-    *(
-        [
-            path("calendar/", include("apps.calendar.urls")),
-            path("math_ops/", include("apps.math_ops.urls")),
-        ]
-        if settings.ENABLE_WIP_APPS
-        else []
-    ),
     # Users
     path("users/", include("apps.users.urls")),
     path("privacy/", views.PrivacyView.as_view(), name="privacy"),

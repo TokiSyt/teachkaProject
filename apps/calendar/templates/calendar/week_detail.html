@@ -31,16 +31,15 @@
 
 <section class="px-5 py-8 md:px-14">
 
-  <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
-    <div class="flex items-center gap-3">
-      <a href="{% url 'calendar_app:home' %}?year={{ week_start.year }}&month={{ week_start.month }}"
-         class="btn btn-ghost btn-sm rounded-xl px-3 text-[10px] tracking-[2px] uppercase font-bold text-base-content/40 hover:text-base-content">
-        <i data-lucide="arrow-left" class="w-4 h-4"></i>
-        {% trans "Month" %}
-      </a>
+  <div class="flex items-center justify-between mb-6 flex-wrap gap-2">
+    <div class="flex items-center gap-1.5 sm:gap-3 flex-wrap">
       <a href="{% url 'calendar_app:week_detail' today.year today.month today.day %}"
-         class="btn btn-ghost btn-sm rounded-xl px-3 text-[10px] tracking-[2px] uppercase font-bold text-base-content/40 hover:text-base-content">
+         class="btn btn-ghost btn-sm rounded-xl px-2.5 sm:px-3 text-[10px] tracking-[2px] uppercase font-bold text-base-content/40 hover:text-base-content">
         {% trans "This week" %}
+      </a>
+      <a href="{% url 'calendar_app:home' %}?year={{ week_start.year }}&month={{ week_start.month }}"
+         class="btn btn-ghost btn-sm rounded-xl px-2.5 sm:px-3 text-[10px] tracking-[2px] uppercase font-bold text-base-content/40 hover:text-base-content">
+        {% trans "Month" %}
       </a>
       <div class="flex items-center gap-1">
         <a href="{% url 'calendar_app:week_detail' prev_start.year prev_start.month prev_start.day %}"
@@ -54,42 +53,50 @@
       </div>
     </div>
     <a href="{% url 'calendar_app:event_create' %}?next={{ request.get_full_path|urlencode }}"
-       class="btn btn-primary btn-sm rounded-xl px-5 shadow-sm border-none">
+       class="btn btn-primary btn-sm rounded-xl px-3 sm:px-5 shadow-sm border-none">
       <i data-lucide="plus" class="w-4 h-4"></i>
-      {% trans "New event" %}
+      <span class="hidden sm:inline">{% trans "New event" %}</span>
+      <span class="sm:hidden">{% trans "New" %}</span>
     </a>
   </div>
 
   <div class="cal-grid card bg-base-100 border border-base-300 shadow-sm overflow-hidden" style="border-color: var(--cal-line)">
 
-    <div class="cal-header grid grid-cols-1 md:grid-cols-7 border-b bg-base-200/50">
+    <div class="cal-header hidden md:grid grid-cols-7 border-b bg-base-200/50">
       {% for d in days %}
       <div class="py-2.5 text-center text-[10px] tracking-[2px] uppercase font-bold text-base-content/35
         {% if not forloop.last %}md:border-r{% endif %}">{{ d.date|date:"D" }}</div>
       {% endfor %}
     </div>
 
-    <div class="cal-week grid grid-cols-1 md:grid-cols-7">
+    <div class="cal-week flex flex-col md:grid md:grid-cols-7">
       {% for d in days %}
-      <div class="cal-cell relative p-2 min-h-[220px] flex flex-col gap-1
-        {% if not forloop.last %}md:border-r border-b md:border-b-0{% endif %}
+      <div class="cal-cell relative flex flex-row md:flex-col gap-2 md:gap-1 p-3 md:p-2 md:min-h-[220px]
+        {% if not forloop.last %}border-b md:border-b-0 md:border-r{% endif %}
         {% if today == d.date %}bg-primary/5{% endif %}">
         <a href="{% url 'calendar_app:day_detail' d.date.year d.date.month d.date.day %}"
            class="cal-cell-link" aria-label="{{ d.date|date:'l, j F Y' }}"></a>
-        <div class="mb-0.5 relative z-10 pointer-events-none">
+
+        <div class="flex md:block flex-row md:flex-none items-center gap-2 md:gap-0 shrink-0 w-16 md:w-auto md:mb-0.5 relative z-10 pointer-events-none">
+          <span class="md:hidden text-[10px] tracking-[2px] uppercase font-bold {% if today == d.date %}text-primary{% else %}text-base-content/40{% endif %}">{{ d.date|date:"D" }}</span>
           {% if today == d.date %}
-          <span class="w-6 h-6 flex items-center justify-center rounded-full bg-primary/15 text-primary text-[11px] font-bold">{{ d.date.day }}</span>
+          <span class="w-7 h-7 md:w-6 md:h-6 flex items-center justify-center rounded-full bg-primary/15 text-primary text-[12px] md:text-[11px] font-bold">{{ d.date.day }}</span>
           {% else %}
-          <span class="text-[11px] font-bold text-base-content/35 w-6 h-6 flex items-center justify-center">{{ d.date.day }}</span>
+          <span class="text-[13px] md:text-[11px] font-bold text-base-content/40 md:text-base-content/35 w-7 h-7 md:w-6 md:h-6 flex items-center justify-center">{{ d.date.day }}</span>
           {% endif %}
         </div>
-        {% for ev in d.events %}
-        <a href="{% url 'calendar_app:event_edit' ev.pk %}?next={{ request.get_full_path|urlencode }}"
-           class="relative z-10 block truncate rounded-[6px] px-1.5 py-0.5 text-[10px] font-semibold bg-primary/12 text-primary hover:bg-primary/22 transition-colors leading-5 border-l-2 border-primary"
-           title="{{ ev.title }}{% if ev.subject %} · {{ ev.subject }}{% endif %}">
-          {% if ev.all_day %}<span class="opacity-50 mr-0.5">●</span>{% else %}<span class="opacity-50 font-normal mr-0.5">{{ ev.start_datetime|time:"H:i" }}</span>{% endif %}{{ ev.title }}{% if ev.subject %}<span class="font-normal"> · {{ ev.subject }}</span>{% endif %}
-        </a>
-        {% endfor %}
+
+        <div class="flex-1 min-w-0 flex flex-col gap-1">
+          {% for ev in d.events %}
+          <a href="{% url 'calendar_app:event_edit' ev.pk %}?next={{ request.get_full_path|urlencode }}"
+             class="relative z-10 block truncate rounded-[6px] px-2 md:px-1.5 py-1 md:py-0.5 text-[12px] md:text-[10px] font-semibold bg-primary/12 text-primary hover:bg-primary/22 transition-colors leading-5 border-l-2 border-primary"
+             title="{{ ev.title }}{% if ev.subject %} · {{ ev.subject }}{% endif %}">
+            {% if ev.all_day %}<span class="opacity-50 mr-0.5">●</span>{% else %}<span class="opacity-50 font-normal mr-0.5">{{ ev.start_datetime|time:"H:i" }}</span>{% endif %}{{ ev.title }}{% if ev.subject %}<span class="font-normal"> · {{ ev.subject }}</span>{% endif %}
+          </a>
+          {% empty %}
+          <span class="md:hidden text-[11px] text-base-content/30">{% trans "No events" %}</span>
+          {% endfor %}
+        </div>
       </div>
       {% endfor %}
     </div>

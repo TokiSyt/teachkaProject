@@ -47,6 +47,7 @@ class TestRecalculateTotals:
 class TestQuizDefaults:
     def test_new_quiz_expected_duration_defaults_to_one(self, user):
         from apps.quizzmaker.models import Quiz
+
         q = Quiz.objects.create(user=user, title="Fresh")
         assert q.expected_duration == 1
 

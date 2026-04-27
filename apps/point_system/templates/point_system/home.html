@@ -89,7 +89,7 @@
           <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30">{% trans "Negative points" %}</p>
         </div>
         {% if negative_data %}
-        <span class="text-[11px] tracking-[1.5px] uppercase text-base-content/30 serif italic">{{ negative_data|length }} {% if negative_data|length == 1 %}{% trans "column" %}{% else %}{% trans "columns" %}{% endif %}</span>
+        <span class="text-[11px] tracking-[1.5px] uppercase text-base-content/30 serif">{{ negative_data|length }} {% if negative_data|length == 1 %}{% trans "column" %}{% else %}{% trans "columns" %}{% endif %}</span>
         {% endif %}
       </div>
 
@@ -192,7 +192,7 @@
           <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30">{% trans "Positive points" %}</p>
         </div>
         {% if positive_data %}
-        <span class="text-[11px] tracking-[1.5px] uppercase text-base-content/30 serif italic">{{ positive_data|length }} {% if positive_data|length == 1 %}{% trans "column" %}{% else %}{% trans "columns" %}{% endif %}</span>
+        <span class="text-[11px] tracking-[1.5px] uppercase text-base-content/30 serif">{{ positive_data|length }} {% if positive_data|length == 1 %}{% trans "column" %}{% else %}{% trans "columns" %}{% endif %}</span>
         {% endif %}
       </div>
 

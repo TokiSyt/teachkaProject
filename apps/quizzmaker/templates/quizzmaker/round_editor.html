@@ -212,7 +212,7 @@
                                value="{{ ans.text }}"
                                placeholder="{% trans 'Answer' %} {% if forloop.counter == 1 %}A{% elif forloop.counter == 2 %}B{% elif forloop.counter == 3 %}C{% else %}D{% endif %}"
                                data-answer-text
-                               class="flex-1 bg-transparent text-xl text-base-content focus:outline-none placeholder:italic placeholder:text-base-content/40" />
+                               class="flex-1 bg-transparent text-xl text-base-content focus:outline-none placeholder:text-base-content/40" />
                       </div>
                     {% endif %}
                   {% endfor %}
@@ -229,7 +229,7 @@
                                value="{{ ans.text }}"
                                placeholder="{% trans 'Type the correct answer' %}"
                                data-answer-text
-                               class="flex-1 bg-transparent text-3xl text-base-content focus:outline-none placeholder:italic placeholder:text-base-content/40 text-center" />
+                               class="flex-1 bg-transparent text-3xl text-base-content focus:outline-none placeholder:text-base-content/40 text-center" />
                       </div>
                       <p class="text-[10px] tracking-[2px] uppercase text-base-content/40 mt-2 text-center">
                         {% trans "Participants will type their answer here. Match is case-insensitive." %}

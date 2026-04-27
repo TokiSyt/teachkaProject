@@ -132,7 +132,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "apps.core.context_processors.site_flags",
             ],
         },
     },
@@ -256,8 +255,6 @@ if not DEBUG:
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
-
-ENABLE_WIP_APPS = bool(_env_truthy("ENABLE_WIP_APPS") if _env_truthy("ENABLE_WIP_APPS") is not None else DEBUG)
 
 SENTRY_DSN = os.environ.get("SENTRY_DSN")
 if SENTRY_DSN and not DEBUG:

@@ -11,16 +11,11 @@ def validate_upload(uploaded_file):
     if not uploaded_file:
         return
     name = (getattr(uploaded_file, "name", "") or "").lower()
-    is_gif = (
-        getattr(uploaded_file, "content_type", "") == "image/gif"
-        or name.endswith(".gif")
-    )
+    is_gif = getattr(uploaded_file, "content_type", "") == "image/gif" or name.endswith(".gif")
     size = getattr(uploaded_file, "size", 0) or 0
     cap = MAX_GIF_SIZE if is_gif else MAX_IMAGE_SIZE
     if size > cap:
-        raise ValidationError(
-            f"File too large ({size // 1024} KB). Max {cap // (1024 * 1024)} MB."
-        )
+        raise ValidationError(f"File too large ({size // 1024} KB). Max {cap // (1024 * 1024)} MB.")
     try:
         uploaded_file.seek(0)
         img = Image.open(uploaded_file)
@@ -34,10 +29,6 @@ def validate_upload(uploaded_file):
         except Exception:
             pass
     if w > MAX_IMAGE_DIM or h > MAX_IMAGE_DIM:
-        raise ValidationError(
-            f"Image too large ({w}×{h}). Max {MAX_IMAGE_DIM}×{MAX_IMAGE_DIM}."
-        )
+        raise ValidationError(f"Image too large ({w}×{h}). Max {MAX_IMAGE_DIM}×{MAX_IMAGE_DIM}.")
     if is_gif and n_frames > MAX_GIF_FRAMES:
-        raise ValidationError(
-            f"GIF has {n_frames} frames. Max {MAX_GIF_FRAMES}."
-        )
+        raise ValidationError(f"GIF has {n_frames} frames. Max {MAX_GIF_FRAMES}.")

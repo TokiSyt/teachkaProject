@@ -2,7 +2,15 @@
 View and QuerySet mixins for Teachka applications.
 """
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
+
+class AdminRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
+    """Restrict view to staff/superusers."""
+
+    def test_func(self):
+        user = self.request.user
+        return user.is_authenticated and (user.is_staff or user.is_superuser)
 
 
 class UserQuerySetMixin:
