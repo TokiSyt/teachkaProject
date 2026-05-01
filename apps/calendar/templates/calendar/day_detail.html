@@ -50,7 +50,7 @@
       </div>
     </div>
     <a href="{% url 'calendar_app:event_create' %}?next={{ request.get_full_path|urlencode }}"
-       class="btn btn-primary btn-sm rounded-xl px-5 shadow-sm border-none">
+       class="btn-as-link">
       <i data-lucide="plus" class="w-4 h-4"></i>
       {% trans "New event" %}
     </a>

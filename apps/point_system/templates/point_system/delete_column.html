@@ -73,12 +73,10 @@
       </div>
 
       <div class="flex flex-wrap gap-2 mt-6">
-        <a href="javascript:void(0)" 
-           onclick="document.getElementById('delete-column-form').submit();"
-           class="btn btn-error btn-sm">
+        <button type="submit" form="delete-column-form" class="btn-as-link">
           <i data-lucide="trash-2" class="w-4 h-4"></i>
           {% trans "Delete column" %}
-        </a>
+        </button>
         
         <a href="{% url 'karma:karma-home' %}?group_id={{ group_id }}" class="btn btn-ghost btn-sm">
           <i data-lucide="x" class="w-4 h-4"></i>

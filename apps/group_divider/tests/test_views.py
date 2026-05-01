@@ -30,19 +30,19 @@ class TestGroupDividerHomeView:
         assert "form" in response.context
 
     def test_post_splits_group(self, authenticated_client, url, group):
-        response = authenticated_client.post(url, {"group_id": group.id, "size": 2})
+        response = authenticated_client.post(url, {"group_id": group.id, "size": 2}, follow=True)
         assert response.status_code == 200
-        assert "splitted_group" in response.context
-        assert len(response.context["splitted_group"]) == 3  # 6 members / 2 = 3 groups
+        assert "splitted_teams" in response.context
+        assert len(response.context["splitted_teams"]) == 3  # 6 members / 2 = 3 groups
 
     def test_post_with_different_size(self, authenticated_client, url, group):
-        response = authenticated_client.post(url, {"group_id": group.id, "size": 3})
+        response = authenticated_client.post(url, {"group_id": group.id, "size": 3}, follow=True)
         assert response.status_code == 200
-        assert "splitted_group" in response.context
-        assert len(response.context["splitted_group"]) == 2  # 6 members / 3 = 2 groups
+        assert "splitted_teams" in response.context
+        assert len(response.context["splitted_teams"]) == 2  # 6 members / 3 = 2 groups
 
     def test_post_returns_selected_group(self, authenticated_client, url, group):
-        response = authenticated_client.post(url, {"group_id": group.id, "size": 2})
+        response = authenticated_client.post(url, {"group_id": group.id, "size": 2}, follow=True)
         assert response.context["selected_group"] == group
 
     def test_post_invalid_size_shows_errors(self, authenticated_client, url, group):

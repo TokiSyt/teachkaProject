@@ -161,11 +161,10 @@
     </div>
 
     <div class="flex flex-wrap items-center gap-3 mt-8">
-      <a href="javascript:void(0)"
-         onclick="document.getElementById('event-form').submit();"
-         class="btn btn-primary btn-sm px-8 rounded-xl shadow-md border-none">
+      <button type="submit" form="event-form"
+              class="btn-as-link">
         {% if action == "Edit" %}{% trans "Save changes" %}{% else %}{% trans "Create event" %}{% endif %}
-      </a>
+      </button>
       {% if action == "Edit" %}
       <div class="divider divider-horizontal mx-1 hidden sm:flex"></div>
       <a href="{% url 'calendar_app:event_delete' object.pk %}"

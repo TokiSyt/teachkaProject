@@ -50,11 +50,10 @@
       {% csrf_token %}
       <input type="hidden" name="origin_app" value="{{ origin_app }}">
 
-      <a href="javascript:void(0)" 
-         onclick="document.getElementById('delete-form').submit();"
-         class="btn btn-error btn-sm px-8 rounded-xl shadow-md border-none text-white hover:bg-red-700">
+      <button type="submit"
+              class="btn-as-link">
         {% trans "Delete permanently" %}
-      </a>
+      </button>
       
       <a href="{{ cancel_url }}" class="btn btn-ghost btn-sm rounded-xl text-base-content/40 hover:text-base-content">
         {% trans "Cancel" %}

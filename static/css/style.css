@@ -513,6 +513,16 @@ button:not(.btn):not(.btn-as-link):not(.btn-as-link-ghost) {
   background: none;
 }
 
+/* Ensure <button class="btn"> renders identically to <a class="btn"> —
+   reset browser-default button appearance/border/font that override DaisyUI .btn */
+button.btn {
+  -webkit-appearance: none;
+  appearance: none;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+
 /* Make a <button> visually identical to an <a class="btn btn-primary rounded-xl"> */
 .btn-as-link {
   display: inline-flex;
@@ -596,6 +606,35 @@ button:not(.btn):not(.btn-as-link):not(.btn-as-link-ghost) {
 
 .input,
 .select { padding-inline: 1rem !important; }
+
+/* Custom <details>-based dropdowns (group picker): hide content when closed,
+   and hide the default disclosure triangle on the summary. */
+details:not([open]) > ul { display: none; }
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+
+/* Prevent diacritics (Á, Č, Ž, Ã…) from being clipped on capital letters.
+   DaisyUI input height + tight line-height crops the top of uppercase accents. */
+.input,
+.textarea,
+.select,
+input.input,
+textarea.textarea {
+  line-height: 1.6 !important;
+  height: auto !important;
+  min-height: 3rem;
+  padding-block: 0.625rem !important;
+}
+.input.input-sm,
+.select.select-sm {
+  min-height: 2rem;
+  padding-block: 0.375rem !important;
+}
+.input.input-lg,
+.select.select-lg {
+  min-height: 3.5rem;
+  padding-block: 0.75rem !important;
+}
 
 /* Force 24h format on time inputs — hide AM/PM field injected by Chromium */
 input[type="time"]::-webkit-datetime-edit-ampm-field {
