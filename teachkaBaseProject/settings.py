@@ -94,6 +94,7 @@ INSTALLED_APPS = [
     "apps.group_maker",
     "apps.point_system",
     "apps.group_divider",
+    "apps.contact",
 ]
 
 TAILWIND_APP_NAME = "theme"

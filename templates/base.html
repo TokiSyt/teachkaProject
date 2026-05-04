@@ -153,6 +153,7 @@
       <ul class="menu menu-sm p-0 gap-0.5">
         <li><a href="{% url 'profile:profile' %}" class="rounded-lg"><i data-lucide="user" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Profile" %}</span></a></li>
         <li><a href="{% url 'profile:settings' %}" class="rounded-lg"><i data-lucide="settings" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Settings" %}</span></a></li>
+        <li><a href="{% url 'contact:contact' %}" class="rounded-lg {% if request.resolver_match.namespace == 'contact' %}active{% endif %}"><i data-lucide="message-square-plus" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Contact" %}</span></a></li>
       </ul>
     </div>
     {% endif %}
@@ -320,6 +321,7 @@
   <footer class="mt-auto px-5 py-8 md:px-14 md:py-7 border-t border-base-300 flex items-center justify-between shrink-0">
     <p class="serif italic text-sm text-base-content/40">Teachka, 2026</p>
     <div class="flex items-center gap-4">
+      <a href="{% url 'contact:contact' %}" class="link link-hover text-xs text-base-content/40">{% trans "Contact" %}</a>
       <a href="{% url 'privacy' %}" class="link link-hover text-xs text-base-content/40">{% trans "Privacy" %}</a>
       <a href="https://teachka.com" target="_blank"
          class="link link-hover text-sm text-base-content/50 flex items-center gap-1.5 font-medium">
