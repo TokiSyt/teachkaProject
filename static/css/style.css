@@ -904,6 +904,20 @@ input[type="password"]::-webkit-textfield-decoration-container {
 [data-theme="light"] .cal-grid .text-base-content\/35 { color: color-mix(in srgb, var(--color-base-content) 60%, transparent); }
 [data-theme="light"] .cal-grid .text-base-content\/20 { color: color-mix(in srgb, var(--color-base-content) 38%, transparent); }
 
+/* ── Dark theme: bg-base-300 override ── */
+[data-theme="dark"] {
+  --color-base-300: oklch(32.57% 0.04663 323.444);
+}
+
+
+/* ── Tooltip: allow wrap + wider for long text values ── */
+.tooltip[data-tip]:hover::before,
+.tooltip[data-tip]:focus-within::before {
+  white-space: normal !important;
+  max-width: 20rem !important;
+  word-break: break-word;
+}
+
 /* ── Calendar grid lines ── */
 .cal-grid {
   --cal-line: color-mix(in oklch, var(--color-base-300) 90%, transparent);
@@ -962,12 +976,26 @@ input[type="password"]::-webkit-textfield-decoration-container {
   border-color: var(--color-base-300);
 }
 
-/* Checked toggle-primary: fill with the theme's primary color */
-[data-theme="light"] .toggle-primary:checked,
-[data-theme="lemonade"] .toggle-primary:checked,
-[data-theme="pastel"] .toggle-primary:checked {
+/* Checked toggle-primary: knob + border use primary across all themes */
+.toggle-primary:checked {
   color: var(--color-primary) !important;
   border-color: var(--color-primary) !important;
+}
+
+/* ── Toggle knob padding (all themes) ── */
+.toggle {
+  --toggle-p: 2px !important;
+  padding: 2px !important;
+}
+
+/* ── Toggle track = form background (all themes) ── */
+.toggle {
+  background-color: var(--form-background) !important;
+}
+
+/* ── Light theme: toggle off-state knob (white on track) ── */
+[data-theme="light"] .toggle:not(:checked) {
+  color: var(--color-base-100) !important;
 }
 
 /* Select and non-ghost inputs: ensure a visible border against light backgrounds */

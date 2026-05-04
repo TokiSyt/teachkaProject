@@ -104,11 +104,16 @@
     </script>
 
     {% if selected_group %}
-    <div class="flex flex-wrap gap-2 mt-6">
+    <div class="flex flex-wrap items-center gap-4 mt-6">
       <a href="{% url 'karma:karma-home' %}" class="btn btn-ghost btn-sm">
         <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
         {% trans "Reset" %}
       </a>
+      <div class="flex items-center gap-2">
+        <input type="checkbox" id="autosave-toggle" class="toggle toggle-sm toggle-primary cursor-pointer">
+        <span class="text-[11px] tracking-[1.5px] uppercase text-base-content/50">{% trans "Auto-save" %}</span>
+        <span id="autosave-status" class="text-[10px] text-base-content/30 italic"></span>
+      </div>
     </div>
     {% endif %}
   </section>
@@ -133,12 +138,20 @@
       {% if negative_data %}
       <div class="card bg-base-100 border border-base-300 overflow-hidden">
         <div class="overflow-x-auto">
-          <table class="table">
+          <table class="table [&_th]:border-r [&_th]:border-base-300 [&_td]:border-r [&_td]:border-base-300 [&_th:last-child]:border-r-0 [&_td:last-child]:border-r-0 [&_tbody_tr]:border-b [&_tbody_tr]:border-base-300 [&_tbody_tr:last-child]:border-b-0"
+                 data-reorderable-table="negative"
+                 data-reorder-url="{% url 'karma:column-reorder' selected_group.id %}">
             <thead>
-              <tr class="bg-base-200">
+              <tr class="bg-base-300">
                 <th class="text-[10px] font-semibold tracking-[1.5px] uppercase text-base-content/50">{% trans "Name" %}</th>
-                {% for key in negative_data %}
-                <th class="text-[10px] font-semibold tracking-[1.5px] uppercase text-base-content/50">{{ key }}</th>
+                {% for field in negative_fields %}
+                <th class="text-[10px] font-semibold tracking-[1.5px] uppercase text-base-content/50 cursor-move active:cursor-grabbing"
+                    data-field-pk="{{ field.id }}" draggable="true">
+                  <span class="inline-flex items-center gap-1.5">
+                    <i data-lucide="menu" class="w-3 h-3 opacity-60"></i>
+                    {{ field.name }}
+                  </span>
+                </th>
                 {% endfor %}
                 <th class="text-[10px] font-semibold tracking-[1.5px] uppercase text-base-content/50 text-right">{% trans "Total" %}</th>
               </tr>
@@ -152,13 +165,22 @@
                     <i data-lucide="arrow-up-right" class="w-3 h-3 opacity-0 group-hover:opacity-60 transition-opacity"></i>
                   </a>
                 </td>
-                {% for column in negative_data %}
-                <td>
-                  <input type="{{ column_type_negative|get_item:column }}"
-                         name="{{ member.id }}_negative_{{ column }}"
-                         value="{{ member.negative_data|get_item:column }}"
+                {% for field in negative_fields %}
+                <td data-field-pk="{{ field.id }}">
+                  {% if column_type_negative|get_item:field.name == 'text' %}
+                  <input type="text"
+                         name="{{ member.id }}_negative_{{ field.name }}"
+                         value="{{ member.negative_data|get_item:field.name }}"
+                         title="{{ member.negative_data|get_item:field.name }}"
+                         class="input input-bordered input-sm w-48"
+                         oninput="this.title = this.value">
+                  {% else %}
+                  <input type="{{ column_type_negative|get_item:field.name }}"
+                         name="{{ member.id }}_negative_{{ field.name }}"
+                         value="{{ member.negative_data|get_item:field.name }}"
                          min="0"
-                         class="input input-bordered input-sm w-20">
+                         class="input input-bordered input-sm w-16">
+                  {% endif %}
                 </td>
                 {% endfor %}
                 <td class="text-right tabular-nums">
@@ -236,12 +258,20 @@
       {% if positive_data %}
       <div class="card bg-base-100 border border-base-300 overflow-hidden">
         <div class="overflow-x-auto">
-          <table class="table">
+          <table class="table [&_th]:border-r [&_th]:border-base-300 [&_td]:border-r [&_td]:border-base-300 [&_th:last-child]:border-r-0 [&_td:last-child]:border-r-0 [&_tbody_tr]:border-b [&_tbody_tr]:border-base-300 [&_tbody_tr:last-child]:border-b-0"
+                 data-reorderable-table="positive"
+                 data-reorder-url="{% url 'karma:column-reorder' selected_group.id %}">
             <thead>
-              <tr class="bg-base-200">
+              <tr class="bg-base-300">
                 <th class="text-[10px] font-semibold tracking-[1.5px] uppercase text-base-content/50">{% trans "Name" %}</th>
-                {% for key in positive_data %}
-                <th class="text-[10px] font-semibold tracking-[1.5px] uppercase text-base-content/50">{{ key }}</th>
+                {% for field in positive_fields %}
+                <th class="text-[10px] font-semibold tracking-[1.5px] uppercase text-base-content/50 cursor-move active:cursor-grabbing"
+                    data-field-pk="{{ field.id }}" draggable="true">
+                  <span class="inline-flex items-center gap-1.5">
+                    <i data-lucide="menu" class="w-3 h-3 opacity-60"></i>
+                    {{ field.name }}
+                  </span>
+                </th>
                 {% endfor %}
                 <th class="text-[10px] font-semibold tracking-[1.5px] uppercase text-base-content/50 text-right">{% trans "Total" %}</th>
               </tr>
@@ -255,13 +285,22 @@
                     <i data-lucide="arrow-up-right" class="w-3 h-3 opacity-0 group-hover:opacity-60 transition-opacity"></i>
                   </a>
                 </td>
-                {% for column in positive_data %}
-                <td>
-                  <input type="{{ column_type_positive|get_item:column }}"
-                         name="{{ member.id }}_positive_{{ column }}"
-                         value="{{ member.positive_data|get_item:column }}"
+                {% for field in positive_fields %}
+                <td data-field-pk="{{ field.id }}">
+                  {% if column_type_positive|get_item:field.name == 'text' %}
+                  <input type="text"
+                         name="{{ member.id }}_positive_{{ field.name }}"
+                         value="{{ member.positive_data|get_item:field.name }}"
+                         title="{{ member.positive_data|get_item:field.name }}"
+                         class="input input-bordered input-sm w-48"
+                         oninput="this.title = this.value">
+                  {% else %}
+                  <input type="{{ column_type_positive|get_item:field.name }}"
+                         name="{{ member.id }}_positive_{{ field.name }}"
+                         value="{{ member.positive_data|get_item:field.name }}"
                          min="0"
-                         class="input input-bordered input-sm w-20">
+                         class="input input-bordered input-sm w-16">
+                  {% endif %}
                 </td>
                 {% endfor %}
                 <td class="text-right tabular-nums">
@@ -323,6 +362,235 @@
       </div>
     </section>
   </form>
+
+  <script>
+  (function() {
+    const form = document.getElementById('points-form');
+    if (!form) return;
+    form.addEventListener('keydown', function(e) {
+      if (e.key !== 'Enter') return;
+      const t = e.target;
+      if (!(t instanceof HTMLInputElement)) return;
+      if (t.type === 'submit' || t.type === 'button') return;
+      e.preventDefault();
+      const td = t.closest('td');
+      const tr = td && td.closest('tr');
+      if (!tr) return;
+      const idx = Array.from(tr.children).indexOf(td);
+      const next = tr.nextElementSibling;
+      if (!next) return;
+      const nextCell = next.children[idx];
+      const nextInput = nextCell && nextCell.querySelector('input');
+      if (nextInput) {
+        nextInput.focus();
+        if (nextInput.select) nextInput.select();
+      }
+    });
+  })();
+  </script>
+
+  <script>
+  (function() {
+    const form = document.getElementById('points-form');
+    const toggle = document.getElementById('autosave-toggle');
+    const status = document.getElementById('autosave-status');
+    if (!form || !toggle) return;
+
+    const STORAGE_KEY = 'points-autosave-' + (form.querySelector('[name=group_id]')?.value || 'x');
+    const DEBOUNCE_MS = 2000;
+    const MIN_INTERVAL_MS = 5000;
+
+    toggle.checked = localStorage.getItem(STORAGE_KEY) === '1';
+    toggle.addEventListener('change', function() {
+      localStorage.setItem(STORAGE_KEY, toggle.checked ? '1' : '0');
+      setStatus(toggle.checked ? 'enabled' : '');
+    });
+    setStatus(toggle.checked ? 'enabled' : '');
+
+    let dirty = { negative: false, positive: false };
+    let timer = null;
+    let lastSaveAt = 0;
+    let saving = false;
+
+    function setStatus(text) {
+      if (status) status.textContent = text ? '· ' + text : '';
+    }
+
+    form.addEventListener('input', function(e) {
+      const name = e.target.name || '';
+      const isNeg = name.indexOf('_negative_') !== -1;
+      const isPos = name.indexOf('_positive_') !== -1;
+      if (!isNeg && !isPos) return;
+      updateRowTotal(e.target, isPos);
+      if (!toggle.checked) return;
+      if (isNeg) dirty.negative = true;
+      else dirty.positive = true;
+      schedule();
+    });
+
+    function updateRowTotal(input, isPositive) {
+      const tr = input.closest('tr');
+      if (!tr) return;
+      let total = 0;
+      tr.querySelectorAll('input[type="number"]').forEach(function(i) {
+        const v = parseInt(i.value, 10);
+        if (!isNaN(v)) total += v;
+      });
+      const tds = tr.children;
+      const totalTd = tds[tds.length - 1];
+      if (!totalTd) return;
+      const badge = totalTd.querySelector('.badge');
+      if (!badge) return;
+      badge.textContent = total;
+      const cls = ['badge', 'badge-sm', 'font-semibold'];
+      if (isPositive) {
+        if (total >= 10) cls.push('badge-success');
+        else if (total >= 5) cls.push('badge-success', 'badge-soft');
+        else cls.push('badge-ghost', 'bg-base-200', 'border-none', 'serif', 'font-medium', 'text-base-content/60');
+      } else {
+        if (total >= 10) cls.push('badge-error');
+        else if (total >= 5) cls.push('badge-warning');
+        else cls.push('badge-ghost', 'bg-base-200', 'border-none', 'serif', 'font-medium', 'text-base-content/60');
+      }
+      badge.className = cls.join(' ');
+    }
+
+    function schedule() {
+      clearTimeout(timer);
+      const elapsed = Date.now() - lastSaveAt;
+      const wait = Math.max(DEBOUNCE_MS, MIN_INTERVAL_MS - elapsed);
+      setStatus('pending…');
+      timer = setTimeout(run, wait);
+    }
+
+    async function run() {
+      if (saving) return;
+      if (!dirty.negative && !dirty.positive) return;
+      saving = true;
+      const flags = [];
+      if (dirty.negative) flags.push('negative_save');
+      if (dirty.positive) flags.push('positive_save');
+      dirty = { negative: false, positive: false };
+      lastSaveAt = Date.now();
+      setStatus('saving…');
+      let failed = false;
+      try {
+        for (const flag of flags) {
+          const fd = new FormData(form);
+          fd.set(flag, '1');
+          const res = await fetch(window.location.pathname + window.location.search, {
+            method: 'POST',
+            body: fd,
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            credentials: 'same-origin',
+          });
+          if (!res.ok && res.type !== 'opaqueredirect') {
+            failed = true;
+            console.warn('[autosave] HTTP', res.status, 'for', flag);
+          } else if (res.type === 'opaqueredirect') {
+            failed = true;
+            console.warn('[autosave] session expired (redirect)');
+          }
+        }
+        if (failed) {
+          setStatus('save failed — refresh page');
+          if (flags.includes('negative_save')) dirty.negative = true;
+          if (flags.includes('positive_save')) dirty.positive = true;
+        } else {
+          setStatus('saved ' + new Date().toLocaleTimeString());
+        }
+      } catch (err) {
+        console.error('[autosave] error', err);
+        setStatus('save failed');
+        if (flags.includes('negative_save')) dirty.negative = true;
+        if (flags.includes('positive_save')) dirty.positive = true;
+      } finally {
+        saving = false;
+        if (dirty.negative || dirty.positive) schedule();
+      }
+    }
+
+    window.addEventListener('beforeunload', function(e) {
+      if (toggle.checked && (dirty.negative || dirty.positive)) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    });
+  })();
+  </script>
+
+  <script>
+  (function() {
+    const csrf = document.querySelector('[name=csrfmiddlewaretoken]')?.value;
+    document.querySelectorAll('table[data-reorderable-table]').forEach(function(table) {
+      const definition = table.dataset.reorderableTable;
+      const url = table.dataset.reorderUrl;
+      const headerRow = table.querySelector('thead tr');
+      const tbody = table.querySelector('tbody');
+      if (!headerRow || !tbody || !url) return;
+      let dragTh = null;
+
+      function colIndex(th) {
+        return Array.from(headerRow.children).indexOf(th);
+      }
+
+      function moveCells(fromIdx, toIdx) {
+        if (fromIdx === toIdx) return;
+        tbody.querySelectorAll('tr').forEach(function(tr) {
+          const cells = tr.children;
+          const moving = cells[fromIdx];
+          if (!moving) return;
+          const ref = cells[toIdx];
+          if (toIdx > fromIdx) {
+            tr.insertBefore(moving, ref ? ref.nextSibling : null);
+          } else {
+            tr.insertBefore(moving, ref);
+          }
+        });
+      }
+
+      headerRow.addEventListener('dragstart', function(e) {
+        const th = e.target.closest('th[data-field-pk]');
+        if (!th) return;
+        dragTh = th;
+        th.classList.add('opacity-50');
+        e.dataTransfer.effectAllowed = 'move';
+      });
+
+      headerRow.addEventListener('dragend', function() {
+        if (dragTh) dragTh.classList.remove('opacity-50');
+        dragTh = null;
+      });
+
+      headerRow.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        if (!dragTh) return;
+        const target = e.target.closest('th[data-field-pk]');
+        if (!target || target === dragTh) return;
+        const rect = target.getBoundingClientRect();
+        const after = (e.clientX - rect.left) > rect.width / 2;
+        const fromIdx = colIndex(dragTh);
+        headerRow.insertBefore(dragTh, after ? target.nextSibling : target);
+        const toIdx = colIndex(dragTh);
+        moveCells(fromIdx, toIdx);
+      });
+
+      headerRow.addEventListener('drop', function(e) {
+        e.preventDefault();
+        const order = Array.from(headerRow.querySelectorAll('th[data-field-pk]'))
+          .map(function(th) { return parseInt(th.dataset.fieldPk, 10); });
+        fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrf },
+          body: JSON.stringify({ definition: definition, order: order }),
+          credentials: 'same-origin',
+        }).then(function(r) {
+          if (!r.ok) console.warn('[reorder] failed', r.status);
+        });
+      });
+    });
+  })();
+  </script>
   {% endif %}
 
 {% endblock content %}

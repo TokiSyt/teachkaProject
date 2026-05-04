@@ -1,5 +1,7 @@
 """Comprehensive tests for point_system views."""
 
+import json
+
 import pytest
 from django.urls import reverse
 
@@ -63,7 +65,7 @@ class TestHomeView:
             f"{member.id}_positive_homework": "25",
         }
         response = authenticated_client.post(url, data)
-        assert response.status_code == 200
+        assert response.status_code == 302
         member.refresh_from_db()
         # Values are sanitized to integers
         assert member.positive_data["homework"] == 25
@@ -78,7 +80,7 @@ class TestHomeView:
             f"{member.id}_negative_tardiness": "5",
         }
         response = authenticated_client.post(url, data)
-        assert response.status_code == 200
+        assert response.status_code == 302
         member.refresh_from_db()
         # Values are sanitized to integers
         assert member.negative_data["tardiness"] == 5
@@ -622,3 +624,67 @@ class TestViewIntegration:
         assert member.positive_data["notes"] == "Great work!"
         # Total should only count numerical
         assert member.positive_total == 100
+
+
+@pytest.mark.django_db
+class TestColumnReorderView:
+    """Tests for column reorder endpoint."""
+
+    def _make_fields(self, group, definition="positive"):
+        f1 = FieldDefinition.objects.create(group=group, name="a", type="int", definition=definition, order=1)
+        f2 = FieldDefinition.objects.create(group=group, name="b", type="int", definition=definition, order=2)
+        f3 = FieldDefinition.objects.create(group=group, name="c", type="int", definition=definition, order=3)
+        return f1, f2, f3
+
+    def test_persists_new_order(self, authenticated_client, user):
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A")
+        f1, f2, f3 = self._make_fields(group, "positive")
+        url = reverse("karma:column-reorder", kwargs={"group_pk": group.id})
+        resp = authenticated_client.post(
+            url,
+            data=json.dumps({"definition": "positive", "order": [f3.pk, f1.pk, f2.pk]}),
+            content_type="application/json",
+        )
+        assert resp.status_code == 200
+        f1.refresh_from_db()
+        f2.refresh_from_db()
+        f3.refresh_from_db()
+        assert (f3.order, f1.order, f2.order) == (1, 2, 3)
+
+    def test_rejects_id_set_mismatch(self, authenticated_client, user):
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A")
+        f1, _, _ = self._make_fields(group, "positive")
+        url = reverse("karma:column-reorder", kwargs={"group_pk": group.id})
+        resp = authenticated_client.post(
+            url,
+            data=json.dumps({"definition": "positive", "order": [f1.pk, 999999]}),
+            content_type="application/json",
+        )
+        assert resp.status_code == 400
+
+    def test_scoped_to_definition(self, authenticated_client, user):
+        """Reordering positive does not touch negative."""
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A")
+        p1, p2, p3 = self._make_fields(group, "positive")
+        n1 = FieldDefinition.objects.create(group=group, name="x", type="int", definition="negative", order=1)
+        n2 = FieldDefinition.objects.create(group=group, name="y", type="int", definition="negative", order=2)
+        url = reverse("karma:column-reorder", kwargs={"group_pk": group.id})
+        authenticated_client.post(
+            url,
+            data=json.dumps({"definition": "positive", "order": [p3.pk, p2.pk, p1.pk]}),
+            content_type="application/json",
+        )
+        n1.refresh_from_db()
+        n2.refresh_from_db()
+        assert (n1.order, n2.order) == (1, 2)
+
+    def test_rejects_other_user_group(self, authenticated_client, other_user):
+        group = GroupCreationModel.objects.create(user=other_user, title="G", members_string="A")
+        FieldDefinition.objects.create(group=group, name="a", type="int", definition="positive", order=1)
+        url = reverse("karma:column-reorder", kwargs={"group_pk": group.id})
+        resp = authenticated_client.post(
+            url,
+            data=json.dumps({"definition": "positive", "order": []}),
+            content_type="application/json",
+        )
+        assert resp.status_code == 404

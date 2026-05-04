@@ -8,6 +8,7 @@ import logging
 from typing import Any
 
 from django.db import transaction
+from django.db.models import Max
 
 from ..models import FieldDefinition, Member
 
@@ -72,6 +73,27 @@ class MemberService:
             except (ValueError, TypeError):
                 pass
         return total
+
+    @staticmethod
+    @transaction.atomic
+    def create_field(group, field_name: str, field_type: str, definition: str) -> FieldDefinition:
+        """
+        Create a FieldDefinition with auto-assigned order and sync to members.
+
+        Order = max(order) + 1 within (group, definition) bucket.
+        """
+        current_max = (
+            FieldDefinition.objects.filter(group=group, definition=definition).aggregate(m=Max("order"))["m"] or 0
+        )
+        field = FieldDefinition.objects.create(
+            group=group,
+            name=field_name,
+            type=field_type,
+            definition=definition,
+            order=current_max + 1,
+        )
+        MemberService.add_field_to_members(group, field_name, field_type, definition)
+        return field
 
     @staticmethod
     @transaction.atomic

@@ -8,7 +8,6 @@ from apps.users.models import UserStats
 from .forms import GradeCalculatorForm
 from .services.grade_calculator import grade_calculator
 
-
 SESSION_RESULT_KEY = "grade_calculator_result"
 
 

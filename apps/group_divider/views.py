@@ -10,7 +10,6 @@ from .forms import GroupMakerForm
 from .services.group_split import get_split_group_color
 from .services.group_split import group_split as group_split_f
 
-
 SESSION_RESULT_KEY = "group_divider_result"
 
 
