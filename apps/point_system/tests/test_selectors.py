@@ -217,6 +217,16 @@ class TestGetGroupFullData:
         assert data["group"] == group
         assert len(list(data["members"])) == 1
 
+    def test_get_group_full_data_orders_by_order_field(self, user):
+        """positive_column_names follow FieldDefinition.order ascending."""
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A")
+        FieldDefinition.objects.create(group=group, name="b", type="int", definition="positive", order=2)
+        FieldDefinition.objects.create(group=group, name="a", type="int", definition="positive", order=1)
+        FieldDefinition.objects.create(group=group, name="c", type="int", definition="positive", order=3)
+
+        data = selectors.get_group_full_data(group.id, user)
+        assert data["positive_column_names"] == ["a", "b", "c"]
+
     def test_get_group_full_data_no_fields(self, user):
         """Test getting full data for group with no fields."""
         group = GroupCreationModel.objects.create(user=user, title="No Fields", members_string="A")

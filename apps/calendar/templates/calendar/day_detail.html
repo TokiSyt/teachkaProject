@@ -9,6 +9,40 @@
   <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
     <i data-lucide="calendar-check" class="text-primary" style="width: 180px; height: 180px;"></i>
   </div>
+  <button type="button" onclick="holiday_help_modal.showModal()"
+          class="absolute top-4 right-4 z-20 text-primary hover:text-primary/70 transition-colors"
+          title="{% trans 'About holiday descriptions' %}"
+          aria-label="{% trans 'About holiday descriptions' %}">
+    <i data-lucide="circle-question-mark" class="w-7 h-7"></i>
+  </button>
+
+  <dialog id="holiday_help_modal" class="modal">
+    <div class="modal-box max-w-md rounded-[14px] border border-base-300">
+      <form method="dialog">
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-3 top-3" aria-label="{% trans 'Close' %}">✕</button>
+      </form>
+      <div class="flex items-center gap-3 mb-4">
+        <i data-lucide="circle-question-mark" class="w-6 h-6 text-primary"></i>
+        <h3 class="serif text-[20px] font-medium tracking-tight">{% trans "Help us tell the story" %}</h3>
+      </div>
+      <p class="text-[14px] text-base-content/70 leading-relaxed font-light mb-3">
+        {% blocktrans %}Teachka is still being detailed. Holiday descriptions are a work in progress and not every entry has the depth it deserves yet.{% endblocktrans %}
+      </p>
+      <p class="text-[14px] text-base-content/70 leading-relaxed font-light mb-6">
+        {% blocktrans %}If you know the history behind a holiday and would like to contribute, we'd love to hear from you.{% endblocktrans %}
+      </p>
+      <div class="modal-action">
+        <form method="dialog">
+          <button class="btn btn-ghost btn-sm">{% trans "Close" %}</button>
+        </form>
+        <a href="{% url 'contact:contact' %}" class="btn btn-primary btn-sm">
+          <i data-lucide="mail" class="w-4 h-4"></i>
+          {% trans "Contact us" %}
+        </a>
+      </div>
+    </div>
+    <form method="dialog" class="modal-backdrop"><button>close</button></form>
+  </dialog>
   <div class="relative z-10">
     <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">
       {% trans "Calendar" %} · {{ day|date:"F Y" }}
@@ -18,7 +52,7 @@
       <span class="text-base-content/60">{{ day|date:"F" }}</span>
     </h1>
     <p class="drift drift-3 text-[11px] tracking-[2px] uppercase text-base-content/30">
-      {{ day|date:"l" }}{% if today == day %} · {% trans "Today" %}{% endif %}
+      {{ day|date:"l" }}{% if today == day %} · {% trans "Today" %}{% endif %}{% if name_day %} · {% trans "Name day" %}: {{ name_day }}{% endif %}
     </p>
   </div>
 </section>
@@ -50,11 +84,35 @@
       </div>
     </div>
     <a href="{% url 'calendar_app:event_create' %}?next={{ request.get_full_path|urlencode }}"
-       class="btn btn-primary btn-sm rounded-xl px-5 shadow-sm border-none">
+       class="btn-as-link">
       <i data-lucide="plus" class="w-4 h-4"></i>
       {% trans "New event" %}
     </a>
   </div>
+
+  {% if holidays %}
+  <div class="flex flex-col gap-3 mb-4">
+    {% for h in holidays %}
+    <div class="card bg-primary/5 border border-primary/30 rounded-[14px]">
+      <div class="card-body p-5 flex flex-row gap-5 items-start">
+        <div class="shrink-0 w-28 text-center">
+          <i data-lucide="{% if h.country == 'INTL' %}globe{% else %}star{% endif %}" class="w-5 h-5 text-primary mx-auto"></i>
+          <span class="text-[10px] tracking-[2px] uppercase font-bold text-primary mt-1 block [text-indent:2px]">{{ h.get_country_display }}</span>
+        </div>
+        <div class="flex-1 min-w-0 border-l border-primary/30 pl-5">
+          <h3 class="serif text-[17px] font-medium tracking-tight text-base-content mb-1">{{ h.name }}</h3>
+          {% if h.subject %}
+          <p class="text-[11px] tracking-[1.5px] uppercase text-base-content/40 font-medium mb-2">{{ h.subject }}</p>
+          {% endif %}
+          {% if h.description %}
+          <p class="text-[13px] text-base-content/60 leading-relaxed font-light">{{ h.description|linebreaksbr }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
 
   {% if events %}
   <div class="flex flex-col gap-3">
@@ -88,9 +146,6 @@
           {% endif %}
           {% if ev.description %}
           <p class="text-[13px] text-base-content/60 leading-relaxed font-light">{{ ev.description|linebreaksbr }}</p>
-          {% endif %}
-          {% if ev.notes %}
-          <p class="text-[12px] text-base-content/45 leading-relaxed font-light mt-2">{{ ev.notes|linebreaksbr }}</p>
           {% endif %}
         </div>
 

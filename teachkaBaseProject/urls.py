@@ -33,6 +33,7 @@ urlpatterns += i18n_patterns(
     # Users
     path("users/", include("apps.users.urls")),
     path("privacy/", views.PrivacyView.as_view(), name="privacy"),
+    path("contact/", include("apps.contact.urls", namespace="contact")),
     prefix_default_language=False,
 )
 

@@ -95,10 +95,7 @@ class GroupDelete(LoginRequiredMixin, DeleteView):  # type: ignore[misc]
         origin_app = self.request.GET.get("origin_app")
         context["origin_app"] = origin_app
         if origin_app and origin_app.strip() in ALLOWED_ORIGIN_APPS:
-            # Came from edit page, cancel goes back to edit
-            edit_url = reverse("group_maker:group-maker-edit", args=[self.object.id])
-            context["cancel_url"] = f"{edit_url}?origin_app={origin_app}"
+            context["cancel_url"] = reverse(f"{origin_app.strip()}:home")
         else:
-            # Direct access, cancel goes to referer or home
             context["cancel_url"] = self.request.META.get("HTTP_REFERER") or reverse("home")
         return context

@@ -67,12 +67,11 @@
     </div>
 
     <div class="flex items-center gap-3 mt-8">
-      <a href="javascript:void(0)" 
-         onclick="document.getElementById('calc-form').submit();"
-         class="btn btn-primary btn-sm px-8 rounded-xl shadow-md border-none">
+      <button type="submit" form="calc-form"
+              class="btn-as-link">
         {% trans "Calculate" %}
-      </a>
-      <a href="{% url 'grade_calculator:grade_calculator' %}" class="btn btn-ghost btn-sm rounded-xl text-base-content/40">
+      </button>
+      <a href="{% url 'grade_calculator:grade_calculator' %}?reset=1" class="btn btn-ghost btn-sm rounded-xl text-base-content/40">
         {% trans "Reset" %}
       </a>
     </div>
@@ -80,7 +79,7 @@
 </section>
 
 {% if score_range %}
-<section class="px-5 py-12 md:px-14 bg-base-200/30 min-h-[50vh]">
+<section class="px-5 pt-8 pb-4 md:px-14 bg-base-200/30">
   <div class="flex items-baseline gap-4 mb-10">
     <h2 class="serif text-3xl font-medium italic text-base-content/80">{% trans "The results" %}</h2>
     <span class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/20">{% trans "Max" %}: {{ form.max_points.value }}</span>
@@ -95,23 +94,23 @@
           <ul class="divide-y divide-base-300/50">
             <li class="px-5 py-4 flex items-center justify-between">
               <span class="serif text-xl font-bold text-primary">{% trans "Grade" %} 1</span>
-              <span class="font-bold">{{ score_range.0 }} -{{ score_range.1 }}</span>
+              <span class="text-xl font-bold">{{ score_range.0 }} - {{ score_range.1 }}</span>
             </li>
             <li class="px-5 py-4 flex items-center justify-between">
               <span class="serif text-xl font-medium">{% trans "Grade" %} 2</span>
-              <span class="font-medium text-base-content/70">{{ score_range.2 }} -{{ score_range.3 }}</span>
+              <span class="text-xl font-medium text-base-content/70">{{ score_range.2 }} - {{ score_range.3 }}</span>
             </li>
             <li class="px-5 py-4 flex items-center justify-between">
               <span class="serif text-xl font-medium">{% trans "Grade" %} 3</span>
-              <span class="font-medium text-base-content/70">{{ score_range.4 }} -{{ score_range.5 }}</span>
+              <span class="text-xl font-medium text-base-content/70">{{ score_range.4 }} - {{ score_range.5 }}</span>
             </li>
             <li class="px-5 py-4 flex items-center justify-between">
               <span class="serif text-xl font-medium">{% trans "Grade" %} 4</span>
-              <span class="font-medium text-base-content/70">{{ score_range.6 }} -{{ score_range.7 }}</span>
+              <span class="text-xl font-medium text-base-content/70">{{ score_range.6 }} - {{ score_range.7 }}</span>
             </li>
             <li class="px-5 py-4 flex items-center justify-between">
               <span class="serif text-xl font-medium">{% trans "Grade" %} 5</span>
-              <span class="font-medium text-base-content/70">{{ score_range.8 }} -{{ score_range.9 }}</span>
+              <span class="text-xl font-medium text-base-content/70">{{ score_range.8 }} - {{ score_range.9 }}</span>
             </li>
           </ul>
         </div>
@@ -135,7 +134,7 @@
 
   </div>
 
-  <div class="mt-12 p-4 bg-primary/5 border-l-2 border-primary max-w-lg">
+  <div class="mt-8 p-4 bg-primary/5 border-l-2 border-primary max-w-lg">
     <p class="text-[11px] serif leading-relaxed text-base-content/60">
       {% trans "From 4 to 9 max points, grades do not follow specific percentage thresholds." %}
     </p>

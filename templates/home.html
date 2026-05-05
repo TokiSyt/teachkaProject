@@ -208,10 +208,17 @@
       </div>
 
       <!-- Week + parity toggle -->
-      <div class="drift drift-4 flex items-center gap-4">
+      <div class="drift drift-4 flex items-center gap-4 flex-wrap">
         <span class="text-[11px] tracking-[2.5px] uppercase text-base-content/30">{% trans "Week" %} {{ week_number }}</span>
         <span class="text-base-content/15 text-sm">·</span>
         <span class="text-[11px] tracking-[2.5px] uppercase font-semibold text-primary">{{ week_parity|capfirst }}</span>
+        {% if name_day %}
+        <span class="text-base-content/15 text-sm">·</span>
+        <span class="text-[11px] tracking-[2.5px] uppercase text-base-content/30">
+          {% trans "Name day" %}:
+          <span class="text-base-content/60 font-semibold">{{ name_day }}</span>
+        </span>
+        {% endif %}
       </div>
 
     </div>
@@ -331,7 +338,7 @@
 
     <div>
 
-      <div class="stat-row border-t border-base-300/50 py-6 flex items-baseline justify-between">
+      <div class="stat-row border-t border-base-300 py-6 flex items-baseline justify-between">
         <span class="text-xs tracking-[2px] uppercase text-base-content/35">{% trans "Groups" %}</span>
         <div class="text-right leading-none">
           <span class="serif font-medium text-base-content tabular-nums stat-num" style="font-size:28px" data-target="{{ user_groups_count }}">{{ user_groups_count }}</span>
@@ -339,7 +346,7 @@
         </div>
       </div>
 
-      <div class="stat-row border-t border-base-300/50 py-6 flex items-baseline justify-between">
+      <div class="stat-row border-t border-base-300 py-6 flex items-baseline justify-between">
         <span class="text-xs tracking-[2px] uppercase text-base-content/35">{% trans "Points" %}</span>
         <div class="text-right leading-none">
           <span class="serif font-medium tabular-nums" style="font-size:28px; color:oklch(58% .17 145)">+<span class="stat-num" data-target="{{ user_positive_points }}">{{ user_positive_points }}</span></span>
@@ -348,7 +355,7 @@
         </div>
       </div>
 
-      <div class="stat-row border-t border-base-300/50 py-6 flex items-baseline justify-between">
+      <div class="stat-row border-t border-base-300 py-6 flex items-baseline justify-between">
         <span class="text-xs tracking-[2px] uppercase text-base-content/35">{% trans "Calculator" %}</span>
         <div class="text-right leading-none">
           <span class="serif font-medium text-base-content tabular-nums stat-num" style="font-size:28px" data-target="{{ calculator_uses }}">{{ calculator_uses }}</span>
@@ -356,7 +363,7 @@
         </div>
       </div>
 
-      <div class="stat-row border-t border-base-300/50 py-6 flex items-baseline justify-between">
+      <div class="stat-row border-t border-base-300 py-6 flex items-baseline justify-between">
         <span class="text-xs tracking-[2px] uppercase text-base-content/35">{% trans "Wheel" %}</span>
         <div class="text-right leading-none">
           <span class="serif font-medium text-base-content tabular-nums stat-num" style="font-size:28px" data-target="{{ wheel_spins }}">{{ wheel_spins }}</span>
@@ -364,7 +371,7 @@
         </div>
       </div>
 
-      <div class="stat-row border-t border-base-300/50 py-6 flex items-baseline justify-between">
+      <div class="stat-row border-t border-base-300 py-6 flex items-baseline justify-between">
         <span class="text-xs tracking-[2px] uppercase text-base-content/35">{% trans "Divider" %}</span>
         <div class="text-right leading-none">
           <span class="serif font-medium text-base-content tabular-nums stat-num" style="font-size:28px" data-target="{{ divider_uses }}">{{ divider_uses }}</span>
@@ -372,7 +379,7 @@
         </div>
       </div>
 
-      <div class="stat-row border-t border-base-300/50 py-6 flex items-baseline justify-between">
+      <div class="stat-row border-t border-base-300 py-6 flex items-baseline justify-between">
         <span class="text-xs tracking-[2px] uppercase text-base-content/35">{% trans "Timer" %}</span>
         <div class="text-right leading-none">
           <span class="serif font-medium text-base-content tabular-nums stat-num" style="font-size:28px" data-target="{{ timer_total_minutes }}">{{ timer_total_minutes }}</span>
@@ -380,7 +387,7 @@
         </div>
       </div>
 
-      <div class="border-t border-base-300/50"></div>
+      <div class="border-t border-base-300"></div>
     </div>
 
     <script>

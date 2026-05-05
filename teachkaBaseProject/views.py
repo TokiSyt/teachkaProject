@@ -7,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import TemplateView
 
+from apps.calendar.name_days_cz import NAME_DAYS_CZ
 from apps.group_maker.models import GroupCreationModel
 from apps.point_system.models import Member
 from apps.users.models import UserStats
@@ -116,5 +117,9 @@ class HomeView(TemplateView):
         context["today"] = today
         context["week_number"] = week_number
         context["week_parity"] = _("Even") if week_number % 2 == 0 else _("Odd")
+
+        # Czech name day (only for CZ users)
+        if self.request.user.is_authenticated and getattr(self.request.user, "country", "") == "CZ":
+            context["name_day"] = NAME_DAYS_CZ.get((today.month, today.day))
 
         return context

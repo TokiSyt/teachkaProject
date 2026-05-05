@@ -18,13 +18,13 @@ class TestGradeCalculatorView:
         assert "form" in response.context
 
     def test_post_valid_data_returns_grades(self, authenticated_client, url):
-        response = authenticated_client.post(url, {"max_points": 100, "rounding_option": 1})
+        response = authenticated_client.post(url, {"max_points": 100, "rounding_option": 1}, follow=True)
         assert response.status_code == 200
         assert "score_range" in response.context
         assert len(response.context["score_range"]) == 10
 
     def test_post_with_decimal_rounding(self, authenticated_client, url):
-        response = authenticated_client.post(url, {"max_points": 100, "rounding_option": 2})
+        response = authenticated_client.post(url, {"max_points": 100, "rounding_option": 2}, follow=True)
         assert response.status_code == 200
         assert "score_range" in response.context
 

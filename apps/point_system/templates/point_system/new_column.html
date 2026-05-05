@@ -76,12 +76,10 @@
       </div>
 
       <div class="flex flex-wrap gap-2 mt-6">
-        <a href="javascript:void(0)" 
-           onclick="document.getElementById('new-column-form').submit();"
-           class="btn btn-primary btn-sm">
+        <button type="submit" form="new-column-form" class="btn-as-link">
           <i data-lucide="plus" class="w-4 h-4"></i>
           {% trans "Create column" %}
-        </a>
+        </button>
 
         <a href="{% url 'karma:karma-home' %}?group_id={{ group_id }}" class="btn btn-ghost btn-sm">
           <i data-lucide="x" class="w-4 h-4"></i>

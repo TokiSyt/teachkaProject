@@ -46,7 +46,7 @@
       </div>
     </div>
     <a href="{% url 'calendar_app:event_create' %}?next={{ request.get_full_path|urlencode }}"
-       class="btn btn-primary btn-sm rounded-xl px-5 shadow-sm border-none">
+       class="btn-as-link">
       <i data-lucide="plus" class="w-4 h-4"></i>
       {% trans "New event" %}
     </a>
@@ -65,20 +65,30 @@
       <div>
         {% for week in weeks %}
         <div class="cal-week grid grid-cols-7 {% if not forloop.last %}border-b{% endif %}">
-          {% for cell_date, is_current, events in week %}
+          {% for cell_date, is_current, events, holidays, name_day in week %}
           {% if is_current %}
           <div class="cal-cell relative p-2 min-h-[130px] flex flex-col gap-1
             {% if not forloop.last %}border-r{% endif %}
-            {% if today == cell_date %}bg-primary/5{% endif %}">
+            {% if today == cell_date %}bg-primary/5{% elif holidays %}bg-primary/5{% endif %}">
             <a href="{% url 'calendar_app:day_detail' cell_date.year cell_date.month cell_date.day %}"
                class="cal-cell-link" aria-label="{{ cell_date|date:'l, j F Y' }}"></a>
-            <div class="mb-0.5 relative z-10 pointer-events-none">
+            <div class="mb-0.5 relative z-10 pointer-events-none flex items-baseline gap-1.5">
               {% if today == cell_date %}
               <span class="w-6 h-6 flex items-center justify-center rounded-full bg-primary/15 text-primary text-[11px] font-bold">{{ cell_date.day }}</span>
               {% else %}
-              <span class="text-[11px] font-bold text-base-content/35 w-6 h-6 flex items-center justify-center">{{ cell_date.day }}</span>
+              <span class="text-[11px] font-bold {% if holidays %}text-primary{% else %}text-base-content/35{% endif %} w-6 h-6 flex items-center justify-center">{{ cell_date.day }}</span>
+              {% endif %}
+              {% if name_day %}
+              <span class="text-[10px] text-base-content/40 truncate" title="{{ name_day }}">{{ name_day }}</span>
               {% endif %}
             </div>
+            {% for h in holidays %}
+            <span class="relative z-10 flex items-center gap-1 truncate rounded-[6px] px-1.5 py-0.5 text-[10px] font-semibold bg-primary/15 text-primary leading-5 border-l-2 border-primary"
+                  title="{{ h.subject|default:h.name }}{% if h.description %} — {{ h.description }}{% endif %}">
+              <i data-lucide="{% if h.country == 'INTL' %}globe{% else %}star{% endif %}" class="w-2.5 h-2.5 opacity-60 shrink-0"></i>
+              <span class="truncate">{{ h.name }}</span>
+            </span>
+            {% endfor %}
             {% for ev in events %}
             <a href="{% url 'calendar_app:event_edit' ev.pk %}?next={{ request.get_full_path|urlencode }}"
                class="relative z-10 block truncate rounded-[6px] px-1.5 py-0.5 text-[10px] font-semibold bg-primary/12 text-primary hover:bg-primary/22 transition-colors leading-5 border-l-2 border-primary"

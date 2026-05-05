@@ -1,7 +1,32 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from apps.core.models import UserOwnedModel
+from apps.core.models import TimestampedModel, UserOwnedModel
+
+
+class Holiday(TimestampedModel):
+    COUNTRY_INTERNATIONAL = "INTL"
+    COUNTRY_CHOICES = [
+        ("CZ", _("Czech Republic")),
+        ("PT", _("Portugal")),
+        ("EN", _("England")),
+        (COUNTRY_INTERNATIONAL, _("International")),
+    ]
+
+    name = models.CharField(max_length=120)
+    subject = models.CharField(max_length=200, blank=True)
+    description = models.TextField(blank=True)
+    date = models.DateField()
+    country = models.CharField(max_length=4, choices=COUNTRY_CHOICES)
+
+    class Meta:
+        ordering = ["date", "name"]
+        indexes = [
+            models.Index(fields=["country", "date"]),
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.name} ({self.country} {self.date:%Y-%m-%d})"
 
 
 class Event(UserOwnedModel):

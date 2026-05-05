@@ -1,8 +1,12 @@
+import json
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError, transaction
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.views import View
 from django.views.generic import TemplateView
 
 from apps.group_maker.models import GroupCreationModel
@@ -27,6 +31,8 @@ class HomeView(LoginRequiredMixin, TemplateView):
             "negative_data": [],
             "column_type_positive": {},
             "column_type_negative": {},
+            "positive_fields": [],
+            "negative_fields": [],
         }
 
         if group_id:
@@ -42,6 +48,8 @@ class HomeView(LoginRequiredMixin, TemplateView):
                     "negative_data": data["negative_column_names"],
                     "column_type_positive": data["column_type_positive"],
                     "column_type_negative": data["column_type_negative"],
+                    "positive_fields": data["positive_fields"],
+                    "negative_fields": data["negative_fields"],
                 }
             )
 
@@ -87,8 +95,9 @@ class HomeView(LoginRequiredMixin, TemplateView):
                         positive_data[col_name] = value
                 MemberService.update_member_data(member, positive_data=positive_data)
 
-        context = self.get_context_data(group_id)
-        return render(request, self.template_name, context)
+        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            return HttpResponse(status=204)
+        return redirect(f"{reverse('karma:karma-home')}?group_id={group_id}")
 
 
 class AddColumn(LoginRequiredMixin, TemplateView):
@@ -129,14 +138,7 @@ class AddColumn(LoginRequiredMixin, TemplateView):
                     },
                 )
 
-            with transaction.atomic():
-                FieldDefinition.objects.create(
-                    group=group,
-                    name=field_name,
-                    type=field_type,
-                    definition=field_definition,
-                )
-                MemberService.add_field_to_members(group, field_name, field_type, field_definition)
+            MemberService.create_field(group, field_name, field_type, field_definition)
 
             return redirect(f"{reverse('karma:karma-home')}?group_id={group.id}")
 
@@ -250,3 +252,28 @@ class DeleteColumn(LoginRequiredMixin, TemplateView):
 
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = "wip.html"
+
+
+class ColumnReorderView(LoginRequiredMixin, View):
+    """Persist a new column order for a group's positive or negative fields."""
+
+    def post(self, request, group_pk):
+        group = get_object_or_404(GroupCreationModel, id=group_pk, user=request.user)
+        try:
+            payload = json.loads(request.body or b"{}")
+            definition = payload.get("definition")
+            ids = [int(x) for x in payload.get("order", [])]
+        except (ValueError, TypeError):
+            return JsonResponse({"ok": False, "error": "bad payload"}, status=400)
+
+        if definition not in ("positive", "negative"):
+            return JsonResponse({"ok": False, "error": "bad definition"}, status=400)
+
+        valid_ids = set(FieldDefinition.objects.filter(group=group, definition=definition).values_list("pk", flat=True))
+        if set(ids) != valid_ids:
+            return JsonResponse({"ok": False, "error": "id mismatch"}, status=400)
+
+        with transaction.atomic():
+            for index, field_pk in enumerate(ids, start=1):
+                FieldDefinition.objects.filter(pk=field_pk, group=group, definition=definition).update(order=index)
+        return JsonResponse({"ok": True})

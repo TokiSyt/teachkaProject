@@ -83,10 +83,9 @@
 
       <!-- Actions -->
       <div class="flex flex-wrap gap-2 mt-6">
-        <a onclick="document.getElementById('settings-form').submit()" class="btn btn-primary btn-sm cursor-pointer">
-          <i data-lucide="check" class="w-4 h-4"></i>
+        <button type="submit" class="btn-as-link">
           {% trans "Save settings" %}
-        </a>
+        </button>
         <a href="{% url 'profile:profile' %}" class="btn btn-ghost btn-sm">
           {% trans "Back to profile" %}
         </a>

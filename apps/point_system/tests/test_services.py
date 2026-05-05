@@ -121,6 +121,27 @@ class TestMemberService:
             assert "absences" in member.negative_data
             assert member.negative_data["absences"] == 0
 
+    def test_create_field_assigns_first_order(self, user):
+        """First field in (group, definition) bucket gets order=1."""
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A")
+        field = MemberService.create_field(group, "homework", "int", "positive")
+        assert field.order == 1
+
+    def test_create_field_increments_order_per_bucket(self, user):
+        """Each new field in a bucket gets max(order)+1; positive/negative independent."""
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A")
+        f1 = MemberService.create_field(group, "homework", "int", "positive")
+        f2 = MemberService.create_field(group, "tests", "int", "positive")
+        f_neg = MemberService.create_field(group, "tardy", "int", "negative")
+        assert (f1.order, f2.order) == (1, 2)
+        assert f_neg.order == 1
+
+    def test_create_field_syncs_members(self, group_with_fields):
+        """create_field also seeds the field on every existing member."""
+        MemberService.create_field(group_with_fields, "extra", "int", "positive")
+        for m in group_with_fields.karma_members.all():
+            assert m.positive_data["extra"] == 0
+
     def test_add_field_initializes_empty_data(self, user):
         """Test adding field when member data is empty."""
         group = GroupCreationModel.objects.create(user=user, title="Test", members_string="A")

@@ -96,15 +96,32 @@
             {% endif %}
           </div>
 
+          <!-- Country -->
+          <div class="px-5 py-4">
+            <p class="text-xs text-base-content/40 mb-1.5">{% trans "Country" %} <span class="text-base-content/25">({% trans "optional" %})</span></p>
+            <select name="country"
+                    id="id_country"
+                    class="select select-bordered w-full">
+              <option value="" {% if not form.country.value %}selected{% endif %}>{% trans "— None —" %}</option>
+              {% for value, label in form.fields.country.choices %}
+                {% if value %}
+                <option value="{{ value }}" {% if form.country.value == value %}selected{% endif %}>{{ label }}</option>
+                {% endif %}
+              {% endfor %}
+            </select>
+            {% if form.country.errors %}
+            <p class="text-xs text-error mt-1">{{ form.country.errors.0 }}</p>
+            {% endif %}
+          </div>
+
         </div>
       </div>
 
       <!-- Actions -->
       <div class="flex flex-wrap gap-2 mt-6">
-        <a onclick="document.getElementById('edit-form').submit()" class="btn btn-primary btn-sm cursor-pointer">
-          <i data-lucide="check" class="w-4 h-4"></i>
+        <button type="submit" class="btn-as-link">
           {% trans "Save changes" %}
-        </a>
+        </button>
         <a href="{% url 'profile:profile' %}" class="btn btn-ghost btn-sm">
           {% trans "Cancel" %}
         </a>

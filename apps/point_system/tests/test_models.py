@@ -204,6 +204,13 @@ class TestFieldDefinitionModel:
         assert field.created_at is not None
         assert field.updated_at is not None
 
+    def test_field_has_order_field(self, user):
+        """FieldDefinition exposes an integer order field."""
+        group = GroupCreationModel.objects.create(user=user, title="Test", members_string="A")
+        field = FieldDefinition.objects.create(group=group, name="col", type="int", definition="positive", order=5)
+        field.refresh_from_db()
+        assert field.order == 5
+
     def test_field_name_max_length(self, user):
         """Test that field name respects max_length."""
         group = GroupCreationModel.objects.create(user=user, title="Test", members_string="A")
