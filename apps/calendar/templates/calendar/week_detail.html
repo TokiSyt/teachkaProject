@@ -73,7 +73,7 @@
       {% for d in days %}
       <div class="cal-cell relative flex flex-row md:flex-col gap-2 md:gap-1 p-3 md:p-2 md:min-h-[220px]
         {% if not forloop.last %}border-b md:border-b-0 md:border-r{% endif %}
-        {% if today == d.date %}bg-primary/5{% endif %}">
+        {% if today == d.date %}bg-primary/5{% elif d.holidays %}bg-primary/5{% endif %}">
         <a href="{% url 'calendar_app:day_detail' d.date.year d.date.month d.date.day %}"
            class="cal-cell-link" aria-label="{{ d.date|date:'l, j F Y' }}"></a>
 
@@ -84,9 +84,19 @@
           {% else %}
           <span class="text-[13px] md:text-[11px] font-bold text-base-content/40 md:text-base-content/35 w-7 h-7 md:w-6 md:h-6 flex items-center justify-center">{{ d.date.day }}</span>
           {% endif %}
+          {% if d.name_day %}
+          <span class="text-[10px] text-base-content/40 md:block md:mt-0.5 truncate" title="{{ d.name_day }}">{{ d.name_day }}</span>
+          {% endif %}
         </div>
 
         <div class="flex-1 min-w-0 flex flex-col gap-1">
+          {% for h in d.holidays %}
+          <span class="relative z-10 flex items-center gap-1 truncate rounded-[6px] px-2 md:px-1.5 py-1 md:py-0.5 text-[12px] md:text-[10px] font-semibold bg-primary/15 text-primary leading-5 border-l-2 border-primary"
+                title="{{ h.subject|default:h.name }}{% if h.description %} — {{ h.description }}{% endif %}">
+            <i data-lucide="{% if h.country == 'INTL' %}globe{% else %}star{% endif %}" class="w-3 h-3 md:w-2.5 md:h-2.5 opacity-60 shrink-0"></i>
+            <span class="truncate">{{ h.name }}</span>
+          </span>
+          {% endfor %}
           {% for ev in d.events %}
           <a href="{% url 'calendar_app:event_edit' ev.pk %}?next={{ request.get_full_path|urlencode }}"
              class="relative z-10 block truncate rounded-[6px] px-2 md:px-1.5 py-1 md:py-0.5 text-[12px] md:text-[10px] font-semibold bg-primary/12 text-primary hover:bg-primary/22 transition-colors leading-5 border-l-2 border-primary"

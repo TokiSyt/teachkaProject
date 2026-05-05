@@ -1,4 +1,4 @@
-.PHONY: build up down restart logs shell dbshell migrate createsuperuser translations collectstatic test clean lint typecheck format tailwind deploy-check audit ci
+.PHONY: build up down restart logs shell dbshell migrate createsuperuser translations collectstatic test clean lint typecheck format tailwind deploy-check audit ci sync-holidays sync-holidays-intl sync-holidays-cz sync-holidays-pt sync-holidays-en
 
 # Build and start containers
 build:
@@ -131,6 +131,24 @@ status:
 #   GHSA-6w46-j5rx-g56g: pytest 8 dev-tool CVE; bump to 9 blocked by apps.calendar shadowing stdlib calendar
 audit:
 	docker compose exec -e XDG_CACHE_HOME=/tmp/pip-audit-cache web pip-audit -r requirements.txt --ignore-vuln GHSA-6w46-j5rx-g56g
+
+# Sync holidays for the given year. Override with: make sync-holidays year=2027
+year ?= 2026
+
+sync-holidays:
+	docker compose exec web python manage.py sync_holidays --year $(year)
+
+sync-holidays-intl:
+	docker compose exec web python manage.py sync_holidays --year $(year) --country INTL
+
+sync-holidays-cz:
+	docker compose exec web python manage.py sync_holidays --year $(year) --country CZ
+
+sync-holidays-pt:
+	docker compose exec web python manage.py sync_holidays --year $(year) --country PT
+
+sync-holidays-en:
+	docker compose exec web python manage.py sync_holidays --year $(year) --country EN
 
 # Run all CI checks (ruff, mypy, tests, audit, Django deploy checklist)
 ci:

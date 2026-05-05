@@ -208,10 +208,17 @@
       </div>
 
       <!-- Week + parity toggle -->
-      <div class="drift drift-4 flex items-center gap-4">
+      <div class="drift drift-4 flex items-center gap-4 flex-wrap">
         <span class="text-[11px] tracking-[2.5px] uppercase text-base-content/30">{% trans "Week" %} {{ week_number }}</span>
         <span class="text-base-content/15 text-sm">·</span>
         <span class="text-[11px] tracking-[2.5px] uppercase font-semibold text-primary">{{ week_parity|capfirst }}</span>
+        {% if name_day %}
+        <span class="text-base-content/15 text-sm">·</span>
+        <span class="text-[11px] tracking-[2.5px] uppercase text-base-content/30">
+          {% trans "Name day" %}:
+          <span class="text-base-content/60 font-semibold">{{ name_day }}</span>
+        </span>
+        {% endif %}
       </div>
 
     </div>

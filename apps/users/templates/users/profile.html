@@ -56,6 +56,11 @@
           <p class="font-medium text-base-content">{{ user_data.email|default:"-" }}</p>
         </div>
 
+        <div class="px-5 py-4">
+          <p class="text-xs text-base-content/40 mb-0.5">{% trans "Country" %}</p>
+          <p class="font-medium text-base-content">{{ user_data.get_country_display|default:"-" }}</p>
+        </div>
+
       </div>
     </div>
 

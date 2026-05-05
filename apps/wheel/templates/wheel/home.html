@@ -66,6 +66,20 @@
               </ul>
             </details>
             <input type="hidden" name="group_id" id="groupSelect" value="{{ selected_group.id|default:'' }}">
+            <script>
+            function pickGroup(btn) {
+              const sel = document.getElementById('groupSelect');
+              sel.value = btn.dataset.id;
+              document.getElementById('groupSelectLabel').textContent = btn.dataset.label;
+              const dd = document.getElementById('groupDropdown');
+              if (dd) dd.open = false;
+              sel.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+            document.addEventListener('click', function(e) {
+              const dd = document.getElementById('groupDropdown');
+              if (dd && dd.open && !dd.contains(e.target)) dd.open = false;
+            });
+            </script>
           </div>
 
           <div class="px-5 py-4">
@@ -164,13 +178,11 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   const groupSelect = document.getElementById("groupSelect");
-  const editBtn = document.getElementById("editGroupsBtn");
   const resetBtn = document.getElementById("resetBtn");
   const wheelSection = document.getElementById("wheelSection");
   const canvas = document.getElementById("wheelCanvas");
   const spinBtn = document.getElementById("spinBtn");
   const form = document.getElementById("wheelForm");
-  const baseUrl = "{% url 'group_maker:group-maker-edit' 0 %}?origin_app=wheel";
   const resetBaseUrl = "{% url 'wheel:home' %}?reset=1&group_id=";
 
   const groupsData = {
@@ -519,17 +531,10 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  function updateEditLink() {
+  function updateResetLink() {
+    if (!resetBtn) return;
     const groupId = groupSelect.value;
-    if (groupId) {
-      editBtn.href = baseUrl.replace("0", groupId);
-      editBtn.classList.remove("opacity-50", "pointer-events-none");
-      resetBtn.href = resetBaseUrl + groupId;
-    } else {
-      editBtn.href = "#";
-      editBtn.classList.add("opacity-50", "pointer-events-none");
-      resetBtn.href = "{% url 'wheel:home' %}?reset=1";
-    }
+    resetBtn.href = groupId ? resetBaseUrl + groupId : "{% url 'wheel:home' %}?reset=1";
   }
 
   const membersChosenInput = document.getElementById("membersChosen");
@@ -538,7 +543,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   groupSelect.addEventListener("change", () => {
     const newGroupId = groupSelect.value;
-    updateEditLink();
+    updateResetLink();
     updateWheel(newGroupId);
 
     if (membersChosenInput) membersChosenInput.value = 1;
@@ -678,7 +683,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  updateEditLink();
+  updateResetLink();
   updateWheel(groupSelect.value);
 
   const popup = document.getElementById("chosenPopup");

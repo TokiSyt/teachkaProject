@@ -12,7 +12,14 @@ from apps.core.mixins import FormUserMixin, UserOwnedMixin
 
 from .forms import EventForm
 from .models import Event
-from .services.calendar_service import get_events_for_day, get_events_for_month
+from .services.calendar_service import (
+    get_events_for_day,
+    get_events_for_month,
+    get_holidays_for_day,
+    get_holidays_for_month,
+    get_name_day_for_day,
+    get_name_days_for_month,
+)
 
 
 # defaults to monthly view
@@ -32,11 +39,21 @@ class CalendarView(LoginRequiredMixin, TemplateView):
 
         raw_map = get_events_for_month(self.request.user, year, month)
         events_by_day = {d.day: evs for d, evs in raw_map.items()}
+        holiday_map = get_holidays_for_month(self.request.user, year, month)
+        holidays_by_day = {d.day: hs for d, hs in holiday_map.items()}
+        name_day_map = get_name_days_for_month(self.request.user, year, month)
+        name_days_by_day = {d.day: n for d, n in name_day_map.items()}
         full_grid = _build_full_grid(year, month)
-        # Each cell: (date_obj, is_current_month, events_list)
+        # Each cell: (date_obj, is_current_month, events_list, holidays_list, name_day_or_none)
         weeks = [
             [
-                (cell_date, is_current, events_by_day.get(cell_date.day, []) if is_current else [])
+                (
+                    cell_date,
+                    is_current,
+                    events_by_day.get(cell_date.day, []) if is_current else [],
+                    holidays_by_day.get(cell_date.day, []) if is_current else [],
+                    name_days_by_day.get(cell_date.day) if is_current else None,
+                )
                 for cell_date, is_current in week
             ]
             for week in full_grid
@@ -79,6 +96,8 @@ class DayDetailView(LoginRequiredMixin, TemplateView):
             {
                 "day": day,
                 "events": get_events_for_day(self.request.user, day),
+                "holidays": get_holidays_for_day(self.request.user, day),
+                "name_day": get_name_day_for_day(self.request.user, day),
                 "prev_day": prev_day,
                 "next_day": next_day,
                 "today": date.today(),
@@ -106,6 +125,8 @@ class WeekDetailView(LoginRequiredMixin, TemplateView):
             {
                 "date": week_start + timedelta(days=i),
                 "events": get_events_for_day(self.request.user, week_start + timedelta(days=i)),
+                "holidays": get_holidays_for_day(self.request.user, week_start + timedelta(days=i)),
+                "name_day": get_name_day_for_day(self.request.user, week_start + timedelta(days=i)),
             }
             for i in range(7)
         ]
