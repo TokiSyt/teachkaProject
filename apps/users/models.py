@@ -1,14 +1,15 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class CustomUser(AbstractUser):
     THEME_CHOICES = [
-        ("light", "Light"),
-        ("dark", "Dark"),
-        ("pastel", "Pastel"),
-        ("lemonade", "Editorial"),
-        ("fantasy", "Palette"),
+        ("light", _("Light")),
+        ("dark", _("Dark")),
+        ("pastel", _("Pastel")),
+        ("lemonade", _("Editorial")),
+        ("fantasy", _("Palette")),
     ]
     LANGUAGE_CHOICES = [
         ("en", "English"),
@@ -16,9 +17,9 @@ class CustomUser(AbstractUser):
         ("cs", "Čeština"),
     ]
     COUNTRY_CHOICES = [
-        ("CZ", "Czech Republic"),
-        ("PT", "Portugal"),
-        ("EN", "England"),
+        ("CZ", _("Czech Republic")),
+        ("PT", _("Portugal")),
+        ("EN", _("England")),
     ]
     theme = models.CharField(max_length=10, choices=THEME_CHOICES, default="light")
     language = models.CharField(max_length=10, choices=LANGUAGE_CHOICES, default="en")
@@ -38,7 +39,7 @@ class UserStats(models.Model):
     countdown_total_ms = models.PositiveBigIntegerField(default=0)
 
     class Meta:
-        verbose_name_plural = "User stats"
+        verbose_name_plural = _("User stats")
 
     def __str__(self):
         return f"Stats for {self.user.username}"

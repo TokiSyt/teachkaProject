@@ -1,6 +1,7 @@
 from django.apps import apps
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class GroupCreationModel(models.Model):
@@ -10,7 +11,9 @@ class GroupCreationModel(models.Model):
     title = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
     members_string = models.TextField(
-        help_text='Comma-separated names. (f.e.: "Toki, Tina, Alice") | We recommend not using the same exact name for different members',
+        help_text=_(
+            'Comma-separated names. (f.e.: "Toki, Tina, Alice") | We recommend not using the same exact name for different members'
+        ),
         default="",
     )
     size = models.PositiveIntegerField(default=0)

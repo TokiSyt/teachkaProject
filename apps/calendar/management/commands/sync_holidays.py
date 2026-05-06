@@ -67,7 +67,7 @@ class Command(BaseCommand):
     def _sync_country(self, country_code: str, year: int) -> tuple[int, int]:
         lib_code = LIB_COUNTRY[country_code]
         try:
-            country_holidays = holidays.country_holidays(lib_code, years=year, language="en")
+            country_holidays = holidays.country_holidays(lib_code, years=year, language="en_US")
         except Exception as exc:
             raise CommandError(f"holidays lib failed for {lib_code} {year}: {exc}") from exc
 
@@ -78,13 +78,15 @@ class Command(BaseCommand):
             # Some countries return composite names like "Holiday A; Holiday B" on one date.
             for single_name in [n.strip() for n in name.split(";") if n.strip()]:
                 meta = descriptions.get(single_name, {})
+                subject = meta.get("subject", {}).get("en", single_name) if meta else single_name
+                description = meta.get("description", {}).get("en", "") if meta else ""
                 _, was_created = Holiday.objects.update_or_create(
                     country=country_code,
                     date=d,
                     name=single_name,
                     defaults={
-                        "subject": meta.get("subject", single_name),
-                        "description": meta.get("description", ""),
+                        "subject": subject,
+                        "description": description,
                     },
                 )
                 if was_created:
@@ -101,7 +103,10 @@ class Command(BaseCommand):
                 country="INTL",
                 date=d,
                 name=name,
-                defaults={"subject": subject, "description": description},
+                defaults={
+                    "subject": subject.get("en", name),
+                    "description": description.get("en", ""),
+                },
             )
             if was_created:
                 created += 1

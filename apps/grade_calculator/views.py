@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils.translation import gettext_lazy
 from django.views.generic import TemplateView
 
 from apps.users.models import UserStats
@@ -44,7 +45,7 @@ class GradeCalculatorView(LoginRequiredMixin, TemplateView):
         rounding_option = form.cleaned_data["rounding_option"]
 
         if max_points < 4:
-            form.add_error("max_points", "Maximum points must be at least 4.")
+            form.add_error("max_points", gettext_lazy("Maximum points must be at least 4."))
             return render(request, self.template_name, {"form": form})
 
         stats, _ = UserStats.objects.get_or_create(user=request.user)

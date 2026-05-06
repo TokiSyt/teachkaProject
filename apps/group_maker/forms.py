@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from .models import GroupCreationModel
 
@@ -13,6 +14,6 @@ class GroupCreationForm(forms.ModelForm):
         }
         error_messages = {
             "title": {
-                "unique": "A group with this name already exists. Please choose a different name.",
+                "unique": _("A group with this name already exists. Please choose a different name."),
             },
         }

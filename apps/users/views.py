@@ -19,6 +19,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import FormView, TemplateView, UpdateView
 
@@ -42,7 +43,7 @@ class RegisterView(FormView):
         new_user.save()
 
         current_site = get_current_site(self.request)
-        mail_subject = "Welcome to Teachka!"
+        mail_subject = _("Welcome to Teachka!")
         message = render_to_string(
             "registration/account_activation_email.html",
             {
@@ -59,14 +60,14 @@ class RegisterView(FormView):
             email.send()
             messages.success(
                 self.request,
-                "Welcome, please check your email to complete your registration.",
+                _("Welcome, please check your email to complete your registration."),
             )
         except Exception:
             logger.exception("Failed to send registration email to %s", to_email)
             new_user.delete()
             messages.error(
                 self.request,
-                "Registration failed due to an email error. Please try again later.",
+                _("Registration failed due to an email error. Please try again later."),
             )
             return redirect("register")
         return redirect("home")
@@ -87,10 +88,10 @@ class ActivateAccountView(View):
             user.is_active = True
             user.save()
             login(request, user, backend="django.contrib.auth.backends.ModelBackend")
-            messages.success(request, "Your account has been successfully activated!")
+            messages.success(request, _("Your account has been successfully activated!"))
             return redirect(reverse("home"))
         else:
-            messages.error(request, "Activation link is invalid or expired.")
+            messages.error(request, _("Activation link is invalid or expired."))
             return redirect("home")
 
 
@@ -146,7 +147,7 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         email = form.cleaned_data.get("email")
         if User.objects.exclude(pk=self.request.user.pk).filter(email=email).exists():
-            form.add_error("email", "An account with this email address already exists.")
+            form.add_error("email", _("An account with this email address already exists."))
             return self.form_invalid(form)
         return super().form_valid(form)
 
@@ -163,7 +164,7 @@ class ChangePassword(LoginRequiredMixin, FormView):
         to_email = form.cleaned_data.get("send_to_email")
         if User.objects.filter(email=to_email, pk=self.request.user.pk).exists():
             current_site = get_current_site(self.request)
-            mail_subject = "You have requested a new password"
+            mail_subject = _("You have requested a new password")
             message = render_to_string(
                 "users/password_reset_email.html",
                 {
@@ -178,7 +179,7 @@ class ChangePassword(LoginRequiredMixin, FormView):
             email.send()
         messages.success(
             self.request,
-            "You will receive a password reset link in the email registered",
+            _("You will receive a password reset link in the email registered"),
         )
         return redirect("home")
 
@@ -204,20 +205,20 @@ class PasswordResetView(View):
             form = SetPasswordForm(user)
             return render(request, "users/password_reset.html", {"form": form, "uidb64": uidb64, "token": token})
 
-        messages.error(request, "Reset link is invalid or expired.")
+        messages.error(request, _("Reset link is invalid or expired."))
         return redirect("home")
 
     def post(self, request, uidb64, token):
         user = self._get_user_from_token(uidb64, token)
         if user is None:
-            messages.error(request, "Reset link is invalid or expired.")
+            messages.error(request, _("Reset link is invalid or expired."))
             return redirect("home")
 
         form = SetPasswordForm(user, request.POST)
         if form.is_valid():
             form.save()
             logout(request)
-            messages.success(request, "Your password was successfully reset. You may now login again.")
+            messages.success(request, _("Your password was successfully reset. You may now login again."))
             return redirect("login")
 
         return render(request, "users/password_reset.html", {"form": form, "uidb64": uidb64, "token": token})
@@ -239,7 +240,7 @@ class ForgotPasswordPublicView(FormView):
         try:
             user = User.objects.get(email=email, is_active=True)
             current_site = get_current_site(self.request)
-            mail_subject = "Reset your Teachka password"
+            mail_subject = _("Reset your Teachka password")
             message = render_to_string(
                 "users/password_reset_email.html",
                 {
@@ -259,7 +260,7 @@ class ForgotPasswordPublicView(FormView):
             pass  # Don't reveal whether the email exists
         messages.success(
             self.request,
-            "If that email is registered you'll receive a reset link shortly.",
+            _("If that email is registered you'll receive a reset link shortly."),
         )
         return redirect("login")
 
@@ -274,11 +275,11 @@ class DeleteAccountView(LoginRequiredMixin, View):
         password = request.POST.get("password", "")
         user = request.user
         if not user.check_password(password):
-            messages.error(request, "Incorrect password. Account not deleted.")
+            messages.error(request, _("Incorrect password. Account not deleted."))
             return render(request, self.template_name)
         logout(request)
         user.delete()
-        messages.success(request, "Your account and all associated data have been permanently deleted.")
+        messages.success(request, _("Your account and all associated data have been permanently deleted."))
         return redirect("login")
 
 

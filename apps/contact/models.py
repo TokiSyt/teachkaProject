@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class ContactMessage(models.Model):
@@ -7,9 +8,9 @@ class ContactMessage(models.Model):
     KIND_QUESTION = "question"
     KIND_FEATURE = "feature"
     KIND_CHOICES = [
-        (KIND_BUG, "Bug report"),
-        (KIND_QUESTION, "Question"),
-        (KIND_FEATURE, "Feature request"),
+        (KIND_BUG, _("Bug report")),
+        (KIND_QUESTION, _("Question")),
+        (KIND_FEATURE, _("Feature request")),
     ]
 
     user = models.ForeignKey(
