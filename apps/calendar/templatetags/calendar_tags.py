@@ -39,7 +39,7 @@ def holiday_subject(holiday) -> str:
     meta = _LOOKUP.get((holiday.country, holiday.name))
     if meta:
         return _pick(meta.get("subject", {}), holiday.subject or holiday.name)
-    return holiday.subject or holiday.name
+    return str(holiday.subject or holiday.name)
 
 
 @register.filter
@@ -47,4 +47,4 @@ def holiday_description(holiday) -> str:
     meta = _LOOKUP.get((holiday.country, holiday.name))
     if meta:
         return _pick(meta.get("description", {}), holiday.description or "")
-    return holiday.description or ""
+    return str(holiday.description or "")

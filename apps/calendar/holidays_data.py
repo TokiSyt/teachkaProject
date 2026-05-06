@@ -486,8 +486,7 @@ DESCRIPTIONS: dict[str, dict[str, dict[str, dict[str, str]]]] = {
                     "processions through Portuguese towns and cities."
                 ),
                 "cs": (
-                    "Katolický svátek na počest eucharistie. Doprovázen náboženskými "
-                    "procesími v portugalských městech."
+                    "Katolický svátek na počest eucharistie. Doprovázen náboženskými procesími v portugalských městech."
                 ),
                 "pt": (
                     "Festa católica em honra da Eucaristia. Assinalada com procissões "
@@ -764,7 +763,9 @@ DESCRIPTIONS: dict[str, dict[str, dict[str, dict[str, str]]]] = {
 # Format: (month, day, name, subject_dict, description_dict)
 INTERNATIONAL_HOLIDAYS: list[tuple[int, int, str, dict[str, str], dict[str, str]]] = [
     (
-        1, 1, "New Year's Day",
+        1,
+        1,
+        "New Year's Day",
         {"en": "New Year's Day", "cs": "Nový rok", "pt": "Ano Novo"},
         {
             "en": "Global celebration marking the first day of the Gregorian calendar year.",
@@ -773,7 +774,9 @@ INTERNATIONAL_HOLIDAYS: list[tuple[int, int, str, dict[str, str], dict[str, str]
         },
     ),
     (
-        2, 14, "Valentine's Day",
+        2,
+        14,
+        "Valentine's Day",
         {"en": "Saint Valentine's Day", "cs": "Svatý Valentýn", "pt": "Dia de São Valentim"},
         {
             "en": "Day celebrating romantic love, named after the Christian martyr Saint Valentine.",
@@ -782,7 +785,9 @@ INTERNATIONAL_HOLIDAYS: list[tuple[int, int, str, dict[str, str], dict[str, str]
         },
     ),
     (
-        3, 8, "International Women's Day",
+        3,
+        8,
+        "International Women's Day",
         {
             "en": "International Women's Day",
             "cs": "Mezinárodní den žen",
@@ -806,7 +811,9 @@ INTERNATIONAL_HOLIDAYS: list[tuple[int, int, str, dict[str, str], dict[str, str]
         },
     ),
     (
-        4, 22, "Earth Day",
+        4,
+        22,
+        "Earth Day",
         {"en": "Earth Day", "cs": "Den Země", "pt": "Dia da Terra"},
         {
             "en": "Annual event demonstrating support for environmental protection, first held on 22 April 1970.",
@@ -815,7 +822,9 @@ INTERNATIONAL_HOLIDAYS: list[tuple[int, int, str, dict[str, str], dict[str, str]
         },
     ),
     (
-        5, 1, "International Workers' Day",
+        5,
+        1,
+        "International Workers' Day",
         {
             "en": "International Workers' Day / Labour Day",
             "cs": "Mezinárodní svátek práce",
@@ -828,7 +837,9 @@ INTERNATIONAL_HOLIDAYS: list[tuple[int, int, str, dict[str, str], dict[str, str]
         },
     ),
     (
-        6, 5, "World Environment Day",
+        6,
+        5,
+        "World Environment Day",
         {
             "en": "World Environment Day",
             "cs": "Světový den životního prostředí",
@@ -841,7 +852,9 @@ INTERNATIONAL_HOLIDAYS: list[tuple[int, int, str, dict[str, str], dict[str, str]
         },
     ),
     (
-        9, 21, "International Day of Peace",
+        9,
+        21,
+        "International Day of Peace",
         {
             "en": "International Day of Peace",
             "cs": "Mezinárodní den míru",
@@ -852,10 +865,7 @@ INTERNATIONAL_HOLIDAYS: list[tuple[int, int, str, dict[str, str], dict[str, str]
                 "United Nations day devoted to strengthening the ideals of peace, "
                 "observed by a global ceasefire and non-violence."
             ),
-            "cs": (
-                "Den OSN věnovaný posílení ideálů míru, slavený celosvětovým "
-                "příměřím a nenásilím."
-            ),
+            "cs": ("Den OSN věnovaný posílení ideálů míru, slavený celosvětovým příměřím a nenásilím."),
             "pt": (
                 "Dia das Nações Unidas dedicado ao reforço dos ideais de paz, "
                 "assinalado por um cessar-fogo global e pela não-violência."
@@ -863,7 +873,9 @@ INTERNATIONAL_HOLIDAYS: list[tuple[int, int, str, dict[str, str], dict[str, str]
         },
     ),
     (
-        10, 5, "World Teachers' Day",
+        10,
+        5,
+        "World Teachers' Day",
         {
             "en": "World Teachers' Day",
             "cs": "Mezinárodní den učitelů",
@@ -876,7 +888,9 @@ INTERNATIONAL_HOLIDAYS: list[tuple[int, int, str, dict[str, str], dict[str, str]
         },
     ),
     (
-        12, 10, "Human Rights Day",
+        12,
+        10,
+        "Human Rights Day",
         {"en": "Human Rights Day", "cs": "Den lidských práv", "pt": "Dia dos Direitos Humanos"},
         {
             "en": "Marks the adoption of the Universal Declaration of Human Rights by the UN General Assembly in 1948.",
@@ -885,7 +899,9 @@ INTERNATIONAL_HOLIDAYS: list[tuple[int, int, str, dict[str, str], dict[str, str]
         },
     ),
     (
-        12, 25, "Christmas Day",
+        12,
+        25,
+        "Christmas Day",
         {"en": "Christmas Day", "cs": "Vánoce", "pt": "Natal"},
         {
             "en": "Christian feast celebrating the birth of Jesus Christ, observed as a public holiday in much of the world.",
