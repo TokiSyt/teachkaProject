@@ -6,6 +6,7 @@ from django.db import IntegrityError, transaction
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.utils.translation import gettext as _
 from django.views import View
 from django.views.generic import TemplateView
 
@@ -127,7 +128,8 @@ class AddColumn(LoginRequiredMixin, TemplateView):
             if FieldDefinition.objects.filter(group=group, name=field_name, definition=field_definition).exists():
                 messages.error(
                     request,
-                    f"A column named '{field_name}' already exists in {field_definition} table.",
+                    _("A column named '%(name)s' already exists in %(definition)s table.")
+                    % {"name": field_name, "definition": field_definition},
                 )
                 return render(
                     request,
@@ -188,10 +190,10 @@ class EditColumn(LoginRequiredMixin, TemplateView):
                 return redirect(f"{reverse('karma:karma-home')}?group_id={group.id}")
 
             except FieldDefinition.DoesNotExist:
-                messages.error(request, f"Column '{old_name}' not found.")
+                messages.error(request, _("Column '%(name)s' not found.") % {"name": old_name})
 
             except IntegrityError:
-                messages.error(request, f"A column named '{new_name}' already exists.")
+                messages.error(request, _("A column named '%(name)s' already exists.") % {"name": new_name})
 
         return render(
             request,

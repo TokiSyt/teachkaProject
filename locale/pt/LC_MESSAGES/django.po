@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Teachka\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-27 16:00+0000\n"
+"POT-Creation-Date: 2026-05-06 08:15+0000\n"
 "PO-Revision-Date: 2026-02-14 21:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
@@ -16,72 +16,144 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: apps/calendar/models.py:14
+#: apps/calendar/models.py:10 apps/users/models.py:20
+msgid "Czech Republic"
+msgstr "República Checa"
+
+#: apps/calendar/models.py:11 apps/users/models.py:21
+msgid "Portugal"
+msgstr "Portugal"
+
+#: apps/calendar/models.py:12 apps/users/models.py:22
+msgid "England"
+msgstr "Inglaterra"
+
+#: apps/calendar/models.py:13
+msgid "International"
+msgstr "Internacional"
+
+#: apps/calendar/models.py:39
 msgid "One-time event"
 msgstr "Evento único"
 
-#: apps/calendar/models.py:15
+#: apps/calendar/models.py:40
 msgid "Daily"
 msgstr "Diariamente"
 
-#: apps/calendar/models.py:16
+#: apps/calendar/models.py:41
 msgid "Weekly"
 msgstr "Semanalmente"
 
-#: apps/calendar/models.py:17
+#: apps/calendar/models.py:42
 msgid "Monthly"
 msgstr "Mensalmente"
 
-#: apps/calendar/models.py:18
+#: apps/calendar/models.py:43
 msgid "Yearly"
 msgstr "Anualmente"
 
 #: apps/calendar/templates/calendar/day_detail.html:14
+#: apps/calendar/templates/calendar/day_detail.html:15
+#: apps/calendar/templates/calendar/home.html:14
+#: apps/calendar/templates/calendar/home.html:15
+#: apps/calendar/templates/calendar/week_detail.html:14
+#: apps/calendar/templates/calendar/week_detail.html:15
+msgid "About holiday descriptions"
+msgstr "Sobre as descrições dos feriados"
+
+#: apps/calendar/templates/calendar/day_detail.html:22
+#: apps/calendar/templates/calendar/day_detail.html:36
+#: apps/calendar/templates/calendar/home.html:22
+#: apps/calendar/templates/calendar/home.html:36
+#: apps/calendar/templates/calendar/week_detail.html:22
+#: apps/calendar/templates/calendar/week_detail.html:36
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:30
+msgid "Close"
+msgstr "Fechar"
+
+#: apps/calendar/templates/calendar/day_detail.html:26
+#: apps/calendar/templates/calendar/home.html:26
+#: apps/calendar/templates/calendar/week_detail.html:26
+msgid "Help us tell the story"
+msgstr "Ajude-nos a contar a história"
+
+#: apps/calendar/templates/calendar/day_detail.html:29
+#: apps/calendar/templates/calendar/home.html:29
+#: apps/calendar/templates/calendar/week_detail.html:29
+msgid ""
+"Teachka is still being detailed. Holiday descriptions are a work in progress"
+" and not every entry has the depth it deserves yet."
+msgstr ""
+"A Teachka ainda está a ser detalhada. As descrições dos feriados estão em "
+"desenvolvimento e nem todas têm ainda a profundidade que merecem."
+
+#: apps/calendar/templates/calendar/day_detail.html:32
+#: apps/calendar/templates/calendar/home.html:32
+#: apps/calendar/templates/calendar/week_detail.html:32
+msgid ""
+"If you know the history behind a holiday and would like to contribute, we'd "
+"love to hear from you."
+msgstr ""
+"Se conhece a história por trás de um feriado e gostaria de contribuir, "
+"gostaríamos muito de saber."
+
+#: apps/calendar/templates/calendar/day_detail.html:40
+#: apps/calendar/templates/calendar/home.html:40
+#: apps/calendar/templates/calendar/week_detail.html:40
+msgid "Contact us"
+msgstr "Contacte-nos"
+
+#: apps/calendar/templates/calendar/day_detail.html:48
 #: apps/calendar/templates/calendar/event_confirm_delete.html:14
 #: apps/calendar/templates/calendar/event_form.html:14
 #: apps/calendar/templates/calendar/home.html:4
-#: apps/calendar/templates/calendar/week_detail.html:15 templates/base.html:168
-#: templates/base.html:209 templates/home.html:301
+#: apps/calendar/templates/calendar/week_detail.html:49
+#: templates/base.html:168 templates/home.html:308
 msgid "Calendar"
 msgstr "Calendário"
 
-#: apps/calendar/templates/calendar/day_detail.html:21
-#: apps/calendar/templates/calendar/home.html:31
+#: apps/calendar/templates/calendar/day_detail.html:55
+#: apps/calendar/templates/calendar/home.html:65
 msgid "Today"
 msgstr "Hoje"
 
-#: apps/calendar/templates/calendar/day_detail.html:33
-#: apps/calendar/templates/calendar/week_detail.html:42
+#: apps/calendar/templates/calendar/day_detail.html:55 templates/home.html:218
+msgid "Name day"
+msgstr "Onomástico"
+
+#: apps/calendar/templates/calendar/day_detail.html:67
+#: apps/calendar/templates/calendar/week_detail.html:76
 msgid "Month"
 msgstr "Mês"
 
-#: apps/calendar/templates/calendar/day_detail.html:37
-#: apps/calendar/templates/calendar/home.html:35
+#: apps/calendar/templates/calendar/day_detail.html:71
+#: apps/calendar/templates/calendar/home.html:69
 #: apps/calendar/templates/calendar/week_detail.html:4
-#: apps/calendar/templates/calendar/week_detail.html:24 templates/home.html:212
+#: apps/calendar/templates/calendar/week_detail.html:58
+#: templates/home.html:212
 msgid "Week"
 msgstr "Semana"
 
-#: apps/calendar/templates/calendar/day_detail.html:55
-#: apps/calendar/templates/calendar/home.html:51
-#: apps/calendar/templates/calendar/week_detail.html:58
+#: apps/calendar/templates/calendar/day_detail.html:89
+#: apps/calendar/templates/calendar/home.html:85
+#: apps/calendar/templates/calendar/week_detail.html:92
 msgid "New event"
 msgstr "Novo evento"
 
-#: apps/calendar/templates/calendar/day_detail.html:68
+#: apps/calendar/templates/calendar/day_detail.html:128
 msgid "All day"
 msgstr "Dia inteiro"
 
-#: apps/calendar/templates/calendar/day_detail.html:109
-#: apps/calendar/templates/calendar/week_detail.html:97
+#: apps/calendar/templates/calendar/day_detail.html:166
+#: apps/calendar/templates/calendar/week_detail.html:143
 msgid "No events"
 msgstr "Sem eventos"
 
-#: apps/calendar/templates/calendar/day_detail.html:110
+#: apps/calendar/templates/calendar/day_detail.html:167
 msgid "Nothing scheduled for this day."
 msgstr "Nada agendado para este dia."
 
-#: apps/calendar/templates/calendar/day_detail.html:113
+#: apps/calendar/templates/calendar/day_detail.html:170
 msgid "Add event"
 msgstr "Adicionar evento"
 
@@ -95,13 +167,13 @@ msgid "Danger Zone"
 msgstr "Zona de perigo"
 
 #: apps/calendar/templates/calendar/event_confirm_delete.html:17
-#: apps/calendar/templates/calendar/event_form.html:174
+#: apps/calendar/templates/calendar/event_form.html:173
 #: apps/group_maker/templates/group_maker/confirm_delete.html:17
 #: apps/group_maker/templates/group_maker/home.html:47
 #: apps/point_system/templates/point_system/delete_column.html:22
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:431
 #: apps/users/templates/users/delete_account.html:16
-#: apps/users/templates/users/settings.html:107
+#: apps/users/templates/users/settings.html:106
 msgid "Delete"
 msgstr "Eliminar"
 
@@ -132,31 +204,33 @@ msgstr "Recorrência"
 
 #: apps/calendar/templates/calendar/event_confirm_delete.html:55
 #: apps/calendar/templates/calendar/event_form.html:55
+#: apps/contact/templates/contact/contact.html:157
 msgid "Subject"
 msgstr "Assunto"
 
-#: apps/calendar/templates/calendar/event_confirm_delete.html:68
-#: apps/group_maker/templates/group_maker/confirm_delete.html:56
+#: apps/calendar/templates/calendar/event_confirm_delete.html:67
+#: apps/group_maker/templates/group_maker/confirm_delete.html:55
 msgid "Delete permanently"
 msgstr "Apagar permanentemente"
 
-#: apps/calendar/templates/calendar/event_confirm_delete.html:71
-#: apps/calendar/templates/calendar/event_form.html:178
-#: apps/group_maker/templates/group_maker/confirm_delete.html:60
-#: apps/group_maker/templates/group_maker/list_create.html:75
-#: apps/group_maker/templates/group_maker/list_edit.html:90
-#: apps/point_system/templates/point_system/delete_column.html:85
-#: apps/point_system/templates/point_system/edit_column.html:105
-#: apps/point_system/templates/point_system/home.html:163
-#: apps/point_system/templates/point_system/home.html:266
-#: apps/point_system/templates/point_system/new_column.html:88
+#: apps/calendar/templates/calendar/event_confirm_delete.html:70
+#: apps/calendar/templates/calendar/event_form.html:177
+#: apps/contact/templates/contact/contact.html:213
+#: apps/group_maker/templates/group_maker/confirm_delete.html:59
+#: apps/group_maker/templates/group_maker/list_create.html:74
+#: apps/group_maker/templates/group_maker/list_edit.html:89
+#: apps/point_system/templates/point_system/delete_column.html:83
+#: apps/point_system/templates/point_system/edit_column.html:103
+#: apps/point_system/templates/point_system/home.html:222
+#: apps/point_system/templates/point_system/home.html:342
+#: apps/point_system/templates/point_system/new_column.html:86
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:70
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:330
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:414
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:446
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:509
-#: apps/users/templates/users/delete_account.html:46
-#: apps/users/templates/users/edit_profile.html:109
+#: apps/users/templates/users/delete_account.html:45
+#: apps/users/templates/users/edit_profile.html:126
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -174,7 +248,7 @@ msgid "Edit"
 msgstr "Editar"
 
 #: apps/calendar/templates/calendar/event_form.html:20
-#: apps/calendar/templates/calendar/week_detail.html:59
+#: apps/calendar/templates/calendar/week_detail.html:93
 #: apps/point_system/templates/point_system/new_column.html:21
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:15
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:273
@@ -204,12 +278,14 @@ msgstr "ex. Aula de Matemática, Reunião de pais"
 #: apps/calendar/templates/calendar/event_form.html:129
 #: apps/calendar/templates/calendar/event_form.html:140
 #: apps/calendar/templates/calendar/event_form.html:151
+#: apps/contact/templates/contact/contact.html:184
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:48
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:292
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:367
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:482
 #: apps/users/templates/registration/register.html:98
 #: apps/users/templates/users/edit_profile.html:73
+#: apps/users/templates/users/edit_profile.html:101
 msgid "optional"
 msgstr "opcional"
 
@@ -249,20 +325,20 @@ msgstr "Notas da aula"
 msgid "Learning objectives, materials, homework..."
 msgstr "Objetivos, materiais, trabalhos de casa..."
 
-#: apps/calendar/templates/calendar/event_form.html:167
-#: apps/group_maker/templates/group_maker/list_edit.html:86
-#: apps/point_system/templates/point_system/edit_column.html:100
+#: apps/calendar/templates/calendar/event_form.html:166
+#: apps/group_maker/templates/group_maker/list_edit.html:85
+#: apps/point_system/templates/point_system/edit_column.html:98
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:410
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:505
-#: apps/users/templates/users/edit_profile.html:106
+#: apps/users/templates/users/edit_profile.html:123
 msgid "Save changes"
 msgstr "Guardar alterações"
 
-#: apps/calendar/templates/calendar/event_form.html:167
+#: apps/calendar/templates/calendar/event_form.html:166
 msgid "Create event"
 msgstr "Criar uma"
 
-#: apps/calendar/templates/calendar/home.html:14
+#: apps/calendar/templates/calendar/home.html:48
 #: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:14
 #: apps/group_divider/templates/group_divider/home.html:13
 #: apps/point_system/templates/point_system/home.html:15
@@ -270,29 +346,156 @@ msgstr "Criar uma"
 #: apps/timer/templates/timer/countdown.html:13
 #: apps/timer/templates/timer/home.html:14
 #: apps/timer/templates/timer/stopwatch.html:13
-#: apps/wheel/templates/wheel/home.html:14 templates/base.html:161
+#: apps/wheel/templates/wheel/home.html:14 templates/base.html:163
 msgid "Tools"
 msgstr "Ferramentas"
 
-#: apps/calendar/templates/calendar/home.html:14
+#: apps/calendar/templates/calendar/home.html:48
 msgid "Planning"
 msgstr "Planeamento"
 
-#: apps/calendar/templates/calendar/home.html:20
+#: apps/calendar/templates/calendar/home.html:54
 msgid "Plans and events"
 msgstr "Planos e eventos"
 
-#: apps/calendar/templates/calendar/week_detail.html:26
+#: apps/calendar/templates/calendar/week_detail.html:60
+#: teachkaBaseProject/views.py:119
 msgid "Even"
 msgstr "Par"
 
-#: apps/calendar/templates/calendar/week_detail.html:26
+#: apps/calendar/templates/calendar/week_detail.html:60
+#: teachkaBaseProject/views.py:119
 msgid "Odd"
 msgstr "Ímpar"
 
-#: apps/calendar/templates/calendar/week_detail.html:38
+#: apps/calendar/templates/calendar/week_detail.html:72
 msgid "This week"
 msgstr "Esta semana"
+
+#: apps/contact/forms.py:21
+msgid "Subject too short."
+msgstr "Assunto demasiado curto."
+
+#: apps/contact/forms.py:27
+msgid "Please add a bit more detail (at least 10 characters)."
+msgstr "Adicione mais detalhes (pelo menos 10 caracteres)."
+
+#: apps/contact/models.py:11 apps/contact/templates/contact/contact.html:104
+msgid "Bug report"
+msgstr "Reportar erro"
+
+#: apps/contact/models.py:12 apps/contact/templates/contact/contact.html:119
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:284
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:359
+msgid "Question"
+msgstr "Pergunta"
+
+#: apps/contact/models.py:13 apps/contact/templates/contact/contact.html:134
+msgid "Feature request"
+msgstr "Pedido de funcionalidade"
+
+#: apps/contact/templates/contact/contact.html:4
+#: apps/contact/templates/contact/contact.html:37 templates/base.html:156
+#: templates/base.html:325 templates/legal/privacy.html:93
+msgid "Contact"
+msgstr "Contacto"
+
+#: apps/contact/templates/contact/contact.html:37
+msgid "Support"
+msgstr "Suporte"
+
+#: apps/contact/templates/contact/contact.html:41
+msgid "Send word"
+msgstr "Envie-nos uma mensagem"
+
+#: apps/contact/templates/contact/contact.html:45
+msgid "Bug reports, questions, feature ideas"
+msgstr "Erros, perguntas, ideias de funcionalidades"
+
+#: apps/contact/templates/contact/contact.html:57
+msgid "Message received"
+msgstr "Mensagem recebida"
+
+#: apps/contact/templates/contact/contact.html:59
+msgid "Thank you."
+msgstr "Obrigado."
+
+#: apps/contact/templates/contact/contact.html:61
+msgid ""
+"Your message has been logged. If a reply is needed, we'll write back to the "
+"address you left."
+msgstr ""
+"A sua mensagem foi registada. Se for necessária uma resposta, escreveremos "
+"para o endereço que indicou."
+
+#: apps/contact/templates/contact/contact.html:66
+msgid "Send another"
+msgstr "Enviar outra"
+
+#: apps/contact/templates/contact/contact.html:70
+msgid "Back to home"
+msgstr "Voltar ao início"
+
+#: apps/contact/templates/contact/contact.html:89
+#: apps/contact/templates/contact/contact.html:94
+msgid "Type of message"
+msgstr "Tipo de mensagem"
+
+#: apps/contact/templates/contact/contact.html:91
+msgid "Required"
+msgstr "Obrigatório"
+
+#: apps/contact/templates/contact/contact.html:106
+msgid "Something broke. Tell us what, where, and how to reproduce."
+msgstr "Algo deixou de funcionar. Diga-nos o quê, onde e como reproduzir."
+
+#: apps/contact/templates/contact/contact.html:121
+msgid "Stuck or unsure how something works? Ask away."
+msgstr "Bloqueado ou com dúvidas sobre como algo funciona? Pergunte."
+
+#: apps/contact/templates/contact/contact.html:136
+msgid "Got an idea that would make Teachka better? We're listening."
+msgstr "Tem uma ideia para melhorar a Teachka? Estamos a ouvir."
+
+#: apps/contact/templates/contact/contact.html:149
+msgid "Your message"
+msgstr "A sua mensagem"
+
+#: apps/contact/templates/contact/contact.html:162
+msgid "In one line — what is this about?"
+msgstr "Numa linha — sobre o que é?"
+
+#: apps/contact/templates/contact/contact.html:170
+msgid "Message"
+msgstr "Mensagem"
+
+#: apps/contact/templates/contact/contact.html:175
+msgid ""
+"Tell us as much or as little as you like. Steps to reproduce help if it is a"
+" bug."
+msgstr ""
+"Diga-nos tanto ou tão pouco quanto quiser. Os passos para reproduzir ajudam "
+"se for um erro."
+
+#: apps/contact/templates/contact/contact.html:183
+msgid "Reply address"
+msgstr "Endereço para resposta"
+
+#: apps/contact/templates/contact/contact.html:200
+msgid "We attach the page URL you were on, your browser version"
+msgstr "Anexamos o URL da página em que estava, a versão do seu navegador"
+
+#: apps/contact/templates/contact/contact.html:200
+msgid "and your username"
+msgstr "e o seu nome de utilizador"
+
+#: apps/contact/templates/contact/contact.html:209
+msgid "Send message"
+msgstr "Enviar mensagem"
+
+#: apps/contact/views.py:37
+msgid "Message received. We'll be in touch."
+msgstr "Mensagem recebida. Entraremos em contacto."
 
 #: apps/grade_calculator/forms.py:6
 msgid "Max Points"
@@ -311,7 +514,7 @@ msgid "Decimal number"
 msgstr "Número decimal"
 
 #: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:4
-#: templates/base.html:187 templates/base.html:212
+#: templates/base.html:186
 msgid "Grade calculator"
 msgstr "Calculadora de notas"
 
@@ -320,11 +523,11 @@ msgid "Grading"
 msgstr "Nota"
 
 #: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:17
-#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:97
-#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:101
-#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:105
-#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:109
-#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:113
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:96
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:100
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:104
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:108
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:112
 msgid "Grade"
 msgstr "Nota"
 
@@ -349,42 +552,53 @@ msgstr "Nenhuma coluna disponível"
 msgid "Rounding strategy"
 msgstr "Opção de arredondamento"
 
-#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:73
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:72
 msgid "Calculate"
 msgstr "Calcular"
 
-#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:76
-#: apps/group_divider/templates/group_divider/home.html:65
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:75
+#: apps/group_divider/templates/group_divider/home.html:97
 #: apps/group_maker/templates/group_maker/home.html:44
-#: apps/point_system/templates/point_system/home.html:64
-#: apps/wheel/templates/wheel/home.html:79
+#: apps/point_system/templates/point_system/home.html:110
+#: apps/wheel/templates/wheel/home.html:126
 msgid "Reset"
 msgstr "Reiniciar"
 
-#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:85
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:84
 msgid "The results"
 msgstr "Os resultados"
 
-#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:86
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:85
 msgid "Max"
 msgstr "Máx"
 
-#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:92
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:91
 msgid "Point ranges"
 msgstr "Pontos"
 
-#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:122
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:121
 msgid "Thresholds"
 msgstr "Limites de notas"
 
-#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:140
+#: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:139
 msgid ""
 "From 4 to 9 max points, grades do not follow specific percentage thresholds."
 msgstr ""
-"De 4 a 9 pontos máximos, as notas não seguem limites percentuais específicos."
+"De 4 a 9 pontos máximos, as notas não seguem limites percentuais "
+"específicos."
+
+#: apps/grade_calculator/views.py:48
+#, fuzzy
+#| msgid "Maximum points available"
+msgid "Maximum points must be at least 4."
+msgstr "Nenhuma coluna disponível"
+
+#: apps/group_divider/forms.py:7
+msgid "How many members per group?"
+msgstr "Quantos membros por grupo?"
 
 #: apps/group_divider/templates/group_divider/home.html:4
-#: templates/base.html:181 templates/base.html:211
+#: templates/base.html:180
 msgid "Group divider"
 msgstr "Divisor de grupos"
 
@@ -395,9 +609,9 @@ msgid "Organization"
 msgstr "Organização"
 
 #: apps/group_divider/templates/group_divider/home.html:16
-#: apps/group_divider/templates/group_divider/home.html:34
-#: apps/point_system/templates/point_system/home.html:42
-#: apps/wheel/templates/wheel/home.html:35
+#: apps/group_divider/templates/group_divider/home.html:35
+#: apps/point_system/templates/point_system/home.html:43
+#: apps/wheel/templates/wheel/home.html:36
 msgid "Group"
 msgstr "Grupo"
 
@@ -409,75 +623,96 @@ msgstr "Divisor"
 msgid "Split your group into smaller teams effortlessly"
 msgstr "Divida o seu grupo em equipas mais pequenas"
 
-#: apps/group_divider/templates/group_divider/home.html:36
-#: apps/group_maker/templates/group_maker/home.html:25
-#: apps/point_system/templates/point_system/home.html:44
-#: apps/wheel/templates/wheel/home.html:37
-msgid "Choose a group..."
-msgstr "Escolher um grupo..."
-
-#: apps/group_divider/templates/group_divider/home.html:38
+#: apps/group_divider/templates/group_divider/home.html:39
+#: apps/group_divider/templates/group_divider/home.html:47
+#: apps/group_divider/templates/group_divider/home.html:49
 #: apps/group_maker/templates/group_maker/home.html:28
 #: apps/point_system/templates/point_system/home.html:26
-#: apps/point_system/templates/point_system/home.html:46
-#: apps/wheel/templates/wheel/home.html:39 templates/home.html:338
+#: apps/point_system/templates/point_system/home.html:47
+#: apps/point_system/templates/point_system/home.html:55
+#: apps/point_system/templates/point_system/home.html:57
+#: apps/wheel/templates/wheel/home.html:40
+#: apps/wheel/templates/wheel/home.html:48
+#: apps/wheel/templates/wheel/home.html:50 templates/home.html:345
 msgid "members"
 msgstr "membros"
 
-#: apps/group_divider/templates/group_divider/home.html:40
-#: apps/point_system/templates/point_system/home.html:48
-#: apps/wheel/templates/wheel/home.html:41
-msgid "No groups available"
-msgstr "Nenhum grupo disponível"
+#: apps/group_divider/templates/group_divider/home.html:39
+#: apps/group_maker/templates/group_maker/home.html:25
+#: apps/point_system/templates/point_system/home.html:47
+#: apps/wheel/templates/wheel/home.html:40
+msgid "Choose a group..."
+msgstr "Escolher um grupo..."
 
-#: apps/group_divider/templates/group_divider/home.html:46
-msgid "Team size"
-msgstr "Tamanho da equipa"
-
-#: apps/group_divider/templates/group_divider/home.html:61
-msgid "Divide"
-msgstr "Dividir"
-
-#: apps/group_divider/templates/group_divider/home.html:69
-#: apps/point_system/templates/point_system/home.html:68
-#: apps/wheel/templates/wheel/home.html:81
-msgid "New group"
-msgstr "Criar grupo"
-
-#: apps/group_divider/templates/group_divider/home.html:74
+#: apps/group_divider/templates/group_divider/home.html:53
 #: apps/group_maker/templates/group_maker/list_edit.html:4
-#: apps/point_system/templates/point_system/home.html:60
-#: apps/wheel/templates/wheel/home.html:84
+#: apps/point_system/templates/point_system/home.html:61
+#: apps/wheel/templates/wheel/home.html:54
 msgid "Edit group"
 msgstr "Editar grupo"
 
-#: apps/group_divider/templates/group_divider/home.html:85
+#: apps/group_divider/templates/group_divider/home.html:58
+#: apps/group_maker/templates/group_maker/confirm_delete.html:4
+#: apps/group_maker/templates/group_maker/list_edit.html:97
+#: apps/point_system/templates/point_system/home.html:66
+#: apps/wheel/templates/wheel/home.html:59
+msgid "Delete group"
+msgstr "Eliminar grupo"
+
+#: apps/group_divider/templates/group_divider/home.html:63
+#: apps/point_system/templates/point_system/home.html:71
+#: apps/wheel/templates/wheel/home.html:64
+msgid "No groups available"
+msgstr "Nenhum grupo disponível"
+
+#: apps/group_divider/templates/group_divider/home.html:71
+msgid "Team size"
+msgstr "Tamanho da equipa"
+
+#: apps/group_divider/templates/group_divider/home.html:84
+#: apps/point_system/templates/point_system/home.html:83
+#: apps/wheel/templates/wheel/home.html:119
+msgid "New group"
+msgstr "Criar grupo"
+
+#: apps/group_divider/templates/group_divider/home.html:93
+msgid "Divide"
+msgstr "Dividir"
+
+#: apps/group_divider/templates/group_divider/home.html:107
 msgid "Selected teams"
 msgstr "Selecionado"
 
-#: apps/group_divider/templates/group_divider/home.html:86
+#: apps/group_divider/templates/group_divider/home.html:108
 msgid "Source"
 msgstr "Origem"
 
-#: apps/group_divider/templates/group_divider/home.html:90
+#: apps/group_divider/templates/group_divider/home.html:112
 msgid "Total Teams"
 msgstr "Total"
 
-#: apps/group_divider/templates/group_divider/home.html:103
+#: apps/group_divider/templates/group_divider/home.html:125
 msgid "Team"
 msgstr "Equipa"
 
-#: apps/group_divider/templates/group_divider/home.html:105
+#: apps/group_divider/templates/group_divider/home.html:127
 #: apps/group_maker/templates/group_maker/confirm_delete.html:43
 #: apps/group_maker/templates/group_maker/list_create.html:50
 #: apps/group_maker/templates/group_maker/list_edit.html:50
 msgid "Members"
 msgstr "Membros"
 
-#: apps/group_maker/templates/group_maker/confirm_delete.html:4
-#: apps/group_maker/templates/group_maker/list_edit.html:98
-msgid "Delete group"
-msgstr "Eliminar grupo"
+#: apps/group_maker/forms.py:17
+msgid "A group with this name already exists. Please choose a different name."
+msgstr "Já existe um grupo com este nome. Escolha outro nome."
+
+#: apps/group_maker/models.py:15
+msgid ""
+"Comma-separated names. (f.e.: \"Toki, Tina, Alice\") | We recommend not "
+"using the same exact name for different members"
+msgstr ""
+"Nomes separados por vírgula. (ex.: \"Toki, Tina, Alice\") | Recomendamos não"
+" usar exatamente o mesmo nome para membros diferentes"
 
 #: apps/group_maker/templates/group_maker/confirm_delete.html:14
 #: apps/group_maker/templates/group_maker/list_create.html:14
@@ -533,7 +768,7 @@ msgid "Create your first group to get started"
 msgstr "Crie o seu primeiro grupo para começar"
 
 #: apps/group_maker/templates/group_maker/list_create.html:4
-#: apps/group_maker/templates/group_maker/list_create.html:72
+#: apps/group_maker/templates/group_maker/list_create.html:71
 msgid "Create group"
 msgstr "Criar grupo"
 
@@ -601,10 +836,20 @@ msgstr "Esta ferramenta está a ser desenvolvida. Volte em breve!"
 msgid "Back to Home"
 msgstr "Voltar ao Início"
 
+#: apps/point_system/forms.py:60
+#: apps/point_system/templates/point_system/karma_dashboard.html:52
+msgid "Positive"
+msgstr "Pontos positivos"
+
+#: apps/point_system/forms.py:60
+#: apps/point_system/templates/point_system/karma_dashboard.html:36
+msgid "Negative"
+msgstr "Pontos negativos"
+
 #: apps/point_system/templates/point_system/delete_column.html:5
-#: apps/point_system/templates/point_system/delete_column.html:80
-#: apps/point_system/templates/point_system/home.html:176
-#: apps/point_system/templates/point_system/home.html:278
+#: apps/point_system/templates/point_system/delete_column.html:78
+#: apps/point_system/templates/point_system/home.html:235
+#: apps/point_system/templates/point_system/home.html:354
 msgid "Delete column"
 msgstr "Eliminar coluna"
 
@@ -617,8 +862,8 @@ msgstr "Voltar aos Pontos"
 
 #: apps/point_system/templates/point_system/delete_column.html:23
 #: apps/point_system/templates/point_system/edit_column.html:23
-#: apps/point_system/templates/point_system/home.html:92
-#: apps/point_system/templates/point_system/home.html:195
+#: apps/point_system/templates/point_system/home.html:134
+#: apps/point_system/templates/point_system/home.html:254
 #: apps/point_system/templates/point_system/new_column.html:22
 msgid "column"
 msgstr "Adicionar coluna"
@@ -659,24 +904,24 @@ msgid "Column type"
 msgstr "Tipo de coluna"
 
 #: apps/point_system/templates/point_system/delete_column.html:68
-#: apps/point_system/templates/point_system/delete_column.html:100
+#: apps/point_system/templates/point_system/delete_column.html:98
 #: apps/point_system/templates/point_system/edit_column.html:88
-#: apps/point_system/templates/point_system/edit_column.html:120
+#: apps/point_system/templates/point_system/edit_column.html:118
 #: apps/point_system/templates/point_system/new_column.html:69
 msgid "Numerical"
 msgstr "Numérico"
 
 #: apps/point_system/templates/point_system/delete_column.html:68
-#: apps/point_system/templates/point_system/delete_column.html:100
+#: apps/point_system/templates/point_system/delete_column.html:98
 #: apps/point_system/templates/point_system/edit_column.html:88
-#: apps/point_system/templates/point_system/edit_column.html:120
+#: apps/point_system/templates/point_system/edit_column.html:118
 #: apps/point_system/templates/point_system/new_column.html:70
 msgid "Text"
 msgstr "Texto"
 
 #: apps/point_system/templates/point_system/edit_column.html:5
-#: apps/point_system/templates/point_system/home.html:171
-#: apps/point_system/templates/point_system/home.html:274
+#: apps/point_system/templates/point_system/home.html:230
+#: apps/point_system/templates/point_system/home.html:350
 msgid "Edit column"
 msgstr "Editar coluna"
 
@@ -698,14 +943,14 @@ msgstr "Introduz o novo nome"
 
 #: apps/point_system/templates/point_system/home.html:5
 #: apps/point_system/templates/point_system/home.html:15
-#: templates/base.html:175 templates/base.html:210
+#: templates/base.html:174
 msgid "Point system"
 msgstr "Sistema de pontos"
 
 #: apps/point_system/templates/point_system/home.html:19
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:316
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:400
-#: templates/home.html:343
+#: templates/home.html:350
 msgid "Points"
 msgstr "Pontos"
 
@@ -719,64 +964,64 @@ msgstr ""
 msgid "Choose group"
 msgstr "Escolher um grupo..."
 
-#: apps/point_system/templates/point_system/home.html:73
-msgid "Create a group"
-msgstr "Criar grupo"
+#: apps/point_system/templates/point_system/home.html:114
+msgid "Auto-save"
+msgstr "Guardar automaticamente"
 
-#: apps/point_system/templates/point_system/home.html:89
+#: apps/point_system/templates/point_system/home.html:131
 #: apps/point_system/templates/point_system/karma_dashboard.html:92
 msgid "Negative points"
 msgstr "Pontos negativos"
 
-#: apps/point_system/templates/point_system/home.html:92
-#: apps/point_system/templates/point_system/home.html:195
+#: apps/point_system/templates/point_system/home.html:134
+#: apps/point_system/templates/point_system/home.html:254
 msgid "columns"
 msgstr "Adicionar coluna"
 
-#: apps/point_system/templates/point_system/home.html:102
-#: apps/point_system/templates/point_system/home.html:205
+#: apps/point_system/templates/point_system/home.html:146
+#: apps/point_system/templates/point_system/home.html:266
 #: apps/wheel/templates/wheel/home.html:17
 msgid "Name"
 msgstr "Nome"
 
-#: apps/point_system/templates/point_system/home.html:106
-#: apps/point_system/templates/point_system/home.html:209
+#: apps/point_system/templates/point_system/home.html:156
+#: apps/point_system/templates/point_system/home.html:276
 msgid "Total"
 msgstr "Total"
 
-#: apps/point_system/templates/point_system/home.html:148
+#: apps/point_system/templates/point_system/home.html:207
 msgid "No negative columns yet"
 msgstr "Nenhum ponto negativo registado"
 
-#: apps/point_system/templates/point_system/home.html:149
+#: apps/point_system/templates/point_system/home.html:208
 msgid "Add one to start tracking."
 msgstr "Adiciona uma para começar a registar."
 
-#: apps/point_system/templates/point_system/home.html:159
-#: apps/point_system/templates/point_system/home.html:262
+#: apps/point_system/templates/point_system/home.html:218
+#: apps/point_system/templates/point_system/home.html:338
 msgid "Save points"
 msgstr "Guardar pontos"
 
-#: apps/point_system/templates/point_system/home.html:167
-#: apps/point_system/templates/point_system/home.html:270
+#: apps/point_system/templates/point_system/home.html:226
+#: apps/point_system/templates/point_system/home.html:346
 msgid "Add column"
 msgstr "Adicionar coluna"
 
-#: apps/point_system/templates/point_system/home.html:181
-#: apps/point_system/templates/point_system/home.html:283
+#: apps/point_system/templates/point_system/home.html:240
+#: apps/point_system/templates/point_system/home.html:359
 msgid "Add first column"
 msgstr "Adicionar primeira coluna"
 
-#: apps/point_system/templates/point_system/home.html:192
+#: apps/point_system/templates/point_system/home.html:251
 #: apps/point_system/templates/point_system/karma_dashboard.html:119
 msgid "Positive points"
 msgstr "Pontos positivos"
 
-#: apps/point_system/templates/point_system/home.html:251
+#: apps/point_system/templates/point_system/home.html:327
 msgid "No positive columns yet"
 msgstr "Nenhum ponto positivo registado"
 
-#: apps/point_system/templates/point_system/home.html:252
+#: apps/point_system/templates/point_system/home.html:328
 msgid "Add one to start rewarding."
 msgstr "Adiciona uma para começar a recompensar."
 
@@ -791,10 +1036,6 @@ msgstr "Painel individual do membro"
 #: apps/point_system/templates/point_system/karma_dashboard.html:28
 msgid "Overview"
 msgstr "Resumo"
-
-#: apps/point_system/templates/point_system/karma_dashboard.html:36
-msgid "Negative"
-msgstr "Pontos negativos"
 
 #: apps/point_system/templates/point_system/karma_dashboard.html:43
 #: apps/point_system/templates/point_system/karma_dashboard.html:59
@@ -815,10 +1056,6 @@ msgstr "Minutos"
 #: apps/point_system/templates/point_system/karma_dashboard.html:59
 msgid "none recorded"
 msgstr "Nenhum ponto negativo registado"
-
-#: apps/point_system/templates/point_system/karma_dashboard.html:52
-msgid "Positive"
-msgstr "Pontos positivos"
 
 #: apps/point_system/templates/point_system/karma_dashboard.html:69
 msgid "Net"
@@ -864,9 +1101,24 @@ msgstr "ex. Trabalhos, Participação"
 msgid "Numerical columns are summed in the total."
 msgstr "Colunas numéricas serão somadas no total"
 
-#: apps/point_system/templates/point_system/new_column.html:83
+#: apps/point_system/templates/point_system/new_column.html:81
 msgid "Create column"
 msgstr "Criar coluna"
+
+#: apps/point_system/views.py:131
+#, python-format
+msgid "A column named '%(name)s' already exists in %(definition)s table."
+msgstr "Já existe uma coluna chamada '%(name)s' na tabela %(definition)s."
+
+#: apps/point_system/views.py:193
+#, python-format
+msgid "Column '%(name)s' not found."
+msgstr "Coluna '%(name)s' não encontrada."
+
+#: apps/point_system/views.py:196
+#, python-format
+msgid "A column named '%(name)s' already exists."
+msgstr "Já existe uma coluna chamada '%(name)s'."
 
 #: apps/quizzmaker/templates/quizzmaker/_image_cropper.html:6
 msgid "Original"
@@ -961,7 +1213,6 @@ msgstr[1] "%(counter)s rondas não têm limite de tempo"
 #: apps/quizzmaker/templates/quizzmaker/home.html:18
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:15
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:16
-#: templates/base.html:205 templates/base.html:215
 msgid "Quizzes"
 msgstr "Quizzes"
 
@@ -1008,10 +1259,6 @@ msgstr "Rondas"
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:26
 msgid "Quiz settings"
 msgstr "Definições do quiz"
-
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:30
-msgid "Close"
-msgstr "Fechar"
 
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:36
 msgid "Save & leave"
@@ -1095,8 +1342,8 @@ msgstr "Cria a tua primeira ronda"
 
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:254
 msgid ""
-"Use the plus button on the left to add a round. The live preview will appear "
-"here as you build."
+"Use the plus button on the left to add a round. The live preview will appear"
+" here as you build."
 msgstr ""
 "Usa o botão + à esquerda para adicionar uma ronda. A pré-visualização "
 "aparece aqui à medida que constróis."
@@ -1112,11 +1359,6 @@ msgstr "Quiz"
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:352
 msgid "question"
 msgstr "pergunta"
-
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:284
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:359
-msgid "Question"
-msgstr "Pergunta"
 
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:292
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:367
@@ -1145,10 +1387,12 @@ msgstr "ronda"
 msgid ""
 "This will permanently remove the round and its answers. This cannot be "
 "undone."
-msgstr "Isto irá remover permanentemente a ronda e as suas respostas. Esta ação não pode ser revertida."
+msgstr ""
+"Isto irá remover permanentemente a ronda e as suas respostas. Esta ação não "
+"pode ser revertida."
 
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:464
-#: apps/users/templates/users/profile.html:70
+#: apps/users/templates/users/profile.html:75
 #: apps/users/templates/users/settings.html:4
 #: apps/users/templates/users/settings.html:17 templates/base.html:155
 msgid "Settings"
@@ -1177,8 +1421,8 @@ msgstr "Contagem decrescente"
 #: apps/timer/templates/timer/home.html:4
 #: apps/timer/templates/timer/home.html:14
 #: apps/timer/templates/timer/home.html:17
-#: apps/timer/templates/timer/stopwatch.html:13 templates/base.html:199
-#: templates/base.html:214 templates/home.html:287 templates/home.html:376
+#: apps/timer/templates/timer/stopwatch.html:13 templates/base.html:198
+#: templates/home.html:294 templates/home.html:383
 msgid "Timer"
 msgstr "Temporizador"
 
@@ -1231,6 +1475,50 @@ msgstr "Marca os teus tempos com bandeiras"
 msgid "Flags"
 msgstr "Marcações"
 
+#: apps/users/forms.py:18
+#, fuzzy
+#| msgid "Configuration"
+msgid "Password Confirmation"
+msgstr "Configuração"
+
+#: apps/users/forms.py:34 apps/users/views.py:150
+msgid "An account with this email address already exists."
+msgstr "Já existe uma conta com este endereço de email."
+
+#: apps/users/forms.py:40
+msgid "An account with this username already exists."
+msgstr "Já existe uma conta com este nome de utilizador."
+
+#: apps/users/forms.py:57
+#, fuzzy
+#| msgid "Confirm password"
+msgid "Confirm new password"
+msgstr "Alterar palavra-passe"
+
+#: apps/users/models.py:8 templates/base.html:221
+msgid "Light"
+msgstr "Claro"
+
+#: apps/users/models.py:9 templates/base.html:226
+msgid "Dark"
+msgstr "Escuro"
+
+#: apps/users/models.py:10 templates/base.html:231
+msgid "Pastel"
+msgstr "Pastel"
+
+#: apps/users/models.py:11 templates/base.html:236
+msgid "Editorial"
+msgstr "Editar perfil"
+
+#: apps/users/models.py:12 templates/base.html:241
+msgid "Palette"
+msgstr "Paleta"
+
+#: apps/users/models.py:42
+msgid "User stats"
+msgstr "Estatísticas do utilizador"
+
 #: apps/users/templates/registration/account_activation_email.html:7
 msgid "Welcome to Teachka"
 msgstr "Bem-vindo de volta"
@@ -1246,8 +1534,8 @@ msgstr "Ativa a tua<br>conta, %(name)s"
 
 #: apps/users/templates/registration/account_activation_email.html:59
 msgid ""
-"Thanks for signing up for Teachka. To get started with your classroom tools, "
-"confirm your email address by clicking below."
+"Thanks for signing up for Teachka. To get started with your classroom tools,"
+" confirm your email address by clicking below."
 msgstr ""
 "Obrigado por te inscreveres no Teachka. Para começares a usar as tuas "
 "ferramentas, confirma o teu email clicando abaixo."
@@ -1258,7 +1546,8 @@ msgstr "Criar uma conta"
 
 #: apps/users/templates/registration/account_activation_email.html:82
 #: apps/users/templates/users/password_reset_email.html:82
-msgid "If the button doesn't work, copy and paste this link into your browser:"
+msgid ""
+"If the button doesn't work, copy and paste this link into your browser:"
 msgstr "Se o botão não funcionar, copia e cola este link no teu navegador:"
 
 #: apps/users/templates/registration/account_activation_email.html:97
@@ -1278,11 +1567,11 @@ msgid ""
 msgstr "Se não criaste uma conta Teachka, podes ignorar este email."
 
 #: apps/users/templates/registration/login.html:5
-#: apps/users/templates/registration/login.html:128
-#: apps/users/templates/registration/register.html:217
-#: apps/users/templates/users/forgot_password.html:117
-#: apps/users/templates/users/password_reset.html:150 templates/home.html:231
-#: templates/home.html:644
+#: apps/users/templates/registration/login.html:127
+#: apps/users/templates/registration/register.html:216
+#: apps/users/templates/users/forgot_password.html:116
+#: apps/users/templates/users/password_reset.html:149 templates/home.html:238
+#: templates/home.html:651
 msgid "Sign in"
 msgstr "Entrar"
 
@@ -1319,20 +1608,20 @@ msgstr "Alterar palavra-passe"
 msgid "Toggle password visibility"
 msgstr "Alternar visibilidade da palavra-passe"
 
-#: apps/users/templates/registration/login.html:135
+#: apps/users/templates/registration/login.html:134
 msgid "New here?"
 msgstr "Novo por aqui?"
 
-#: apps/users/templates/registration/login.html:138 templates/home.html:641
+#: apps/users/templates/registration/login.html:137 templates/home.html:648
 msgid "Create an account"
 msgstr "Criar uma conta"
 
 #: apps/users/templates/registration/register.html:5
-#: apps/users/templates/registration/register.html:207
+#: apps/users/templates/registration/register.html:206
 msgid "Create account"
 msgstr "Criar conta"
 
-#: apps/users/templates/registration/register.html:50 templates/base.html:291
+#: apps/users/templates/registration/register.html:50 templates/base.html:285
 #: templates/home.html:128
 msgid "Get started"
 msgstr "Começar"
@@ -1369,7 +1658,7 @@ msgstr "Email"
 msgid "Confirm password"
 msgstr "Alterar palavra-passe"
 
-#: apps/users/templates/registration/register.html:214
+#: apps/users/templates/registration/register.html:213
 msgid "Already have an account?"
 msgstr "Já tem uma conta?"
 
@@ -1378,8 +1667,8 @@ msgid "Change Password"
 msgstr "Alterar Palavra-passe"
 
 #: apps/users/templates/users/change_password.html:53
-#: apps/users/templates/users/change_password.html:115
-#: apps/users/templates/users/settings.html:91
+#: apps/users/templates/users/change_password.html:114
+#: apps/users/templates/users/settings.html:90
 msgid "Back to profile"
 msgstr "Voltar ao Início"
 
@@ -1405,13 +1694,13 @@ msgstr "Enviaremos um link de recuperação para o seu email"
 msgid "Email address"
 msgstr "Endereço de email"
 
-#: apps/users/templates/users/change_password.html:107
-#: apps/users/templates/users/forgot_password.html:108
+#: apps/users/templates/users/change_password.html:106
+#: apps/users/templates/users/forgot_password.html:107
 msgid "Send reset link"
 msgstr "Enviar link de recuperação"
 
 #: apps/users/templates/users/delete_account.html:4
-#: apps/users/templates/users/settings.html:102
+#: apps/users/templates/users/settings.html:101
 msgid "Delete account"
 msgstr "Eliminar conta"
 
@@ -1433,12 +1722,12 @@ msgstr ""
 msgid "Confirm with password"
 msgstr "Confirma com a palavra-passe"
 
-#: apps/users/templates/users/delete_account.html:43
+#: apps/users/templates/users/delete_account.html:42
 msgid "Delete my account"
 msgstr "Eliminar a minha conta"
 
 #: apps/users/templates/users/edit_profile.html:4
-#: apps/users/templates/users/profile.html:66
+#: apps/users/templates/users/profile.html:71
 msgid "Edit profile"
 msgstr "Editar perfil"
 
@@ -1454,6 +1743,17 @@ msgstr "Detalhes da conta"
 #: apps/users/templates/users/edit_profile.html:54
 msgid "Username cannot be changed"
 msgstr "O nome de utilizador não pode ser alterado"
+
+#: apps/users/templates/users/edit_profile.html:101
+#: apps/users/templates/users/profile.html:60
+#, fuzzy
+#| msgid "Countdown"
+msgid "Country"
+msgstr "Contagem decrescente"
+
+#: apps/users/templates/users/edit_profile.html:105
+msgid "— None —"
+msgstr "— Nenhum —"
 
 #: apps/users/templates/users/forgot_password.html:5
 msgid "Forgot password"
@@ -1480,8 +1780,8 @@ msgstr "Palavra-passe"
 msgid "Enter your registered email and we'll send you a reset link."
 msgstr "Introduz o email registado e enviaremos um link de recuperação."
 
-#: apps/users/templates/users/forgot_password.html:114
-#: apps/users/templates/users/password_reset.html:147
+#: apps/users/templates/users/forgot_password.html:113
+#: apps/users/templates/users/password_reset.html:146
 msgid "Remember your password?"
 msgstr "Introduza a sua nova palavra-passe"
 
@@ -1505,7 +1805,7 @@ msgstr "Alterar palavra-passe"
 msgid "Password requirements"
 msgstr "Requisitos da palavra-passe"
 
-#: apps/users/templates/users/password_reset.html:140
+#: apps/users/templates/users/password_reset.html:139
 msgid "Reset password"
 msgstr "Redefinir Palavra-passe"
 
@@ -1547,8 +1847,8 @@ msgid ""
 "You're receiving this because a password reset was requested for your "
 "Teachka account."
 msgstr ""
-"Estás a receber este email porque foi pedida a reposição da palavra-passe da "
-"tua conta Teachka."
+"Estás a receber este email porque foi pedida a reposição da palavra-passe da"
+" tua conta Teachka."
 
 #: apps/users/templates/users/profile.html:4 templates/base.html:154
 msgid "Profile"
@@ -1562,7 +1862,7 @@ msgstr "O seu perfil"
 msgid "Member since"
 msgstr "Membro desde"
 
-#: apps/users/templates/users/profile.html:74
+#: apps/users/templates/users/profile.html:79
 msgid "Change password"
 msgstr "Alterar palavra-passe"
 
@@ -1571,15 +1871,15 @@ msgstr "Alterar palavra-passe"
 msgid "Preferences"
 msgstr "Preferências"
 
-#: apps/users/templates/users/settings.html:39 templates/base.html:278
+#: apps/users/templates/users/settings.html:39 templates/base.html:272
 msgid "Theme"
 msgstr "Tema"
 
-#: apps/users/templates/users/settings.html:52 templates/base.html:259
+#: apps/users/templates/users/settings.html:52 templates/base.html:253
 msgid "Language"
 msgstr "Idioma"
 
-#: apps/users/templates/users/settings.html:62 templates/home.html:474
+#: apps/users/templates/users/settings.html:62 templates/home.html:481
 msgid "Accent colour"
 msgstr "Cor de destaque"
 
@@ -1587,21 +1887,88 @@ msgstr "Cor de destaque"
 msgid "Sidebar highlight"
 msgstr "Destaque da barra lateral"
 
-#: apps/users/templates/users/settings.html:88
+#: apps/users/templates/users/settings.html:87
 msgid "Save settings"
 msgstr "Guardar definições"
 
-#: apps/users/templates/users/settings.html:98
+#: apps/users/templates/users/settings.html:97
 msgid "Danger zone"
 msgstr "Zona de perigo"
 
-#: apps/users/templates/users/settings.html:103
+#: apps/users/templates/users/settings.html:102
 msgid "Permanently remove your account and all data."
 msgstr "Remove permanentemente a tua conta e todos os dados."
 
+#: apps/users/views.py:46
+#, fuzzy
+#| msgid "Welcome to Teachka"
+msgid "Welcome to Teachka!"
+msgstr "Bem-vindo de volta"
+
+#: apps/users/views.py:63
+msgid "Welcome, please check your email to complete your registration."
+msgstr "Bem-vindo, por favor verifique o seu email para concluir o registo."
+
+#: apps/users/views.py:70
+msgid "Registration failed due to an email error. Please try again later."
+msgstr ""
+"O registo falhou devido a um erro de email. Por favor tente novamente mais "
+"tarde."
+
+#: apps/users/views.py:91
+msgid "Your account has been successfully activated!"
+msgstr "A sua conta foi ativada com sucesso!"
+
+#: apps/users/views.py:94
+msgid "Activation link is invalid or expired."
+msgstr "O link de ativação é inválido ou expirou."
+
+#: apps/users/views.py:167
+msgid "You have requested a new password"
+msgstr "Pediu uma nova palavra-passe"
+
+#: apps/users/views.py:182
+msgid "You will receive a password reset link in the email registered"
+msgstr "Receberá um link de redefinição da palavra-passe no email registado"
+
+#: apps/users/views.py:208 apps/users/views.py:214
+msgid "Reset link is invalid or expired."
+msgstr "O link de redefinição é inválido ou expirou."
+
+#: apps/users/views.py:221
+msgid "Your password was successfully reset. You may now login again."
+msgstr ""
+"A sua palavra-passe foi redefinida com sucesso. Já pode iniciar sessão "
+"novamente."
+
+#: apps/users/views.py:243
+#, fuzzy
+#| msgid "Reset your password"
+msgid "Reset your Teachka password"
+msgstr "Redefinir Palavra-passe"
+
+#: apps/users/views.py:263
+msgid "If that email is registered you'll receive a reset link shortly."
+msgstr ""
+"Se esse email estiver registado, receberá em breve um link de redefinição."
+
+#: apps/users/views.py:278
+msgid "Incorrect password. Account not deleted."
+msgstr "Palavra-passe incorreta. Conta não eliminada."
+
+#: apps/users/views.py:282
+msgid "Your account and all associated data have been permanently deleted."
+msgstr ""
+"A sua conta e todos os dados associados foram permanentemente eliminados."
+
+#: apps/wheel/forms.py:6
+#, fuzzy
+#| msgid "Member colors"
+msgid "Members chosen"
+msgstr "Cores dos membros"
+
 #: apps/wheel/templates/wheel/home.html:4
-#: apps/wheel/templates/wheel/home.html:14 templates/base.html:193
-#: templates/base.html:213
+#: apps/wheel/templates/wheel/home.html:14 templates/base.html:192
 msgid "Name wheel"
 msgstr "Roleta de nomes"
 
@@ -1613,33 +1980,55 @@ msgstr "Roleta"
 msgid "Spin to pick a random student"
 msgstr "Roda para escolher um aluno aleatório"
 
-#: apps/wheel/templates/wheel/home.html:47
+#: apps/wheel/templates/wheel/home.html:86
 msgid "Members to pick"
 msgstr "Membros"
 
-#: apps/wheel/templates/wheel/home.html:68
+#: apps/wheel/templates/wheel/home.html:107
 msgid "Remove after spin"
 msgstr "Remover após girar"
 
-#: apps/wheel/templates/wheel/home.html:69
+#: apps/wheel/templates/wheel/home.html:108
 msgid "Each student picked only once"
 msgstr "Cada aluno é escolhido apenas uma vez"
 
-#: apps/wheel/templates/wheel/home.html:78
+#: apps/wheel/templates/wheel/home.html:125
+#: apps/wheel/templates/wheel/home.html:605
+#: apps/wheel/templates/wheel/home.html:618
+#: apps/wheel/templates/wheel/home.html:640
+#: apps/wheel/templates/wheel/home.html:648
 msgid "Spin"
 msgstr "Girar"
 
-#: apps/wheel/templates/wheel/home.html:80
+#: apps/wheel/templates/wheel/home.html:127
 msgid "Shuffle"
 msgstr "Baralhar"
 
-#: apps/wheel/templates/wheel/home.html:112
+#: apps/wheel/templates/wheel/home.html:155
+#: apps/wheel/templates/wheel/home.html:443
 msgid "Already chosen"
 msgstr "Já Escolhidos"
 
-#: apps/wheel/templates/wheel/home.html:128
+#: apps/wheel/templates/wheel/home.html:171
+#: apps/wheel/templates/wheel/home.html:467
 msgid "Selected"
 msgstr "Selecionado"
+
+#: apps/wheel/templates/wheel/home.html:499
+msgid "Notice"
+msgstr "Aviso"
+
+#: apps/wheel/templates/wheel/home.html:568
+msgid "Please select a group first."
+msgstr "Selecione primeiro um grupo."
+
+#: apps/wheel/templates/wheel/home.html:581
+msgid "All members chosen! Click Reset to start over."
+msgstr "Todos os membros foram escolhidos! Clique em Repor para recomeçar."
+
+#: apps/wheel/templates/wheel/home.html:587
+msgid "Spinning..."
+msgstr "A girar..."
 
 #: templates/403.html:9
 msgid "Access denied"
@@ -1715,39 +2104,19 @@ msgstr "Entrar"
 msgid "Register"
 msgstr "Registar"
 
-#: templates/base.html:227
-msgid "Light"
-msgstr "Claro"
-
-#: templates/base.html:232
-msgid "Dark"
-msgstr "Escuro"
-
-#: templates/base.html:237
-msgid "Pastel"
-msgstr "Pastel"
-
-#: templates/base.html:242
-msgid "Editorial"
-msgstr "Editar perfil"
-
-#: templates/base.html:247
-msgid "Palette"
-msgstr "Paleta"
-
-#: templates/base.html:285
+#: templates/base.html:279
 msgid "Logout"
 msgstr "Sair"
 
-#: templates/base.html:331 templates/legal/privacy.html:16
+#: templates/base.html:326 templates/legal/privacy.html:16
 msgid "Privacy"
 msgstr "Privacidade"
 
-#: templates/base.html:344
+#: templates/base.html:339
 msgid "We use a session cookie to keep you logged in. No tracking. "
 msgstr "Usamos um cookie de sessão para te manter ligado. Sem rastreio. "
 
-#: templates/base.html:345
+#: templates/base.html:340
 msgid "Privacy policy"
 msgstr "Política de privacidade"
 
@@ -1796,126 +2165,127 @@ msgstr "Sem compromissos"
 msgid "Welcome back to"
 msgstr "Bem-vindo de volta"
 
-#: templates/home.html:225
+#: templates/home.html:232
 msgid "The toolkit"
 msgstr "As ferramentas"
 
-#: templates/home.html:227
+#: templates/home.html:234
 msgid "Six tools,"
 msgstr "Seis ferramentas,"
 
-#: templates/home.html:227
+#: templates/home.html:234
 msgid "one home"
 msgstr "uma casa"
 
-#: templates/home.html:231
+#: templates/home.html:238
 msgid "to start using any tool."
 msgstr "para começares a usar qualquer ferramenta."
 
-#: templates/home.html:245
+#: templates/home.html:252
 msgid "Grade Calculator"
 msgstr "Calculadora de Notas"
 
-#: templates/home.html:246
+#: templates/home.html:253
 msgid "Weighted averages, bulk grading, instant export to your records."
 msgstr "Médias ponderadas, avaliação em massa, exportação instantânea."
 
-#: templates/home.html:259
+#: templates/home.html:266
 msgid "Group Divider"
 msgstr "Divisor de grupos"
 
-#: templates/home.html:260
+#: templates/home.html:267
 msgid "Split your class into balanced teams in seconds."
 msgstr "Divida a sua turma aleatoriamente em equipas de qualquer tamanho."
 
-#: templates/home.html:273
+#: templates/home.html:280
 msgid "Point System"
 msgstr "Sistema de pontos"
 
-#: templates/home.html:274
+#: templates/home.html:281
 msgid "Track participation and reward students with points in real time."
 msgstr ""
 "Acompanhe a participação e o comportamento com categorias de pontos "
 "personalizáveis."
 
-#: templates/home.html:288
+#: templates/home.html:295
 msgid "Visual countdowns for tests, group work, and transitions."
 msgstr ""
 "Contagens decrescentes visuais para testes, trabalhos de grupo e transições."
 
-#: templates/home.html:302
+#: templates/home.html:309
 msgid "Lesson planning and deadline tracking in one clean weekly view."
 msgstr "Planeamento de aulas e prazos numa vista semanal limpa."
 
-#: templates/home.html:315
+#: templates/home.html:322
 msgid "Name Wheel"
 msgstr "Roleta de nomes"
 
-#: templates/home.html:316
+#: templates/home.html:323
 msgid "Spin to pick a random student: fair, fun, and instant."
-msgstr "Roda para escolher um aluno aleatório: justo, divertido e instantâneo."
+msgstr ""
+"Roda para escolher um aluno aleatório: justo, divertido e instantâneo."
 
-#: templates/home.html:330
+#: templates/home.html:337
 msgid "Your activity"
 msgstr "A sua Atividade"
 
-#: templates/home.html:335
+#: templates/home.html:342
 msgid "Groups"
 msgstr "Grupos"
 
-#: templates/home.html:352
+#: templates/home.html:359
 msgid "Calculator"
 msgstr "Calculadora"
 
-#: templates/home.html:355
+#: templates/home.html:362
 msgid "uses"
 msgstr "utilizações"
 
-#: templates/home.html:360
+#: templates/home.html:367
 msgid "Wheel"
 msgstr "Roleta"
 
-#: templates/home.html:363
+#: templates/home.html:370
 msgid "spins"
 msgstr "giros"
 
-#: templates/home.html:368
+#: templates/home.html:375
 msgid "Divider"
 msgstr "Divisor"
 
-#: templates/home.html:371
+#: templates/home.html:378
 msgid "splits"
 msgstr "divisões"
 
-#: templates/home.html:379
+#: templates/home.html:386
 msgid "minutes"
 msgstr "Minutos"
 
-#: templates/home.html:475
+#: templates/home.html:482
 msgid "Sidebar highlight colour."
 msgstr "Cor de destaque da barra lateral."
 
-#: templates/home.html:477
+#: templates/home.html:484
 msgid "hover to preview · click to save"
 msgstr "passa para pré-visualizar · clica para guardar"
 
-#: templates/home.html:544
+#: templates/home.html:551
 msgid "Built for teachers"
 msgstr "Ferramentas para Professores"
 
-#: templates/home.html:546
+#: templates/home.html:553
 msgid "Why teachers"
 msgstr "Porque os professores"
 
-#: templates/home.html:546
+#: templates/home.html:553
 msgid "use it"
 msgstr "usam"
 
-#: templates/home.html:555
+#: templates/home.html:562
 msgid "Ready in under a minute"
 msgstr "Pronto em menos de um minuto"
 
-#: templates/home.html:556
+#: templates/home.html:563
 msgid ""
 "No installation, no training, no IT department needed. Sign up and start "
 "using your tools straight away."
@@ -1923,75 +2293,76 @@ msgstr ""
 "Sem instalação, sem formação, sem departamento de TI. Regista-te e começa a "
 "usar as ferramentas imediatamente."
 
-#: templates/home.html:565
+#: templates/home.html:572
 msgid "One class list, every tool access"
 msgstr "Uma lista de turma, acesso a todas as ferramentas"
 
-#: templates/home.html:566
+#: templates/home.html:573
 msgid ""
 "Add your students once. All the tools use the same list; no duplicate entry."
 msgstr ""
 "Adiciona os alunos uma vez. Todas as ferramentas usam a mesma lista; sem "
 "entradas duplicadas."
 
-#: templates/home.html:575
+#: templates/home.html:582
 msgid "No learning curve"
 msgstr "Sem curva de aprendizagem"
 
-#: templates/home.html:576
+#: templates/home.html:583
 msgid ""
 "Every tool is designed to work the first time you open it, with no setup or "
 "manual needed."
 msgstr ""
 "Todas as ferramentas funcionam à primeira, sem configuração nem manual."
 
-#: templates/home.html:584
+#: templates/home.html:591
 msgid "How it works"
 msgstr "Como funciona"
 
-#: templates/home.html:586
+#: templates/home.html:593
 msgid "Three steps"
 msgstr "Três passos"
 
-#: templates/home.html:586
+#: templates/home.html:593
 msgid "to start"
 msgstr "para começar"
 
-#: templates/home.html:597
+#: templates/home.html:604
 msgid "Create your account"
 msgstr "Criar conta"
 
-#: templates/home.html:598
+#: templates/home.html:605
 msgid "Free signup. Ready in under a minute."
 msgstr "Registo gratuito. Pronto em menos de um minuto."
 
-#: templates/home.html:608
+#: templates/home.html:615
 msgid "Add your class"
 msgstr "Adiciona a tua turma"
 
-#: templates/home.html:609
+#: templates/home.html:616
 msgid "Create your classes. All tools sync from these lists automatically."
-msgstr "Cria as tuas turmas. Todas as ferramentas sincronizam automaticamente."
+msgstr ""
+"Cria as tuas turmas. Todas as ferramentas sincronizam automaticamente."
 
-#: templates/home.html:618
+#: templates/home.html:625
 msgid "Open a tool and go"
 msgstr "Abre uma ferramenta e avança"
 
-#: templates/home.html:619
+#: templates/home.html:626
 msgid "No duplicate data entry, no per-tool setup. It just works."
 msgstr ""
 "Sem duplicação de dados, sem configuração por ferramenta. Simplesmente "
 "funciona."
 
-#: templates/home.html:634
+#: templates/home.html:641
 msgid "Start today"
 msgstr "Começa hoje"
 
-#: templates/home.html:636
+#: templates/home.html:643
 msgid "Your classroom,"
 msgstr "A tua sala de aula,"
 
-#: templates/home.html:636
+#: templates/home.html:643
 msgid "finally in one place"
 msgstr "finalmente num só lugar"
 
@@ -2023,8 +2394,8 @@ msgid ""
 "to your account."
 msgstr ""
 "Quando crias uma conta recolhemos o teu nome de utilizador, endereço de "
-"email e palavra-passe (guardada como hash bcrypt, nunca em texto simples). À "
-"medida que usas as ferramentas registamos estatísticas de uso (ex. rodas "
+"email e palavra-passe (guardada como hash bcrypt, nunca em texto simples). À"
+" medida que usas as ferramentas registamos estatísticas de uso (ex. rodas "
 "giradas, duração do temporizador) associadas à tua conta."
 
 #: templates/legal/privacy.html:44
@@ -2062,8 +2433,8 @@ msgid ""
 "intentionally forwarded to Sentry."
 msgstr ""
 "Usamos o Sentry para monitorizar erros. O Sentry pode definir os próprios "
-"cookies ou usar armazenamento do navegador para deduplicar relatórios. Não é "
-"enviado intencionalmente qualquer dado pessoal para o Sentry."
+"cookies ou usar armazenamento do navegador para deduplicar relatórios. Não é"
+" enviado intencionalmente qualquer dado pessoal para o Sentry."
 
 #: templates/legal/privacy.html:69
 msgid "Data retention"
@@ -2072,8 +2443,8 @@ msgstr "Retenção de dados"
 #: templates/legal/privacy.html:71
 msgid ""
 "Your account and all associated data are retained for as long as your "
-"account is active. You can delete your account and all data at any time from "
-"the Settings page."
+"account is active. You can delete your account and all data at any time from"
+" the Settings page."
 msgstr ""
 "A tua conta e todos os dados associados são mantidos enquanto a conta "
 "estiver ativa. Podes apagar a conta e todos os dados a qualquer momento na "
@@ -2098,10 +2469,6 @@ msgstr "Definições → Eliminar conta"
 #: templates/legal/privacy.html:83
 msgid "For other requests contact us at the address below."
 msgstr "Para outros pedidos contacta-nos no endereço abaixo."
-
-#: templates/legal/privacy.html:93
-msgid "Contact"
-msgstr "Contacto"
 
 #: templates/legal/privacy.html:95
 msgid "Questions about this policy: "

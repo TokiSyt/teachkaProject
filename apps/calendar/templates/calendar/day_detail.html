@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n calendar_tags %}
 
 {% block title %}{{ day|date:"l, j F Y" }} · Teachka{% endblock title %}
 
@@ -100,13 +100,15 @@
           <span class="text-[10px] tracking-[2px] uppercase font-bold text-primary mt-1 block [text-indent:2px]">{{ h.get_country_display }}</span>
         </div>
         <div class="flex-1 min-w-0 border-l border-primary/30 pl-5">
-          <h3 class="serif text-[17px] font-medium tracking-tight text-base-content mb-1">{{ h.name }}</h3>
-          {% if h.subject %}
-          <p class="text-[11px] tracking-[1.5px] uppercase text-base-content/40 font-medium mb-2">{{ h.subject }}</p>
+          <h3 class="serif text-[17px] font-medium tracking-tight text-base-content mb-1">{{ h.name|holiday_name }}</h3>
+          {% with hsub=h|holiday_subject hdesc=h|holiday_description %}
+          {% if hsub %}
+          <p class="text-[11px] tracking-[1.5px] uppercase text-base-content/40 font-medium mb-2">{{ hsub }}</p>
           {% endif %}
-          {% if h.description %}
-          <p class="text-[13px] text-base-content/60 leading-relaxed font-light">{{ h.description|linebreaksbr }}</p>
+          {% if hdesc %}
+          <p class="text-[13px] text-base-content/60 leading-relaxed font-light">{{ hdesc|linebreaksbr }}</p>
           {% endif %}
+          {% endwith %}
         </div>
       </div>
     </div>

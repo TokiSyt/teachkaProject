@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from .models import ContactMessage
 
@@ -17,11 +18,11 @@ class ContactForm(forms.ModelForm):
     def clean_subject(self):
         s = (self.cleaned_data.get("subject") or "").strip()
         if len(s) < 3:
-            raise forms.ValidationError("Subject too short.")
+            raise forms.ValidationError(_("Subject too short."))
         return s
 
     def clean_body(self):
         b = (self.cleaned_data.get("body") or "").strip()
         if len(b) < 10:
-            raise forms.ValidationError("Please add a bit more detail (at least 10 characters).")
+            raise forms.ValidationError(_("Please add a bit more detail (at least 10 characters)."))
         return b

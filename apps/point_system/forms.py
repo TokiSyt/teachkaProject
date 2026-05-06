@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import ModelForm
+from django.utils.translation import gettext_lazy as _
 
 from .models import FieldDefinition, Member
 
@@ -56,4 +57,4 @@ class RemoveFieldForm(forms.Form):
 class EditColumnForm(forms.Form):
     new_name = forms.CharField(max_length=50)
     old_name = forms.CharField(max_length=50)
-    field_definition = forms.ChoiceField(choices=[("positive", "Positive"), ("negative", "Negative")])
+    field_definition = forms.ChoiceField(choices=[("positive", _("Positive")), ("negative", _("Negative"))])

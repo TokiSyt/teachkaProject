@@ -440,7 +440,7 @@ document.addEventListener("DOMContentLoaded", function() {
       return;
     }
 
-    title.textContent = `Already chosen (${alreadyChosenIds.length})`;
+    title.textContent = `{% trans 'Already chosen' %} (${alreadyChosenIds.length})`;
 
     const allMembers = groupsData[groupId] || [];
     const chosenMembers = alreadyChosenIds.map(id => allMembers.find(m => m.id === id)).filter(Boolean);
@@ -464,7 +464,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (!popup || !popupTitle || !popupNames) return;
 
-    popupTitle.textContent = `Selected (${chosenNames.length})`;
+    popupTitle.textContent = `{% trans 'Selected' %} (${chosenNames.length})`;
 
     if (chosenNames.length === 1) {
       popupNames.className = "flex justify-center mb-6";
@@ -496,7 +496,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (!popup || !popupTitle || !popupNames) return;
 
-    popupTitle.textContent = "Notice";
+    popupTitle.textContent = "{% trans 'Notice' %}";
     popupNames.className = "flex justify-center mb-6";
     popupNames.innerHTML = `<p class="text-base text-base-content/60 text-center font-light">${message}</p>`;
 
@@ -565,7 +565,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const groupId = groupSelect.value;
 
     if (!groupId) {
-      showMessage("Please select a group first.");
+      showMessage("{% trans 'Please select a group first.' %}");
       return;
     }
 
@@ -578,13 +578,13 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     if (members.length === 0) {
-      showMessage("All members chosen! Click Reset to start over.");
+      showMessage("{% trans 'All members chosen! Click Reset to start over.' %}");
       return;
     }
 
     stopIdleSpin();
     spinBtn.classList.add("btn-disabled", "pointer-events-none");
-    spinBtn.textContent = "Spinning...";
+    spinBtn.textContent = "{% trans 'Spinning...' %}";
     wheelSection.classList.remove("hidden");
 
     const formData = new FormData(form);
@@ -602,7 +602,7 @@ document.addEventListener("DOMContentLoaded", function() {
       if (data.error) {
         showMessage(data.error);
         spinBtn.classList.remove("btn-disabled", "pointer-events-none");
-        spinBtn.textContent = "Spin";
+        spinBtn.textContent = "{% trans 'Spin' %}";
         if (data.all_chosen) wheelSection.classList.add("hidden");
         idleSpin();
         return;
@@ -615,7 +615,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
       if (targetIndex === -1) {
         spinBtn.classList.remove("btn-disabled", "pointer-events-none");
-        spinBtn.textContent = "Spin";
+        spinBtn.textContent = "{% trans 'Spin' %}";
         idleSpin();
         return;
       }
@@ -637,7 +637,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
           showPopup(chosenNames);
           spinBtn.classList.remove("btn-disabled", "pointer-events-none");
-          spinBtn.textContent = "Spin";
+          spinBtn.textContent = "{% trans 'Spin' %}";
 
           if (!removeAfterSpin || members.length > 0) idleSpin();
         });
@@ -645,7 +645,7 @@ document.addEventListener("DOMContentLoaded", function() {
     })
     .catch(() => {
       spinBtn.classList.remove("btn-disabled", "pointer-events-none");
-      spinBtn.textContent = "Spin";
+      spinBtn.textContent = "{% trans 'Spin' %}";
       idleSpin();
     });
   }

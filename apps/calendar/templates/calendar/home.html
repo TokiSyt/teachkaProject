@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n calendar_tags %}
 
 {% block title %}{% trans "Calendar" %} · Teachka{% endblock title %}
 
@@ -9,6 +9,40 @@
   <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
     <i data-lucide="calendar-days" class="text-primary" style="width: 180px; height: 180px;"></i>
   </div>
+  <button type="button" onclick="holiday_help_modal.showModal()"
+          class="absolute top-4 right-4 z-20 text-primary hover:text-primary/70 transition-colors"
+          title="{% trans 'About holiday descriptions' %}"
+          aria-label="{% trans 'About holiday descriptions' %}">
+    <i data-lucide="circle-question-mark" class="w-7 h-7"></i>
+  </button>
+
+  <dialog id="holiday_help_modal" class="modal">
+    <div class="modal-box max-w-md rounded-[14px] border border-base-300">
+      <form method="dialog">
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-3 top-3" aria-label="{% trans 'Close' %}">✕</button>
+      </form>
+      <div class="flex items-center gap-3 mb-4">
+        <i data-lucide="circle-question-mark" class="w-6 h-6 text-primary"></i>
+        <h3 class="serif text-[20px] font-medium tracking-tight">{% trans "Help us tell the story" %}</h3>
+      </div>
+      <p class="text-[14px] text-base-content/70 leading-relaxed font-light mb-3">
+        {% blocktrans %}Teachka is still being detailed. Holiday descriptions are a work in progress and not every entry has the depth it deserves yet.{% endblocktrans %}
+      </p>
+      <p class="text-[14px] text-base-content/70 leading-relaxed font-light mb-6">
+        {% blocktrans %}If you know the history behind a holiday and would like to contribute, we'd love to hear from you.{% endblocktrans %}
+      </p>
+      <div class="modal-action">
+        <form method="dialog">
+          <button class="btn btn-ghost btn-sm">{% trans "Close" %}</button>
+        </form>
+        <a href="{% url 'contact:contact' %}" class="btn btn-primary btn-sm">
+          <i data-lucide="mail" class="w-4 h-4"></i>
+          {% trans "Contact us" %}
+        </a>
+      </div>
+    </div>
+    <form method="dialog" class="modal-backdrop"><button>close</button></form>
+  </dialog>
   <div class="relative z-10">
     <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">
       {% trans "Tools" %} · {% trans "Planning" %}
@@ -83,11 +117,13 @@
               {% endif %}
             </div>
             {% for h in holidays %}
+            {% with hsub=h|holiday_subject hdesc=h|holiday_description hname=h.name|holiday_name %}
             <span class="relative z-10 flex items-center gap-1 truncate rounded-[6px] px-1.5 py-0.5 text-[10px] font-semibold bg-primary/15 text-primary leading-5 border-l-2 border-primary"
-                  title="{{ h.subject|default:h.name }}{% if h.description %} — {{ h.description }}{% endif %}">
+                  title="{{ hsub|default:hname }}{% if hdesc %} — {{ hdesc }}{% endif %}">
               <i data-lucide="{% if h.country == 'INTL' %}globe{% else %}star{% endif %}" class="w-2.5 h-2.5 opacity-60 shrink-0"></i>
-              <span class="truncate">{{ h.name }}</span>
+              <span class="truncate">{{ hname }}</span>
             </span>
+            {% endwith %}
             {% endfor %}
             {% for ev in events %}
             <a href="{% url 'calendar_app:event_edit' ev.pk %}?next={{ request.get_full_path|urlencode }}"

@@ -6,6 +6,7 @@ from django.contrib.auth.forms import (
     UserCreationForm,
 )
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
 
@@ -14,7 +15,7 @@ class RegisterForm(UserCreationForm):
     email = forms.EmailField()
     first_name = forms.CharField()
     last_name = forms.CharField(required=False)
-    password2 = forms.CharField(label="Password Confirmation", widget=forms.PasswordInput, help_text="")
+    password2 = forms.CharField(label=_("Password Confirmation"), widget=forms.PasswordInput, help_text="")
 
     class Meta:
         model = User
@@ -30,13 +31,13 @@ class RegisterForm(UserCreationForm):
     def clean_email(self):
         email = self.cleaned_data.get("email")
         if User.objects.filter(email=email).exists():
-            raise ValidationError("An account with this email address already exists.")
+            raise ValidationError(_("An account with this email address already exists."))
         return email
 
     def clean_username(self):
         username = self.cleaned_data.get("username")
         if User.objects.filter(username=username).exists():
-            raise ValidationError("An account with this username already exists.")
+            raise ValidationError(_("An account with this username already exists."))
         return username
 
 
@@ -53,7 +54,7 @@ class EditProfileForm(UserChangeForm):
 
 class CustomPasswordChangeForm(PasswordChangeForm):
     new_password = forms.CharField(
-        label="Confirm new password",
+        label=_("Confirm new password"),
         widget=forms.PasswordInput,
         help_text="",
     )
