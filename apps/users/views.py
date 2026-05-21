@@ -38,8 +38,13 @@ class RegisterView(FormView):
     success_url = reverse_lazy("home")
 
     def form_valid(self, form):
+        from django.conf import settings as dj_settings
+        from django.utils import timezone
+
         new_user = form.save(commit=False)
         new_user.is_active = False
+        new_user.terms_accepted_at = timezone.now()
+        new_user.terms_version = dj_settings.TERMS_VERSION
         new_user.save()
 
         current_site = get_current_site(self.request)

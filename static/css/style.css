@@ -607,6 +607,22 @@ button.btn {
 .input,
 .select { padding-inline: 1rem !important; }
 
+/* ── Light theme: make input borders + bg visible ──
+   Default daisy borders blend into the near-white base-100 background. */
+[data-theme=light] .input,
+[data-theme=light] .select,
+[data-theme=light] .textarea {
+  background-color: var(--color-base-200);
+  border: 1px solid var(--color-base-300);
+}
+[data-theme=light] .input:focus,
+[data-theme=light] .select:focus,
+[data-theme=light] .textarea:focus {
+  border-color: var(--color-primary-content);
+  outline: 2px solid var(--color-primary);
+  outline-offset: -1px;
+}
+
 /* Custom <details>-based dropdowns (group picker): hide content when closed,
    and hide the default disclosure triangle on the summary. */
 details:not([open]) > ul { display: none; }

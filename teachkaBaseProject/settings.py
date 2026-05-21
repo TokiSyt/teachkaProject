@@ -133,7 +133,7 @@ ROOT_URLCONF = "teachkaBaseProject.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": ["templates"],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -253,6 +253,9 @@ AUTHENTICATION_BACKENDS = [
     "axes.backends.AxesStandaloneBackend",
     "django.contrib.auth.backends.ModelBackend",
 ]
+
+# Terms of Service version — bump when ToS materially changes to force re-acceptance.
+TERMS_VERSION = "2026-05-09"
 
 # django-axes: brute force login protection
 AXES_FAILURE_LIMIT = 5

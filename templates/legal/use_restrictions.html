@@ -1,0 +1,77 @@
+s{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Use Restrictions" %} · Teachka{% endblock %}
+
+{% block content %}
+
+  <!-- ── HEADER ── -->
+  <section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
+    <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+      <i data-lucide="shield-off" class="text-primary" style="width:180px;height:180px;"></i>
+    </div>
+    <div class="relative z-10">
+      <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Legal" %}</p>
+      <h1 class="serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
+        {% trans "Use" %} <em class="text-primary font-light">{% trans "Restrictions" %}</em>
+      </h1>
+      <p class="text-xs text-base-content/30">{% trans "Last updated" %}: 2026-05-09</p>
+    </div>
+  </section>
+
+  <!-- ── CONTENT ── -->
+  <section class="px-5 py-10 md:px-14">
+    <div class="max-w-2xl space-y-6">
+
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="ban" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "Restricted purposes" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed mb-3">{% trans "When you use Teachka, you acknowledge that you may not:" %}</p>
+          <ul class="text-sm text-base-content/70 leading-relaxed list-disc pl-5 space-y-2 m-0">
+            <li>{% trans "Collect or extract information or user data from accounts that do not belong to you." %}</li>
+            <li>{% trans "Circumvent, disable, or otherwise interfere with security-related features of the service." %}</li>
+            <li>{% trans "Trick, defraud, or mislead us or other users, including making false reports or impersonating another user." %}</li>
+            <li>{% trans "Upload or transmit viruses, malware, or any information-collection mechanism such as tracking pixels or web bugs." %}</li>
+            <li>{% trans "Interfere with, disrupt, or create an undue burden on the service or its underlying networks (rate-limiting bypass, scraping, automated mass requests)." %}</li>
+            <li>{% trans "Harass, intimidate, or threaten other users." %}</li>
+            <li>{% trans "Upload content that is illegal, hateful, sexually explicit, or that infringes third-party rights." %}</li>
+            <li>{% trans "Enter personal data of students or minors without lawful basis (parental consent, educational purpose, etc.)." %}</li>
+            <li>{% trans "Reverse-engineer, decompile, or attempt to extract the source code of the service beyond what open-source licences permit." %}</li>
+            <li>{% trans "Use the service in a manner inconsistent with applicable laws or regulations, including GDPR." %}</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="x-octagon" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "Consequences" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Accounts found to be in violation of any of the above are subject to suspension or cancellation without prior notice." %}</p>
+        </div>
+      </article>
+
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="megaphone" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "How to report abuse" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Report violations to " %}<a href="mailto:report@teachka.com" class="link link-primary">report@teachka.com</a>{% trans ". Include the account, content, or behaviour you are reporting and how you found it (URLs or screenshots help). We will not disclose your identity to anyone associated with the reported account." %}</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+{% endblock %}

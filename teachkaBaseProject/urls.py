@@ -33,6 +33,10 @@ urlpatterns += i18n_patterns(
     # Users
     path("users/", include("apps.users.urls")),
     path("privacy/", views.PrivacyView.as_view(), name="privacy"),
+    path("terms/", views.TermsView.as_view(), name="terms"),
+    path("use-restrictions/", views.UseRestrictionsView.as_view(), name="use_restrictions"),
+    path("security/", views.SecurityView.as_view(), name="security"),
+    path("cancellation/", views.CancellationView.as_view(), name="cancellation"),
     path("contact/", include("apps.contact.urls", namespace="contact")),
     prefix_default_language=False,
 )

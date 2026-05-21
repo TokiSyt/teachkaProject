@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Security" %} · Teachka{% endblock %}
+
+{% block content %}
+
+  <!-- ── HEADER ── -->
+  <section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
+    <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+      <i data-lucide="shield-check" class="text-primary" style="width:180px;height:180px;"></i>
+    </div>
+    <div class="relative z-10">
+      <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Legal" %}</p>
+      <h1 class="serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
+        {% trans "Security" %} <em class="text-primary font-light">{% trans "Overview" %}</em>
+      </h1>
+      <p class="text-xs text-base-content/30">{% trans "Last updated" %}: 2026-05-09</p>
+    </div>
+  </section>
+
+  <!-- ── CONTENT ── -->
+  <section class="px-5 py-10 md:px-14">
+    <div class="max-w-2xl space-y-6">
+
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="hard-drive" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "Where your data lives" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Teachka runs on managed infrastructure (Render) with PostgreSQL as the primary database. Data are written to redundant storage with daily automated backups. Servers are located in the EU." %}</p>
+        </div>
+      </article>
+
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "Encryption in transit" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "All traffic between your browser and Teachka is served over HTTPS with HSTS enabled. We do not accept plain-HTTP connections in production." %}</p>
+        </div>
+      </article>
+
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="key" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "Passwords" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Passwords are never stored in plain text. We use bcrypt with per-user salts. Failed login attempts are rate-limited via django-axes to prevent brute-force attacks." %}</p>
+        </div>
+      </article>
+
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "Patching & dependencies" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Operating-system images and Python dependencies are updated on a regular cadence. Vulnerable packages are patched as soon as a fix is published, using pip-audit and Dependabot to track CVEs." %}</p>
+        </div>
+      </article>
+
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="activity" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "Monitoring" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Sentry monitors errors and unusual activity. Health and readiness probes verify the database and migration state. Personally identifiable information is scrubbed from error reports where possible." %}</p>
+        </div>
+      </article>
+
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="user-cog" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "Access control" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Production access is restricted to the maintainer. Database credentials and API keys are stored as environment variables, never committed to the repository. Admin actions are audited via Django's admin log." %}</p>
+        </div>
+      </article>
+
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "Incident response" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "If we discover a breach that affects your data, we will notify affected users by email within 72 hours, as required by GDPR Article 33." %}</p>
+        </div>
+      </article>
+
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="bug" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "Report a vulnerability" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Found a security issue? Please email " %}<a href="mailto:security@teachka.com" class="link link-primary">security@teachka.com</a>{% trans " with steps to reproduce. Do not publicly disclose the issue until we have had a reasonable opportunity to fix it. We will acknowledge your report within 5 business days." %}</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+{% endblock %}
