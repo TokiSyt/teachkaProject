@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Teachka\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-09 11:57+0000\n"
+"POT-Creation-Date: 2026-06-09 12:22+0000\n"
 "PO-Revision-Date: 2026-02-14 21:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
@@ -1057,7 +1057,6 @@ msgid "Member dashboard"
 msgstr "Individuální přehled člena"
 
 #: apps/point_system/templates/point_system/karma_dashboard.html:28
-#: templates/legal/security.html:16
 msgid "Overview"
 msgstr "Přehled"
 
@@ -2048,7 +2047,7 @@ msgid "Back to profile"
 msgstr "Zpět na úvod"
 
 #: apps/users/templates/users/change_password.html:59 templates/base.html:325
-#: templates/legal/security.html:4 templates/legal/security.html:16
+#: templates/legal/security.html:4
 msgid "Security"
 msgstr "Zabezpečení"
 
@@ -2469,7 +2468,7 @@ msgstr "Registrovat se"
 msgid "Logout"
 msgstr "Odhlásit se"
 
-#: templates/base.html:323 templates/legal/privacy.html:16
+#: templates/base.html:323
 msgid "Privacy"
 msgstr "Soukromí"
 
@@ -2744,14 +2743,8 @@ msgid "Legal"
 msgstr "Právní"
 
 #: templates/legal/cancellation.html:16
-#, fuzzy
-#| msgid "Cancel"
-msgid "Cancellation"
-msgstr "Zrušit"
-
-#: templates/legal/cancellation.html:16 templates/legal/privacy.html:16
-msgid "Policy"
-msgstr "Zásady"
+msgid "Cancellation <em class=\"text-primary font-light\">Policy</em>"
+msgstr "Zásady <em class=\"text-primary font-light\">zrušení</em>"
 
 #: templates/legal/cancellation.html:18 templates/legal/privacy.html:18
 #: templates/legal/security.html:18 templates/legal/terms.html:18
@@ -2760,10 +2753,9 @@ msgid "Last updated"
 msgstr "Naposledy aktualizováno"
 
 #: templates/legal/cancellation.html:32
-#, fuzzy
 #| msgid "Cancel"
 msgid "Cancel anytime"
-msgstr "Zrušit"
+msgstr "Zrušte kdykoli"
 
 #: templates/legal/cancellation.html:34
 msgid ""
@@ -2786,13 +2778,11 @@ msgid "What happens when you cancel"
 msgstr "Co se stane při zrušení"
 
 #: templates/legal/cancellation.html:46
-#, fuzzy
 #| msgid "Create your account"
 msgid "When you delete your account:"
-msgstr "Vytvořit účet"
+msgstr "Když smažete svůj účet:"
 
 #: templates/legal/cancellation.html:48
-#, fuzzy
 #| msgid ""
 #| "This will permanently delete your account and all associated data: groups, "
 #| "members, points, and usage stats. This action cannot be undone."
@@ -2800,8 +2790,8 @@ msgid ""
 "You immediately lose access to the account and all its data (groups, "
 "members, points, quizzes, calendar entries, statistics)."
 msgstr ""
-"Toto trvale smaže tvůj účet a všechna související data: skupiny, členy, body"
-" a statistiky. Tuto akci nelze vrátit."
+"Okamžitě ztratíte přístup k účtu a všem jeho datům (skupiny, členové, body, "
+"kvízy, položky kalendáře, statistiky)."
 
 #: templates/legal/cancellation.html:49
 msgid "Your records are permanently removed from our active database."
@@ -2832,23 +2822,20 @@ msgid "Have been inactive for 365 consecutive days."
 msgstr "Byly neaktivní po dobu 365 po sobě jdoucích dnů."
 
 #: templates/legal/cancellation.html:67
-#, fuzzy
 #| msgid "Create your"
 msgid "Violate our "
-msgstr "Vytvořit skupinu"
+msgstr "Porušují naše "
 
 #: templates/legal/cancellation.html:67 templates/legal/terms.html:93
 #: templates/legal/use_restrictions.html:4
-#, fuzzy
 #| msgid "Under Construction"
 msgid "Use Restrictions"
-msgstr "Ve výstavbě"
+msgstr "Omezení použití"
 
 #: templates/legal/cancellation.html:67
-#, fuzzy
 #| msgid "Policy"
 msgid " policy."
-msgstr "Zásady"
+msgstr "."
 
 #: templates/legal/cancellation.html:68
 msgid "Pose a security risk to the service or other users."
@@ -2879,6 +2866,10 @@ msgstr " z adresy spojené s vaším účtem a my jej za vás smažeme."
 msgid "Privacy Policy"
 msgstr "Zásady ochrany osobních údajů"
 
+#: templates/legal/privacy.html:16
+msgid "Privacy <em class=\"text-primary font-light\">Policy</em>"
+msgstr "Zásady ochrany <em class=\"text-primary font-light\">osobních údajů</em>"
+
 #: templates/legal/privacy.html:26
 msgid ""
 "This policy describes how the operator of the Teachka application processes "
@@ -2904,10 +2895,9 @@ msgstr ""
 "nekomerčním základě."
 
 #: templates/legal/privacy.html:51
-#, fuzzy
 #| msgid "What data we collect"
 msgid "2. What data we process"
-msgstr "Jaká data sbíráme"
+msgstr "2. Jaké údaje zpracováváme"
 
 #: templates/legal/privacy.html:53
 msgid ""
@@ -2972,10 +2962,9 @@ msgid "Purpose"
 msgstr "Účel"
 
 #: templates/legal/privacy.html:79
-#, fuzzy
 #| msgid "Legal"
 msgid "Legal basis"
-msgstr "Právní"
+msgstr "Právní základ"
 
 #: templates/legal/privacy.html:84
 msgid "Providing the service and managing your account"
@@ -3002,10 +2991,9 @@ msgid "Protection against abuse and operational security"
 msgstr "Ochrana proti zneužití a provozní bezpečnost"
 
 #: templates/legal/privacy.html:112
-#, fuzzy
 #| msgid "Data retention"
 msgid "4. Data retention"
-msgstr "Uchování dat"
+msgstr "4. Doba uchování"
 
 #: templates/legal/privacy.html:114
 msgid ""
@@ -3026,10 +3014,9 @@ msgid "Cancellation policy"
 msgstr "Zásady zrušení"
 
 #: templates/legal/privacy.html:114
-#, fuzzy
 #| msgid "Group details"
 msgid " for details."
-msgstr "Skupiny"
+msgstr " pro podrobnosti."
 
 #: templates/legal/privacy.html:125
 msgid "5. Recipients of personal data"
@@ -3065,10 +3052,9 @@ msgid "We do not sell your data or share it for marketing purposes."
 msgstr "Vaše údaje neprodáváme ani je nesdílíme pro marketingové účely."
 
 #: templates/legal/privacy.html:145
-#, fuzzy
 #| msgid "International"
 msgid "6. International transfers"
-msgstr "Mezinárodní"
+msgstr "6. Mezinárodní přenosy"
 
 #: templates/legal/privacy.html:147
 msgid ""
@@ -3084,10 +3070,9 @@ msgstr ""
 "smluvních doložek schválených Evropskou komisí nebo rovnocenné záruky."
 
 #: templates/legal/privacy.html:158
-#, fuzzy
 #| msgid "Your rights"
 msgid "7. Your rights"
-msgstr "Váš profil"
+msgstr "7. Vaše práva"
 
 #: templates/legal/privacy.html:160
 msgid "In relation to your personal data you have the following rights:"
@@ -3164,10 +3149,6 @@ msgid "9. Cookies and tracking"
 msgstr "9. Cookies a sledování"
 
 #: templates/legal/privacy.html:196
-#| msgid ""
-#| "We use one session cookie to keep you logged in (strictly necessary, no "
-#| "consent required under ePrivacy). We also store your theme preference in "
-#| "localStorage, which is not a cookie and does not leave your device."
 msgid ""
 "We use only strictly necessary cookies: a session cookie to keep you logged "
 "in and a CSRF cookie for security (no consent required under ePrivacy). We "
@@ -3190,10 +3171,9 @@ msgstr ""
 "signály prohlížeče \"Do Not Track\"."
 
 #: templates/legal/privacy.html:208
-#, fuzzy
 #| msgid "Security"
 msgid "10. Security"
-msgstr "Zabezpečení"
+msgstr "10. Zabezpečení"
 
 #: templates/legal/privacy.html:210
 msgid ""
@@ -3208,10 +3188,9 @@ msgstr ""
 " solí. Viz náš "
 
 #: templates/legal/privacy.html:210
-#, fuzzy
 #| msgid "Security"
 msgid "Security overview"
-msgstr "Zabezpečení"
+msgstr "Přehled zabezpečení"
 
 #: templates/legal/privacy.html:210
 msgid " for more."
@@ -3232,14 +3211,17 @@ msgstr ""
 " nebo prostřednictvím aplikace."
 
 #: templates/legal/privacy.html:234
-#, fuzzy
 #| msgid "Contact"
 msgid "12. Contact"
-msgstr "Kontakt"
+msgstr "12. Kontakt"
 
 #: templates/legal/privacy.html:236
 msgid "Questions about this policy: "
 msgstr "Dotazy k těmto zásadám: "
+
+#: templates/legal/security.html:16
+msgid "Security <em class=\"text-primary font-light\">Overview</em>"
+msgstr "Přehled <em class=\"text-primary font-light\">zabezpečení</em>"
 
 #: templates/legal/security.html:32
 msgid "Where your data lives"
@@ -3269,10 +3251,9 @@ msgstr ""
 "zapnutým HSTS. V produkci nepřijímáme nešifrovaná připojení HTTP."
 
 #: templates/legal/security.html:56
-#, fuzzy
 #| msgid "Password"
 msgid "Passwords"
-msgstr "Heslo"
+msgstr "Hesla"
 
 #: templates/legal/security.html:58
 msgid ""
@@ -3314,10 +3295,9 @@ msgstr ""
 " hlášení pokud možno odstraněny."
 
 #: templates/legal/security.html:92
-#, fuzzy
 #| msgid "Access"
 msgid "Access control"
-msgstr "Přístup"
+msgstr "Řízení přístupu"
 
 #: templates/legal/security.html:94
 msgid ""
@@ -3368,13 +3348,8 @@ msgid "Terms of Service"
 msgstr "Podmínky služby"
 
 #: templates/legal/terms.html:16
-msgid "Terms of"
-msgstr "Podmínky"
-
-#: templates/legal/terms.html:16
-#| msgid "Overview"
-msgid "Service"
-msgstr "Služba"
+msgid "Terms of <em class=\"text-primary font-light\">Service</em>"
+msgstr "Podmínky <em class=\"text-primary font-light\">služby</em>"
 
 #: templates/legal/terms.html:26
 msgid ""
@@ -3389,10 +3364,9 @@ msgstr ""
 "službu nepoužívejte."
 
 #: templates/legal/terms.html:35
-#, fuzzy
 #| msgid "Math Operations"
 msgid "1. Operator"
-msgstr "Matematické operace"
+msgstr "1. Provozovatel"
 
 #: templates/legal/terms.html:38
 msgid "a private individual based in Portugal"
@@ -3423,10 +3397,9 @@ msgstr ""
 "můžeme kdykoli změnit, pozastavit nebo ukončit."
 
 #: templates/legal/terms.html:65
-#, fuzzy
 #| msgid "Create an account"
 msgid "3. Registration and account"
-msgstr "Vytvořit účet"
+msgstr "3. Registrace a účet"
 
 #: templates/legal/terms.html:67
 msgid ""
@@ -3619,25 +3592,18 @@ msgstr ""
 " jsou dotčena závazná práva na ochranu spotřebitele ve vaší zemi bydliště."
 
 #: templates/legal/terms.html:208
-#, fuzzy
 #| msgid "Contact"
 msgid "14. Contact"
-msgstr "Kontakt"
+msgstr "14. Kontakt"
 
 #: templates/legal/terms.html:210
-#, fuzzy
 #| msgid "Questions about this policy: "
 msgid "Questions about these terms: "
-msgstr "Dotazy k těmto zásadám: "
+msgstr "Dotazy k těmto podmínkám: "
 
 #: templates/legal/use_restrictions.html:16
-msgid "Use"
-msgstr "Použití"
-
-#: templates/legal/use_restrictions.html:16
-#| msgid "Description"
-msgid "Restrictions"
-msgstr "Omezení"
+msgid "Use <em class=\"text-primary font-light\">Restrictions</em>"
+msgstr "Omezení <em class=\"text-primary font-light\">použití</em>"
 
 #: templates/legal/use_restrictions.html:32
 msgid "Restricted purposes"
@@ -3789,6 +3755,24 @@ msgstr "Přehled"
 #: templates/wip.html:51
 msgid "Go Back"
 msgstr "Zpět"
+
+#~ msgid "Cancellation"
+#~ msgstr "Zrušení"
+
+#~ msgid "Policy"
+#~ msgstr "Zásady"
+
+#~ msgid "Terms of"
+#~ msgstr "Podmínky"
+
+#~ msgid "Service"
+#~ msgstr "Služba"
+
+#~ msgid "Use"
+#~ msgstr "Použití"
+
+#~ msgid "Restrictions"
+#~ msgstr "Omezení"
 
 #~ msgid ""
 #~ "When you create an account we collect your username, email address, and "

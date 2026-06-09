@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Teachka\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-09 11:57+0000\n"
+"POT-Creation-Date: 2026-06-09 12:22+0000\n"
 "PO-Revision-Date: 2026-02-14 21:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
@@ -1063,7 +1063,6 @@ msgid "Member dashboard"
 msgstr "Painel individual do membro"
 
 #: apps/point_system/templates/point_system/karma_dashboard.html:28
-#: templates/legal/security.html:16
 msgid "Overview"
 msgstr "Resumo"
 
@@ -2059,7 +2058,7 @@ msgid "Back to profile"
 msgstr "Voltar ao Início"
 
 #: apps/users/templates/users/change_password.html:59 templates/base.html:325
-#: templates/legal/security.html:4 templates/legal/security.html:16
+#: templates/legal/security.html:4
 msgid "Security"
 msgstr "Segurança"
 
@@ -2487,7 +2486,7 @@ msgstr "Registar"
 msgid "Logout"
 msgstr "Sair"
 
-#: templates/base.html:323 templates/legal/privacy.html:16
+#: templates/base.html:323
 msgid "Privacy"
 msgstr "Privacidade"
 
@@ -2769,14 +2768,8 @@ msgid "Legal"
 msgstr "Legal"
 
 #: templates/legal/cancellation.html:16
-#, fuzzy
-#| msgid "Cancel"
-msgid "Cancellation"
-msgstr "Cancelar"
-
-#: templates/legal/cancellation.html:16 templates/legal/privacy.html:16
-msgid "Policy"
-msgstr "Política"
+msgid "Cancellation <em class=\"text-primary font-light\">Policy</em>"
+msgstr "Política de <em class=\"text-primary font-light\">Cancelamento</em>"
 
 #: templates/legal/cancellation.html:18 templates/legal/privacy.html:18
 #: templates/legal/security.html:18 templates/legal/terms.html:18
@@ -2785,10 +2778,9 @@ msgid "Last updated"
 msgstr "Última atualização"
 
 #: templates/legal/cancellation.html:32
-#, fuzzy
 #| msgid "Cancel"
 msgid "Cancel anytime"
-msgstr "Cancelar"
+msgstr "Cancele quando quiser"
 
 #: templates/legal/cancellation.html:34
 msgid ""
@@ -2811,13 +2803,11 @@ msgid "What happens when you cancel"
 msgstr "O que acontece quando cancela"
 
 #: templates/legal/cancellation.html:46
-#, fuzzy
 #| msgid "Create your account"
 msgid "When you delete your account:"
-msgstr "Criar conta"
+msgstr "Quando elimina a sua conta:"
 
 #: templates/legal/cancellation.html:48
-#, fuzzy
 #| msgid ""
 #| "This will permanently delete your account and all associated data: groups, "
 #| "members, points, and usage stats. This action cannot be undone."
@@ -2825,9 +2815,8 @@ msgid ""
 "You immediately lose access to the account and all its data (groups, "
 "members, points, quizzes, calendar entries, statistics)."
 msgstr ""
-"Isto irá apagar permanentemente a tua conta e todos os dados associados: "
-"grupos, membros, pontos e estatísticas de uso. Esta ação não pode ser "
-"revertida."
+"Perde imediatamente o acesso à conta e a todos os seus dados (grupos, "
+"membros, pontos, questionários, entradas de calendário, estatísticas)."
 
 #: templates/legal/cancellation.html:49
 msgid "Your records are permanently removed from our active database."
@@ -2861,23 +2850,20 @@ msgid "Have been inactive for 365 consecutive days."
 msgstr "Estiveram inativas durante 365 dias consecutivos."
 
 #: templates/legal/cancellation.html:67
-#, fuzzy
 #| msgid "Create your"
 msgid "Violate our "
-msgstr "Criar grupo"
+msgstr "Violem as nossas "
 
 #: templates/legal/cancellation.html:67 templates/legal/terms.html:93
 #: templates/legal/use_restrictions.html:4
-#, fuzzy
 #| msgid "Under Construction"
 msgid "Use Restrictions"
-msgstr "Em construção"
+msgstr "Restrições de Utilização"
 
 #: templates/legal/cancellation.html:67
-#, fuzzy
 #| msgid "Policy"
 msgid " policy."
-msgstr "Política"
+msgstr "."
 
 #: templates/legal/cancellation.html:68
 msgid "Pose a security risk to the service or other users."
@@ -2909,6 +2895,10 @@ msgstr " a partir do endereço associado à sua conta e eliminá-la-emos por si.
 msgid "Privacy Policy"
 msgstr "Política de Privacidade"
 
+#: templates/legal/privacy.html:16
+msgid "Privacy <em class=\"text-primary font-light\">Policy</em>"
+msgstr "Política de <em class=\"text-primary font-light\">Privacidade</em>"
+
 #: templates/legal/privacy.html:26
 msgid ""
 "This policy describes how the operator of the Teachka application processes "
@@ -2934,10 +2924,9 @@ msgstr ""
 "comercial."
 
 #: templates/legal/privacy.html:51
-#, fuzzy
 #| msgid "What data we collect"
 msgid "2. What data we process"
-msgstr "Que dados recolhemos"
+msgstr "2. Que dados tratamos"
 
 #: templates/legal/privacy.html:53
 msgid ""
@@ -3004,10 +2993,9 @@ msgid "Purpose"
 msgstr "Finalidade"
 
 #: templates/legal/privacy.html:79
-#, fuzzy
 #| msgid "Legal"
 msgid "Legal basis"
-msgstr "Legal"
+msgstr "Base legal"
 
 #: templates/legal/privacy.html:84
 msgid "Providing the service and managing your account"
@@ -3035,10 +3023,9 @@ msgid "Protection against abuse and operational security"
 msgstr "Proteção contra abusos e segurança operacional"
 
 #: templates/legal/privacy.html:112
-#, fuzzy
 #| msgid "Data retention"
 msgid "4. Data retention"
-msgstr "Retenção de dados"
+msgstr "4. Conservação de dados"
 
 #: templates/legal/privacy.html:114
 msgid ""
@@ -3060,10 +3047,9 @@ msgid "Cancellation policy"
 msgstr "Política de cancelamento"
 
 #: templates/legal/privacy.html:114
-#, fuzzy
 #| msgid "Group details"
 msgid " for details."
-msgstr "Grupos"
+msgstr " para mais detalhes."
 
 #: templates/legal/privacy.html:125
 msgid "5. Recipients of personal data"
@@ -3102,10 +3088,9 @@ msgid "We do not sell your data or share it for marketing purposes."
 msgstr "Não vendemos os seus dados nem os partilhamos para fins de marketing."
 
 #: templates/legal/privacy.html:145
-#, fuzzy
 #| msgid "International"
 msgid "6. International transfers"
-msgstr "Internacional"
+msgstr "6. Transferências internacionais"
 
 #: templates/legal/privacy.html:147
 msgid ""
@@ -3122,10 +3107,9 @@ msgstr ""
 "pela Comissão Europeia ou numa salvaguarda equivalente."
 
 #: templates/legal/privacy.html:158
-#, fuzzy
 #| msgid "Your rights"
 msgid "7. Your rights"
-msgstr "O seu perfil"
+msgstr "7. Os seus direitos"
 
 #: templates/legal/privacy.html:160
 msgid "In relation to your personal data you have the following rights:"
@@ -3203,10 +3187,6 @@ msgid "9. Cookies and tracking"
 msgstr "9. Cookies e rastreio"
 
 #: templates/legal/privacy.html:196
-#| msgid ""
-#| "We use one session cookie to keep you logged in (strictly necessary, no "
-#| "consent required under ePrivacy). We also store your theme preference in "
-#| "localStorage, which is not a cookie and does not leave your device."
 msgid ""
 "We use only strictly necessary cookies: a session cookie to keep you logged "
 "in and a CSRF cookie for security (no consent required under ePrivacy). We "
@@ -3229,10 +3209,9 @@ msgstr ""
 "respondemos a sinais \"Do Not Track\" do navegador."
 
 #: templates/legal/privacy.html:208
-#, fuzzy
 #| msgid "Security"
 msgid "10. Security"
-msgstr "Segurança"
+msgstr "10. Segurança"
 
 #: templates/legal/privacy.html:210
 msgid ""
@@ -3247,10 +3226,9 @@ msgstr ""
 "armazenadas como hashes unidirecionais com sal. Consulte a nossa "
 
 #: templates/legal/privacy.html:210
-#, fuzzy
 #| msgid "Security"
 msgid "Security overview"
-msgstr "Segurança"
+msgstr "Visão geral de segurança"
 
 #: templates/legal/privacy.html:210
 msgid " for more."
@@ -3271,14 +3249,17 @@ msgstr ""
 "substanciais por e-mail ou através da aplicação."
 
 #: templates/legal/privacy.html:234
-#, fuzzy
 #| msgid "Contact"
 msgid "12. Contact"
-msgstr "Contacto"
+msgstr "12. Contacto"
 
 #: templates/legal/privacy.html:236
 msgid "Questions about this policy: "
 msgstr "Questões sobre esta política: "
+
+#: templates/legal/security.html:16
+msgid "Security <em class=\"text-primary font-light\">Overview</em>"
+msgstr "Visão geral de <em class=\"text-primary font-light\">Segurança</em>"
 
 #: templates/legal/security.html:32
 msgid "Where your data lives"
@@ -3308,10 +3289,9 @@ msgstr ""
 "HSTS ativado. Não aceitamos ligações HTTP simples em produção."
 
 #: templates/legal/security.html:56
-#, fuzzy
 #| msgid "Password"
 msgid "Passwords"
-msgstr "Palavra-passe"
+msgstr "Palavras-passe"
 
 #: templates/legal/security.html:58
 msgid ""
@@ -3354,10 +3334,9 @@ msgstr ""
 "sempre que possível."
 
 #: templates/legal/security.html:92
-#, fuzzy
 #| msgid "Access"
 msgid "Access control"
-msgstr "Acesso"
+msgstr "Controlo de acesso"
 
 #: templates/legal/security.html:94
 msgid ""
@@ -3408,13 +3387,8 @@ msgid "Terms of Service"
 msgstr "Termos de Serviço"
 
 #: templates/legal/terms.html:16
-msgid "Terms of"
-msgstr "Termos de"
-
-#: templates/legal/terms.html:16
-#| msgid "Overview"
-msgid "Service"
-msgstr "Serviço"
+msgid "Terms of <em class=\"text-primary font-light\">Service</em>"
+msgstr "Termos de <em class=\"text-primary font-light\">Serviço</em>"
 
 #: templates/legal/terms.html:26
 msgid ""
@@ -3429,10 +3403,9 @@ msgstr ""
 "concordar, não utilize o serviço."
 
 #: templates/legal/terms.html:35
-#, fuzzy
 #| msgid "Math Operations"
 msgid "1. Operator"
-msgstr "Operações Matemáticas"
+msgstr "1. Operador"
 
 #: templates/legal/terms.html:38
 msgid "a private individual based in Portugal"
@@ -3464,10 +3437,9 @@ msgstr ""
 "qualquer ferramenta a qualquer momento."
 
 #: templates/legal/terms.html:65
-#, fuzzy
 #| msgid "Create an account"
 msgid "3. Registration and account"
-msgstr "Criar uma conta"
+msgstr "3. Registo e conta"
 
 #: templates/legal/terms.html:67
 msgid ""
@@ -3665,25 +3637,18 @@ msgstr ""
 "seu país de residência."
 
 #: templates/legal/terms.html:208
-#, fuzzy
 #| msgid "Contact"
 msgid "14. Contact"
-msgstr "Contacto"
+msgstr "14. Contacto"
 
 #: templates/legal/terms.html:210
-#, fuzzy
 #| msgid "Questions about this policy: "
 msgid "Questions about these terms: "
-msgstr "Questões sobre esta política: "
+msgstr "Questões sobre estes termos: "
 
 #: templates/legal/use_restrictions.html:16
-msgid "Use"
-msgstr "Utilização"
-
-#: templates/legal/use_restrictions.html:16
-#| msgid "Description"
-msgid "Restrictions"
-msgstr "Restrições"
+msgid "Use <em class=\"text-primary font-light\">Restrictions</em>"
+msgstr "Restrições de <em class=\"text-primary font-light\">Utilização</em>"
 
 #: templates/legal/use_restrictions.html:32
 msgid "Restricted purposes"
@@ -3836,6 +3801,24 @@ msgstr "Painel"
 #: templates/wip.html:51
 msgid "Go Back"
 msgstr "Voltar"
+
+#~ msgid "Cancellation"
+#~ msgstr "Cancelamento"
+
+#~ msgid "Policy"
+#~ msgstr "Política"
+
+#~ msgid "Terms of"
+#~ msgstr "Termos de"
+
+#~ msgid "Service"
+#~ msgstr "Serviço"
+
+#~ msgid "Use"
+#~ msgstr "Utilização"
+
+#~ msgid "Restrictions"
+#~ msgstr "Restrições"
 
 #~ msgid ""
 #~ "When you create an account we collect your username, email address, and "
