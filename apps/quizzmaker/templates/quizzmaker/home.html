@@ -49,7 +49,7 @@
               const host = img.closest(".card") || img.parentElement;
               host.addEventListener("mouseenter", () => { img.src = gifUrl; });
               host.addEventListener("mouseleave", () => { img.src = poster; });
-            } catch (e) { /* CORS taint — leave gif playing */ }
+            } catch (e) { /* CORS taint, leave gif playing */ }
           };
           tmp.src = gifUrl;
         });

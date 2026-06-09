@@ -13,6 +13,22 @@ exclude = [
     "theme/static_src",
 ]
 
+# redis-py's sync client inherits command return types from the shared
+# sync/async mixins, so every call is typed as the union ``Awaitable[T] | T``
+# (ResponseT). With ``decode_responses=True`` these are always plain sync
+# values, but mypy can't know that. live.py is purely a Redis gateway, so the
+# whole file trips this stub imprecision; scope the resulting codes off here.
+[[tool.mypy.overrides]]
+module = "apps.quizzmaker.live"
+disable_error_code = [
+    "union-attr",
+    "arg-type",
+    "return-value",
+    "operator",
+    "index",
+    "no-any-return",
+]
+
 [tool.django-stubs]
 django_settings_module = "teachkaBaseProject.settings"
 

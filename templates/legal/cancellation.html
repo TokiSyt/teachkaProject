@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Cancellation Policy" %} · Teachka{% endblock %}
+
+{% block content %}
+
+  <!-- ── HEADER ── -->
+  <section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
+    <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+      <i data-lucide="user-minus" class="text-primary" style="width:180px;height:180px;"></i>
+    </div>
+    <div class="relative z-10">
+      <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Legal" %}</p>
+      <h1 class="serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
+        {% blocktrans %}Cancellation <em class="text-primary font-light">Policy</em>{% endblocktrans %}
+      </h1>
+      <p class="text-xs text-base-content/30">{% trans "Last updated" %}: 2026-05-09</p>
+    </div>
+  </section>
+
+  <!-- ── CONTENT ── -->
+  <section class="px-5 py-10 md:px-14">
+    <div class="max-w-2xl space-y-6">
+
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "Cancel anytime" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "We want satisfied users, not hostages. You can delete your Teachka account directly from " %}<a href="{% url 'profile:settings' %}" class="link link-primary">{% trans "Settings → Delete account" %}</a>{% trans ". No phone calls, no questions asked." %}</p>
+        </div>
+      </article>
+
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "What happens when you cancel" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed mb-3">{% trans "When you delete your account:" %}</p>
+          <ul class="text-sm text-base-content/70 leading-relaxed list-disc pl-5 space-y-2 m-0">
+            <li>{% trans "You immediately lose access to the account and all its data (groups, members, points, quizzes, calendar entries, statistics)." %}</li>
+            <li>{% trans "Your records are permanently removed from our active database." %}</li>
+            <li>{% trans "Encrypted backups containing your data are rotated out within 30 days." %}</li>
+            <li>{% trans "Once deleted, your data cannot be recovered. Export anything you want to keep before cancelling." %}</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="user-x" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "Cancellations initiated by us" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed mb-3">{% trans "We may cancel accounts that:" %}</p>
+          <ul class="text-sm text-base-content/70 leading-relaxed list-disc pl-5 space-y-2 m-0">
+            <li>{% trans "Have been inactive for 365 consecutive days." %}</li>
+            <li>{% trans "Violate our " %}<a href="{% url 'use_restrictions' %}" class="link link-primary">{% trans "Use Restrictions" %}</a>{% trans " policy." %}</li>
+            <li>{% trans "Pose a security risk to the service or other users." %}</li>
+          </ul>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0 mt-3">{% trans "Where possible we will warn you by email before deleting an inactive account, giving you the chance to log in and keep it." %}</p>
+        </div>
+      </article>
+
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "Need help?" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "If you cannot reach the Settings page, email " %}<a href="mailto:info@teachka.com" class="link link-primary">info@teachka.com</a>{% trans " from the address linked to your account and we will delete it for you." %}</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+{% endblock %}

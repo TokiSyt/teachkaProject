@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Terms of Service" %} · Teachka{% endblock %}
+
+{% block content %}
+
+  <!-- ── HEADER ── -->
+  <section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
+    <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+      <i data-lucide="file-text" class="text-primary" style="width:180px;height:180px;"></i>
+    </div>
+    <div class="relative z-10">
+      <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Legal" %}</p>
+      <h1 class="serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
+        {% blocktrans %}Terms of <em class="text-primary font-light">Service</em>{% endblocktrans %}
+      </h1>
+      <p class="text-xs text-base-content/30">{% trans "Last updated" %}: 2026-06-09</p>
+    </div>
+  </section>
+
+  <!-- ── CONTENT ── -->
+  <section class="px-5 py-10 md:px-14">
+    <div class="max-w-2xl space-y-6">
+
+      <p class="text-sm text-base-content/70 leading-relaxed">{% trans "These terms govern the relationship between the operator of the Teachka application and users who use the application's classroom tools. By creating an account or using Teachka, you agree to these terms. If you do not agree, please do not use the service." %}</p>
+
+      <!-- 1. Provider -->
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="user-circle" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "1. Operator" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed mb-3">
+            <span class="font-medium">Tiago Pereira Maria Gonçalves da Silva</span> — {% trans "a private individual based in Portugal" %}<br>
+            {% trans "Contact" %}: <a href="mailto:info@teachka.com" class="link link-primary">info@teachka.com</a>
+          </p>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Teachka is provided free of charge, on a non-commercial basis, by a private individual. It is not a paid service and processes no payments." %}</p>
+        </div>
+      </article>
+
+      <!-- 2. The service -->
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "2. The service" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Teachka is a free hub of teaching tools (grade calculator, group maker, point system, wheel, timer, calendar, quiz maker, and more). The service is provided as-is, without warranty of any kind. We may change, suspend, or discontinue any tool at any time." %}</p>
+        </div>
+      </article>
+
+      <!-- 3. Registration & account -->
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="user-check" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "3. Registration and account" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Using the application requires registration, during which you provide true and current details. You are responsible for keeping your password secure, for not sharing it with third parties, and for all activity on your account. The operator reserves the right to suspend or cancel an account that seriously breaches these terms, provides false information, or misuses the service." %}</p>
+        </div>
+      </article>
+
+      <!-- 4. Intended audience & students -->
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "4. Intended audience and students" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Teachka is intended for teachers and educators. Accounts are for adults. Students do not create their own accounts; they may only participate in activities (such as quizzes) under the responsibility and supervision of a teacher. If you enter data about students, you are responsible for having a lawful basis to do so, including any parental or school consent required." %}</p>
+        </div>
+      </article>
+
+      <!-- 5. User obligations / acceptable use -->
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "5. Acceptable use" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "You agree to use the application only for lawful purposes; not to attempt unauthorised access to other accounts or data; not to overload the service with automated requests or misuse its features; not to upload illegal, harmful, hateful, or sexually explicit content; and to report any loss or compromise of your credentials. See our full " %}<a href="{% url 'use_restrictions' %}" class="link link-primary">{% trans "Use Restrictions" %}</a>{% trans " policy. We may suspend or delete accounts that violate these rules." %}</p>
+        </div>
+      </article>
+
+      <!-- 6. Your content -->
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="folder" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "6. Your content" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Content you create on Teachka (groups, members, points, quizzes, etc.) belongs to you. You grant us a limited licence to store and display it solely so we can provide the service. You are responsible for ensuring you have the right to use any names, photos, or data you enter, including those of students." %}</p>
+        </div>
+      </article>
+
+      <!-- 7. Intellectual property -->
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="copyright" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "7. Intellectual property" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "The Teachka name, logo, design, and code are owned by the operator. You may not copy, redistribute, or create derivative services from the platform without written permission." %}</p>
+        </div>
+      </article>
+
+      <!-- 8. Availability -->
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="activity" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "8. Service availability" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "The operator makes reasonable efforts to keep the application available but does not guarantee uninterrupted operation. The operator is not responsible for outages caused by circumstances beyond its control (hosting provider, internet connection, or third-party service outages)." %}</p>
+        </div>
+      </article>
+
+      <!-- 9. Disclaimer & liability -->
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "9. Disclaimer & liability" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Teachka is provided without any guarantee of availability, accuracy, or fitness for a particular purpose. To the maximum extent permitted by law, the operator is liable only for damage caused by breach of these terms and is not liable for indirect damage, lost profit, or damage arising from incorrect use of the application. Always keep your own backup of important data (e.g. grades)." %}</p>
+        </div>
+      </article>
+
+      <!-- 10. Termination -->
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="x-circle" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "10. Termination" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "You may delete your account at any time from the Settings page. We may suspend or terminate accounts that breach these terms or pose a risk to the service or other users. See our " %}<a href="{% url 'cancellation' %}" class="link link-primary">{% trans "Cancellation policy" %}</a>{% trans " for details on what happens to your data." %}</p>
+        </div>
+      </article>
+
+      <!-- 11. Personal data -->
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="shield" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "11. Personal data" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "The processing of users' personal data is governed by our separate " %}<a href="{% url 'privacy' %}" class="link link-primary">{% trans "Privacy Policy" %}</a>.</p>
+        </div>
+      </article>
+
+      <!-- 12. Changes to terms -->
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "12. Changes to these terms" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "The operator may change these terms at any time. Users will be informed of material changes by e-mail or through the application at least 14 days before they take effect. If you do not agree with the changes, you may cancel your account." %}</p>
+        </div>
+      </article>
+
+      <!-- 13. Governing law -->
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="scale" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "13. Governing law" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "These terms and any relationship arising from use of the application are governed by the law of Portugal, and disputes will be handled by the competent courts of Portugal. A consumer may use the European Commission's Online Dispute Resolution platform, " %}<a href="https://ec.europa.eu/consumers/odr" class="link link-primary" rel="noopener" target="_blank">ec.europa.eu/consumers/odr</a>{% trans ", or a competent Portuguese consumer dispute resolution entity, without prejudice to mandatory consumer-protection rights in your country of residence." %}</p>
+        </div>
+      </article>
+
+      <!-- 14. Contact -->
+      <article class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-6 md:p-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+            </span>
+            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "14. Contact" %}</h2>
+          </div>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Questions about these terms: " %}<a href="mailto:info@teachka.com" class="link link-primary">info@teachka.com</a></p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+{% endblock %}

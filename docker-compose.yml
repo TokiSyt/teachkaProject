@@ -15,8 +15,20 @@ services:
       timeout: 5s
       retries: 5
 
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
   web:
     build: .
+    # runserver auto-uses daphne (ASGI) because `daphne` is first in INSTALLED_APPS,
+    # so WebSockets work in dev with autoreload.
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
@@ -26,8 +38,12 @@ services:
       - "8000:8000"
     env_file:
       - .env
+    environment:
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379/0}
     depends_on:
       db:
+        condition: service_healthy
+      redis:
         condition: service_healthy
 
   tailwind:

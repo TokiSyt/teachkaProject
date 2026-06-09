@@ -200,6 +200,29 @@
           </div>
         </div>
 
+        <!-- Terms acceptance -->
+        <div class="flex flex-col gap-1.5">
+          <label for="id_accept_terms" class="flex items-center gap-2.5 cursor-pointer text-sm text-base-content/55 leading-snug">
+            <input type="checkbox"
+                   name="accept_terms"
+                   id="id_accept_terms"
+                   class="shrink-0 w-4 h-4 accent-[var(--color-primary)] cursor-pointer"
+                   {% if form.accept_terms.value %}checked{% endif %}
+                   required>
+            <span>
+              {% url 'terms' as terms_url %}
+              {% url 'privacy' as privacy_url %}
+              {% blocktrans trimmed with terms_url=terms_url privacy_url=privacy_url %}
+                I agree to the <a href="{{ terms_url }}" target="_blank" class="text-primary font-medium hover:underline underline-offset-2">Terms of Service</a>
+                and <a href="{{ privacy_url }}" target="_blank" class="text-primary font-medium hover:underline underline-offset-2">Privacy Policy</a>.
+              {% endblocktrans %}
+            </span>
+          </label>
+          {% if form.accept_terms.errors %}
+          <p class="text-xs text-error">{{ form.accept_terms.errors.0 }}</p>
+          {% endif %}
+        </div>
+
         <!-- Submit -->
         <button type="submit"
                 class="btn-as-link">

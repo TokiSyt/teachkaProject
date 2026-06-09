@@ -12,8 +12,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}Teachka{% endblock %}</title>
   <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon" />
-  <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}?v=2">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300;1,9..144,500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
   {% block extra_css %}{% endblock %}
   <style>
@@ -110,7 +110,7 @@
   <!-- Logo -->
   <div id="sidebar-header" class="flex items-center justify-between h-[60px] px-3.5 border-b border-base-300 shrink-0">
     <a href="{% url 'home' %}" class="flex items-center gap-2.5 overflow-hidden whitespace-nowrap">
-      <div class="w-8 h-8 flex items-center justify-center shrink-0 text-2xl font-semibold serif text-primary">T</div>
+      <img src="{% static 'images/favicon.png' %}" alt="Teachka" class="w-8 h-8 shrink-0 object-contain" />
       <span id="logo-text" class="fade-label text-base font-medium text-base-content serif">Teachka</span>
     </a>
     <button id="desktop-toggle" onclick="toggleSidebar()"
@@ -198,14 +198,12 @@
             <span class="fade-label nav-label">{% trans "Timer" %}</span>
           </a>
         </li>
-        {% comment %}
         <li>
           <a href="{% url 'quizzmaker:home' %}" class="rounded-lg">
             <i data-lucide="badge-question-mark" class="w-6 h-6 shrink-0"></i>
             <span class="fade-label nav-label">{% trans "Quizzes" %}</span>
           </a>
         </li>
-        {% endcomment %}
       </ul>
     </div>
     {% endif %}
@@ -323,6 +321,8 @@
     <div class="flex items-center gap-4">
       <a href="{% url 'contact:contact' %}" class="link link-hover text-xs text-base-content/40">{% trans "Contact" %}</a>
       <a href="{% url 'privacy' %}" class="link link-hover text-xs text-base-content/40">{% trans "Privacy" %}</a>
+      <a href="{% url 'terms' %}" class="link link-hover text-xs text-base-content/40">{% trans "Terms" %}</a>
+      <a href="{% url 'security' %}" class="link link-hover text-xs text-base-content/40">{% trans "Security" %}</a>
       <a href="https://teachka.com" target="_blank"
          class="link link-hover text-sm text-base-content/50 flex items-center gap-1.5 font-medium">
         <i data-lucide="external-link" class="w-3.5 h-3.5"></i> teachka.com

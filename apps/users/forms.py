@@ -16,6 +16,10 @@ class RegisterForm(UserCreationForm):
     first_name = forms.CharField()
     last_name = forms.CharField(required=False)
     password2 = forms.CharField(label=_("Password Confirmation"), widget=forms.PasswordInput, help_text="")
+    accept_terms = forms.BooleanField(
+        required=True,
+        error_messages={"required": _("You must accept the Terms of Service and Privacy Policy to continue.")},
+    )
 
     class Meta:
         model = User

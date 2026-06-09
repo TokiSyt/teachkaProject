@@ -159,7 +159,7 @@
                    value="{{ form.subject.value|default_if_none:'' }}"
                    maxlength="140" required autocomplete="off"
                    class="input input-bordered w-full"
-                   placeholder="{% trans 'In one line — what is this about?' %}">
+                   placeholder="{% trans 'In one line, what is this about?' %}">
             {% if form.subject.errors %}
               <p class="text-[11px] text-error mt-1.5">{{ form.subject.errors.0 }}</p>
             {% endif %}
@@ -181,7 +181,7 @@
           <div class="px-5 py-4">
             <p class="text-xs text-base-content/40 mb-1.5">
               {% trans "Reply address" %}
-              <span class="text-base-content/30 italic">— {% trans "optional" %}</span>
+              <span class="text-base-content/30 italic">({% trans "optional" %})</span>
             </p>
             <input type="email" name="email" id="id_email"
                    value="{{ form.email.value|default_if_none:'' }}"

@@ -22,6 +22,7 @@ def registration_data():
         "email": "newuser@example.com",
         "password1": "SecurePass123!",
         "password2": "SecurePass123!",
+        "accept_terms": "on",
     }
 
 

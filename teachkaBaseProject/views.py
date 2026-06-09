@@ -29,6 +29,22 @@ class PrivacyView(TemplateView):
     template_name = "legal/privacy.html"
 
 
+class TermsView(TemplateView):
+    template_name = "legal/terms.html"
+
+
+class UseRestrictionsView(TemplateView):
+    template_name = "legal/use_restrictions.html"
+
+
+class SecurityView(TemplateView):
+    template_name = "legal/security.html"
+
+
+class CancellationView(TemplateView):
+    template_name = "legal/cancellation.html"
+
+
 class HealthView(View):
     def get(self, request):
         try:

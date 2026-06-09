@@ -55,6 +55,11 @@ else:
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "teachka.com", "www.teachka.com", "dev.teachka.com"]
 
+# Dev: allow LAN access (students joining live quizzes from phones on the
+# teacher's network hit http://<lan-ip>:8000, which isn't a named host).
+if DEBUG:
+    ALLOWED_HOSTS = ["*"]
+
 RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -70,6 +75,8 @@ if RENDER_EXTERNAL_HOSTNAME:
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
+    "channels",
     "lucide",
     "crispy_forms",
     "crispy_bootstrap4",
@@ -126,7 +133,7 @@ ROOT_URLCONF = "teachkaBaseProject.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": ["templates"],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -139,6 +146,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "teachkaBaseProject.wsgi.application"
+ASGI_APPLICATION = "teachkaBaseProject.asgi.application"
+
+# Channels / live quiz state. Redis is the channel layer + live game store.
+REDIS_URL = os.environ.get("REDIS_URL", "redis://redis:6379/0")
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {"hosts": [REDIS_URL]},
+    },
+}
 
 
 # Database
@@ -237,6 +254,9 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
 ]
 
+# Terms of Service version — bump when ToS materially changes to force re-acceptance.
+TERMS_VERSION = "2026-06-09"
+
 # django-axes: brute force login protection
 AXES_FAILURE_LIMIT = 5
 AXES_COOLOFF_TIME = 0.5  # 30 minutes (in hours)
@@ -302,6 +322,11 @@ LOGGING = {
         "django.request": {
             "handlers": ["console"],
             "level": "WARNING",
+            "propagate": False,
+        },
+        "daphne": {
+            "handlers": ["console"],
+            "level": "INFO",
             "propagate": False,
         },
     },

@@ -8,6 +8,8 @@
 
 {% block extra_css %}
 <style>
+  /* Tool cards follow base-100 (override legacy .card rule in style.css) */
+  .tool-card { background-color: var(--color-base-100); }
   /* Tool card hover arrow + border */
   .tool-card:hover .arrow-icon { transform: translateX(4px); }
   .arrow-icon { transition: transform 0.15s; }
@@ -137,7 +139,7 @@
   <!-- ── STATS ── -->
   <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-base-300 border-b border-base-300">
     <div class="stat py-8 px-4 md:py-8 md:px-10">
-      <div class="stat-value serif font-medium text-3xl md:text-4xl tracking-tight">6</div>
+      <div class="stat-value serif font-medium text-3xl md:text-4xl tracking-tight">7</div>
       <div class="stat-desc text-xs font-medium mt-1">{% trans "Built-in classroom tools" %}</div>
     </div>
     <div class="stat py-8 px-4 md:py-8 md:px-10">
@@ -231,7 +233,7 @@
       <div>
         <p class="text-[10px] font-semibold tracking-[2.5px] uppercase text-base-content/40 mb-2">{% trans "The toolkit" %}</p>
         <h2 class="serif text-[34px] font-medium tracking-tight leading-[1.1] text-base-content">
-          {% trans "Six tools," %}<br><em class="text-base-content/40 font-light">{% trans "one home" %}</em>
+          {% trans "Seven tools," %}<br><em class="text-base-content/40 font-light">{% trans "one home" %}</em>
         </h2>
         {% if not user.is_authenticated %}
         <p class="text-[11px] text-base-content/40 font-light mt-3">
@@ -321,6 +323,20 @@
           </div>
           <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">{% trans "Name Wheel" %}</h3>
           <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">{% trans "Spin to pick a random student: fair, fun, and instant." %}</p>
+          <div class="arrow-icon mt-4 text-base-content/25 flex items-center">
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </div>
+        </div>
+      </a>
+
+      <a href="{% url 'quizzmaker:home' %}" class="tool-card card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md transition-all duration-200">
+        <div class="card-body p-6 flex flex-col gap-0">
+          <p class="text-[11px] font-medium text-base-content/30 tracking-wide mb-4 serif">07</p>
+          <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
+            <i data-lucide="list-checks" class="w-[18px] h-[18px]"></i>
+          </div>
+          <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">{% trans "Quiz Maker" %}</h3>
+          <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">{% trans "Build multi-round quizzes with custom questions and answers." %}</p>
           <div class="arrow-icon mt-4 text-base-content/25 flex items-center">
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </div>
