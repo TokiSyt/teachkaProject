@@ -5,6 +5,11 @@ databases:
     user: teachka
 
 services:
+  - type: keyvalue
+    name: teachka-redis
+    plan: free
+    ipAllowList: []  # only reachable from Render services
+
   - type: web
     plan: free
     name: teachka-web
@@ -20,3 +25,8 @@ services:
         generateValue: true
       - key: WEB_CONCURRENCY
         value: 4
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: teachka-redis
+          property: connectionString

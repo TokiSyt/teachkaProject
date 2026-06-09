@@ -1,0 +1,400 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Hosting" %} · Teachka{% endblock title %}
+
+{% block content %}
+<section class="min-h-[80vh] px-4 py-6 md:px-10 flex flex-col">
+  <div class="flex justify-end mb-2">
+    <button type="button" id="close-room-btn" class="btn-as-link"
+            onclick="document.getElementById('close-modal').showModal()">
+      {% trans "Close room" %}
+    </button>
+  </div>
+  <div id="app" class="flex-1 flex flex-col w-full max-w-5xl mx-auto">
+    <p class="text-base-content/50 text-center my-auto">{% trans "Connecting…" %}</p>
+  </div>
+
+  <dialog id="close-modal" class="modal">
+    <div class="modal-box max-w-sm rounded-2xl border border-base-300 bg-base-100">
+      <header class="mb-4">
+        <h2 class="serif font-medium leading-none tracking-tight text-2xl">
+          <span class="text-error">{% trans "Close" %}</span> <span class="text-base-content/60">{% trans "the room?" %}</span>
+        </h2>
+      </header>
+      <p class="text-sm text-base-content/70 mb-6">
+        {% trans "This ends the game for everyone and removes all players. This cannot be undone." %}
+      </p>
+      <div class="flex items-center gap-3">
+        <button type="button" id="close-confirm" class="btn-as-link">{% trans "Close room" %}</button>
+        <button type="button" class="btn-as-link-ghost"
+                onclick="document.getElementById('close-modal').close()">
+          {% trans "Cancel" %}
+        </button>
+      </div>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+      <button>close</button>
+    </form>
+  </dialog>
+
+  <dialog id="player-modal" class="modal">
+    <div class="modal-box max-w-sm rounded-2xl border border-base-300 bg-base-100">
+      <header class="mb-5">
+        <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-2">{% trans "Player" %}</p>
+        <div class="flex items-center justify-between gap-3">
+          <h2 id="player-modal-name" class="serif font-medium leading-none tracking-tight text-3xl text-primary break-all"></h2>
+          <button type="button" id="player-edit-toggle" class="btn-as-link-ghost shrink-0"
+                  title="{% trans 'Edit name' %}" aria-label="{% trans 'Edit name' %}">
+            <i data-lucide="pencil" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </header>
+      <div id="player-edit-row" class="hidden mb-5">
+        <label class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">{% trans "Edit name" %}</label>
+        <div class="flex items-center gap-2">
+          <input id="player-name-input" maxlength="30"
+                 class="input input-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl flex-1" />
+          <button type="button" id="player-save" class="btn-as-link shrink-0">{% trans "Save" %}</button>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <button type="button" id="player-kick" class="btn-as-link">{% trans "Kick" %}</button>
+        <button type="button" class="btn-as-link-ghost ml-auto"
+                onclick="document.getElementById('player-modal').close()">{% trans "Cancel" %}</button>
+      </div>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+      <button>close</button>
+    </form>
+  </dialog>
+</section>
+
+<script id="host-i18n" type="application/json">
+{
+  "join_at": "{% trans 'Join at' %}",
+  "or_enter": "{% trans 'or enter the code' %}",
+  "players": "{% trans 'Players' %}",
+  "edit_player": "{% trans 'Edit player' %}",
+  "nickname": "{% trans 'Nickname' %}",
+  "save": "{% trans 'Save' %}",
+  "kick": "{% trans 'Kick' %}",
+  "no_players": "{% trans 'Waiting for players…' %}",
+  "show_q": "{% trans 'Show question on player devices' %}",
+  "start": "{% trans 'Start' %}",
+  "reveal": "{% trans 'Reveal answer' %}",
+  "next": "{% trans 'Next' %}",
+  "end": "{% trans 'End game' %}",
+  "round": "{% trans 'Round' %}",
+  "of": "{% trans 'of' %}",
+  "leaderboard": "{% trans 'Leaderboard' %}",
+  "answered": "{% trans 'answered' %}",
+  "final": "{% trans 'Final leaderboard' %}",
+  "review": "{% trans 'Review questions' %}",
+  "prev": "{% trans 'Previous' %}",
+  "done": "{% trans 'Done' %}",
+  "correct": "{% trans 'Correct answer' %}",
+  "right": "{% trans 'right' %}",
+  "wrong": "{% trans 'wrong' %}",
+  "pick_one": "{% trans 'Pick one' %}",
+  "pick_all": "{% trans 'Pick all that apply' %}",
+  "standings": "{% trans 'Standings' %}"
+}
+</script>
+
+<script>
+(function () {
+  const CODE = "{{ code }}";
+  const HOME = "{% url 'quizzmaker:home' %}";
+  const T = JSON.parse(document.getElementById("host-i18n").textContent);
+  // All options use the current theme's primary color.
+  const OPT_BG = Array(4).fill("var(--color-primary)");
+  const OPT_FG = Array(4).fill("var(--color-primary-content)");
+  const LETTERS = ["A", "B", "C", "D"];
+  const root = document.getElementById("app");
+  // Streak flame, filled with the theme primary colour.
+  const FLAME = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"/></svg>`;
+  function streakBadge(n) { return n > 1 ? `<span class="inline-flex items-center gap-0.5 text-xs text-base-content/60">${FLAME}${n}</span>` : ""; }
+
+  let ws = null, state = null, reviewIdx = null, reviewData = null, closing = false;
+
+  function connect() {
+    const scheme = location.protocol === "https:" ? "wss" : "ws";
+    ws = new WebSocket(`${scheme}://${location.host}/ws/quiz/${CODE}/`);
+    ws.onmessage = (e) => handle(JSON.parse(e.data));
+    ws.onclose = (e) => {
+      if (closing) return;
+      if (e.code === 4003 || e.code === 4004) { closing = true; window.location.href = HOME; return; }
+      setTimeout(connect, 1500);
+    };
+  }
+  function send(obj) { if (ws && ws.readyState === 1) ws.send(JSON.stringify(obj)); }
+
+  function handle(msg) {
+    if (msg.type === "state") { state = msg; if (state.phase !== "ended") { reviewIdx = null; reviewData = null; } render(); }
+    else if (msg.type === "review") { reviewData = msg; renderReview(); }
+    else if (msg.type === "closed") { closing = true; window.location.href = HOME; }
+    else if (msg.type === "error") { window.alert(msg.message); }
+  }
+
+  document.getElementById("close-confirm").addEventListener("click", () => {
+    send({ action: "close" });
+    document.getElementById("close-modal").close();
+  });
+
+  // --- player edit/kick modal ---
+  let editingPlayer = null;
+  function openPlayerModal(nick) {
+    editingPlayer = nick;
+    document.getElementById("player-modal-name").textContent = nick;
+    document.getElementById("player-name-input").value = nick;
+    document.getElementById("player-edit-row").classList.add("hidden");  // hidden until edit clicked
+    document.getElementById("player-modal").showModal();
+  }
+  document.getElementById("player-edit-toggle").addEventListener("click", () => {
+    document.getElementById("player-edit-row").classList.remove("hidden");
+    document.getElementById("player-name-input").focus();
+  });
+  document.getElementById("player-save").addEventListener("click", () => {
+    const v = document.getElementById("player-name-input").value.trim();
+    if (v && editingPlayer) send({ action: "rename", nickname: editingPlayer, new_name: v });
+    document.getElementById("player-modal").close();
+  });
+  document.getElementById("player-kick").addEventListener("click", () => {
+    if (editingPlayer) send({ action: "kick", nickname: editingPlayer });
+    document.getElementById("player-modal").close();
+  });
+
+  function el(html) { const d = document.createElement("div"); d.innerHTML = html.trim(); return d.firstChild; }
+  function clear() { root.innerHTML = ""; }
+  function esc(s) { const d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; }
+
+  function render() {
+    clear();
+    if (!state) return;
+    if (state.phase === "lobby") renderLobby();
+    else if (state.phase === "question") renderQuestion();
+    else if (state.phase === "reveal") renderReveal();
+    else if (state.phase === "leaderboard") renderLeaderboard();
+    else if (state.phase === "ended") renderEnded();
+    if (window.lucide) lucide.createIcons();
+  }
+
+  function renderLobby() {
+    const players = state.players || [];
+    const joinBase = location.host + "{% url 'quizzmaker:join' %}";
+    const joinUrl = joinBase + state.code + "/";
+    const chips = players.length
+      ? players.map((n, i) => `<button type="button" data-pi="${i}"
+          class="rounded-full bg-base-200 border border-base-300 hover:border-primary hover:bg-primary/5 transition px-4 py-1.5 text-sm font-medium cursor-pointer">${esc(n)}</button>`).join("")
+      : `<p class="text-base-content/50">${T.no_players}</p>`;
+    const node = el(`
+      <div class="flex flex-col items-center gap-6 my-auto text-center w-full">
+        <h1 class="serif text-3xl font-medium">${esc(state.quiz_title || "")}</h1>
+        <div>
+          <p class="text-[11px] tracking-[2px] uppercase text-base-content/40 mb-1">${T.join_at}</p>
+          <p class="text-lg md:text-2xl font-medium break-all mb-3">${esc(joinBase)}<span class="text-primary font-bold">${esc(state.code)}</span>/</p>
+          <p class="text-[11px] tracking-[2px] uppercase text-base-content/40 mb-2">${T.or_enter}</p>
+          <div class="serif font-bold tracking-[10px] text-primary" style="font-size:clamp(48px,9vw,96px)">${esc(state.code)}</div>
+        </div>
+        <label class="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" id="show-q" class="toggle toggle-primary" ${state.show_question ? "checked" : ""} />
+          <span class="text-sm text-base-content/70">${T.show_q}</span>
+        </label>
+        <div class="flex flex-wrap gap-2 justify-center max-w-2xl">${chips}</div>
+        <button id="start-btn" class="btn-as-link" ${players.length ? "" : "disabled"}>
+          ${T.start} (${players.length})
+        </button>
+      </div>`);
+    node.querySelector("#show-q").addEventListener("change", (e) =>
+      send({ action: "set_show_question", value: e.target.checked }));
+    node.querySelector("#start-btn").addEventListener("click", () => send({ action: "start" }));
+    node.querySelectorAll("[data-pi]").forEach((b) =>
+      b.addEventListener("click", () => openPlayerModal(players[+b.dataset.pi])));
+    root.appendChild(node);
+  }
+
+  function questionHeader() {
+    return `<div class="flex items-center justify-between text-[11px] tracking-[2px] uppercase text-base-content/40 mb-3">
+      <span>${T.round} ${state.current_round + 1} ${T.of} ${state.num_rounds}</span>
+      <span id="timer"></span></div>`;
+  }
+
+  function renderQuestion() {
+    const r = state.round || {};
+    const node = el(`<div class="flex flex-col gap-5 my-auto w-full">${questionHeader()}</div>`);
+    node.appendChild(el(`<h1 class="serif font-medium leading-tight text-center" style="font-size:clamp(28px,4vw,52px)">${esc(r.question || "")}</h1>`));
+    if (r.time_limit && state.round_started_at) {
+      // Timer bar between the question and the image.
+      node.appendChild(el(`<div class="w-full max-w-3xl mx-auto h-2 rounded-full bg-base-300/50 overflow-hidden">
+        <div id="timer-fill" class="h-full rounded-full" style="width:100%;background:var(--color-primary);transition:width .25s linear;"></div></div>`));
+    }
+    if (r.image_url) {
+      node.appendChild(el(`<figure class="w-full max-w-3xl mx-auto aspect-video bg-base-200 rounded-2xl overflow-hidden">
+        <img src="${r.image_url}" class="w-full h-full object-cover" /></figure>`));
+    }
+    if (r.question_type === "type_input") {
+      node.appendChild(el(`<p class="text-center text-base-content/50 text-lg">{% trans "Players type their answer" %}</p>`));
+    } else {
+      node.appendChild(modeBadge(!!r.single_select));
+      const grid = el(`<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-3xl mx-auto"></div>`);
+      (r.answers || []).forEach((a, i) =>
+        grid.appendChild(el(`<div class="rounded-2xl p-5 font-semibold text-lg flex items-center gap-3" style="background:${OPT_BG[i % 4]};color:${OPT_FG[i % 4]}">
+          <span class="text-2xl font-bold w-8">${LETTERS[i % 4]}</span><span class="flex-1 whitespace-normal">${esc(a.text)}</span></div>`)));
+      node.appendChild(grid);
+    }
+    const btn = el(`<button class="btn-as-link self-center">${T.reveal}</button>`);
+    btn.addEventListener("click", () => send({ action: "reveal" }));
+    node.appendChild(btn);
+    root.appendChild(node);
+    startTimer(r);
+  }
+
+  function startTimer(r) {
+    const fill = document.getElementById("timer-fill");
+    if (!fill || !r.time_limit || !state.round_started_at) return;
+    function tick() {
+      if (!state || state.phase !== "question") return;
+      const frac = Math.max(0, Math.min(1, 1 - (Date.now() / 1000 - state.round_started_at) / r.time_limit));
+      fill.style.width = (frac * 100) + "%";
+      if (frac > 0) setTimeout(tick, 250);
+    }
+    tick();
+  }
+
+  function renderReveal() {
+    const r = state.round || {};
+    const rev = state.reveal || {};
+    const node = el(`<div class="flex flex-col gap-5 my-auto w-full">${questionHeader()}</div>`);
+    node.appendChild(el(`<h1 class="serif font-medium leading-tight text-center" style="font-size:clamp(24px,3.5vw,44px)">${esc(r.question || "")}</h1>`));
+
+    if (r.question_type === "type_input") {
+      const d = rev.distribution || { right: 0, wrong: 0 };
+      node.appendChild(el(`
+        <div class="text-center space-y-2">
+          <p class="text-[11px] tracking-[2px] uppercase text-base-content/40">${T.correct}</p>
+          <p class="serif text-3xl text-primary font-medium">${esc((rev.correct_texts || []).join("   ·   "))}</p>
+          <p class="text-sm text-base-content/60">${d.right} ${T.right} · ${d.wrong} ${T.wrong}</p>
+        </div>`));
+    } else {
+      const counts = (rev.distribution && rev.distribution.counts) || {};
+      const correct = new Set(rev.correct_ids || []);
+      const max = Math.max(1, ...Object.values(counts));
+      const grid = el(`<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-3xl mx-auto"></div>`);
+      (r.answers || []).forEach((a, i) => {
+        const c = counts[a.id] || 0;
+        const isC = correct.has(a.id);
+        const ringStyle = isC ? "box-shadow:0 0 0 4px color-mix(in oklch, var(--color-primary) 30%, transparent);" : "";
+        grid.appendChild(el(`
+          <div class="rounded-2xl p-4 font-semibold flex items-center gap-3 ${isC ? "quiz-correct" : "opacity-50"}" style="background:${OPT_BG[i % 4]};color:${OPT_FG[i % 4]};${ringStyle}">
+            <span class="text-xl font-bold w-7">${LETTERS[i % 4]}</span>
+            <span class="flex-1 whitespace-normal">${esc(a.text)} ${isC ? "✓" : ""}</span>
+            <span class="text-sm">${c}</span>
+          </div>`));
+      });
+      node.appendChild(grid);
+    }
+
+    const btn = el(`<button class="btn-as-link self-center">${T.next} →</button>`);
+    btn.addEventListener("click", () => send({ action: "next" }));
+    node.appendChild(btn);
+    root.appendChild(node);
+  }
+
+  function modeBadge(single) {
+    const icon = single ? "circle-dot" : "list-checks";
+    const label = single ? T.pick_one : T.pick_all;
+    return el(`
+      <div class="inline-flex items-center gap-2 self-center px-3 py-1 rounded-full bg-base-200 text-base-content/70 text-[11px] tracking-[2px] uppercase font-bold">
+        <i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}
+      </div>`);
+  }
+
+  function renderLeaderboard() {
+    const lb = (state.leaderboard || []).slice(0, 10);
+    const rows = lb.map((row) => {
+      const lead = row.rank === 1;
+      const style = lead ? "background:color-mix(in oklch, var(--color-primary) 15%, transparent);box-shadow:inset 0 0 0 2px color-mix(in oklch, var(--color-primary) 30%, transparent);" : "";
+      return `<li class="flex justify-between items-center px-4 py-2.5 rounded-xl ${lead ? "" : "bg-base-200"}" style="${style}">
+        <span class="flex items-center gap-3">
+          <b class="w-6 text-base-content/50">#${row.rank}</b>
+          ${esc(row.nickname)}
+          ${streakBadge(row.streak)}
+        </span>
+        <span class="font-semibold tabular-nums">${row.score}</span></li>`;
+    }).join("");
+    const node = el(`
+      <div class="flex flex-col gap-6 my-auto w-full items-center">
+        <h2 class="serif text-2xl font-medium text-center">${T.standings}</h2>
+        <ul class="space-y-2 w-full max-w-md mx-auto text-left">${rows}</ul>
+      </div>`);
+    const btn = el(`<button class="btn-as-link self-center">${T.next} →</button>`);
+    btn.addEventListener("click", () => send({ action: "next" }));
+    node.appendChild(btn);
+    root.appendChild(node);
+  }
+
+  function leaderboardEl(limit) {
+    const lb = (state.leaderboard || []).slice(0, limit);
+    const rows = lb.map((row) =>
+      `<li class="flex justify-between items-center px-4 py-2 rounded-xl bg-base-200">
+        <span class="flex items-center gap-3"><b class="w-6 text-base-content/50">#${row.rank}</b> ${esc(row.nickname)} ${streakBadge(row.streak)}</span>
+        <span class="font-semibold tabular-nums">${row.score}</span></li>`).join("");
+    return el(`<div class="w-full max-w-md mx-auto">
+      <ul class="space-y-2">${rows}</ul></div>`);
+  }
+
+  function renderEnded() {
+    const node = el(`<div class="flex flex-col gap-6 my-auto w-full items-center text-center">
+      <h1 class="serif text-3xl font-medium">${T.final}</h1></div>`);
+    node.appendChild(leaderboardEl(10));
+
+    // per-question review (ephemeral)
+    const reviewWrap = el(`<div class="w-full max-w-3xl mx-auto"></div>`);
+    const nav = el(`<div class="flex items-center justify-center gap-3 mt-4">
+      <p class="text-[11px] tracking-[2px] uppercase text-base-content/40 w-full text-center mb-1">${T.review}</p></div>`);
+    const buttons = el(`<div class="flex flex-wrap gap-2 justify-center"></div>`);
+    for (let i = 0; i < state.num_rounds; i++) {
+      const b = el(`<button class="${reviewIdx === i ? "btn-as-link" : "btn-as-link-ghost"}">${i + 1}</button>`);
+      b.addEventListener("click", () => { reviewIdx = i; send({ action: "review", round_idx: i }); });
+      buttons.appendChild(b);
+    }
+    reviewWrap.appendChild(nav);
+    reviewWrap.appendChild(buttons);
+    reviewWrap.appendChild(el(`<div id="review-panel" class="mt-4"></div>`));
+    node.appendChild(reviewWrap);
+
+    // "Done" closes the room for everyone (same as Close room) so players are
+    // sent home instead of seeing a "waiting for host" notice.
+    const done = el(`<button class="btn-as-link-ghost">${T.done}</button>`);
+    done.addEventListener("click", () => send({ action: "close" }));
+    node.appendChild(done);
+    root.appendChild(node);
+    if (reviewData && reviewIdx === reviewData.round_idx) renderReview();
+  }
+
+  function renderReview() {
+    const panel = document.getElementById("review-panel");
+    if (!panel || !reviewData) return;
+    const d = reviewData;
+    let body = "";
+    if (d.question_type === "type_input") {
+      const dist = d.distribution || {};
+      body = `<p class="serif text-xl text-primary">${esc((d.correct_texts || []).join("   ·   "))}</p>
+              <p class="text-sm text-base-content/60">${dist.right || 0} ${T.right} · ${dist.wrong || 0} ${T.wrong}</p>`;
+    } else {
+      const counts = (d.distribution && d.distribution.counts) || {};
+      const correct = new Set(d.correct_ids || []);
+      body = (d.answers || []).map((a, i) =>
+        `<div class="flex items-center gap-2 text-sm ${correct.has(a.id) ? "font-semibold text-primary" : "text-base-content/60"}">
+          <span class="w-5">${LETTERS[i % 4]}</span><span class="flex-1">${esc(a.text)} ${correct.has(a.id) ? "✓" : ""}</span>
+          <span>${counts[a.id] || 0}</span></div>`).join("");
+    }
+    panel.innerHTML = `<div class="bg-base-100 border border-base-300 rounded-2xl p-5 text-left space-y-2">
+      <p class="font-medium">${esc(d.question)}</p>${body}</div>`;
+  }
+
+  connect();
+})();
+</script>
+{% endblock content %}

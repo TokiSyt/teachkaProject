@@ -396,6 +396,15 @@
     const status = document.getElementById('autosave-status');
     if (!form || !toggle) return;
 
+    const T = {
+      enabled: "{% trans 'enabled' %}",
+      pending: "{% trans 'pending…' %}",
+      saving: "{% trans 'saving…' %}",
+      saved: "{% trans 'saved' %}",
+      failed: "{% trans 'save failed' %}",
+      failedRefresh: "{% trans 'save failed, refresh page' %}",
+    };
+
     const STORAGE_KEY = 'points-autosave-' + (form.querySelector('[name=group_id]')?.value || 'x');
     const DEBOUNCE_MS = 2000;
     const MIN_INTERVAL_MS = 5000;
@@ -403,7 +412,7 @@
     toggle.checked = localStorage.getItem(STORAGE_KEY) === '1';
     toggle.addEventListener('change', function() {
       localStorage.setItem(STORAGE_KEY, toggle.checked ? '1' : '0');
-      setStatus(toggle.checked ? 'enabled' : '');
+      setStatus(toggle.checked ? T.enabled : '');
     });
     setStatus(toggle.checked ? 'enabled' : '');
 
@@ -459,7 +468,7 @@
       clearTimeout(timer);
       const elapsed = Date.now() - lastSaveAt;
       const wait = Math.max(DEBOUNCE_MS, MIN_INTERVAL_MS - elapsed);
-      setStatus('pending…');
+      setStatus(T.pending);
       timer = setTimeout(run, wait);
     }
 
@@ -472,7 +481,7 @@
       if (dirty.positive) flags.push('positive_save');
       dirty = { negative: false, positive: false };
       lastSaveAt = Date.now();
-      setStatus('saving…');
+      setStatus(T.saving);
       let failed = false;
       try {
         for (const flag of flags) {
@@ -493,15 +502,15 @@
           }
         }
         if (failed) {
-          setStatus('save failed — refresh page');
+          setStatus(T.failedRefresh);
           if (flags.includes('negative_save')) dirty.negative = true;
           if (flags.includes('positive_save')) dirty.positive = true;
         } else {
-          setStatus('saved ' + new Date().toLocaleTimeString());
+          setStatus(T.saved + ' ' + new Date().toLocaleTimeString());
         }
       } catch (err) {
         console.error('[autosave] error', err);
-        setStatus('save failed');
+        setStatus(T.failed);
         if (flags.includes('negative_save')) dirty.negative = true;
         if (flags.includes('positive_save')) dirty.positive = true;
       } finally {

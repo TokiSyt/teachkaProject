@@ -28,8 +28,13 @@
 
 <div class="flex items-center gap-2">
   <input type="file" id="{{ input_id }}" name="{{ input_name }}" accept="image/*"
-         class="file-input file-input-bordered rounded-xl w-full flex-1" />
-  <button type="button" data-image-remove data-input-id="{{ input_id }}" class="btn-as-link-ghost" style="display:none;">
+         class="sr-only" data-image-empty="{% trans 'No file chosen' %}" />
+  <label for="{{ input_id }}" class="btn-as-link-ghost cursor-pointer shrink-0">
+    <i data-lucide="upload" class="w-4 h-4"></i>
+    {% trans "Choose file" %}
+  </label>
+  <span data-image-filename class="text-sm text-base-content/50 truncate flex-1">{% trans "No file chosen" %}</span>
+  <button type="button" data-image-remove data-input-id="{{ input_id }}" class="btn-as-link-ghost shrink-0" style="display:none;">
     <i data-lucide="x" class="w-4 h-4"></i>
     {% trans "Remove" %}
   </button>

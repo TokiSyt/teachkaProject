@@ -68,6 +68,7 @@
             {% for round in rounds %}
               {% if selected_round and selected_round.pk == round.pk %}
                 <li class="relative group" draggable="true" data-round-pk="{{ round.pk }}">
+                  {% include "quizzmaker/_round_markers.html" with round=round %}
                   <a href="?round={{ forloop.counter }}" draggable="false"
                      class="w-full text-left rounded-xl px-3 py-2.5 border-2 bg-base-100 transition flex items-center gap-3"
                      style="border-color: var(--color-primary);">
@@ -104,6 +105,7 @@
                 </li>
               {% else %}
                 <li class="relative group" draggable="true" data-round-pk="{{ round.pk }}">
+                  {% include "quizzmaker/_round_markers.html" with round=round %}
                   <a href="?round={{ forloop.counter }}" draggable="false"
                      class="block w-full text-left rounded-xl px-3 py-2.5 border hover:bg-base-100 transition flex items-center gap-3"
                      style="border-color: color-mix(in oklch, var(--color-primary) 50%, transparent);">
@@ -219,23 +221,36 @@
                 </div>
               {% elif r.question_type == "type_input" %}
                 <div class="shrink-0 mb-16 w-full max-w-4xl mx-auto"
-                     data-answer-update-base="{% url 'quizzmaker:answer_update' quiz.pk 0 %}">
-                  {% with ans=r.answers.first %}
-                    {% if ans %}
-                      <div class="border-2 border-base-300 rounded-xl px-10 py-9 flex items-center gap-6 focus-within:border-primary transition"
+                     data-answer-update-base="{% url 'quizzmaker:answer_update' quiz.pk 0 %}"
+                     data-answer-create-url="{% url 'quizzmaker:answer_create' quiz.pk r.pk %}"
+                     data-answer-delete-base="{% url 'quizzmaker:answer_delete' quiz.pk 0 %}"
+                     data-answer-placeholder="{% trans 'Type an accepted answer' %}">
+                  <div id="ti-list" class="space-y-3">
+                    {% for ans in r.answers.all %}
+                      <div class="ti-row border-2 border-base-300 rounded-xl px-8 py-5 flex items-center gap-4 focus-within:border-primary transition"
                            data-answer-pk="{{ ans.pk }}">
-                        <i data-lucide="pencil-line" class="w-7 h-7 text-base-content/40 shrink-0"></i>
+                        <i data-lucide="pencil-line" class="w-6 h-6 text-base-content/40 shrink-0"></i>
                         <input type="text"
                                value="{{ ans.text }}"
-                               placeholder="{% trans 'Type the correct answer' %}"
+                               placeholder="{% trans 'Type an accepted answer' %}"
                                data-answer-text
-                               class="flex-1 bg-transparent text-3xl text-base-content focus:outline-none placeholder:text-base-content/40 text-center" />
+                               class="flex-1 bg-transparent text-2xl text-base-content focus:outline-none placeholder:text-base-content/40 text-center" />
+                        <button type="button" data-answer-del
+                                title="{% trans 'Remove answer' %}" aria-label="{% trans 'Remove answer' %}"
+                                class="btn btn-xs btn-circle btn-ghost text-base-content/40 hover:text-error shrink-0">
+                          <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
                       </div>
-                      <p class="text-[10px] tracking-[2px] uppercase text-base-content/40 mt-2 text-center">
-                        {% trans "Participants will type their answer here. Match is case-insensitive." %}
-                      </p>
-                    {% endif %}
-                  {% endwith %}
+                    {% endfor %}
+                  </div>
+                  <div class="flex justify-center mt-3">
+                    <button type="button" id="ti-add" class="btn-as-link-ghost">
+                      <i data-lucide="plus" class="w-4 h-4"></i> {% trans "Add accepted answer" %}
+                    </button>
+                  </div>
+                  <p class="text-[10px] tracking-[2px] uppercase text-base-content/40 mt-2 text-center">
+                    {% trans "Players match any of these. Case-insensitive." %}
+                  </p>
                 </div>
               {% endif %}
             </div>
@@ -270,7 +285,7 @@
             {% trans "Quiz" %} · {{ next_round_title }}
           </p>
           <h2 class="serif font-medium leading-none tracking-tight text-3xl">
-            <span class="text-primary">{% trans "New" %}</span> <span class="text-base-content/60">{% trans "question" %}</span>
+            <span class="text-primary">{% trans "New" context "feminine noun" %}</span> <span class="text-base-content/60">{% trans "question" %}</span>
           </h2>
         </header>
 
@@ -508,7 +523,43 @@
                   onclick="document.getElementById('quiz-settings-modal').close()">
             {% trans "Cancel" %}
           </button>
+          <button type="button" class="btn-as-link-ghost text-error ml-auto"
+                  onclick="document.getElementById('quiz-settings-modal').close(); document.getElementById('quiz-delete-modal').showModal()">
+            {% trans "Delete quiz" %}
+          </button>
         </div>
+      </form>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+      <button>close</button>
+    </form>
+  </dialog>
+
+  <!-- ── QUIZ DELETE MODAL ── -->
+  <dialog id="quiz-delete-modal" class="modal">
+    <div class="modal-box max-w-md rounded-2xl border border-base-300 bg-base-100">
+      <header class="mb-5">
+        <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-2">
+          {% trans "Quiz" %} · {% trans "Settings" %}
+        </p>
+        <h2 class="serif font-medium leading-none tracking-tight text-2xl">
+          <span class="text-error">{% trans "Delete" %}</span> <span class="text-base-content/60">{% trans "quiz" %}</span>
+        </h2>
+      </header>
+
+      <p class="text-sm text-base-content/70 mb-6">
+        {% trans "This will permanently remove the quiz, all its rounds, and their answers. This cannot be undone." %}
+      </p>
+
+      <form method="post" action="{% url 'quizzmaker:delete' quiz.pk %}" class="flex items-center gap-3">
+        {% csrf_token %}
+        <button type="submit" class="btn-as-link">
+          {% trans "Delete quiz" %}
+        </button>
+        <button type="button" class="btn-as-link-ghost"
+                onclick="document.getElementById('quiz-delete-modal').close()">
+          {% trans "Cancel" %}
+        </button>
       </form>
     </div>
     <form method="dialog" class="modal-backdrop">
@@ -566,6 +617,15 @@
 
       function urlFor(pk) { return baseUrl.replace(/\/0\/$/, `/${pk}/`); }
 
+      const MARK_ON = "var(--color-primary)";
+      const MARK_OFF = "color-mix(in oklch, var(--color-base-content) 20%, transparent)";
+      function setMarker(pk, on) {
+        const dot = document.querySelector(`[data-marker-answer="${pk}"]`);
+        if (dot) dot.style.background = on ? MARK_ON : MARK_OFF;
+        const tick = document.querySelector(`[data-marker-text="${pk}"]`);
+        if (tick) tick.style.color = on ? MARK_ON : "color-mix(in oklch, var(--color-base-content) 25%, transparent)";
+      }
+
       function send(pk, body) {
         fetch(urlFor(pk), {
           method: "POST",
@@ -574,13 +634,42 @@
         });
       }
 
-      grid.querySelectorAll("[data-answer-pk]").forEach(card => {
+      const createUrl = grid.dataset.answerCreateUrl;     // type_input only
+      const deleteBase = grid.dataset.answerDeleteBase;   // type_input only
+      const placeholder = grid.dataset.answerPlaceholder || "";
+      const tiList = document.getElementById("ti-list");
+
+      // type_input: the single card marker is lit when ANY accepted answer has text.
+      function refreshTypeInputMarker() {
+        if (!tiList) return;
+        const any = [...tiList.querySelectorAll("[data-answer-text]")].some(i => i.value.trim() !== "");
+        const tick = document.querySelector("[data-marker-text]");
+        if (tick) tick.style.color = any ? MARK_ON : "color-mix(in oklch, var(--color-base-content) 25%, transparent)";
+      }
+
+      function updateDelVisibility() {
+        if (!tiList) return;
+        const rows = tiList.querySelectorAll(".ti-row");
+        rows.forEach(row => {
+          const d = row.querySelector("[data-answer-del]");
+          if (d) d.style.display = rows.length > 1 ? "" : "none";
+        });
+      }
+
+      function wireRow(card) {
         const pk = card.dataset.answerPk;
         const txt = card.querySelector("[data-answer-text]");
         const chk = card.querySelector("[data-answer-correct]");
+        const isTI = !chk;
+
+        function refreshMarker() {
+          if (isTI) refreshTypeInputMarker();
+          else setMarker(pk, chk.checked);
+        }
 
         let saveTimer;
         txt.addEventListener("input", () => {
+          refreshMarker();
           clearTimeout(saveTimer);
           saveTimer = setTimeout(() => send(pk, "text=" + encodeURIComponent(txt.value)), 400);
         });
@@ -590,10 +679,50 @@
         });
         if (chk) {
           chk.addEventListener("change", () => {
+            refreshMarker();
             send(pk, "is_correct=" + (chk.checked ? "1" : "0"));
           });
         }
-      });
+        const del = card.querySelector("[data-answer-del]");
+        if (del && deleteBase) {
+          del.addEventListener("click", () => {
+            if (tiList && tiList.querySelectorAll(".ti-row").length <= 1) return;
+            fetch(deleteBase.replace("/0/delete/", `/${pk}/delete/`), {
+              method: "POST", headers: { "X-CSRFToken": csrf },
+            }).then(r => {
+              if (r.ok) { card.remove(); updateDelVisibility(); refreshTypeInputMarker(); }
+            });
+          });
+        }
+      }
+
+      grid.querySelectorAll("[data-answer-pk]").forEach(wireRow);
+      updateDelVisibility();
+
+      const addBtn = document.getElementById("ti-add");
+      if (addBtn && createUrl && tiList) {
+        addBtn.addEventListener("click", () => {
+          fetch(createUrl, { method: "POST", headers: { "X-CSRFToken": csrf } })
+            .then(r => r.json())
+            .then(data => {
+              if (!data.ok) return;
+              const row = document.createElement("div");
+              row.className = "ti-row border-2 border-base-300 rounded-xl px-8 py-5 flex items-center gap-4 focus-within:border-primary transition";
+              row.dataset.answerPk = data.pk;
+              row.innerHTML =
+                `<i data-lucide="pencil-line" class="w-6 h-6 text-base-content/40 shrink-0"></i>
+                 <input type="text" value="" data-answer-text
+                        class="flex-1 bg-transparent text-2xl text-base-content focus:outline-none placeholder:text-base-content/40 text-center" />
+                 <button type="button" data-answer-del class="btn btn-xs btn-circle btn-ghost text-base-content/40 hover:text-error shrink-0"><i data-lucide="x" class="w-4 h-4"></i></button>`;
+              row.querySelector("input").placeholder = placeholder;
+              tiList.appendChild(row);
+              wireRow(row);
+              updateDelVisibility();
+              if (window.lucide) lucide.createIcons();
+              row.querySelector("input").focus();
+            });
+        });
+      }
     })();
   </script>
 

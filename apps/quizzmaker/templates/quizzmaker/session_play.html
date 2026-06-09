@@ -1,0 +1,332 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Playing" %} · Teachka{% endblock title %}
+
+{% block content %}
+<section class="min-h-[70vh] px-4 py-6 md:px-10 flex flex-col">
+  <div class="flex justify-end mb-2">
+    <button type="button" class="btn-as-link"
+            onclick="document.getElementById('leave-modal').showModal()">
+      {% trans "Leave" %}
+    </button>
+  </div>
+
+  <dialog id="leave-modal" class="modal">
+    <div class="modal-box max-w-sm rounded-2xl border border-base-300 bg-base-100">
+      <header class="mb-4">
+        <h2 class="serif font-medium leading-none tracking-tight text-2xl">
+          <span class="text-error">{% trans "Leave" %}</span> <span class="text-base-content/60">{% trans "the game?" %}</span>
+        </h2>
+      </header>
+      <p class="text-sm text-base-content/70 mb-6">
+        {% trans "You'll lose your score and your spot in this game." %}
+      </p>
+      <form method="post" action="{% url 'quizzmaker:session_leave' code %}" class="flex items-center gap-3">
+        {% csrf_token %}
+        <button type="submit" class="btn-as-link">{% trans "Leave" %}</button>
+        <button type="button" class="btn-as-link-ghost"
+                onclick="document.getElementById('leave-modal').close()">
+          {% trans "Cancel" %}
+        </button>
+      </form>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+      <button>close</button>
+    </form>
+  </dialog>
+  <div id="app" class="flex-1 flex flex-col items-center justify-center text-center w-full max-w-2xl mx-auto">
+    <p class="text-base-content/50">{% trans "Connecting…" %}</p>
+  </div>
+</section>
+
+<script id="play-i18n" type="application/json">
+{
+  "waiting": "{% trans 'You are in! Waiting for the host to start…' %}",
+  "lobby_hint": "{% trans 'Keep this screen open.' %}",
+  "answer_locked": "{% trans 'Answers locked' %}",
+  "waiting_others": "{% trans 'Answer submitted, waiting for the round to end…' %}",
+  "type_answer": "{% trans 'Type your answer' %}",
+  "submit": "{% trans 'Submit' %}",
+  "correct": "{% trans 'Correct!' %}",
+  "partial": "{% trans 'Partly right' %}",
+  "missed": "{% trans 'Missed' %}",
+  "rank": "{% trans 'Rank' %}",
+  "score": "{% trans 'Score' %}",
+  "streak": "{% trans 'Streak' %}",
+  "final": "{% trans 'Final result' %}",
+  "thanks": "{% trans 'Thanks for playing!' %}",
+  "reconnecting": "{% trans 'Reconnecting…' %}",
+  "host_left": "{% trans 'Host disconnected, waiting for them to return…' %}",
+  "leaderboard": "{% trans 'Leaderboard' %}",
+  "pick_one": "{% trans 'Pick one' %}",
+  "pick_all": "{% trans 'Pick all that apply' %}"
+}
+</script>
+
+<script>
+(function () {
+  const CODE = "{{ code }}";
+  const HOME = "{% url 'quizzmaker:home' %}";
+  const T = JSON.parse(document.getElementById("play-i18n").textContent);
+  // All options use the current theme's primary color.
+  const OPT_BG = Array(4).fill("var(--color-primary)");
+  const OPT_FG = Array(4).fill("var(--color-primary-content)");
+  const LETTERS = ["A", "B", "C", "D"];
+  const root = document.getElementById("app");
+  // Streak flame, filled with the theme primary colour.
+  const FLAME = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"/></svg>`;
+  function streakBadge(n) { return n > 1 ? `<span class="inline-flex items-center gap-0.5 text-xs text-base-content/60">${FLAME}${n}</span>` : ""; }
+
+  let ws = null, state = null, curRound = -1, closing = false;
+  let selected = new Set(), typed = "", locked = false, answered = false;
+
+  function connect() {
+    const scheme = location.protocol === "https:" ? "wss" : "ws";
+    ws = new WebSocket(`${scheme}://${location.host}/ws/quiz/${CODE}/`);
+    ws.onmessage = (e) => handle(JSON.parse(e.data));
+    ws.onclose = (e) => {
+      if (closing) return;
+      // 4004 = game gone, 4003 = not allowed: stop looping, leave.
+      if (e.code === 4003 || e.code === 4004) { closing = true; window.location.href = HOME; return; }
+      setTimeout(connect, 1500);
+    };
+  }
+  function send(obj) { if (ws && ws.readyState === 1) ws.send(JSON.stringify(obj)); }
+
+  function handle(msg) {
+    if (msg.type === "state") { onState(msg); }  // host back / any update clears the notice
+    else if (msg.type === "host_left") { renderHostLeft(); }
+    else if (msg.type === "closed") { closing = true; window.location.href = HOME; }
+    else if (msg.type === "error") { /* transient; ignore */ }
+  }
+
+  function renderHostLeft() {
+    clear();
+    root.appendChild(el(`
+      <div class="space-y-4 flex flex-col items-center">
+        <div class="w-16 h-16 rounded-2xl bg-warning/15 flex items-center justify-center text-warning">
+          <i data-lucide="plug-zap" class="w-8 h-8"></i>
+        </div>
+        <p class="serif text-2xl font-medium">${T.host_left}</p>
+      </div>`));
+    if (window.lucide) lucide.createIcons();
+  }
+
+  function onState(s) {
+    // New question -> reset local answer state.
+    if (s.phase === "question" && s.current_round !== curRound) {
+      curRound = s.current_round;
+      selected = new Set();
+      typed = "";
+      locked = false;
+      answered = false;
+      if (s.my_answer) {
+        // Reconnected after already answering -> show the waiting screen.
+        if (Array.isArray(s.my_answer)) s.my_answer.forEach((id) => selected.add(id));
+        else typed = s.my_answer;
+        answered = true;
+      }
+    }
+    if (s.phase !== "question") locked = true;
+    state = s;
+    render();
+  }
+
+  function el(html) { const d = document.createElement("div"); d.innerHTML = html.trim(); return d.firstChild; }
+  function clear() { root.innerHTML = ""; }
+
+  function render() {
+    clear();
+    if (!state) return;
+    if (state.phase === "lobby") renderLobby();
+    else if (state.phase === "question") renderQuestion();
+    else if (state.phase === "reveal") renderReveal();
+    else if (state.phase === "leaderboard") renderLeaderboard();
+    else if (state.phase === "ended") renderEnded();
+    if (window.lucide) lucide.createIcons();
+  }
+
+  function renderLobby() {
+    root.appendChild(el(`
+      <div class="space-y-4 flex flex-col items-center">
+        <div class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+          <i data-lucide="gamepad-2" class="w-8 h-8"></i>
+        </div>
+        <h2 class="serif text-2xl font-medium">${esc(state.quiz_title || "")}</h2>
+        <p class="text-base-content/70">${T.waiting}</p>
+        <p class="text-[11px] tracking-[2px] uppercase text-base-content/40">${T.lobby_hint}</p>
+      </div>`));
+  }
+
+  function renderQuestion() {
+    clear();
+    const r = state.round || {};
+
+    // Already answered (or round locked) -> waiting screen, no inputs.
+    if (answered || locked) { renderWaiting(); return; }
+
+    const wrap = el(`<div class="w-full space-y-5"></div>`);
+    if (state.show_question && r.question) {
+      wrap.appendChild(el(`<h2 class="serif text-2xl md:text-3xl font-medium leading-tight">${esc(r.question)}</h2>`));
+    }
+    // Timer bar sits between the question and the image.
+    wrap.appendChild(timerBar(r));
+    if (r.image_url) {
+      wrap.appendChild(el(`<figure class="w-full max-w-md mx-auto aspect-video bg-base-200 rounded-2xl overflow-hidden">
+        <img src="${r.image_url}" class="w-full h-full object-cover" /></figure>`));
+    }
+
+    if (r.question_type === "type_input") {
+      const box = el(`
+        <form class="flex flex-col gap-3 w-full max-w-md mx-auto">
+          <input type="text" inputmode="text" autocomplete="off"
+                 class="input input-bordered input-lg rounded-xl text-2xl w-full"
+                 style="text-align:center"
+                 placeholder="${T.type_answer}" value="${esc(typed)}" />
+          <button type="submit" class="btn-as-link w-full">${T.submit}</button>
+        </form>`);
+      const input = box.querySelector("input");
+      input.addEventListener("input", () => { typed = input.value; });
+      box.addEventListener("submit", (e) => {
+        e.preventDefault();
+        typed = input.value.trim();
+        if (!typed) return;
+        submitAnswer(typed);
+      });
+      wrap.appendChild(box);
+    } else {
+      // select_correct: pick option(s), then Submit.
+      const single = !!r.single_select;
+      wrap.appendChild(modeBadge(single));
+      const grid = el(`<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full"></div>`);
+      (r.answers || []).forEach((a, i) => {
+        const on = selected.has(a.id);
+        const ringStyle = on ? "outline:4px solid color-mix(in oklch, var(--color-primary) 30%, transparent);outline-offset:0;" : "";
+        const btn = el(`
+          <button class="rounded-2xl p-5 text-left font-semibold text-lg flex items-center gap-3 transition ${on ? "" : "opacity-90"}"
+                  style="background:${OPT_BG[i % 4]};color:${OPT_FG[i % 4]};${ringStyle}">
+            <span class="text-2xl font-bold w-8">${LETTERS[i % 4]}</span>
+            <span class="flex-1 whitespace-normal">${state.show_question ? esc(a.text) : ""}</span>
+            ${on ? '<span class="text-2xl">✓</span>' : ""}
+          </button>`);
+        btn.addEventListener("click", () => {
+          if (single) {
+            // Radio behaviour: only one option may be selected.
+            if (selected.has(a.id)) selected.clear();
+            else { selected.clear(); selected.add(a.id); }
+          } else {
+            if (selected.has(a.id)) selected.delete(a.id); else selected.add(a.id);
+          }
+          renderQuestion();
+        });
+        grid.appendChild(btn);
+      });
+      wrap.appendChild(grid);
+      const submit = el(`<button class="btn-as-link w-full max-w-md mx-auto" ${selected.size ? "" : "disabled"}>${T.submit}</button>`);
+      submit.addEventListener("click", () => {
+        if (!selected.size) return;
+        submitAnswer(Array.from(selected));
+      });
+      wrap.appendChild(submit);
+    }
+    root.appendChild(wrap);
+  }
+
+  function submitAnswer(value) {
+    send({ action: "answer", round_idx: curRound, value });
+    answered = true;
+    renderQuestion();
+  }
+
+  function modeBadge(single) {
+    const icon = single ? "circle-dot" : "list-checks";
+    const label = single ? T.pick_one : T.pick_all;
+    return el(`
+      <div class="inline-flex items-center gap-2 self-center px-3 py-1 rounded-full bg-base-200 text-base-content/70 text-[11px] tracking-[2px] uppercase font-bold">
+        <i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}
+      </div>`);
+  }
+
+  function renderLeaderboard() {
+    const lb = state.leaderboard || [];
+    const mine = state.me || null;
+    const rows = lb.slice(0, 8).map((row) => {
+      const me_ = mine && row.nickname === mine.nickname;
+      const style = me_ ? "background:color-mix(in oklch, var(--color-primary) 15%, transparent);box-shadow:inset 0 0 0 2px color-mix(in oklch, var(--color-primary) 30%, transparent);" : "";
+      return `<li class="flex justify-between items-center px-4 py-2.5 rounded-xl ${me_ ? "" : "bg-base-200"}" style="${style}">
+         <span class="flex items-center gap-3"><b class="w-6 text-base-content/50">#${row.rank}</b> ${esc(row.nickname)} ${streakBadge(row.streak)}</span>
+         <span class="font-semibold tabular-nums">${row.score}</span></li>`;
+    }).join("");
+    root.appendChild(el(`
+      <div class="space-y-5 w-full">
+        <h2 class="serif text-2xl font-medium text-center">${T.leaderboard}</h2>
+        ${mine ? `<p class="text-center text-base-content/70">${T.rank} <b>#${mine.rank}</b> · ${mine.score} ${T.score}</p>` : ""}
+        <ul class="space-y-2 max-w-md mx-auto text-left">${rows}</ul>
+      </div>`));
+  }
+
+  function renderWaiting() {
+    clear();
+    root.appendChild(el(`
+      <div class="space-y-4 flex flex-col items-center">
+        <div class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+          <i data-lucide="check" class="w-8 h-8"></i>
+        </div>
+        <p class="serif text-2xl font-medium">${T.waiting_others}</p>
+      </div>`));
+    if (window.lucide) lucide.createIcons();
+  }
+
+  function timerBar(r) {
+    const track = el(`<div class="w-full h-2 rounded-full bg-base-300/50 overflow-hidden"></div>`);
+    if (!r.time_limit || !state.round_started_at) { track.style.display = "none"; return track; }
+    const fill = el(`<div class="h-full rounded-full" style="width:100%;background:var(--color-primary);transition:width .25s linear;"></div>`);
+    track.appendChild(fill);
+    function tick() {
+      const frac = Math.max(0, Math.min(1, 1 - (Date.now() / 1000 - state.round_started_at) / r.time_limit));
+      fill.style.width = (frac * 100) + "%";
+      if (frac > 0 && !locked) setTimeout(tick, 250);
+    }
+    tick();
+    return track;
+  }
+
+  function renderReveal() {
+    const me = (state.reveal && state.reveal.me) || { points: 0, full: false, earned: false, score: 0, streak: 0, rank: null };
+    let label = T.missed, color = "#ef4444";
+    if (me.full) { label = T.correct; color = "#22c55e"; }
+    else if (me.earned) { label = T.partial; color = "#f59e0b"; }
+    root.appendChild(el(`
+      <div class="space-y-5 w-full">
+        <h2 class="serif text-4xl font-medium" style="color:${color}">${label}</h2>
+        <p class="text-2xl font-semibold">+${me.points}</p>
+        <div class="flex items-center justify-center gap-6 text-sm text-base-content/70">
+          <span>${T.rank}: <b>#${me.rank ?? "–"}</b></span>
+          <span>${T.score}: <b>${me.score}</b></span>
+          <span>${T.streak}: <b>${me.streak}</b></span>
+        </div>
+      </div>`));
+  }
+
+  function renderEnded() {
+    const lb = state.leaderboard || [];
+    const mine = state.me || null;
+    const rows = lb.slice(0, 5).map((row) =>
+      `<li class="flex justify-between px-4 py-2 rounded-xl ${mine && row.nickname === mine.nickname ? "bg-primary/10" : "bg-base-200"}">
+         <span><b>#${row.rank}</b> ${esc(row.nickname)}</span><span class="font-semibold">${row.score}</span></li>`).join("");
+    root.appendChild(el(`
+      <div class="space-y-5 w-full">
+        <h2 class="serif text-2xl font-medium">${T.final}</h2>
+        ${mine ? `<p class="text-lg">${T.rank} <b>#${mine.rank}</b> · ${mine.score} ${T.score}</p>` : ""}
+        <ul class="space-y-2 text-left max-w-sm mx-auto">${rows}</ul>
+        <p class="text-base-content/60">${T.thanks}</p>
+      </div>`));
+  }
+
+  function esc(s) { const d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; }
+
+  connect();
+})();
+</script>
+{% endblock content %}

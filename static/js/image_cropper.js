@@ -96,6 +96,15 @@
     const focusXEl = form.querySelector(`input[data-image-focus="x"][data-input-id="${inputId}"]`);
     const focusYEl = form.querySelector(`input[data-image-focus="y"][data-input-id="${inputId}"]`);
 
+    // Custom file control: reflect the chosen filename (native text is browser-locale only).
+    const fileNameEl = fileInput.closest("div")?.querySelector("[data-image-filename]");
+    const emptyText = fileInput.dataset.imageEmpty || "";
+    function refreshFileName() {
+      if (!fileNameEl) return;
+      const f = fileInput.files && fileInput.files[0];
+      fileNameEl.textContent = f ? f.name : emptyText;
+    }
+
     function showSrc(src, focusX, focusY) {
       full.onload = () => init(focusX, focusY);
       full.src = src;
@@ -121,10 +130,12 @@
       card.removeAttribute("src");
       wrap.classList.add("hidden");
       if (removeBtn) removeBtn.style.display = "none";
+      refreshFileName();
     }
 
     fileInput.addEventListener("change", (e) => {
       const file = e.target.files && e.target.files[0];
+      refreshFileName();
       if (!file) { clearFile(); return; }
       showFile(file);
     });

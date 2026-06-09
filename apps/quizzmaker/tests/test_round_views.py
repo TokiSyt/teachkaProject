@@ -157,7 +157,8 @@ class TestRoundReorder:
 @pytest.mark.django_db
 class TestQuizFinalize:
     def test_recalculates_totals_and_redirects_home(self, authenticated_client, quiz):
-        RoundFactory(quiz=quiz, time_limit=90, points=20, order=1)
+        r = RoundFactory(quiz=quiz, time_limit=90, points=20, order=1)
+        AnswerFactory(round=r, text="A", is_correct=True)
         resp = authenticated_client.post(reverse("quizzmaker:quiz_finalize", kwargs={"pk": quiz.pk}))
         assert resp.status_code == 302
         assert resp.url == reverse("quizzmaker:home")
@@ -188,6 +189,36 @@ class TestAnswerUpdate:
         url = reverse("quizzmaker:answer_update", kwargs={"pk": quiz.pk, "answer_pk": ans.pk})
         resp = client.post(url, {"text": "hacked"})
         assert resp.status_code == 404
+
+
+@pytest.mark.django_db
+class TestAnswerCreateDelete:
+    def test_create_adds_blank_answer(self, authenticated_client, quiz, round_obj):
+        url = reverse("quizzmaker:answer_create", kwargs={"pk": quiz.pk, "round_pk": round_obj.pk})
+        resp = authenticated_client.post(url)
+        assert resp.status_code == 200
+        assert resp.json()["ok"] is True
+        assert round_obj.answers.count() == 1
+
+    def test_delete_removes_answer(self, authenticated_client, quiz, round_obj):
+        a1 = AnswerFactory(round=round_obj, text="one")
+        AnswerFactory(round=round_obj, text="two")
+        url = reverse("quizzmaker:answer_delete", kwargs={"pk": quiz.pk, "answer_pk": a1.pk})
+        resp = authenticated_client.post(url)
+        assert resp.status_code == 200
+        assert round_obj.answers.count() == 1
+
+    def test_cannot_delete_last_answer(self, authenticated_client, quiz, round_obj):
+        only = AnswerFactory(round=round_obj, text="solo")
+        url = reverse("quizzmaker:answer_delete", kwargs={"pk": quiz.pk, "answer_pk": only.pk})
+        resp = authenticated_client.post(url)
+        assert resp.status_code == 400
+        assert round_obj.answers.count() == 1
+
+    def test_other_user_cannot_create(self, client, quiz, round_obj, other_user):
+        client.login(username="otheruser", password="otherpass123")
+        url = reverse("quizzmaker:answer_create", kwargs={"pk": quiz.pk, "round_pk": round_obj.pk})
+        assert client.post(url).status_code == 404
 
 
 @pytest.mark.django_db

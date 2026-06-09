@@ -130,10 +130,10 @@
 }
 
 [data-theme="light"] {
-  --color-base-100: oklch(100% 0.00011 271.152);
-  --color-base-200: oklch(100% 0.00011 271.152);
-  --color-base-300: oklch(86% 0.002 247);
-  --color-primary: oklch(60.221% 0.21537 310.815); /* change this — DaisyUI light default is dark blue */
+  --color-base-100: oklch(98.554% 0.00621 317.003); /*sidebar + inputs*/
+  --color-base-200: oklch(96.787% 0.01432 308.034); /*Background*/
+  --color-base-300: oklch(86.02% 0.00186 249.044); /*Borders*/
+  --color-primary: oklch(60.221% 0.21537 310.815);
   --color-primary-content: oklch(100% 0 0);
 }
 
@@ -864,7 +864,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   border-color: oklch(83% 0.075 354) !important;
 }
 
-[data-theme="pastel"] .rounded-2xl,
+[data-theme="pastel"] .rounded-2xl:not(.quiz-correct),
 [data-theme="pastel"] .rounded-lg:not(#sidebar *) {
   box-shadow: 0 2px 8px oklch(70% 0.060 354 / 0.15) !important;
 }
@@ -993,9 +993,12 @@ input[type="password"]::-webkit-textfield-decoration-container {
   background-color: var(--form-background) !important;
 }
 
-/* ── Light theme: toggle off-state knob (white on track) ── */
+/* ── Light theme: toggle off-state knob ──
+   Track is near-white (--form-background: #f8f9fa), so a white knob vanishes.
+   Use a gray knob + border that stay visible on light containers. */
 [data-theme="light"] .toggle:not(:checked) {
-  color: var(--color-base-100) !important;
+  color: var(--color-base-300) !important;
+  border-color: color-mix(in oklch, var(--color-base-content) 30%, transparent) !important;
 }
 
 /* Select and non-ghost inputs: ensure a visible border against light backgrounds */

@@ -27,8 +27,13 @@
         <i data-lucide="search" class="w-4 h-4"></i>
       </button>
     </form>
+    <a href="{% url 'quizzmaker:join' %}"
+       class="btn-as-link ml-auto">
+      <i data-lucide="log-in" class="w-4 h-4"></i>
+      {% trans "Join a game" %}
+    </a>
     <a href="{% url 'quizzmaker:create' %}"
-       class="btn btn-primary btn-sm rounded-xl px-5 ml-auto border-none shadow-sm">
+       class="btn-as-link">
       <i data-lucide="plus" class="w-4 h-4"></i>
       {% trans "Create a Quizz" %}
     </a>
@@ -69,6 +74,17 @@
                title="{% trans 'Edit quiz' %}">
               <i data-lucide="pencil" class="w-4 h-4"></i>
             </a>
+          {% endif %}
+          {% if user.is_authenticated %}
+            <form method="post" action="{% url 'quizzmaker:host_create' quiz.pk %}"
+                  class="absolute top-2 left-2 z-10">
+              {% csrf_token %}
+              <button type="submit"
+                      class="btn btn-sm btn-circle btn-primary border-none shadow"
+                      title="{% trans 'Host live game' %}">
+                <i data-lucide="play" class="w-4 h-4"></i>
+              </button>
+            </form>
           {% endif %}
           {% if quiz.logo %}
             <figure class="h-40 sm:h-44 bg-base-200">

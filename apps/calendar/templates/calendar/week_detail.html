@@ -127,7 +127,7 @@
           {% for h in d.holidays %}
           {% with hsub=h|holiday_subject hdesc=h|holiday_description hname=h.name|holiday_name %}
           <span class="relative z-10 flex items-center gap-1 truncate rounded-[6px] px-2 md:px-1.5 py-1 md:py-0.5 text-[12px] md:text-[10px] font-semibold bg-primary/15 text-primary leading-5 border-l-2 border-primary"
-                title="{{ hsub|default:hname }}{% if hdesc %} — {{ hdesc }}{% endif %}">
+                title="{{ hsub|default:hname }}{% if hdesc %}: {{ hdesc }}{% endif %}">
             <i data-lucide="{% if h.country == 'INTL' %}globe{% else %}star{% endif %}" class="w-3 h-3 md:w-2.5 md:h-2.5 opacity-60 shrink-0"></i>
             <span class="truncate">{{ hname }}</span>
           </span>

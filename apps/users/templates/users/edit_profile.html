@@ -102,7 +102,7 @@
             <select name="country"
                     id="id_country"
                     class="select select-bordered w-full">
-              <option value="" {% if not form.country.value %}selected{% endif %}>{% trans "— None —" %}</option>
+              <option value="" {% if not form.country.value %}selected{% endif %}>{% trans "None" %}</option>
               {% for value, label in form.fields.country.choices %}
                 {% if value %}
                 <option value="{{ value }}" {% if form.country.value == value %}selected{% endif %}>{{ label }}</option>

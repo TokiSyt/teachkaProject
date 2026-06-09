@@ -1,0 +1,23 @@
+{% load i18n %}
+{% comment %}
+Top-right correct-answer markers for a round card.
+select_correct: 4 dots (A–D), lit primary when that answer is marked correct.
+type_input: one check, lit primary when an answer text is set.
+{% endcomment %}
+<span class="absolute top-1.5 right-2 flex items-center gap-1"
+      title="{% if round.has_correct_answer %}{% trans 'Correct answer set' %}{% else %}{% trans 'No correct answer yet' %}{% endif %}">
+  {% if round.question_type == "select_correct" %}
+    {% for ans in round.answers.all|slice:":4" %}
+      <span class="w-1.5 h-1.5 rounded-full transition" data-marker-answer="{{ ans.pk }}"
+            data-marker-on="{% if ans.is_correct %}1{% else %}0{% endif %}"
+            style="background: {% if ans.is_correct %}var(--color-primary){% else %}color-mix(in oklch, var(--color-base-content) 20%, transparent){% endif %};"></span>
+    {% endfor %}
+  {% elif round.question_type == "type_input" %}
+    {% with first=round.answers.first %}
+    <span class="inline-flex" data-marker-text="{{ first.pk }}"
+          style="color: {% if round.has_correct_answer %}var(--color-primary){% else %}color-mix(in oklch, var(--color-base-content) 25%, transparent){% endif %};">
+      <i data-lucide="check" class="w-3 h-3"></i>
+    </span>
+    {% endwith %}
+  {% endif %}
+</span>
