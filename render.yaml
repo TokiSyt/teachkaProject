@@ -1,7 +1,7 @@
 databases:
   # Created + restored manually in Frankfurt. Blueprint adopts it by name.
   - name: teachka-db-eu
-    plan: basic_256mb
+    plan: basic-256mb
     region: frankfurt
     databaseName: teachkadbeu
     user: teachkadbeu_user
