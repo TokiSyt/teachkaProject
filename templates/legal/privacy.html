@@ -161,7 +161,7 @@
           <ul class="text-sm text-base-content/70 leading-relaxed list-disc pl-5 space-y-2 m-0">
             <li>{% trans "Right of access to your personal data (Art. 15 GDPR)." %}</li>
             <li>{% trans "Right to rectification of inaccurate data (Art. 16 GDPR)." %}</li>
-            <li>{% trans "Right to erasure (\"right to be forgotten\", Art. 17 GDPR) — you can delete your account and all data from " %}<a href="{% url 'profile:settings' %}" class="link link-primary">{% trans "Settings → Delete account" %}</a>.</li>
+            <li>{% trans 'Right to erasure ("right to be forgotten", Art. 17 GDPR) — you can delete your account and all data from ' %}<a href="{% url 'profile:settings' %}" class="link link-primary">{% trans "Settings → Delete account" %}</a>.</li>
             <li>{% trans "Right to restriction of processing (Art. 18 GDPR)." %}</li>
             <li>{% trans "Right to data portability (Art. 20 GDPR)." %}</li>
             <li>{% trans "Right to object to processing (Art. 21 GDPR)." %}</li>
@@ -194,7 +194,7 @@
             <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "9. Cookies and tracking" %}</h2>
           </div>
           <p class="text-sm text-base-content/70 leading-relaxed mb-3">{% trans "We use only strictly necessary cookies: a session cookie to keep you logged in and a CSRF cookie for security (no consent required under ePrivacy). We store your theme preference in localStorage, which is not a cookie and does not leave your device. We do not use advertising or third-party analytics cookies." %}</p>
-          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "We do not track users across third-party websites and therefore do not respond to \"Do Not Track\" browser signals." %}</p>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans 'We do not track users across third-party websites and therefore do not respond to "Do Not Track" browser signals.' %}</p>
         </div>
       </article>
 

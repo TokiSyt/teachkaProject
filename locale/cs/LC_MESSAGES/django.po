@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Teachka\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-06 08:15+0000\n"
+"POT-Creation-Date: 2026-06-09 11:57+0000\n"
 "PO-Revision-Date: 2026-02-14 21:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
@@ -68,6 +68,7 @@ msgstr "O popisech svátků"
 #: apps/calendar/templates/calendar/week_detail.html:22
 #: apps/calendar/templates/calendar/week_detail.html:36
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:30
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:22
 msgid "Close"
 msgstr "Zavřít"
 
@@ -107,7 +108,7 @@ msgstr "Kontaktujte nás"
 #: apps/calendar/templates/calendar/event_form.html:14
 #: apps/calendar/templates/calendar/home.html:4
 #: apps/calendar/templates/calendar/week_detail.html:49
-#: templates/base.html:168 templates/home.html:308
+#: templates/base.html:168 templates/home.html:310
 msgid "Calendar"
 msgstr "Kalendář"
 
@@ -116,7 +117,7 @@ msgstr "Kalendář"
 msgid "Today"
 msgstr "Dnes"
 
-#: apps/calendar/templates/calendar/day_detail.html:55 templates/home.html:218
+#: apps/calendar/templates/calendar/day_detail.html:55 templates/home.html:220
 msgid "Name day"
 msgstr "Jmeniny"
 
@@ -129,7 +130,7 @@ msgstr "Měsíc"
 #: apps/calendar/templates/calendar/home.html:69
 #: apps/calendar/templates/calendar/week_detail.html:4
 #: apps/calendar/templates/calendar/week_detail.html:58
-#: templates/home.html:212
+#: templates/home.html:214
 msgid "Week"
 msgstr "Týden"
 
@@ -170,7 +171,8 @@ msgstr "Nebezpečná zóna"
 #: apps/group_maker/templates/group_maker/confirm_delete.html:17
 #: apps/group_maker/templates/group_maker/home.html:47
 #: apps/point_system/templates/point_system/delete_column.html:22
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:431
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:446
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:546
 #: apps/users/templates/users/delete_account.html:16
 #: apps/users/templates/users/settings.html:106
 msgid "Delete"
@@ -224,10 +226,14 @@ msgstr "Trvale smazat"
 #: apps/point_system/templates/point_system/home.html:342
 #: apps/point_system/templates/point_system/new_column.html:86
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:70
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:330
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:414
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:446
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:509
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:345
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:429
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:461
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:524
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:561
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:32
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:64
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:30
 #: apps/users/templates/users/delete_account.html:45
 #: apps/users/templates/users/edit_profile.html:126
 msgid "Cancel"
@@ -240,8 +246,8 @@ msgstr "Událost"
 #: apps/calendar/templates/calendar/event_form.html:18
 #: apps/group_maker/templates/group_maker/list_edit.html:17
 #: apps/point_system/templates/point_system/edit_column.html:22
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:352
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:467
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:367
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:482
 #: apps/users/templates/users/edit_profile.html:17
 msgid "Edit"
 msgstr "Upravit"
@@ -250,9 +256,8 @@ msgstr "Upravit"
 #: apps/calendar/templates/calendar/week_detail.html:93
 #: apps/point_system/templates/point_system/new_column.html:21
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:15
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:273
 msgid "New"
-msgstr "Nová"
+msgstr "Nový"
 
 #: apps/calendar/templates/calendar/event_form.html:24
 msgid "Fill in the details below"
@@ -264,7 +269,7 @@ msgstr "Detaily události"
 
 #: apps/calendar/templates/calendar/event_form.html:40
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:40
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:474
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:489
 msgid "Title"
 msgstr "Název"
 
@@ -279,22 +284,23 @@ msgstr "např. Hodina matematiky, Rodičovská schůzka"
 #: apps/calendar/templates/calendar/event_form.html:151
 #: apps/contact/templates/contact/contact.html:184
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:48
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:292
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:367
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:482
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:307
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:382
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:497
 #: apps/users/templates/registration/register.html:98
 #: apps/users/templates/users/edit_profile.html:73
 #: apps/users/templates/users/edit_profile.html:101
 msgid "optional"
-msgstr "volitelné"
+msgstr "nepovinné"
 
 #: apps/calendar/templates/calendar/event_form.html:61
 msgid "e.g. Mathematics, History"
 msgstr "např. Matematika, Dějepis"
 
 #: apps/calendar/templates/calendar/event_form.html:70
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:84
 msgid "Start"
-msgstr "Začátek"
+msgstr "Začít"
 
 #: apps/calendar/templates/calendar/event_form.html:86
 msgid "End"
@@ -327,8 +333,8 @@ msgstr "Cíle, materiály, domácí úkoly..."
 #: apps/calendar/templates/calendar/event_form.html:166
 #: apps/group_maker/templates/group_maker/list_edit.html:85
 #: apps/point_system/templates/point_system/edit_column.html:98
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:410
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:505
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:425
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:520
 #: apps/users/templates/users/edit_profile.html:123
 msgid "Save changes"
 msgstr "Uložit změny"
@@ -358,12 +364,12 @@ msgid "Plans and events"
 msgstr "Plány a události"
 
 #: apps/calendar/templates/calendar/week_detail.html:60
-#: teachkaBaseProject/views.py:119
+#: teachkaBaseProject/views.py:135
 msgid "Even"
 msgstr "Sudý"
 
 #: apps/calendar/templates/calendar/week_detail.html:60
-#: teachkaBaseProject/views.py:119
+#: teachkaBaseProject/views.py:135
 msgid "Odd"
 msgstr "Lichý"
 
@@ -384,8 +390,8 @@ msgid "Bug report"
 msgstr "Hlášení chyby"
 
 #: apps/contact/models.py:12 apps/contact/templates/contact/contact.html:119
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:284
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:359
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:299
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:374
 msgid "Question"
 msgstr "Otázka"
 
@@ -395,7 +401,8 @@ msgstr "Žádost o funkci"
 
 #: apps/contact/templates/contact/contact.html:4
 #: apps/contact/templates/contact/contact.html:37 templates/base.html:156
-#: templates/base.html:325 templates/legal/privacy.html:93
+#: templates/base.html:322 templates/legal/privacy.html:39
+#: templates/legal/terms.html:39
 msgid "Contact"
 msgstr "Kontakt"
 
@@ -461,8 +468,8 @@ msgid "Your message"
 msgstr "Vaše zpráva"
 
 #: apps/contact/templates/contact/contact.html:162
-msgid "In one line — what is this about?"
-msgstr "Stručně – o čem to je?"
+msgid "In one line, what is this about?"
+msgstr "V jedné větě, čeho se to týká?"
 
 #: apps/contact/templates/contact/contact.html:170
 msgid "Message"
@@ -587,10 +594,8 @@ msgstr ""
 "hranicím."
 
 #: apps/grade_calculator/views.py:48
-#, fuzzy
-#| msgid "Maximum points available"
 msgid "Maximum points must be at least 4."
-msgstr "Žádné sloupce nejsou k dispozici"
+msgstr "Maximální počet bodů musí být alespoň 4."
 
 #: apps/group_divider/forms.py:7
 msgid "How many members per group?"
@@ -632,7 +637,7 @@ msgstr "Rozdělte skupinu na menší týmy"
 #: apps/point_system/templates/point_system/home.html:57
 #: apps/wheel/templates/wheel/home.html:40
 #: apps/wheel/templates/wheel/home.html:48
-#: apps/wheel/templates/wheel/home.html:50 templates/home.html:345
+#: apps/wheel/templates/wheel/home.html:50 templates/home.html:361
 msgid "members"
 msgstr "členů"
 
@@ -773,7 +778,7 @@ msgstr "Vytvořit skupinu"
 #: apps/group_maker/templates/group_maker/list_create.html:17
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:18
 msgid "Create"
-msgstr "Vytvořte si ho"
+msgstr "Vytvořit"
 
 #: apps/group_maker/templates/group_maker/list_create.html:20
 msgid "Add a group that you can use across all tools"
@@ -944,9 +949,9 @@ msgid "Point system"
 msgstr "Bodový systém"
 
 #: apps/point_system/templates/point_system/home.html:19
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:316
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:400
-#: templates/home.html:350
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:331
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:415
+#: templates/home.html:366
 msgid "Points"
 msgstr "Body"
 
@@ -1019,6 +1024,30 @@ msgstr "Žádné kladné body zaznamenány"
 msgid "Add one to start rewarding."
 msgstr "Přidej jeden a začni odměňovat."
 
+#: apps/point_system/templates/point_system/home.html:400
+msgid "enabled"
+msgstr "zapnuto"
+
+#: apps/point_system/templates/point_system/home.html:401
+msgid "pending…"
+msgstr "čeká se…"
+
+#: apps/point_system/templates/point_system/home.html:402
+msgid "saving…"
+msgstr "ukládání…"
+
+#: apps/point_system/templates/point_system/home.html:403
+msgid "saved"
+msgstr "uloženo"
+
+#: apps/point_system/templates/point_system/home.html:404
+msgid "save failed"
+msgstr "uložení selhalo"
+
+#: apps/point_system/templates/point_system/home.html:405
+msgid "save failed, refresh page"
+msgstr "uložení selhalo, obnov stránku"
+
 #: apps/point_system/templates/point_system/karma_dashboard.html:4
 msgid "Dashboard"
 msgstr "Přehled"
@@ -1028,6 +1057,7 @@ msgid "Member dashboard"
 msgstr "Individuální přehled člena"
 
 #: apps/point_system/templates/point_system/karma_dashboard.html:28
+#: templates/legal/security.html:16
 msgid "Overview"
 msgstr "Přehled"
 
@@ -1114,17 +1144,39 @@ msgstr "Sloupec '%(name)s' nenalezen."
 msgid "A column named '%(name)s' already exists."
 msgstr "Sloupec s názvem '%(name)s' již existuje."
 
+#: apps/quizzmaker/models.py:13
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:512
+msgid "Public"
+msgstr "Veřejný"
+
+#: apps/quizzmaker/models.py:14
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:513
+msgid "Private"
+msgstr "Soukromý"
+
+#: apps/quizzmaker/models.py:46
+msgid "Pick the correct answer"
+msgstr "Vyber správnou odpověď"
+
+#: apps/quizzmaker/models.py:47
+msgid "Write the answer"
+msgstr "Napiš odpověď"
+
+#: apps/quizzmaker/models.py:48
+msgid "Drag the answer into the blank"
+msgstr "Přetáhni odpověď na prázdné místo"
+
 #: apps/quizzmaker/templates/quizzmaker/_image_cropper.html:6
 msgid "Original"
 msgstr "Originál"
 
 #: apps/quizzmaker/templates/quizzmaker/_image_cropper.html:6
 msgid "shaded = cut"
-msgstr "šedé = oříznuto"
+msgstr "ztmavené = oříznuté"
 
 #: apps/quizzmaker/templates/quizzmaker/_image_cropper.html:14
 msgid "Drag the bright area to choose what is kept"
-msgstr "Přetáhněte světlou oblast pro výběr toho, co zachovat"
+msgstr "Tažením světlé oblasti vyber, co se zachová"
 
 #: apps/quizzmaker/templates/quizzmaker/_image_cropper.html:17
 msgid "Card preview"
@@ -1132,16 +1184,25 @@ msgstr "Náhled karty"
 
 #: apps/quizzmaker/templates/quizzmaker/_image_field.html:11
 msgid "Re-cut current image"
-msgstr "Znovu oříznout aktuální obrázek"
+msgstr "Znovu oříznout obrázek"
 
 #: apps/quizzmaker/templates/quizzmaker/_image_field.html:17
 msgid "Re-cut"
-msgstr "Znovu oříznout"
+msgstr "Oříznout"
 
 #: apps/quizzmaker/templates/quizzmaker/_image_field.html:23
-#: apps/quizzmaker/templates/quizzmaker/_image_field.html:34
+#: apps/quizzmaker/templates/quizzmaker/_image_field.html:39
 msgid "Remove"
-msgstr "Odstranit"
+msgstr "Odebrat"
+
+#: apps/quizzmaker/templates/quizzmaker/_image_field.html:31
+#: apps/quizzmaker/templates/quizzmaker/_image_field.html:36
+msgid "No file chosen"
+msgstr "Nevybrán žádný soubor"
+
+#: apps/quizzmaker/templates/quizzmaker/_image_field.html:34
+msgid "Choose file"
+msgstr "Vybrat soubor"
 
 #: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:11
 msgid "Search Quizzes"
@@ -1149,11 +1210,11 @@ msgstr "Hledat kvízy"
 
 #: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:17
 msgid "My Quizz Library"
-msgstr "Moje knihovna kvízů"
+msgstr "Moje knihovna"
 
 #: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:23
 msgid "Search your quizzes..."
-msgstr "Hledat své kvízy..."
+msgstr "Hledej ve svých kvízech..."
 
 #: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:23
 msgid "Search by title..."
@@ -1164,51 +1225,68 @@ msgid "Search"
 msgstr "Hledat"
 
 #: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:33
+msgid "Join a game"
+msgstr "Připojit se ke hře"
+
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:38
 msgid "Create a Quizz"
 msgstr "Vytvořit kvíz"
 
-#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:46
-msgid "No quizzes match"
-msgstr "Žádné kvízy neodpovídají"
-
-#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:48
-msgid "Try a different search"
-msgstr "Zkuste jiné hledání"
-
 #: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:51
+msgid "No quizzes match"
+msgstr "Žádný kvíz neodpovídá"
+
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:53
+msgid "Try a different search"
+msgstr "Zkus jiné hledání"
+
 #: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:56
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:61
 msgid "No quizzes yet"
 msgstr "Zatím žádné kvízy"
 
-#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:53
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:58
 msgid "Create your first quiz to get started"
 msgstr "Vytvoř svůj první kvíz a začni"
 
-#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:58
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:63
 msgid "Be the first to publish one"
-msgstr "Buďte první, kdo nějaký zveřejní"
+msgstr "Buď první, kdo nějaký zveřejní"
 
-#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:69
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:74
 msgid "Edit quiz"
 msgstr "Upravit kvíz"
 
-#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:93
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:84
+msgid "Host live game"
+msgstr "Spustit živou hru"
+
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:109
 msgid "pts"
 msgstr "b"
 
-#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:100
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:116
 #, python-format
 msgid "%(counter)s round has no time limit"
 msgid_plural "%(counter)s rounds have no time limit"
 msgstr[0] "%(counter)s kolo nemá časový limit"
 msgstr[1] "%(counter)s kola nemají časový limit"
-msgstr[2] "%(counter)s kol nemá časový limit"
+msgstr[2] "%(counter)s kola nemají časový limit"
 msgstr[3] "%(counter)s kol nemá časový limit"
+
+#: apps/quizzmaker/templates/quizzmaker/_round_markers.html:8
+msgid "Correct answer set"
+msgstr "Správná odpověď nastavena"
+
+#: apps/quizzmaker/templates/quizzmaker/_round_markers.html:8
+msgid "No correct answer yet"
+msgstr "Zatím bez správné odpovědi"
 
 #: apps/quizzmaker/templates/quizzmaker/home.html:4
 #: apps/quizzmaker/templates/quizzmaker/home.html:18
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:15
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:16
+#: templates/base.html:204
 msgid "Quizzes"
 msgstr "Kvízy"
 
@@ -1218,7 +1296,34 @@ msgstr "Čas na kvíz"
 
 #: apps/quizzmaker/templates/quizzmaker/home.html:21
 msgid "Build and run quick quizzes"
-msgstr "Vytvářejte a používejte rychlé kvízy"
+msgstr "Vytvářej a hraj rychlé kvízy"
+
+#: apps/quizzmaker/templates/quizzmaker/join.html:4
+#: apps/quizzmaker/templates/quizzmaker/join.html:13
+msgid "Join a quiz"
+msgstr "Připojit se ke kvízu"
+
+#: apps/quizzmaker/templates/quizzmaker/join.html:14
+msgid "Enter the code from your teacher's screen."
+msgstr "Zadej kód z obrazovky učitele."
+
+#: apps/quizzmaker/templates/quizzmaker/join.html:27
+#: apps/quizzmaker/templates/quizzmaker/join.html:32
+msgid "Game code"
+msgstr "Kód hry"
+
+#: apps/quizzmaker/templates/quizzmaker/join.html:39
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:79
+msgid "Nickname"
+msgstr "Přezdívka"
+
+#: apps/quizzmaker/templates/quizzmaker/join.html:41
+msgid "Your name"
+msgstr "Tvé jméno"
+
+#: apps/quizzmaker/templates/quizzmaker/join.html:44
+msgid "Join"
+msgstr "Připojit se"
 
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:4
 msgid "Create Quizz"
@@ -1233,12 +1338,12 @@ msgid "Title, logo, visibility"
 msgstr "Název, logo, viditelnost"
 
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:48
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:482
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:497
 msgid "Logo"
 msgstr "Logo"
 
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:56
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:493
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:508
 msgid "Visibility"
 msgstr "Viditelnost"
 
@@ -1265,143 +1370,405 @@ msgstr "Uložit a odejít"
 msgid "New round"
 msgstr "Nové kolo"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:78
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:114
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:175
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:188
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:79
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:116
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:177
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:190
 msgid "No question yet"
-msgstr "Zatím žádná otázka"
+msgstr "Zatím bez otázky"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:92
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:93
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:128
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:129
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:94
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:130
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:131
 msgid "Edit round"
 msgstr "Upravit kolo"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:99
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:100
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:135
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:136
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:442
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:101
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:137
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:138
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:457
 msgid "Delete round"
 msgstr "Smazat kolo"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:151
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:153
 msgid "No rounds yet"
 msgstr "Zatím žádná kola"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:154
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:156
 msgid "Tap"
-msgstr "Klikni"
+msgstr "Klepni na"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:154
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:156
 msgid "to add one"
-msgstr "pro přidání"
+msgstr "a přidej kolo"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:168
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:349
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:428
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:170
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:364
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:443
 #, python-format
 msgid "Round %(n)s"
 msgstr "Kolo %(n)s"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:168
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:170
 msgid "Preview"
 msgstr "Náhled"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:199
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:201
 msgid "Mark as correct"
 msgstr "Označit jako správné"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:213
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:215
 msgid "Answer"
 msgstr "Odpověď"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:230
-msgid "Type the correct answer"
-msgstr "Zadejte správnou odpověď"
-
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:227
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:235
-msgid "Participants will type their answer here. Match is case-insensitive."
-msgstr "Účastníci sem napíší svou odpověď. Nezáleží na velikosti písmen."
+msgid "Type an accepted answer"
+msgstr "Napiš uznávanou odpověď"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:249
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:239
+msgid "Remove answer"
+msgstr "Odebrat odpověď"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:248
+msgid "Add accepted answer"
+msgstr "Přidat uznávanou odpověď"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:252
+msgid "Players match any of these. Case-insensitive."
+msgstr "Hráči musí trefit některou z nich. Nezáleží na velikosti písmen."
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:264
 msgid "Nothing to preview"
 msgstr "Není co zobrazit"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:251
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:266
 msgid "Create your first round"
 msgstr "Vytvoř své první kolo"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:254
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:269
 msgid ""
 "Use the plus button on the left to add a round. The live preview will appear"
 " here as you build."
 msgstr ""
-"Pomocí tlačítka + vlevo přidejte kolo. Živý náhled se zobrazí zde, jak "
-"budete tvořit."
+"Pomocí tlačítka plus vlevo přidej kolo. Náhled se zde zobrazí během tvorby."
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:270
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:349
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:428
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:464
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:285
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:364
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:443
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:479
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:543
 msgid "Quiz"
 msgstr "Kvíz"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:273
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:352
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:288
+msgctxt "feminine noun"
+msgid "New"
+msgstr "Nová"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:288
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:367
 msgid "question"
 msgstr "otázka"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:292
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:367
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:307
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:382
 msgid "Image"
 msgstr "Obrázek"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:300
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:380
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:315
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:395
 msgid "Question type"
 msgstr "Typ otázky"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:309
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:393
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:324
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:408
 msgid "Duration"
-msgstr "Doba trvání"
+msgstr "Trvání"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:326
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:341
 msgid "Create round"
 msgstr "Vytvořit kolo"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:431
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:446
 msgid "round"
 msgstr "kolo"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:436
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:451
 msgid ""
 "This will permanently remove the round and its answers. This cannot be "
 "undone."
-msgstr ""
-"Toto trvale odstraní kolo a jeho odpovědi. Tuto akci nelze vrátit zpět."
+msgstr "Tímto trvale odstraníš kolo i jeho odpovědi. Nelze vrátit zpět."
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:464
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:479
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:543
 #: apps/users/templates/users/profile.html:75
 #: apps/users/templates/users/settings.html:4
 #: apps/users/templates/users/settings.html:17 templates/base.html:155
 msgid "Settings"
 msgstr "Nastavení"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:467
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:482
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:546
 msgid "quiz"
 msgstr "kvíz"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:497
-msgid "Public"
-msgstr "Veřejný"
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:528
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:557
+msgid "Delete quiz"
+msgstr "Smazat kvíz"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:498
-msgid "Private"
-msgstr "Soukromé"
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:551
+msgid ""
+"This will permanently remove the quiz, all its rounds, and their answers. "
+"This cannot be undone."
+msgstr ""
+"Tímto trvale odstraníš kvíz, všechna jeho kola i odpovědi. Nelze vrátit "
+"zpět."
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:4
+msgid "Hosting"
+msgstr "Hostování"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:11
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:29
+msgid "Close room"
+msgstr "Zavřít místnost"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:15
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:39
+msgid "Connecting…"
+msgstr "Připojování…"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:22
+msgid "the room?"
+msgstr "místnost?"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:26
+msgid ""
+"This ends the game for everyone and removes all players. This cannot be "
+"undone."
+msgstr ""
+"Tímto ukončíš hru pro všechny a odebereš všechny hráče. Nelze vrátit zpět."
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:44
+msgid "Player"
+msgstr "Hráč"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:48
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:54
+msgid "Edit name"
+msgstr "Upravit jméno"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:58
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:80
+msgid "Save"
+msgstr "Uložit"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:62
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:81
+msgid "Kick"
+msgstr "Vyhodit"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:75
+msgid "Join at"
+msgstr "Připoj se na"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:76
+msgid "or enter the code"
+msgstr "nebo zadej kód"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:77
+msgid "Players"
+msgstr "Hráči"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:78
+msgid "Edit player"
+msgstr "Upravit hráče"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:82
+msgid "Waiting for players…"
+msgstr "Čekání na hráče…"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:83
+msgid "Show question on player devices"
+msgstr "Zobrazit otázku na zařízeních hráčů"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:85
+msgid "Reveal answer"
+msgstr "Odhalit odpověď"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:86
+msgid "Next"
+msgstr "Další"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:87
+msgid "End game"
+msgstr "Ukončit hru"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:88
+msgid "Round"
+msgstr "Kolo"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:89
+msgid "of"
+msgstr "z"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:90
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:61
+msgid "Leaderboard"
+msgstr "Žebříček"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:91
+msgid "answered"
+msgstr "odpovědělo"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:92
+msgid "Final leaderboard"
+msgstr "Konečný žebříček"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:93
+msgid "Review questions"
+msgstr "Projít otázky"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:94
+msgid "Previous"
+msgstr "Předchozí"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:95
+msgid "Done"
+msgstr "Hotovo"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:96
+msgid "Correct answer"
+msgstr "Správná odpověď"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:97
+msgid "right"
+msgstr "správně"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:98
+msgid "wrong"
+msgstr "špatně"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:99
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:62
+msgid "Pick one"
+msgstr "Vyber jednu"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:100
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:63
+msgid "Pick all that apply"
+msgstr "Vyber všechny správné"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:101
+msgid "Standings"
+msgstr "Pořadí"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:237
+msgid "Players type their answer"
+msgstr "Hráči píší svou odpověď"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:4
+msgid "Playing"
+msgstr "Hraní"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:11
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:19
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:27
+msgid "Leave"
+msgstr "Odejít"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:19
+msgid "the game?"
+msgstr "ze hry?"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:23
+msgid "You'll lose your score and your spot in this game."
+msgstr "Přijdeš o své body i o své místo v této hře."
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:45
+msgid "You are in! Waiting for the host to start…"
+msgstr "Jsi ve hře! Čekáš, až hostitel začne…"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:46
+msgid "Keep this screen open."
+msgstr "Nech tuto obrazovku otevřenou."
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:47
+msgid "Answers locked"
+msgstr "Odpovědi uzamčeny"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:48
+msgid "Answer submitted, waiting for the round to end…"
+msgstr "Odpověď odeslána, čeká se na konec kola…"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:49
+msgid "Type your answer"
+msgstr "Napiš svou odpověď"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:50
+msgid "Submit"
+msgstr "Odeslat"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:51
+msgid "Correct!"
+msgstr "Správně!"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:52
+msgid "Partly right"
+msgstr "Částečně správně"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:53
+msgid "Missed"
+msgstr "Mimo"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:54
+msgid "Rank"
+msgstr "Pořadí"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:55
+msgid "Score"
+msgstr "Body"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:56
+msgid "Streak"
+msgstr "Série"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:57
+msgid "Final result"
+msgstr "Konečný výsledek"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:58
+msgid "Thanks for playing!"
+msgstr "Díky za hru!"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:59
+msgid "Reconnecting…"
+msgstr "Opětovné připojování…"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:60
+msgid "Host disconnected, waiting for them to return…"
+msgstr "Hostitel se odpojil, čeká se na jeho návrat…"
+
+#: apps/quizzmaker/views.py:202
+#, python-format
+msgid "Round %(n)s needs a correct answer before you can save."
+msgstr "Kolo %(n)s potřebuje správnou odpověď, než budeš moci uložit."
+
+#: apps/quizzmaker/views.py:213
+msgid "Quiz deleted."
+msgstr "Kvíz smazán."
+
+#: apps/quizzmaker/views.py:331
+msgid "Game not found. Check the code."
+msgstr "Hra nenalezena. Zkontroluj kód."
+
+#: apps/quizzmaker/views.py:334
+msgid "You're hosting this game. Open it from your host screen."
+msgstr "Tuto hru hostuješ. Otevři ji ze své obrazovky hostitele."
 
 #: apps/timer/templates/timer/countdown.html:4
 #: apps/timer/templates/timer/countdown.html:13
@@ -1415,7 +1782,7 @@ msgstr "Odpočítávání"
 #: apps/timer/templates/timer/home.html:14
 #: apps/timer/templates/timer/home.html:17
 #: apps/timer/templates/timer/stopwatch.html:13 templates/base.html:198
-#: templates/home.html:294 templates/home.html:383
+#: templates/home.html:296 templates/home.html:399
 msgid "Timer"
 msgstr "Časovač"
 
@@ -1469,46 +1836,48 @@ msgid "Flags"
 msgstr "Označení"
 
 #: apps/users/forms.py:18
-#, fuzzy
-#| msgid "Configuration"
 msgid "Password Confirmation"
-msgstr "Nastavení"
+msgstr "Potvrzení hesla"
 
-#: apps/users/forms.py:34 apps/users/views.py:150
+#: apps/users/forms.py:21
+msgid "You must accept the Terms of Service and Privacy Policy to continue."
+msgstr ""
+"Pro pokračování musíte přijmout Podmínky služby a Zásady ochrany osobních "
+"údajů."
+
+#: apps/users/forms.py:38 apps/users/views.py:155
 msgid "An account with this email address already exists."
 msgstr "Účet s tímto e-mailem již existuje."
 
-#: apps/users/forms.py:40
+#: apps/users/forms.py:44
 msgid "An account with this username already exists."
 msgstr "Účet s tímto uživatelským jménem již existuje."
 
-#: apps/users/forms.py:57
-#, fuzzy
-#| msgid "Confirm password"
+#: apps/users/forms.py:61
 msgid "Confirm new password"
-msgstr "Změnit heslo"
+msgstr "Potvrď nové heslo"
 
-#: apps/users/models.py:8 templates/base.html:221
+#: apps/users/models.py:8 templates/base.html:218
 msgid "Light"
 msgstr "Světlý"
 
-#: apps/users/models.py:9 templates/base.html:226
+#: apps/users/models.py:9 templates/base.html:223
 msgid "Dark"
 msgstr "Tmavý"
 
-#: apps/users/models.py:10 templates/base.html:231
+#: apps/users/models.py:10 templates/base.html:228
 msgid "Pastel"
 msgstr "Pastelový"
 
-#: apps/users/models.py:11 templates/base.html:236
+#: apps/users/models.py:11 templates/base.html:233
 msgid "Editorial"
 msgstr "Upravit profil"
 
-#: apps/users/models.py:12 templates/base.html:241
+#: apps/users/models.py:12 templates/base.html:238
 msgid "Palette"
 msgstr "Paleta"
 
-#: apps/users/models.py:42
+#: apps/users/models.py:44
 msgid "User stats"
 msgstr "Statistiky uživatele"
 
@@ -1550,7 +1919,7 @@ msgstr "Teachka, 2026"
 
 #: apps/users/templates/registration/account_activation_email.html:100
 #: apps/users/templates/users/password_reset_email.html:110
-#: templates/home.html:109
+#: templates/home.html:111
 msgid "Toolkit for educators"
 msgstr "Nástroje pro učitele"
 
@@ -1561,10 +1930,10 @@ msgstr "Pokud sis účet Teachka nevytvořil, tento e-mail můžeš ignorovat."
 
 #: apps/users/templates/registration/login.html:5
 #: apps/users/templates/registration/login.html:127
-#: apps/users/templates/registration/register.html:216
+#: apps/users/templates/registration/register.html:239
 #: apps/users/templates/users/forgot_password.html:116
-#: apps/users/templates/users/password_reset.html:149 templates/home.html:238
-#: templates/home.html:651
+#: apps/users/templates/users/password_reset.html:149 templates/home.html:240
+#: templates/home.html:667
 msgid "Sign in"
 msgstr "Přihlásit se"
 
@@ -1605,17 +1974,17 @@ msgstr "Přepnout viditelnost hesla"
 msgid "New here?"
 msgstr "Nový zde?"
 
-#: apps/users/templates/registration/login.html:137 templates/home.html:648
+#: apps/users/templates/registration/login.html:137 templates/home.html:664
 msgid "Create an account"
 msgstr "Vytvořit účet"
 
 #: apps/users/templates/registration/register.html:5
-#: apps/users/templates/registration/register.html:206
+#: apps/users/templates/registration/register.html:229
 msgid "Create account"
 msgstr "Vytvořit účet"
 
-#: apps/users/templates/registration/register.html:50 templates/base.html:285
-#: templates/home.html:128
+#: apps/users/templates/registration/register.html:50 templates/base.html:282
+#: templates/home.html:130
 msgid "Get started"
 msgstr "Začít"
 
@@ -1651,7 +2020,20 @@ msgstr "Email"
 msgid "Confirm password"
 msgstr "Změnit heslo"
 
-#: apps/users/templates/registration/register.html:213
+#: apps/users/templates/registration/register.html:215
+#, python-format
+msgid ""
+"I agree to the <a href=\"%(terms_url)s\" target=\"_blank\" class=\"text-"
+"primary font-medium hover:underline underline-offset-2\">Terms of "
+"Service</a> and <a href=\"%(privacy_url)s\" target=\"_blank\" class=\"text-"
+"primary font-medium hover:underline underline-offset-2\">Privacy Policy</a>."
+msgstr ""
+"Souhlasím s <a href=\"%(terms_url)s\" target=\"_blank\" class=\"text-primary"
+" font-medium hover:underline underline-offset-2\">Podmínkami služby</a> a <a"
+" href=\"%(privacy_url)s\" target=\"_blank\" class=\"text-primary font-medium"
+" hover:underline underline-offset-2\">Zásadami ochrany osobních údajů</a>."
+
+#: apps/users/templates/registration/register.html:236
 msgid "Already have an account?"
 msgstr "Již máte účet?"
 
@@ -1665,7 +2047,8 @@ msgstr "Změnit heslo"
 msgid "Back to profile"
 msgstr "Zpět na úvod"
 
-#: apps/users/templates/users/change_password.html:59
+#: apps/users/templates/users/change_password.html:59 templates/base.html:325
+#: templates/legal/security.html:4 templates/legal/security.html:16
 msgid "Security"
 msgstr "Zabezpečení"
 
@@ -1738,14 +2121,12 @@ msgstr "Uživatelské jméno nelze změnit"
 
 #: apps/users/templates/users/edit_profile.html:101
 #: apps/users/templates/users/profile.html:60
-#, fuzzy
-#| msgid "Countdown"
 msgid "Country"
-msgstr "Odpočítávání"
+msgstr "Země"
 
 #: apps/users/templates/users/edit_profile.html:105
-msgid "— None —"
-msgstr "— Žádný —"
+msgid "None"
+msgstr "Žádná"
 
 #: apps/users/templates/users/forgot_password.html:5
 msgid "Forgot password"
@@ -1863,15 +2244,15 @@ msgstr "Změnit heslo"
 msgid "Preferences"
 msgstr "Předvolby"
 
-#: apps/users/templates/users/settings.html:39 templates/base.html:272
+#: apps/users/templates/users/settings.html:39 templates/base.html:269
 msgid "Theme"
 msgstr "Motiv"
 
-#: apps/users/templates/users/settings.html:52 templates/base.html:253
+#: apps/users/templates/users/settings.html:52 templates/base.html:250
 msgid "Language"
 msgstr "Jazyk"
 
-#: apps/users/templates/users/settings.html:62 templates/home.html:481
+#: apps/users/templates/users/settings.html:62 templates/home.html:497
 msgid "Accent colour"
 msgstr "Barva zvýraznění"
 
@@ -1891,67 +2272,61 @@ msgstr "Nebezpečná zóna"
 msgid "Permanently remove your account and all data."
 msgstr "Trvale odeber svůj účet a všechna data."
 
-#: apps/users/views.py:46
-#, fuzzy
-#| msgid "Welcome to Teachka"
+#: apps/users/views.py:51
 msgid "Welcome to Teachka!"
-msgstr "Vítejte zpět"
+msgstr "Vítej v Teachka!"
 
-#: apps/users/views.py:63
+#: apps/users/views.py:68
 msgid "Welcome, please check your email to complete your registration."
 msgstr "Vítejte, zkontrolujte prosím svůj e-mail pro dokončení registrace."
 
-#: apps/users/views.py:70
+#: apps/users/views.py:75
 msgid "Registration failed due to an email error. Please try again later."
 msgstr "Registrace selhala kvůli chybě e-mailu. Zkuste to prosím později."
 
-#: apps/users/views.py:91
+#: apps/users/views.py:96
 msgid "Your account has been successfully activated!"
 msgstr "Váš účet byl úspěšně aktivován!"
 
-#: apps/users/views.py:94
+#: apps/users/views.py:99
 msgid "Activation link is invalid or expired."
 msgstr "Aktivační odkaz je neplatný nebo vypršel."
 
-#: apps/users/views.py:167
+#: apps/users/views.py:172
 msgid "You have requested a new password"
 msgstr "Požádali jste o nové heslo"
 
-#: apps/users/views.py:182
+#: apps/users/views.py:187
 msgid "You will receive a password reset link in the email registered"
 msgstr "Na zaregistrovaný e-mail obdržíte odkaz pro obnovení hesla"
 
-#: apps/users/views.py:208 apps/users/views.py:214
+#: apps/users/views.py:213 apps/users/views.py:219
 msgid "Reset link is invalid or expired."
 msgstr "Odkaz pro obnovení je neplatný nebo vypršel."
 
-#: apps/users/views.py:221
+#: apps/users/views.py:226
 msgid "Your password was successfully reset. You may now login again."
 msgstr "Vaše heslo bylo úspěšně obnoveno. Nyní se můžete znovu přihlásit."
 
-#: apps/users/views.py:243
-#, fuzzy
-#| msgid "Reset your password"
+#: apps/users/views.py:248
 msgid "Reset your Teachka password"
-msgstr "Obnovit heslo"
+msgstr "Obnovení hesla Teachka"
 
-#: apps/users/views.py:263
+#: apps/users/views.py:268
 msgid "If that email is registered you'll receive a reset link shortly."
 msgstr "Pokud je e-mail zaregistrován, brzy obdržíte odkaz pro obnovení."
 
-#: apps/users/views.py:278
+#: apps/users/views.py:283
 msgid "Incorrect password. Account not deleted."
 msgstr "Nesprávné heslo. Účet nebyl smazán."
 
-#: apps/users/views.py:282
+#: apps/users/views.py:287
 msgid "Your account and all associated data have been permanently deleted."
 msgstr "Váš účet a všechna související data byla trvale smazána."
 
 #: apps/wheel/forms.py:6
-#, fuzzy
-#| msgid "Member colors"
 msgid "Members chosen"
-msgstr "Barvy členů"
+msgstr "Vybraní členové"
 
 #: apps/wheel/templates/wheel/home.html:4
 #: apps/wheel/templates/wheel/home.html:14 templates/base.html:192
@@ -2090,19 +2465,23 @@ msgstr "Přihlásit se"
 msgid "Register"
 msgstr "Registrovat se"
 
-#: templates/base.html:279
+#: templates/base.html:276
 msgid "Logout"
 msgstr "Odhlásit se"
 
-#: templates/base.html:326 templates/legal/privacy.html:16
+#: templates/base.html:323 templates/legal/privacy.html:16
 msgid "Privacy"
 msgstr "Soukromí"
 
-#: templates/base.html:339
+#: templates/base.html:324
+msgid "Terms"
+msgstr "Podmínky"
+
+#: templates/base.html:338
 msgid "We use a session cookie to keep you logged in. No tracking. "
 msgstr "Používáme session cookie, abys zůstal přihlášený. Žádné sledování. "
 
-#: templates/base.html:340
+#: templates/base.html:339
 msgid "Privacy policy"
 msgstr "Zásady ochrany osobních údajů"
 
@@ -2110,164 +2489,172 @@ msgstr "Zásady ochrany osobních údajů"
 msgid "Teachka: Toolkit for Educators"
 msgstr "Teachka: Nástroje pro pedagogy"
 
-#: templates/home.html:114
+#: templates/home.html:116
 msgid "Teaching made"
 msgstr "Výuka"
 
-#: templates/home.html:115
+#: templates/home.html:117
 msgid "effortlessly"
 msgstr "bez námahy"
 
-#: templates/home.html:116
+#: templates/home.html:118
 msgid "organised"
 msgstr "organizovaná"
 
-#: templates/home.html:121
+#: templates/home.html:123
 msgid "One calm, clean hub for all your classroom tools."
 msgstr "Jedno klidné a čisté místo pro všechny nástroje do třídy."
 
-#: templates/home.html:131
+#: templates/home.html:133
 msgid "See the tools"
 msgstr "Zobrazit nástroje"
 
-#: templates/home.html:141
+#: templates/home.html:143
 msgid "Built-in classroom tools"
 msgstr "Vestavěné nástroje pro třídu"
 
-#: templates/home.html:145
+#: templates/home.html:147
 msgid "Place for everything"
 msgstr "Místo pro vše"
 
-#: templates/home.html:148
+#: templates/home.html:150
 msgid "Free"
 msgstr "Zdarma"
 
-#: templates/home.html:149
+#: templates/home.html:151
 msgid "No strings attached"
 msgstr "Bez závazků"
 
-#: templates/home.html:196
+#: templates/home.html:198
 msgid "Welcome back to"
 msgstr "Vítejte zpět"
 
-#: templates/home.html:232
+#: templates/home.html:234
 msgid "The toolkit"
 msgstr "Nástroje"
 
-#: templates/home.html:234
-msgid "Six tools,"
-msgstr "Šest nástrojů,"
+#: templates/home.html:236
+msgid "Seven tools,"
+msgstr "Sedm nástrojů,"
 
-#: templates/home.html:234
+#: templates/home.html:236
 msgid "one home"
 msgstr "jeden domov"
 
-#: templates/home.html:238
+#: templates/home.html:240
 msgid "to start using any tool."
 msgstr "pro používání nástrojů."
 
-#: templates/home.html:252
+#: templates/home.html:254
 msgid "Grade Calculator"
 msgstr "Kalkulačka známek"
 
-#: templates/home.html:253
+#: templates/home.html:255
 msgid "Weighted averages, bulk grading, instant export to your records."
 msgstr "Vážené průměry, hromadné hodnocení, okamžitý export."
 
-#: templates/home.html:266
+#: templates/home.html:268
 msgid "Group Divider"
 msgstr "Rozdělovač skupin"
 
-#: templates/home.html:267
+#: templates/home.html:269
 msgid "Split your class into balanced teams in seconds."
 msgstr "Náhodně rozdělte třídu do skupin libovolné velikosti."
 
-#: templates/home.html:280
+#: templates/home.html:282
 msgid "Point System"
 msgstr "Bodový systém"
 
-#: templates/home.html:281
+#: templates/home.html:283
 msgid "Track participation and reward students with points in real time."
 msgstr "Sledujte účast a chování pomocí vlastních bodových kategorií."
 
-#: templates/home.html:295
+#: templates/home.html:297
 msgid "Visual countdowns for tests, group work, and transitions."
 msgstr "Vizuální odpočet pro testy, skupinovou práci a přechody."
 
-#: templates/home.html:309
+#: templates/home.html:311
 msgid "Lesson planning and deadline tracking in one clean weekly view."
 msgstr ""
 "Plánování hodin a sledování termínů v jednom čistém týdenním přehledu."
 
-#: templates/home.html:322
+#: templates/home.html:324
 msgid "Name Wheel"
 msgstr "Kolo jmen"
 
-#: templates/home.html:323
+#: templates/home.html:325
 msgid "Spin to pick a random student: fair, fun, and instant."
 msgstr "Zatoč a vyber náhodného studenta: férově, zábavně a okamžitě."
 
-#: templates/home.html:337
+#: templates/home.html:338
+msgid "Quiz Maker"
+msgstr "Tvůrce kvízů"
+
+#: templates/home.html:339
+msgid "Build multi-round quizzes with custom questions and answers."
+msgstr "Vytvářej vícekolové kvízy s vlastními otázkami a odpověďmi."
+
+#: templates/home.html:353
 msgid "Your activity"
 msgstr "Vaše aktivita"
 
-#: templates/home.html:342
+#: templates/home.html:358
 msgid "Groups"
 msgstr "Skupiny"
 
-#: templates/home.html:359
+#: templates/home.html:375
 msgid "Calculator"
 msgstr "Kalkulačka"
 
-#: templates/home.html:362
+#: templates/home.html:378
 msgid "uses"
 msgstr "použití"
 
-#: templates/home.html:367
+#: templates/home.html:383
 msgid "Wheel"
 msgstr "Kolo"
 
-#: templates/home.html:370
+#: templates/home.html:386
 msgid "spins"
 msgstr "otočení"
 
-#: templates/home.html:375
+#: templates/home.html:391
 msgid "Divider"
 msgstr "Rozdělovač"
 
-#: templates/home.html:378
+#: templates/home.html:394
 msgid "splits"
 msgstr "rozdělení"
 
-#: templates/home.html:386
+#: templates/home.html:402
 msgid "minutes"
 msgstr "Minuty"
 
-#: templates/home.html:482
+#: templates/home.html:498
 msgid "Sidebar highlight colour."
 msgstr "Barva zvýraznění panelu."
 
-#: templates/home.html:484
+#: templates/home.html:500
 msgid "hover to preview · click to save"
 msgstr "najeď pro náhled · klikni pro uložení"
 
-#: templates/home.html:551
+#: templates/home.html:567
 msgid "Built for teachers"
 msgstr "Nástroje pro učitele"
 
-#: templates/home.html:553
+#: templates/home.html:569
 msgid "Why teachers"
 msgstr "Proč učitelé"
 
-#: templates/home.html:553
+#: templates/home.html:569
 msgid "use it"
 msgstr "ho používají"
 
-#: templates/home.html:562
+#: templates/home.html:578
 msgid "Ready in under a minute"
 msgstr "Připraveno za méně než minutu"
 
-#: templates/home.html:563
+#: templates/home.html:579
 msgid ""
 "No installation, no training, no IT department needed. Sign up and start "
 "using your tools straight away."
@@ -2275,183 +2662,1097 @@ msgstr ""
 "Žádná instalace, žádné školení, žádné IT oddělení. Zaregistruj se a začni "
 "ihned."
 
-#: templates/home.html:572
+#: templates/home.html:588
 msgid "One class list, every tool access"
 msgstr "Jeden seznam třídy, přístup ke všem nástrojům"
 
-#: templates/home.html:573
+#: templates/home.html:589
 msgid ""
 "Add your students once. All the tools use the same list; no duplicate entry."
 msgstr ""
 "Přidej studenty jednou. Všechny nástroje používají stejný seznam; bez "
 "duplicit."
 
-#: templates/home.html:582
+#: templates/home.html:598
 msgid "No learning curve"
 msgstr "Bez složitého učení"
 
-#: templates/home.html:583
+#: templates/home.html:599
 msgid ""
 "Every tool is designed to work the first time you open it, with no setup or "
 "manual needed."
 msgstr "Každý nástroj funguje hned napoprvé, bez nastavení či návodu."
 
-#: templates/home.html:591
+#: templates/home.html:607
 msgid "How it works"
 msgstr "Jak to funguje"
 
-#: templates/home.html:593
+#: templates/home.html:609
 msgid "Three steps"
 msgstr "Tři kroky"
 
-#: templates/home.html:593
+#: templates/home.html:609
 msgid "to start"
 msgstr "k začátku"
 
-#: templates/home.html:604
+#: templates/home.html:620
 msgid "Create your account"
 msgstr "Vytvořit účet"
 
-#: templates/home.html:605
+#: templates/home.html:621
 msgid "Free signup. Ready in under a minute."
 msgstr "Registrace zdarma. Připraveno za minutu."
 
-#: templates/home.html:615
+#: templates/home.html:631
 msgid "Add your class"
 msgstr "Přidej svou třídu"
 
-#: templates/home.html:616
+#: templates/home.html:632
 msgid "Create your classes. All tools sync from these lists automatically."
 msgstr "Vytvoř třídy. Všechny nástroje se synchronizují automaticky."
 
-#: templates/home.html:625
+#: templates/home.html:641
 msgid "Open a tool and go"
 msgstr "Otevři nástroj a jeď"
 
-#: templates/home.html:626
+#: templates/home.html:642
 msgid "No duplicate data entry, no per-tool setup. It just works."
 msgstr ""
 "Žádné duplicitní zadávání, žádné nastavení pro každý nástroj. Prostě to "
 "funguje."
 
-#: templates/home.html:641
+#: templates/home.html:657
 msgid "Start today"
 msgstr "Začni dnes"
 
-#: templates/home.html:643
+#: templates/home.html:659
 msgid "Your classroom,"
 msgstr "Tvá třída,"
 
-#: templates/home.html:643
+#: templates/home.html:659
 msgid "finally in one place"
 msgstr "konečně na jednom místě"
 
-#: templates/legal/privacy.html:4
-msgid "Privacy Policy"
-msgstr "Zásady ochrany osobních údajů"
+#: templates/legal/cancellation.html:4
+msgid "Cancellation Policy"
+msgstr "Zásady zrušení"
 
-#: templates/legal/privacy.html:14
+#: templates/legal/cancellation.html:14 templates/legal/privacy.html:14
+#: templates/legal/security.html:14 templates/legal/terms.html:14
+#: templates/legal/use_restrictions.html:14
 msgid "Legal"
 msgstr "Právní"
 
-#: templates/legal/privacy.html:16
+#: templates/legal/cancellation.html:16
+#, fuzzy
+#| msgid "Cancel"
+msgid "Cancellation"
+msgstr "Zrušit"
+
+#: templates/legal/cancellation.html:16 templates/legal/privacy.html:16
 msgid "Policy"
 msgstr "Zásady"
 
-#: templates/legal/privacy.html:18
+#: templates/legal/cancellation.html:18 templates/legal/privacy.html:18
+#: templates/legal/security.html:18 templates/legal/terms.html:18
+#: templates/legal/use_restrictions.html:18
 msgid "Last updated"
-msgstr "Příjmení"
+msgstr "Naposledy aktualizováno"
 
-#: templates/legal/privacy.html:32
-msgid "What data we collect"
-msgstr "Jaká data sbíráme"
+#: templates/legal/cancellation.html:32
+#, fuzzy
+#| msgid "Cancel"
+msgid "Cancel anytime"
+msgstr "Zrušit"
 
-#: templates/legal/privacy.html:34
+#: templates/legal/cancellation.html:34
 msgid ""
-"When you create an account we collect your username, email address, and "
-"password (stored as a bcrypt hash, never in plain text). As you use the "
-"tools we record usage statistics (e.g. wheel spins, timer duration) linked "
-"to your account."
+"We want satisfied users, not hostages. You can delete your Teachka account "
+"directly from "
 msgstr ""
-"Při vytvoření účtu shromažďujeme uživatelské jméno, e-mail a heslo (uloženo "
-"jako bcrypt hash, nikdy v čitelné podobě). Při používání nástrojů "
-"zaznamenáváme statistiky použití (např. zatočení rulety, doba časovače) "
-"spojené s tvým účtem."
+"Chceme spokojené uživatele, ne rukojmí. Svůj účet Teachka můžete smazat "
+"přímo v "
 
-#: templates/legal/privacy.html:44
-msgid "How we use your data"
-msgstr "Jak data používáme"
-
-#: templates/legal/privacy.html:46
-msgid ""
-"Your data is used solely to provide the Teachka service: authentication, "
-"personalisation (theme, language), and displaying your activity on the home "
-"dashboard. We do not sell or share your data with third parties."
-msgstr ""
-"Data používáme výhradně pro službu Teachka: ověření, přizpůsobení (motiv, "
-"jazyk) a zobrazení tvé aktivity na domovském panelu. Data neprodáváme ani "
-"nesdílíme s třetími stranami."
-
-#: templates/legal/privacy.html:56
-msgid "Cookies"
-msgstr "Cookies"
-
-#: templates/legal/privacy.html:58
-msgid ""
-"We use one session cookie to keep you logged in (strictly necessary, no "
-"consent required under ePrivacy). We also store your theme preference in "
-"localStorage, which is not a cookie and does not leave your device."
-msgstr ""
-"Používáme jedno session cookie, aby sis zůstal přihlášený (striktně "
-"nezbytné, bez souhlasu dle ePrivacy). Předvolbu motivu ukládáme do "
-"localStorage, což není cookie a neopouští tvé zařízení."
-
-#: templates/legal/privacy.html:59
-msgid ""
-"We use Sentry for error monitoring. Sentry may set its own cookies or use "
-"browser storage to deduplicate error reports. No personal data is "
-"intentionally forwarded to Sentry."
-msgstr ""
-"Pro sledování chyb používáme Sentry. Sentry může nastavovat vlastní cookies "
-"nebo využívat úložiště prohlížeče pro deduplikaci chybových hlášení. Do "
-"Sentry záměrně neposíláme žádná osobní data."
-
-#: templates/legal/privacy.html:69
-msgid "Data retention"
-msgstr "Uchování dat"
-
-#: templates/legal/privacy.html:71
-msgid ""
-"Your account and all associated data are retained for as long as your "
-"account is active. You can delete your account and all data at any time from"
-" the Settings page."
-msgstr ""
-"Tvůj účet a veškerá související data jsou uchovávána po dobu aktivity účtu. "
-"Účet a všechna data můžeš kdykoliv smazat v nastavení."
-
-#: templates/legal/privacy.html:81
-msgid "Your rights"
-msgstr "Váš profil"
-
-#: templates/legal/privacy.html:83
-msgid ""
-"Under GDPR you have the right to access, correct, or erase your data. To "
-"delete your account and all data permanently, visit "
-msgstr ""
-"Podle GDPR máš právo na přístup, opravu nebo výmaz svých dat. Pro trvalé "
-"smazání účtu a všech dat navštiv "
-
-#: templates/legal/privacy.html:83
+#: templates/legal/cancellation.html:34 templates/legal/privacy.html:164
 msgid "Settings → Delete account"
 msgstr "Nastavení → Smazat účet"
 
-#: templates/legal/privacy.html:83
-msgid "For other requests contact us at the address below."
-msgstr "Ohledně dalších žádostí nás kontaktuj na adrese níže."
+#: templates/legal/cancellation.html:34
+msgid ". No phone calls, no questions asked."
+msgstr ". Žádné telefonáty, žádné dotazy."
 
-#: templates/legal/privacy.html:95
+#: templates/legal/cancellation.html:44
+msgid "What happens when you cancel"
+msgstr "Co se stane při zrušení"
+
+#: templates/legal/cancellation.html:46
+#, fuzzy
+#| msgid "Create your account"
+msgid "When you delete your account:"
+msgstr "Vytvořit účet"
+
+#: templates/legal/cancellation.html:48
+#, fuzzy
+#| msgid ""
+#| "This will permanently delete your account and all associated data: groups, "
+#| "members, points, and usage stats. This action cannot be undone."
+msgid ""
+"You immediately lose access to the account and all its data (groups, "
+"members, points, quizzes, calendar entries, statistics)."
+msgstr ""
+"Toto trvale smaže tvůj účet a všechna související data: skupiny, členy, body"
+" a statistiky. Tuto akci nelze vrátit."
+
+#: templates/legal/cancellation.html:49
+msgid "Your records are permanently removed from our active database."
+msgstr "Vaše záznamy jsou trvale odstraněny z naší aktivní databáze."
+
+#: templates/legal/cancellation.html:50
+msgid "Encrypted backups containing your data are rotated out within 30 days."
+msgstr "Šifrované zálohy obsahující vaše údaje jsou odstraněny do 30 dnů."
+
+#: templates/legal/cancellation.html:51
+msgid ""
+"Once deleted, your data cannot be recovered. Export anything you want to "
+"keep before cancelling."
+msgstr ""
+"Po smazání nelze údaje obnovit. Před zrušením si exportujte vše, co si "
+"chcete ponechat."
+
+#: templates/legal/cancellation.html:62
+msgid "Cancellations initiated by us"
+msgstr "Zrušení z naší strany"
+
+#: templates/legal/cancellation.html:64
+msgid "We may cancel accounts that:"
+msgstr "Můžeme zrušit účty, které:"
+
+#: templates/legal/cancellation.html:66
+msgid "Have been inactive for 365 consecutive days."
+msgstr "Byly neaktivní po dobu 365 po sobě jdoucích dnů."
+
+#: templates/legal/cancellation.html:67
+#, fuzzy
+#| msgid "Create your"
+msgid "Violate our "
+msgstr "Vytvořit skupinu"
+
+#: templates/legal/cancellation.html:67 templates/legal/terms.html:93
+#: templates/legal/use_restrictions.html:4
+#, fuzzy
+#| msgid "Under Construction"
+msgid "Use Restrictions"
+msgstr "Ve výstavbě"
+
+#: templates/legal/cancellation.html:67
+#, fuzzy
+#| msgid "Policy"
+msgid " policy."
+msgstr "Zásady"
+
+#: templates/legal/cancellation.html:68
+msgid "Pose a security risk to the service or other users."
+msgstr "Představují bezpečnostní riziko pro službu nebo ostatní uživatele."
+
+#: templates/legal/cancellation.html:70
+msgid ""
+"Where possible we will warn you by email before deleting an inactive "
+"account, giving you the chance to log in and keep it."
+msgstr ""
+"Pokud to bude možné, před smazáním neaktivního účtu vás upozorníme e-mailem "
+"a dáme vám možnost se přihlásit a účet si ponechat."
+
+#: templates/legal/cancellation.html:80
+msgid "Need help?"
+msgstr "Potřebujete pomoc?"
+
+#: templates/legal/cancellation.html:82
+msgid "If you cannot reach the Settings page, email "
+msgstr "Pokud se nemůžete dostat na stránku Nastavení, napište na "
+
+#: templates/legal/cancellation.html:82
+msgid ""
+" from the address linked to your account and we will delete it for you."
+msgstr " z adresy spojené s vaším účtem a my jej za vás smažeme."
+
+#: templates/legal/privacy.html:4 templates/legal/terms.html:171
+msgid "Privacy Policy"
+msgstr "Zásady ochrany osobních údajů"
+
+#: templates/legal/privacy.html:26
+msgid ""
+"This policy describes how the operator of the Teachka application processes "
+"users' personal data in accordance with Regulation (EU) 2016/679 of the "
+"European Parliament and of the Council (GDPR) and Portuguese Law No. 58/2019"
+" (Lei n.º 58/2019), on the processing of personal data."
+msgstr ""
+"Tyto zásady popisují, jak provozovatel aplikace Teachka zpracovává osobní "
+"údaje uživatelů v souladu s nařízením Evropského parlamentu a Rady (EU) "
+"2016/679 (GDPR) a portugalským zákonem č. 58/2019 o zpracování osobních "
+"údajů."
+
+#: templates/legal/privacy.html:35
+msgid "1. Data controller"
+msgstr "1. Správce osobních údajů"
+
+#: templates/legal/privacy.html:38
+msgid ""
+"a private individual based in Portugal, operating Teachka on a non-"
+"commercial basis."
+msgstr ""
+"soukromá osoba se sídlem v Portugalsku, která provozuje Teachka na "
+"nekomerčním základě."
+
+#: templates/legal/privacy.html:51
+#, fuzzy
+#| msgid "What data we collect"
+msgid "2. What data we process"
+msgstr "Jaká data sbíráme"
+
+#: templates/legal/privacy.html:53
+msgid ""
+"When you use the application we process the following categories of personal"
+" data:"
+msgstr ""
+"Při používání aplikace zpracováváme následující kategorie osobních údajů:"
+
+#: templates/legal/privacy.html:55
+msgid ""
+"Account data: username, e-mail address, password (stored only as a salted "
+"one-way hash, never in plain text)."
+msgstr ""
+"Údaje účtu: uživatelské jméno, e-mailová adresa, heslo (uložené pouze jako "
+"jednosměrný hash se solí, nikdy jako prostý text)."
+
+#: templates/legal/privacy.html:56
+msgid "Preferences: country, language, theme, and interface accent colour."
+msgstr "Předvolby: země, jazyk, motiv a zvýrazňovací barva rozhraní."
+
+#: templates/legal/privacy.html:57
+msgid ""
+"Usage data: counts and durations of tool usage (e.g. wheel spins, timer "
+"time, calculator uses) linked to your account."
+msgstr ""
+"Údaje o používání: počty a doby používání nástrojů (např. roztočení kola, "
+"čas časovače, použití kalkulačky) spojené s vaším účtem."
+
+#: templates/legal/privacy.html:58
+msgid ""
+"Security data: IP address and username recorded on login attempts, for "
+"brute-force protection."
+msgstr ""
+"Bezpečnostní údaje: IP adresa a uživatelské jméno zaznamenané při pokusech o"
+" přihlášení, pro ochranu proti útokům hrubou silou."
+
+#: templates/legal/privacy.html:59
+msgid ""
+"Content you create: groups, members, points, quizzes, calendar entries — "
+"which may include names, photos, or data of third parties such as students."
+msgstr ""
+"Obsah, který vytváříte: skupiny, členové, body, kvízy, položky kalendáře — "
+"které mohou zahrnovat jména, fotografie nebo údaje třetích osob, například "
+"studentů."
+
+#: templates/legal/privacy.html:61
+msgid ""
+"The application does not process special categories of personal data (e.g. "
+"health or biometric data) and does not carry out automated decision-making "
+"or profiling."
+msgstr ""
+"Aplikace nezpracovává zvláštní kategorie osobních údajů (např. údaje o "
+"zdravotním stavu nebo biometrické údaje) ani neprovádí automatizované "
+"rozhodování či profilování."
+
+#: templates/legal/privacy.html:72
+msgid "3. Purpose and legal basis"
+msgstr "3. Účel a právní základ"
+
+#: templates/legal/privacy.html:78
+msgid "Purpose"
+msgstr "Účel"
+
+#: templates/legal/privacy.html:79
+#, fuzzy
+#| msgid "Legal"
+msgid "Legal basis"
+msgstr "Právní"
+
+#: templates/legal/privacy.html:84
+msgid "Providing the service and managing your account"
+msgstr "Poskytování služby a správa vašeho účtu"
+
+#: templates/legal/privacy.html:85 templates/legal/privacy.html:89
+msgid "Performance of a contract (Art. 6(1)(b) GDPR)"
+msgstr "Plnění smlouvy (čl. 6 odst. 1 písm. b) GDPR)"
+
+#: templates/legal/privacy.html:88
+msgid "Transactional e-mails (account activation, password reset)"
+msgstr "Transakční e-maily (aktivace účtu, obnovení hesla)"
+
+#: templates/legal/privacy.html:92
+msgid "Usage statistics shown on your dashboard"
+msgstr "Statistiky používání zobrazené na vašem panelu"
+
+#: templates/legal/privacy.html:93 templates/legal/privacy.html:97
+msgid "Legitimate interest (Art. 6(1)(f) GDPR)"
+msgstr "Oprávněný zájem (čl. 6 odst. 1 písm. f) GDPR)"
+
+#: templates/legal/privacy.html:96
+msgid "Protection against abuse and operational security"
+msgstr "Ochrana proti zneužití a provozní bezpečnost"
+
+#: templates/legal/privacy.html:112
+#, fuzzy
+#| msgid "Data retention"
+msgid "4. Data retention"
+msgstr "Uchování dat"
+
+#: templates/legal/privacy.html:114
+msgid ""
+"We retain your personal data for as long as your account is active. When you"
+" delete your account, your data is permanently removed from our active "
+"database, and encrypted backups containing it are rotated out within 30 "
+"days. Accounts inactive for 365 consecutive days may be deleted after prior "
+"e-mail warning. See our "
+msgstr ""
+"Vaše osobní údaje uchováváme po dobu, kdy je váš účet aktivní. Když svůj "
+"účet smažete, vaše údaje jsou trvale odstraněny z naší aktivní databáze a "
+"šifrované zálohy, které je obsahují, jsou odstraněny do 30 dnů. Účty "
+"neaktivní po dobu 365 po sobě jdoucích dnů mohou být po předchozím "
+"upozornění e-mailem smazány. Viz naše "
+
+#: templates/legal/privacy.html:114 templates/legal/terms.html:158
+msgid "Cancellation policy"
+msgstr "Zásady zrušení"
+
+#: templates/legal/privacy.html:114
+#, fuzzy
+#| msgid "Group details"
+msgid " for details."
+msgstr "Skupiny"
+
+#: templates/legal/privacy.html:125
+msgid "5. Recipients of personal data"
+msgstr "5. Příjemci osobních údajů"
+
+#: templates/legal/privacy.html:127
+msgid ""
+"Your data may, to the extent necessary, be processed by the following "
+"categories of recipients (processors):"
+msgstr ""
+"Vaše údaje mohou být v nezbytném rozsahu zpracovávány následujícími "
+"kategoriemi příjemců (zpracovatelů):"
+
+#: templates/legal/privacy.html:129
+msgid "Render — application hosting and database (EU, Frankfurt region)."
+msgstr "Render — hosting aplikace a databáze (EU, region Frankfurt)."
+
+#: templates/legal/privacy.html:130
+msgid "Our e-mail provider, for delivering transactional messages."
+msgstr "Náš poskytovatel e-mailu pro doručování transakčních zpráv."
+
+#: templates/legal/privacy.html:131
+msgid "Sentry — error monitoring (personal data is scrubbed where possible)."
+msgstr ""
+"Sentry — monitorování chyb (osobní údaje jsou pokud možno odstraněny)."
+
+#: templates/legal/privacy.html:132
+msgid "Public authorities, where required by law."
+msgstr "Orgány veřejné moci, je-li to vyžadováno zákonem."
+
+#: templates/legal/privacy.html:134
+msgid "We do not sell your data or share it for marketing purposes."
+msgstr "Vaše údaje neprodáváme ani je nesdílíme pro marketingové účely."
+
+#: templates/legal/privacy.html:145
+#, fuzzy
+#| msgid "International"
+msgid "6. International transfers"
+msgstr "Mezinárodní"
+
+#: templates/legal/privacy.html:147
+msgid ""
+"Our database and application servers are located within the EU (Frankfurt). "
+"Where a processor (such as our error-monitoring provider) may process "
+"limited data outside the EU/EEA, such transfers take place on the basis of "
+"Standard Contractual Clauses approved by the European Commission or an "
+"equivalent safeguard."
+msgstr ""
+"Naše databáze a aplikační servery se nacházejí v EU (Frankfurt). Pokud "
+"zpracovatel (například náš poskytovatel monitorování chyb) zpracovává "
+"omezené údaje mimo EU/EHP, probíhají takové přenosy na základě standardních "
+"smluvních doložek schválených Evropskou komisí nebo rovnocenné záruky."
+
+#: templates/legal/privacy.html:158
+#, fuzzy
+#| msgid "Your rights"
+msgid "7. Your rights"
+msgstr "Váš profil"
+
+#: templates/legal/privacy.html:160
+msgid "In relation to your personal data you have the following rights:"
+msgstr "Ve vztahu ke svým osobním údajům máte následující práva:"
+
+#: templates/legal/privacy.html:162
+msgid "Right of access to your personal data (Art. 15 GDPR)."
+msgstr "Právo na přístup k osobním údajům (čl. 15 GDPR)."
+
+#: templates/legal/privacy.html:163
+msgid "Right to rectification of inaccurate data (Art. 16 GDPR)."
+msgstr "Právo na opravu nepřesných údajů (čl. 16 GDPR)."
+
+#: templates/legal/privacy.html:164
+msgid ""
+"Right to erasure (\"right to be forgotten\", Art. 17 GDPR) — you can delete "
+"your account and all data from "
+msgstr ""
+"Právo na výmaz („právo být zapomenut“, čl. 17 GDPR) — svůj účet a všechna "
+"data můžete smazat z "
+
+#: templates/legal/privacy.html:165
+msgid "Right to restriction of processing (Art. 18 GDPR)."
+msgstr "Právo na omezení zpracování (čl. 18 GDPR)."
+
+#: templates/legal/privacy.html:166
+msgid "Right to data portability (Art. 20 GDPR)."
+msgstr "Právo na přenositelnost údajů (čl. 20 GDPR)."
+
+#: templates/legal/privacy.html:167
+msgid "Right to object to processing (Art. 21 GDPR)."
+msgstr "Právo vznést námitku proti zpracování (čl. 21 GDPR)."
+
+#: templates/legal/privacy.html:168
+msgid "Right to lodge a complaint with a supervisory authority."
+msgstr "Právo podat stížnost u dozorového úřadu."
+
+#: templates/legal/privacy.html:170
+msgid "You may exercise your rights in writing at "
+msgstr "Svá práva můžete uplatnit písemně na adrese "
+
+#: templates/legal/privacy.html:170
+msgid ""
+"You may lodge a complaint with the Portuguese supervisory authority, the "
+"National Data Protection Commission (Comissão Nacional de Proteção de Dados "
+"— CNPD), Av. D. Carlos I, 134, 1.º, 1200-651 Lisbon, Portugal, "
+msgstr ""
+"Stížnost můžete podat u portugalského dozorového úřadu, Národní komise pro "
+"ochranu údajů (Comissão Nacional de Proteção de Dados — CNPD), Av. D. Carlos"
+" I, 134, 1.º, 1200-651 Lisabon, Portugalsko, "
+
+#: templates/legal/privacy.html:181
+msgid "8. Data about students"
+msgstr "8. Údaje o studentech"
+
+#: templates/legal/privacy.html:183
+msgid ""
+"Teachka is intended for teachers and educators. When you enter data about "
+"your students (names, photos, points, etc.), you act as the data controller "
+"for that data and Teachka acts only as a processor on your behalf. You are "
+"responsible for having a lawful basis to enter it, including any parental or"
+" school consent required. We process such data only to provide the service "
+"to you and do not use it for any other purpose."
+msgstr ""
+"Teachka je určena učitelům a pedagogům. Když zadáváte údaje o svých "
+"studentech (jména, fotografie, body atd.), vystupujete jako správce těchto "
+"údajů a Teachka vystupuje pouze jako zpracovatel vaším jménem. Jste "
+"odpovědní za to, že máte právní základ pro jejich zadání, včetně případného "
+"souhlasu rodičů nebo školy. Tyto údaje zpracováváme pouze za účelem "
+"poskytování služby vám a nepoužíváme je k žádnému jinému účelu."
+
+#: templates/legal/privacy.html:194
+msgid "9. Cookies and tracking"
+msgstr "9. Cookies a sledování"
+
+#: templates/legal/privacy.html:196
+#| msgid ""
+#| "We use one session cookie to keep you logged in (strictly necessary, no "
+#| "consent required under ePrivacy). We also store your theme preference in "
+#| "localStorage, which is not a cookie and does not leave your device."
+msgid ""
+"We use only strictly necessary cookies: a session cookie to keep you logged "
+"in and a CSRF cookie for security (no consent required under ePrivacy). We "
+"store your theme preference in localStorage, which is not a cookie and does "
+"not leave your device. We do not use advertising or third-party analytics "
+"cookies."
+msgstr ""
+"Používáme pouze nezbytně nutné cookies: relační cookie, abyste zůstali "
+"přihlášeni, a CSRF cookie kvůli bezpečnosti (souhlas dle ePrivacy není "
+"vyžadován). Vaši předvolbu motivu ukládáme do localStorage, což není cookie "
+"a neopouští vaše zařízení. Nepoužíváme reklamní ani analytické cookies "
+"třetích stran."
+
+#: templates/legal/privacy.html:197
+msgid ""
+"We do not track users across third-party websites and therefore do not "
+"respond to \"Do Not Track\" browser signals."
+msgstr ""
+"Nesledujeme uživatele napříč weby třetích stran, a proto nereagujeme na "
+"signály prohlížeče \"Do Not Track\"."
+
+#: templates/legal/privacy.html:208
+#, fuzzy
+#| msgid "Security"
+msgid "10. Security"
+msgstr "Zabezpečení"
+
+#: templates/legal/privacy.html:210
+msgid ""
+"We take appropriate technical and organisational measures to protect "
+"personal data against unauthorised access, loss, or destruction. All "
+"communication with the application is encrypted (HTTPS), and passwords are "
+"stored as salted one-way hashes. See our "
+msgstr ""
+"Přijímáme vhodná technická a organizační opatření k ochraně osobních údajů "
+"před neoprávněným přístupem, ztrátou nebo zničením. Veškerá komunikace s "
+"aplikací je šifrovaná (HTTPS) a hesla jsou uložena jako jednosměrné hashe se"
+" solí. Viz náš "
+
+#: templates/legal/privacy.html:210
+#, fuzzy
+#| msgid "Security"
+msgid "Security overview"
+msgstr "Zabezpečení"
+
+#: templates/legal/privacy.html:210
+msgid " for more."
+msgstr " pro více informací."
+
+#: templates/legal/privacy.html:221
+msgid "11. Changes to this policy"
+msgstr "11. Změny těchto zásad"
+
+#: templates/legal/privacy.html:223
+msgid ""
+"We may update this policy from time to time. The current version is always "
+"available on this page. We will inform users of material changes by e-mail "
+"or through the application."
+msgstr ""
+"Tyto zásady můžeme čas od času aktualizovat. Aktuální znění je vždy dostupné"
+" na této stránce. O podstatných změnách budeme uživatele informovat e-mailem"
+" nebo prostřednictvím aplikace."
+
+#: templates/legal/privacy.html:234
+#, fuzzy
+#| msgid "Contact"
+msgid "12. Contact"
+msgstr "Kontakt"
+
+#: templates/legal/privacy.html:236
 msgid "Questions about this policy: "
 msgstr "Dotazy k těmto zásadám: "
+
+#: templates/legal/security.html:32
+msgid "Where your data lives"
+msgstr "Kde jsou vaše data uložena"
+
+#: templates/legal/security.html:34
+msgid ""
+"Teachka runs on managed infrastructure (Render) with PostgreSQL as the "
+"primary database. Data are written to redundant storage with daily automated"
+" backups. Servers are located in the EU (Render, Frankfurt region)."
+msgstr ""
+"Teachka běží na spravované infrastruktuře (Render) s PostgreSQL jako "
+"primární databází. Data se zapisují do redundantního úložiště s denními "
+"automatickými zálohami. Servery se nacházejí v EU (Render, region "
+"Frankfurt)."
+
+#: templates/legal/security.html:44
+msgid "Encryption in transit"
+msgstr "Šifrování při přenosu"
+
+#: templates/legal/security.html:46
+msgid ""
+"All traffic between your browser and Teachka is served over HTTPS with HSTS "
+"enabled. We do not accept plain-HTTP connections in production."
+msgstr ""
+"Veškerý provoz mezi vaším prohlížečem a Teachka probíhá přes HTTPS se "
+"zapnutým HSTS. V produkci nepřijímáme nešifrovaná připojení HTTP."
+
+#: templates/legal/security.html:56
+#, fuzzy
+#| msgid "Password"
+msgid "Passwords"
+msgstr "Heslo"
+
+#: templates/legal/security.html:58
+msgid ""
+"Passwords are never stored in plain text. We use a strong, industry-standard"
+" one-way hashing algorithm with a unique per-user salt. Failed login "
+"attempts are rate-limited via django-axes to prevent brute-force attacks."
+msgstr ""
+"Hesla nikdy neukládáme jako prostý text. Používáme silný, standardní "
+"jednosměrný hashovací algoritmus s jedinečnou solí pro každého uživatele. "
+"Neúspěšné pokusy o přihlášení jsou omezovány pomocí django-axes, aby se "
+"zabránilo útokům hrubou silou."
+
+#: templates/legal/security.html:68
+msgid "Patching & dependencies"
+msgstr "Záplaty a závislosti"
+
+#: templates/legal/security.html:70
+msgid ""
+"Operating-system images and Python dependencies are updated on a regular "
+"cadence. Vulnerable packages are patched as soon as a fix is published, "
+"using pip-audit and Dependabot to track CVEs."
+msgstr ""
+"Image operačního systému a závislosti Pythonu jsou pravidelně aktualizovány."
+" Zranitelné balíčky jsou opraveny, jakmile je vydána oprava, přičemž ke "
+"sledování CVE používáme pip-audit a Dependabot."
+
+#: templates/legal/security.html:80
+msgid "Monitoring"
+msgstr "Monitorování"
+
+#: templates/legal/security.html:82
+msgid ""
+"Sentry monitors errors and unusual activity. Health and readiness probes "
+"verify the database and migration state. Personally identifiable information"
+" is scrubbed from error reports where possible."
+msgstr ""
+"Sentry monitoruje chyby a neobvyklou aktivitu. Kontroly stavu a "
+"připravenosti ověřují stav databáze a migrací. Osobní údaje jsou z chybových"
+" hlášení pokud možno odstraněny."
+
+#: templates/legal/security.html:92
+#, fuzzy
+#| msgid "Access"
+msgid "Access control"
+msgstr "Přístup"
+
+#: templates/legal/security.html:94
+msgid ""
+"Production access is restricted to the maintainer. Database credentials and "
+"API keys are stored as environment variables, never committed to the "
+"repository. Admin actions are audited via Django's admin log."
+msgstr ""
+"Přístup k produkci má pouze správce. Přihlašovací údaje k databázi a klíče "
+"API jsou uloženy jako proměnné prostředí a nikdy se neukládají do "
+"repozitáře. Administrátorské akce jsou auditovány prostřednictvím "
+"administračního logu Djanga."
+
+#: templates/legal/security.html:104
+msgid "Incident response"
+msgstr "Reakce na incidenty"
+
+#: templates/legal/security.html:106
+msgid ""
+"If we discover a breach that affects your data, we will notify the competent"
+" supervisory authority within 72 hours where required (GDPR Article 33) and "
+"inform affected users by email without undue delay (GDPR Article 34)."
+msgstr ""
+"Pokud zjistíme porušení zabezpečení, které se týká vašich údajů, oznámíme to"
+" příslušnému dozorovému úřadu do 72 hodin, je-li to vyžadováno (článek 33 "
+"GDPR), a bez zbytečného odkladu informujeme dotčené uživatele e-mailem "
+"(článek 34 GDPR)."
+
+#: templates/legal/security.html:116
+msgid "Report a vulnerability"
+msgstr "Nahlásit zranitelnost"
+
+#: templates/legal/security.html:118
+msgid "Found a security issue? Please email "
+msgstr "Našli jste bezpečnostní problém? Napište prosím na "
+
+#: templates/legal/security.html:118
+msgid ""
+" with steps to reproduce. Do not publicly disclose the issue until we have "
+"had a reasonable opportunity to fix it. We will acknowledge your report "
+"within 5 business days."
+msgstr ""
+" s kroky k reprodukci. Problém prosím nezveřejňujte, dokud nebudeme mít "
+"přiměřenou příležitost jej opravit. Přijetí vašeho hlášení potvrdíme do 5 "
+"pracovních dnů."
+
+#: templates/legal/terms.html:4
+msgid "Terms of Service"
+msgstr "Podmínky služby"
+
+#: templates/legal/terms.html:16
+msgid "Terms of"
+msgstr "Podmínky"
+
+#: templates/legal/terms.html:16
+#| msgid "Overview"
+msgid "Service"
+msgstr "Služba"
+
+#: templates/legal/terms.html:26
+msgid ""
+"These terms govern the relationship between the operator of the Teachka "
+"application and users who use the application's classroom tools. By creating"
+" an account or using Teachka, you agree to these terms. If you do not agree,"
+" please do not use the service."
+msgstr ""
+"Tyto podmínky upravují vztah mezi provozovatelem aplikace Teachka a "
+"uživateli, kteří používají třídní nástroje aplikace. Vytvořením účtu nebo "
+"používáním Teachka s těmito podmínkami souhlasíte. Pokud nesouhlasíte, "
+"službu nepoužívejte."
+
+#: templates/legal/terms.html:35
+#, fuzzy
+#| msgid "Math Operations"
+msgid "1. Operator"
+msgstr "Matematické operace"
+
+#: templates/legal/terms.html:38
+msgid "a private individual based in Portugal"
+msgstr "soukromá osoba se sídlem v Portugalsku"
+
+#: templates/legal/terms.html:41
+msgid ""
+"Teachka is provided free of charge, on a non-commercial basis, by a private "
+"individual. It is not a paid service and processes no payments."
+msgstr ""
+"Teachka poskytuje zdarma, na nekomerčním základě, soukromá osoba. Nejedná se"
+" o placenou službu a nezpracovává žádné platby."
+
+#: templates/legal/terms.html:52
+msgid "2. The service"
+msgstr "2. Služba"
+
+#: templates/legal/terms.html:54
+msgid ""
+"Teachka is a free hub of teaching tools (grade calculator, group maker, "
+"point system, wheel, timer, calendar, quiz maker, and more). The service is "
+"provided as-is, without warranty of any kind. We may change, suspend, or "
+"discontinue any tool at any time."
+msgstr ""
+"Teachka je bezplatný soubor učitelských nástrojů (kalkulačka známek, tvorba "
+"skupin, bodový systém, kolo, časovač, kalendář, tvorba kvízů a další). "
+"Služba je poskytována tak, jak je, bez jakékoli záruky. Kterýkoli nástroj "
+"můžeme kdykoli změnit, pozastavit nebo ukončit."
+
+#: templates/legal/terms.html:65
+#, fuzzy
+#| msgid "Create an account"
+msgid "3. Registration and account"
+msgstr "Vytvořit účet"
+
+#: templates/legal/terms.html:67
+msgid ""
+"Using the application requires registration, during which you provide true "
+"and current details. You are responsible for keeping your password secure, "
+"for not sharing it with third parties, and for all activity on your account."
+" The operator reserves the right to suspend or cancel an account that "
+"seriously breaches these terms, provides false information, or misuses the "
+"service."
+msgstr ""
+"Používání aplikace vyžaduje registraci, při níž uvádíte pravdivé a aktuální "
+"údaje. Odpovídáte za udržení hesla v tajnosti, za jeho nesdílení s třetími "
+"osobami a za veškerou aktivitu na svém účtu. Provozovatel si vyhrazuje právo"
+" pozastavit nebo zrušit účet, který závažně poruší tyto podmínky, uvede "
+"nepravdivé údaje nebo službu zneužije."
+
+#: templates/legal/terms.html:78
+msgid "4. Intended audience and students"
+msgstr "4. Cílové publikum a studenti"
+
+#: templates/legal/terms.html:80
+msgid ""
+"Teachka is intended for teachers and educators. Accounts are for adults. "
+"Students do not create their own accounts; they may only participate in "
+"activities (such as quizzes) under the responsibility and supervision of a "
+"teacher. If you enter data about students, you are responsible for having a "
+"lawful basis to do so, including any parental or school consent required."
+msgstr ""
+"Teachka je určena učitelům a pedagogům. Účty jsou pro dospělé. Studenti si "
+"nevytvářejí vlastní účty; mohou se účastnit aktivit (například kvízů) pouze "
+"pod odpovědností a dohledem učitele. Pokud zadáváte údaje o studentech, jste"
+" odpovědní za to, že k tomu máte právní základ, včetně případného souhlasu "
+"rodičů nebo školy."
+
+#: templates/legal/terms.html:91
+msgid "5. Acceptable use"
+msgstr "5. Přijatelné použití"
+
+#: templates/legal/terms.html:93
+msgid ""
+"You agree to use the application only for lawful purposes; not to attempt "
+"unauthorised access to other accounts or data; not to overload the service "
+"with automated requests or misuse its features; not to upload illegal, "
+"harmful, hateful, or sexually explicit content; and to report any loss or "
+"compromise of your credentials. See our full "
+msgstr ""
+"Souhlasíte, že aplikaci budete používat pouze k zákonným účelům; nebudete se"
+" pokoušet o neoprávněný přístup k cizím účtům nebo údajům; nebudete službu "
+"přetěžovat automatizovanými požadavky ani zneužívat její funkce; nebudete "
+"nahrávat nezákonný, škodlivý, nenávistný nebo sexuálně explicitní obsah; a "
+"nahlásíte jakoukoli ztrátu nebo kompromitaci svých přihlašovacích údajů. Viz"
+" naše úplné zásady "
+
+#: templates/legal/terms.html:93
+msgid " policy. We may suspend or delete accounts that violate these rules."
+msgstr ". Účty, které tato pravidla poruší, můžeme pozastavit nebo smazat."
+
+#: templates/legal/terms.html:104
+msgid "6. Your content"
+msgstr "6. Váš obsah"
+
+#: templates/legal/terms.html:106
+msgid ""
+"Content you create on Teachka (groups, members, points, quizzes, etc.) "
+"belongs to you. You grant us a limited licence to store and display it "
+"solely so we can provide the service. You are responsible for ensuring you "
+"have the right to use any names, photos, or data you enter, including those "
+"of students."
+msgstr ""
+"Obsah, který na Teachka vytvoříte (skupiny, členové, body, kvízy atd.), "
+"patří vám. Udělujete nám omezenou licenci k jeho uložení a zobrazení "
+"výhradně za účelem poskytování služby. Odpovídáte za to, že máte právo "
+"používat jakákoli jména, fotografie nebo údaje, které zadáte, včetně údajů "
+"studentů."
+
+#: templates/legal/terms.html:117
+msgid "7. Intellectual property"
+msgstr "7. Duševní vlastnictví"
+
+#: templates/legal/terms.html:119
+msgid ""
+"The Teachka name, logo, design, and code are owned by the operator. You may "
+"not copy, redistribute, or create derivative services from the platform "
+"without written permission."
+msgstr ""
+"Název, logo, design a kód Teachka vlastní provozovatel. Bez písemného "
+"souhlasu nesmíte platformu kopírovat, dále šířit ani z ní vytvářet odvozené "
+"služby."
+
+#: templates/legal/terms.html:130
+msgid "8. Service availability"
+msgstr "8. Dostupnost služby"
+
+#: templates/legal/terms.html:132
+msgid ""
+"The operator makes reasonable efforts to keep the application available but "
+"does not guarantee uninterrupted operation. The operator is not responsible "
+"for outages caused by circumstances beyond its control (hosting provider, "
+"internet connection, or third-party service outages)."
+msgstr ""
+"Provozovatel vyvíjí přiměřené úsilí, aby byla aplikace dostupná, nezaručuje "
+"však nepřetržitý provoz. Provozovatel neodpovídá za výpadky způsobené "
+"okolnostmi mimo jeho kontrolu (poskytovatel hostingu, internetové připojení "
+"nebo výpadky služeb třetích stran)."
+
+#: templates/legal/terms.html:143
+msgid "9. Disclaimer & liability"
+msgstr "9. Vyloučení odpovědnosti"
+
+#: templates/legal/terms.html:145
+msgid ""
+"Teachka is provided without any guarantee of availability, accuracy, or "
+"fitness for a particular purpose. To the maximum extent permitted by law, "
+"the operator is liable only for damage caused by breach of these terms and "
+"is not liable for indirect damage, lost profit, or damage arising from "
+"incorrect use of the application. Always keep your own backup of important "
+"data (e.g. grades)."
+msgstr ""
+"Teachka je poskytována bez jakékoli záruky dostupnosti, přesnosti nebo "
+"vhodnosti pro určitý účel. V maximálním rozsahu povoleném zákonem "
+"provozovatel odpovídá pouze za škodu způsobenou porušením těchto podmínek a "
+"neodpovídá za nepřímé škody, ušlý zisk ani za škody vzniklé nesprávným "
+"použitím aplikace. Vždy si uchovávejte vlastní zálohu důležitých dat (např. "
+"známek)."
+
+#: templates/legal/terms.html:156
+msgid "10. Termination"
+msgstr "10. Ukončení"
+
+#: templates/legal/terms.html:158
+msgid ""
+"You may delete your account at any time from the Settings page. We may "
+"suspend or terminate accounts that breach these terms or pose a risk to the "
+"service or other users. See our "
+msgstr ""
+"Svůj účet můžete kdykoli smazat na stránce Nastavení. Účty, které poruší "
+"tyto podmínky nebo představují riziko pro službu či ostatní uživatele, "
+"můžeme pozastavit nebo ukončit. Viz naše "
+
+#: templates/legal/terms.html:158
+msgid " for details on what happens to your data."
+msgstr " pro podrobnosti o tom, co se stane s vašimi údaji."
+
+#: templates/legal/terms.html:169
+msgid "11. Personal data"
+msgstr "11. Osobní údaje"
+
+#: templates/legal/terms.html:171
+msgid "The processing of users' personal data is governed by our separate "
+msgstr "Zpracování osobních údajů uživatelů se řídí našimi samostatnými "
+
+#: templates/legal/terms.html:182
+msgid "12. Changes to these terms"
+msgstr "12. Změny těchto podmínek"
+
+#: templates/legal/terms.html:184
+msgid ""
+"The operator may change these terms at any time. Users will be informed of "
+"material changes by e-mail or through the application at least 14 days "
+"before they take effect. If you do not agree with the changes, you may "
+"cancel your account."
+msgstr ""
+"Provozovatel může tyto podmínky kdykoli změnit. O podstatných změnách budou "
+"uživatelé informováni e-mailem nebo prostřednictvím aplikace alespoň 14 dní "
+"před jejich účinností. Pokud se změnami nesouhlasíte, můžete svůj účet "
+"zrušit."
+
+#: templates/legal/terms.html:195
+msgid "13. Governing law"
+msgstr "13. Rozhodné právo"
+
+#: templates/legal/terms.html:197
+msgid ""
+"These terms and any relationship arising from use of the application are "
+"governed by the law of Portugal, and disputes will be handled by the "
+"competent courts of Portugal. A consumer may use the European Commission's "
+"Online Dispute Resolution platform, "
+msgstr ""
+"Tyto podmínky a jakýkoli vztah vzniklý z používání aplikace se řídí právem "
+"Portugalska a spory budou řešeny příslušnými soudy Portugalska. Spotřebitel "
+"může využít platformu Evropské komise pro řešení sporů online, "
+
+#: templates/legal/terms.html:197
+msgid ""
+", or a competent Portuguese consumer dispute resolution entity, without "
+"prejudice to mandatory consumer-protection rights in your country of "
+"residence."
+msgstr ""
+", nebo příslušný portugalský subjekt pro řešení spotřebitelských sporů, aniž"
+" jsou dotčena závazná práva na ochranu spotřebitele ve vaší zemi bydliště."
+
+#: templates/legal/terms.html:208
+#, fuzzy
+#| msgid "Contact"
+msgid "14. Contact"
+msgstr "Kontakt"
+
+#: templates/legal/terms.html:210
+#, fuzzy
+#| msgid "Questions about this policy: "
+msgid "Questions about these terms: "
+msgstr "Dotazy k těmto zásadám: "
+
+#: templates/legal/use_restrictions.html:16
+msgid "Use"
+msgstr "Použití"
+
+#: templates/legal/use_restrictions.html:16
+#| msgid "Description"
+msgid "Restrictions"
+msgstr "Omezení"
+
+#: templates/legal/use_restrictions.html:32
+msgid "Restricted purposes"
+msgstr "Omezené účely"
+
+#: templates/legal/use_restrictions.html:34
+msgid "When you use Teachka, you acknowledge that you may not:"
+msgstr "Při používání Teachka berete na vědomí, že nesmíte:"
+
+#: templates/legal/use_restrictions.html:36
+msgid ""
+"Collect or extract information or user data from accounts that do not belong"
+" to you."
+msgstr ""
+"Shromažďovat nebo získávat informace či uživatelská data z účtů, které vám "
+"nepatří."
+
+#: templates/legal/use_restrictions.html:37
+msgid ""
+"Circumvent, disable, or otherwise interfere with security-related features "
+"of the service."
+msgstr ""
+"Obcházet, deaktivovat nebo jinak narušovat bezpečnostní funkce služby."
+
+#: templates/legal/use_restrictions.html:38
+msgid ""
+"Trick, defraud, or mislead us or other users, including making false reports"
+" or impersonating another user."
+msgstr ""
+"Klamat, podvádět nebo uvádět v omyl nás či ostatní uživatele, včetně "
+"podávání falešných hlášení nebo vydávání se za jiného uživatele."
+
+#: templates/legal/use_restrictions.html:39
+msgid ""
+"Upload or transmit viruses, malware, or any information-collection mechanism"
+" such as tracking pixels or web bugs."
+msgstr ""
+"Nahrávat nebo přenášet viry, malware nebo jakýkoli mechanismus shromažďování"
+" informací, jako jsou sledovací pixely nebo web bugy."
+
+#: templates/legal/use_restrictions.html:40
+msgid ""
+"Interfere with, disrupt, or create an undue burden on the service or its "
+"underlying networks (rate-limiting bypass, scraping, automated mass "
+"requests)."
+msgstr ""
+"Zasahovat do služby nebo jejích sítí, narušovat je nebo je nepřiměřeně "
+"zatěžovat (obcházení omezení rychlosti, scraping, automatizované hromadné "
+"požadavky)."
+
+#: templates/legal/use_restrictions.html:41
+msgid "Harass, intimidate, or threaten other users."
+msgstr "Obtěžovat, zastrašovat nebo vyhrožovat ostatním uživatelům."
+
+#: templates/legal/use_restrictions.html:42
+msgid ""
+"Upload content that is illegal, hateful, sexually explicit, or that "
+"infringes third-party rights."
+msgstr ""
+"Nahrávat obsah, který je nezákonný, nenávistný, sexuálně explicitní nebo "
+"který porušuje práva třetích stran."
+
+#: templates/legal/use_restrictions.html:43
+msgid ""
+"Enter personal data of students or minors without lawful basis (parental "
+"consent, educational purpose, etc.)."
+msgstr ""
+"Zadávat osobní údaje studentů nebo nezletilých bez právního základu (souhlas"
+" rodičů, vzdělávací účel atd.)."
+
+#: templates/legal/use_restrictions.html:44
+msgid ""
+"Reverse-engineer, decompile, or attempt to extract the source code of the "
+"service beyond what open-source licences permit."
+msgstr ""
+"Provádět zpětnou analýzu, dekompilovat nebo se pokoušet získat zdrojový kód "
+"služby nad rámec toho, co povolují licence open source."
+
+#: templates/legal/use_restrictions.html:45
+msgid ""
+"Use the service in a manner inconsistent with applicable laws or "
+"regulations, including GDPR."
+msgstr ""
+"Používat službu způsobem, který je v rozporu s platnými zákony nebo "
+"předpisy, včetně GDPR."
+
+#: templates/legal/use_restrictions.html:56
+msgid "Consequences"
+msgstr "Důsledky"
+
+#: templates/legal/use_restrictions.html:58
+msgid ""
+"Accounts found to be in violation of any of the above are subject to "
+"suspension or cancellation without prior notice."
+msgstr ""
+"Účty, u nichž se zjistí porušení kteréhokoli z výše uvedených bodů, mohou "
+"být pozastaveny nebo zrušeny bez předchozího upozornění."
+
+#: templates/legal/use_restrictions.html:68
+msgid "How to report abuse"
+msgstr "Jak nahlásit zneužití"
+
+#: templates/legal/use_restrictions.html:70
+msgid "Report violations to "
+msgstr "Porušení nahlaste na "
+
+#: templates/legal/use_restrictions.html:70
+msgid ""
+". Include the account, content, or behaviour you are reporting and how you "
+"found it (URLs or screenshots help). We will not disclose your identity to "
+"anyone associated with the reported account."
+msgstr ""
+". Uveďte účet, obsah nebo chování, které nahlašujete, a jak jste je našli "
+"(pomohou adresy URL nebo snímky obrazovky). Vaši totožnost nesdělíme nikomu "
+"spojenému s nahlášeným účtem."
 
 #: templates/wip.html:4
 msgid "Coming Soon"
@@ -2488,3 +3789,62 @@ msgstr "Přehled"
 #: templates/wip.html:51
 msgid "Go Back"
 msgstr "Zpět"
+
+#~ msgid ""
+#~ "When you create an account we collect your username, email address, and "
+#~ "password (stored as a bcrypt hash, never in plain text). As you use the "
+#~ "tools we record usage statistics (e.g. wheel spins, timer duration) linked "
+#~ "to your account."
+#~ msgstr ""
+#~ "Při vytvoření účtu shromažďujeme uživatelské jméno, e-mail a heslo (uloženo "
+#~ "jako bcrypt hash, nikdy v čitelné podobě). Při používání nástrojů "
+#~ "zaznamenáváme statistiky použití (např. zatočení rulety, doba časovače) "
+#~ "spojené s tvým účtem."
+
+#~ msgid "How we use your data"
+#~ msgstr "Jak data používáme"
+
+#~ msgid ""
+#~ "Your data is used solely to provide the Teachka service: authentication, "
+#~ "personalisation (theme, language), and displaying your activity on the home "
+#~ "dashboard. We do not sell or share your data with third parties."
+#~ msgstr ""
+#~ "Data používáme výhradně pro službu Teachka: ověření, přizpůsobení (motiv, "
+#~ "jazyk) a zobrazení tvé aktivity na domovském panelu. Data neprodáváme ani "
+#~ "nesdílíme s třetími stranami."
+
+#~ msgid "Cookies"
+#~ msgstr "Cookies"
+
+#~ msgid ""
+#~ "We use Sentry for error monitoring. Sentry may set its own cookies or use "
+#~ "browser storage to deduplicate error reports. No personal data is "
+#~ "intentionally forwarded to Sentry."
+#~ msgstr ""
+#~ "Pro sledování chyb používáme Sentry. Sentry může nastavovat vlastní cookies "
+#~ "nebo využívat úložiště prohlížeče pro deduplikaci chybových hlášení. Do "
+#~ "Sentry záměrně neposíláme žádná osobní data."
+
+#~ msgid ""
+#~ "Your account and all associated data are retained for as long as your "
+#~ "account is active. You can delete your account and all data at any time from"
+#~ " the Settings page."
+#~ msgstr ""
+#~ "Tvůj účet a veškerá související data jsou uchovávána po dobu aktivity účtu. "
+#~ "Účet a všechna data můžeš kdykoliv smazat v nastavení."
+
+#~ msgid ""
+#~ "Under GDPR you have the right to access, correct, or erase your data. To "
+#~ "delete your account and all data permanently, visit "
+#~ msgstr ""
+#~ "Podle GDPR máš právo na přístup, opravu nebo výmaz svých dat. Pro trvalé "
+#~ "smazání účtu a všech dat navštiv "
+
+#~ msgid "For other requests contact us at the address below."
+#~ msgstr "Ohledně dalších žádostí nás kontaktuj na adrese níže."
+
+#~ msgid "— None —"
+#~ msgstr "— Žádný —"
+
+#~ msgid "Participants will type their answer here. Match is case-insensitive."
+#~ msgstr "Účastníci sem napíší svou odpověď. Nezáleží na velikosti písmen."

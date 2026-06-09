@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Teachka\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-06 08:15+0000\n"
+"POT-Creation-Date: 2026-06-09 11:57+0000\n"
 "PO-Revision-Date: 2026-02-14 21:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
@@ -68,6 +68,7 @@ msgstr "Sobre as descrições dos feriados"
 #: apps/calendar/templates/calendar/week_detail.html:22
 #: apps/calendar/templates/calendar/week_detail.html:36
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:30
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:22
 msgid "Close"
 msgstr "Fechar"
 
@@ -108,7 +109,7 @@ msgstr "Contacte-nos"
 #: apps/calendar/templates/calendar/event_form.html:14
 #: apps/calendar/templates/calendar/home.html:4
 #: apps/calendar/templates/calendar/week_detail.html:49
-#: templates/base.html:168 templates/home.html:308
+#: templates/base.html:168 templates/home.html:310
 msgid "Calendar"
 msgstr "Calendário"
 
@@ -117,7 +118,7 @@ msgstr "Calendário"
 msgid "Today"
 msgstr "Hoje"
 
-#: apps/calendar/templates/calendar/day_detail.html:55 templates/home.html:218
+#: apps/calendar/templates/calendar/day_detail.html:55 templates/home.html:220
 msgid "Name day"
 msgstr "Onomástico"
 
@@ -130,7 +131,7 @@ msgstr "Mês"
 #: apps/calendar/templates/calendar/home.html:69
 #: apps/calendar/templates/calendar/week_detail.html:4
 #: apps/calendar/templates/calendar/week_detail.html:58
-#: templates/home.html:212
+#: templates/home.html:214
 msgid "Week"
 msgstr "Semana"
 
@@ -171,7 +172,8 @@ msgstr "Zona de perigo"
 #: apps/group_maker/templates/group_maker/confirm_delete.html:17
 #: apps/group_maker/templates/group_maker/home.html:47
 #: apps/point_system/templates/point_system/delete_column.html:22
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:431
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:446
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:546
 #: apps/users/templates/users/delete_account.html:16
 #: apps/users/templates/users/settings.html:106
 msgid "Delete"
@@ -225,10 +227,14 @@ msgstr "Apagar permanentemente"
 #: apps/point_system/templates/point_system/home.html:342
 #: apps/point_system/templates/point_system/new_column.html:86
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:70
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:330
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:414
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:446
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:509
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:345
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:429
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:461
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:524
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:561
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:32
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:64
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:30
 #: apps/users/templates/users/delete_account.html:45
 #: apps/users/templates/users/edit_profile.html:126
 msgid "Cancel"
@@ -241,8 +247,8 @@ msgstr "Evento"
 #: apps/calendar/templates/calendar/event_form.html:18
 #: apps/group_maker/templates/group_maker/list_edit.html:17
 #: apps/point_system/templates/point_system/edit_column.html:22
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:352
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:467
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:367
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:482
 #: apps/users/templates/users/edit_profile.html:17
 msgid "Edit"
 msgstr "Editar"
@@ -251,7 +257,6 @@ msgstr "Editar"
 #: apps/calendar/templates/calendar/week_detail.html:93
 #: apps/point_system/templates/point_system/new_column.html:21
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:15
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:273
 msgid "New"
 msgstr "Novo"
 
@@ -265,7 +270,7 @@ msgstr "Detalhes do evento"
 
 #: apps/calendar/templates/calendar/event_form.html:40
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:40
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:474
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:489
 msgid "Title"
 msgstr "Título"
 
@@ -280,9 +285,9 @@ msgstr "ex. Aula de Matemática, Reunião de pais"
 #: apps/calendar/templates/calendar/event_form.html:151
 #: apps/contact/templates/contact/contact.html:184
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:48
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:292
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:367
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:482
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:307
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:382
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:497
 #: apps/users/templates/registration/register.html:98
 #: apps/users/templates/users/edit_profile.html:73
 #: apps/users/templates/users/edit_profile.html:101
@@ -294,8 +299,9 @@ msgid "e.g. Mathematics, History"
 msgstr "ex. Matemática, História"
 
 #: apps/calendar/templates/calendar/event_form.html:70
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:84
 msgid "Start"
-msgstr "Início"
+msgstr "Começar"
 
 #: apps/calendar/templates/calendar/event_form.html:86
 msgid "End"
@@ -328,8 +334,8 @@ msgstr "Objetivos, materiais, trabalhos de casa..."
 #: apps/calendar/templates/calendar/event_form.html:166
 #: apps/group_maker/templates/group_maker/list_edit.html:85
 #: apps/point_system/templates/point_system/edit_column.html:98
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:410
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:505
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:425
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:520
 #: apps/users/templates/users/edit_profile.html:123
 msgid "Save changes"
 msgstr "Guardar alterações"
@@ -359,12 +365,12 @@ msgid "Plans and events"
 msgstr "Planos e eventos"
 
 #: apps/calendar/templates/calendar/week_detail.html:60
-#: teachkaBaseProject/views.py:119
+#: teachkaBaseProject/views.py:135
 msgid "Even"
 msgstr "Par"
 
 #: apps/calendar/templates/calendar/week_detail.html:60
-#: teachkaBaseProject/views.py:119
+#: teachkaBaseProject/views.py:135
 msgid "Odd"
 msgstr "Ímpar"
 
@@ -385,8 +391,8 @@ msgid "Bug report"
 msgstr "Reportar erro"
 
 #: apps/contact/models.py:12 apps/contact/templates/contact/contact.html:119
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:284
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:359
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:299
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:374
 msgid "Question"
 msgstr "Pergunta"
 
@@ -396,7 +402,8 @@ msgstr "Pedido de funcionalidade"
 
 #: apps/contact/templates/contact/contact.html:4
 #: apps/contact/templates/contact/contact.html:37 templates/base.html:156
-#: templates/base.html:325 templates/legal/privacy.html:93
+#: templates/base.html:322 templates/legal/privacy.html:39
+#: templates/legal/terms.html:39
 msgid "Contact"
 msgstr "Contacto"
 
@@ -462,8 +469,8 @@ msgid "Your message"
 msgstr "A sua mensagem"
 
 #: apps/contact/templates/contact/contact.html:162
-msgid "In one line — what is this about?"
-msgstr "Numa linha — sobre o que é?"
+msgid "In one line, what is this about?"
+msgstr "Numa linha, sobre o que é isto?"
 
 #: apps/contact/templates/contact/contact.html:170
 msgid "Message"
@@ -588,10 +595,8 @@ msgstr ""
 "específicos."
 
 #: apps/grade_calculator/views.py:48
-#, fuzzy
-#| msgid "Maximum points available"
 msgid "Maximum points must be at least 4."
-msgstr "Nenhuma coluna disponível"
+msgstr "O máximo de pontos tem de ser pelo menos 4."
 
 #: apps/group_divider/forms.py:7
 msgid "How many members per group?"
@@ -633,7 +638,7 @@ msgstr "Divida o seu grupo em equipas mais pequenas"
 #: apps/point_system/templates/point_system/home.html:57
 #: apps/wheel/templates/wheel/home.html:40
 #: apps/wheel/templates/wheel/home.html:48
-#: apps/wheel/templates/wheel/home.html:50 templates/home.html:345
+#: apps/wheel/templates/wheel/home.html:50 templates/home.html:361
 msgid "members"
 msgstr "membros"
 
@@ -775,7 +780,7 @@ msgstr "Criar grupo"
 #: apps/group_maker/templates/group_maker/list_create.html:17
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:18
 msgid "Create"
-msgstr "Criar uma"
+msgstr "Criar"
 
 #: apps/group_maker/templates/group_maker/list_create.html:20
 msgid "Add a group that you can use across all tools"
@@ -948,9 +953,9 @@ msgid "Point system"
 msgstr "Sistema de pontos"
 
 #: apps/point_system/templates/point_system/home.html:19
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:316
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:400
-#: templates/home.html:350
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:331
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:415
+#: templates/home.html:366
 msgid "Points"
 msgstr "Pontos"
 
@@ -1025,6 +1030,30 @@ msgstr "Nenhum ponto positivo registado"
 msgid "Add one to start rewarding."
 msgstr "Adiciona uma para começar a recompensar."
 
+#: apps/point_system/templates/point_system/home.html:400
+msgid "enabled"
+msgstr "ativado"
+
+#: apps/point_system/templates/point_system/home.html:401
+msgid "pending…"
+msgstr "pendente…"
+
+#: apps/point_system/templates/point_system/home.html:402
+msgid "saving…"
+msgstr "a guardar…"
+
+#: apps/point_system/templates/point_system/home.html:403
+msgid "saved"
+msgstr "guardado"
+
+#: apps/point_system/templates/point_system/home.html:404
+msgid "save failed"
+msgstr "falha ao guardar"
+
+#: apps/point_system/templates/point_system/home.html:405
+msgid "save failed, refresh page"
+msgstr "falha ao guardar, atualiza a página"
+
 #: apps/point_system/templates/point_system/karma_dashboard.html:4
 msgid "Dashboard"
 msgstr "Painel"
@@ -1034,6 +1063,7 @@ msgid "Member dashboard"
 msgstr "Painel individual do membro"
 
 #: apps/point_system/templates/point_system/karma_dashboard.html:28
+#: templates/legal/security.html:16
 msgid "Overview"
 msgstr "Resumo"
 
@@ -1120,6 +1150,28 @@ msgstr "Coluna '%(name)s' não encontrada."
 msgid "A column named '%(name)s' already exists."
 msgstr "Já existe uma coluna chamada '%(name)s'."
 
+#: apps/quizzmaker/models.py:13
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:512
+msgid "Public"
+msgstr "Público"
+
+#: apps/quizzmaker/models.py:14
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:513
+msgid "Private"
+msgstr "Privado"
+
+#: apps/quizzmaker/models.py:46
+msgid "Pick the correct answer"
+msgstr "Escolhe a resposta correta"
+
+#: apps/quizzmaker/models.py:47
+msgid "Write the answer"
+msgstr "Escreve a resposta"
+
+#: apps/quizzmaker/models.py:48
+msgid "Drag the answer into the blank"
+msgstr "Arrasta a resposta para o espaço"
+
 #: apps/quizzmaker/templates/quizzmaker/_image_cropper.html:6
 msgid "Original"
 msgstr "Original"
@@ -1130,7 +1182,7 @@ msgstr "sombreado = cortado"
 
 #: apps/quizzmaker/templates/quizzmaker/_image_cropper.html:14
 msgid "Drag the bright area to choose what is kept"
-msgstr "Arrasta a área brilhante para escolher o que manter"
+msgstr "Arrasta a área clara para escolher o que fica"
 
 #: apps/quizzmaker/templates/quizzmaker/_image_cropper.html:17
 msgid "Card preview"
@@ -1138,111 +1190,164 @@ msgstr "Pré-visualização do cartão"
 
 #: apps/quizzmaker/templates/quizzmaker/_image_field.html:11
 msgid "Re-cut current image"
-msgstr "Voltar a recortar imagem"
+msgstr "Recortar imagem atual"
 
 #: apps/quizzmaker/templates/quizzmaker/_image_field.html:17
 msgid "Re-cut"
 msgstr "Recortar"
 
 #: apps/quizzmaker/templates/quizzmaker/_image_field.html:23
-#: apps/quizzmaker/templates/quizzmaker/_image_field.html:34
+#: apps/quizzmaker/templates/quizzmaker/_image_field.html:39
 msgid "Remove"
 msgstr "Remover"
 
+#: apps/quizzmaker/templates/quizzmaker/_image_field.html:31
+#: apps/quizzmaker/templates/quizzmaker/_image_field.html:36
+msgid "No file chosen"
+msgstr "Nenhum ficheiro escolhido"
+
+#: apps/quizzmaker/templates/quizzmaker/_image_field.html:34
+msgid "Choose file"
+msgstr "Escolher ficheiro"
+
 #: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:11
 msgid "Search Quizzes"
-msgstr "Pesquisar Quizzes"
+msgstr "Procurar quizzes"
 
 #: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:17
 msgid "My Quizz Library"
-msgstr "A minha biblioteca de quizzes"
+msgstr "A minha biblioteca"
 
 #: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:23
 msgid "Search your quizzes..."
-msgstr "Pesquisar os teus quizzes..."
+msgstr "Procura nos teus quizzes..."
 
 #: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:23
 msgid "Search by title..."
-msgstr "Pesquisar por título..."
+msgstr "Procurar por título..."
 
 #: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:26
 msgid "Search"
-msgstr "Pesquisar"
+msgstr "Procurar"
 
 #: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:33
+msgid "Join a game"
+msgstr "Entrar num jogo"
+
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:38
 msgid "Create a Quizz"
-msgstr "Criar um Quiz"
-
-#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:46
-msgid "No quizzes match"
-msgstr "Nenhum quiz corresponde"
-
-#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:48
-msgid "Try a different search"
-msgstr "Tenta uma pesquisa diferente"
+msgstr "Criar um quiz"
 
 #: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:51
-#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:56
-msgid "No quizzes yet"
-msgstr "Ainda sem quizzes"
+msgid "No quizzes match"
+msgstr "Nenhum quiz corresponde a"
 
 #: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:53
+msgid "Try a different search"
+msgstr "Tenta outra pesquisa"
+
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:56
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:61
+msgid "No quizzes yet"
+msgstr "Ainda não há quizzes"
+
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:58
 msgid "Create your first quiz to get started"
 msgstr "Cria o teu primeiro quiz para começar"
 
-#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:58
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:63
 msgid "Be the first to publish one"
 msgstr "Sê o primeiro a publicar um"
 
-#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:69
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:74
 msgid "Edit quiz"
 msgstr "Editar quiz"
 
-#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:93
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:84
+msgid "Host live game"
+msgstr "Iniciar jogo ao vivo"
+
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:109
 msgid "pts"
 msgstr "pts"
 
-#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:100
+#: apps/quizzmaker/templates/quizzmaker/_quiz_region.html:116
 #, python-format
 msgid "%(counter)s round has no time limit"
 msgid_plural "%(counter)s rounds have no time limit"
-msgstr[0] "%(counter)s ronda não tem limite de tempo"
-msgstr[1] "%(counter)s rondas não têm limite de tempo"
+msgstr[0] "%(counter)s ronda sem limite de tempo"
+msgstr[1] "%(counter)s rondas sem limite de tempo"
+
+#: apps/quizzmaker/templates/quizzmaker/_round_markers.html:8
+msgid "Correct answer set"
+msgstr "Resposta correta definida"
+
+#: apps/quizzmaker/templates/quizzmaker/_round_markers.html:8
+msgid "No correct answer yet"
+msgstr "Ainda sem resposta correta"
 
 #: apps/quizzmaker/templates/quizzmaker/home.html:4
 #: apps/quizzmaker/templates/quizzmaker/home.html:18
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:15
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:16
+#: templates/base.html:204
 msgid "Quizzes"
 msgstr "Quizzes"
 
 #: apps/quizzmaker/templates/quizzmaker/home.html:15
 msgid "Quizz time"
-msgstr "Hora do quizz"
+msgstr "Hora dos quizzes"
 
 #: apps/quizzmaker/templates/quizzmaker/home.html:21
 msgid "Build and run quick quizzes"
-msgstr "Cria e aplica quizzes rápidos"
+msgstr "Cria e joga quizzes rápidos"
+
+#: apps/quizzmaker/templates/quizzmaker/join.html:4
+#: apps/quizzmaker/templates/quizzmaker/join.html:13
+msgid "Join a quiz"
+msgstr "Entrar num quiz"
+
+#: apps/quizzmaker/templates/quizzmaker/join.html:14
+msgid "Enter the code from your teacher's screen."
+msgstr "Introduz o código do ecrã do teu professor."
+
+#: apps/quizzmaker/templates/quizzmaker/join.html:27
+#: apps/quizzmaker/templates/quizzmaker/join.html:32
+msgid "Game code"
+msgstr "Código do jogo"
+
+#: apps/quizzmaker/templates/quizzmaker/join.html:39
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:79
+msgid "Nickname"
+msgstr "Alcunha"
+
+#: apps/quizzmaker/templates/quizzmaker/join.html:41
+msgid "Your name"
+msgstr "O teu nome"
+
+#: apps/quizzmaker/templates/quizzmaker/join.html:44
+msgid "Join"
+msgstr "Entrar"
 
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:4
 msgid "Create Quizz"
-msgstr "Criar Quiz"
+msgstr "Criar quiz"
 
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:18
 msgid "a Quizz"
-msgstr "um Quizz"
+msgstr "um quiz"
 
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:21
 msgid "Title, logo, visibility"
 msgstr "Título, logótipo, visibilidade"
 
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:48
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:482
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:497
 msgid "Logo"
 msgstr "Logótipo"
 
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:56
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:493
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:508
 msgid "Visibility"
 msgstr "Visibilidade"
 
@@ -1269,146 +1374,411 @@ msgstr "Guardar e sair"
 msgid "New round"
 msgstr "Nova ronda"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:78
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:114
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:175
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:188
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:79
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:116
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:177
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:190
 msgid "No question yet"
 msgstr "Ainda sem pergunta"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:92
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:93
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:128
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:129
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:94
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:130
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:131
 msgid "Edit round"
 msgstr "Editar ronda"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:99
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:100
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:135
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:136
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:442
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:101
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:137
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:138
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:457
 msgid "Delete round"
 msgstr "Eliminar ronda"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:151
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:153
 msgid "No rounds yet"
-msgstr "Ainda sem rondas"
+msgstr "Ainda não há rondas"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:154
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:156
 msgid "Tap"
-msgstr "Toca"
+msgstr "Toca em"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:154
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:156
 msgid "to add one"
-msgstr "para adicionar"
+msgstr "para adicionar uma"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:168
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:349
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:428
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:170
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:364
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:443
 #, python-format
 msgid "Round %(n)s"
 msgstr "Ronda %(n)s"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:168
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:170
 msgid "Preview"
 msgstr "Pré-visualização"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:199
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:201
 msgid "Mark as correct"
-msgstr "Marcar como correto"
+msgstr "Marcar como correta"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:213
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:215
 msgid "Answer"
 msgstr "Resposta"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:230
-msgid "Type the correct answer"
-msgstr "Escreve a resposta correta"
-
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:227
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:235
-msgid "Participants will type their answer here. Match is case-insensitive."
-msgstr ""
-"Os participantes escrevem a resposta aqui. Não distingue maiúsculas de "
-"minúsculas."
+msgid "Type an accepted answer"
+msgstr "Escreve uma resposta aceite"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:249
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:239
+msgid "Remove answer"
+msgstr "Remover resposta"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:248
+msgid "Add accepted answer"
+msgstr "Adicionar resposta aceite"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:252
+msgid "Players match any of these. Case-insensitive."
+msgstr ""
+"Os jogadores acertam com qualquer uma destas. Não distingue maiúsculas."
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:264
 msgid "Nothing to preview"
 msgstr "Nada para pré-visualizar"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:251
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:266
 msgid "Create your first round"
 msgstr "Cria a tua primeira ronda"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:254
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:269
 msgid ""
 "Use the plus button on the left to add a round. The live preview will appear"
 " here as you build."
 msgstr ""
-"Usa o botão + à esquerda para adicionar uma ronda. A pré-visualização "
+"Usa o botão mais à esquerda para adicionar uma ronda. A pré-visualização "
 "aparece aqui à medida que constróis."
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:270
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:349
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:428
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:464
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:285
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:364
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:443
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:479
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:543
 msgid "Quiz"
 msgstr "Quiz"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:273
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:352
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:288
+msgctxt "feminine noun"
+msgid "New"
+msgstr "Nova"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:288
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:367
 msgid "question"
 msgstr "pergunta"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:292
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:367
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:307
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:382
 msgid "Image"
 msgstr "Imagem"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:300
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:380
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:315
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:395
 msgid "Question type"
 msgstr "Tipo de pergunta"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:309
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:393
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:324
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:408
 msgid "Duration"
 msgstr "Duração"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:326
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:341
 msgid "Create round"
 msgstr "Criar ronda"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:431
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:446
 msgid "round"
 msgstr "ronda"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:436
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:451
 msgid ""
 "This will permanently remove the round and its answers. This cannot be "
 "undone."
 msgstr ""
-"Isto irá remover permanentemente a ronda e as suas respostas. Esta ação não "
-"pode ser revertida."
+"Isto remove permanentemente a ronda e as suas respostas. Não pode ser "
+"anulado."
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:464
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:479
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:543
 #: apps/users/templates/users/profile.html:75
 #: apps/users/templates/users/settings.html:4
 #: apps/users/templates/users/settings.html:17 templates/base.html:155
 msgid "Settings"
 msgstr "Definições"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:467
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:482
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:546
 msgid "quiz"
 msgstr "quiz"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:497
-msgid "Public"
-msgstr "Público"
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:528
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:557
+msgid "Delete quiz"
+msgstr "Eliminar quiz"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:498
-msgid "Private"
-msgstr "Privado"
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:551
+msgid ""
+"This will permanently remove the quiz, all its rounds, and their answers. "
+"This cannot be undone."
+msgstr ""
+"Isto remove permanentemente o quiz, todas as suas rondas e respostas. Não "
+"pode ser anulado."
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:4
+msgid "Hosting"
+msgstr "A apresentar"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:11
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:29
+msgid "Close room"
+msgstr "Fechar sala"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:15
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:39
+msgid "Connecting…"
+msgstr "A ligar…"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:22
+msgid "the room?"
+msgstr "a sala?"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:26
+msgid ""
+"This ends the game for everyone and removes all players. This cannot be "
+"undone."
+msgstr ""
+"Isto termina o jogo para todos e remove todos os jogadores. Não pode ser "
+"anulado."
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:44
+msgid "Player"
+msgstr "Jogador"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:48
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:54
+msgid "Edit name"
+msgstr "Editar nome"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:58
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:80
+msgid "Save"
+msgstr "Guardar"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:62
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:81
+msgid "Kick"
+msgstr "Expulsar"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:75
+msgid "Join at"
+msgstr "Entra em"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:76
+msgid "or enter the code"
+msgstr "ou introduz o código"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:77
+msgid "Players"
+msgstr "Jogadores"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:78
+msgid "Edit player"
+msgstr "Editar jogador"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:82
+msgid "Waiting for players…"
+msgstr "À espera de jogadores…"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:83
+msgid "Show question on player devices"
+msgstr "Mostrar pergunta nos dispositivos dos jogadores"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:85
+msgid "Reveal answer"
+msgstr "Revelar resposta"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:86
+msgid "Next"
+msgstr "Seguinte"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:87
+msgid "End game"
+msgstr "Terminar jogo"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:88
+msgid "Round"
+msgstr "Ronda"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:89
+msgid "of"
+msgstr "de"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:90
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:61
+msgid "Leaderboard"
+msgstr "Classificação"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:91
+msgid "answered"
+msgstr "responderam"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:92
+msgid "Final leaderboard"
+msgstr "Classificação final"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:93
+msgid "Review questions"
+msgstr "Rever perguntas"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:94
+msgid "Previous"
+msgstr "Anterior"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:95
+msgid "Done"
+msgstr "Concluído"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:96
+msgid "Correct answer"
+msgstr "Resposta correta"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:97
+msgid "right"
+msgstr "certas"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:98
+msgid "wrong"
+msgstr "erradas"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:99
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:62
+msgid "Pick one"
+msgstr "Escolhe uma"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:100
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:63
+msgid "Pick all that apply"
+msgstr "Escolhe todas as corretas"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:101
+msgid "Standings"
+msgstr "Classificação"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:237
+msgid "Players type their answer"
+msgstr "Os jogadores escrevem a resposta"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:4
+msgid "Playing"
+msgstr "A jogar"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:11
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:19
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:27
+msgid "Leave"
+msgstr "Sair"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:19
+msgid "the game?"
+msgstr "o jogo?"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:23
+msgid "You'll lose your score and your spot in this game."
+msgstr "Vais perder a tua pontuação e o teu lugar neste jogo."
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:45
+msgid "You are in! Waiting for the host to start…"
+msgstr "Estás dentro! À espera que o anfitrião comece…"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:46
+msgid "Keep this screen open."
+msgstr "Mantém este ecrã aberto."
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:47
+msgid "Answers locked"
+msgstr "Respostas bloqueadas"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:48
+msgid "Answer submitted, waiting for the round to end…"
+msgstr "Resposta enviada, à espera do fim da ronda…"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:49
+msgid "Type your answer"
+msgstr "Escreve a tua resposta"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:50
+msgid "Submit"
+msgstr "Enviar"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:51
+msgid "Correct!"
+msgstr "Certo!"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:52
+msgid "Partly right"
+msgstr "Parcialmente certo"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:53
+msgid "Missed"
+msgstr "Falhaste"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:54
+msgid "Rank"
+msgstr "Posição"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:55
+msgid "Score"
+msgstr "Pontos"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:56
+msgid "Streak"
+msgstr "Sequência"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:57
+msgid "Final result"
+msgstr "Resultado final"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:58
+msgid "Thanks for playing!"
+msgstr "Obrigado por jogares!"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:59
+msgid "Reconnecting…"
+msgstr "A reconectar…"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:60
+msgid "Host disconnected, waiting for them to return…"
+msgstr "Anfitrião desligou-se, à espera que regresse…"
+
+#: apps/quizzmaker/views.py:202
+#, python-format
+msgid "Round %(n)s needs a correct answer before you can save."
+msgstr "A ronda %(n)s precisa de uma resposta correta antes de guardares."
+
+#: apps/quizzmaker/views.py:213
+msgid "Quiz deleted."
+msgstr "Quiz eliminado."
+
+#: apps/quizzmaker/views.py:331
+msgid "Game not found. Check the code."
+msgstr "Jogo não encontrado. Verifica o código."
+
+#: apps/quizzmaker/views.py:334
+msgid "You're hosting this game. Open it from your host screen."
+msgstr ""
+"Estás a apresentar este jogo. Abre-o a partir do teu ecrã de anfitrião."
 
 #: apps/timer/templates/timer/countdown.html:4
 #: apps/timer/templates/timer/countdown.html:13
@@ -1422,7 +1792,7 @@ msgstr "Contagem decrescente"
 #: apps/timer/templates/timer/home.html:14
 #: apps/timer/templates/timer/home.html:17
 #: apps/timer/templates/timer/stopwatch.html:13 templates/base.html:198
-#: templates/home.html:294 templates/home.html:383
+#: templates/home.html:296 templates/home.html:399
 msgid "Timer"
 msgstr "Temporizador"
 
@@ -1476,46 +1846,48 @@ msgid "Flags"
 msgstr "Marcações"
 
 #: apps/users/forms.py:18
-#, fuzzy
-#| msgid "Configuration"
 msgid "Password Confirmation"
-msgstr "Configuração"
+msgstr "Confirmação da palavra-passe"
 
-#: apps/users/forms.py:34 apps/users/views.py:150
+#: apps/users/forms.py:21
+msgid "You must accept the Terms of Service and Privacy Policy to continue."
+msgstr ""
+"Para continuar, tem de aceitar os Termos de Serviço e a Política de "
+"Privacidade."
+
+#: apps/users/forms.py:38 apps/users/views.py:155
 msgid "An account with this email address already exists."
 msgstr "Já existe uma conta com este endereço de email."
 
-#: apps/users/forms.py:40
+#: apps/users/forms.py:44
 msgid "An account with this username already exists."
 msgstr "Já existe uma conta com este nome de utilizador."
 
-#: apps/users/forms.py:57
-#, fuzzy
-#| msgid "Confirm password"
+#: apps/users/forms.py:61
 msgid "Confirm new password"
-msgstr "Alterar palavra-passe"
+msgstr "Confirmar nova palavra-passe"
 
-#: apps/users/models.py:8 templates/base.html:221
+#: apps/users/models.py:8 templates/base.html:218
 msgid "Light"
 msgstr "Claro"
 
-#: apps/users/models.py:9 templates/base.html:226
+#: apps/users/models.py:9 templates/base.html:223
 msgid "Dark"
 msgstr "Escuro"
 
-#: apps/users/models.py:10 templates/base.html:231
+#: apps/users/models.py:10 templates/base.html:228
 msgid "Pastel"
 msgstr "Pastel"
 
-#: apps/users/models.py:11 templates/base.html:236
+#: apps/users/models.py:11 templates/base.html:233
 msgid "Editorial"
 msgstr "Editar perfil"
 
-#: apps/users/models.py:12 templates/base.html:241
+#: apps/users/models.py:12 templates/base.html:238
 msgid "Palette"
 msgstr "Paleta"
 
-#: apps/users/models.py:42
+#: apps/users/models.py:44
 msgid "User stats"
 msgstr "Estatísticas do utilizador"
 
@@ -1557,7 +1929,7 @@ msgstr "Teachka, 2026"
 
 #: apps/users/templates/registration/account_activation_email.html:100
 #: apps/users/templates/users/password_reset_email.html:110
-#: templates/home.html:109
+#: templates/home.html:111
 msgid "Toolkit for educators"
 msgstr "Ferramentas para Professores"
 
@@ -1568,10 +1940,10 @@ msgstr "Se não criaste uma conta Teachka, podes ignorar este email."
 
 #: apps/users/templates/registration/login.html:5
 #: apps/users/templates/registration/login.html:127
-#: apps/users/templates/registration/register.html:216
+#: apps/users/templates/registration/register.html:239
 #: apps/users/templates/users/forgot_password.html:116
-#: apps/users/templates/users/password_reset.html:149 templates/home.html:238
-#: templates/home.html:651
+#: apps/users/templates/users/password_reset.html:149 templates/home.html:240
+#: templates/home.html:667
 msgid "Sign in"
 msgstr "Entrar"
 
@@ -1612,17 +1984,17 @@ msgstr "Alternar visibilidade da palavra-passe"
 msgid "New here?"
 msgstr "Novo por aqui?"
 
-#: apps/users/templates/registration/login.html:137 templates/home.html:648
+#: apps/users/templates/registration/login.html:137 templates/home.html:664
 msgid "Create an account"
 msgstr "Criar uma conta"
 
 #: apps/users/templates/registration/register.html:5
-#: apps/users/templates/registration/register.html:206
+#: apps/users/templates/registration/register.html:229
 msgid "Create account"
 msgstr "Criar conta"
 
-#: apps/users/templates/registration/register.html:50 templates/base.html:285
-#: templates/home.html:128
+#: apps/users/templates/registration/register.html:50 templates/base.html:282
+#: templates/home.html:130
 msgid "Get started"
 msgstr "Começar"
 
@@ -1658,7 +2030,21 @@ msgstr "Email"
 msgid "Confirm password"
 msgstr "Alterar palavra-passe"
 
-#: apps/users/templates/registration/register.html:213
+#: apps/users/templates/registration/register.html:215
+#, python-format
+msgid ""
+"I agree to the <a href=\"%(terms_url)s\" target=\"_blank\" class=\"text-"
+"primary font-medium hover:underline underline-offset-2\">Terms of "
+"Service</a> and <a href=\"%(privacy_url)s\" target=\"_blank\" class=\"text-"
+"primary font-medium hover:underline underline-offset-2\">Privacy Policy</a>."
+msgstr ""
+"Concordo com os <a href=\"%(terms_url)s\" target=\"_blank\" class=\"text-"
+"primary font-medium hover:underline underline-offset-2\">Termos de "
+"Serviço</a> e a <a href=\"%(privacy_url)s\" target=\"_blank\" class=\"text-"
+"primary font-medium hover:underline underline-offset-2\">Política de "
+"Privacidade</a>."
+
+#: apps/users/templates/registration/register.html:236
 msgid "Already have an account?"
 msgstr "Já tem uma conta?"
 
@@ -1672,7 +2058,8 @@ msgstr "Alterar Palavra-passe"
 msgid "Back to profile"
 msgstr "Voltar ao Início"
 
-#: apps/users/templates/users/change_password.html:59
+#: apps/users/templates/users/change_password.html:59 templates/base.html:325
+#: templates/legal/security.html:4 templates/legal/security.html:16
 msgid "Security"
 msgstr "Segurança"
 
@@ -1746,14 +2133,12 @@ msgstr "O nome de utilizador não pode ser alterado"
 
 #: apps/users/templates/users/edit_profile.html:101
 #: apps/users/templates/users/profile.html:60
-#, fuzzy
-#| msgid "Countdown"
 msgid "Country"
-msgstr "Contagem decrescente"
+msgstr "País"
 
 #: apps/users/templates/users/edit_profile.html:105
-msgid "— None —"
-msgstr "— Nenhum —"
+msgid "None"
+msgstr "Nenhum"
 
 #: apps/users/templates/users/forgot_password.html:5
 msgid "Forgot password"
@@ -1871,15 +2256,15 @@ msgstr "Alterar palavra-passe"
 msgid "Preferences"
 msgstr "Preferências"
 
-#: apps/users/templates/users/settings.html:39 templates/base.html:272
+#: apps/users/templates/users/settings.html:39 templates/base.html:269
 msgid "Theme"
 msgstr "Tema"
 
-#: apps/users/templates/users/settings.html:52 templates/base.html:253
+#: apps/users/templates/users/settings.html:52 templates/base.html:250
 msgid "Language"
 msgstr "Idioma"
 
-#: apps/users/templates/users/settings.html:62 templates/home.html:481
+#: apps/users/templates/users/settings.html:62 templates/home.html:497
 msgid "Accent colour"
 msgstr "Cor de destaque"
 
@@ -1899,73 +2284,67 @@ msgstr "Zona de perigo"
 msgid "Permanently remove your account and all data."
 msgstr "Remove permanentemente a tua conta e todos os dados."
 
-#: apps/users/views.py:46
-#, fuzzy
-#| msgid "Welcome to Teachka"
+#: apps/users/views.py:51
 msgid "Welcome to Teachka!"
-msgstr "Bem-vindo de volta"
+msgstr "Bem-vindo ao Teachka!"
 
-#: apps/users/views.py:63
+#: apps/users/views.py:68
 msgid "Welcome, please check your email to complete your registration."
 msgstr "Bem-vindo, por favor verifique o seu email para concluir o registo."
 
-#: apps/users/views.py:70
+#: apps/users/views.py:75
 msgid "Registration failed due to an email error. Please try again later."
 msgstr ""
 "O registo falhou devido a um erro de email. Por favor tente novamente mais "
 "tarde."
 
-#: apps/users/views.py:91
+#: apps/users/views.py:96
 msgid "Your account has been successfully activated!"
 msgstr "A sua conta foi ativada com sucesso!"
 
-#: apps/users/views.py:94
+#: apps/users/views.py:99
 msgid "Activation link is invalid or expired."
 msgstr "O link de ativação é inválido ou expirou."
 
-#: apps/users/views.py:167
+#: apps/users/views.py:172
 msgid "You have requested a new password"
 msgstr "Pediu uma nova palavra-passe"
 
-#: apps/users/views.py:182
+#: apps/users/views.py:187
 msgid "You will receive a password reset link in the email registered"
 msgstr "Receberá um link de redefinição da palavra-passe no email registado"
 
-#: apps/users/views.py:208 apps/users/views.py:214
+#: apps/users/views.py:213 apps/users/views.py:219
 msgid "Reset link is invalid or expired."
 msgstr "O link de redefinição é inválido ou expirou."
 
-#: apps/users/views.py:221
+#: apps/users/views.py:226
 msgid "Your password was successfully reset. You may now login again."
 msgstr ""
 "A sua palavra-passe foi redefinida com sucesso. Já pode iniciar sessão "
 "novamente."
 
-#: apps/users/views.py:243
-#, fuzzy
-#| msgid "Reset your password"
+#: apps/users/views.py:248
 msgid "Reset your Teachka password"
-msgstr "Redefinir Palavra-passe"
+msgstr "Repor a tua palavra-passe do Teachka"
 
-#: apps/users/views.py:263
+#: apps/users/views.py:268
 msgid "If that email is registered you'll receive a reset link shortly."
 msgstr ""
 "Se esse email estiver registado, receberá em breve um link de redefinição."
 
-#: apps/users/views.py:278
+#: apps/users/views.py:283
 msgid "Incorrect password. Account not deleted."
 msgstr "Palavra-passe incorreta. Conta não eliminada."
 
-#: apps/users/views.py:282
+#: apps/users/views.py:287
 msgid "Your account and all associated data have been permanently deleted."
 msgstr ""
 "A sua conta e todos os dados associados foram permanentemente eliminados."
 
 #: apps/wheel/forms.py:6
-#, fuzzy
-#| msgid "Member colors"
 msgid "Members chosen"
-msgstr "Cores dos membros"
+msgstr "Membros escolhidos"
 
 #: apps/wheel/templates/wheel/home.html:4
 #: apps/wheel/templates/wheel/home.html:14 templates/base.html:192
@@ -2104,19 +2483,23 @@ msgstr "Entrar"
 msgid "Register"
 msgstr "Registar"
 
-#: templates/base.html:279
+#: templates/base.html:276
 msgid "Logout"
 msgstr "Sair"
 
-#: templates/base.html:326 templates/legal/privacy.html:16
+#: templates/base.html:323 templates/legal/privacy.html:16
 msgid "Privacy"
 msgstr "Privacidade"
 
-#: templates/base.html:339
+#: templates/base.html:324
+msgid "Terms"
+msgstr "Termos"
+
+#: templates/base.html:338
 msgid "We use a session cookie to keep you logged in. No tracking. "
 msgstr "Usamos um cookie de sessão para te manter ligado. Sem rastreio. "
 
-#: templates/base.html:340
+#: templates/base.html:339
 msgid "Privacy policy"
 msgstr "Política de privacidade"
 
@@ -2124,168 +2507,177 @@ msgstr "Política de privacidade"
 msgid "Teachka: Toolkit for Educators"
 msgstr "Teachka: Ferramentas para educadores"
 
-#: templates/home.html:114
+#: templates/home.html:116
 msgid "Teaching made"
 msgstr "Ensinar de forma"
 
-#: templates/home.html:115
+#: templates/home.html:117
 msgid "effortlessly"
 msgstr "sem esforço"
 
-#: templates/home.html:116
+#: templates/home.html:118
 msgid "organised"
 msgstr "organizada"
 
-#: templates/home.html:121
+#: templates/home.html:123
 msgid "One calm, clean hub for all your classroom tools."
 msgstr ""
 "Um espaço calmo e limpo para todas as tuas ferramentas de sala de aula."
 
-#: templates/home.html:131
+#: templates/home.html:133
 msgid "See the tools"
 msgstr "Ver as ferramentas"
 
-#: templates/home.html:141
+#: templates/home.html:143
 msgid "Built-in classroom tools"
 msgstr "Ferramentas de sala de aula integradas"
 
-#: templates/home.html:145
+#: templates/home.html:147
 msgid "Place for everything"
 msgstr "Lugar para tudo"
 
-#: templates/home.html:148
+#: templates/home.html:150
 msgid "Free"
 msgstr "Grátis"
 
-#: templates/home.html:149
+#: templates/home.html:151
 msgid "No strings attached"
 msgstr "Sem compromissos"
 
-#: templates/home.html:196
+#: templates/home.html:198
 msgid "Welcome back to"
 msgstr "Bem-vindo de volta"
 
-#: templates/home.html:232
+#: templates/home.html:234
 msgid "The toolkit"
 msgstr "As ferramentas"
 
-#: templates/home.html:234
-msgid "Six tools,"
-msgstr "Seis ferramentas,"
+#: templates/home.html:236
+msgid "Seven tools,"
+msgstr "Sete ferramentas,"
 
-#: templates/home.html:234
+#: templates/home.html:236
 msgid "one home"
 msgstr "uma casa"
 
-#: templates/home.html:238
+#: templates/home.html:240
 msgid "to start using any tool."
 msgstr "para começares a usar qualquer ferramenta."
 
-#: templates/home.html:252
+#: templates/home.html:254
 msgid "Grade Calculator"
 msgstr "Calculadora de Notas"
 
-#: templates/home.html:253
+#: templates/home.html:255
 msgid "Weighted averages, bulk grading, instant export to your records."
 msgstr "Médias ponderadas, avaliação em massa, exportação instantânea."
 
-#: templates/home.html:266
+#: templates/home.html:268
 msgid "Group Divider"
 msgstr "Divisor de grupos"
 
-#: templates/home.html:267
+#: templates/home.html:269
 msgid "Split your class into balanced teams in seconds."
 msgstr "Divida a sua turma aleatoriamente em equipas de qualquer tamanho."
 
-#: templates/home.html:280
+#: templates/home.html:282
 msgid "Point System"
 msgstr "Sistema de pontos"
 
-#: templates/home.html:281
+#: templates/home.html:283
 msgid "Track participation and reward students with points in real time."
 msgstr ""
 "Acompanhe a participação e o comportamento com categorias de pontos "
 "personalizáveis."
 
-#: templates/home.html:295
+#: templates/home.html:297
 msgid "Visual countdowns for tests, group work, and transitions."
 msgstr ""
 "Contagens decrescentes visuais para testes, trabalhos de grupo e transições."
 
-#: templates/home.html:309
+#: templates/home.html:311
 msgid "Lesson planning and deadline tracking in one clean weekly view."
 msgstr "Planeamento de aulas e prazos numa vista semanal limpa."
 
-#: templates/home.html:322
+#: templates/home.html:324
 msgid "Name Wheel"
 msgstr "Roleta de nomes"
 
-#: templates/home.html:323
+#: templates/home.html:325
 msgid "Spin to pick a random student: fair, fun, and instant."
 msgstr ""
 "Roda para escolher um aluno aleatório: justo, divertido e instantâneo."
 
-#: templates/home.html:337
+#: templates/home.html:338
+msgid "Quiz Maker"
+msgstr "Criador de quizzes"
+
+#: templates/home.html:339
+msgid "Build multi-round quizzes with custom questions and answers."
+msgstr ""
+"Cria quizzes de várias rondas com perguntas e respostas personalizadas."
+
+#: templates/home.html:353
 msgid "Your activity"
 msgstr "A sua Atividade"
 
-#: templates/home.html:342
+#: templates/home.html:358
 msgid "Groups"
 msgstr "Grupos"
 
-#: templates/home.html:359
+#: templates/home.html:375
 msgid "Calculator"
 msgstr "Calculadora"
 
-#: templates/home.html:362
+#: templates/home.html:378
 msgid "uses"
 msgstr "utilizações"
 
-#: templates/home.html:367
+#: templates/home.html:383
 msgid "Wheel"
 msgstr "Roleta"
 
-#: templates/home.html:370
+#: templates/home.html:386
 msgid "spins"
 msgstr "giros"
 
-#: templates/home.html:375
+#: templates/home.html:391
 msgid "Divider"
 msgstr "Divisor"
 
-#: templates/home.html:378
+#: templates/home.html:394
 msgid "splits"
 msgstr "divisões"
 
-#: templates/home.html:386
+#: templates/home.html:402
 msgid "minutes"
 msgstr "Minutos"
 
-#: templates/home.html:482
+#: templates/home.html:498
 msgid "Sidebar highlight colour."
 msgstr "Cor de destaque da barra lateral."
 
-#: templates/home.html:484
+#: templates/home.html:500
 msgid "hover to preview · click to save"
 msgstr "passa para pré-visualizar · clica para guardar"
 
-#: templates/home.html:551
+#: templates/home.html:567
 msgid "Built for teachers"
 msgstr "Ferramentas para Professores"
 
-#: templates/home.html:553
+#: templates/home.html:569
 msgid "Why teachers"
 msgstr "Porque os professores"
 
-#: templates/home.html:553
+#: templates/home.html:569
 msgid "use it"
 msgstr "usam"
 
-#: templates/home.html:562
+#: templates/home.html:578
 msgid "Ready in under a minute"
 msgstr "Pronto em menos de um minuto"
 
-#: templates/home.html:563
+#: templates/home.html:579
 msgid ""
 "No installation, no training, no IT department needed. Sign up and start "
 "using your tools straight away."
@@ -2293,186 +2685,1121 @@ msgstr ""
 "Sem instalação, sem formação, sem departamento de TI. Regista-te e começa a "
 "usar as ferramentas imediatamente."
 
-#: templates/home.html:572
+#: templates/home.html:588
 msgid "One class list, every tool access"
 msgstr "Uma lista de turma, acesso a todas as ferramentas"
 
-#: templates/home.html:573
+#: templates/home.html:589
 msgid ""
 "Add your students once. All the tools use the same list; no duplicate entry."
 msgstr ""
 "Adiciona os alunos uma vez. Todas as ferramentas usam a mesma lista; sem "
 "entradas duplicadas."
 
-#: templates/home.html:582
+#: templates/home.html:598
 msgid "No learning curve"
 msgstr "Sem curva de aprendizagem"
 
-#: templates/home.html:583
+#: templates/home.html:599
 msgid ""
 "Every tool is designed to work the first time you open it, with no setup or "
 "manual needed."
 msgstr ""
 "Todas as ferramentas funcionam à primeira, sem configuração nem manual."
 
-#: templates/home.html:591
+#: templates/home.html:607
 msgid "How it works"
 msgstr "Como funciona"
 
-#: templates/home.html:593
+#: templates/home.html:609
 msgid "Three steps"
 msgstr "Três passos"
 
-#: templates/home.html:593
+#: templates/home.html:609
 msgid "to start"
 msgstr "para começar"
 
-#: templates/home.html:604
+#: templates/home.html:620
 msgid "Create your account"
 msgstr "Criar conta"
 
-#: templates/home.html:605
+#: templates/home.html:621
 msgid "Free signup. Ready in under a minute."
 msgstr "Registo gratuito. Pronto em menos de um minuto."
 
-#: templates/home.html:615
+#: templates/home.html:631
 msgid "Add your class"
 msgstr "Adiciona a tua turma"
 
-#: templates/home.html:616
+#: templates/home.html:632
 msgid "Create your classes. All tools sync from these lists automatically."
 msgstr ""
 "Cria as tuas turmas. Todas as ferramentas sincronizam automaticamente."
 
-#: templates/home.html:625
+#: templates/home.html:641
 msgid "Open a tool and go"
 msgstr "Abre uma ferramenta e avança"
 
-#: templates/home.html:626
+#: templates/home.html:642
 msgid "No duplicate data entry, no per-tool setup. It just works."
 msgstr ""
 "Sem duplicação de dados, sem configuração por ferramenta. Simplesmente "
 "funciona."
 
-#: templates/home.html:641
+#: templates/home.html:657
 msgid "Start today"
 msgstr "Começa hoje"
 
-#: templates/home.html:643
+#: templates/home.html:659
 msgid "Your classroom,"
 msgstr "A tua sala de aula,"
 
-#: templates/home.html:643
+#: templates/home.html:659
 msgid "finally in one place"
 msgstr "finalmente num só lugar"
 
-#: templates/legal/privacy.html:4
-msgid "Privacy Policy"
-msgstr "Política de Privacidade"
+#: templates/legal/cancellation.html:4
+msgid "Cancellation Policy"
+msgstr "Política de Cancelamento"
 
-#: templates/legal/privacy.html:14
+#: templates/legal/cancellation.html:14 templates/legal/privacy.html:14
+#: templates/legal/security.html:14 templates/legal/terms.html:14
+#: templates/legal/use_restrictions.html:14
 msgid "Legal"
 msgstr "Legal"
 
-#: templates/legal/privacy.html:16
+#: templates/legal/cancellation.html:16
+#, fuzzy
+#| msgid "Cancel"
+msgid "Cancellation"
+msgstr "Cancelar"
+
+#: templates/legal/cancellation.html:16 templates/legal/privacy.html:16
 msgid "Policy"
 msgstr "Política"
 
-#: templates/legal/privacy.html:18
+#: templates/legal/cancellation.html:18 templates/legal/privacy.html:18
+#: templates/legal/security.html:18 templates/legal/terms.html:18
+#: templates/legal/use_restrictions.html:18
 msgid "Last updated"
-msgstr "Último nome"
+msgstr "Última atualização"
 
-#: templates/legal/privacy.html:32
-msgid "What data we collect"
-msgstr "Que dados recolhemos"
+#: templates/legal/cancellation.html:32
+#, fuzzy
+#| msgid "Cancel"
+msgid "Cancel anytime"
+msgstr "Cancelar"
 
-#: templates/legal/privacy.html:34
+#: templates/legal/cancellation.html:34
 msgid ""
-"When you create an account we collect your username, email address, and "
-"password (stored as a bcrypt hash, never in plain text). As you use the "
-"tools we record usage statistics (e.g. wheel spins, timer duration) linked "
-"to your account."
+"We want satisfied users, not hostages. You can delete your Teachka account "
+"directly from "
 msgstr ""
-"Quando crias uma conta recolhemos o teu nome de utilizador, endereço de "
-"email e palavra-passe (guardada como hash bcrypt, nunca em texto simples). À"
-" medida que usas as ferramentas registamos estatísticas de uso (ex. rodas "
-"giradas, duração do temporizador) associadas à tua conta."
+"Queremos utilizadores satisfeitos, não reféns. Pode eliminar a sua conta "
+"Teachka diretamente em "
 
-#: templates/legal/privacy.html:44
-msgid "How we use your data"
-msgstr "Como usamos os teus dados"
-
-#: templates/legal/privacy.html:46
-msgid ""
-"Your data is used solely to provide the Teachka service: authentication, "
-"personalisation (theme, language), and displaying your activity on the home "
-"dashboard. We do not sell or share your data with third parties."
-msgstr ""
-"Os teus dados são usados exclusivamente para fornecer o serviço Teachka: "
-"autenticação, personalização (tema, idioma) e mostrar a tua atividade no "
-"painel inicial. Não vendemos nem partilhamos os teus dados com terceiros."
-
-#: templates/legal/privacy.html:56
-msgid "Cookies"
-msgstr "Cookies"
-
-#: templates/legal/privacy.html:58
-msgid ""
-"We use one session cookie to keep you logged in (strictly necessary, no "
-"consent required under ePrivacy). We also store your theme preference in "
-"localStorage, which is not a cookie and does not leave your device."
-msgstr ""
-"Usamos um cookie de sessão para te manter ligado (estritamente necessário, "
-"sem consentimento exigido sob ePrivacy). Também guardamos a preferência de "
-"tema em localStorage, que não é um cookie e não sai do teu dispositivo."
-
-#: templates/legal/privacy.html:59
-msgid ""
-"We use Sentry for error monitoring. Sentry may set its own cookies or use "
-"browser storage to deduplicate error reports. No personal data is "
-"intentionally forwarded to Sentry."
-msgstr ""
-"Usamos o Sentry para monitorizar erros. O Sentry pode definir os próprios "
-"cookies ou usar armazenamento do navegador para deduplicar relatórios. Não é"
-" enviado intencionalmente qualquer dado pessoal para o Sentry."
-
-#: templates/legal/privacy.html:69
-msgid "Data retention"
-msgstr "Retenção de dados"
-
-#: templates/legal/privacy.html:71
-msgid ""
-"Your account and all associated data are retained for as long as your "
-"account is active. You can delete your account and all data at any time from"
-" the Settings page."
-msgstr ""
-"A tua conta e todos os dados associados são mantidos enquanto a conta "
-"estiver ativa. Podes apagar a conta e todos os dados a qualquer momento na "
-"página de Definições."
-
-#: templates/legal/privacy.html:81
-msgid "Your rights"
-msgstr "O seu perfil"
-
-#: templates/legal/privacy.html:83
-msgid ""
-"Under GDPR you have the right to access, correct, or erase your data. To "
-"delete your account and all data permanently, visit "
-msgstr ""
-"Sob o RGPD tens o direito de aceder, corrigir ou apagar os teus dados. Para "
-"apagar a conta e todos os dados permanentemente, visita "
-
-#: templates/legal/privacy.html:83
+#: templates/legal/cancellation.html:34 templates/legal/privacy.html:164
 msgid "Settings → Delete account"
 msgstr "Definições → Eliminar conta"
 
-#: templates/legal/privacy.html:83
-msgid "For other requests contact us at the address below."
-msgstr "Para outros pedidos contacta-nos no endereço abaixo."
+#: templates/legal/cancellation.html:34
+msgid ". No phone calls, no questions asked."
+msgstr ". Sem telefonemas, sem perguntas."
 
-#: templates/legal/privacy.html:95
+#: templates/legal/cancellation.html:44
+msgid "What happens when you cancel"
+msgstr "O que acontece quando cancela"
+
+#: templates/legal/cancellation.html:46
+#, fuzzy
+#| msgid "Create your account"
+msgid "When you delete your account:"
+msgstr "Criar conta"
+
+#: templates/legal/cancellation.html:48
+#, fuzzy
+#| msgid ""
+#| "This will permanently delete your account and all associated data: groups, "
+#| "members, points, and usage stats. This action cannot be undone."
+msgid ""
+"You immediately lose access to the account and all its data (groups, "
+"members, points, quizzes, calendar entries, statistics)."
+msgstr ""
+"Isto irá apagar permanentemente a tua conta e todos os dados associados: "
+"grupos, membros, pontos e estatísticas de uso. Esta ação não pode ser "
+"revertida."
+
+#: templates/legal/cancellation.html:49
+msgid "Your records are permanently removed from our active database."
+msgstr ""
+"Os seus registos são permanentemente removidos da nossa base de dados ativa."
+
+#: templates/legal/cancellation.html:50
+msgid "Encrypted backups containing your data are rotated out within 30 days."
+msgstr ""
+"As cópias de segurança encriptadas que contêm os seus dados são eliminadas "
+"no prazo de 30 dias."
+
+#: templates/legal/cancellation.html:51
+msgid ""
+"Once deleted, your data cannot be recovered. Export anything you want to "
+"keep before cancelling."
+msgstr ""
+"Uma vez eliminados, os seus dados não podem ser recuperados. Exporte tudo o "
+"que quiser manter antes de cancelar."
+
+#: templates/legal/cancellation.html:62
+msgid "Cancellations initiated by us"
+msgstr "Cancelamentos iniciados por nós"
+
+#: templates/legal/cancellation.html:64
+msgid "We may cancel accounts that:"
+msgstr "Podemos cancelar contas que:"
+
+#: templates/legal/cancellation.html:66
+msgid "Have been inactive for 365 consecutive days."
+msgstr "Estiveram inativas durante 365 dias consecutivos."
+
+#: templates/legal/cancellation.html:67
+#, fuzzy
+#| msgid "Create your"
+msgid "Violate our "
+msgstr "Criar grupo"
+
+#: templates/legal/cancellation.html:67 templates/legal/terms.html:93
+#: templates/legal/use_restrictions.html:4
+#, fuzzy
+#| msgid "Under Construction"
+msgid "Use Restrictions"
+msgstr "Em construção"
+
+#: templates/legal/cancellation.html:67
+#, fuzzy
+#| msgid "Policy"
+msgid " policy."
+msgstr "Política"
+
+#: templates/legal/cancellation.html:68
+msgid "Pose a security risk to the service or other users."
+msgstr ""
+"Representam um risco de segurança para o serviço ou outros utilizadores."
+
+#: templates/legal/cancellation.html:70
+msgid ""
+"Where possible we will warn you by email before deleting an inactive "
+"account, giving you the chance to log in and keep it."
+msgstr ""
+"Sempre que possível, avisá-lo-emos por e-mail antes de eliminar uma conta "
+"inativa, dando-lhe a oportunidade de iniciar sessão e mantê-la."
+
+#: templates/legal/cancellation.html:80
+msgid "Need help?"
+msgstr "Precisa de ajuda?"
+
+#: templates/legal/cancellation.html:82
+msgid "If you cannot reach the Settings page, email "
+msgstr "Se não conseguir aceder à página de Definições, envie um e-mail para "
+
+#: templates/legal/cancellation.html:82
+msgid ""
+" from the address linked to your account and we will delete it for you."
+msgstr " a partir do endereço associado à sua conta e eliminá-la-emos por si."
+
+#: templates/legal/privacy.html:4 templates/legal/terms.html:171
+msgid "Privacy Policy"
+msgstr "Política de Privacidade"
+
+#: templates/legal/privacy.html:26
+msgid ""
+"This policy describes how the operator of the Teachka application processes "
+"users' personal data in accordance with Regulation (EU) 2016/679 of the "
+"European Parliament and of the Council (GDPR) and Portuguese Law No. 58/2019"
+" (Lei n.º 58/2019), on the processing of personal data."
+msgstr ""
+"Esta política descreve como o operador da aplicação Teachka trata os dados "
+"pessoais dos utilizadores em conformidade com o Regulamento (UE) 2016/679 do"
+" Parlamento Europeu e do Conselho (RGPD) e a Lei n.º 58/2019, relativa ao "
+"tratamento de dados pessoais."
+
+#: templates/legal/privacy.html:35
+msgid "1. Data controller"
+msgstr "1. Responsável pelo tratamento de dados"
+
+#: templates/legal/privacy.html:38
+msgid ""
+"a private individual based in Portugal, operating Teachka on a non-"
+"commercial basis."
+msgstr ""
+"um particular sediado em Portugal, que opera o Teachka numa base não "
+"comercial."
+
+#: templates/legal/privacy.html:51
+#, fuzzy
+#| msgid "What data we collect"
+msgid "2. What data we process"
+msgstr "Que dados recolhemos"
+
+#: templates/legal/privacy.html:53
+msgid ""
+"When you use the application we process the following categories of personal"
+" data:"
+msgstr ""
+"Quando utiliza a aplicação, tratamos as seguintes categorias de dados "
+"pessoais:"
+
+#: templates/legal/privacy.html:55
+msgid ""
+"Account data: username, e-mail address, password (stored only as a salted "
+"one-way hash, never in plain text)."
+msgstr ""
+"Dados da conta: nome de utilizador, endereço de e-mail, palavra-passe "
+"(armazenada apenas como hash unidirecional com sal, nunca em texto simples)."
+
+#: templates/legal/privacy.html:56
+msgid "Preferences: country, language, theme, and interface accent colour."
+msgstr "Preferências: país, idioma, tema e cor de destaque da interface."
+
+#: templates/legal/privacy.html:57
+msgid ""
+"Usage data: counts and durations of tool usage (e.g. wheel spins, timer "
+"time, calculator uses) linked to your account."
+msgstr ""
+"Dados de utilização: contagens e durações de uso das ferramentas (por "
+"exemplo, rodadas da roda, tempo do cronómetro, usos da calculadora) "
+"associados à sua conta."
+
+#: templates/legal/privacy.html:58
+msgid ""
+"Security data: IP address and username recorded on login attempts, for "
+"brute-force protection."
+msgstr ""
+"Dados de segurança: endereço IP e nome de utilizador registados nas "
+"tentativas de início de sessão, para proteção contra ataques de força bruta."
+
+#: templates/legal/privacy.html:59
+msgid ""
+"Content you create: groups, members, points, quizzes, calendar entries — "
+"which may include names, photos, or data of third parties such as students."
+msgstr ""
+"Conteúdo que cria: grupos, membros, pontos, questionários, entradas de "
+"calendário — que podem incluir nomes, fotografias ou dados de terceiros, "
+"como alunos."
+
+#: templates/legal/privacy.html:61
+msgid ""
+"The application does not process special categories of personal data (e.g. "
+"health or biometric data) and does not carry out automated decision-making "
+"or profiling."
+msgstr ""
+"A aplicação não trata categorias especiais de dados pessoais (por exemplo, "
+"dados de saúde ou biométricos) nem realiza decisões automatizadas ou "
+"definição de perfis."
+
+#: templates/legal/privacy.html:72
+msgid "3. Purpose and legal basis"
+msgstr "3. Finalidade e base legal"
+
+#: templates/legal/privacy.html:78
+msgid "Purpose"
+msgstr "Finalidade"
+
+#: templates/legal/privacy.html:79
+#, fuzzy
+#| msgid "Legal"
+msgid "Legal basis"
+msgstr "Legal"
+
+#: templates/legal/privacy.html:84
+msgid "Providing the service and managing your account"
+msgstr "Prestação do serviço e gestão da sua conta"
+
+#: templates/legal/privacy.html:85 templates/legal/privacy.html:89
+msgid "Performance of a contract (Art. 6(1)(b) GDPR)"
+msgstr "Execução de um contrato (art. 6.º, n.º 1, al. b) do RGPD)"
+
+#: templates/legal/privacy.html:88
+msgid "Transactional e-mails (account activation, password reset)"
+msgstr ""
+"E-mails transacionais (ativação de conta, redefinição de palavra-passe)"
+
+#: templates/legal/privacy.html:92
+msgid "Usage statistics shown on your dashboard"
+msgstr "Estatísticas de utilização apresentadas no seu painel"
+
+#: templates/legal/privacy.html:93 templates/legal/privacy.html:97
+msgid "Legitimate interest (Art. 6(1)(f) GDPR)"
+msgstr "Interesse legítimo (art. 6.º, n.º 1, al. f) do RGPD)"
+
+#: templates/legal/privacy.html:96
+msgid "Protection against abuse and operational security"
+msgstr "Proteção contra abusos e segurança operacional"
+
+#: templates/legal/privacy.html:112
+#, fuzzy
+#| msgid "Data retention"
+msgid "4. Data retention"
+msgstr "Retenção de dados"
+
+#: templates/legal/privacy.html:114
+msgid ""
+"We retain your personal data for as long as your account is active. When you"
+" delete your account, your data is permanently removed from our active "
+"database, and encrypted backups containing it are rotated out within 30 "
+"days. Accounts inactive for 365 consecutive days may be deleted after prior "
+"e-mail warning. See our "
+msgstr ""
+"Conservamos os seus dados pessoais enquanto a sua conta estiver ativa. "
+"Quando elimina a sua conta, os seus dados são permanentemente removidos da "
+"nossa base de dados ativa e as cópias de segurança encriptadas que os contêm"
+" são eliminadas no prazo de 30 dias. As contas inativas durante 365 dias "
+"consecutivos podem ser eliminadas após aviso prévio por e-mail. Consulte a "
+"nossa "
+
+#: templates/legal/privacy.html:114 templates/legal/terms.html:158
+msgid "Cancellation policy"
+msgstr "Política de cancelamento"
+
+#: templates/legal/privacy.html:114
+#, fuzzy
+#| msgid "Group details"
+msgid " for details."
+msgstr "Grupos"
+
+#: templates/legal/privacy.html:125
+msgid "5. Recipients of personal data"
+msgstr "5. Destinatários dos dados pessoais"
+
+#: templates/legal/privacy.html:127
+msgid ""
+"Your data may, to the extent necessary, be processed by the following "
+"categories of recipients (processors):"
+msgstr ""
+"Os seus dados podem, na medida do necessário, ser tratados pelas seguintes "
+"categorias de destinatários (subcontratantes):"
+
+#: templates/legal/privacy.html:129
+msgid "Render — application hosting and database (EU, Frankfurt region)."
+msgstr ""
+"Render — alojamento da aplicação e base de dados (UE, região de Frankfurt)."
+
+#: templates/legal/privacy.html:130
+msgid "Our e-mail provider, for delivering transactional messages."
+msgstr ""
+"O nosso fornecedor de e-mail, para a entrega de mensagens transacionais."
+
+#: templates/legal/privacy.html:131
+msgid "Sentry — error monitoring (personal data is scrubbed where possible)."
+msgstr ""
+"Sentry — monitorização de erros (os dados pessoais são removidos sempre que "
+"possível)."
+
+#: templates/legal/privacy.html:132
+msgid "Public authorities, where required by law."
+msgstr "Autoridades públicas, quando exigido por lei."
+
+#: templates/legal/privacy.html:134
+msgid "We do not sell your data or share it for marketing purposes."
+msgstr "Não vendemos os seus dados nem os partilhamos para fins de marketing."
+
+#: templates/legal/privacy.html:145
+#, fuzzy
+#| msgid "International"
+msgid "6. International transfers"
+msgstr "Internacional"
+
+#: templates/legal/privacy.html:147
+msgid ""
+"Our database and application servers are located within the EU (Frankfurt). "
+"Where a processor (such as our error-monitoring provider) may process "
+"limited data outside the EU/EEA, such transfers take place on the basis of "
+"Standard Contractual Clauses approved by the European Commission or an "
+"equivalent safeguard."
+msgstr ""
+"A nossa base de dados e os servidores da aplicação estão localizados na UE "
+"(Frankfurt). Quando um subcontratante (como o nosso fornecedor de "
+"monitorização de erros) possa tratar dados limitados fora da UE/EEE, essas "
+"transferências realizam-se com base em Cláusulas Contratuais-Tipo aprovadas "
+"pela Comissão Europeia ou numa salvaguarda equivalente."
+
+#: templates/legal/privacy.html:158
+#, fuzzy
+#| msgid "Your rights"
+msgid "7. Your rights"
+msgstr "O seu perfil"
+
+#: templates/legal/privacy.html:160
+msgid "In relation to your personal data you have the following rights:"
+msgstr "Relativamente aos seus dados pessoais, tem os seguintes direitos:"
+
+#: templates/legal/privacy.html:162
+msgid "Right of access to your personal data (Art. 15 GDPR)."
+msgstr "Direito de acesso aos seus dados pessoais (art. 15.º do RGPD)."
+
+#: templates/legal/privacy.html:163
+msgid "Right to rectification of inaccurate data (Art. 16 GDPR)."
+msgstr "Direito de retificação de dados inexatos (art. 16.º do RGPD)."
+
+#: templates/legal/privacy.html:164
+msgid ""
+"Right to erasure (\"right to be forgotten\", Art. 17 GDPR) — you can delete "
+"your account and all data from "
+msgstr ""
+"Direito ao apagamento (\"direito a ser esquecido\", art. 17.º do RGPD) — "
+"pode eliminar a sua conta e todos os dados em "
+
+#: templates/legal/privacy.html:165
+msgid "Right to restriction of processing (Art. 18 GDPR)."
+msgstr "Direito à limitação do tratamento (art. 18.º do RGPD)."
+
+#: templates/legal/privacy.html:166
+msgid "Right to data portability (Art. 20 GDPR)."
+msgstr "Direito à portabilidade dos dados (art. 20.º do RGPD)."
+
+#: templates/legal/privacy.html:167
+msgid "Right to object to processing (Art. 21 GDPR)."
+msgstr "Direito de oposição ao tratamento (art. 21.º do RGPD)."
+
+#: templates/legal/privacy.html:168
+msgid "Right to lodge a complaint with a supervisory authority."
+msgstr "Direito de apresentar reclamação a uma autoridade de controlo."
+
+#: templates/legal/privacy.html:170
+msgid "You may exercise your rights in writing at "
+msgstr "Pode exercer os seus direitos por escrito através de "
+
+#: templates/legal/privacy.html:170
+msgid ""
+"You may lodge a complaint with the Portuguese supervisory authority, the "
+"National Data Protection Commission (Comissão Nacional de Proteção de Dados "
+"— CNPD), Av. D. Carlos I, 134, 1.º, 1200-651 Lisbon, Portugal, "
+msgstr ""
+"Pode apresentar uma reclamação junto da autoridade de controlo portuguesa, a"
+" Comissão Nacional de Proteção de Dados (CNPD), Av. D. Carlos I, 134, 1.º, "
+"1200-651 Lisboa, Portugal, "
+
+#: templates/legal/privacy.html:181
+msgid "8. Data about students"
+msgstr "8. Dados sobre alunos"
+
+#: templates/legal/privacy.html:183
+msgid ""
+"Teachka is intended for teachers and educators. When you enter data about "
+"your students (names, photos, points, etc.), you act as the data controller "
+"for that data and Teachka acts only as a processor on your behalf. You are "
+"responsible for having a lawful basis to enter it, including any parental or"
+" school consent required. We process such data only to provide the service "
+"to you and do not use it for any other purpose."
+msgstr ""
+"O Teachka destina-se a professores e educadores. Quando introduz dados sobre"
+" os seus alunos (nomes, fotografias, pontos, etc.), atua como responsável "
+"pelo tratamento desses dados e o Teachka atua apenas como subcontratante em "
+"seu nome. É responsável por ter uma base legal para os introduzir, incluindo"
+" qualquer consentimento parental ou escolar necessário. Tratamos esses dados"
+" apenas para lhe prestar o serviço e não os utilizamos para qualquer outra "
+"finalidade."
+
+#: templates/legal/privacy.html:194
+msgid "9. Cookies and tracking"
+msgstr "9. Cookies e rastreio"
+
+#: templates/legal/privacy.html:196
+#| msgid ""
+#| "We use one session cookie to keep you logged in (strictly necessary, no "
+#| "consent required under ePrivacy). We also store your theme preference in "
+#| "localStorage, which is not a cookie and does not leave your device."
+msgid ""
+"We use only strictly necessary cookies: a session cookie to keep you logged "
+"in and a CSRF cookie for security (no consent required under ePrivacy). We "
+"store your theme preference in localStorage, which is not a cookie and does "
+"not leave your device. We do not use advertising or third-party analytics "
+"cookies."
+msgstr ""
+"Utilizamos apenas cookies estritamente necessários: um cookie de sessão para"
+" o manter com sessão iniciada e um cookie CSRF por segurança (não é "
+"necessário consentimento ao abrigo da ePrivacy). Guardamos a sua preferência"
+" de tema no localStorage, que não é um cookie e não sai do seu dispositivo. "
+"Não utilizamos cookies de publicidade nem de análise de terceiros."
+
+#: templates/legal/privacy.html:197
+msgid ""
+"We do not track users across third-party websites and therefore do not "
+"respond to \"Do Not Track\" browser signals."
+msgstr ""
+"Não rastreamos os utilizadores em sites de terceiros e, por isso, não "
+"respondemos a sinais \"Do Not Track\" do navegador."
+
+#: templates/legal/privacy.html:208
+#, fuzzy
+#| msgid "Security"
+msgid "10. Security"
+msgstr "Segurança"
+
+#: templates/legal/privacy.html:210
+msgid ""
+"We take appropriate technical and organisational measures to protect "
+"personal data against unauthorised access, loss, or destruction. All "
+"communication with the application is encrypted (HTTPS), and passwords are "
+"stored as salted one-way hashes. See our "
+msgstr ""
+"Tomamos medidas técnicas e organizativas adequadas para proteger os dados "
+"pessoais contra acesso não autorizado, perda ou destruição. Toda a "
+"comunicação com a aplicação é encriptada (HTTPS) e as palavras-passe são "
+"armazenadas como hashes unidirecionais com sal. Consulte a nossa "
+
+#: templates/legal/privacy.html:210
+#, fuzzy
+#| msgid "Security"
+msgid "Security overview"
+msgstr "Segurança"
+
+#: templates/legal/privacy.html:210
+msgid " for more."
+msgstr " para saber mais."
+
+#: templates/legal/privacy.html:221
+msgid "11. Changes to this policy"
+msgstr "11. Alterações a esta política"
+
+#: templates/legal/privacy.html:223
+msgid ""
+"We may update this policy from time to time. The current version is always "
+"available on this page. We will inform users of material changes by e-mail "
+"or through the application."
+msgstr ""
+"Podemos atualizar esta política periodicamente. A versão atual está sempre "
+"disponível nesta página. Informaremos os utilizadores de alterações "
+"substanciais por e-mail ou através da aplicação."
+
+#: templates/legal/privacy.html:234
+#, fuzzy
+#| msgid "Contact"
+msgid "12. Contact"
+msgstr "Contacto"
+
+#: templates/legal/privacy.html:236
 msgid "Questions about this policy: "
 msgstr "Questões sobre esta política: "
+
+#: templates/legal/security.html:32
+msgid "Where your data lives"
+msgstr "Onde residem os seus dados"
+
+#: templates/legal/security.html:34
+msgid ""
+"Teachka runs on managed infrastructure (Render) with PostgreSQL as the "
+"primary database. Data are written to redundant storage with daily automated"
+" backups. Servers are located in the EU (Render, Frankfurt region)."
+msgstr ""
+"O Teachka funciona em infraestrutura gerida (Render) com PostgreSQL como "
+"base de dados principal. Os dados são gravados em armazenamento redundante "
+"com cópias de segurança automáticas diárias. Os servidores estão localizados"
+" na UE (Render, região de Frankfurt)."
+
+#: templates/legal/security.html:44
+msgid "Encryption in transit"
+msgstr "Encriptação em trânsito"
+
+#: templates/legal/security.html:46
+msgid ""
+"All traffic between your browser and Teachka is served over HTTPS with HSTS "
+"enabled. We do not accept plain-HTTP connections in production."
+msgstr ""
+"Todo o tráfego entre o seu navegador e o Teachka é servido por HTTPS com "
+"HSTS ativado. Não aceitamos ligações HTTP simples em produção."
+
+#: templates/legal/security.html:56
+#, fuzzy
+#| msgid "Password"
+msgid "Passwords"
+msgstr "Palavra-passe"
+
+#: templates/legal/security.html:58
+msgid ""
+"Passwords are never stored in plain text. We use a strong, industry-standard"
+" one-way hashing algorithm with a unique per-user salt. Failed login "
+"attempts are rate-limited via django-axes to prevent brute-force attacks."
+msgstr ""
+"As palavras-passe nunca são armazenadas em texto simples. Utilizamos um "
+"algoritmo de hash unidirecional robusto e padrão da indústria, com um sal "
+"único por utilizador. As tentativas de início de sessão falhadas são "
+"limitadas através do django-axes para evitar ataques de força bruta."
+
+#: templates/legal/security.html:68
+msgid "Patching & dependencies"
+msgstr "Correções e dependências"
+
+#: templates/legal/security.html:70
+msgid ""
+"Operating-system images and Python dependencies are updated on a regular "
+"cadence. Vulnerable packages are patched as soon as a fix is published, "
+"using pip-audit and Dependabot to track CVEs."
+msgstr ""
+"As imagens do sistema operativo e as dependências Python são atualizadas "
+"regularmente. Os pacotes vulneráveis são corrigidos assim que uma correção é"
+" publicada, utilizando o pip-audit e o Dependabot para acompanhar os CVE."
+
+#: templates/legal/security.html:80
+msgid "Monitoring"
+msgstr "Monitorização"
+
+#: templates/legal/security.html:82
+msgid ""
+"Sentry monitors errors and unusual activity. Health and readiness probes "
+"verify the database and migration state. Personally identifiable information"
+" is scrubbed from error reports where possible."
+msgstr ""
+"O Sentry monitoriza erros e atividade invulgar. As sondas de saúde e "
+"prontidão verificam o estado da base de dados e das migrações. As "
+"informações de identificação pessoal são removidas dos relatórios de erro "
+"sempre que possível."
+
+#: templates/legal/security.html:92
+#, fuzzy
+#| msgid "Access"
+msgid "Access control"
+msgstr "Acesso"
+
+#: templates/legal/security.html:94
+msgid ""
+"Production access is restricted to the maintainer. Database credentials and "
+"API keys are stored as environment variables, never committed to the "
+"repository. Admin actions are audited via Django's admin log."
+msgstr ""
+"O acesso em produção está restrito ao responsável de manutenção. As "
+"credenciais da base de dados e as chaves de API são armazenadas como "
+"variáveis de ambiente, nunca incluídas no repositório. As ações de "
+"administração são auditadas através do registo de administração do Django."
+
+#: templates/legal/security.html:104
+msgid "Incident response"
+msgstr "Resposta a incidentes"
+
+#: templates/legal/security.html:106
+msgid ""
+"If we discover a breach that affects your data, we will notify the competent"
+" supervisory authority within 72 hours where required (GDPR Article 33) and "
+"inform affected users by email without undue delay (GDPR Article 34)."
+msgstr ""
+"Se detetarmos uma violação que afete os seus dados, notificaremos a "
+"autoridade de controlo competente no prazo de 72 horas, quando exigido "
+"(artigo 33.º do RGPD), e informaremos os utilizadores afetados por e-mail "
+"sem demora injustificada (artigo 34.º do RGPD)."
+
+#: templates/legal/security.html:116
+msgid "Report a vulnerability"
+msgstr "Comunicar uma vulnerabilidade"
+
+#: templates/legal/security.html:118
+msgid "Found a security issue? Please email "
+msgstr "Encontrou um problema de segurança? Envie um e-mail para "
+
+#: templates/legal/security.html:118
+msgid ""
+" with steps to reproduce. Do not publicly disclose the issue until we have "
+"had a reasonable opportunity to fix it. We will acknowledge your report "
+"within 5 business days."
+msgstr ""
+" com os passos para reproduzir. Não divulgue publicamente o problema até "
+"termos tido uma oportunidade razoável de o corrigir. Confirmaremos a receção"
+" do seu relatório no prazo de 5 dias úteis."
+
+#: templates/legal/terms.html:4
+msgid "Terms of Service"
+msgstr "Termos de Serviço"
+
+#: templates/legal/terms.html:16
+msgid "Terms of"
+msgstr "Termos de"
+
+#: templates/legal/terms.html:16
+#| msgid "Overview"
+msgid "Service"
+msgstr "Serviço"
+
+#: templates/legal/terms.html:26
+msgid ""
+"These terms govern the relationship between the operator of the Teachka "
+"application and users who use the application's classroom tools. By creating"
+" an account or using Teachka, you agree to these terms. If you do not agree,"
+" please do not use the service."
+msgstr ""
+"Estes termos regem a relação entre o operador da aplicação Teachka e os "
+"utilizadores que usam as ferramentas de sala de aula da aplicação. Ao criar "
+"uma conta ou utilizar o Teachka, concorda com estes termos. Se não "
+"concordar, não utilize o serviço."
+
+#: templates/legal/terms.html:35
+#, fuzzy
+#| msgid "Math Operations"
+msgid "1. Operator"
+msgstr "Operações Matemáticas"
+
+#: templates/legal/terms.html:38
+msgid "a private individual based in Portugal"
+msgstr "um particular sediado em Portugal"
+
+#: templates/legal/terms.html:41
+msgid ""
+"Teachka is provided free of charge, on a non-commercial basis, by a private "
+"individual. It is not a paid service and processes no payments."
+msgstr ""
+"O Teachka é fornecido gratuitamente, numa base não comercial, por um "
+"particular. Não é um serviço pago e não processa quaisquer pagamentos."
+
+#: templates/legal/terms.html:52
+msgid "2. The service"
+msgstr "2. O serviço"
+
+#: templates/legal/terms.html:54
+msgid ""
+"Teachka is a free hub of teaching tools (grade calculator, group maker, "
+"point system, wheel, timer, calendar, quiz maker, and more). The service is "
+"provided as-is, without warranty of any kind. We may change, suspend, or "
+"discontinue any tool at any time."
+msgstr ""
+"O Teachka é um centro gratuito de ferramentas de ensino (calculadora de "
+"notas, criador de grupos, sistema de pontos, roda, cronómetro, calendário, "
+"criador de questionários e mais). O serviço é fornecido tal como está, sem "
+"garantias de qualquer tipo. Podemos alterar, suspender ou descontinuar "
+"qualquer ferramenta a qualquer momento."
+
+#: templates/legal/terms.html:65
+#, fuzzy
+#| msgid "Create an account"
+msgid "3. Registration and account"
+msgstr "Criar uma conta"
+
+#: templates/legal/terms.html:67
+msgid ""
+"Using the application requires registration, during which you provide true "
+"and current details. You are responsible for keeping your password secure, "
+"for not sharing it with third parties, and for all activity on your account."
+" The operator reserves the right to suspend or cancel an account that "
+"seriously breaches these terms, provides false information, or misuses the "
+"service."
+msgstr ""
+"A utilização da aplicação exige registo, durante o qual fornece dados "
+"verdadeiros e atuais. É responsável por manter a sua palavra-passe segura, "
+"por não a partilhar com terceiros e por toda a atividade na sua conta. O "
+"operador reserva-se o direito de suspender ou cancelar uma conta que viole "
+"gravemente estes termos, forneça informações falsas ou faça uso indevido do "
+"serviço."
+
+#: templates/legal/terms.html:78
+msgid "4. Intended audience and students"
+msgstr "4. Público-alvo e alunos"
+
+#: templates/legal/terms.html:80
+msgid ""
+"Teachka is intended for teachers and educators. Accounts are for adults. "
+"Students do not create their own accounts; they may only participate in "
+"activities (such as quizzes) under the responsibility and supervision of a "
+"teacher. If you enter data about students, you are responsible for having a "
+"lawful basis to do so, including any parental or school consent required."
+msgstr ""
+"O Teachka destina-se a professores e educadores. As contas são para adultos."
+" Os alunos não criam as suas próprias contas; apenas podem participar em "
+"atividades (como questionários) sob a responsabilidade e supervisão de um "
+"professor. Se introduzir dados sobre alunos, é responsável por ter uma base "
+"legal para o fazer, incluindo qualquer consentimento parental ou escolar "
+"necessário."
+
+#: templates/legal/terms.html:91
+msgid "5. Acceptable use"
+msgstr "5. Utilização aceitável"
+
+#: templates/legal/terms.html:93
+msgid ""
+"You agree to use the application only for lawful purposes; not to attempt "
+"unauthorised access to other accounts or data; not to overload the service "
+"with automated requests or misuse its features; not to upload illegal, "
+"harmful, hateful, or sexually explicit content; and to report any loss or "
+"compromise of your credentials. See our full "
+msgstr ""
+"Concorda em utilizar a aplicação apenas para fins lícitos; não tentar o "
+"acesso não autorizado a outras contas ou dados; não sobrecarregar o serviço "
+"com pedidos automatizados nem fazer uso indevido das suas funcionalidades; "
+"não carregar conteúdo ilegal, prejudicial, de ódio ou sexualmente explícito;"
+" e comunicar qualquer perda ou comprometimento das suas credenciais. "
+"Consulte a nossa política completa de "
+
+#: templates/legal/terms.html:93
+msgid " policy. We may suspend or delete accounts that violate these rules."
+msgstr ". Podemos suspender ou eliminar contas que violem estas regras."
+
+#: templates/legal/terms.html:104
+msgid "6. Your content"
+msgstr "6. O seu conteúdo"
+
+#: templates/legal/terms.html:106
+msgid ""
+"Content you create on Teachka (groups, members, points, quizzes, etc.) "
+"belongs to you. You grant us a limited licence to store and display it "
+"solely so we can provide the service. You are responsible for ensuring you "
+"have the right to use any names, photos, or data you enter, including those "
+"of students."
+msgstr ""
+"O conteúdo que cria no Teachka (grupos, membros, pontos, questionários, "
+"etc.) pertence-lhe. Concede-nos uma licença limitada para o armazenar e "
+"apresentar exclusivamente para podermos prestar o serviço. É responsável por"
+" garantir que tem o direito de utilizar quaisquer nomes, fotografias ou "
+"dados que introduza, incluindo os de alunos."
+
+#: templates/legal/terms.html:117
+msgid "7. Intellectual property"
+msgstr "7. Propriedade intelectual"
+
+#: templates/legal/terms.html:119
+msgid ""
+"The Teachka name, logo, design, and code are owned by the operator. You may "
+"not copy, redistribute, or create derivative services from the platform "
+"without written permission."
+msgstr ""
+"O nome, o logótipo, o design e o código do Teachka são propriedade do "
+"operador. Não pode copiar, redistribuir ou criar serviços derivados da "
+"plataforma sem autorização escrita."
+
+#: templates/legal/terms.html:130
+msgid "8. Service availability"
+msgstr "8. Disponibilidade do serviço"
+
+#: templates/legal/terms.html:132
+msgid ""
+"The operator makes reasonable efforts to keep the application available but "
+"does not guarantee uninterrupted operation. The operator is not responsible "
+"for outages caused by circumstances beyond its control (hosting provider, "
+"internet connection, or third-party service outages)."
+msgstr ""
+"O operador envida esforços razoáveis para manter a aplicação disponível, mas"
+" não garante um funcionamento ininterrupto. O operador não é responsável por"
+" interrupções causadas por circunstâncias fora do seu controlo (fornecedor "
+"de alojamento, ligação à Internet ou interrupções de serviços de terceiros)."
+
+#: templates/legal/terms.html:143
+msgid "9. Disclaimer & liability"
+msgstr "9. Exclusão de responsabilidade"
+
+#: templates/legal/terms.html:145
+msgid ""
+"Teachka is provided without any guarantee of availability, accuracy, or "
+"fitness for a particular purpose. To the maximum extent permitted by law, "
+"the operator is liable only for damage caused by breach of these terms and "
+"is not liable for indirect damage, lost profit, or damage arising from "
+"incorrect use of the application. Always keep your own backup of important "
+"data (e.g. grades)."
+msgstr ""
+"O Teachka é fornecido sem qualquer garantia de disponibilidade, exatidão ou "
+"adequação a uma finalidade específica. Na medida máxima permitida por lei, o"
+" operador é responsável apenas por danos causados pela violação destes "
+"termos e não é responsável por danos indiretos, lucros cessantes ou danos "
+"resultantes do uso incorreto da aplicação. Mantenha sempre a sua própria "
+"cópia de segurança dos dados importantes (por exemplo, notas)."
+
+#: templates/legal/terms.html:156
+msgid "10. Termination"
+msgstr "10. Cessação"
+
+#: templates/legal/terms.html:158
+msgid ""
+"You may delete your account at any time from the Settings page. We may "
+"suspend or terminate accounts that breach these terms or pose a risk to the "
+"service or other users. See our "
+msgstr ""
+"Pode eliminar a sua conta a qualquer momento na página de Definições. "
+"Podemos suspender ou cessar contas que violem estes termos ou representem um"
+" risco para o serviço ou outros utilizadores. Consulte a nossa "
+
+#: templates/legal/terms.html:158
+msgid " for details on what happens to your data."
+msgstr " para detalhes sobre o que acontece aos seus dados."
+
+#: templates/legal/terms.html:169
+msgid "11. Personal data"
+msgstr "11. Dados pessoais"
+
+#: templates/legal/terms.html:171
+msgid "The processing of users' personal data is governed by our separate "
+msgstr "O tratamento dos dados pessoais dos utilizadores rege-se pela nossa "
+
+#: templates/legal/terms.html:182
+msgid "12. Changes to these terms"
+msgstr "12. Alterações a estes termos"
+
+#: templates/legal/terms.html:184
+msgid ""
+"The operator may change these terms at any time. Users will be informed of "
+"material changes by e-mail or through the application at least 14 days "
+"before they take effect. If you do not agree with the changes, you may "
+"cancel your account."
+msgstr ""
+"O operador pode alterar estes termos a qualquer momento. Os utilizadores "
+"serão informados de alterações substanciais por e-mail ou através da "
+"aplicação com, pelo menos, 14 dias de antecedência relativamente à sua "
+"entrada em vigor. Se não concordar com as alterações, pode cancelar a sua "
+"conta."
+
+#: templates/legal/terms.html:195
+msgid "13. Governing law"
+msgstr "13. Lei aplicável"
+
+#: templates/legal/terms.html:197
+msgid ""
+"These terms and any relationship arising from use of the application are "
+"governed by the law of Portugal, and disputes will be handled by the "
+"competent courts of Portugal. A consumer may use the European Commission's "
+"Online Dispute Resolution platform, "
+msgstr ""
+"Estes termos e qualquer relação decorrente da utilização da aplicação regem-"
+"se pela lei de Portugal, e os litígios serão tratados pelos tribunais "
+"competentes de Portugal. Um consumidor pode utilizar a plataforma de "
+"Resolução de Litígios em Linha da Comissão Europeia, "
+
+#: templates/legal/terms.html:197
+msgid ""
+", or a competent Portuguese consumer dispute resolution entity, without "
+"prejudice to mandatory consumer-protection rights in your country of "
+"residence."
+msgstr ""
+", ou uma entidade portuguesa competente para a resolução de litígios de "
+"consumo, sem prejuízo dos direitos imperativos de proteção do consumidor no "
+"seu país de residência."
+
+#: templates/legal/terms.html:208
+#, fuzzy
+#| msgid "Contact"
+msgid "14. Contact"
+msgstr "Contacto"
+
+#: templates/legal/terms.html:210
+#, fuzzy
+#| msgid "Questions about this policy: "
+msgid "Questions about these terms: "
+msgstr "Questões sobre esta política: "
+
+#: templates/legal/use_restrictions.html:16
+msgid "Use"
+msgstr "Utilização"
+
+#: templates/legal/use_restrictions.html:16
+#| msgid "Description"
+msgid "Restrictions"
+msgstr "Restrições"
+
+#: templates/legal/use_restrictions.html:32
+msgid "Restricted purposes"
+msgstr "Finalidades restritas"
+
+#: templates/legal/use_restrictions.html:34
+msgid "When you use Teachka, you acknowledge that you may not:"
+msgstr "Ao utilizar o Teachka, reconhece que não pode:"
+
+#: templates/legal/use_restrictions.html:36
+msgid ""
+"Collect or extract information or user data from accounts that do not belong"
+" to you."
+msgstr ""
+"Recolher ou extrair informações ou dados de utilizador de contas que não lhe"
+" pertencem."
+
+#: templates/legal/use_restrictions.html:37
+msgid ""
+"Circumvent, disable, or otherwise interfere with security-related features "
+"of the service."
+msgstr ""
+"Contornar, desativar ou interferir de qualquer outra forma com "
+"funcionalidades de segurança do serviço."
+
+#: templates/legal/use_restrictions.html:38
+msgid ""
+"Trick, defraud, or mislead us or other users, including making false reports"
+" or impersonating another user."
+msgstr ""
+"Enganar, fraudar ou induzir em erro a nós ou a outros utilizadores, "
+"incluindo fazer denúncias falsas ou fazer-se passar por outro utilizador."
+
+#: templates/legal/use_restrictions.html:39
+msgid ""
+"Upload or transmit viruses, malware, or any information-collection mechanism"
+" such as tracking pixels or web bugs."
+msgstr ""
+"Carregar ou transmitir vírus, malware ou qualquer mecanismo de recolha de "
+"informações, como pixels de rastreio ou web bugs."
+
+#: templates/legal/use_restrictions.html:40
+msgid ""
+"Interfere with, disrupt, or create an undue burden on the service or its "
+"underlying networks (rate-limiting bypass, scraping, automated mass "
+"requests)."
+msgstr ""
+"Interferir, perturbar ou criar uma carga indevida no serviço ou nas suas "
+"redes subjacentes (contornar limites de taxa, scraping, pedidos em massa "
+"automatizados)."
+
+#: templates/legal/use_restrictions.html:41
+msgid "Harass, intimidate, or threaten other users."
+msgstr "Assediar, intimidar ou ameaçar outros utilizadores."
+
+#: templates/legal/use_restrictions.html:42
+msgid ""
+"Upload content that is illegal, hateful, sexually explicit, or that "
+"infringes third-party rights."
+msgstr ""
+"Carregar conteúdo que seja ilegal, de ódio, sexualmente explícito ou que "
+"viole direitos de terceiros."
+
+#: templates/legal/use_restrictions.html:43
+msgid ""
+"Enter personal data of students or minors without lawful basis (parental "
+"consent, educational purpose, etc.)."
+msgstr ""
+"Introduzir dados pessoais de alunos ou menores sem base legal (consentimento"
+" parental, finalidade educativa, etc.)."
+
+#: templates/legal/use_restrictions.html:44
+msgid ""
+"Reverse-engineer, decompile, or attempt to extract the source code of the "
+"service beyond what open-source licences permit."
+msgstr ""
+"Fazer engenharia inversa, descompilar ou tentar extrair o código-fonte do "
+"serviço para além do que as licenças de código aberto permitem."
+
+#: templates/legal/use_restrictions.html:45
+msgid ""
+"Use the service in a manner inconsistent with applicable laws or "
+"regulations, including GDPR."
+msgstr ""
+"Utilizar o serviço de forma incompatível com as leis ou regulamentos "
+"aplicáveis, incluindo o RGPD."
+
+#: templates/legal/use_restrictions.html:56
+msgid "Consequences"
+msgstr "Consequências"
+
+#: templates/legal/use_restrictions.html:58
+msgid ""
+"Accounts found to be in violation of any of the above are subject to "
+"suspension or cancellation without prior notice."
+msgstr ""
+"As contas que se verifique violarem qualquer um dos pontos acima estão "
+"sujeitas a suspensão ou cancelamento sem aviso prévio."
+
+#: templates/legal/use_restrictions.html:68
+msgid "How to report abuse"
+msgstr "Como denunciar abusos"
+
+#: templates/legal/use_restrictions.html:70
+msgid "Report violations to "
+msgstr "Comunique violações para "
+
+#: templates/legal/use_restrictions.html:70
+msgid ""
+". Include the account, content, or behaviour you are reporting and how you "
+"found it (URLs or screenshots help). We will not disclose your identity to "
+"anyone associated with the reported account."
+msgstr ""
+". Inclua a conta, o conteúdo ou o comportamento que está a denunciar e como "
+"o encontrou (URLs ou capturas de ecrã ajudam). Não divulgaremos a sua "
+"identidade a ninguém associado à conta denunciada."
 
 #: templates/wip.html:4
 msgid "Coming Soon"
@@ -2509,3 +3836,65 @@ msgstr "Painel"
 #: templates/wip.html:51
 msgid "Go Back"
 msgstr "Voltar"
+
+#~ msgid ""
+#~ "When you create an account we collect your username, email address, and "
+#~ "password (stored as a bcrypt hash, never in plain text). As you use the "
+#~ "tools we record usage statistics (e.g. wheel spins, timer duration) linked "
+#~ "to your account."
+#~ msgstr ""
+#~ "Quando crias uma conta recolhemos o teu nome de utilizador, endereço de "
+#~ "email e palavra-passe (guardada como hash bcrypt, nunca em texto simples). À"
+#~ " medida que usas as ferramentas registamos estatísticas de uso (ex. rodas "
+#~ "giradas, duração do temporizador) associadas à tua conta."
+
+#~ msgid "How we use your data"
+#~ msgstr "Como usamos os teus dados"
+
+#~ msgid ""
+#~ "Your data is used solely to provide the Teachka service: authentication, "
+#~ "personalisation (theme, language), and displaying your activity on the home "
+#~ "dashboard. We do not sell or share your data with third parties."
+#~ msgstr ""
+#~ "Os teus dados são usados exclusivamente para fornecer o serviço Teachka: "
+#~ "autenticação, personalização (tema, idioma) e mostrar a tua atividade no "
+#~ "painel inicial. Não vendemos nem partilhamos os teus dados com terceiros."
+
+#~ msgid "Cookies"
+#~ msgstr "Cookies"
+
+#~ msgid ""
+#~ "We use Sentry for error monitoring. Sentry may set its own cookies or use "
+#~ "browser storage to deduplicate error reports. No personal data is "
+#~ "intentionally forwarded to Sentry."
+#~ msgstr ""
+#~ "Usamos o Sentry para monitorizar erros. O Sentry pode definir os próprios "
+#~ "cookies ou usar armazenamento do navegador para deduplicar relatórios. Não é"
+#~ " enviado intencionalmente qualquer dado pessoal para o Sentry."
+
+#~ msgid ""
+#~ "Your account and all associated data are retained for as long as your "
+#~ "account is active. You can delete your account and all data at any time from"
+#~ " the Settings page."
+#~ msgstr ""
+#~ "A tua conta e todos os dados associados são mantidos enquanto a conta "
+#~ "estiver ativa. Podes apagar a conta e todos os dados a qualquer momento na "
+#~ "página de Definições."
+
+#~ msgid ""
+#~ "Under GDPR you have the right to access, correct, or erase your data. To "
+#~ "delete your account and all data permanently, visit "
+#~ msgstr ""
+#~ "Sob o RGPD tens o direito de aceder, corrigir ou apagar os teus dados. Para "
+#~ "apagar a conta e todos os dados permanentemente, visita "
+
+#~ msgid "For other requests contact us at the address below."
+#~ msgstr "Para outros pedidos contacta-nos no endereço abaixo."
+
+#~ msgid "— None —"
+#~ msgstr "— Nenhum —"
+
+#~ msgid "Participants will type their answer here. Match is case-insensitive."
+#~ msgstr ""
+#~ "Os participantes escrevem a resposta aqui. Não distingue maiúsculas de "
+#~ "minúsculas."
