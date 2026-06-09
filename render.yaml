@@ -1,25 +1,32 @@
 databases:
-  - name: teachkadb
-    plan: free
-    databaseName: teachka
-    user: teachka
+  # Created + restored manually in Frankfurt. Blueprint adopts it by name.
+  - name: teachka-db-eu
+    plan: basic-256mb
+    region: frankfurt
+    databaseName: teachkadbeu
+    user: teachkadbeu_user
 
 services:
+  # New Frankfurt redis (for live-play / Channels). None existed before.
   - type: keyvalue
-    name: teachka-redis
+    name: teachka-redis-eu
     plan: free
+    region: frankfurt
     ipAllowList: []  # only reachable from Render services
 
+  # New Frankfurt web service. Old Oregon `teachka-web` keeps serving
+  # teachka.com until you move the custom domain here, then delete it.
   - type: web
-    plan: free
-    name: teachka-web
+    plan: starter
+    name: teachka-web-eu
+    region: frankfurt
     runtime: python
     buildCommand: './build.sh'
     startCommand: 'python -m gunicorn teachkaBaseProject.asgi:application -k uvicorn.workers.UvicornWorker'
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: teachkadb
+          name: teachka-db-eu
           property: connectionString
       - key: SECRET_KEY
         generateValue: true
@@ -28,5 +35,5 @@ services:
       - key: REDIS_URL
         fromService:
           type: keyvalue
-          name: teachka-redis
+          name: teachka-redis-eu
           property: connectionString
