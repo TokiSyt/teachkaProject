@@ -255,7 +255,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # Terms of Service version — bump when ToS materially changes to force re-acceptance.
-TERMS_VERSION = "2026-05-09"
+TERMS_VERSION = "2026-06-09"
 
 # django-axes: brute force login protection
 AXES_FAILURE_LIMIT = 5

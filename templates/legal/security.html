@@ -31,7 +31,7 @@
             </span>
             <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "Where your data lives" %}</h2>
           </div>
-          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Teachka runs on managed infrastructure (Render) with PostgreSQL as the primary database. Data are written to redundant storage with daily automated backups. Servers are located in the EU." %}</p>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Teachka runs on managed infrastructure (Render) with PostgreSQL as the primary database. Data are written to redundant storage with daily automated backups. Servers are located in the EU (Render, Frankfurt region)." %}</p>
         </div>
       </article>
 
@@ -55,7 +55,7 @@
             </span>
             <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "Passwords" %}</h2>
           </div>
-          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Passwords are never stored in plain text. We use bcrypt with per-user salts. Failed login attempts are rate-limited via django-axes to prevent brute-force attacks." %}</p>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Passwords are never stored in plain text. We use a strong, industry-standard one-way hashing algorithm with a unique per-user salt. Failed login attempts are rate-limited via django-axes to prevent brute-force attacks." %}</p>
         </div>
       </article>
 
@@ -103,7 +103,7 @@
             </span>
             <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "Incident response" %}</h2>
           </div>
-          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "If we discover a breach that affects your data, we will notify affected users by email within 72 hours, as required by GDPR Article 33." %}</p>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "If we discover a breach that affects your data, we will notify the competent supervisory authority within 72 hours where required (GDPR Article 33) and inform affected users by email without undue delay (GDPR Article 34)." %}</p>
         </div>
       </article>
 
