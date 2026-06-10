@@ -1,15 +1,25 @@
 from datetime import date
 
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+from django.contrib import messages
+from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db import connection
 from django.db.models import Sum
 from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404, redirect
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import TemplateView
 
 from apps.calendar.name_days_cz import NAME_DAYS_CZ
+from apps.contact.models import ContactMessage
 from apps.group_maker.models import GroupCreationModel
 from apps.point_system.models import Member
+from apps.quizzmaker import live
+from apps.quizzmaker.models import GameSession
 from apps.users.models import UserStats
 
 
@@ -18,6 +28,7 @@ class RobotsView(View):
         content = (
             "User-agent: *\n"
             "Disallow: /manage-portal/\n"
+            "Disallow: /admin-portal/\n"
             "Disallow: /users/activate/\n"
             "Disallow: /users/reset/\n"
             "Disallow: /i18n/\n"
@@ -79,6 +90,103 @@ class ReadyzView(View):
             {"status": "ready" if ready else "not ready", **checks},
             status=200 if ready else 503,
         )
+
+
+class AdminRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
+    """Restrict a view to admin (superuser) accounts."""
+
+    def test_func(self):
+        return self.request.user.is_superuser
+
+
+class AdminDashboardView(AdminRequiredMixin, TemplateView):
+    template_name = "admin_dashboard/dashboard.html"
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["total_users"] = get_user_model().objects.count()
+
+        messages_qs = ContactMessage.objects.select_related("user")
+        ctx["contact_messages"] = messages_qs
+        ctx["contact_counts"] = {
+            "all": messages_qs.count(),
+            "open": messages_qs.filter(handled=False).count(),
+            ContactMessage.KIND_BUG: messages_qs.filter(kind=ContactMessage.KIND_BUG).count(),
+            ContactMessage.KIND_QUESTION: messages_qs.filter(kind=ContactMessage.KIND_QUESTION).count(),
+            ContactMessage.KIND_FEATURE: messages_qs.filter(kind=ContactMessage.KIND_FEATURE).count(),
+        }
+        ctx["kind_bug"] = ContactMessage.KIND_BUG
+        ctx["kind_question"] = ContactMessage.KIND_QUESTION
+        ctx["kind_feature"] = ContactMessage.KIND_FEATURE
+
+        ctx["open_sessions"] = (
+            GameSession.objects.exclude(state=GameSession.ENDED).select_related("quiz", "host").order_by("-created_at")
+        )
+        return ctx
+
+
+class ForceQuitSessionView(AdminRequiredMixin, View):
+    """Force-terminate a live quiz session: wipe Redis state, mark it ended,
+    and tell every connected socket to leave."""
+
+    def post(self, request, pk):
+        session = get_object_or_404(GameSession, pk=pk)
+        # Best-effort wipe of live Redis state + persist scores. This may no-op
+        # if the Redis room already expired, so we don't rely on it to clear the
+        # DB row below.
+        try:
+            live.close_room(session.code)
+        except Exception:
+            pass
+        layer = get_channel_layer()
+        if layer is not None:
+            async_to_sync(layer.group_send)(f"quiz_{session.code}", {"type": "closed"})
+        # Authoritatively mark the row ended so it leaves the open list even when
+        # the Redis state was already gone (end_game early-returns in that case).
+        if session.state != GameSession.ENDED:
+            session.state = GameSession.ENDED
+            session.ended_at = timezone.now()
+            session.save(update_fields=["state", "ended_at"])
+        messages.success(request, _("Session %(code)s was force-quit.") % {"code": session.code})
+        return redirect("admin_dashboard")
+
+
+class AdminMessageReplyView(AdminRequiredMixin, View):
+    """Reply to a contact message by email from inside the dashboard and mark
+    it handled. If no reply body is given, just toggle the handled flag."""
+
+    def post(self, request, pk):
+        msg = get_object_or_404(ContactMessage, pk=pk)
+        body = (request.POST.get("reply") or "").strip()
+        recipient = msg.email or (msg.user.email if msg.user else "")
+
+        if body:
+            if not recipient:
+                messages.error(request, _("No email on file for this message — cannot reply."))
+                return redirect("admin_dashboard")
+            from django.core.mail import EmailMultiAlternatives
+            from django.template.loader import render_to_string
+
+            ctx = {"reply_body": body, "subject": msg.subject, "site_url": "https://teachka.com"}
+            email = EmailMultiAlternatives(
+                subject=_("Re: %(subject)s") % {"subject": msg.subject},
+                body=render_to_string("email/contact_reply.txt", ctx),
+                from_email=None,  # uses DEFAULT_FROM_EMAIL
+                to=[recipient],
+            )
+            email.attach_alternative(render_to_string("email/contact_reply.html", ctx), "text/html")
+            email.send(fail_silently=False)
+            msg.handled = True
+            msg.save(update_fields=["handled"])
+            messages.success(request, _("Reply sent to %(to)s.") % {"to": recipient})
+        else:
+            msg.handled = not msg.handled
+            msg.save(update_fields=["handled"])
+            messages.success(
+                request,
+                _("Marked as handled.") if msg.handled else _("Marked as open."),
+            )
+        return redirect("admin_dashboard")
 
 
 class HomeView(TemplateView):

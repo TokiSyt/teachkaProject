@@ -1,0 +1,75 @@
+{% load static %}<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Teachka</title>
+</head>
+<body style="margin:0;padding:0;background-color:#f4f1f6;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
+  <!-- preheader (hidden) : shows the subject as preview, neutral -->
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;">Re: {{ subject }}</div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f1f6;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0"
+               style="width:600px;max-width:600px;background-color:#ffffff;border:1px solid #e7e1ec;border-radius:16px;overflow:hidden;">
+
+          <!-- accent bar -->
+          <tr><td style="height:4px;background-color:#b4477f;line-height:4px;font-size:4px;">&nbsp;</td></tr>
+
+          <!-- header / wordmark -->
+          <tr>
+            <td style="padding:28px 36px 0 36px;">
+              <span style="font-family:Georgia,'Times New Roman',serif;font-size:24px;font-weight:600;color:#2a2230;letter-spacing:-0.5px;">Teachka</span>
+            </td>
+          </tr>
+
+          <!-- subject reference (neutral: 'Re:' + subject) -->
+          <tr>
+            <td style="padding:18px 36px 0 36px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+                     style="background-color:#faf7fc;border:1px solid #ece5f1;border-radius:10px;">
+                <tr>
+                  <td style="padding:12px 16px;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#8a7f93;">
+                    Re:&nbsp;<span style="color:#5a4f64;font-weight:600;">{{ subject }}</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- reply body (admin-authored, recipient's language) -->
+          <tr>
+            <td style="padding:24px 36px 8px 36px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.65;color:#2a2230;">
+              {{ reply_body|linebreaksbr }}
+            </td>
+          </tr>
+
+          <!-- divider -->
+          <tr>
+            <td style="padding:20px 36px 0 36px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr><td style="border-top:1px solid #eee7f1;line-height:1px;font-size:1px;">&nbsp;</td></tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- footer -->
+          <tr>
+            <td style="padding:18px 36px 30px 36px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.6;color:#a99fb2;">
+              <a href="{{ site_url }}" style="color:#b4477f;text-decoration:none;font-weight:600;">teachka.com</a>
+              <span style="color:#cfc6d6;">&nbsp;·&nbsp;</span>
+              <span>© Teachka</span>
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

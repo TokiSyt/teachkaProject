@@ -155,6 +155,9 @@
         <li><a href="{% url 'profile:profile' %}" class="rounded-lg"><i data-lucide="user" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Profile" %}</span></a></li>
         <li><a href="{% url 'profile:settings' %}" class="rounded-lg"><i data-lucide="settings" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Settings" %}</span></a></li>
         <li><a href="{% url 'contact:contact' %}" class="rounded-lg {% if request.resolver_match.namespace == 'contact' %}active{% endif %}"><i data-lucide="message-square-plus" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Contact" %}</span></a></li>
+        {% if user.is_superuser %}
+        <li><a href="{% url 'admin_dashboard' %}" class="rounded-lg {% if request.resolver_match.url_name == 'admin_dashboard' %}active{% endif %}"><i data-lucide="shield-check" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Admin" %}</span></a></li>
+        {% endif %}
       </ul>
     </div>
     {% endif %}
