@@ -19,7 +19,7 @@
           <span class="text-base-content/60">{{ quiz.title }}</span>
         </h1>
       </div>
-      <div class="flex items-center gap-3">
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-2 w-full sm:w-auto">
         <button type="button" class="btn-as-link-ghost"
                 onclick="document.getElementById('quiz-settings-modal').showModal()">
           <i data-lucide="settings-2" class="w-4 h-4"></i>
@@ -192,11 +192,11 @@
                 </div>
               {% endif %}
               {% if r.question_type == "select_correct" %}
-                <div class="grid grid-cols-2 gap-4 shrink-0"
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 shrink-0"
                      data-answer-update-base="{% url 'quizzmaker:answer_update' quiz.pk 0 %}">
                   {% for ans in r.answers.all %}
                     {% if forloop.counter <= 4 %}
-                      <div class="border-2 border-base-300 rounded-xl px-7 py-6 flex items-center gap-5 hover:border-primary transition has-[:checked]:border-primary has-[:checked]:bg-primary/5"
+                      <div class="border-2 border-base-300 rounded-xl px-4 py-4 sm:px-7 sm:py-6 flex items-center gap-3 sm:gap-5 hover:border-primary transition has-[:checked]:border-primary has-[:checked]:bg-primary/5"
                            data-answer-pk="{{ ans.pk }}">
                         <label class="relative flex items-center justify-center cursor-pointer shrink-0 w-7 h-7" title="{% trans 'Mark as correct' %}">
                           <input type="checkbox"
@@ -209,12 +209,12 @@
                             <polyline points="20 6 9 17 4 12"></polyline>
                           </svg>
                         </label>
-                        <span class="serif text-4xl text-primary w-9 text-center">{% if forloop.counter == 1 %}A{% elif forloop.counter == 2 %}B{% elif forloop.counter == 3 %}C{% else %}D{% endif %}</span>
+                        <span class="serif text-2xl sm:text-4xl text-primary w-7 sm:w-9 text-center shrink-0">{% if forloop.counter == 1 %}A{% elif forloop.counter == 2 %}B{% elif forloop.counter == 3 %}C{% else %}D{% endif %}</span>
                         <input type="text"
                                value="{{ ans.text }}"
                                placeholder="{% trans 'Answer' %} {% if forloop.counter == 1 %}A{% elif forloop.counter == 2 %}B{% elif forloop.counter == 3 %}C{% else %}D{% endif %}"
                                data-answer-text
-                               class="flex-1 bg-transparent text-xl text-base-content focus:outline-none placeholder:text-base-content/40" />
+                               class="flex-1 min-w-0 bg-transparent text-base sm:text-xl text-base-content focus:outline-none placeholder:text-base-content/40" />
                       </div>
                     {% endif %}
                   {% endfor %}
@@ -227,14 +227,14 @@
                      data-answer-placeholder="{% trans 'Type an accepted answer' %}">
                   <div id="ti-list" class="space-y-3">
                     {% for ans in r.answers.all %}
-                      <div class="ti-row border-2 border-base-300 rounded-xl px-8 py-5 flex items-center gap-4 focus-within:border-primary transition"
+                      <div class="ti-row border-2 border-base-300 rounded-xl px-4 py-4 sm:px-8 sm:py-5 flex items-center gap-3 sm:gap-4 focus-within:border-primary transition"
                            data-answer-pk="{{ ans.pk }}">
-                        <i data-lucide="pencil-line" class="w-6 h-6 text-base-content/40 shrink-0"></i>
+                        <i data-lucide="pencil-line" class="w-5 h-5 sm:w-6 sm:h-6 text-base-content/40 shrink-0"></i>
                         <input type="text"
                                value="{{ ans.text }}"
                                placeholder="{% trans 'Type an accepted answer' %}"
                                data-answer-text
-                               class="flex-1 bg-transparent text-2xl text-base-content focus:outline-none placeholder:text-base-content/40 text-center" />
+                               class="flex-1 min-w-0 bg-transparent text-lg sm:text-2xl text-base-content focus:outline-none placeholder:text-base-content/40 text-center" />
                         <button type="button" data-answer-del
                                 title="{% trans 'Remove answer' %}" aria-label="{% trans 'Remove answer' %}"
                                 class="btn btn-xs btn-circle btn-ghost text-base-content/40 hover:text-error shrink-0">
@@ -276,7 +276,7 @@
 
   <!-- ── ROUND CREATE MODAL ── -->
   <dialog id="round-create-modal" class="modal">
-    <div class="modal-box max-w-lg rounded-2xl border border-base-300 bg-base-100">
+    <div class="modal-box max-w-lg max-h-[90dvh] overflow-y-auto rounded-2xl border border-base-300 bg-base-100">
       <form method="post" enctype="multipart/form-data" action="{% url 'quizzmaker:round_create' quiz.pk %}">
         {% csrf_token %}
 
@@ -355,7 +355,7 @@
   <!-- ── ROUND EDIT MODALS ── -->
   {% for round in rounds %}
     <dialog id="round-edit-modal-{{ round.pk }}" class="modal">
-      <div class="modal-box max-w-lg rounded-2xl border border-base-300 bg-base-100">
+      <div class="modal-box max-w-lg max-h-[90dvh] overflow-y-auto rounded-2xl border border-base-300 bg-base-100">
         <form method="post" enctype="multipart/form-data" action="{% url 'quizzmaker:round_edit' quiz.pk round.pk %}">
           {% csrf_token %}
 
@@ -437,7 +437,7 @@
     </dialog>
 
     <dialog id="round-delete-modal-{{ round.pk }}" class="modal">
-      <div class="modal-box max-w-md rounded-2xl border border-base-300 bg-base-100">
+      <div class="modal-box max-w-md max-h-[90dvh] overflow-y-auto rounded-2xl border border-base-300 bg-base-100">
         <header class="mb-5">
           <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-2">
             {% trans "Quiz" %} · {% blocktrans with n=round.order %}Round {{ n }}{% endblocktrans %}
@@ -470,7 +470,7 @@
 
   <!-- ── QUIZ SETTINGS MODAL ── -->
   <dialog id="quiz-settings-modal" class="modal">
-    <div class="modal-box max-w-lg rounded-2xl border border-base-300 bg-base-100">
+    <div class="modal-box max-w-lg max-h-[90dvh] overflow-y-auto rounded-2xl border border-base-300 bg-base-100">
       <form method="post" enctype="multipart/form-data" action="{% url 'quizzmaker:edit' quiz.pk %}">
         {% csrf_token %}
 
@@ -537,7 +537,7 @@
 
   <!-- ── QUIZ DELETE MODAL ── -->
   <dialog id="quiz-delete-modal" class="modal">
-    <div class="modal-box max-w-md rounded-2xl border border-base-300 bg-base-100">
+    <div class="modal-box max-w-md max-h-[90dvh] overflow-y-auto rounded-2xl border border-base-300 bg-base-100">
       <header class="mb-5">
         <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-2">
           {% trans "Quiz" %} · {% trans "Settings" %}

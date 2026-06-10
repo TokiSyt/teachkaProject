@@ -125,6 +125,11 @@
     ws.onclose = (e) => {
       if (closing) return;
       if (e.code === 4003 || e.code === 4004) { closing = true; window.location.href = HOME; return; }
+      if (e.code === 4500) {
+        closing = true;
+        root.innerHTML = `<p class="text-error text-center my-auto">{% trans "Live server unavailable. Please try again shortly." %}</p>`;
+        return;
+      }
       setTimeout(connect, 1500);
     };
   }

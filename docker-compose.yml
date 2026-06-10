@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "5433:5432"  # Use 5433 externally to avoid conflict with local PostgreSQL
+      - "5433:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-teachkadb}"]
       interval: 5s
@@ -27,8 +27,6 @@ services:
 
   web:
     build: .
-    # runserver auto-uses daphne (ASGI) because `daphne` is first in INSTALLED_APPS,
-    # so WebSockets work in dev with autoreload.
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app

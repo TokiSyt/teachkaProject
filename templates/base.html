@@ -17,6 +17,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300;1,9..144,500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
   {% block extra_css %}{% endblock %}
   <style>
+    html, body { overflow-x: hidden; max-width: 100%; }
     body { font-family: 'Epilogue', system-ui, sans-serif; }
     .serif { font-family: 'Fraunces', serif; }
 
@@ -316,9 +317,9 @@
   {% block content %}{% endblock content %}
 
   <!-- ── FOOTER ── -->
-  <footer class="mt-auto px-5 py-8 md:px-14 md:py-7 border-t border-base-300 flex items-center justify-between shrink-0">
+  <footer class="mt-auto px-5 py-8 md:px-14 md:py-7 border-t border-base-300 flex flex-col gap-4 md:flex-row md:items-center md:justify-between shrink-0">
     <p class="serif italic text-sm text-base-content/40">Teachka, 2026</p>
-    <div class="flex items-center gap-4">
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
       <a href="{% url 'contact:contact' %}" class="link link-hover text-xs text-base-content/40">{% trans "Contact" %}</a>
       <a href="{% url 'privacy' %}" class="link link-hover text-xs text-base-content/40">{% trans "Privacy" %}</a>
       <a href="{% url 'terms' %}" class="link link-hover text-xs text-base-content/40">{% trans "Terms" %}</a>

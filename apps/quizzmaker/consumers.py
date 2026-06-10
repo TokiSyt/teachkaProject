@@ -11,6 +11,7 @@ from __future__ import annotations
 import asyncio
 import time
 
+import redis
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
@@ -36,7 +37,14 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
         self.role: str | None = None
         self._lock_task: asyncio.Task | None = None
 
-        meta = await self._safe(live.get_meta, self.code)
+        try:
+            meta = await self._safe(live.get_meta, self.code)
+        except (redis.RedisError, OSError):
+            # Live store unreachable (Redis down/misconfigured). Close with a
+            # distinct code so the client shows an error instead of silently
+            # reconnecting forever.
+            await self.close(code=4500)
+            return
         if meta is None:
             await self.close(code=4004)
             return
