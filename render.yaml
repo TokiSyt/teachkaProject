@@ -1,5 +1,4 @@
 databases:
-  # Created + restored manually in Frankfurt. Blueprint adopts it by name.
   - name: teachka-db-eu
     plan: basic-256mb
     region: frankfurt
@@ -7,15 +6,12 @@ databases:
     user: teachkadbeu_user
 
 services:
-  # New Frankfurt redis (for live-play / Channels). None existed before.
   - type: keyvalue
     name: teachka-redis-eu
     plan: free
     region: frankfurt
-    ipAllowList: []  # only reachable from Render services
+    ipAllowList: []
 
-  # New Frankfurt web service. Old Oregon `teachka-web` keeps serving
-  # teachka.com until you move the custom domain here, then delete it.
   - type: web
     plan: starter
     name: teachka-web-eu

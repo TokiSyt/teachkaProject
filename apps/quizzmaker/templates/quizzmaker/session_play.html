@@ -89,6 +89,12 @@
       if (closing) return;
       // 4004 = game gone, 4003 = not allowed: stop looping, leave.
       if (e.code === 4003 || e.code === 4004) { closing = true; window.location.href = HOME; return; }
+      // 4500 = live store unreachable: stop looping, show error.
+      if (e.code === 4500) {
+        closing = true;
+        root.innerHTML = `<p class="text-error text-center">{% trans "Live server unavailable. Please try again shortly." %}</p>`;
+        return;
+      }
       setTimeout(connect, 1500);
     };
   }

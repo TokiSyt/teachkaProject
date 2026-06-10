@@ -588,6 +588,37 @@ button.btn {
   transform: translateY(1px);
 }
 
+/* Danger variant — destructive actions (force quit, delete) */
+.btn-as-link-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-error);
+  background-color: var(--color-error);
+  color: var(--color-error-content);
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.15s ease, transform 0.05s ease;
+  -webkit-appearance: none;
+  appearance: none;
+  font-family: inherit;
+}
+.btn-as-link-danger:hover,
+.btn-as-link-danger:focus {
+  background-color: color-mix(in srgb, var(--color-error) 88%, black);
+  outline: none;
+}
+.btn-as-link-danger:active {
+  transform: translateY(1px);
+}
+
 /* Crop preview dim overlay (quiz logo crop UI) */
 .crop-dim {
   background-color: rgba(0, 0, 0, 0.55);

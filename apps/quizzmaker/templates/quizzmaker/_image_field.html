@@ -28,7 +28,11 @@
 
 <div class="flex items-center gap-2">
   <input type="file" id="{{ input_id }}" name="{{ input_name }}" accept="image/*"
-         class="sr-only" data-image-empty="{% trans 'No file chosen' %}" />
+         class="sr-only" data-image-empty="{% trans 'No file chosen' %}"
+         data-image-max-bytes="8388608"
+         data-image-max-gif-bytes="5242880"
+         data-image-toobig="{% trans 'Image is too large. Maximum size is 8 MB.' %}"
+         data-image-toobig-gif="{% trans 'GIF is too large. Maximum size is 5 MB.' %}" />
   <label for="{{ input_id }}" class="btn-as-link-ghost cursor-pointer shrink-0">
     <i data-lucide="upload" class="w-4 h-4"></i>
     {% trans "Choose file" %}
@@ -39,6 +43,7 @@
     {% trans "Remove" %}
   </button>
 </div>
+<p data-image-error data-input-id="{{ input_id }}" class="mt-1.5 text-xs text-error" style="display:none;"></p>
 
 <input type="hidden" name="focus_x" value="{{ focus_x|default:50 }}" data-image-focus="x" data-input-id="{{ input_id }}">
 <input type="hidden" name="focus_y" value="{{ focus_y|default:50 }}" data-image-focus="y" data-input-id="{{ input_id }}">

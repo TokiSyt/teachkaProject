@@ -1,0 +1,7 @@
+Teachka
+
+Re: {{ subject }}
+
+{{ reply_body }}
+
+{{ site_url }} · © Teachka

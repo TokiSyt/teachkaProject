@@ -95,6 +95,26 @@
     const removeBtn = form.querySelector(`[data-image-remove][data-input-id="${inputId}"]`);
     const focusXEl = form.querySelector(`input[data-image-focus="x"][data-input-id="${inputId}"]`);
     const focusYEl = form.querySelector(`input[data-image-focus="y"][data-input-id="${inputId}"]`);
+    const errorEl = form.querySelector(`[data-image-error][data-input-id="${inputId}"]`);
+    const maxBytes = parseInt(fileInput.dataset.imageMaxBytes || "0", 10);
+    const maxGifBytes = parseInt(fileInput.dataset.imageMaxGifBytes || "0", 10);
+
+    function sizeError(file) {
+      const isGif = file.type === "image/gif";
+      const cap = isGif && maxGifBytes > 0 ? maxGifBytes : maxBytes;
+      if (cap > 0 && file.size > cap) {
+        return isGif && maxGifBytes > 0
+          ? (fileInput.dataset.imageToobigGif || "GIF is too large.")
+          : (fileInput.dataset.imageToobig || "Image is too large.");
+      }
+      return "";
+    }
+
+    function showError(msg) {
+      if (!errorEl) return;
+      errorEl.textContent = msg;
+      errorEl.style.display = msg ? "block" : "none";
+    }
 
     // Custom file control: reflect the chosen filename (native text is browser-locale only).
     const fileNameEl = fileInput.closest("div")?.querySelector("[data-image-filename]");
@@ -135,12 +155,19 @@
 
     fileInput.addEventListener("change", (e) => {
       const file = e.target.files && e.target.files[0];
+      if (!file) { showError(""); refreshFileName(); clearFile(); return; }
+      const sizeMsg = sizeError(file);
+      if (sizeMsg) {
+        clearFile();
+        showError(sizeMsg);
+        return;
+      }
+      showError("");
       refreshFileName();
-      if (!file) { clearFile(); return; }
       showFile(file);
     });
 
-    if (removeBtn) removeBtn.addEventListener("click", clearFile);
+    if (removeBtn) removeBtn.addEventListener("click", () => { showError(""); clearFile(); });
 
     const recutBtn = form.querySelector(`[data-image-recut][data-input-id="${inputId}"]`);
     if (recutBtn) {

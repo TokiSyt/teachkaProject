@@ -38,6 +38,9 @@ urlpatterns += i18n_patterns(
     path("security/", views.SecurityView.as_view(), name="security"),
     path("cancellation/", views.CancellationView.as_view(), name="cancellation"),
     path("contact/", include("apps.contact.urls", namespace="contact")),
+    path("admin-portal/", views.AdminDashboardView.as_view(), name="admin_dashboard"),
+    path("admin-portal/sessions/<int:pk>/force-quit/", views.ForceQuitSessionView.as_view(), name="admin_force_quit"),
+    path("admin-portal/messages/<int:pk>/reply/", views.AdminMessageReplyView.as_view(), name="admin_message_reply"),
     prefix_default_language=False,
 )
 
