@@ -41,6 +41,17 @@ class TestGroupDividerHomeView:
         assert "splitted_teams" in response.context
         assert len(response.context["splitted_teams"]) == 2  # 6 members / 3 = 2 groups
 
+    def test_post_by_team_count(self, authenticated_client, url, group):
+        # 6 members, ask for 4 teams -> 4 teams
+        response = authenticated_client.post(url, {"group_id": group.id, "size": 4, "mode": "teams"}, follow=True)
+        assert response.status_code == 200
+        assert len(response.context["splitted_teams"]) == 4
+
+    def test_post_defaults_to_size_mode(self, authenticated_client, url, group):
+        # No mode -> size mode: 6 members / 2 = 3 teams
+        response = authenticated_client.post(url, {"group_id": group.id, "size": 2}, follow=True)
+        assert len(response.context["splitted_teams"]) == 3
+
     def test_post_returns_selected_group(self, authenticated_client, url, group):
         response = authenticated_client.post(url, {"group_id": group.id, "size": 2}, follow=True)
         assert response.context["selected_group"] == group

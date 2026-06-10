@@ -67,13 +67,44 @@
             <input type="hidden" name="group_id" id="groupSelect" value="{{ selected_group.id|default:'' }}" required>
           </div>
 
+          {% with cur_mode=form.mode.value|default:"size" %}
           <div class="px-5 py-4">
-            <p class="text-xs text-base-content/40 mb-1.5">{% trans "Team size" %}</p>
-            <input type="number" name="size" id="{{ form.size.id_for_label }}"
-                   value="{{ form.size.value|default:'' }}"
-                   class="input input-bordered w-full"
-                   placeholder="0" min="1" required>
+            <p class="text-xs text-base-content/40 mb-2">{% trans "Split by" %}</p>
+            <div class="grid grid-cols-2 gap-2" id="modeCards">
+              <label class="mode-card relative flex cursor-pointer flex-col gap-1 rounded-box border bg-base-100 p-3 transition-colors hover:bg-base-200 {% if cur_mode != 'teams' %}border-primary bg-base-200{% else %}border-base-300{% endif %}">
+                <input type="radio" name="mode" value="size" class="sr-only mode-radio"
+                       {% if cur_mode != 'teams' %}checked{% endif %}>
+                <span class="flex items-center gap-2">
+                  <i data-lucide="users" class="w-4 h-4 text-primary shrink-0"></i>
+                  <span class="font-medium text-sm">{% trans "Team size" %}</span>
+                </span>
+                <span class="text-xs text-base-content/40">{% trans "Fixed members per team" %}</span>
+              </label>
+              <label class="mode-card relative flex cursor-pointer flex-col gap-1 rounded-box border bg-base-100 p-3 transition-colors hover:bg-base-200 {% if cur_mode == 'teams' %}border-primary bg-base-200{% else %}border-base-300{% endif %}">
+                <input type="radio" name="mode" value="teams" class="sr-only mode-radio"
+                       {% if cur_mode == 'teams' %}checked{% endif %}>
+                <span class="flex items-center gap-2">
+                  <i data-lucide="layout-grid" class="w-4 h-4 text-primary shrink-0"></i>
+                  <span class="font-medium text-sm">{% trans "Number of teams" %}</span>
+                </span>
+                <span class="text-xs text-base-content/40">{% trans "Fixed team count" %}</span>
+              </label>
+            </div>
           </div>
+
+          <div class="px-5 py-4">
+            <p class="text-xs text-base-content/40 mb-1.5" id="sizeLabel">
+              {% if cur_mode == 'teams' %}{% trans "How many teams?" %}{% else %}{% trans "Members per team" %}{% endif %}
+            </p>
+            <label class="input input-bordered flex items-center gap-2 w-full">
+              <i data-lucide="hash" class="w-4 h-4 text-base-content/30 shrink-0" id="sizeIcon"></i>
+              <input type="number" name="size" id="{{ form.size.id_for_label }}"
+                     value="{{ form.size.value|default:'' }}"
+                     class="grow min-w-0 bg-transparent"
+                     placeholder="0" min="1" required>
+            </label>
+          </div>
+          {% endwith %}
 
         </div>
       </div>
@@ -161,6 +192,27 @@ function pickGroup(btn) {
 document.addEventListener('click', function(e) {
   const dd = document.getElementById('groupDropdown');
   if (dd && dd.open && !dd.contains(e.target)) dd.open = false;
+});
+document.querySelectorAll('.mode-radio').forEach(r => {
+  r.addEventListener('change', function () {
+    if (!this.checked) return;
+    const teams = this.value === 'teams';
+    // Active card styling
+    document.querySelectorAll('.mode-card').forEach(card => {
+      const on = card.contains(this);
+      card.classList.toggle('border-primary', on);
+      card.classList.toggle('bg-base-200', on);
+      card.classList.toggle('border-base-300', !on);
+    });
+    // Dynamic field label + icon
+    document.getElementById('sizeLabel').textContent =
+      teams ? '{% trans "How many teams?" %}' : '{% trans "Members per team" %}';
+    const icon = document.getElementById('sizeIcon');
+    if (icon) {
+      icon.setAttribute('data-lucide', teams ? 'layout-grid' : 'hash');
+      if (window.lucide) lucide.createIcons();
+    }
+  });
 });
 </script>
 

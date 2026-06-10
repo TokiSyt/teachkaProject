@@ -90,6 +90,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "cloudinary_storage",
+    "cloudinary",
     "apps.core",
     "apps.timer",
     "apps.wheel",
@@ -230,10 +232,29 @@ MEDIA_ROOT = BASE_DIR / "mediafiles"
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-if not DEBUG:
-    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-else:
+if DEBUG:
     WHITENOISE_AUTOREFRESH = True
+
+# Media uploads: Cloudinary in production (Render disk is ephemeral), local
+# filesystem in dev. Cloudinary auto-reads the CLOUDINARY_URL env var.
+USE_CLOUDINARY = bool(os.environ.get("CLOUDINARY_URL"))
+
+STORAGES = {
+    "default": {
+        "BACKEND": (
+            "cloudinary_storage.storage.MediaCloudinaryStorage"
+            if USE_CLOUDINARY
+            else "django.core.files.storage.FileSystemStorage"
+        ),
+    },
+    "staticfiles": {
+        "BACKEND": (
+            "whitenoise.storage.CompressedManifestStaticFilesStorage"
+            if not DEBUG
+            else "django.contrib.staticfiles.storage.StaticFilesStorage"
+        ),
+    },
+}
 
 
 # Default primary key field type

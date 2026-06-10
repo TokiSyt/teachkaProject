@@ -7,7 +7,7 @@ from apps.group_maker.models import GroupCreationModel
 from apps.users.models import UserStats
 
 from .forms import GroupMakerForm
-from .services.group_split import get_split_group_color
+from .services.group_split import get_split_group_color, group_split_by_teams
 from .services.group_split import group_split as group_split_f
 
 SESSION_RESULT_KEY = "group_divider_result"
@@ -45,7 +45,11 @@ class GroupDividerHome(LoginRequiredMixin, TemplateView):
             if selected_group:
                 context["splitted_teams"] = result["splitted_teams"]
                 context["selected_group"] = selected_group
-                initial = {"group_id": result["selected_group_id"], "size": result.get("size")}
+                initial = {
+                    "group_id": result["selected_group_id"],
+                    "size": result.get("size"),
+                    "mode": result.get("mode", "size"),
+                }
 
         context["form"] = self.form_class(initial=initial)
         return context
@@ -59,9 +63,13 @@ class GroupDividerHome(LoginRequiredMixin, TemplateView):
 
         selected_group_id = form.cleaned_data["group_id"]
         selected_group_size = form.cleaned_data["size"]
+        mode = form.cleaned_data["mode"]
         selected_group = get_object_or_404(GroupCreationModel, id=selected_group_id, user=request.user)
         members = list(selected_group.get_members())
-        raw_splitted_teams = group_split_f(members, selected_group_size)
+        if mode == GroupMakerForm.MODE_TEAMS:
+            raw_splitted_teams = group_split_by_teams(members, selected_group_size)
+        else:
+            raw_splitted_teams = group_split_f(members, selected_group_size)
         colored_splitted_teams = get_split_group_color(raw_splitted_teams)
 
         stats, _ = UserStats.objects.get_or_create(user=request.user)
@@ -72,5 +80,6 @@ class GroupDividerHome(LoginRequiredMixin, TemplateView):
             "splitted_teams": _serialize_split(colored_splitted_teams),
             "selected_group_id": selected_group_id,
             "size": selected_group_size,
+            "mode": mode,
         }
         return redirect(reverse("group_divider:home"))

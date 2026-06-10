@@ -15,7 +15,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import CreateView, DetailView, ListView, TemplateView, UpdateView
 
-from apps.core.mixins import AdminRequiredMixin, FormUserMixin, UserOwnedMixin
+from apps.core.mixins import FormUserMixin, UserOwnedMixin
 
 from . import live
 from .forms import QuizForm, RoundForm
@@ -65,7 +65,7 @@ class HomeView(ListView):
         return ctx
 
 
-class QuizCreateView(AdminRequiredMixin, FormUserMixin, CreateView):
+class QuizCreateView(LoginRequiredMixin, FormUserMixin, CreateView):
     model = Quiz
     form_class = QuizForm
     template_name = "quizzmaker/quiz_form.html"
@@ -74,7 +74,7 @@ class QuizCreateView(AdminRequiredMixin, FormUserMixin, CreateView):
         return reverse("quizzmaker:rounds", kwargs={"pk": self.object.pk})
 
 
-class QuizUpdateView(AdminRequiredMixin, UserOwnedMixin, UpdateView):
+class QuizUpdateView(UserOwnedMixin, UpdateView):
     model = Quiz
     form_class = QuizForm
     http_method_names = ["post"]
@@ -87,7 +87,7 @@ class QuizUpdateView(AdminRequiredMixin, UserOwnedMixin, UpdateView):
         return redirect(self.get_success_url())
 
 
-class RoundEditorView(AdminRequiredMixin, UserOwnedMixin, DetailView):
+class RoundEditorView(UserOwnedMixin, DetailView):
     model = Quiz
     template_name = "quizzmaker/round_editor.html"
     context_object_name = "quiz"
@@ -139,7 +139,7 @@ def _flash_form_errors(request, form):
             messages.error(request, f"{label}: {err}")
 
 
-class RoundCreateView(AdminRequiredMixin, View):
+class RoundCreateView(LoginRequiredMixin, View):
     def post(self, request, pk):
         quiz = get_object_or_404(Quiz, pk=pk, user=request.user)
         form = RoundForm(request.POST, request.FILES)
@@ -161,7 +161,7 @@ class RoundCreateView(AdminRequiredMixin, View):
         return redirect(url)
 
 
-class RoundUpdateView(AdminRequiredMixin, View):
+class RoundUpdateView(LoginRequiredMixin, View):
     def post(self, request, pk, round_pk):
         quiz = get_object_or_404(Quiz, pk=pk, user=request.user)
         round_obj = get_object_or_404(quiz.rounds, pk=round_pk)
@@ -177,7 +177,7 @@ class RoundUpdateView(AdminRequiredMixin, View):
         return redirect(url)
 
 
-class RoundDeleteView(AdminRequiredMixin, View):
+class RoundDeleteView(LoginRequiredMixin, View):
     def post(self, request, pk, round_pk):
         quiz = get_object_or_404(Quiz, pk=pk, user=request.user)
         round_obj = get_object_or_404(quiz.rounds, pk=round_pk)
@@ -190,7 +190,7 @@ class RoundDeleteView(AdminRequiredMixin, View):
         return redirect("quizzmaker:rounds", pk=quiz.pk)
 
 
-class QuizFinalizeView(AdminRequiredMixin, View):
+class QuizFinalizeView(LoginRequiredMixin, View):
     def post(self, request, pk):
         quiz = get_object_or_404(Quiz, pk=pk, user=request.user)
         rounds = list(quiz.rounds.prefetch_related("answers"))
@@ -206,7 +206,7 @@ class QuizFinalizeView(AdminRequiredMixin, View):
         return redirect("quizzmaker:home")
 
 
-class QuizDeleteView(AdminRequiredMixin, View):
+class QuizDeleteView(LoginRequiredMixin, View):
     def post(self, request, pk):
         quiz = get_object_or_404(Quiz, pk=pk, user=request.user)
         quiz.delete()
@@ -214,7 +214,7 @@ class QuizDeleteView(AdminRequiredMixin, View):
         return redirect("quizzmaker:home")
 
 
-class AnswerUpdateView(AdminRequiredMixin, View):
+class AnswerUpdateView(LoginRequiredMixin, View):
     def post(self, request, pk, answer_pk):
         quiz = get_object_or_404(Quiz, pk=pk, user=request.user)
         answer = get_object_or_404(Answer, pk=answer_pk, round__quiz=quiz)
@@ -226,7 +226,7 @@ class AnswerUpdateView(AdminRequiredMixin, View):
         return JsonResponse({"ok": True})
 
 
-class AnswerCreateView(AdminRequiredMixin, View):
+class AnswerCreateView(LoginRequiredMixin, View):
     """Add a new (blank) accepted answer to a round (type_input alternatives)."""
 
     def post(self, request, pk, round_pk):
@@ -237,7 +237,7 @@ class AnswerCreateView(AdminRequiredMixin, View):
         return JsonResponse({"ok": True, "pk": answer.pk})
 
 
-class AnswerDeleteView(AdminRequiredMixin, View):
+class AnswerDeleteView(LoginRequiredMixin, View):
     """Remove an accepted answer. Never deletes a round's last answer."""
 
     def post(self, request, pk, answer_pk):
@@ -249,7 +249,7 @@ class AnswerDeleteView(AdminRequiredMixin, View):
         return JsonResponse({"ok": True})
 
 
-class RoundReorderView(AdminRequiredMixin, View):
+class RoundReorderView(LoginRequiredMixin, View):
     def post(self, request, pk):
         quiz = get_object_or_404(Quiz, pk=pk, user=request.user)
         try:
