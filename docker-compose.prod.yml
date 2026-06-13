@@ -1,9 +1,10 @@
 services:
   db:
-    image: postgres:16-alpine
+    image: postgres:18-alpine
     restart: unless-stopped
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      # PG18+ official image stores data in a major-version subdir under this path
+      - postgres_data:/var/lib/postgresql
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-teachkadb}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
