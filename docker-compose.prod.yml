@@ -39,11 +39,15 @@ services:
         condition: service_healthy
 
   caddy:
-    image: caddy:2-alpine
+    build:
+      context: .
+      dockerfile: Dockerfile.caddy
     restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
+    environment:
+      CF_API_TOKEN: ${CF_API_TOKEN}
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data

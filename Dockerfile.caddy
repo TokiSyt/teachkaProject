@@ -1,0 +1,8 @@
+# Custom Caddy build: stock image has no DNS providers compiled in.
+# Add the Cloudflare DNS module so TLS certs renew via DNS-01 challenge
+# (works behind Cloudflare's proxy; HTTP-01 on port 80 would not).
+FROM caddy:2-builder AS builder
+RUN xcaddy build --with github.com/caddy-dns/cloudflare
+
+FROM caddy:2-alpine
+COPY --from=builder /usr/bin/caddy /usr/bin/caddy

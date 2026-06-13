@@ -2,6 +2,12 @@
 # Redirects www -> apex, reverse-proxies everything to the Django web container.
 # WhiteNoise serves static; Cloudinary serves media — Caddy just proxies.
 
+# Renew certs via Cloudflare DNS-01 challenge (token from env). This works even
+# when Cloudflare's orange-cloud proxy is on, which blocks HTTP-01 on port 80.
+{
+	acme_dns cloudflare {env.CF_API_TOKEN}
+}
+
 www.teachka.com {
 	redir https://teachka.com{uri} permanent
 }
