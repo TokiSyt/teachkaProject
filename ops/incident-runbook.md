@@ -4,7 +4,10 @@
 
 **1. Check logs**
 
-Render dashboard → your service → Logs tab.
+On the Hetzner host:
+```bash
+docker compose -f docker-compose.prod.yml logs -f web
+```
 
 Locally:
 ```bash
@@ -23,12 +26,17 @@ curl https://teachka.com/healthz/
 
 **3. DB is down**
 
-- If DB is unreachable, restart the DB instance from the Render dashboard.
+- If DB is unreachable, restart it: `docker compose -f docker-compose.prod.yml restart db`.
 - If data loss is suspected, restore from latest dump (see `restore.md`).
 
 **4. Restart the web service**
 
-Render dashboard → Manual Deploy → "Clear build cache & deploy" if code is fine but container is wedged.
+On the Hetzner host, if code is fine but the container is wedged:
+```bash
+docker compose -f docker-compose.prod.yml restart web
+# or rebuild + recreate after a code change
+docker compose -f docker-compose.prod.yml up -d --build web
+```
 
 Locally:
 ```bash
@@ -43,7 +51,7 @@ git checkout <hash>
 git push origin HEAD:main --force-with-lease   # only if truly needed
 ```
 
-Then trigger a new Render deploy.
+Then redeploy on the Hetzner host: `git pull && docker compose -f docker-compose.prod.yml up -d --build`.
 
 ---
 
@@ -59,7 +67,7 @@ Then trigger a new Render deploy.
 
 Symptom: `ValueError: SECRET_KEY environment variable is required when DEBUG=False`
 
-Fix: Render dashboard → Environment → add the missing var → redeploy.
+Fix: add the missing var to `.env` on the Hetzner host, then `docker compose -f docker-compose.prod.yml up -d`.
 
 ---
 

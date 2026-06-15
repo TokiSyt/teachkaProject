@@ -1,17 +1,19 @@
 # Database Backup
 
-## Render (production)
+## Hetzner (production)
 
-Render Basic tier runs **automatic daily backups** (7-day retention). View and download them:
-Render dashboard → your PostgreSQL instance → Backups tab.
-
-Before any risky deploy, also take a manual dump as extra safety:
+Postgres runs as the `db` container in the prod stack (`docker-compose.prod.yml`).
+There is **no managed backup** — take dumps yourself. On the Hetzner host:
 
 ```bash
-pg_dump "$DATABASE_URL" --no-acl --no-owner -Fc -f backup_$(date +%Y%m%d_%H%M%S).dump
+docker compose -f docker-compose.prod.yml exec db \
+  pg_dump -U postgres -d teachkadb -Fc -f /tmp/backup.dump
+docker compose -f docker-compose.prod.yml cp db:/tmp/backup.dump \
+  ./backup_$(date +%Y%m%d_%H%M%S).dump
 ```
 
-Store the `.dump` file somewhere safe (local machine, cloud storage). The file is compressed — a 100 MB DB produces ~10 MB dump.
+Run it on a daily cron and ship the `.dump` off-box (e.g. `scp` / object storage).
+The file is compressed — a 100 MB DB produces ~10 MB dump. Always dump before a risky deploy.
 
 ## Local Docker stack
 

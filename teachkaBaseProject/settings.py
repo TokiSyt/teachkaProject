@@ -35,13 +35,10 @@ def _env_truthy(name: str) -> bool | None:
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# Explicit DEBUG wins. If unset, Render sets RENDER → assume production (DEBUG off).
-# Any other host must set DEBUG=1 for local dev or DEBUG=0 for production.
+# Explicit DEBUG wins. Set DEBUG=1 for local dev or DEBUG=0 for production.
 _dbg = _env_truthy("DEBUG")
 if _dbg is not None:
     DEBUG = _dbg
-elif "RENDER" in os.environ:
-    DEBUG = False
 else:
     DEBUG = True
 
@@ -60,17 +57,11 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1", "teachka.com", "www.teachka.com", "de
 if DEBUG:
     ALLOWED_HOSTS = ["*"]
 
-RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
-
 CSRF_TRUSTED_ORIGINS = [
     "https://teachka.com",
     "https://www.teachka.com",
     "https://dev.teachka.com",
 ]
-if RENDER_EXTERNAL_HOSTNAME:
-    CSRF_TRUSTED_ORIGINS.append(f"https://{RENDER_EXTERNAL_HOSTNAME}")
 
 # Application definition
 
@@ -235,8 +226,8 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 if DEBUG:
     WHITENOISE_AUTOREFRESH = True
 
-# Media uploads: Cloudinary in production (Render disk is ephemeral), local
-# filesystem in dev. Cloudinary auto-reads the CLOUDINARY_URL env var.
+# Media uploads: Cloudinary in production (keeps the app container stateless),
+# local filesystem in dev. Cloudinary auto-reads the CLOUDINARY_URL env var.
 USE_CLOUDINARY = bool(os.environ.get("CLOUDINARY_URL"))
 
 STORAGES = {

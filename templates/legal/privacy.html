@@ -35,7 +35,7 @@
             <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "1. Data controller" %}</h2>
           </div>
           <p class="text-sm text-base-content/70 leading-relaxed m-0">
-            <span class="font-medium">Tiago Pereira Maria Gonçalves da Silva</span> — {% trans "a private individual based in Portugal, operating Teachka on a non-commercial basis." %}<br>
+            <span class="font-medium">Tiago Pereira Maria Gonçalves da Silva</span>, {% trans "a private individual based in Portugal, operating Teachka on a non-commercial basis." %}<br>
             {% trans "Contact" %}: <a href="mailto:info@teachka.com" class="link link-primary">info@teachka.com</a>
           </p>
         </div>
@@ -56,7 +56,7 @@
             <li>{% trans "Preferences: country, language, theme, and interface accent colour." %}</li>
             <li>{% trans "Usage data: counts and durations of tool usage (e.g. wheel spins, timer time, calculator uses) linked to your account." %}</li>
             <li>{% trans "Security data: IP address and username recorded on login attempts, for brute-force protection." %}</li>
-            <li>{% trans "Content you create: groups, members, points, quizzes, calendar entries — which may include names, photos, or data of third parties such as students." %}</li>
+            <li>{% trans "Content you create: groups, members, points, quizzes, calendar entries, which may include names, photos, or data of third parties such as students." %}</li>
           </ul>
           <p class="text-sm text-base-content/70 leading-relaxed mt-3 mb-0">{% trans "The application does not process special categories of personal data (e.g. health or biometric data) and does not carry out automated decision-making or profiling." %}</p>
         </div>
@@ -126,9 +126,9 @@
           </div>
           <p class="text-sm text-base-content/70 leading-relaxed mb-3">{% trans "Your data may, to the extent necessary, be processed by the following categories of recipients (processors):" %}</p>
           <ul class="text-sm text-base-content/70 leading-relaxed list-disc pl-5 space-y-2 m-0">
-            <li>{% trans "Render — application hosting and database (EU, Frankfurt region)." %}</li>
+            <li>{% trans "Hetzner, application hosting and database (EU, Germany)." %}</li>
             <li>{% trans "Our e-mail provider, for delivering transactional messages." %}</li>
-            <li>{% trans "Sentry — error monitoring (personal data is scrubbed where possible)." %}</li>
+            <li>{% trans "Sentry, error monitoring (personal data is scrubbed where possible)." %}</li>
             <li>{% trans "Public authorities, where required by law." %}</li>
           </ul>
           <p class="text-sm text-base-content/70 leading-relaxed mt-3 mb-0">{% trans "We do not sell your data or share it for marketing purposes." %}</p>
@@ -144,7 +144,7 @@
             </span>
             <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "6. International transfers" %}</h2>
           </div>
-          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Our database and application servers are located within the EU (Frankfurt). Where a processor (such as our error-monitoring provider) may process limited data outside the EU/EEA, such transfers take place on the basis of Standard Contractual Clauses approved by the European Commission or an equivalent safeguard." %}</p>
+          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Our database and application servers are located within the EU (Germany). Where a processor (such as our error-monitoring provider) may process limited data outside the EU/EEA, such transfers take place on the basis of Standard Contractual Clauses approved by the European Commission or an equivalent safeguard." %}</p>
         </div>
       </article>
 
@@ -161,13 +161,13 @@
           <ul class="text-sm text-base-content/70 leading-relaxed list-disc pl-5 space-y-2 m-0">
             <li>{% trans "Right of access to your personal data (Art. 15 GDPR)." %}</li>
             <li>{% trans "Right to rectification of inaccurate data (Art. 16 GDPR)." %}</li>
-            <li>{% trans 'Right to erasure ("right to be forgotten", Art. 17 GDPR) — you can delete your account and all data from ' %}<a href="{% url 'profile:settings' %}" class="link link-primary">{% trans "Settings → Delete account" %}</a>.</li>
+            <li>{% trans 'Right to erasure ("right to be forgotten", Art. 17 GDPR). You can delete your account and all data from ' %}<a href="{% url 'profile:settings' %}" class="link link-primary">{% trans "Settings → Delete account" %}</a>.</li>
             <li>{% trans "Right to restriction of processing (Art. 18 GDPR)." %}</li>
             <li>{% trans "Right to data portability (Art. 20 GDPR)." %}</li>
             <li>{% trans "Right to object to processing (Art. 21 GDPR)." %}</li>
             <li>{% trans "Right to lodge a complaint with a supervisory authority." %}</li>
           </ul>
-          <p class="text-sm text-base-content/70 leading-relaxed mt-3 mb-0">{% trans "You may exercise your rights in writing at " %}<a href="mailto:info@teachka.com" class="link link-primary">info@teachka.com</a>. {% trans "You may lodge a complaint with the Portuguese supervisory authority, the National Data Protection Commission (Comissão Nacional de Proteção de Dados — CNPD), Av. D. Carlos I, 134, 1.º, 1200-651 Lisbon, Portugal, " %}<a href="https://www.cnpd.pt" class="link link-primary" rel="noopener" target="_blank">www.cnpd.pt</a>.</p>
+          <p class="text-sm text-base-content/70 leading-relaxed mt-3 mb-0">{% trans "You may exercise your rights in writing at " %}<a href="mailto:info@teachka.com" class="link link-primary">info@teachka.com</a>. {% trans "You may lodge a complaint with the Portuguese supervisory authority, the National Data Protection Commission (Comissão Nacional de Proteção de Dados, CNPD), Av. D. Carlos I, 134, 1.º, 1200-651 Lisbon, Portugal, " %}<a href="https://www.cnpd.pt" class="link link-primary" rel="noopener" target="_blank">www.cnpd.pt</a>.</p>
         </div>
       </article>
 
