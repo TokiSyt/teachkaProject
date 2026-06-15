@@ -17,20 +17,24 @@ docker compose exec db pg_restore -U postgres -d teachkadb /tmp/backup.dump
 docker compose exec web python manage.py migrate
 ```
 
-## Restore to Render (production)
+## Restore to Hetzner (production)
 
-**From automatic backup (easiest):**
-Render dashboard → your PostgreSQL instance → Backups tab → select point-in-time → Restore.
-
-**From a manual dump:**
-1. Get the Render external DB URL from the dashboard.
-2. From a machine with `pg_restore` installed:
+On the Hetzner host, with the prod stack running:
 
 ```bash
-pg_restore --no-acl --no-owner -d "$DATABASE_URL" backup.dump
-```
+# Copy dump into the db container
+docker compose -f docker-compose.prod.yml cp ./backup.dump db:/tmp/backup.dump
 
-3. Redeploy the app so `entrypoint.sh` runs `migrate`.
+# Drop and recreate DB (WARNING: destroys all current data)
+docker compose -f docker-compose.prod.yml exec db psql -U postgres -c "DROP DATABASE IF EXISTS teachkadb;"
+docker compose -f docker-compose.prod.yml exec db psql -U postgres -c "CREATE DATABASE teachkadb;"
+
+# Restore
+docker compose -f docker-compose.prod.yml exec db pg_restore -U postgres -d teachkadb /tmp/backup.dump
+
+# Re-run migrations in case schema diverged
+docker compose -f docker-compose.prod.yml exec web python manage.py migrate
+```
 
 ## Verify after restore
 

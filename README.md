@@ -34,7 +34,7 @@ What it demonstrates at a glance:
 | **Internationalized** | Full EN / PT / CS translations via `i18n_patterns` + locale middleware |
 | **Hardened** | CSP headers, brute-force lockout (django-axes), Django deploy-checklist gate in CI |
 | **CI/CD** | 5-job pipeline: lint, typecheck, 573 tests (>=70% cov), dependency audit, deploy-check |
-| **Real deploy** | Dockerised, shipped to Render with Postgres, Redis, WhiteNoise statics, and Cloudinary media |
+| **Real deploy** | Dockerised, shipped to Hetzner (Docker + Caddy) with Postgres, Redis, WhiteNoise statics, and Cloudinary media |
 
 ---
 
@@ -132,7 +132,7 @@ Full multilingual support (English, Portuguese, Czech) using `i18n_patterns` and
 | **Media / static** | Cloudinary (uploads), WhiteNoise (compressed static) |
 | **Auth / security** | Custom user model, django-axes (lockout), CSP and security headers |
 | **Tooling** | Ruff, mypy, pytest + factory-boy, Vitest (JS), pip-audit |
-| **Infra** | Docker / Compose (dev), Render (prod), GitHub Actions (CI) |
+| **Infra** | Docker / Compose (dev), Hetzner + Caddy (prod), GitHub Actions (CI) |
 
 ---
 
@@ -206,7 +206,7 @@ make translations      # compile i18n .po into .mo
 
 | Var | Purpose |
 |-----|---------|
-| `DEBUG` | Explicit on / off; defaults to dev unless `RENDER` is present |
+| `DEBUG` | Explicit on / off; defaults to dev when unset |
 | `SECRET_KEY` | Required when `DEBUG=False` |
 | `DATABASE_URL` | Postgres in Docker, SQLite for deploy-checks |
 | `REDIS_URL` | Channel layer for live quizzes |
@@ -218,7 +218,7 @@ make translations      # compile i18n .po into .mo
 
 ## Deployment notes
 
-- **Stateless media**: Render's disk is ephemeral, so user uploads go to **Cloudinary**; static assets are compressed and served by **WhiteNoise**.
+- **Stateless media**: user uploads go to **Cloudinary**; static assets are compressed and served by **WhiteNoise**.
 - **Production hardening**: a Django `check --deploy` gate, CSP and referrer-policy headers, plus `ALLOWED_HOSTS` / `CSRF_TRUSTED_ORIGINS` driven by environment.
 - **Single settings file**, environment-driven, with no fragile per-env settings split.
 
@@ -226,7 +226,7 @@ make translations      # compile i18n .po into .mo
 
 ## What I learned building this
 
-Refactoring an initially tightly-coupled codebase into **decoupled apps over a shared core** made it dramatically more testable and easier to extend. Adding **real-time multiplayer** pushed me into ASGI, Channels and Redis. Standing up a **multi-job CI pipeline** and a real **Render deploy** taught me to catch production issues (CSP, ephemeral storage, env config) *before* they reach users, and to keep a clean git history through disciplined branching.
+Refactoring an initially tightly-coupled codebase into **decoupled apps over a shared core** made it dramatically more testable and easier to extend. Adding **real-time multiplayer** pushed me into ASGI, Channels and Redis. Standing up a **multi-job CI pipeline** and a real **Hetzner deploy** taught me to catch production issues (CSP, ephemeral storage, env config) *before* they reach users, and to keep a clean git history through disciplined branching.
 
 ---
 
