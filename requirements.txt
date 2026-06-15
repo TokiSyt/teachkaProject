@@ -11,7 +11,7 @@ django-tailwind==3.8.0
 gunicorn==23.0.0
 h11==0.16.0
 lucide==1.1.3
-packaging==25.0
+packaging==26.2
 psycopg2-binary==2.9.10
 sentry-sdk[django]==2.25.1
 sqlparse==0.5.4
