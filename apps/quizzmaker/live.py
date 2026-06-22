@@ -117,6 +117,7 @@ def _build_rounds_snapshot(quiz) -> list[dict[str, Any]]:
             entry["single_select"] = len(entry["correct_ids"]) == 1
         else:  # TYPE_INPUT — any of several accepted answers
             entry["answers"] = []
+            entry["accept_all"] = rnd.accept_all
             entry["correct_texts"] = [normalize_text(a.text) for a in answers if a.text.strip()]
         snapshot.append(entry)
         idx += 1
@@ -398,6 +399,10 @@ def _grade_one(round_def: dict[str, Any], value: Any) -> tuple[int, bool, bool]:
         return base, is_full, base > 0
 
     if qtype == Round.TYPE_INPUT:
+        if round_def.get("accept_all"):
+            # Open question: any non-empty submission is full-correct.
+            answered = isinstance(value, str) and value.strip() != ""
+            return (points, True, True) if answered else (0, False, False)
         ok = isinstance(value, str) and normalize_text(value) in round_def.get("correct_texts", [])
         return (points, True, True) if ok else (0, False, False)
 
@@ -466,7 +471,10 @@ def _distribution(r: redis.Redis, code: str, round_def: dict[str, Any], round_id
                 if aid in counts:
                     counts[aid] += 1
         return {"type": Round.SELECT_CORRECT, "counts": counts, "answered": len(answers)}
-    # type_input: how many got it right vs wrong
+    # type_input: how many got it right vs wrong (accept_all => every entry is right)
+    if round_def.get("accept_all"):
+        answered = sum(1 for v in answers if isinstance(v, str) and v.strip())
+        return {"type": Round.TYPE_INPUT, "right": answered, "wrong": 0, "answered": len(answers)}
     right = sum(1 for v in answers if isinstance(v, str) and normalize_text(v) in round_def.get("correct_texts", []))
     return {
         "type": Round.TYPE_INPUT,
@@ -474,6 +482,20 @@ def _distribution(r: redis.Redis, code: str, round_def: dict[str, Any], round_id
         "wrong": len(answers) - right,
         "answered": len(answers),
     }
+
+
+def _answers_list(r: redis.Redis, code: str, round_idx: int) -> list[dict[str, Any]]:
+    """Every player's submitted text for ``round_idx`` (accept_all reveal)."""
+    raw_answers = r.hgetall(_k(code, f"answers:{round_idx}"))
+    participants = _all_participants(r, code)
+    out: list[dict[str, Any]] = []
+    for token, p in participants.items():
+        raw = raw_answers.get(token)
+        value = json.loads(raw).get("value") if raw else None
+        text = value if isinstance(value, str) else ""
+        out.append({"nickname": p["nickname"], "text": text})
+    out.sort(key=lambda x: x["nickname"].lower())
+    return out
 
 
 def advance(code: str) -> str:
@@ -637,9 +659,12 @@ def reveal_payload(code: str, round_idx: int, *, role: str, token: str | None = 
         out["correct_ids"] = rdef.get("correct_ids", [])
     else:
         out["correct_texts"] = rdef.get("correct_texts", [])
-    # host/projector gets the distribution
+        out["accept_all"] = rdef.get("accept_all", False)
+    # host/projector gets the distribution (+ the full answer list for open questions)
     if role == "host":
         out["distribution"] = _distribution(r, code, rdef, round_idx)
+        if rdef.get("accept_all"):
+            out["answers_list"] = _answers_list(r, code, round_idx)
     # player gets their own result
     if token:
         graded_raw = r.get(_k(code, f"graded:{round_idx}"))
@@ -654,6 +679,10 @@ def reveal_payload(code: str, round_idx: int, *, role: str, token: str | None = 
             "streak": me["streak"] if me else 0,
             "rank": player_rank(code, token),
         }
+        if rdef.get("accept_all"):
+            ans_raw = r.hget(_k(code, f"answers:{round_idx}"), token)
+            value = json.loads(ans_raw).get("value") if ans_raw else None
+            out["me"]["your_answer"] = value if isinstance(value, str) else ""
     return out
 
 
@@ -664,12 +693,16 @@ def round_review(code: str, round_idx: int) -> dict[str, Any]:
     if not (0 <= round_idx < len(rounds)):
         raise LiveError("No such round.")
     rdef = rounds[round_idx]
-    return {
+    data = {
         "round_idx": round_idx,
         "question": rdef["question"],
         "question_type": rdef["question_type"],
         "answers": rdef.get("answers", []),
         "correct_ids": rdef.get("correct_ids", []),
         "correct_texts": rdef.get("correct_texts", []),
+        "accept_all": rdef.get("accept_all", False),
         "distribution": _distribution(r, code, rdef, round_idx),
     }
+    if rdef.get("accept_all"):
+        data["answers_list"] = _answers_list(r, code, round_idx)
+    return data

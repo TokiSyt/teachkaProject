@@ -43,6 +43,12 @@ class TestRoundHasCorrectAnswer:
         AnswerFactory(round=r, text="paris", is_correct=False)
         assert r.has_correct_answer is True
 
+    def test_type_input_accept_all_complete_without_text(self, quiz):
+        # accept_all rounds are playable with no defined answer.
+        r = RoundFactory(quiz=quiz, question_type=Round.TYPE_INPUT, accept_all=True)
+        AnswerFactory(round=r, text="", is_correct=False)
+        assert r.has_correct_answer is True
+
 
 @pytest.mark.django_db
 class TestFinalizeGating:

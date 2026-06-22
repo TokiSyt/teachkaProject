@@ -54,6 +54,10 @@ class Round(TimestampedModel):
     question_type = models.CharField(max_length=20, choices=QUESTION_TYPE_CHOICES, default=SELECT_CORRECT)
     points = models.IntegerField(default=0)
     time_limit = models.IntegerField(default=0, help_text="Time limit in seconds (0 = no limit)")
+    accept_all = models.BooleanField(
+        default=False,
+        help_text="type_input only: accept every submitted answer as correct (open question).",
+    )
     image = models.ImageField(upload_to="uploads/quizzmaker/rounds/", blank=True, null=True)
     focus_x = models.PositiveSmallIntegerField(default=50)
     focus_y = models.PositiveSmallIntegerField(default=50)
@@ -70,7 +74,8 @@ class Round(TimestampedModel):
         if self.question_type == self.SELECT_CORRECT:
             return any(a.is_correct for a in self.answers.all())
         if self.question_type == self.TYPE_INPUT:
-            return any(a.text.strip() for a in self.answers.all())
+            # accept_all makes the round playable without any defined answer.
+            return self.accept_all or any(a.text.strip() for a in self.answers.all())
         return False
 
 

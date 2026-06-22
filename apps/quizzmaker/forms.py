@@ -31,7 +31,7 @@ class QuizForm(forms.ModelForm):
 class RoundForm(forms.ModelForm):
     class Meta:
         model = Round
-        fields = ["question", "image", "question_type", "time_limit", "points", "focus_x", "focus_y"]
+        fields = ["question", "image", "question_type", "time_limit", "points", "accept_all", "focus_x", "focus_y"]
         widgets = {
             "question": forms.TextInput(
                 attrs={
@@ -59,9 +59,17 @@ class RoundForm(forms.ModelForm):
                     "min": 0,
                 }
             ),
+            "accept_all": forms.CheckboxInput(attrs={"class": "toggle toggle-primary"}),
             "focus_x": forms.HiddenInput(),
             "focus_y": forms.HiddenInput(),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Hide drag_answer from the picker for now (model choice stays intact).
+        self.fields["question_type"].choices = [
+            (v, label) for v, label in self.fields["question_type"].choices if v != Round.DRAG_ANSWER
+        ]
 
     def clean_image(self):
         f = self.cleaned_data.get("image")

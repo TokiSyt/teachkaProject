@@ -177,6 +177,26 @@ class RoundUpdateView(LoginRequiredMixin, View):
         return redirect(url)
 
 
+class RoundCopyTimeView(LoginRequiredMixin, View):
+    """Copy one round's time limit to every other round in the quiz."""
+
+    def post(self, request, pk, round_pk):
+        quiz = get_object_or_404(Quiz, pk=pk, user=request.user)
+        round_obj = get_object_or_404(quiz.rounds, pk=round_pk)
+        raw = request.POST.get("time_limit", "")
+        try:
+            time_limit = int(raw)
+        except (TypeError, ValueError):
+            time_limit = round_obj.time_limit
+        time_limit = max(0, time_limit)
+        quiz.rounds.update(time_limit=time_limit)
+        quiz.recalculate_totals()
+        messages.success(request, _("Time limit copied to all rounds."))
+        url = reverse("quizzmaker:rounds", kwargs={"pk": quiz.pk})
+        url += f"?round={_round_position(quiz, round_obj.pk)}"
+        return redirect(url)
+
+
 class RoundDeleteView(LoginRequiredMixin, View):
     def post(self, request, pk, round_pk):
         quiz = get_object_or_404(Quiz, pk=pk, user=request.user)
