@@ -100,7 +100,8 @@
   "pick_all": "{% trans 'Pick all that apply' %}",
   "standings": "{% trans 'Standings' %}",
   "all_answers": "{% trans 'All answers' %}",
-  "no_answers": "{% trans 'No answers submitted' %}"
+  "no_answers": "{% trans 'No answers submitted' %}",
+  "show_all_answers": "{% trans 'Show all accepted answers' %}"
 }
 </script>
 
@@ -237,8 +238,9 @@
         <div id="timer-fill" class="h-full rounded-full" style="width:100%;background:var(--color-primary);transition:width .25s linear;"></div></div>`));
     }
     if (r.image_url) {
+      const pos = `${r.focus_x ?? 50}% ${r.focus_y ?? 50}%`;
       node.appendChild(el(`<figure class="w-full max-w-3xl mx-auto aspect-video bg-base-200 rounded-2xl overflow-hidden">
-        <img src="${r.image_url}" class="w-full h-full object-cover" /></figure>`));
+        <img src="${r.image_url}" class="w-full h-full object-cover" style="object-position:${pos}" /></figure>`));
     }
     if (r.question_type === "type_input") {
       node.appendChild(el(`<p class="text-center text-base-content/50 text-lg">{% trans "Players type their answer" %}</p>`));
@@ -279,12 +281,23 @@
       node.appendChild(answersListEl(rev.answers_list || []));
     } else if (r.question_type === "type_input") {
       const d = rev.distribution || { right: 0, wrong: 0 };
-      node.appendChild(el(`
+      const texts = rev.correct_texts || [];
+      // Show only the first accepted answer; host can reveal the rest on demand.
+      const block = el(`
         <div class="text-center space-y-2">
           <p class="text-[11px] tracking-[2px] uppercase text-base-content/40">${T.correct}</p>
-          <p class="serif text-3xl text-primary font-medium">${esc((rev.correct_texts || []).join("   ·   "))}</p>
+          <p data-correct-text class="serif text-3xl text-primary font-medium">${esc(texts[0] || "")}</p>
           <p class="text-sm text-base-content/60">${d.right} ${T.right} · ${d.wrong} ${T.wrong}</p>
-        </div>`));
+        </div>`);
+      if (texts.length > 1) {
+        const more = el(`<button class="btn-as-link-ghost mx-auto">${T.show_all_answers} (${texts.length})</button>`);
+        more.addEventListener("click", () => {
+          block.querySelector("[data-correct-text]").textContent = texts.join("   ·   ");
+          more.remove();
+        });
+        block.appendChild(more);
+      }
+      node.appendChild(block);
     } else {
       const counts = (rev.distribution && rev.distribution.counts) || {};
       const correct = new Set(rev.correct_ids || []);
