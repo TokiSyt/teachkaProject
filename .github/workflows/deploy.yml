@@ -1,8 +1,8 @@
 name: Deploy
 
-# Auto-deploy to the Hetzner server on every push to development
-# (i.e. after a PR merges). The server pulls the new code and rebuilds the
-# prod stack; entrypoint.sh runs collectstatic + migrate on boot.
+# Auto-deploy to the Hetzner server on every push to main
+# (i.e. after a PR merges into main). The server pulls the new code and
+# rebuilds the prod stack; entrypoint.sh runs collectstatic + migrate on boot.
 #
 # Required repo secrets:
 #   DEPLOY_HOST     server hostname / IP
@@ -13,7 +13,7 @@ name: Deploy
 
 on:
   push:
-    branches: [development]
+    branches: [main]
 
 # Never run two deploys at once; cancel an in-flight one if a newer push lands.
 concurrency:
@@ -36,5 +36,5 @@ jobs:
             cd "${{ secrets.DEPLOY_PATH }}"
             # DEPLOY_SKIP_HOOK stops the post-merge hook double-building;
             # the explicit deploy.sh below owns the rebuild.
-            DEPLOY_SKIP_HOOK=1 git pull --ff-only origin development
+            DEPLOY_SKIP_HOOK=1 git pull --ff-only origin main
             ./ops/deploy.sh
