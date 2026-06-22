@@ -219,6 +219,16 @@
                     {% endif %}
                   {% endfor %}
                 </div>
+              {% elif r.question_type == "type_input" and r.accept_all %}
+                <div class="shrink-0 mb-16 w-full max-w-4xl mx-auto text-center">
+                  <div class="inline-flex flex-col items-center gap-2 rounded-2xl border-2 border-dashed border-base-300 px-8 py-6">
+                    <i data-lucide="check-check" class="w-7 h-7 text-primary"></i>
+                    <p class="serif text-xl text-base-content/70">{% trans "All answers accepted" %}</p>
+                    <p class="text-[10px] tracking-[2px] uppercase text-base-content/40 max-w-xs">
+                      {% trans "Players type anything. Every answer scores full points, then all answers are shown." %}
+                    </p>
+                  </div>
+                </div>
               {% elif r.question_type == "type_input" %}
                 <div class="shrink-0 mb-16 w-full max-w-4xl mx-auto"
                      data-answer-update-base="{% url 'quizzmaker:answer_update' quiz.pk 0 %}"
@@ -318,6 +328,18 @@
             {% if round_form.question_type.errors %}<p class="text-error text-xs mt-1">{{ round_form.question_type.errors|join:", " }}</p>{% endif %}
           </div>
 
+          <div data-accept-all-row class="hidden">
+            <label class="flex items-start gap-3 cursor-pointer rounded-xl border-2 border-base-300 bg-base-200 px-4 py-3">
+              {{ round_form.accept_all }}
+              <span>
+                <span class="block text-sm font-medium">{% trans "Accept all answers" %}</span>
+                <span class="block text-xs text-base-content/50">
+                  {% trans "Every submission counts as correct. After the round, all answers are shown." %}
+                </span>
+              </span>
+            </label>
+          </div>
+
           <div class="grid grid-cols-2 gap-4">
             <div>
               <label for="{{ round_form.time_limit.id_for_label }}" class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">
@@ -394,12 +416,27 @@
               <label class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">
                 {% trans "Question type" %}
               </label>
-              <select name="question_type"
+              <select name="question_type" data-qtype
                       class="select select-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full">
                 {% for value, label in round.QUESTION_TYPE_CHOICES %}
-                  <option value="{{ value }}" {% if round.question_type == value %}selected{% endif %}>{{ label }}</option>
+                  {% if value != "drag_answer" %}
+                    <option value="{{ value }}" {% if round.question_type == value %}selected{% endif %}>{{ label }}</option>
+                  {% endif %}
                 {% endfor %}
               </select>
+            </div>
+
+            <div data-accept-all-row {% if round.question_type != "type_input" %}class="hidden"{% endif %}>
+              <label class="flex items-start gap-3 cursor-pointer rounded-xl border-2 border-base-300 bg-base-200 px-4 py-3">
+                <input type="checkbox" name="accept_all" class="toggle toggle-primary mt-0.5"
+                       {% if round.accept_all %}checked{% endif %} />
+                <span>
+                  <span class="block text-sm font-medium">{% trans "Accept all answers" %}</span>
+                  <span class="block text-xs text-base-content/50">
+                    {% trans "Every submission counts as correct. After the round, all answers are shown." %}
+                  </span>
+                </span>
+              </label>
             </div>
 
             <div class="grid grid-cols-2 gap-4">
@@ -407,7 +444,7 @@
                 <label class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">
                   {% trans "Duration" %} <span class="text-base-content/30 normal-case font-normal tracking-normal">(s)</span>
                 </label>
-                <input type="number" name="time_limit" value="{{ round.time_limit }}" min="0"
+                <input type="number" name="time_limit" id="round-time-{{ round.pk }}" value="{{ round.time_limit }}" min="0"
                        class="input input-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full" />
               </div>
               <div>
@@ -418,6 +455,12 @@
                        class="input input-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full" />
               </div>
             </div>
+
+            <button type="button" class="btn-as-link-ghost"
+                    onclick="document.getElementById('copytime-value-{{ round.pk }}').value = document.getElementById('round-time-{{ round.pk }}').value; document.getElementById('round-copytime-modal-{{ round.pk }}').showModal();">
+              <i data-lucide="clock" class="w-4 h-4"></i>
+              {% trans "Copy time to all rounds" %}
+            </button>
           </div>
 
           <div class="flex items-center gap-3 mt-7">
@@ -458,6 +501,38 @@
           </button>
           <button type="button" class="btn-as-link-ghost"
                   onclick="document.getElementById('round-delete-modal-{{ round.pk }}').close()">
+            {% trans "Cancel" %}
+          </button>
+        </form>
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
+
+    <dialog id="round-copytime-modal-{{ round.pk }}" class="modal">
+      <div class="modal-box max-w-md max-h-[90dvh] overflow-y-auto rounded-2xl border border-base-300 bg-base-100">
+        <header class="mb-5">
+          <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-2">
+            {% trans "Quiz" %} · {% blocktrans with n=round.order %}Round {{ n }}{% endblocktrans %}
+          </p>
+          <h2 class="serif font-medium leading-none tracking-tight text-2xl">
+            <span class="text-primary">{% trans "Copy time" %}</span> <span class="text-base-content/60">{% trans "to all rounds" %}</span>
+          </h2>
+        </header>
+
+        <p class="text-sm text-base-content/70 mb-6">
+          {% trans "This sets every round's time limit to this round's value. It overwrites the time on all other rounds and cannot be undone." %}
+        </p>
+
+        <form method="post" action="{% url 'quizzmaker:round_copy_time' quiz.pk round.pk %}" class="flex items-center gap-3">
+          {% csrf_token %}
+          <input type="hidden" name="time_limit" id="copytime-value-{{ round.pk }}" value="{{ round.time_limit }}" />
+          <button type="submit" class="btn-as-link">
+            {% trans "Apply to all rounds" %}
+          </button>
+          <button type="button" class="btn-as-link-ghost"
+                  onclick="document.getElementById('round-copytime-modal-{{ round.pk }}').close()">
             {% trans "Cancel" %}
           </button>
         </form>
@@ -723,6 +798,19 @@
             });
         });
       }
+    })();
+
+    // Show the "Accept all answers" toggle only when the question type is
+    // "Write the answer" (type_input), in both the create and edit modals.
+    (function () {
+      document.querySelectorAll("[data-accept-all-row]").forEach((row) => {
+        const form = row.closest("form");
+        const select = form && form.querySelector('select[name="question_type"]');
+        if (!select) return;
+        const sync = () => row.classList.toggle("hidden", select.value !== "type_input");
+        select.addEventListener("change", sync);
+        sync();
+      });
     })();
   </script>
 

@@ -98,7 +98,9 @@
   "wrong": "{% trans 'wrong' %}",
   "pick_one": "{% trans 'Pick one' %}",
   "pick_all": "{% trans 'Pick all that apply' %}",
-  "standings": "{% trans 'Standings' %}"
+  "standings": "{% trans 'Standings' %}",
+  "all_answers": "{% trans 'All answers' %}",
+  "no_answers": "{% trans 'No answers submitted' %}"
 }
 </script>
 
@@ -273,7 +275,9 @@
     const node = el(`<div class="flex flex-col gap-5 my-auto w-full">${questionHeader()}</div>`);
     node.appendChild(el(`<h1 class="serif font-medium leading-tight text-center" style="font-size:clamp(24px,3.5vw,44px)">${esc(r.question || "")}</h1>`));
 
-    if (r.question_type === "type_input") {
+    if (r.question_type === "type_input" && rev.accept_all) {
+      node.appendChild(answersListEl(rev.answers_list || []));
+    } else if (r.question_type === "type_input") {
       const d = rev.distribution || { right: 0, wrong: 0 };
       node.appendChild(el(`
         <div class="text-center space-y-2">
@@ -312,6 +316,23 @@
     return el(`
       <div class="inline-flex items-center gap-2 self-center px-3 py-1 rounded-full bg-base-200 text-base-content/70 text-[11px] tracking-[2px] uppercase font-bold">
         <i data-lucide="${icon}" class="w-3.5 h-3.5"></i>${label}
+      </div>`);
+  }
+
+  // Open-question reveal: every player's submitted answer (accept_all rounds).
+  function answersListEl(list) {
+    const items = (list || []).filter((a) => a.text && a.text.trim());
+    const cards = items.length
+      ? items.map((a) => `
+          <div class="rounded-2xl bg-base-200 border border-base-300 px-4 py-3 text-left">
+            <p class="text-[10px] tracking-[2px] uppercase text-base-content/40">${esc(a.nickname)}</p>
+            <p class="text-lg font-medium whitespace-normal break-words">${esc(a.text)}</p>
+          </div>`).join("")
+      : `<p class="text-base-content/50 col-span-full text-center">${T.no_answers}</p>`;
+    return el(`
+      <div class="w-full max-w-3xl mx-auto space-y-3">
+        <p class="text-[11px] tracking-[2px] uppercase text-base-content/40 text-center">${T.all_answers}</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">${cards}</div>
       </div>`);
   }
 
@@ -383,7 +404,15 @@
     if (!panel || !reviewData) return;
     const d = reviewData;
     let body = "";
-    if (d.question_type === "type_input") {
+    if (d.question_type === "type_input" && d.accept_all) {
+      const items = (d.answers_list || []).filter((a) => a.text && a.text.trim());
+      body = items.length
+        ? items.map((a) =>
+            `<div class="flex items-baseline gap-2 text-sm">
+              <span class="text-base-content/40 shrink-0">${esc(a.nickname)}</span>
+              <span class="flex-1 font-medium break-words">${esc(a.text)}</span></div>`).join("")
+        : `<p class="text-sm text-base-content/50">${T.no_answers}</p>`;
+    } else if (d.question_type === "type_input") {
       const dist = d.distribution || {};
       body = `<p class="serif text-xl text-primary">${esc((d.correct_texts || []).join("   ·   "))}</p>
               <p class="text-sm text-base-content/60">${dist.right || 0} ${T.right} · ${dist.wrong || 0} ${T.wrong}</p>`;

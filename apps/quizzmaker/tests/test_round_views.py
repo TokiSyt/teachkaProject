@@ -126,6 +126,41 @@ class TestRoundDelete:
 
 
 @pytest.mark.django_db
+class TestRoundCopyTime:
+    def _post(self, client, quiz, round_obj, **data):
+        url = reverse("quizzmaker:round_copy_time", kwargs={"pk": quiz.pk, "round_pk": round_obj.pk})
+        return client.post(url, data=data)
+
+    def test_copies_value_to_every_round(self, authenticated_client, quiz):
+        r1 = RoundFactory(quiz=quiz, time_limit=15, order=1)
+        r2 = RoundFactory(quiz=quiz, time_limit=99, order=2)
+        r3 = RoundFactory(quiz=quiz, time_limit=42, order=3)
+        resp = self._post(authenticated_client, quiz, r1, time_limit=20)
+        assert resp.status_code == 302
+        for r in (r1, r2, r3):
+            r.refresh_from_db()
+            assert r.time_limit == 20
+
+    def test_falls_back_to_saved_value_on_bad_input(self, authenticated_client, quiz):
+        r1 = RoundFactory(quiz=quiz, time_limit=7, order=1)
+        r2 = RoundFactory(quiz=quiz, time_limit=99, order=2)
+        self._post(authenticated_client, quiz, r1, time_limit="abc")
+        r2.refresh_from_db()
+        assert r2.time_limit == 7
+
+    def test_recalculates_quiz_totals(self, authenticated_client, quiz):
+        r1 = RoundFactory(quiz=quiz, time_limit=30, order=1)
+        RoundFactory(quiz=quiz, time_limit=30, order=2)
+        self._post(authenticated_client, quiz, r1, time_limit=60)
+        quiz.refresh_from_db()
+        assert quiz.expected_duration == 2  # 60 + 60 = 120s -> 2 min
+
+    def test_other_user_cannot_copy(self, client, quiz, round_obj, other_user):
+        client.login(username="otheruser", password="otherpass123")
+        assert self._post(client, quiz, round_obj, time_limit=10).status_code == 404
+
+
+@pytest.mark.django_db
 class TestRoundReorder:
     def test_reorders_by_id_list(self, authenticated_client, quiz):
         r1 = RoundFactory(quiz=quiz, order=1)

@@ -1,4 +1,4 @@
-.PHONY: build up down restart logs shell dbshell migrate createsuperuser translations collectstatic test clean lint typecheck format tailwind deploy-check audit ci sync-holidays sync-holidays-intl sync-holidays-cz sync-holidays-pt sync-holidays-en
+.PHONY: build up down restart logs shell dbshell migrate createsuperuser translations collectstatic test clean lint typecheck format tailwind deploy deploy-check audit ci sync-holidays sync-holidays-intl sync-holidays-cz sync-holidays-pt sync-holidays-en
 
 # Build and start containers
 build:
@@ -35,6 +35,10 @@ bash:
 # Open PostgreSQL shell
 dbshell:
 	docker compose exec db psql -U postgres -d teachkadb
+
+# Rebuild + restart the production stack (server only; entrypoint auto-migrates)
+deploy:
+	./ops/deploy.sh
 
 # Run migrations (creates and applies)
 migrate:

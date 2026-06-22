@@ -12,6 +12,7 @@ from .views import (
     QuizDeleteView,
     QuizFinalizeView,
     QuizUpdateView,
+    RoundCopyTimeView,
     RoundCreateView,
     RoundDeleteView,
     RoundEditorView,
@@ -46,6 +47,11 @@ urlpatterns = [
         "<int:pk>/rounds/<int:round_pk>/delete/",
         RoundDeleteView.as_view(),
         name="round_delete",
+    ),
+    path(
+        "<int:pk>/rounds/<int:round_pk>/copy-time/",
+        RoundCopyTimeView.as_view(),
+        name="round_copy_time",
     ),
     path(
         "<int:pk>/rounds/reorder/",

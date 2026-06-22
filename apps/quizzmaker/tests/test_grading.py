@@ -23,3 +23,17 @@ class TestTypeInputGrading:
         rd = _round(["yes", "y"])
         base, is_full, earned = live._grade_one(rd, "Y")
         assert is_full is True and earned is True
+
+
+class TestAcceptAllGrading:
+    def _round(self, points=10):
+        return {"question_type": Round.TYPE_INPUT, "points": points, "accept_all": True, "correct_texts": []}
+
+    def test_any_nonblank_answer_is_full(self):
+        rd = self._round()
+        assert live._grade_one(rd, "literally anything") == (10, True, True)
+
+    def test_blank_or_missing_answer_scores_zero(self):
+        rd = self._round()
+        assert live._grade_one(rd, "   ") == (0, False, False)
+        assert live._grade_one(rd, None) == (0, False, False)

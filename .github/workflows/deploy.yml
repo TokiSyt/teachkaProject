@@ -1,0 +1,40 @@
+name: Deploy
+
+# Auto-deploy to the Hetzner server on every push to main
+# (i.e. after a PR merges into main). The server pulls the new code and
+# rebuilds the prod stack; entrypoint.sh runs collectstatic + migrate on boot.
+#
+# Required repo secrets:
+#   DEPLOY_HOST     server hostname / IP
+#   DEPLOY_USER     ssh user
+#   DEPLOY_SSH_KEY  private key for that user (PEM)
+#   DEPLOY_PATH     absolute path to the repo checkout on the server
+#   DEPLOY_PORT     ssh port (optional; defaults to 22)
+
+on:
+  push:
+    branches: [main]
+
+# Never run two deploys at once; cancel an in-flight one if a newer push lands.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          port: ${{ secrets.DEPLOY_PORT || 22 }}
+          script: |
+            set -euo pipefail
+            cd "${{ secrets.DEPLOY_PATH }}"
+            # DEPLOY_SKIP_HOOK stops the post-merge hook double-building;
+            # the explicit deploy.sh below owns the rebuild.
+            DEPLOY_SKIP_HOOK=1 git pull --ff-only origin main
+            ./ops/deploy.sh

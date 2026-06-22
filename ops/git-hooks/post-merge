@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Auto-redeploy after every successful `git pull` / merge.
+#
+# Enable on the SERVER only (keeps dev machines unaffected):
+#   git config core.hooksPath ops/git-hooks
+#
+# Disable:
+#   git config --unset core.hooksPath
+set -euo pipefail
+
+# CI (deploy.yml) sets this so its own `git pull` doesn't trigger a second
+# rebuild on top of the explicit ops/deploy.sh it runs.
+if [ "${DEPLOY_SKIP_HOOK:-0}" = "1" ]; then
+  echo "[post-merge] DEPLOY_SKIP_HOOK set; CI handles the rebuild."
+  exit 0
+fi
+
+ROOT="$(git rev-parse --show-toplevel)"
+
+# Only redeploy when something that affects the running image changed.
+# `git pull` leaves the pre-merge ref in ORIG_HEAD; compare against HEAD.
+if git diff --quiet ORIG_HEAD HEAD -- \
+    requirements.txt Dockerfile Dockerfile.caddy entrypoint.sh \
+    docker-compose.prod.yml Caddyfile apps teachkaBaseProject theme 2>/dev/null; then
+  echo "[post-merge] no deploy-relevant changes; skipping rebuild."
+  exit 0
+fi
+
+echo "[post-merge] deploy-relevant changes detected -> redeploying."
+exec "$ROOT/ops/deploy.sh"
