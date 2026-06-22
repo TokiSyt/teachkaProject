@@ -664,10 +664,11 @@ def reveal_payload(code: str, round_idx: int, *, role: str, token: str | None = 
     else:
         out["correct_texts"] = rdef.get("correct_texts", [])
         out["accept_all"] = rdef.get("accept_all", False)
-    # host/projector gets the distribution (+ the full answer list for open questions)
+    # host/projector gets the distribution (+ every participant's submission for
+    # type_input: open questions show them outright, graded ones on host demand)
     if role == "host":
         out["distribution"] = _distribution(r, code, rdef, round_idx)
-        if rdef.get("accept_all"):
+        if rdef["question_type"] == Round.TYPE_INPUT:
             out["answers_list"] = _answers_list(r, code, round_idx)
     # player gets their own result
     if token:

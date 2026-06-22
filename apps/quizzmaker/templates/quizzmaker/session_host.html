@@ -101,7 +101,8 @@
   "standings": "{% trans 'Standings' %}",
   "all_answers": "{% trans 'All answers' %}",
   "no_answers": "{% trans 'No answers submitted' %}",
-  "show_all_answers": "{% trans 'Show all accepted answers' %}"
+  "show_all_answers": "{% trans 'Show participant answers' %}",
+  "hide_answers": "{% trans 'Hide answers' %}"
 }
 </script>
 
@@ -282,20 +283,32 @@
     } else if (r.question_type === "type_input") {
       const d = rev.distribution || { right: 0, wrong: 0 };
       const texts = rev.correct_texts || [];
-      // Show only the first accepted answer; host can reveal the rest on demand.
+      // Show only the first accepted answer + the right/wrong tally; the host
+      // can reveal every participant's submission on demand.
       const block = el(`
         <div class="text-center space-y-2">
           <p class="text-[11px] tracking-[2px] uppercase text-base-content/40">${T.correct}</p>
-          <p data-correct-text class="serif text-3xl text-primary font-medium">${esc(texts[0] || "")}</p>
+          <p class="serif text-3xl text-primary font-medium">${esc(texts[0] || "")}</p>
           <p class="text-sm text-base-content/60">${d.right} ${T.right} · ${d.wrong} ${T.wrong}</p>
         </div>`);
-      if (texts.length > 1) {
-        const more = el(`<button class="btn-as-link-ghost mx-auto">${T.show_all_answers} (${texts.length})</button>`);
-        more.addEventListener("click", () => {
-          block.querySelector("[data-correct-text]").textContent = texts.join("   ·   ");
-          more.remove();
-        });
-        block.appendChild(more);
+      const submissions = (rev.answers_list || []).filter((a) => a.text && a.text.trim());
+      if (submissions.length) {
+        const holder = el(`<div class="w-full flex flex-col items-center gap-3"></div>`);
+        function showCollapsed() {
+          holder.innerHTML = "";
+          const b = el(`<button class="btn-as-link-ghost mx-auto">${T.show_all_answers}</button>`);
+          b.addEventListener("click", showExpanded);
+          holder.appendChild(b);
+        }
+        function showExpanded() {
+          holder.innerHTML = "";
+          holder.appendChild(answersListEl(rev.answers_list, rev.correct_texts));
+          const h = el(`<button class="btn-as-link-ghost mx-auto">${T.hide_answers}</button>`);
+          h.addEventListener("click", showCollapsed);
+          holder.appendChild(h);
+        }
+        showCollapsed();
+        block.appendChild(holder);
       }
       node.appendChild(block);
     } else {
@@ -332,15 +345,22 @@
       </div>`);
   }
 
-  // Open-question reveal: every player's submitted answer (accept_all rounds).
-  function answersListEl(list) {
+  // Every participant's submitted answer. Open (accept_all) rounds show them
+  // outright; graded type_input rounds reveal them on host demand, ticking the
+  // ones that matched an accepted answer (correctTexts optional).
+  function answersListEl(list, correctTexts) {
+    const correct = correctTexts ? new Set(correctTexts) : null;
     const items = (list || []).filter((a) => a.text && a.text.trim());
     const cards = items.length
-      ? items.map((a) => `
-          <div class="rounded-2xl bg-base-200 border border-base-300 px-4 py-3 text-left">
+      ? items.map((a) => {
+          const ok = correct && correct.has(a.text.trim().toLowerCase());
+          const ring = ok ? "box-shadow:inset 0 0 0 2px color-mix(in oklch, var(--color-primary) 40%, transparent);" : "";
+          return `
+          <div class="rounded-2xl bg-base-200 border border-base-300 px-4 py-3 text-left" style="${ring}">
             <p class="text-[10px] tracking-[2px] uppercase text-base-content/40">${esc(a.nickname)}</p>
-            <p class="text-lg font-medium whitespace-normal break-words">${esc(a.text)}</p>
-          </div>`).join("")
+            <p class="text-lg font-medium whitespace-normal break-words">${esc(a.text)}${ok ? ' <span class="text-primary">✓</span>' : ""}</p>
+          </div>`;
+        }).join("")
       : `<p class="text-base-content/50 col-span-full text-center">${T.no_answers}</p>`;
     return el(`
       <div class="w-full max-w-3xl mx-auto space-y-3">
