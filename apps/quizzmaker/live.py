@@ -581,6 +581,8 @@ def _public_round(round_def: dict[str, Any], show_question: bool) -> dict[str, A
     if show_question:
         data["question"] = round_def["question"]
         data["image_url"] = round_def.get("image_url", "")
+        data["focus_x"] = round_def.get("focus_x", 50)
+        data["focus_y"] = round_def.get("focus_y", 50)
     return data
 
 
@@ -615,6 +617,8 @@ def state_payload(code: str, *, role: str, token: str | None = None) -> dict[str
                 "points": rdef["points"],
                 "time_limit": rdef["time_limit"],
                 "image_url": rdef.get("image_url", ""),
+                "focus_x": rdef.get("focus_x", 50),
+                "focus_y": rdef.get("focus_y", 50),
                 "single_select": rdef.get("single_select", False),
                 "answers": [{"id": a["id"], "text": a["text"]} for a in rdef.get("answers", [])],
             }
