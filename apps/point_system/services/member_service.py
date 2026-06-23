@@ -97,6 +97,28 @@ class MemberService:
 
     @staticmethod
     @transaction.atomic
+    def create_fields(group, specs: list[tuple[str, str]], definition: str) -> list[FieldDefinition]:
+        """
+        Create several FieldDefinitions in one call and sync them to members.
+
+        ``specs`` is a list of ``(name, type)`` tuples sharing one ``definition``.
+        Names already present in the table, or repeated within the batch, are
+        skipped. Returns the FieldDefinitions actually created, in input order.
+        """
+        existing = set(
+            FieldDefinition.objects.filter(group=group, definition=definition).values_list("name", flat=True)
+        )
+        created: list[FieldDefinition] = []
+        seen: set[str] = set()
+        for name, field_type in specs:
+            if not name or name in existing or name in seen:
+                continue
+            seen.add(name)
+            created.append(MemberService.create_field(group, name, field_type, definition))
+        return created
+
+    @staticmethod
+    @transaction.atomic
     def add_field_to_members(group, field_name: str, field_type: str, definition: str) -> None:
         """
         Add a new field to all members in a group.
@@ -149,6 +171,55 @@ class MemberService:
         FieldDefinition.objects.filter(group=group, name=field_name, definition=definition).delete()
 
         logger.info(f"Removed field '{field_name}' from group {group.title}")
+
+    @staticmethod
+    @transaction.atomic
+    def clear_field_values(group, field_name: str, definition: str) -> None:
+        """
+        Reset a single field's value for every member, keeping the FieldDefinition.
+
+        Numeric fields reset to 0, text fields to "".
+        """
+        field = FieldDefinition.objects.filter(group=group, name=field_name, definition=definition).first()
+        default_value = "" if field and field.type == "str" else 0
+
+        members = list(Member.objects.filter(group=group))
+        update_field = "positive_data" if definition == "positive" else "negative_data"
+
+        for member in members:
+            data = getattr(member, update_field)
+            if data and field_name in data:
+                data[field_name] = default_value
+                setattr(member, update_field, MemberService._sanitize_data(data))
+            member.positive_total = MemberService._calculate_total(member.positive_data)
+            member.negative_total = MemberService._calculate_total(member.negative_data)
+
+        if members:
+            Member.objects.bulk_update(members, [update_field, "positive_total", "negative_total"])
+
+        logger.info(f"Cleared field '{field_name}' for group {group.title}")
+
+    @staticmethod
+    @transaction.atomic
+    def delete_all_fields(group, definition: str) -> None:
+        """
+        Remove every FieldDefinition in one table and clear that side's member data.
+
+        The group, its members, and the other table are preserved.
+        """
+        data_field = "positive_data" if definition == "positive" else "negative_data"
+        total_field = "positive_total" if definition == "positive" else "negative_total"
+
+        members = list(Member.objects.filter(group=group))
+        for member in members:
+            setattr(member, data_field, {})
+            setattr(member, total_field, 0)
+
+        if members:
+            Member.objects.bulk_update(members, [data_field, total_field])
+
+        FieldDefinition.objects.filter(group=group, definition=definition).delete()
+        logger.info(f"Deleted all {definition} fields for group {group.title}")
 
     @staticmethod
     @transaction.atomic

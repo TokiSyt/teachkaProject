@@ -282,6 +282,268 @@ class TestMemberService:
 
 
 @pytest.mark.django_db
+class TestClearFieldValues:
+    """Tests for MemberService.clear_field_values."""
+
+    def test_clear_int_field_resets_values_to_zero(self, group_with_fields):
+        """Clearing a numeric column sets every member's value to 0."""
+        for member in group_with_fields.karma_members.all():
+            member.positive_data["homework"] = 42
+            member.save()
+
+        MemberService.clear_field_values(group_with_fields, "homework", "positive")
+
+        for member in group_with_fields.karma_members.all():
+            member.refresh_from_db()
+            assert member.positive_data["homework"] == 0
+            assert member.positive_total == 0
+
+    def test_clear_keeps_field_definition(self, group_with_fields):
+        """Clearing a column does not delete its FieldDefinition."""
+        MemberService.clear_field_values(group_with_fields, "homework", "positive")
+        assert FieldDefinition.objects.filter(group=group_with_fields, name="homework", definition="positive").exists()
+
+    def test_clear_text_field_resets_to_empty_string(self, group_with_fields):
+        """Clearing a text column sets every member's value to ''."""
+        FieldDefinition.objects.create(group=group_with_fields, name="notes", type="str", definition="positive")
+        for member in group_with_fields.karma_members.all():
+            member.positive_data["notes"] = "something"
+            member.save()
+
+        MemberService.clear_field_values(group_with_fields, "notes", "positive")
+
+        for member in group_with_fields.karma_members.all():
+            member.refresh_from_db()
+            assert member.positive_data["notes"] == ""
+
+    def test_clear_preserves_other_fields(self, group_with_fields):
+        """Clearing one column leaves other columns untouched."""
+        FieldDefinition.objects.create(group=group_with_fields, name="tests", type="int", definition="positive")
+        for member in group_with_fields.karma_members.all():
+            member.positive_data["homework"] = 10
+            member.positive_data["tests"] = 7
+            member.save()
+
+        MemberService.clear_field_values(group_with_fields, "homework", "positive")
+
+        for member in group_with_fields.karma_members.all():
+            member.refresh_from_db()
+            assert member.positive_data["homework"] == 0
+            assert member.positive_data["tests"] == 7
+
+
+@pytest.mark.django_db
+class TestCreateFieldsEdgeCases:
+    """Edge cases for MemberService.create_fields."""
+
+    def test_empty_specs_returns_empty(self, user):
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A")
+        assert MemberService.create_fields(group, [], "positive") == []
+        assert FieldDefinition.objects.filter(group=group).count() == 0
+
+    def test_blank_names_are_skipped(self, user):
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A")
+        created = MemberService.create_fields(group, [("", "int"), ("ok", "int")], "positive")
+        assert [f.name for f in created] == ["ok"]
+
+    def test_order_continues_from_existing_max(self, group_with_fields):
+        """Fixture fields are created with the default order 0, so new ones start at 1."""
+        created = MemberService.create_fields(group_with_fields, [("a", "int"), ("b", "int")], "positive")
+        assert [f.order for f in created] == [1, 2]
+        assert created[0].order < created[1].order  # strictly increasing
+
+    def test_negative_order_independent_of_positive(self, group_with_fields):
+        created = MemberService.create_fields(group_with_fields, [("x", "int"), ("y", "int")], "negative")
+        assert [f.order for f in created] == [1, 2]
+
+    def test_mixed_types_get_correct_defaults(self, user):
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A, B")
+        MemberService.create_fields(group, [("num", "int"), ("txt", "str")], "negative")
+        for member in group.karma_members.all():
+            assert member.negative_data["num"] == 0
+            assert member.negative_data["txt"] == ""
+
+    def test_existing_and_intra_batch_dups_all_collapsed(self, group_with_fields):
+        created = MemberService.create_fields(
+            group_with_fields,
+            [("homework", "int"), ("dup", "int"), ("dup", "str")],
+            "positive",
+        )
+        assert [f.name for f in created] == ["dup"]
+        # First occurrence's type wins
+        assert FieldDefinition.objects.get(group=group_with_fields, name="dup", definition="positive").type == "int"
+
+    def test_seeds_members_with_empty_existing_data(self, user):
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A")
+        member = group.karma_members.first()
+        member.positive_data = {}
+        member.save()
+        MemberService.create_fields(group, [("p", "int")], "positive")
+        member.refresh_from_db()
+        assert member.positive_data == {"p": 0}
+
+
+@pytest.mark.django_db
+class TestClearFieldValuesEdgeCases:
+    """Edge cases for MemberService.clear_field_values."""
+
+    def test_field_absent_from_member_data_is_noop(self, group_with_fields):
+        """FieldDefinition exists but the key is missing from a member's data."""
+        for member in group_with_fields.karma_members.all():
+            member.positive_data = {}
+            member.save()
+        MemberService.clear_field_values(group_with_fields, "homework", "positive")
+        for member in group_with_fields.karma_members.all():
+            member.refresh_from_db()
+            assert member.positive_data == {}
+            assert member.positive_total == 0
+
+    def test_recalculates_both_totals_leaving_other_side(self, group_with_fields):
+        for member in group_with_fields.karma_members.all():
+            member.positive_data = {"homework": 10}
+            member.negative_data = {"tardiness": 5}
+            member.positive_total = 10
+            member.negative_total = 5
+            member.save()
+        MemberService.clear_field_values(group_with_fields, "homework", "positive")
+        for member in group_with_fields.karma_members.all():
+            member.refresh_from_db()
+            assert member.positive_total == 0
+            assert member.negative_total == 5
+            assert member.negative_data == {"tardiness": 5}
+
+    def test_clear_negative_field(self, group_with_fields):
+        for member in group_with_fields.karma_members.all():
+            member.negative_data = {"tardiness": 8}
+            member.negative_total = 8
+            member.save()
+        MemberService.clear_field_values(group_with_fields, "tardiness", "negative")
+        for member in group_with_fields.karma_members.all():
+            member.refresh_from_db()
+            assert member.negative_data["tardiness"] == 0
+            assert member.negative_total == 0
+
+    def test_clear_field_with_no_field_definition(self, group_with_fields):
+        """Clearing a name that has no FieldDefinition defaults to numeric 0 and is harmless."""
+        for member in group_with_fields.karma_members.all():
+            member.positive_data = {"ghost": 7}
+            member.save()
+        MemberService.clear_field_values(group_with_fields, "ghost", "positive")
+        for member in group_with_fields.karma_members.all():
+            member.refresh_from_db()
+            assert member.positive_data["ghost"] == 0
+
+
+@pytest.mark.django_db
+class TestDeleteAllFieldsEdgeCases:
+    """Edge cases for MemberService.delete_all_fields."""
+
+    def test_delete_empty_table_is_noop(self, user):
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A")
+        FieldDefinition.objects.create(group=group, name="hw", type="int", definition="positive")
+        group.sync_members()
+        # No negative fields exist; deleting them must not touch positive
+        MemberService.delete_all_fields(group, "negative")
+        assert FieldDefinition.objects.filter(group=group, definition="positive").exists()
+
+    def test_preserves_other_side_total(self, group_with_fields):
+        for member in group_with_fields.karma_members.all():
+            member.positive_data = {"homework": 9}
+            member.negative_data = {"tardiness": 4}
+            member.positive_total = 9
+            member.negative_total = 4
+            member.save()
+        MemberService.delete_all_fields(group_with_fields, "negative")
+        for member in group_with_fields.karma_members.all():
+            member.refresh_from_db()
+            assert member.negative_data == {}
+            assert member.negative_total == 0
+            assert member.positive_data == {"homework": 9}
+            assert member.positive_total == 9
+
+    def test_deletes_text_and_int_fields_together(self, group_with_fields):
+        FieldDefinition.objects.create(group=group_with_fields, name="note", type="str", definition="positive")
+        MemberService.delete_all_fields(group_with_fields, "positive")
+        assert not FieldDefinition.objects.filter(group=group_with_fields, definition="positive").exists()
+
+
+@pytest.mark.django_db
+class TestCreateFields:
+    """Tests for MemberService.create_fields (bulk column creation)."""
+
+    def test_creates_multiple_fields_with_sequential_order(self, user):
+        """Several columns created in one call get sequential order values."""
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A")
+        created = MemberService.create_fields(
+            group,
+            [("homework", "int"), ("notes", "str"), ("tests", "int")],
+            "positive",
+        )
+        assert [f.name for f in created] == ["homework", "notes", "tests"]
+        assert [f.order for f in created] == [1, 2, 3]
+
+    def test_syncs_all_fields_to_members(self, user):
+        """Each created field is seeded on every member with the right default."""
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A, B")
+        MemberService.create_fields(group, [("homework", "int"), ("notes", "str")], "positive")
+        for member in group.karma_members.all():
+            assert member.positive_data["homework"] == 0
+            assert member.positive_data["notes"] == ""
+
+    def test_skips_existing_names(self, group_with_fields):
+        """A name already present in the table is skipped, not duplicated."""
+        created = MemberService.create_fields(
+            group_with_fields, [("homework", "int"), ("brand_new", "int")], "positive"
+        )
+        assert [f.name for f in created] == ["brand_new"]
+        assert (
+            FieldDefinition.objects.filter(group=group_with_fields, name="homework", definition="positive").count() == 1
+        )
+
+    def test_skips_duplicate_names_within_batch(self, user):
+        """A name repeated within the batch is only created once."""
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A")
+        created = MemberService.create_fields(group, [("dup", "int"), ("dup", "int")], "positive")
+        assert [f.name for f in created] == ["dup"]
+
+
+@pytest.mark.django_db
+class TestDeleteAllFields:
+    """Tests for MemberService.delete_all_fields (scoped to one table)."""
+
+    def test_deletes_only_target_definition_fields(self, group_with_fields):
+        """Only the target table's FieldDefinitions are removed; the other stays."""
+        MemberService.delete_all_fields(group_with_fields, "positive")
+        assert not FieldDefinition.objects.filter(group=group_with_fields, definition="positive").exists()
+        assert FieldDefinition.objects.filter(group=group_with_fields, definition="negative").exists()
+
+    def test_clears_only_target_side_data(self, group_with_fields):
+        """Only the target side's member data and total are cleared."""
+        for member in group_with_fields.karma_members.all():
+            member.positive_data = {"homework": 10}
+            member.negative_data = {"tardiness": 5}
+            member.positive_total = 10
+            member.negative_total = 5
+            member.save()
+
+        MemberService.delete_all_fields(group_with_fields, "positive")
+
+        for member in group_with_fields.karma_members.all():
+            member.refresh_from_db()
+            assert member.positive_data == {}
+            assert member.positive_total == 0
+            assert member.negative_data == {"tardiness": 5}  # untouched
+            assert member.negative_total == 5
+
+    def test_keeps_group_and_members(self, group_with_fields):
+        """The group and its members are preserved."""
+        group_id = group_with_fields.id
+        MemberService.delete_all_fields(group_with_fields, "negative")
+        assert GroupCreationModel.objects.filter(id=group_id).exists()
+        assert group_with_fields.karma_members.count() == 2
+
+
+@pytest.mark.django_db
 class TestMemberServiceCalculateTotal:
     """Tests for MemberService._calculate_total."""
 

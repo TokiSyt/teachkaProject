@@ -39,7 +39,7 @@
             <p class="text-xs text-base-content/40 mb-1.5">{% trans "Theme" %}</p>
             <select id="settings-theme-select" class="select select-bordered w-full"
                     onchange="setTheme(this.value)">
-              {% with current_theme=request.user.theme|default:"light" %}
+              {% with current_theme=request.user.theme|default:"fantasy" %}
               {% for value, label in theme_choices %}
               <option value="{{ value }}" {% if current_theme == value %}selected{% endif %}>{{ label }}</option>
               {% endfor %}

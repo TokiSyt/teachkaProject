@@ -12,8 +12,8 @@ from django.views.generic import TemplateView
 
 from apps.group_maker.models import GroupCreationModel
 
-from .forms import AddFieldForm, EditColumnForm
-from .models import FieldDefinition
+from .forms import EditColumnForm
+from .models import FieldDefinition, PointSystemGroupSettings
 from .selectors import get_group_full_data, get_group_with_members, get_user_groups
 from .services.member_service import MemberService
 
@@ -34,6 +34,8 @@ class HomeView(LoginRequiredMixin, TemplateView):
             "column_type_negative": {},
             "positive_fields": [],
             "negative_fields": [],
+            "show_positive": True,
+            "show_negative": True,
         }
 
         if group_id:
@@ -41,6 +43,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
                 data = get_group_full_data(int(group_id), self.request.user)
             except (TypeError, ValueError):
                 return context
+            settings = PointSystemGroupSettings.for_group(data["group"])
             context.update(
                 {
                     "selected_group": data["group"],
@@ -51,6 +54,8 @@ class HomeView(LoginRequiredMixin, TemplateView):
                     "column_type_negative": data["column_type_negative"],
                     "positive_fields": data["positive_fields"],
                     "negative_fields": data["negative_fields"],
+                    "show_positive": settings.show_positive,
+                    "show_negative": settings.show_negative,
                 }
             )
 
@@ -118,33 +123,38 @@ class AddColumn(LoginRequiredMixin, TemplateView):
 
     def post(self, request, pk):
         group = get_object_or_404(GroupCreationModel, id=pk, user=request.user)
-        form = AddFieldForm(request.POST)
+        field_definition = request.POST.get("definition")
 
-        if form.is_valid():
-            field_name = form.cleaned_data["name"]
-            field_type = form.cleaned_data["type"]  # text / numerical
-            field_definition = form.cleaned_data["definition"]  # negative / positive
+        # Collect one or more (name, type) rows. Single-row submissions arrive as
+        # one-element lists, so the same path handles both cases.
+        names = request.POST.getlist("name")
+        types = request.POST.getlist("type")
+        specs = [(name.strip(), ftype) for name, ftype in zip(names, types, strict=False) if name.strip()]
 
-            if FieldDefinition.objects.filter(group=group, name=field_name, definition=field_definition).exists():
-                messages.error(
-                    request,
-                    _("A column named '%(name)s' already exists in %(definition)s table.")
-                    % {"name": field_name, "definition": field_definition},
-                )
-                return render(
-                    request,
-                    self.template_name,
-                    {
-                        "group_id": group.id,
-                        "field_definition": field_definition,
-                    },
-                )
+        def _rerender():
+            return render(
+                request,
+                self.template_name,
+                {"group_id": group.id, "field_definition": field_definition},
+            )
 
-            MemberService.create_field(group, field_name, field_type, field_definition)
+        if field_definition not in ("positive", "negative") or not specs:
+            return _rerender()
 
-            return redirect(f"{reverse('karma:karma-home')}?group_id={group.id}")
+        existing = set(
+            FieldDefinition.objects.filter(group=group, definition=field_definition).values_list("name", flat=True)
+        )
+        duplicates = [name for name, _ in specs if name in existing]
+        if duplicates:
+            messages.error(
+                request,
+                _("A column named '%(name)s' already exists in %(definition)s table.")
+                % {"name": duplicates[0], "definition": field_definition},
+            )
+            return _rerender()
 
-        return render(request, self.template_name, {"group_id": group.id})
+        MemberService.create_fields(group, specs, field_definition)
+        return redirect(f"{reverse('karma:karma-home')}?group_id={group.id}")
 
 
 def _get_field_data(group, table_definition):
@@ -250,6 +260,44 @@ class DeleteColumn(LoginRequiredMixin, TemplateView):
                 "table_definition": table_definition,
             },
         )
+
+
+class ClearColumn(LoginRequiredMixin, View):
+    """Reset every member's value for a single column, keeping the column."""
+
+    def post(self, request, pk):
+        group = get_object_or_404(GroupCreationModel, id=pk, user=request.user)
+        definition = request.POST.get("definition")
+        field_name = request.POST.get("field_name")
+        all_keys, _ = _get_field_data(group, definition)
+        if field_name and field_name in all_keys:
+            MemberService.clear_field_values(group, field_name, definition)
+        return redirect(f"{reverse('karma:karma-home')}?group_id={group.id}")
+
+
+class DeleteAllColumns(LoginRequiredMixin, View):
+    """Delete every column from a group without deleting the group itself."""
+
+    def post(self, request, pk):
+        group = get_object_or_404(GroupCreationModel, id=pk, user=request.user)
+        definition = request.POST.get("definition")
+        if definition in ("positive", "negative"):
+            MemberService.delete_all_fields(group, definition)
+        return redirect(f"{reverse('karma:karma-home')}?group_id={group.id}")
+
+
+class ToggleTable(LoginRequiredMixin, View):
+    """Persist whether a group's positive or negative table is shown."""
+
+    def post(self, request, pk):
+        group = get_object_or_404(GroupCreationModel, id=pk, user=request.user)
+        definition = request.POST.get("definition")
+        if definition in ("positive", "negative"):
+            visible = request.POST.get("visible") == "1"
+            PointSystemGroupSettings.set_table_visibility(group, definition, visible)
+        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            return HttpResponse(status=204)
+        return redirect(f"{reverse('karma:karma-home')}?group_id={group.id}")
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):

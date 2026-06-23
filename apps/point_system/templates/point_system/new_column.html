@@ -48,37 +48,53 @@
       <input type="hidden" name="group_id" value="{{ group_id }}">
       <input type="hidden" name="definition" value="{{ field_definition }}">
 
-      <div class="card bg-base-100 border border-base-300 max-w-lg">
-        <div class="card-body p-0 divide-y divide-base-300">
+      <div class="card bg-base-100 border border-base-300 max-w-2xl">
+        <div class="card-body p-5">
 
-          <div class="px-5 py-4">
-            <label for="id_name" class="text-xs text-base-content/40 block mb-1.5">{% trans "Column name" %}</label>
-            <input type="text"
-                   name="name"
-                   id="id_name"
-                   maxlength="25"
-                   class="input w-full"
-                   placeholder="{% trans 'e.g., Homework, Participation' %}"
-                   autofocus
-                   required>
+          <div class="hidden md:flex gap-3 mb-2 px-1">
+            <span class="flex-1 text-[10px] tracking-[2px] uppercase text-base-content/40">{% trans "Column name" %}</span>
+            <span class="w-40 text-[10px] tracking-[2px] uppercase text-base-content/40">{% trans "Type" %}</span>
+            <span class="w-9"></span>
           </div>
 
-          <div class="px-5 py-4">
-            <label for="id_type" class="text-xs text-base-content/40 block mb-1.5">{% trans "Column type" %}</label>
-            <select name="type" id="id_type" class="select select-bordered w-full" required>
-              <option value="int">{% trans "Numerical" %}</option>
-              <option value="str">{% trans "Text" %}</option>
-            </select>
-            <p class="text-[11px] text-base-content/35 font-light mt-2">{% trans "Numerical columns are summed in the total." %}</p>
+          <div id="column-rows" class="flex flex-col gap-3">
+            <!-- Rows injected here; one template row below is cloned -->
           </div>
+
+          <template id="column-row-template">
+            <div class="column-row flex flex-col md:flex-row gap-3 md:items-center">
+              <input type="text"
+                     name="name"
+                     maxlength="25"
+                     class="input input-bordered w-full md:flex-1 md:min-w-0"
+                     placeholder="{% trans 'e.g., Homework, Participation' %}"
+                     required>
+              <select name="type" class="select select-bordered w-full md:w-40 md:shrink-0" required>
+                <option value="int">{% trans "Numerical" %}</option>
+                <option value="str">{% trans "Text" %}</option>
+              </select>
+              <button type="button"
+                      class="remove-row btn btn-ghost btn-sm btn-square text-error/70 hover:bg-error/10 shrink-0"
+                      title="{% trans 'Remove row' %}" aria-label="{% trans 'Remove row' %}">
+                <i data-lucide="x" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </template>
+
+          <button type="button" id="add-row" class="btn btn-ghost btn-sm self-start mt-3 gap-1.5">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            {% trans "Add another column" %}
+          </button>
+
+          <p class="text-[11px] text-base-content/35 font-light mt-3">{% trans "Each row becomes a column. Numerical columns are summed in the total." %}</p>
 
         </div>
       </div>
 
       <div class="flex flex-wrap gap-2 mt-6">
-        <button type="submit" form="new-column-form" class="btn-as-link">
+        <button type="submit" class="btn-as-link">
           <i data-lucide="plus" class="w-4 h-4"></i>
-          {% trans "Create column" %}
+          {% trans "Create columns" %}
         </button>
 
         <a href="{% url 'karma:karma-home' %}?group_id={{ group_id }}" class="btn btn-ghost btn-sm">
@@ -87,6 +103,39 @@
         </a>
       </div>
     </form>
+
+    <script>
+    (function() {
+      const rows = document.getElementById('column-rows');
+      const tpl = document.getElementById('column-row-template');
+      const addBtn = document.getElementById('add-row');
+      if (!rows || !tpl || !addBtn) return;
+
+      function refreshRemoveState() {
+        const all = rows.querySelectorAll('.column-row');
+        all.forEach(function(row) {
+          const btn = row.querySelector('.remove-row');
+          if (btn) btn.disabled = all.length <= 1;
+        });
+      }
+
+      function addRow(focus) {
+        const frag = tpl.content.cloneNode(true);
+        rows.appendChild(frag);
+        const row = rows.lastElementChild;
+        row.querySelector('.remove-row').addEventListener('click', function() {
+          row.remove();
+          refreshRemoveState();
+        });
+        if (window.lucide) lucide.createIcons();
+        refreshRemoveState();
+        if (focus) row.querySelector('input[name="name"]').focus();
+      }
+
+      addBtn.addEventListener('click', function() { addRow(true); });
+      addRow(true); // start with one row
+    })();
+    </script>
   </section>
 
 {% endblock content %}

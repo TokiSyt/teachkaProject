@@ -21,7 +21,7 @@ class CustomUser(AbstractUser):
         ("PT", _("Portugal")),
         ("EN", _("England")),
     ]
-    theme = models.CharField(max_length=10, choices=THEME_CHOICES, default="light")
+    theme = models.CharField(max_length=10, choices=THEME_CHOICES, default="fantasy")
     language = models.CharField(max_length=10, choices=LANGUAGE_CHOICES, default="en")
     country = models.CharField(max_length=2, choices=COUNTRY_CHOICES, blank=True, default="")
     icon_hover_color = models.CharField(max_length=20, default="#1779db")

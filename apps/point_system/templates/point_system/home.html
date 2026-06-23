@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load custom_tags %}
 {% load i18n %}
+{% load static %}
 
 {% block title %}{% trans "Point system" %} · Teachka{% endblock title %}
 
@@ -130,11 +131,63 @@
           <span class="w-2 h-2 rounded-full bg-error"></span>
           <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30">{% trans "Negative points" %}</p>
         </div>
+        <div class="flex items-center gap-3">
+          {% if negative_data %}
+          <span class="text-[11px] tracking-[1.5px] uppercase text-base-content/30 serif">{{ negative_data|length }} {% if negative_data|length == 1 %}{% trans "column" %}{% else %}{% trans "columns" %}{% endif %}</span>
+          {% endif %}
+          <button type="button" class="btn btn-ghost btn-xs gap-1.5"
+                  data-toggle-table="negative"
+                  data-toggle-url="{% url 'karma:toggle-table' selected_group.id %}"
+                  data-target="neg-table-wrap"
+                  aria-pressed="{{ show_negative|yesno:'true,false' }}">
+            <i data-lucide="{% if show_negative %}eye{% else %}eye-off{% endif %}" class="w-3.5 h-3.5"></i>
+            <span class="text-[11px] tracking-[1px] uppercase">{% if show_negative %}{% trans "Hide" %}{% else %}{% trans "Show" %}{% endif %}</span>
+          </button>
+        </div>
+      </div>
+
+      {# ── Action buttons (top) ── #}
+      <div class="flex flex-wrap gap-2 mb-5">
         {% if negative_data %}
-        <span class="text-[11px] tracking-[1.5px] uppercase text-base-content/30 serif">{{ negative_data|length }} {% if negative_data|length == 1 %}{% trans "column" %}{% else %}{% trans "columns" %}{% endif %}</span>
+        <button type="submit" form="points-form" name="negative_save" value="1"
+                class="btn-as-link">
+          <i data-lucide="check" class="w-4 h-4"></i>
+          {% trans "Save points" %}
+        </button>
+        <a href="?group_id={{ group_id }}" class="btn btn-ghost btn-sm">
+          <i data-lucide="x" class="w-4 h-4"></i>
+          {% trans "Cancel" %}
+        </a>
+        <a href="{% url 'karma:new-column' selected_group.id %}?table=negative" class="btn btn-ghost btn-sm">
+          <i data-lucide="plus" class="w-4 h-4"></i>
+          {% trans "Add column" %}
+        </a>
+        <a href="{% url 'karma:edit-column' selected_group.id %}?table=negative" class="btn btn-ghost btn-sm">
+          <i data-lucide="pen-line" class="w-4 h-4"></i>
+          {% trans "Edit column" %}
+        </a>
+        <a href="{% url 'karma:delete-column' selected_group.id %}?table=negative"
+          class="btn btn-ghost btn-sm text-error hover:bg-error/10">
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+            {% trans "Delete column" %}
+        </a>
+        <a href="#" role="button"
+           class="btn btn-ghost btn-sm text-error hover:bg-error/10"
+           data-delete-all
+           data-definition="negative"
+           data-delete-all-url="{% url 'karma:delete-all-columns' selected_group.id %}">
+          <i data-lucide="trash-2" class="w-4 h-4"></i>
+          {% trans "Delete all columns" %}
+        </a>
+        {% else %}
+        <a href="{% url 'karma:new-column' selected_group.id %}?table=negative" class="btn-as-link">
+          <i data-lucide="plus" class="w-4 h-4"></i>
+          {% trans "Add first column" %}
+        </a>
         {% endif %}
       </div>
 
+      <div id="neg-table-wrap" class="{% if not show_negative %}hidden{% endif %}">
       {% if negative_data %}
       <div class="card bg-base-100 border border-base-300 overflow-hidden">
         <div class="overflow-x-auto">
@@ -150,6 +203,13 @@
                   <span class="inline-flex items-center gap-1.5">
                     <i data-lucide="menu" class="w-3 h-3 opacity-60"></i>
                     {{ field.name }}
+                    <button type="button" class="ml-1 opacity-50 hover:opacity-100 hover:text-error transition"
+                            data-clear-field="{{ field.name }}" data-definition="negative"
+                            data-clear-url="{% url 'karma:clear-column' selected_group.id %}"
+                            title="{% trans 'Clear all values in this column' %}"
+                            aria-label="{% trans 'Clear column' %}">
+                      <i data-lucide="eraser" class="w-3 h-3"></i>
+                    </button>
                   </span>
                 </th>
                 {% endfor %}
@@ -158,7 +218,7 @@
             </thead>
             <tbody>
               {% for member in members %}
-              <tr class="hover:bg-base-200/40 transition-colors">
+              <tr class="hover:bg-base-300 transition-colors">
                 <td>
                   <a href="{% url 'karma:karma-dashboard' member.id %}" class="font-medium text-base-content hover:text-primary transition-colors inline-flex items-center gap-1.5 group">
                     {{ member.name }}
@@ -209,37 +269,6 @@
         </div>
       </div>
       {% endif %}
-
-      <div class="flex flex-wrap gap-2 mt-6">
-        {% if negative_data %}
-        <button type="submit" form="points-form" name="negative_save" value="1"
-                class="btn-as-link">
-          <i data-lucide="check" class="w-4 h-4"></i>
-          {% trans "Save points" %}
-        </button>
-        <a href="?group_id={{ group_id }}" class="btn btn-ghost btn-sm">
-          <i data-lucide="x" class="w-4 h-4"></i>
-          {% trans "Cancel" %}
-        </a>
-        <a href="{% url 'karma:new-column' selected_group.id %}?table=negative" class="btn btn-ghost btn-sm">
-          <i data-lucide="plus" class="w-4 h-4"></i>
-          {% trans "Add column" %}
-        </a>
-        <a href="{% url 'karma:edit-column' selected_group.id %}?table=negative" class="btn btn-ghost btn-sm">
-          <i data-lucide="pen-line" class="w-4 h-4"></i>
-          {% trans "Edit column" %}
-        </a>
-        <a href="{% url 'karma:delete-column' selected_group.id %}?table=negative" 
-          class="btn btn-ghost btn-sm text-error hover:bg-error/10">
-            <i data-lucide="trash-2" class="w-4 h-4"></i>
-            {% trans "Delete column" %}
-        </a>
-        {% else %}
-        <a href="{% url 'karma:new-column' selected_group.id %}?table=negative" class="btn-as-link">
-          <i data-lucide="plus" class="w-4 h-4"></i>
-          {% trans "Add first column" %}
-        </a>
-        {% endif %}
       </div>
     </section>
 
@@ -250,11 +279,62 @@
           <span class="w-2 h-2 rounded-full bg-success"></span>
           <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30">{% trans "Positive points" %}</p>
         </div>
+        <div class="flex items-center gap-3">
+          {% if positive_data %}
+          <span class="text-[11px] tracking-[1.5px] uppercase text-base-content/30 serif">{{ positive_data|length }} {% if positive_data|length == 1 %}{% trans "column" %}{% else %}{% trans "columns" %}{% endif %}</span>
+          {% endif %}
+          <button type="button" class="btn btn-ghost btn-xs gap-1.5"
+                  data-toggle-table="positive"
+                  data-toggle-url="{% url 'karma:toggle-table' selected_group.id %}"
+                  data-target="pos-table-wrap"
+                  aria-pressed="{{ show_positive|yesno:'true,false' }}">
+            <i data-lucide="{% if show_positive %}eye{% else %}eye-off{% endif %}" class="w-3.5 h-3.5"></i>
+            <span class="text-[11px] tracking-[1px] uppercase">{% if show_positive %}{% trans "Hide" %}{% else %}{% trans "Show" %}{% endif %}</span>
+          </button>
+        </div>
+      </div>
+
+      {# ── Action buttons (top) ── #}
+      <div class="flex flex-wrap gap-2 mb-5">
         {% if positive_data %}
-        <span class="text-[11px] tracking-[1.5px] uppercase text-base-content/30 serif">{{ positive_data|length }} {% if positive_data|length == 1 %}{% trans "column" %}{% else %}{% trans "columns" %}{% endif %}</span>
+        <button type="submit" form="points-form" name="positive_save" value="1"
+                class="btn-as-link">
+          <i data-lucide="check" class="w-4 h-4"></i>
+          {% trans "Save points" %}
+        </button>
+        <a href="?group_id={{ group_id }}" class="btn btn-ghost btn-sm">
+          <i data-lucide="x" class="w-4 h-4"></i>
+          {% trans "Cancel" %}
+        </a>
+        <a href="{% url 'karma:new-column' selected_group.id %}?table=positive" class="btn btn-ghost btn-sm">
+          <i data-lucide="plus" class="w-4 h-4"></i>
+          {% trans "Add column" %}
+        </a>
+        <a href="{% url 'karma:edit-column' selected_group.id %}?table=positive" class="btn btn-ghost btn-sm">
+          <i data-lucide="pen-line" class="w-4 h-4"></i>
+          {% trans "Edit column" %}
+        </a>
+        <a href="{% url 'karma:delete-column' selected_group.id %}?table=positive" class="btn btn-ghost btn-sm text-error hover:bg-error/10">
+          <i data-lucide="trash-2" class="w-4 h-4"></i>
+          {% trans "Delete column" %}
+        </a>
+        <a href="#" role="button"
+           class="btn btn-ghost btn-sm text-error hover:bg-error/10"
+           data-delete-all
+           data-definition="positive"
+           data-delete-all-url="{% url 'karma:delete-all-columns' selected_group.id %}">
+          <i data-lucide="trash-2" class="w-4 h-4"></i>
+          {% trans "Delete all columns" %}
+        </a>
+        {% else %}
+        <a href="{% url 'karma:new-column' selected_group.id %}?table=positive" class="btn-as-link">
+          <i data-lucide="plus" class="w-4 h-4"></i>
+          {% trans "Add first column" %}
+        </a>
         {% endif %}
       </div>
 
+      <div id="pos-table-wrap" class="{% if not show_positive %}hidden{% endif %}">
       {% if positive_data %}
       <div class="card bg-base-100 border border-base-300 overflow-hidden">
         <div class="overflow-x-auto">
@@ -270,6 +350,13 @@
                   <span class="inline-flex items-center gap-1.5">
                     <i data-lucide="menu" class="w-3 h-3 opacity-60"></i>
                     {{ field.name }}
+                    <button type="button" class="ml-1 opacity-50 hover:opacity-100 hover:text-error transition"
+                            data-clear-field="{{ field.name }}" data-definition="positive"
+                            data-clear-url="{% url 'karma:clear-column' selected_group.id %}"
+                            title="{% trans 'Clear all values in this column' %}"
+                            aria-label="{% trans 'Clear column' %}">
+                      <i data-lucide="eraser" class="w-3 h-3"></i>
+                    </button>
                   </span>
                 </th>
                 {% endfor %}
@@ -278,7 +365,7 @@
             </thead>
             <tbody>
               {% for member in members %}
-              <tr class="hover:bg-base-200/40 transition-colors">
+              <tr class="hover:bg-base-300 transition-colors">
                 <td>
                   <a href="{% url 'karma:karma-dashboard' member.id %}" class="font-medium text-base-content hover:text-primary transition-colors inline-flex items-center gap-1.5 group">
                     {{ member.name }}
@@ -329,36 +416,6 @@
         </div>
       </div>
       {% endif %}
-
-      <div class="flex flex-wrap gap-2 mt-6">
-        {% if positive_data %}
-        <button type="submit" form="points-form" name="positive_save" value="1"
-                class="btn-as-link">
-          <i data-lucide="check" class="w-4 h-4"></i>
-          {% trans "Save points" %}
-        </button>
-        <a href="?group_id={{ group_id }}" class="btn btn-ghost btn-sm">
-          <i data-lucide="x" class="w-4 h-4"></i>
-          {% trans "Cancel" %}
-        </a>
-        <a href="{% url 'karma:new-column' selected_group.id %}?table=positive" class="btn btn-ghost btn-sm">
-          <i data-lucide="plus" class="w-4 h-4"></i>
-          {% trans "Add column" %}
-        </a>
-        <a href="{% url 'karma:edit-column' selected_group.id %}?table=positive" class="btn btn-ghost btn-sm">
-          <i data-lucide="pen-line" class="w-4 h-4"></i>
-          {% trans "Edit column" %}
-        </a>
-        <a href="{% url 'karma:delete-column' selected_group.id %}?table=positive" class="btn btn-ghost btn-sm text-error">
-          <i data-lucide="trash-2" class="w-4 h-4"></i>
-          {% trans "Delete column" %}
-        </a>
-        {% else %}
-        <a href="{% url 'karma:new-column' selected_group.id %}?table=positive" class="btn-as-link">
-          <i data-lucide="plus" class="w-4 h-4"></i>
-          {% trans "Add first column" %}
-        </a>
-        {% endif %}
       </div>
     </section>
   </form>
@@ -600,6 +657,124 @@
     });
   })();
   </script>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const csrf = document.querySelector('[name=csrfmiddlewaretoken]')?.value;
+    function postForm(url, fields) {
+      return fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-CSRFToken': csrf,
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+        body: new URLSearchParams(fields).toString(),
+        credentials: 'same-origin',
+      });
+    }
+
+    // ── Show / hide table (persisted per group) ──
+    document.querySelectorAll('[data-toggle-table]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        const wrap = document.getElementById(btn.dataset.target);
+        if (!wrap) return;
+        const nowHidden = wrap.classList.toggle('hidden');
+        const icon = btn.querySelector('[data-lucide]');
+        const label = btn.querySelector('span');
+        if (icon) icon.setAttribute('data-lucide', nowHidden ? 'eye-off' : 'eye');
+        if (label) label.textContent = nowHidden ? '{% trans "Show" %}' : '{% trans "Hide" %}';
+        btn.setAttribute('aria-pressed', nowHidden ? 'false' : 'true');
+        if (window.lucide) lucide.createIcons();
+        postForm(btn.dataset.toggleUrl, { definition: btn.dataset.toggleTable, visible: nowHidden ? '0' : '1' });
+      });
+    });
+
+    // ── Confirm modals (clear column / delete all columns) ──
+    let pending = null;
+    const clearModal = document.getElementById('clear-column-modal');
+    const deleteAllModal = document.getElementById('delete-all-modal');
+
+    function runPending(e) {
+      if (!pending) return;
+      const p = pending;
+      pending = null;
+      const dlg = e.target.closest('dialog');
+      if (dlg) dlg.close();
+      postForm(p.url, p.fields).then(function() { window.location.reload(); });
+    }
+
+    document.querySelectorAll('[data-clear-field]').forEach(function(btn) {
+      btn.addEventListener('mousedown', function(e) { e.stopPropagation(); });
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!clearModal) return;
+        pending = { url: btn.dataset.clearUrl, fields: { field_name: btn.dataset.clearField, definition: btn.dataset.definition } };
+        const nameEl = clearModal.querySelector('[data-col-name]');
+        if (nameEl) nameEl.textContent = btn.dataset.clearField;
+        clearModal.showModal();
+      });
+    });
+    clearModal?.querySelector('[data-confirm]')?.addEventListener('click', runPending);
+
+    document.querySelectorAll('[data-delete-all]').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (!deleteAllModal) return;
+        pending = { url: btn.dataset.deleteAllUrl, fields: { definition: btn.dataset.definition } };
+        deleteAllModal.showModal();
+      });
+    });
+    deleteAllModal?.querySelector('[data-confirm]')?.addEventListener('click', runPending);
+  });
+  </script>
+
+  {# ── Confirm modals ── #}
+  <dialog id="clear-column-modal" class="modal">
+    <div class="modal-box max-w-md rounded-2xl border border-base-300 bg-base-100">
+      <header class="mb-5">
+        <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-2">{% trans "Points" %}</p>
+        <h2 class="serif font-medium leading-none tracking-tight text-2xl">
+          <span class="text-error">{% trans "Clear" %}</span>
+          <span class="text-base-content/60">“<span data-col-name></span>”</span>
+        </h2>
+      </header>
+      <p class="text-sm text-base-content/70 mb-6">
+        {% trans "This resets every value in this column to zero and cannot be undone." %}
+      </p>
+      <div class="flex items-center gap-3">
+        <button type="button" class="btn-as-link" data-confirm>{% trans "Clear column" %}</button>
+        <button type="button" class="btn-as-link-ghost"
+                onclick="document.getElementById('clear-column-modal').close()">{% trans "Cancel" %}</button>
+      </div>
+    </div>
+    <form method="dialog" class="modal-backdrop"><button>close</button></form>
+  </dialog>
+
+  <dialog id="delete-all-modal" class="modal">
+    <div class="modal-box max-w-md rounded-2xl border border-base-300 bg-base-100">
+      <header class="mb-5">
+        <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-2">{% trans "Points" %}</p>
+        <h2 class="serif font-medium leading-none tracking-tight text-2xl">
+          <span class="text-error">{% trans "Delete all columns" %}</span>
+        </h2>
+      </header>
+      <p class="text-sm text-base-content/70 mb-6">
+        {% trans "This removes every column in this table and all of its points. This cannot be undone." %}
+      </p>
+      <div class="flex items-center gap-3">
+        <button type="button" class="btn-as-link" data-confirm>{% trans "Delete all columns" %}</button>
+        <button type="button" class="btn-as-link-ghost"
+                onclick="document.getElementById('delete-all-modal').close()">{% trans "Cancel" %}</button>
+      </div>
+    </div>
+    <form method="dialog" class="modal-backdrop"><button>close</button></form>
+  </dialog>
   {% endif %}
 
 {% endblock content %}
+
+{% block extra_js %}
+<script src="{% static 'js/points.js' %}"></script>
+{% endblock extra_js %}
