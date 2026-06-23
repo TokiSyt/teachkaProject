@@ -897,7 +897,7 @@ msgstr "Voltar aos Pontos"
 #: apps/point_system/templates/point_system/home.html:254
 #: apps/point_system/templates/point_system/new_column.html:22
 msgid "column"
-msgstr "Adicionar coluna"
+msgstr "coluna"
 
 #: apps/point_system/templates/point_system/delete_column.html:29
 #: apps/point_system/templates/point_system/edit_column.html:29
@@ -1007,7 +1007,7 @@ msgstr "Pontos negativos"
 #: apps/point_system/templates/point_system/home.html:134
 #: apps/point_system/templates/point_system/home.html:254
 msgid "columns"
-msgstr "Adicionar coluna"
+msgstr "colunas"
 
 #: apps/point_system/templates/point_system/home.html:146
 #: apps/point_system/templates/point_system/home.html:266

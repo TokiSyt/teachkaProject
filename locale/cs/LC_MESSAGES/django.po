@@ -897,7 +897,7 @@ msgstr "Zpět na body"
 #: apps/point_system/templates/point_system/home.html:254
 #: apps/point_system/templates/point_system/new_column.html:22
 msgid "column"
-msgstr "Přidat sloupec"
+msgstr "sloupec"
 
 #: apps/point_system/templates/point_system/delete_column.html:29
 #: apps/point_system/templates/point_system/edit_column.html:29
@@ -1003,7 +1003,7 @@ msgstr "Záporné body"
 #: apps/point_system/templates/point_system/home.html:134
 #: apps/point_system/templates/point_system/home.html:254
 msgid "columns"
-msgstr "Přidat sloupec"
+msgstr "sloupce"
 
 #: apps/point_system/templates/point_system/home.html:146
 #: apps/point_system/templates/point_system/home.html:266
