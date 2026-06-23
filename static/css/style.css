@@ -509,7 +509,7 @@ form-container table { width: 100%; border-collapse: collapse; font-size: 0.95re
   transition: color 0.2s;
 }
 
-button:not(.btn):not(.btn-as-link):not(.btn-as-link-ghost) {
+button:not(.btn):not(.btn-as-link):not(.btn-as-link-ghost):not(.btn-as-link-danger) {
   background: none;
 }
 
@@ -519,7 +519,8 @@ button.btn {
   -webkit-appearance: none;
   appearance: none;
   font-family: inherit;
-  font-size: inherit;
+  /* Let DaisyUI's .btn drive font-size (var(--fontsize) honours btn-sm/btn-xs);
+     forcing `inherit` here inflated <button class="btn btn-sm"> vs <a class="btn btn-sm">. */
   cursor: pointer;
 }
 

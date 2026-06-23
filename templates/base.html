@@ -5,15 +5,15 @@
 
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}"
-  data-theme="{% if request.user.is_authenticated %}{% if request.user.theme == 'dark' %}dark{% elif request.user.theme == 'pastel' %}pastel{% elif request.user.theme == 'lemonade' %}lemonade{% elif request.user.theme == 'fantasy' %}fantasy{% else %}light{% endif %}{% else %}light{% endif %}">
+  data-theme="{% if request.user.is_authenticated %}{% if request.user.theme == 'dark' %}dark{% elif request.user.theme == 'pastel' %}pastel{% elif request.user.theme == 'lemonade' %}lemonade{% elif request.user.theme == 'fantasy' %}fantasy{% else %}light{% endif %}{% else %}fantasy{% endif %}">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}Teachka{% endblock %}</title>
   <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon" />
-  <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}?v=2">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2">
+  <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}?v=4">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=4">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300;1,9..144,500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
   {% block extra_css %}{% endblock %}
   <style>
@@ -219,10 +219,10 @@
 
     <!-- Theme swatches -->
     <div id="theme-row" class="fade-label flex gap-1 px-1 flex-wrap">
-      <div class="tooltip tooltip-top flex-1" data-tip="{% trans 'Light' %}">
-        <button onclick="setTheme('light')" data-swatch="light"
+      <div class="tooltip tooltip-top flex-1" data-tip="{% trans 'Palette' %}">
+        <button onclick="setTheme('fantasy')" data-swatch="fantasy"
           class="theme-swatch w-full h-7 rounded-lg border-2 border-base-300 hover:scale-105 transition-transform"
-          style="background:conic-gradient(#ffffff 0% 50%,#ddc8f8 50%)"></button>
+          style="background:conic-gradient(#ffffff 0% 50%,#7a2b68 50%)"></button>
       </div>
       <div class="tooltip tooltip-top flex-1" data-tip="{% trans 'Dark' %}">
         <button onclick="setTheme('dark')" data-swatch="dark"
@@ -239,10 +239,10 @@
           class="theme-swatch w-full h-7 rounded-lg border-2 border-base-300 hover:scale-105 transition-transform"
           style="background:conic-gradient(#f4faf0 0% 50%,#4a9b55 50%)"></button>
       </div>
-      <div class="tooltip tooltip-top flex-1" data-tip="{% trans 'Palette' %}">
-        <button onclick="setTheme('fantasy')" data-swatch="fantasy"
+      <div class="tooltip tooltip-top flex-1" data-tip="{% trans 'Light' %}">
+        <button onclick="setTheme('light')" data-swatch="light"
           class="theme-swatch w-full h-7 rounded-lg border-2 border-base-300 hover:scale-105 transition-transform"
-          style="background:conic-gradient(#ffffff 0% 50%,#7a2b68 50%)"></button>
+          style="background:conic-gradient(#ffffff 0% 50%,#ddc8f8 50%)"></button>
       </div>
     </div>
 
@@ -453,7 +453,7 @@ function cycleTheme() {
   if (['light','dark','pastel','lemonade','fantasy'].includes(s)) {
     document.documentElement.setAttribute('data-theme', s);
     updateThemeUI(s);
-  } else { updateThemeUI('light'); }
+  } else { updateThemeUI('fantasy'); }
 })();
 {% else %}
 updateThemeUI('{% if request.user.theme == "dark" %}dark{% elif request.user.theme == "pastel" %}pastel{% elif request.user.theme == "lemonade" %}lemonade{% elif request.user.theme == "fantasy" %}fantasy{% else %}light{% endif %}');

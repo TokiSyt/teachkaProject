@@ -3986,3 +3986,63 @@ msgstr "Zpět"
 
 #~ msgid "Participants will type their answer here. Match is case-insensitive."
 #~ msgstr "Účastníci sem napíší svou odpověď. Nezáleží na velikosti písmen."
+
+#: apps/point_system/templates/point_system/home.html
+msgid "Hide"
+msgstr "Skrýt"
+
+#: apps/point_system/templates/point_system/home.html
+msgid "Show"
+msgstr "Zobrazit"
+
+#: apps/point_system/templates/point_system/home.html
+msgid "Delete all columns"
+msgstr "Smazat všechny sloupce"
+
+#: apps/point_system/templates/point_system/home.html
+msgid "Clear all values in this column"
+msgstr "Vymazat všechny hodnoty v tomto sloupci"
+
+#: apps/point_system/templates/point_system/home.html
+msgid "Clear all values in this column?"
+msgstr "Vymazat všechny hodnoty v tomto sloupci?"
+
+#: apps/point_system/templates/point_system/home.html
+msgid "Clear column"
+msgstr "Vymazat sloupec"
+
+#: apps/point_system/templates/point_system/home.html
+msgid "Delete ALL columns from this group? Points data will be lost."
+msgstr "Smazat VŠECHNY sloupce z této skupiny? Data bodů budou ztracena."
+
+#: apps/point_system/templates/point_system/new_column.html
+msgid "Create columns"
+msgstr "Vytvořit sloupce"
+
+#: apps/point_system/templates/point_system/new_column.html
+msgid "Add another column"
+msgstr "Přidat další sloupec"
+
+#: apps/point_system/templates/point_system/new_column.html
+msgid "Remove row"
+msgstr "Odebrat řádek"
+
+#: apps/point_system/templates/point_system/new_column.html
+msgid "Each row becomes a column. Numerical columns are summed in the total."
+msgstr "Každý řádek se stane sloupcem. Číselné sloupce se sčítají do celkového součtu."
+
+#: apps/point_system/templates/point_system/new_column.html
+msgid "Type"
+msgstr "Typ"
+
+#: apps/point_system/templates/point_system/home.html
+msgid "Clear"
+msgstr "Vymazat"
+
+#: apps/point_system/templates/point_system/home.html
+msgid "This resets every value in this column to zero and cannot be undone."
+msgstr "Tímto se všechny hodnoty v tomto sloupci vynulují a nelze to vrátit zpět."
+
+#: apps/point_system/templates/point_system/home.html
+msgid "This removes every column in this table and all of its points. This cannot be undone."
+msgstr "Tímto se odstraní všechny sloupce v této tabulce a všechny jejich body. Nelze to vrátit zpět."

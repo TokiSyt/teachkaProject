@@ -4,9 +4,71 @@ import pytest
 from django.db import IntegrityError
 
 from apps.group_maker.models import GroupCreationModel
-from apps.point_system.models import FieldDefinition, Member
+from apps.point_system.models import FieldDefinition, Member, PointSystemGroupSettings
 
 from .factories import FieldDefinitionFactory, MemberFactory
+
+
+@pytest.mark.django_db
+class TestPointSystemGroupSettings:
+    """Tests for per-group table visibility settings."""
+
+    def test_for_group_defaults_to_visible(self, user):
+        """A group with no saved settings defaults to both tables visible."""
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A")
+        settings = PointSystemGroupSettings.for_group(group)
+        assert settings.show_positive is True
+        assert settings.show_negative is True
+
+    def test_for_group_is_idempotent(self, user):
+        """Calling for_group twice returns the same row, not a duplicate."""
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A")
+        first = PointSystemGroupSettings.for_group(group)
+        second = PointSystemGroupSettings.for_group(group)
+        assert first.pk == second.pk
+        assert PointSystemGroupSettings.objects.filter(group=group).count() == 1
+
+    def test_set_table_visibility_persists(self, user):
+        """Hiding a table persists across reloads."""
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A")
+        PointSystemGroupSettings.set_table_visibility(group, "negative", False)
+        reloaded = PointSystemGroupSettings.for_group(group)
+        assert reloaded.show_negative is False
+        assert reloaded.show_positive is True  # independent
+
+    def test_set_table_visibility_positive_independent(self, user):
+        """Positive and negative visibility toggle independently."""
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A")
+        PointSystemGroupSettings.set_table_visibility(group, "positive", False)
+        reloaded = PointSystemGroupSettings.for_group(group)
+        assert reloaded.show_positive is False
+        assert reloaded.show_negative is True
+
+    def test_set_table_visibility_invalid_definition_changes_nothing(self, user):
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A")
+        PointSystemGroupSettings.set_table_visibility(group, "sideways", False)
+        reloaded = PointSystemGroupSettings.for_group(group)
+        assert reloaded.show_positive is True
+        assert reloaded.show_negative is True
+
+    def test_set_table_visibility_toggle_back_on(self, user):
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A")
+        PointSystemGroupSettings.set_table_visibility(group, "positive", False)
+        PointSystemGroupSettings.set_table_visibility(group, "positive", True)
+        assert PointSystemGroupSettings.for_group(group).show_positive is True
+
+    def test_settings_deleted_when_group_deleted(self, user):
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A")
+        PointSystemGroupSettings.for_group(group)
+        group.delete()
+        assert PointSystemGroupSettings.objects.count() == 0
+
+    def test_one_settings_row_per_group(self, user):
+        """OneToOne: a second row for the same group is rejected."""
+        group = GroupCreationModel.objects.create(user=user, title="G", members_string="A")
+        PointSystemGroupSettings.objects.create(group=group)
+        with pytest.raises(IntegrityError):
+            PointSystemGroupSettings.objects.create(group=group)
 
 
 @pytest.mark.django_db

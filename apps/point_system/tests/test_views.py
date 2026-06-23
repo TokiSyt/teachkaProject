@@ -128,6 +128,23 @@ class TestHomeView:
         member.refresh_from_db()
         assert "nonexistent" not in member.positive_data
 
+    def test_home_view_visibility_defaults_true(self, authenticated_client, group_with_fields):
+        """With no saved settings, both tables default to visible."""
+        url = reverse("karma:karma-home")
+        response = authenticated_client.get(url, {"group_id": group_with_fields.id})
+        assert response.context["show_positive"] is True
+        assert response.context["show_negative"] is True
+
+    def test_home_view_visibility_reflects_saved(self, authenticated_client, group_with_fields):
+        """Hidden table is reflected in context on next load."""
+        from apps.point_system.models import PointSystemGroupSettings
+
+        PointSystemGroupSettings.set_table_visibility(group_with_fields, "negative", False)
+        url = reverse("karma:karma-home")
+        response = authenticated_client.get(url, {"group_id": group_with_fields.id})
+        assert response.context["show_negative"] is False
+        assert response.context["show_positive"] is True
+
     def test_home_view_empty_groups(self, authenticated_client):
         """Test home view when user has no groups."""
         url = reverse("karma:karma-home")
@@ -248,6 +265,38 @@ class TestAddColumnView:
         }
         response = authenticated_client.post(url, data)
         assert response.status_code == 200  # Returns to form
+
+    def test_add_multiple_columns_at_once(self, authenticated_client, group_with_fields):
+        """Posting parallel name/type lists creates one column per row."""
+        url = reverse("karma:new-column", args=[group_with_fields.id])
+        data = {
+            "name": ["effort", "creativity", "notes"],
+            "type": ["int", "int", "str"],
+            "definition": "positive",
+        }
+        response = authenticated_client.post(url, data)
+        assert response.status_code == 302
+
+        for name in ["effort", "creativity", "notes"]:
+            assert FieldDefinition.objects.filter(group=group_with_fields, name=name, definition="positive").exists()
+        member = group_with_fields.karma_members.first()
+        member.refresh_from_db()
+        assert member.positive_data["effort"] == 0
+        assert member.positive_data["notes"] == ""
+
+    def test_add_multiple_columns_duplicate_rejected(self, authenticated_client, group_with_fields):
+        """If any provided name already exists, the batch is rejected with an error."""
+        url = reverse("karma:new-column", args=[group_with_fields.id])
+        data = {
+            "name": ["brand_new", "homework"],  # homework already exists
+            "type": ["int", "int"],
+            "definition": "positive",
+        }
+        response = authenticated_client.post(url, data)
+        assert response.status_code == 200
+        assert "already exists" in str(response.content).lower()
+        # Nothing created
+        assert not FieldDefinition.objects.filter(group=group_with_fields, name="brand_new").exists()
 
     def test_add_column_nonexistent_group(self, authenticated_client):
         """Test adding column to non-existent group returns 404."""
@@ -452,6 +501,254 @@ class TestDeleteColumnView:
 
         # Verify no positive fields remain
         assert not FieldDefinition.objects.filter(group=group, definition="positive").exists()
+
+
+@pytest.mark.django_db
+class TestClearColumnView:
+    """Tests for ClearColumn view (clear-column)."""
+
+    def test_clear_column_requires_login(self, client, group_with_fields):
+        url = reverse("karma:clear-column", args=[group_with_fields.id])
+        response = client.post(url, {"field_name": "homework", "definition": "positive"})
+        assert response.status_code == 302
+        assert "login" in response.url
+
+    def test_clear_column_post_resets_values(self, authenticated_client, group_with_fields):
+        for member in group_with_fields.karma_members.all():
+            member.positive_data["homework"] = 30
+            member.positive_total = 30
+            member.save()
+
+        url = reverse("karma:clear-column", args=[group_with_fields.id])
+        response = authenticated_client.post(url, {"field_name": "homework", "definition": "positive"})
+        assert response.status_code == 302
+
+        for member in group_with_fields.karma_members.all():
+            member.refresh_from_db()
+            assert member.positive_data["homework"] == 0
+            assert member.positive_total == 0
+        # Column itself preserved
+        assert FieldDefinition.objects.filter(group=group_with_fields, name="homework").exists()
+
+    def test_clear_column_other_user_group_404(self, authenticated_client, other_user):
+        other_group = GroupCreationModel.objects.create(user=other_user, title="Other", members_string="X")
+        FieldDefinition.objects.create(group=other_group, name="hw", type="int", definition="positive")
+        url = reverse("karma:clear-column", args=[other_group.id])
+        response = authenticated_client.post(url, {"field_name": "hw", "definition": "positive"})
+        assert response.status_code == 404
+
+
+@pytest.mark.django_db
+class TestDeleteAllColumnsView:
+    """Tests for DeleteAllColumns view (delete-all-columns)."""
+
+    def test_requires_login(self, client, group_with_fields):
+        url = reverse("karma:delete-all-columns", args=[group_with_fields.id])
+        response = client.post(url, {"definition": "positive"})
+        assert response.status_code == 302
+        assert "login" in response.url
+
+    def test_deletes_only_target_table_keeps_group(self, authenticated_client, group_with_fields):
+        url = reverse("karma:delete-all-columns", args=[group_with_fields.id])
+        response = authenticated_client.post(url, {"definition": "positive"})
+        assert response.status_code == 302
+        # Only positive removed; negative table untouched
+        assert not FieldDefinition.objects.filter(group=group_with_fields, definition="positive").exists()
+        assert FieldDefinition.objects.filter(group=group_with_fields, definition="negative").exists()
+        assert GroupCreationModel.objects.filter(id=group_with_fields.id).exists()
+        assert group_with_fields.karma_members.count() == 2
+
+    def test_other_user_group_404(self, authenticated_client, other_user):
+        other_group = GroupCreationModel.objects.create(user=other_user, title="Other", members_string="X")
+        url = reverse("karma:delete-all-columns", args=[other_group.id])
+        response = authenticated_client.post(url, {"definition": "positive"})
+        assert response.status_code == 404
+
+
+@pytest.mark.django_db
+class TestToggleTableView:
+    """Tests for ToggleTable view (toggle-table)."""
+
+    def test_requires_login(self, client, group_with_fields):
+        url = reverse("karma:toggle-table", args=[group_with_fields.id])
+        response = client.post(url, {"definition": "positive", "visible": "0"})
+        assert response.status_code == 302
+        assert "login" in response.url
+
+    def test_hides_table_persists(self, authenticated_client, group_with_fields):
+        from apps.point_system.models import PointSystemGroupSettings
+
+        url = reverse("karma:toggle-table", args=[group_with_fields.id])
+        response = authenticated_client.post(url, {"definition": "negative", "visible": "0"})
+        assert response.status_code == 302
+        settings = PointSystemGroupSettings.for_group(group_with_fields)
+        assert settings.show_negative is False
+        assert settings.show_positive is True
+
+    def test_ajax_returns_204(self, authenticated_client, group_with_fields):
+        url = reverse("karma:toggle-table", args=[group_with_fields.id])
+        response = authenticated_client.post(
+            url, {"definition": "positive", "visible": "0"}, HTTP_X_REQUESTED_WITH="XMLHttpRequest"
+        )
+        assert response.status_code == 204
+
+    def test_other_user_group_404(self, authenticated_client, other_user):
+        other_group = GroupCreationModel.objects.create(user=other_user, title="Other", members_string="X")
+        url = reverse("karma:toggle-table", args=[other_group.id])
+        response = authenticated_client.post(url, {"definition": "positive", "visible": "0"})
+        assert response.status_code == 404
+
+
+@pytest.mark.django_db
+class TestAddColumnMultiEdgeCases:
+    """Edge cases for bulk column creation via the AddColumn view."""
+
+    def test_more_names_than_types_extras_dropped(self, authenticated_client, group_with_fields):
+        url = reverse("karma:new-column", args=[group_with_fields.id])
+        data = {"name": ["a", "b", "c"], "type": ["int", "int"], "definition": "positive"}
+        response = authenticated_client.post(url, data)
+        assert response.status_code == 302
+        assert FieldDefinition.objects.filter(group=group_with_fields, name="a").exists()
+        assert FieldDefinition.objects.filter(group=group_with_fields, name="b").exists()
+        assert not FieldDefinition.objects.filter(group=group_with_fields, name="c").exists()
+
+    def test_whitespace_only_names_filtered(self, authenticated_client, group_with_fields):
+        url = reverse("karma:new-column", args=[group_with_fields.id])
+        data = {"name": ["   ", "good"], "type": ["int", "int"], "definition": "positive"}
+        response = authenticated_client.post(url, data)
+        assert response.status_code == 302
+        assert FieldDefinition.objects.filter(group=group_with_fields, name="good").exists()
+        assert (
+            FieldDefinition.objects.filter(group=group_with_fields, definition="positive").count() == 2
+        )  # homework + good
+
+    def test_names_are_trimmed_before_save(self, authenticated_client, group_with_fields):
+        url = reverse("karma:new-column", args=[group_with_fields.id])
+        data = {"name": ["  Spaced  "], "type": ["int"], "definition": "positive"}
+        authenticated_client.post(url, data)
+        assert FieldDefinition.objects.filter(group=group_with_fields, name="Spaced").exists()
+
+    def test_all_blank_rerenders_without_creating(self, authenticated_client, group_with_fields):
+        url = reverse("karma:new-column", args=[group_with_fields.id])
+        before = FieldDefinition.objects.filter(group=group_with_fields).count()
+        data = {"name": ["", "  "], "type": ["int", "int"], "definition": "positive"}
+        response = authenticated_client.post(url, data)
+        assert response.status_code == 200
+        assert FieldDefinition.objects.filter(group=group_with_fields).count() == before
+
+    def test_invalid_definition_rerenders(self, authenticated_client, group_with_fields):
+        url = reverse("karma:new-column", args=[group_with_fields.id])
+        data = {"name": ["x"], "type": ["int"], "definition": "sideways"}
+        response = authenticated_client.post(url, data)
+        assert response.status_code == 200
+        assert not FieldDefinition.objects.filter(group=group_with_fields, name="x").exists()
+
+    def test_same_name_other_table_allowed_in_batch(self, authenticated_client, group_with_fields):
+        """'homework' exists in positive; adding it to negative in a batch is fine."""
+        url = reverse("karma:new-column", args=[group_with_fields.id])
+        data = {"name": ["homework", "fresh"], "type": ["int", "int"], "definition": "negative"}
+        response = authenticated_client.post(url, data)
+        assert response.status_code == 302
+        assert FieldDefinition.objects.filter(group=group_with_fields, name="homework", definition="negative").exists()
+
+
+@pytest.mark.django_db
+class TestClearColumnEdgeCases:
+    """Edge cases for ClearColumn view."""
+
+    def test_get_not_allowed(self, authenticated_client, group_with_fields):
+        url = reverse("karma:clear-column", args=[group_with_fields.id])
+        assert authenticated_client.get(url).status_code == 405
+
+    def test_bogus_field_is_noop(self, authenticated_client, group_with_fields):
+        member = group_with_fields.karma_members.first()
+        member.positive_data = {"homework": 12}
+        member.save()
+        url = reverse("karma:clear-column", args=[group_with_fields.id])
+        response = authenticated_client.post(url, {"field_name": "nope", "definition": "positive"})
+        assert response.status_code == 302
+        member.refresh_from_db()
+        assert member.positive_data["homework"] == 12  # untouched
+
+    def test_missing_definition_is_noop(self, authenticated_client, group_with_fields):
+        member = group_with_fields.karma_members.first()
+        member.positive_data = {"homework": 3}
+        member.save()
+        url = reverse("karma:clear-column", args=[group_with_fields.id])
+        response = authenticated_client.post(url, {"field_name": "homework"})
+        assert response.status_code == 302
+        member.refresh_from_db()
+        assert member.positive_data["homework"] == 3
+
+    def test_clears_text_column(self, authenticated_client, group_with_fields):
+        FieldDefinition.objects.create(group=group_with_fields, name="notes", type="str", definition="positive")
+        member = group_with_fields.karma_members.first()
+        member.positive_data["notes"] = "hello"
+        member.save()
+        url = reverse("karma:clear-column", args=[group_with_fields.id])
+        authenticated_client.post(url, {"field_name": "notes", "definition": "positive"})
+        member.refresh_from_db()
+        assert member.positive_data["notes"] == ""
+
+
+@pytest.mark.django_db
+class TestDeleteAllColumnsEdgeCases:
+    """Edge cases for DeleteAllColumns view."""
+
+    def test_get_not_allowed(self, authenticated_client, group_with_fields):
+        url = reverse("karma:delete-all-columns", args=[group_with_fields.id])
+        assert authenticated_client.get(url).status_code == 405
+
+    def test_invalid_definition_deletes_nothing(self, authenticated_client, group_with_fields):
+        url = reverse("karma:delete-all-columns", args=[group_with_fields.id])
+        response = authenticated_client.post(url, {"definition": "bogus"})
+        assert response.status_code == 302
+        assert FieldDefinition.objects.filter(group=group_with_fields).count() == 2
+
+    def test_missing_definition_deletes_nothing(self, authenticated_client, group_with_fields):
+        url = reverse("karma:delete-all-columns", args=[group_with_fields.id])
+        response = authenticated_client.post(url, {})
+        assert response.status_code == 302
+        assert FieldDefinition.objects.filter(group=group_with_fields).count() == 2
+
+
+@pytest.mark.django_db
+class TestToggleTableEdgeCases:
+    """Edge cases for ToggleTable view."""
+
+    def test_get_not_allowed(self, authenticated_client, group_with_fields):
+        url = reverse("karma:toggle-table", args=[group_with_fields.id])
+        assert authenticated_client.get(url).status_code == 405
+
+    def test_invalid_definition_creates_no_settings(self, authenticated_client, group_with_fields):
+        from apps.point_system.models import PointSystemGroupSettings
+
+        url = reverse("karma:toggle-table", args=[group_with_fields.id])
+        response = authenticated_client.post(url, {"definition": "bogus", "visible": "0"})
+        assert response.status_code == 302
+        assert not PointSystemGroupSettings.objects.filter(group=group_with_fields).exists()
+
+    def test_visible_omitted_hides_table(self, authenticated_client, group_with_fields):
+        from apps.point_system.models import PointSystemGroupSettings
+
+        url = reverse("karma:toggle-table", args=[group_with_fields.id])
+        authenticated_client.post(url, {"definition": "positive"})
+        assert PointSystemGroupSettings.for_group(group_with_fields).show_positive is False
+
+    def test_show_after_hide_round_trips(self, authenticated_client, group_with_fields):
+        from apps.point_system.models import PointSystemGroupSettings
+
+        url = reverse("karma:toggle-table", args=[group_with_fields.id])
+        authenticated_client.post(url, {"definition": "negative", "visible": "0"})
+        authenticated_client.post(url, {"definition": "negative", "visible": "1"})
+        assert PointSystemGroupSettings.for_group(group_with_fields).show_negative is True
+
+    def test_home_get_creates_settings_row(self, authenticated_client, group_with_fields):
+        from apps.point_system.models import PointSystemGroupSettings
+
+        assert not PointSystemGroupSettings.objects.filter(group=group_with_fields).exists()
+        authenticated_client.get(reverse("karma:karma-home"), {"group_id": group_with_fields.id})
+        assert PointSystemGroupSettings.objects.filter(group=group_with_fields).exists()
 
 
 @pytest.mark.django_db
