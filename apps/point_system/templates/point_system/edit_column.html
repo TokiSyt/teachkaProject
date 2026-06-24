@@ -26,7 +26,7 @@
     <div class="drift drift-3 flex flex-wrap items-center gap-3">
       <span class="inline-flex items-center gap-2 text-[11px] tracking-[2px] uppercase text-base-content/30">
         <span class="w-1.5 h-1.5 rounded-full {% if table_definition == 'negative' %}bg-error{% else %}bg-success{% endif %}"></span>
-        {{ table_definition|capfirst }} {% trans "table" %}
+        {% if table_definition == 'negative' %}{% trans "Negative table" %}{% else %}{% trans "Positive table" %}{% endif %}
       </span>
     </div>
     </div>

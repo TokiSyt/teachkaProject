@@ -1,4 +1,5 @@
 import json
+import re
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -322,11 +323,23 @@ class DashboardView(LoginRequiredMixin, View):
         prefix_pos = f"{member.id}_positive_"
         prefix_neg = f"{member.id}_negative_"
 
-        if "positive_save" in request.POST:
+        if "member_save" in request.POST or "color_save" in request.POST:
+            updated = []
+            name = (request.POST.get("name") or "").strip()
+            if name:
+                member.name = name[:50]
+                updated.append("name")
+            color = (request.POST.get("color") or "").strip().lower()
+            if re.fullmatch(r"#[0-9a-f]{6}", color):  # ignore anything not a hex colour
+                member.color = color
+                updated.append("color")
+            if updated:
+                member.save(update_fields=updated)
+        elif "positive_save" in request.POST:
             data = member.positive_data.copy() if member.positive_data else {}
             for key, value in request.POST.items():
                 if key.startswith(prefix_pos):
-                    col = key[len(prefix_pos):]
+                    col = key[len(prefix_pos) :]
                     if col in data:  # only existing columns
                         data[col] = value
             MemberService.update_member_data(member, positive_data=data)
@@ -334,7 +347,7 @@ class DashboardView(LoginRequiredMixin, View):
             data = member.negative_data.copy() if member.negative_data else {}
             for key, value in request.POST.items():
                 if key.startswith(prefix_neg):
-                    col = key[len(prefix_neg):]
+                    col = key[len(prefix_neg) :]
                     if col in data:
                         data[col] = value
             MemberService.update_member_data(member, negative_data=data)

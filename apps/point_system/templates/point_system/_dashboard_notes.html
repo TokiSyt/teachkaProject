@@ -1,55 +1,76 @@
 {% load i18n custom_tags %}
 {% comment %}
-Notes tab: every type=str column from both tables, as editable cards.
-Each table's notes save with its own table (positive str -> positive_save,
-negative str -> negative_save), reusing the numeric tabs' POST contract.
+Notes tab: every type=str column from both tables as editable cards.
+Each table's notes save with its own table via positive_save / negative_save.
 Context: positive_text_fields, negative_text_fields, member, group.
 {% endcomment %}
 
 {% if not positive_text_fields and not negative_text_fields %}
-  <div class="rounded-2xl border-2 border-dashed border-base-300 px-6 py-10 text-center">
-    <i data-lucide="sticky-note" class="w-7 h-7 mx-auto mb-3 text-base-content/30"></i>
-    <p class="text-sm text-base-content/50 mb-4">{% trans "No text columns yet." %}</p>
-    <a href="{% url 'karma:new-column' group.id %}?table=positive" class="btn-as-link">
-      <i data-lucide="plus" class="w-4 h-4"></i> {% trans "Add a column" %}
-    </a>
+  <div class="card bg-base-100 border border-base-300 border-dashed">
+    <div class="card-body items-center text-center py-10">
+      <i data-lucide="sticky-note" class="w-8 h-8 text-base-content/20 mb-1"></i>
+      <p class="text-sm text-base-content/50 font-light">{% trans "No text columns yet." %}</p>
+      <a href="{% url 'karma:new-column' group.id %}?table=positive" class="btn-as-link mt-2">
+        <i data-lucide="plus" class="w-4 h-4"></i> {% trans "Add a column" %}
+      </a>
+    </div>
   </div>
 {% else %}
   <div class="space-y-8 max-w-2xl">
 
     {% if positive_text_fields %}
-      <form method="post" data-dash-form="positive" class="space-y-4">
+      <form method="post" data-dash-form="positive">
         {% csrf_token %}
-        {% for field in positive_text_fields %}
-          <div class="rounded-2xl border-2 border-base-300 bg-base-100 px-5 py-4">
-            <label class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2"
-                   for="note_positive_{{ field.id }}">{{ field.name }}</label>
-            <textarea id="note_positive_{{ field.id }}"
-                      name="{{ member.id }}_positive_{{ field.name }}" rows="3"
-                      class="textarea textarea-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full">{{ member.positive_data|get_item:field.name }}</textarea>
-          </div>
-        {% endfor %}
-        <button type="submit" name="positive_save" value="1" class="btn-as-link">
-          <i data-lucide="check" class="w-4 h-4"></i> {% trans "Save positive notes" %}
-        </button>
+        <div class="flex items-center gap-3 mb-3">
+          <span class="w-1.5 h-1.5 rounded-full bg-success"></span>
+          <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30">{% trans "Positive" %}</p>
+        </div>
+        <div class="space-y-4">
+          {% for field in positive_text_fields %}
+            <div class="card bg-base-100 border border-base-300">
+              <div class="card-body p-5">
+                <label class="text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2"
+                       for="note_positive_{{ field.id }}">{{ field.name }}</label>
+                <textarea id="note_positive_{{ field.id }}"
+                          name="{{ member.id }}_positive_{{ field.name }}" rows="3"
+                          class="textarea textarea-bordered rounded-xl w-full p-4 leading-relaxed">{{ member.positive_data|get_item:field.name }}</textarea>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="mt-4">
+          <button type="submit" name="positive_save" value="1" class="btn-as-link">
+            <i data-lucide="check" class="w-4 h-4"></i> {% trans "Save" %}
+          </button>
+        </div>
       </form>
     {% endif %}
 
     {% if negative_text_fields %}
-      <form method="post" data-dash-form="negative" class="space-y-4">
+      <form method="post" data-dash-form="negative">
         {% csrf_token %}
-        {% for field in negative_text_fields %}
-          <div class="rounded-2xl border-2 border-base-300 bg-base-100 px-5 py-4">
-            <label class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2"
-                   for="note_negative_{{ field.id }}">{{ field.name }}</label>
-            <textarea id="note_negative_{{ field.id }}"
-                      name="{{ member.id }}_negative_{{ field.name }}" rows="3"
-                      class="textarea textarea-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full">{{ member.negative_data|get_item:field.name }}</textarea>
-          </div>
-        {% endfor %}
-        <button type="submit" name="negative_save" value="1" class="btn-as-link">
-          <i data-lucide="check" class="w-4 h-4"></i> {% trans "Save negative notes" %}
-        </button>
+        <div class="flex items-center gap-3 mb-3">
+          <span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+          <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30">{% trans "Negative" %}</p>
+        </div>
+        <div class="space-y-4">
+          {% for field in negative_text_fields %}
+            <div class="card bg-base-100 border border-base-300">
+              <div class="card-body p-5">
+                <label class="text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2"
+                       for="note_negative_{{ field.id }}">{{ field.name }}</label>
+                <textarea id="note_negative_{{ field.id }}"
+                          name="{{ member.id }}_negative_{{ field.name }}" rows="3"
+                          class="textarea textarea-bordered rounded-xl w-full p-4 leading-relaxed">{{ member.negative_data|get_item:field.name }}</textarea>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="mt-4">
+          <button type="submit" name="negative_save" value="1" class="btn-as-link">
+            <i data-lucide="check" class="w-4 h-4"></i> {% trans "Save" %}
+          </button>
+        </div>
       </form>
     {% endif %}
 

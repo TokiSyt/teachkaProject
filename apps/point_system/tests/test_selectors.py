@@ -422,3 +422,9 @@ class TestGetMemberDashboardData:
         data = selectors.get_member_dashboard_data(member_with_data.id, user)
         assert {f.name for f in data["positive_text_fields"]} == {"pos_note"}
         assert {f.name for f in data["negative_text_fields"]} == {"neg_note"}
+
+    def test_exposes_wheel_colors_palette(self, user, member_with_data):
+        data = selectors.get_member_dashboard_data(member_with_data.id, user)
+        from apps.point_system.models import Member
+
+        assert data["wheel_colors"] == Member.WHEEL_COLORS

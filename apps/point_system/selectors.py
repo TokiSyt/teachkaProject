@@ -191,6 +191,7 @@ def get_member_dashboard_data(member_id: int, user) -> dict:
     return {
         "member": member,
         "group": group,
+        "wheel_colors": Member.WHEEL_COLORS,
         "positive_fields": positive_fields,
         "negative_fields": negative_fields,
         "text_fields": text_fields,
