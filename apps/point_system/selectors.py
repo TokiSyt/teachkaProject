@@ -125,3 +125,45 @@ def get_group_full_data(group_id: int, user) -> dict:
         "positive_fields": positive_fields,
         "negative_fields": negative_fields,
     }
+
+
+def get_member_dashboard_data(member_id: int, user) -> dict:
+    """Per-member dashboard data (karma dashboard, PRD #39).
+
+    Owner-only: a member belonging to another user raises Http404.
+    Totals are computed from the stored JSON data (not the cached columns).
+
+    Args:
+        member_id: Member ID
+        user: User instance (for permission check)
+
+    Returns:
+        Dict with member, group, totals and net.
+    """
+    member = get_object_or_404(Member, id=member_id, group__user=user)
+    group = member.group
+
+    positive_fields = list(
+        FieldDefinition.objects.filter(group=group, definition="positive").order_by("order", "created_at")
+    )
+    negative_fields = list(
+        FieldDefinition.objects.filter(group=group, definition="negative").order_by("order", "created_at")
+    )
+    # Free-form (text) columns from both tables live together in the Notes tab.
+    text_fields = [f for f in positive_fields + negative_fields if f.type == "str"]
+
+    positive_total = MemberService._calculate_total(member.positive_data)
+    negative_total = MemberService._calculate_total(member.negative_data)
+
+    return {
+        "member": member,
+        "group": group,
+        "positive_fields": positive_fields,
+        "negative_fields": negative_fields,
+        "text_fields": text_fields,
+        "positive_column_types": {f.name: "number" if f.type == "int" else "text" for f in positive_fields},
+        "negative_column_types": {f.name: "number" if f.type == "int" else "text" for f in negative_fields},
+        "positive_total": positive_total,
+        "negative_total": negative_total,
+        "net": positive_total - negative_total,
+    }

@@ -14,7 +14,12 @@ from apps.group_maker.models import GroupCreationModel
 
 from .forms import EditColumnForm
 from .models import FieldDefinition, PointSystemGroupSettings
-from .selectors import get_group_full_data, get_group_with_members, get_user_groups
+from .selectors import (
+    get_group_full_data,
+    get_group_with_members,
+    get_member_dashboard_data,
+    get_user_groups,
+)
 from .services.member_service import MemberService
 
 
@@ -300,8 +305,15 @@ class ToggleTable(LoginRequiredMixin, View):
         return redirect(f"{reverse('karma:karma-home')}?group_id={group.id}")
 
 
-class DashboardView(LoginRequiredMixin, TemplateView):
-    template_name = "wip.html"
+class DashboardView(LoginRequiredMixin, View):
+    """Per-member karma dashboard (deep-dive view). Owner-only; ``pk`` is a
+    Member id. Non-owners / missing members get 404 from the selector."""
+
+    template_name = "point_system/dashboard.html"
+
+    def get(self, request, pk):
+        data = get_member_dashboard_data(pk, request.user)
+        return render(request, self.template_name, data)
 
 
 class ColumnReorderView(LoginRequiredMixin, View):

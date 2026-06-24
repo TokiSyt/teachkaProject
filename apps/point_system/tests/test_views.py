@@ -985,3 +985,31 @@ class TestColumnReorderView:
             content_type="application/json",
         )
         assert resp.status_code == 404
+
+
+@pytest.mark.django_db
+class TestKarmaDashboardView:
+    """Tests for DashboardView (karma-dashboard, member deep-dive #59)."""
+
+    def test_owner_get_returns_200_with_member(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        response = authenticated_client.get(url)
+        assert response.status_code == 200
+        assert response.context["member"] == member_with_data
+        assert response.context["net"] == 7
+        assert member_with_data.name in response.content.decode()
+
+    def test_non_owner_get_returns_404(self, client, other_user, member_with_data):
+        client.force_login(other_user)
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        assert client.get(url).status_code == 404
+
+    def test_nonexistent_member_returns_404(self, authenticated_client):
+        url = reverse("karma:karma-dashboard", args=[999999])
+        assert authenticated_client.get(url).status_code == 404
+
+    def test_requires_login(self, client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        response = client.get(url)
+        assert response.status_code == 302
+        assert "login" in response.url

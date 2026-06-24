@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ member.name }} · {% trans "Dashboard" %} · Teachka{% endblock title %}
+
+{% block content %}
+
+  <!-- ── HEADER ── -->
+  <section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
+    <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+      <i data-lucide="user-round" class="text-primary" style="width:180px;height:180px;"></i>
+    </div>
+
+    <div class="relative z-10">
+      <a href="{% url 'karma:karma-home' %}?group_id={{ group.id }}"
+         class="inline-flex items-center gap-1.5 text-[11px] tracking-[2px] uppercase text-base-content/40 hover:text-primary transition mb-5">
+        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+        {% trans "Back to group" %}
+      </a>
+
+      <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-3">{{ group.title }}</p>
+
+      <h1 class="serif font-medium leading-none tracking-tight flex items-center gap-3" style="font-size: clamp(32px, 4.5vw, 52px);">
+        <span class="inline-block w-7 h-7 md:w-9 md:h-9 rounded-full shrink-0 border border-base-300"
+              style="background: {{ member.color|default:'var(--color-primary)' }};"></span>
+        <span class="text-base-content/80">{{ member.name }}</span>
+      </h1>
+
+      <!-- Stat blocks -->
+      <div class="grid grid-cols-3 gap-3 md:gap-4 mt-7 max-w-xl">
+        <div class="rounded-xl border-2 border-base-300 bg-base-100 px-4 py-3">
+          <p class="text-[10px] tracking-[2px] uppercase text-base-content/40 mb-1">{% trans "Positive" %}</p>
+          <p class="serif text-2xl md:text-3xl font-medium text-base-content/80 tabular-nums">{{ positive_total }}</p>
+        </div>
+        <div class="rounded-xl border-2 border-base-300 bg-base-100 px-4 py-3">
+          <p class="text-[10px] tracking-[2px] uppercase text-base-content/40 mb-1">{% trans "Negative" %}</p>
+          <p class="serif text-2xl md:text-3xl font-medium text-base-content/80 tabular-nums">{{ negative_total }}</p>
+        </div>
+        <div class="rounded-xl border-2 border-base-300 bg-base-100 px-4 py-3">
+          <p class="text-[10px] tracking-[2px] uppercase text-base-content/40 mb-1">{% trans "Net" %}</p>
+          <p class="serif text-2xl md:text-3xl font-medium tabular-nums {% if net < 0 %}text-error{% else %}text-base-content/80{% endif %}">{{ net }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock content %}
