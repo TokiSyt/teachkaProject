@@ -25,6 +25,28 @@ class TestTypeInputGrading:
         assert is_full is True and earned is True
 
 
+class TestTrueFalseGrading:
+    def _round(self, correct_id, points=10):
+        return {
+            "question_type": Round.TRUE_FALSE,
+            "points": points,
+            "correct_ids": [correct_id],
+            "single_select": True,
+        }
+
+    def test_correct_pick_is_full(self):
+        rd = self._round(correct_id=1)
+        assert live._grade_one(rd, [1]) == (10, True, True)
+
+    def test_wrong_pick_scores_zero(self):
+        rd = self._round(correct_id=1)
+        assert live._grade_one(rd, [2]) == (0, False, False)
+
+    def test_no_pick_scores_zero(self):
+        rd = self._round(correct_id=1)
+        assert live._grade_one(rd, None) == (0, False, False)
+
+
 class TestAcceptAllGrading:
     def _round(self, points=10):
         return {"question_type": Round.TYPE_INPUT, "points": points, "accept_all": True, "correct_texts": []}

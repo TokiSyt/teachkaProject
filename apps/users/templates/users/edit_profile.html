@@ -82,18 +82,18 @@
             {% endif %}
           </div>
 
-          <!-- Email -->
+          <!-- Email (locked) -->
           <div class="px-5 py-4">
             <p class="text-xs text-base-content/40 mb-1.5">{% trans "Email" %}</p>
             <input type="email"
-                   name="email"
                    id="id_email"
                    value="{{ form.email.value|default:'' }}"
                    autocomplete="email"
-                   class="input input-bordered w-full">
-            {% if form.email.errors %}
-            <p class="text-xs text-error mt-1">{{ form.email.errors.0 }}</p>
-            {% endif %}
+                   class="input input-bordered w-full bg-base-200 text-base-content/40 cursor-not-allowed"
+                   disabled>
+            <p class="text-[11px] text-base-content/25 mt-1">
+              {% blocktrans %}To change your email, contact info@teachka.com{% endblocktrans %}
+            </p>
           </div>
 
           <!-- Country -->

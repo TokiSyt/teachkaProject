@@ -127,6 +127,15 @@ def _seed_answers(round_obj):
         existing = round_obj.answers.count()
         for i in range(existing, 4):
             Answer.objects.create(round=round_obj, order=i + 1, text="")
+    elif round_obj.question_type == Round.TRUE_FALSE:
+        # Fixed two options ("True"/"False"); host only picks which is correct.
+        answers = list(round_obj.answers.all())
+        texts = [a.text for a in answers]
+        if texts != ["True", "False"]:
+            # Switched in from another type (stale rows) — reset to the fixed pair.
+            round_obj.answers.all().delete()
+            Answer.objects.create(round=round_obj, order=1, text="True")
+            Answer.objects.create(round=round_obj, order=2, text="False")
     elif round_obj.question_type == Round.TYPE_INPUT:
         if round_obj.answers.count() == 0:
             Answer.objects.create(round=round_obj, order=1, text="")
@@ -242,6 +251,9 @@ class AnswerUpdateView(LoginRequiredMixin, View):
             answer.text = request.POST.get("text", "")
         if "is_correct" in request.POST:
             answer.is_correct = request.POST.get("is_correct") in ("1", "true", "on")
+            # true_false is single-answer: marking one correct unsets the other.
+            if answer.is_correct and answer.round.question_type == Round.TRUE_FALSE:
+                answer.round.answers.exclude(pk=answer.pk).update(is_correct=False)
         answer.save()
         return JsonResponse({"ok": True})
 

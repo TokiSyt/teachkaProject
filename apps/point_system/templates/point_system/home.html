@@ -477,6 +477,10 @@
     let timer = null;
     let lastSaveAt = 0;
     let saving = false;
+    let submitting = false;  // set on manual Save so beforeunload doesn't warn
+
+    // Manual save buttons submit the form -> intentional navigation, no warning.
+    form.addEventListener('submit', function() { submitting = true; });
 
     function setStatus(text) {
       if (status) status.textContent = text ? '· ' + text : '';
@@ -577,7 +581,7 @@
     }
 
     window.addEventListener('beforeunload', function(e) {
-      if (toggle.checked && (dirty.negative || dirty.positive)) {
+      if (!submitting && toggle.checked && (dirty.negative || dirty.positive)) {
         e.preventDefault();
         e.returnValue = '';
       }

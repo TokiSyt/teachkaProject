@@ -54,6 +54,11 @@ class EditProfileForm(UserChangeForm):
         super().__init__(*args, **kwargs)
         self.fields.pop("password", None)
         self.fields["username"].disabled = True
+        # Email is locked: users can't change it to an address they don't own
+        # (no ownership verification). Changes go through info@teachka.com.
+        # disabled => the submitted value is ignored, the instance value kept.
+        self.fields["email"].disabled = True
+        self.fields["email"].required = False
 
 
 class CustomPasswordChangeForm(PasswordChangeForm):

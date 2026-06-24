@@ -6,7 +6,7 @@ type_input: one check, lit primary when an answer text is set.
 {% endcomment %}
 <span class="absolute top-1.5 right-2 flex items-center gap-1"
       title="{% if round.has_correct_answer %}{% trans 'Correct answer set' %}{% else %}{% trans 'No correct answer yet' %}{% endif %}">
-  {% if round.question_type == "select_correct" %}
+  {% if round.question_type == "select_correct" or round.question_type == "true_false" %}
     {% for ans in round.answers.all|slice:":4" %}
       <span class="w-1.5 h-1.5 rounded-full transition" data-marker-answer="{{ ans.pk }}"
             data-marker-on="{% if ans.is_correct %}1{% else %}0{% endif %}"

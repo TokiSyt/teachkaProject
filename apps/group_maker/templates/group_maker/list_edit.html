@@ -69,7 +69,8 @@
                      name="member_color_{{ member.id }}"
                      value="{{ member.color }}"
                      class="w-8 h-8 rounded-lg cursor-pointer border-0 bg-transparent flex-shrink-0">
-              <span class="text-sm font-medium text-base-content/70 truncate">{{ member.name }}</span>
+              <a href="{% url 'karma:karma-dashboard' member.id %}"
+                 class="text-sm font-medium text-base-content/70 truncate hover:text-primary transition-colors">{{ member.name }}</a>
             </div>
             {% endfor %}
           </div>

@@ -1,4 +1,5 @@
 import json
+import re
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -13,8 +14,13 @@ from django.views.generic import TemplateView
 from apps.group_maker.models import GroupCreationModel
 
 from .forms import EditColumnForm
-from .models import FieldDefinition, PointSystemGroupSettings
-from .selectors import get_group_full_data, get_group_with_members, get_user_groups
+from .models import FieldDefinition, Member, PointSystemGroupSettings
+from .selectors import (
+    get_group_full_data,
+    get_group_with_members,
+    get_member_dashboard_data,
+    get_user_groups,
+)
 from .services.member_service import MemberService
 
 
@@ -300,8 +306,55 @@ class ToggleTable(LoginRequiredMixin, View):
         return redirect(f"{reverse('karma:karma-home')}?group_id={group.id}")
 
 
-class DashboardView(LoginRequiredMixin, TemplateView):
-    template_name = "wip.html"
+class DashboardView(LoginRequiredMixin, View):
+    """Per-member karma dashboard (deep-dive view). Owner-only; ``pk`` is a
+    Member id. Non-owners / missing members get 404 from the selector."""
+
+    template_name = "point_system/dashboard.html"
+
+    def get(self, request, pk):
+        data = get_member_dashboard_data(pk, request.user)
+        return render(request, self.template_name, data)
+
+    def post(self, request, pk):
+        member = get_object_or_404(Member, id=pk, group__user=request.user)
+
+        # Field names match the home page: "<member_id>_<table>_<col>".
+        prefix_pos = f"{member.id}_positive_"
+        prefix_neg = f"{member.id}_negative_"
+
+        if "member_save" in request.POST or "color_save" in request.POST:
+            updated = []
+            name = (request.POST.get("name") or "").strip()
+            if name:
+                member.name = name[:50]
+                updated.append("name")
+            color = (request.POST.get("color") or "").strip().lower()
+            if re.fullmatch(r"#[0-9a-f]{6}", color):  # ignore anything not a hex colour
+                member.color = color
+                updated.append("color")
+            if updated:
+                member.save(update_fields=updated)
+        elif "positive_save" in request.POST:
+            data = member.positive_data.copy() if member.positive_data else {}
+            for key, value in request.POST.items():
+                if key.startswith(prefix_pos):
+                    col = key[len(prefix_pos) :]
+                    if col in data:  # only existing columns
+                        data[col] = value
+            MemberService.update_member_data(member, positive_data=data)
+        elif "negative_save" in request.POST:
+            data = member.negative_data.copy() if member.negative_data else {}
+            for key, value in request.POST.items():
+                if key.startswith(prefix_neg):
+                    col = key[len(prefix_neg) :]
+                    if col in data:
+                        data[col] = value
+            MemberService.update_member_data(member, negative_data=data)
+
+        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            return HttpResponse(status=204)
+        return redirect("karma:karma-dashboard", pk=member.id)
 
 
 class ColumnReorderView(LoginRequiredMixin, View):

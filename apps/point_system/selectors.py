@@ -125,3 +125,83 @@ def get_group_full_data(group_id: int, user) -> dict:
         "positive_fields": positive_fields,
         "negative_fields": negative_fields,
     }
+
+
+# Single-hue stacked-bar palettes (light -> dark); index by column order.
+_GREEN_SHADES = ["#bbf7d0", "#86efac", "#4ade80", "#22c55e", "#16a34a", "#15803d", "#166534", "#14532d"]
+_RED_SHADES = ["#fecaca", "#fca5a5", "#f87171", "#ef4444", "#dc2626", "#b91c1c", "#991b1b", "#7f1d1d"]
+
+
+def _bar_segments(fields, data, total, shades):
+    """Build stacked-bar segments for a table's numeric columns.
+
+    One segment per int column: name, value, pct of the table total, and a
+    single-hue colour shaded light->dark by the column's position.
+    """
+    segments = []
+    numeric = [f for f in fields if f.type == "int"]
+    for i, field in enumerate(numeric):
+        try:
+            value = int((data or {}).get(field.name, 0) or 0)
+        except (ValueError, TypeError):
+            value = 0
+        pct = round(value / total * 100) if total else 0
+        segments.append(
+            {
+                "name": field.name,
+                "value": value,
+                "pct": pct,
+                "color": shades[i % len(shades)],
+            }
+        )
+    return segments
+
+
+def get_member_dashboard_data(member_id: int, user) -> dict:
+    """Per-member dashboard data (karma dashboard, PRD #39).
+
+    Owner-only: a member belonging to another user raises Http404.
+    Totals are computed from the stored JSON data (not the cached columns).
+
+    Args:
+        member_id: Member ID
+        user: User instance (for permission check)
+
+    Returns:
+        Dict with member, group, fields, totals, net and bar segments.
+    """
+    member = get_object_or_404(Member, id=member_id, group__user=user)
+    group = member.group
+
+    positive_fields = list(
+        FieldDefinition.objects.filter(group=group, definition="positive").order_by("order", "created_at")
+    )
+    negative_fields = list(
+        FieldDefinition.objects.filter(group=group, definition="negative").order_by("order", "created_at")
+    )
+    # Free-form (text) columns. They live together in the Notes tab but each
+    # still saves with its owning table, so keep the split lists too.
+    positive_text_fields = [f for f in positive_fields if f.type == "str"]
+    negative_text_fields = [f for f in negative_fields if f.type == "str"]
+    text_fields = positive_text_fields + negative_text_fields
+
+    positive_total = MemberService._calculate_total(member.positive_data)
+    negative_total = MemberService._calculate_total(member.negative_data)
+
+    return {
+        "member": member,
+        "group": group,
+        "wheel_colors": Member.WHEEL_COLORS,
+        "positive_fields": positive_fields,
+        "negative_fields": negative_fields,
+        "text_fields": text_fields,
+        "positive_text_fields": positive_text_fields,
+        "negative_text_fields": negative_text_fields,
+        "positive_column_types": {f.name: "number" if f.type == "int" else "text" for f in positive_fields},
+        "negative_column_types": {f.name: "number" if f.type == "int" else "text" for f in negative_fields},
+        "positive_segments": _bar_segments(positive_fields, member.positive_data, positive_total, _GREEN_SHADES),
+        "negative_segments": _bar_segments(negative_fields, member.negative_data, negative_total, _RED_SHADES),
+        "positive_total": positive_total,
+        "negative_total": negative_total,
+        "net": positive_total - negative_total,
+    }

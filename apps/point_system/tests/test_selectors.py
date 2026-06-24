@@ -326,3 +326,105 @@ class TestSelectorEdgeCases:
         assert "homework" not in data["positive_column_names"]
         # But member data still has it (orphaned data)
         assert group_with_fields.karma_members.first().positive_data.get("homework") == 50
+
+
+@pytest.mark.django_db
+class TestGetMemberDashboardData:
+    """Tests for get_member_dashboard_data selector (karma dashboard #59)."""
+
+    def test_returns_member_group_and_totals(self, user, member_with_data):
+        """Owner gets the member, its group, and computed totals."""
+        data = selectors.get_member_dashboard_data(member_with_data.id, user)
+        assert data["member"] == member_with_data
+        assert data["group"] == member_with_data.group
+        assert data["positive_total"] == 10
+        assert data["negative_total"] == 3
+
+    def test_net_is_positive_minus_negative(self, user, member_with_data):
+        """net = positive_total - negative_total."""
+        data = selectors.get_member_dashboard_data(member_with_data.id, user)
+        assert data["net"] == 7
+
+    def test_net_can_be_negative(self, user, member_with_data):
+        """net goes negative when negatives outweigh positives."""
+        member_with_data.positive_data = {"homework": 1}
+        member_with_data.negative_data = {"tardiness": 9}
+        member_with_data.save()
+        data = selectors.get_member_dashboard_data(member_with_data.id, user)
+        assert data["net"] == -8
+
+    def test_other_user_member_raises_404(self, other_user, member_with_data):
+        """A member belonging to another user is not found (privacy)."""
+        with pytest.raises(Http404):
+            selectors.get_member_dashboard_data(member_with_data.id, other_user)
+
+    def test_text_fields_collects_str_columns_from_both_tables(self, user, member_with_data):
+        """text_fields = every type=str column from positive and negative."""
+        group = member_with_data.group
+        pos_note = FieldDefinition.objects.create(group=group, name="pos_note", type="str", definition="positive")
+        neg_note = FieldDefinition.objects.create(group=group, name="neg_note", type="str", definition="negative")
+        data = selectors.get_member_dashboard_data(member_with_data.id, user)
+        text_fields = data["text_fields"]
+        assert pos_note in text_fields
+        assert neg_note in text_fields
+        # numeric columns are not text fields
+        names = {f.name for f in text_fields}
+        assert "homework" not in names and "tardiness" not in names
+
+    def test_returns_positive_and_negative_fields(self, user, member_with_data):
+        """positive_fields / negative_fields hold the table's column definitions."""
+        data = selectors.get_member_dashboard_data(member_with_data.id, user)
+        assert {f.name for f in data["positive_fields"]} == {"homework"}
+        assert {f.name for f in data["negative_fields"]} == {"tardiness"}
+
+    def test_positive_segments_built_from_numeric_columns(self, user, member_with_data):
+        """positive_segments: one entry per numeric positive column with value+pct+color."""
+        group = member_with_data.group
+        FieldDefinition.objects.create(group=group, name="bonus", type="int", definition="positive", order=2)
+        member_with_data.positive_data = {"homework": 30, "bonus": 10}
+        member_with_data.save()
+        data = selectors.get_member_dashboard_data(member_with_data.id, user)
+        segs = {s["name"]: s for s in data["positive_segments"]}
+        assert segs["homework"]["value"] == 30
+        assert segs["bonus"]["value"] == 10
+        assert segs["homework"]["pct"] == 75
+        assert segs["bonus"]["pct"] == 25
+        assert segs["homework"]["color"] and segs["bonus"]["color"]
+
+    def test_segments_exclude_text_columns(self, user, member_with_data):
+        """Text (str) columns are not bar segments — they belong to Notes."""
+        group = member_with_data.group
+        FieldDefinition.objects.create(group=group, name="comment", type="str", definition="positive")
+        data = selectors.get_member_dashboard_data(member_with_data.id, user)
+        names = {s["name"] for s in data["positive_segments"]}
+        assert "comment" not in names
+        assert "homework" in names
+
+    def test_negative_segments_built(self, user, member_with_data):
+        """negative_segments mirror positive_segments for the negative table."""
+        data = selectors.get_member_dashboard_data(member_with_data.id, user)
+        segs = {s["name"]: s for s in data["negative_segments"]}
+        assert segs["tardiness"]["value"] == 3
+        assert segs["tardiness"]["pct"] == 100
+
+    def test_all_zero_values_give_zero_pct(self, user, member_with_data):
+        """When the table total is 0, segments report pct 0 (empty-state hook)."""
+        member_with_data.positive_data = {"homework": 0}
+        member_with_data.save()
+        data = selectors.get_member_dashboard_data(member_with_data.id, user)
+        assert data["positive_total"] == 0
+        assert all(s["pct"] == 0 for s in data["positive_segments"])
+
+    def test_text_fields_split_by_table(self, user, member_with_data):
+        group = member_with_data.group
+        FieldDefinition.objects.create(group=group, name="pos_note", type="str", definition="positive")
+        FieldDefinition.objects.create(group=group, name="neg_note", type="str", definition="negative")
+        data = selectors.get_member_dashboard_data(member_with_data.id, user)
+        assert {f.name for f in data["positive_text_fields"]} == {"pos_note"}
+        assert {f.name for f in data["negative_text_fields"]} == {"neg_note"}
+
+    def test_exposes_wheel_colors_palette(self, user, member_with_data):
+        data = selectors.get_member_dashboard_data(member_with_data.id, user)
+        from apps.point_system.models import Member
+
+        assert data["wheel_colors"] == Member.WHEEL_COLORS

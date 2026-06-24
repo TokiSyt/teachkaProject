@@ -44,7 +44,10 @@ LEADERBOARD = "leaderboard"
 ENDED = "ended"
 
 # Supported question types in play (drag_answer deferred — no builder UI).
-PLAYABLE_TYPES = {Round.SELECT_CORRECT, Round.TYPE_INPUT}
+PLAYABLE_TYPES = {Round.SELECT_CORRECT, Round.TRUE_FALSE, Round.TYPE_INPUT}
+
+# Types graded/distributed like "pick the correct option(s)".
+SELECT_LIKE = {Round.SELECT_CORRECT, Round.TRUE_FALSE}
 
 
 class LiveError(Exception):
@@ -110,11 +113,12 @@ def _build_rounds_snapshot(quiz) -> list[dict[str, Any]]:
             "focus_x": rnd.focus_x,
             "focus_y": rnd.focus_y,
         }
-        if rnd.question_type == Round.SELECT_CORRECT:
-            entry["answers"] = [{"id": a.id, "text": a.text} for a in answers[:4]]
-            entry["correct_ids"] = [a.id for a in answers[:4] if a.is_correct]
-            # Single-select when exactly one correct option (radio vs checkbox).
-            entry["single_select"] = len(entry["correct_ids"]) == 1
+        if rnd.question_type in SELECT_LIKE:
+            limit = 2 if rnd.question_type == Round.TRUE_FALSE else 4
+            entry["answers"] = [{"id": a.id, "text": a.text} for a in answers[:limit]]
+            entry["correct_ids"] = [a.id for a in answers[:limit] if a.is_correct]
+            # true_false is always single-select; select_correct when one correct.
+            entry["single_select"] = True if rnd.question_type == Round.TRUE_FALSE else len(entry["correct_ids"]) == 1
         else:  # TYPE_INPUT — any of several accepted answers
             entry["answers"] = []
             entry["accept_all"] = rnd.accept_all
@@ -164,6 +168,8 @@ def create_session(quiz, host, show_question_on_device: bool) -> GameSession:
         "num_rounds": str(len(rounds)),
         "show_question": "1" if show_question_on_device else "0",
         "round_started_at": "",
+        "streak_rate": str(quiz.streak_bonus_rate),
+        "streak_cap": str(quiz.streak_bonus_cap),
     }
     pipe = r.pipeline()
     pipe.delete(_k(code, "meta"), _k(code, "rounds"), _k(code, "participants"))
@@ -388,7 +394,7 @@ def _grade_one(round_def: dict[str, Any], value: Any) -> tuple[int, bool, bool]:
     points = round_def["points"]
     qtype = round_def["question_type"]
 
-    if qtype == Round.SELECT_CORRECT:
+    if qtype in SELECT_LIKE:
         correct = set(round_def.get("correct_ids", []))
         picked = set(value or []) if isinstance(value, list) else set()
         if not correct:
@@ -423,6 +429,16 @@ def lock_and_grade(code: str, round_idx: int) -> None:
         return
     round_def = rounds[round_idx]
 
+    # Per-quiz streak bonus (fractions); fall back to module defaults.
+    try:
+        rate = int(meta.get("streak_rate", "")) / 100
+    except ValueError:
+        rate = STREAK_BONUS_RATE
+    try:
+        cap = int(meta.get("streak_cap", "")) / 100
+    except ValueError:
+        cap = STREAK_BONUS_CAP
+
     answers = {tok: json.loads(raw).get("value") for tok, raw in r.hgetall(_k(code, f"answers:{round_idx}")).items()}
     participants = _all_participants(r, code)
     graded: dict[str, dict[str, Any]] = {}
@@ -434,7 +450,7 @@ def lock_and_grade(code: str, round_idx: int) -> None:
 
         if is_full:
             p["streak"] = p["streak"] + 1
-            bonus_frac = min(STREAK_BONUS_RATE * (p["streak"] - 1), STREAK_BONUS_CAP)
+            bonus_frac = min(rate * (p["streak"] - 1), cap)
             bonus = int(round(round_def["points"] * bonus_frac))
         elif earned:
             bonus = 0  # partial: streak held, no bonus
@@ -464,13 +480,13 @@ def lock_and_grade(code: str, round_idx: int) -> None:
 def _distribution(r: redis.Redis, code: str, round_def: dict[str, Any], round_idx: int) -> dict[str, Any]:
     """Answer breakdown for the reveal screen (host/projector)."""
     answers = [json.loads(raw).get("value") for raw in r.hgetall(_k(code, f"answers:{round_idx}")).values()]
-    if round_def["question_type"] == Round.SELECT_CORRECT:
+    if round_def["question_type"] in SELECT_LIKE:
         counts = {a["id"]: 0 for a in round_def["answers"]}
         for value in answers:
             for aid in value or []:
                 if aid in counts:
                     counts[aid] += 1
-        return {"type": Round.SELECT_CORRECT, "counts": counts, "answered": len(answers)}
+        return {"type": round_def["question_type"], "counts": counts, "answered": len(answers)}
     # type_input: how many got it right vs wrong (accept_all => every entry is right)
     if round_def.get("accept_all"):
         answered = sum(1 for v in answers if isinstance(v, str) and v.strip())
@@ -659,7 +675,7 @@ def reveal_payload(code: str, round_idx: int, *, role: str, token: str | None = 
         "round_idx": round_idx,
         "question_type": rdef["question_type"],
     }
-    if rdef["question_type"] == Round.SELECT_CORRECT:
+    if rdef["question_type"] in SELECT_LIKE:
         out["correct_ids"] = rdef.get("correct_ids", [])
     else:
         out["correct_texts"] = rdef.get("correct_texts", [])

@@ -985,3 +985,220 @@ class TestColumnReorderView:
             content_type="application/json",
         )
         assert resp.status_code == 404
+
+
+@pytest.mark.django_db
+class TestKarmaDashboardView:
+    """Tests for DashboardView (karma-dashboard, member deep-dive #59)."""
+
+    def test_owner_get_returns_200_with_member(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        response = authenticated_client.get(url)
+        assert response.status_code == 200
+        assert response.context["member"] == member_with_data
+        assert response.context["net"] == 7
+        assert member_with_data.name in response.content.decode()
+
+    def test_non_owner_get_returns_404(self, client, other_user, member_with_data):
+        client.force_login(other_user)
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        assert client.get(url).status_code == 404
+
+    def test_nonexistent_member_returns_404(self, authenticated_client):
+        url = reverse("karma:karma-dashboard", args=[999999])
+        assert authenticated_client.get(url).status_code == 404
+
+    def test_requires_login(self, client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        response = client.get(url)
+        assert response.status_code == 302
+        assert "login" in response.url
+
+    def test_renders_three_tabs_negative_default(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        html = authenticated_client.get(url).content.decode()
+        assert 'aria-label="Positive"' in html
+        assert 'aria-label="Negative"' in html
+        assert 'aria-label="Notes"' in html
+        assert 'data-default-tab="negative"' in html
+
+    def test_legend_shows_column_name_and_value(self, authenticated_client, member_with_data):
+        # Negative tab is default; tardiness=3 should appear in its legend.
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        html = authenticated_client.get(url).content.decode()
+        assert "tardiness" in html
+
+    def test_all_zero_shows_no_values_yet(self, authenticated_client, member_with_data):
+        member_with_data.positive_data = {"homework": 0}
+        member_with_data.negative_data = {"tardiness": 0}
+        member_with_data.save()
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        html = authenticated_client.get(url).content.decode()
+        assert "No values yet" in html
+
+    def test_no_columns_shows_add_cta(self, authenticated_client, user):
+        from apps.group_maker.models import GroupCreationModel
+
+        group = GroupCreationModel.objects.create(user=user, title="Bare", members_string="Solo")
+        member = group.karma_members.first()
+        url = reverse("karma:karma-dashboard", args=[member.id])
+        html = authenticated_client.get(url).content.decode()
+        cta = reverse("karma:new-column", args=[group.id])
+        assert cta in html
+
+    def test_positive_save_updates_only_positive(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        authenticated_client.post(
+            url,
+            {
+                "positive_save": "1",
+                f"{member_with_data.id}_positive_homework": "42",
+            },
+        )
+        member_with_data.refresh_from_db()
+        assert member_with_data.positive_data["homework"] == 42
+        assert member_with_data.negative_data == {"tardiness": 3}
+
+    def test_negative_save_updates_only_negative(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        authenticated_client.post(
+            url,
+            {
+                "negative_save": "1",
+                f"{member_with_data.id}_negative_tardiness": "5",
+            },
+        )
+        member_with_data.refresh_from_db()
+        assert member_with_data.negative_data["tardiness"] == 5
+        assert member_with_data.positive_data == {"homework": 10}
+
+    def test_unknown_column_ignored(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        authenticated_client.post(
+            url,
+            {
+                "positive_save": "1",
+                f"{member_with_data.id}_positive_ghost": "99",
+            },
+        )
+        member_with_data.refresh_from_db()
+        assert "ghost" not in member_with_data.positive_data
+
+    def test_save_updates_totals(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        authenticated_client.post(
+            url,
+            {
+                "positive_save": "1",
+                f"{member_with_data.id}_positive_homework": "50",
+            },
+        )
+        member_with_data.refresh_from_db()
+        assert member_with_data.positive_total == 50
+
+    def test_ajax_save_returns_204(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        resp = authenticated_client.post(
+            url,
+            {"positive_save": "1", f"{member_with_data.id}_positive_homework": "1"},
+            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
+        )
+        assert resp.status_code == 204
+
+    def test_non_ajax_save_redirects_to_dashboard(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        resp = authenticated_client.post(url, {"positive_save": "1"})
+        assert resp.status_code == 302
+        assert resp.url == url
+
+    def test_non_owner_post_returns_404(self, client, other_user, member_with_data):
+        client.force_login(other_user)
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        resp = client.post(url, {"positive_save": "1"})
+        assert resp.status_code == 404
+
+    def test_numeric_tabs_render_editable_form(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        html = authenticated_client.get(url).content.decode()
+        assert f'name="{member_with_data.id}_positive_homework"' in html
+        assert f'name="{member_with_data.id}_negative_tardiness"' in html
+        assert 'name="positive_save"' in html
+        assert 'name="negative_save"' in html
+
+    def test_notes_tab_renders_text_columns_from_both_tables(self, authenticated_client, member_with_data):
+        from apps.point_system.models import FieldDefinition
+
+        group = member_with_data.group
+        FieldDefinition.objects.create(group=group, name="pos_note", type="str", definition="positive")
+        FieldDefinition.objects.create(group=group, name="neg_note", type="str", definition="negative")
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        html = authenticated_client.get(url).content.decode()
+        assert f'name="{member_with_data.id}_positive_pos_note"' in html
+        assert f'name="{member_with_data.id}_negative_neg_note"' in html
+
+    def test_saving_a_note_persists(self, authenticated_client, member_with_data):
+        from apps.point_system.services.member_service import MemberService
+
+        group = member_with_data.group
+        MemberService.create_field(group, "comment", "str", "positive")
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        authenticated_client.post(
+            url,
+            {
+                "positive_save": "1",
+                f"{member_with_data.id}_positive_comment": "Great improvement",
+            },
+        )
+        member_with_data.refresh_from_db()
+        assert member_with_data.positive_data["comment"] == "Great improvement"
+
+    def test_notes_tab_empty_state(self, authenticated_client, member_with_data):
+        # Only numeric columns -> Notes tab shows the empty state.
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        html = authenticated_client.get(url).content.decode()
+        assert "No text columns yet" in html
+
+    def test_renders_autosave_toggle_and_dirty_modal(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        html = authenticated_client.get(url).content.decode()
+        assert 'id="dash-autosave-toggle"' in html
+        assert 'id="tab-dirty-modal"' in html
+
+    def test_color_save_updates_member_color(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        resp = authenticated_client.post(
+            url, {"color_save": "1", "color": "#3fc2f1"}, HTTP_X_REQUESTED_WITH="XMLHttpRequest"
+        )
+        assert resp.status_code == 204
+        member_with_data.refresh_from_db()
+        assert member_with_data.color == "#3fc2f1"
+
+    def test_invalid_color_is_ignored(self, authenticated_client, member_with_data):
+        member_with_data.color = "#d84c4c"
+        member_with_data.save()
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        authenticated_client.post(url, {"color_save": "1", "color": "red; drop"})
+        member_with_data.refresh_from_db()
+        assert member_with_data.color == "#d84c4c"
+
+    def test_renders_member_editor(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        html = authenticated_client.get(url).content.decode()
+        assert 'id="color-modal"' in html
+        assert 'name="member_save"' in html
+        assert 'name="name"' in html  # member name field
+
+    def test_member_save_updates_name(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        authenticated_client.post(url, {"member_save": "1", "name": "Renamed", "color": "#3fc2f1"})
+        member_with_data.refresh_from_db()
+        assert member_with_data.name == "Renamed"
+        assert member_with_data.color == "#3fc2f1"
+
+    def test_member_save_blank_name_ignored(self, authenticated_client, member_with_data):
+        original = member_with_data.name
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        authenticated_client.post(url, {"member_save": "1", "name": "  ", "color": "#3fc2f1"})
+        member_with_data.refresh_from_db()
+        assert member_with_data.name == original
+        assert member_with_data.color == "#3fc2f1"

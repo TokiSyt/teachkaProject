@@ -22,6 +22,10 @@ class Quiz(UserOwnedModel):
     visibility = models.CharField(max_length=7, choices=VISIBILITY_CHOICES, default=PUBLIC)
     saved_count = models.IntegerField(default=0)
     expected_duration = models.IntegerField(default=1, help_text="Expected duration in minutes")
+    # Streak bonus: extra % of a round's points per consecutive full-correct
+    # beyond the first, capped at streak_bonus_cap (0 disables the bonus).
+    streak_bonus_rate = models.PositiveSmallIntegerField(default=10, help_text="Bonus % added per extra streak")
+    streak_bonus_cap = models.PositiveSmallIntegerField(default=50, help_text="Max bonus % (≤100)")
 
     class Meta:
         verbose_name_plural = "Quizzes"
@@ -40,10 +44,12 @@ class Quiz(UserOwnedModel):
 
 class Round(TimestampedModel):
     SELECT_CORRECT = "select_correct"
+    TRUE_FALSE = "true_false"
     TYPE_INPUT = "type_input"
     DRAG_ANSWER = "drag_answer"
     QUESTION_TYPE_CHOICES = [
         (SELECT_CORRECT, _("Pick the correct answer")),
+        (TRUE_FALSE, _("True or false")),
         (TYPE_INPUT, _("Write the answer")),
         (DRAG_ANSWER, _("Drag the answer into the blank")),
     ]
@@ -71,7 +77,7 @@ class Round(TimestampedModel):
     @property
     def has_correct_answer(self) -> bool:
         """Whether this round's correct answer is defined (so it can be played)."""
-        if self.question_type == self.SELECT_CORRECT:
+        if self.question_type in (self.SELECT_CORRECT, self.TRUE_FALSE):
             return any(a.is_correct for a in self.answers.all())
         if self.question_type == self.TYPE_INPUT:
             # accept_all makes the round playable without any defined answer.

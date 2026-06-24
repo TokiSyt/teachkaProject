@@ -1,0 +1,331 @@
+{% extends "base.html" %}
+{% load i18n custom_tags %}
+
+{% block title %}{{ member.name }} · {% trans "Dashboard" %} · Teachka{% endblock title %}
+
+{% block content %}
+
+  <!-- ── HEADER ── -->
+  <section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
+    <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
+      <i data-lucide="user-round" class="text-primary" style="width:180px;height:180px;"></i>
+    </div>
+
+    <div class="relative z-10">
+      <a href="{% url 'karma:karma-home' %}?group_id={{ group.id }}"
+         class="drift drift-1 inline-flex items-center gap-1.5 text-[11px] tracking-[2px] uppercase text-base-content/40 hover:text-primary transition-colors mb-5">
+        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+        {% trans "Back to group" %}
+      </a>
+
+      <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-3">
+        {% trans "Karma" %} · {{ group.title }}
+      </p>
+
+      <h1 class="drift drift-2 serif font-medium leading-none tracking-tight flex items-center gap-3" style="font-size: clamp(32px, 4.5vw, 52px);">
+        <button type="button"
+                onclick="document.getElementById('color-modal').showModal()"
+                class="inline-block w-7 h-7 md:w-9 md:h-9 rounded-full shrink-0 border border-base-300 hover:ring-2 hover:ring-offset-2 hover:ring-offset-base-100 transition cursor-pointer"
+                style="background: {{ member.color|default:'var(--color-primary)' }}; --tw-ring-color: {{ member.color|default:'var(--color-primary)' }};"
+                title="{% trans 'Edit member' %}" aria-label="{% trans 'Edit member' %}"></button>
+        <span class="text-base-content/80">{{ member.name }}</span>
+        <button type="button"
+                onclick="document.getElementById('color-modal').showModal()"
+                class="btn btn-ghost btn-sm btn-circle text-base-content/40 hover:text-primary self-center"
+                title="{% trans 'Edit member' %}" aria-label="{% trans 'Edit member' %}">
+          <i data-lucide="pencil" class="w-4 h-4"></i>
+        </button>
+      </h1>
+
+      <!-- Totals -->
+      <div class="drift drift-3 stats stats-horizontal shadow-sm border border-base-300 bg-base-100 mt-7">
+        <div class="stat py-3 px-5">
+          <div class="stat-title text-[10px] uppercase tracking-widest">{% trans "Positive" %}</div>
+          <div class="stat-value text-2xl serif text-success tabular-nums" data-stat="positive">{{ positive_total }}</div>
+        </div>
+        <div class="stat py-3 px-5">
+          <div class="stat-title text-[10px] uppercase tracking-widest">{% trans "Negative" %}</div>
+          <div class="stat-value text-2xl serif text-error tabular-nums" data-stat="negative">{{ negative_total }}</div>
+        </div>
+        <div class="stat py-3 px-5">
+          <div class="stat-title text-[10px] uppercase tracking-widest">{% trans "Net" %}</div>
+          <div class="stat-value text-2xl serif tabular-nums {% if net < 0 %}text-error{% else %}text-primary{% endif %}" data-stat="net">{{ net }}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BREAKDOWN ── -->
+  <section class="px-5 py-8 md:px-14">
+
+    <div class="flex items-center justify-between mb-5 flex-wrap gap-3">
+      <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30">{% trans "Breakdown" %}</p>
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" id="dash-autosave-toggle" class="toggle toggle-sm toggle-primary" />
+        <span class="text-[11px] tracking-[1px] uppercase text-base-content/50">{% trans "Autosave" %}</span>
+        <span id="dash-autosave-status" class="text-[10px] text-base-content/30 italic"></span>
+      </label>
+    </div>
+
+    <div role="tablist" class="flex flex-wrap gap-2" data-default-tab="negative"
+         data-autosave-key="karma-dash-autosave-{{ member.id }}">
+      <a role="tab" class="btn btn-ghost btn-sm gap-2 cursor-pointer" data-tab="negative" data-hue="error" aria-label="{% trans 'Negative' %}">
+        <span class="w-1.5 h-1.5 rounded-full bg-error"></span>{% trans "Negative" %}
+      </a>
+      <a role="tab" class="btn btn-ghost btn-sm gap-2 cursor-pointer" data-tab="positive" data-hue="success" aria-label="{% trans 'Positive' %}">
+        <span class="w-1.5 h-1.5 rounded-full bg-success"></span>{% trans "Positive" %}
+      </a>
+      <a role="tab" class="btn btn-ghost btn-sm gap-2 cursor-pointer" data-tab="notes" data-hue="primary" aria-label="{% trans 'Notes' %}">
+        <i data-lucide="sticky-note" class="w-3.5 h-3.5"></i>{% trans "Notes" %}
+      </a>
+    </div>
+
+    <!-- Negative (default) -->
+    <div role="tabpanel" data-tab-panel="negative"
+         class="mt-5 rounded-2xl border-2 p-4 md:p-6"
+         style="border-color: color-mix(in oklch, var(--color-error) 30%, transparent); background: color-mix(in oklch, var(--color-error) 5%, transparent);">
+      {% include "point_system/_dashboard_bar.html" with fields=negative_fields segments=negative_segments total=negative_total table="negative" hue="error" %}
+    </div>
+    <!-- Positive -->
+    <div role="tabpanel" data-tab-panel="positive"
+         class="mt-5 rounded-2xl border-2 p-4 md:p-6 hidden"
+         style="border-color: color-mix(in oklch, var(--color-success) 30%, transparent); background: color-mix(in oklch, var(--color-success) 5%, transparent);">
+      {% include "point_system/_dashboard_bar.html" with fields=positive_fields segments=positive_segments total=positive_total table="positive" hue="success" %}
+    </div>
+    <!-- Notes -->
+    <div role="tabpanel" data-tab-panel="notes"
+         class="mt-5 rounded-2xl border-2 p-4 md:p-6 hidden"
+         style="border-color: color-mix(in oklch, var(--color-primary) 30%, transparent); background: color-mix(in oklch, var(--color-primary) 5%, transparent);">
+      {% include "point_system/_dashboard_notes.html" %}
+    </div>
+  </section>
+
+  <!-- ── MEMBER EDITOR MODAL (name + color) ── -->
+  <dialog id="color-modal" class="modal">
+    <div class="modal-box max-w-md rounded-2xl border border-base-300 bg-base-100">
+      <h2 class="serif font-medium leading-none tracking-tight text-2xl mb-5">
+        <span class="text-primary">{% trans "Edit" %}</span>
+        <span class="text-base-content/60">{% trans "member" %}</span>
+      </h2>
+
+      <form method="post" id="color-form">
+        {% csrf_token %}
+        <div class="mb-5">
+          <label for="member-name-input" class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">{% trans "Name" %}</label>
+          <input type="text" id="member-name-input" name="name" value="{{ member.name }}" maxlength="50" required
+                 class="input input-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full" />
+        </div>
+        <label class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">{% trans "Color" %}</label>
+        <div class="flex flex-wrap gap-2 mb-5 justify-center">
+          {% for c in wheel_colors %}
+            <button type="button" data-color="{{ c }}"
+                    class="w-7 h-7 shrink-0 rounded-full border border-base-300 hover:scale-110 transition cursor-pointer"
+                    style="background: {{ c }};" aria-label="{{ c }}"></button>
+          {% endfor %}
+        </div>
+
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 text-[11px] tracking-[1px] uppercase text-base-content/50">
+            {% trans "Custom" %}
+            <input type="color" name="color" id="color-input"
+                   value="{% if member.color %}{{ member.color }}{% else %}#888888{% endif %}"
+                   class="w-9 h-9 rounded-lg border border-base-300 bg-base-100 cursor-pointer p-0.5" />
+          </label>
+          <button type="submit" name="member_save" value="1" class="btn-as-link">
+            <i data-lucide="check" class="w-4 h-4"></i> {% trans "Save" %}
+          </button>
+          <button type="button" class="btn-as-link-ghost ml-auto"
+                  onclick="document.getElementById('color-modal').close()">{% trans "Cancel" %}</button>
+        </div>
+      </form>
+    </div>
+    <form method="dialog" class="modal-backdrop"><button>close</button></form>
+  </dialog>
+
+  <!-- ── UNSAVED-CHANGES MODAL (tab switch guard) ── -->
+  <dialog id="tab-dirty-modal" class="modal">
+    <div class="modal-box max-w-sm rounded-2xl border border-base-300 bg-base-100">
+      <h2 class="serif font-medium leading-none tracking-tight text-2xl mb-3">
+        <span class="text-primary">{% trans "Unsaved" %}</span>
+        <span class="text-base-content/60">{% trans "changes" %}</span>
+      </h2>
+      <p class="text-sm text-base-content/70 mb-6">{% trans "You have unsaved edits. Save before switching?" %}</p>
+      <div class="flex items-center gap-3">
+        <button type="button" data-dirty="save" class="btn-as-link">{% trans "Save" %}</button>
+        <button type="button" data-dirty="discard" class="btn-as-link-ghost">{% trans "Discard" %}</button>
+        <button type="button" data-dirty="cancel" class="btn-as-link-ghost ml-auto">{% trans "Cancel" %}</button>
+      </div>
+    </div>
+    <form method="dialog" class="modal-backdrop"><button>close</button></form>
+  </dialog>
+
+  <script>
+  // Color editor: palette swatch -> set the custom color input.
+  (function () {
+    const input = document.getElementById('color-input');
+    if (!input) return;
+    document.querySelectorAll('#color-form [data-color]').forEach(function (b) {
+      b.addEventListener('click', function () { input.value = b.dataset.color; });
+    });
+  })();
+
+  (function () {
+    const tablist = document.querySelector('[data-default-tab]');
+    if (!tablist) return;
+    const tabs = [...tablist.querySelectorAll('[data-tab]')];
+    const panels = [...document.querySelectorAll('[data-tab-panel]')];
+    const forms = [...document.querySelectorAll('form[data-dash-form]')];
+    const toggle = document.getElementById('dash-autosave-toggle');
+    const status = document.getElementById('dash-autosave-status');
+    const modal = document.getElementById('tab-dirty-modal');
+    const KEY = tablist.dataset.autosaveKey || 'karma-dash-autosave';
+    const DEBOUNCE_MS = 1500;
+
+    const T = {
+      enabled: "{% trans 'enabled' %}", pending: "{% trans 'pending…' %}",
+      saving: "{% trans 'saving…' %}", saved: "{% trans 'saved' %}",
+      failed: "{% trans 'save failed, refresh page' %}",
+    };
+    function setStatus(t) { if (status) status.textContent = t ? '· ' + t : ''; }
+
+    const dirty = new Map();
+    let timer = null;
+    let submitting = false;
+
+    toggle.checked = localStorage.getItem(KEY) === '1';
+    setStatus(toggle.checked ? T.enabled : '');
+    toggle.addEventListener('change', function () {
+      localStorage.setItem(KEY, toggle.checked ? '1' : '0');
+      setStatus(toggle.checked ? T.enabled : '');
+      if (toggle.checked && dirty.size) schedule();
+    });
+
+    forms.forEach(function (form) {
+      form.addEventListener('input', function () {
+        dirty.set(form.dataset.dashForm, form);
+        recompute(form);  // live-update bar/legend/totals without a reload
+        if (toggle.checked) { setStatus(T.pending); schedule(); }
+      });
+      form.addEventListener('submit', function () { submitting = true; dirty.delete(form.dataset.dashForm); });
+    });
+
+    // --- live breakdown recompute (numeric tables only) ---
+    const totals = {
+      positive: parseInt((document.querySelector('[data-stat="positive"]') || {}).textContent, 10) || 0,
+      negative: parseInt((document.querySelector('[data-stat="negative"]') || {}).textContent, 10) || 0,
+    };
+    function recompute(form) {
+      const table = form.dataset.dashForm;
+      const numbers = [...form.querySelectorAll('input[type="number"]')];
+      if (!numbers.length) return;  // notes form -> nothing to recompute
+      const panel = document.querySelector('[data-tab-panel="' + table + '"]');
+      let total = 0;
+      const vals = numbers.map(function (inp) {
+        const marker = '_' + table + '_';
+        const i = inp.name.indexOf(marker);
+        const col = i >= 0 ? inp.name.slice(i + marker.length) : inp.name;
+        let v = parseInt(inp.value, 10); if (isNaN(v) || v < 0) v = 0;
+        total += v; return [col, v];
+      });
+      if (panel) {
+        vals.forEach(function (pair) {
+          const col = pair[0], v = pair[1];
+          const pct = total ? Math.round(v / total * 100) : 0;
+          panel.querySelectorAll('[data-seg-bar]').forEach(function (b) { if (b.dataset.segBar === col) b.style.width = pct + '%'; });
+          panel.querySelectorAll('[data-seg-value]').forEach(function (s) { if (s.dataset.segValue === col) s.textContent = v; });
+          panel.querySelectorAll('[data-seg-pct]').forEach(function (s) { if (s.dataset.segPct === col) s.textContent = pct + '%'; });
+        });
+        const tot = panel.querySelector('[data-bar-total]'); if (tot) tot.textContent = total;
+        const hint = panel.querySelector('[data-empty-hint]'); if (hint) hint.classList.toggle('hidden', total > 0);
+      }
+      totals[table] = total;
+      const stat = document.querySelector('[data-stat="' + table + '"]'); if (stat) stat.textContent = total;
+      const net = (totals.positive || 0) - (totals.negative || 0);
+      const netEl = document.querySelector('[data-stat="net"]');
+      if (netEl) {
+        netEl.textContent = net;
+        netEl.classList.toggle('text-error', net < 0);
+        netEl.classList.toggle('text-primary', net >= 0);
+      }
+    }
+
+    function schedule() { clearTimeout(timer); timer = setTimeout(saveDirty, DEBOUNCE_MS); }
+
+    async function saveDirty() {
+      if (!dirty.size) return true;
+      setStatus(T.saving);
+      let failed = false;
+      for (const [table, form] of [...dirty.entries()]) {
+        try {
+          const fd = new FormData(form);
+          fd.set(table + '_save', '1');
+          const res = await fetch(window.location.pathname, {
+            method: 'POST', body: fd,
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            credentials: 'same-origin',
+          });
+          if (res.ok) dirty.delete(table); else failed = true;
+        } catch (e) { failed = true; }
+      }
+      setStatus(failed ? T.failed : T.saved + ' ' + new Date().toLocaleTimeString());
+      return !failed;
+    }
+
+    // --- tab switching + dirty guard ---
+    // Tabs share the column-action button style (btn btn-ghost btn-sm); the
+    // selected one is marked with btn-active.
+    let pendingTab = null;
+    const TAB_KEY = 'karma-dash-tab-' + KEY;
+    function activate(name) {
+      try { localStorage.setItem(TAB_KEY, name); } catch (e) {}
+      tabs.forEach(function (t) {
+        const on = t.dataset.tab === name;
+        t.classList.toggle('btn-active', on);
+        // Selected tab gets a hue-tinted ring, mirroring the section frame.
+        if (on) {
+          t.style.boxShadow = 'inset 0 0 0 2px color-mix(in oklch, var(--color-' + t.dataset.hue + ') 45%, transparent)';
+          t.style.background = 'color-mix(in oklch, var(--color-' + t.dataset.hue + ') 12%, transparent)';
+        } else {
+          t.style.boxShadow = '';
+          t.style.background = '';
+        }
+      });
+      panels.forEach(function (p) { p.classList.toggle('hidden', p.dataset.tabPanel !== name); });
+    }
+    // Restore the last-viewed tab (so a manual save reload stays put).
+    let initialTab = tablist.dataset.defaultTab || 'negative';
+    try {
+      const saved = localStorage.getItem(TAB_KEY);
+      if (saved && tabs.some(function (t) { return t.dataset.tab === saved; })) initialTab = saved;
+    } catch (e) {}
+    activate(initialTab);
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (tab.classList.contains('btn-active')) return;
+        if (dirty.size) { pendingTab = tab.dataset.tab; modal.showModal(); }
+        else activate(tab.dataset.tab);
+      });
+    });
+    function go() { if (pendingTab) { activate(pendingTab); pendingTab = null; } }
+
+    modal?.querySelector('[data-dirty="save"]')?.addEventListener('click', async function () {
+      const ok = await saveDirty();
+      modal.close();
+      if (ok) go(); else pendingTab = null;
+    });
+    modal?.querySelector('[data-dirty="discard"]')?.addEventListener('click', function () {
+      dirty.forEach(function (form) { form.reset(); });
+      dirty.clear(); setStatus(''); modal.close(); go();
+    });
+    modal?.querySelector('[data-dirty="cancel"]')?.addEventListener('click', function () {
+      pendingTab = null; modal.close();
+    });
+
+    window.addEventListener('beforeunload', function (e) {
+      if (!submitting && dirty.size) { e.preventDefault(); e.returnValue = ''; }
+    });
+  })();
+  </script>
+
+{% endblock content %}

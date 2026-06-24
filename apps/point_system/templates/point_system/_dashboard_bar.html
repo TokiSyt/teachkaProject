@@ -1,0 +1,72 @@
+{% load i18n custom_tags %}
+{% comment %}
+Stacked-bar + legend + edit form for one table (positive/negative).
+Context: segments [{name,value,pct,color}], total, table ("positive"/"negative"),
+hue ("success"/"negative" accent), member, group.
+States: no numeric columns -> CTA; columns but all-zero -> "No values yet".
+{% endcomment %}
+
+{% if not segments %}
+  <!-- No-columns state -->
+  <div class="card bg-base-100 border border-base-300 border-dashed">
+    <div class="card-body items-center text-center py-10">
+      <i data-lucide="bar-chart-3" class="w-8 h-8 text-base-content/20 mb-1"></i>
+      <p class="text-sm text-base-content/50 font-light">{% trans "No columns in this table yet." %}</p>
+      <a href="{% url 'karma:new-column' group.id %}?table={{ table }}" class="btn-as-link mt-2">
+        <i data-lucide="plus" class="w-4 h-4"></i> {% trans "Add a column" %}
+      </a>
+    </div>
+  </div>
+
+{% else %}
+  <!-- Visualization -->
+  <div class="card bg-base-100 border border-base-300 mb-4" data-bar-card="{{ table }}">
+    <div class="card-body p-5 md:p-6">
+      <div class="flex items-end justify-between mb-3">
+        <p class="text-[10px] tracking-[2px] uppercase text-base-content/40">{% trans "Column breakdown" %}</p>
+        <span class="serif text-2xl font-medium text-{{ hue }} tabular-nums leading-none" data-bar-total>{{ total }}</span>
+      </div>
+      <!-- Stacked bar -->
+      <div class="w-full h-6 rounded-full overflow-hidden flex border border-base-300 bg-base-200">
+        {% for seg in segments %}
+          <div data-seg-bar="{{ seg.name }}" style="width: {{ seg.pct }}%; background: {{ seg.color }};" title="{{ seg.name }}: {{ seg.value }}"></div>
+        {% endfor %}
+      </div>
+      <p data-empty-hint class="text-center text-sm text-base-content/40 font-light mt-4 {% if total %}hidden{% endif %}">{% trans "No values yet" %}</p>
+      <!-- Legend -->
+      <ul class="mt-5 divide-y divide-base-200">
+        {% for seg in segments %}
+          <li class="flex items-center gap-3 py-2">
+            <span class="inline-block w-2.5 h-2.5 rounded-full shrink-0" style="background: {{ seg.color }};"></span>
+            <span class="flex-1 min-w-0 truncate text-sm text-base-content/70">{{ seg.name }}</span>
+            <span class="text-[10px] tracking-[1px] uppercase text-base-content/30 tabular-nums" data-seg-pct="{{ seg.name }}">{{ seg.pct }}%</span>
+            <span class="w-12 text-right serif font-medium text-base-content/80 tabular-nums" data-seg-value="{{ seg.name }}">{{ seg.value }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <!-- Edit form (manual save; autosave wiring in dashboard.html) -->
+  <form method="post" data-dash-form="{{ table }}">
+    {% csrf_token %}
+    <div class="card bg-base-100 border border-base-300">
+      <div class="card-body p-0 divide-y divide-base-300">
+        {% for seg in segments %}
+          <div class="px-5 py-3 flex items-center gap-4">
+            <span class="flex-1 min-w-0 truncate text-sm text-base-content/70">{{ seg.name }}</span>
+            <input type="number" min="0" inputmode="numeric"
+                   name="{{ member.id }}_{{ table }}_{{ seg.name }}"
+                   value="{{ seg.value }}"
+                   class="input input-bordered input-sm w-24 text-right tabular-nums" />
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="mt-4">
+      <button type="submit" name="{{ table }}_save" value="1" class="btn-as-link">
+        <i data-lucide="check" class="w-4 h-4"></i> {% trans "Save" %}
+      </button>
+    </div>
+  </form>
+{% endif %}

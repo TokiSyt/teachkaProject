@@ -219,6 +219,35 @@
                     {% endif %}
                   {% endfor %}
                 </div>
+              {% elif r.question_type == "true_false" %}
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 shrink-0"
+                     data-single
+                     data-answer-update-base="{% url 'quizzmaker:answer_update' quiz.pk 0 %}">
+                  {% for ans in r.answers.all %}
+                    {% if forloop.counter <= 2 %}
+                      <div class="border-2 border-base-300 rounded-xl px-4 py-6 sm:px-7 sm:py-8 flex items-center gap-3 sm:gap-5 hover:border-primary transition has-[:checked]:border-primary has-[:checked]:bg-primary/5"
+                           data-answer-pk="{{ ans.pk }}">
+                        <label class="relative flex items-center justify-center cursor-pointer shrink-0 w-7 h-7" title="{% trans 'Mark as correct' %}">
+                          <input type="checkbox"
+                                 class="peer sr-only"
+                                 data-answer-correct
+                                 {% if ans.is_correct %}checked{% endif %} />
+                          <span class="absolute inset-0 rounded-full border-2 border-base-300 transition peer-checked:border-primary"></span>
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                               class="relative w-4 h-4 opacity-0 peer-checked:opacity-100 transition pointer-events-none" style="color: var(--color-primary);">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                          </svg>
+                        </label>
+                        <span class="serif text-2xl sm:text-4xl text-primary shrink-0">
+                          {% if forloop.counter == 1 %}{% trans "True" %}{% else %}{% trans "False" %}{% endif %}
+                        </span>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                <p class="text-[10px] tracking-[2px] uppercase text-base-content/40 mt-1 text-center shrink-0">
+                  {% trans "Pick the correct one. Players choose True or False." %}
+                </p>
               {% elif r.question_type == "type_input" and r.accept_all %}
                 <div class="shrink-0 mb-16 w-full max-w-4xl mx-auto text-center">
                   <div class="inline-flex flex-col items-center gap-2 rounded-2xl border-2 border-dashed border-base-300 px-8 py-6">
@@ -588,6 +617,37 @@
               <option value="private" {% if quiz.visibility == "private" %}selected{% endif %}>{% trans "Private" %}</option>
             </select>
           </div>
+
+          <div class="rounded-xl border-2 border-base-300 bg-base-200/50 px-4 py-4 space-y-3" id="streak-settings">
+            <div class="flex items-center gap-2">
+              <i data-lucide="flame" class="w-4 h-4 text-primary"></i>
+              <p class="text-[11px] tracking-[2px] uppercase font-bold text-base-content/50">{% trans "Streak bonus" %}</p>
+            </div>
+            <p class="text-xs text-base-content/50">
+              {% trans "Extra points for consecutive correct answers, as a % of each round's points." %}
+            </p>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label for="id_streak_bonus_rate" class="block text-[10px] tracking-[1px] uppercase font-bold text-base-content/40 mb-1">
+                  {% trans "Per streak" %} (%)
+                </label>
+                <input type="number" name="streak_bonus_rate" id="id_streak_bonus_rate"
+                       value="{{ quiz.streak_bonus_rate }}" min="0" max="100"
+                       class="input input-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full" />
+              </div>
+              <div>
+                <label for="id_streak_bonus_cap" class="block text-[10px] tracking-[1px] uppercase font-bold text-base-content/40 mb-1">
+                  {% trans "Max bonus" %} (%)
+                </label>
+                <input type="number" name="streak_bonus_cap" id="id_streak_bonus_cap"
+                       value="{{ quiz.streak_bonus_cap }}" min="0" max="100"
+                       class="input input-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full" />
+              </div>
+            </div>
+            <div id="streak-preview" class="flex flex-wrap gap-1.5"
+                 data-max-label="{% trans 'max' %}"
+                 data-off-label="{% trans 'Streak bonus off' %}"></div>
+          </div>
         </div>
 
         <div class="flex items-center gap-3 mt-7">
@@ -688,6 +748,7 @@
       const grid = document.querySelector("[data-answer-update-base]");
       if (!grid) return;
       const baseUrl = grid.dataset.answerUpdateBase;
+      const single = grid.hasAttribute("data-single");  // true_false: radio behaviour
       const csrf = document.querySelector("[name=csrfmiddlewaretoken]")?.value;
 
       function urlFor(pk) { return baseUrl.replace(/\/0\/$/, `/${pk}/`); }
@@ -743,17 +804,31 @@
         }
 
         let saveTimer;
-        txt.addEventListener("input", () => {
-          refreshMarker();
-          clearTimeout(saveTimer);
-          saveTimer = setTimeout(() => send(pk, "text=" + encodeURIComponent(txt.value)), 400);
-        });
-        txt.addEventListener("blur", () => {
-          clearTimeout(saveTimer);
-          send(pk, "text=" + encodeURIComponent(txt.value));
-        });
+        if (txt) {  // true_false cards have no editable text, only the correct toggle
+          txt.addEventListener("input", () => {
+            refreshMarker();
+            clearTimeout(saveTimer);
+            saveTimer = setTimeout(() => send(pk, "text=" + encodeURIComponent(txt.value)), 400);
+          });
+          txt.addEventListener("blur", () => {
+            clearTimeout(saveTimer);
+            send(pk, "text=" + encodeURIComponent(txt.value));
+          });
+        }
         if (chk) {
           chk.addEventListener("change", () => {
+            // Single-select (true_false): checking one clears the other.
+            if (single && chk.checked) {
+              grid.querySelectorAll("[data-answer-pk]").forEach((other) => {
+                if (other === card) return;
+                const oc = other.querySelector("[data-answer-correct]");
+                if (oc && oc.checked) {
+                  oc.checked = false;
+                  setMarker(other.dataset.answerPk, false);
+                  send(other.dataset.answerPk, "is_correct=0");
+                }
+              });
+            }
             refreshMarker();
             send(pk, "is_correct=" + (chk.checked ? "1" : "0"));
           });
@@ -811,6 +886,54 @@
         select.addEventListener("change", sync);
         sync();
       });
+    })();
+
+    // Live preview of the streak bonus: a chip per consecutive correct showing
+    // the % bonus it grants, until the cap is hit.
+    (function () {
+      const preview = document.getElementById("streak-preview");
+      const rateEl = document.getElementById("id_streak_bonus_rate");
+      const capEl = document.getElementById("id_streak_bonus_cap");
+      if (!preview || !rateEl || !capEl) return;
+      const MAX_LABEL = preview.dataset.maxLabel || "max";
+      const OFF_LABEL = preview.dataset.offLabel || "Streak bonus off";
+
+      function clamp(el) {
+        let v = parseInt(el.value, 10);
+        if (isNaN(v) || v < 0) v = 0;
+        if (v > 100) v = 100;
+        el.value = v;
+        return v;
+      }
+
+      function chip(text, max) {
+        const cls = max
+          ? "bg-primary text-white"
+          : "bg-base-100 border border-base-300 text-base-content/70";
+        return `<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold ${cls}">${text}</span>`;
+      }
+
+      function render() {
+        const rate = clamp(rateEl);
+        const cap = clamp(capEl);
+        if (rate === 0 || cap === 0) {
+          preview.innerHTML = `<span class="text-[11px] text-base-content/40">${OFF_LABEL}</span>`;
+          return;
+        }
+        const chips = [];
+        for (let streak = 2; streak <= 8; streak++) {
+          const raw = rate * (streak - 1);
+          const bonus = Math.min(raw, cap);
+          const atMax = raw >= cap;
+          chips.push(chip(`×${streak} +${bonus}%${atMax ? " · " + MAX_LABEL : ""}`, atMax));
+          if (atMax) break;  // every later streak stays at the cap
+        }
+        preview.innerHTML = chips.join("");
+      }
+
+      rateEl.addEventListener("input", render);
+      capEl.addEventListener("input", render);
+      render();
     })();
   </script>
 

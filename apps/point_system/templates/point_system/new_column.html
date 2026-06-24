@@ -18,14 +18,14 @@
     </a>
 
     <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
-      <span class="text-primary">{% trans "New" %}</span>
+      <span class="text-primary">{% trans "New" context "column" %}</span>
       <span class="text-base-content/25">{% trans "column" %}</span>
     </h1>
 
     <div class="drift drift-3 flex flex-wrap items-center gap-3">
       <span class="inline-flex items-center gap-2 text-[11px] tracking-[2px] uppercase text-base-content/30">
         <span class="w-1.5 h-1.5 rounded-full {% if field_definition == 'negative' %}bg-error{% else %}bg-success{% endif %}"></span>
-        {{ field_definition|capfirst }} {% trans "table" %}
+        {% if field_definition == 'negative' %}{% trans "Negative table" %}{% else %}{% trans "Positive table" %}{% endif %}
       </span>
     </div>
     </div>
