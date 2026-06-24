@@ -376,3 +376,41 @@ class TestGetMemberDashboardData:
         data = selectors.get_member_dashboard_data(member_with_data.id, user)
         assert {f.name for f in data["positive_fields"]} == {"homework"}
         assert {f.name for f in data["negative_fields"]} == {"tardiness"}
+
+    def test_positive_segments_built_from_numeric_columns(self, user, member_with_data):
+        """positive_segments: one entry per numeric positive column with value+pct+color."""
+        group = member_with_data.group
+        FieldDefinition.objects.create(group=group, name="bonus", type="int", definition="positive", order=2)
+        member_with_data.positive_data = {"homework": 30, "bonus": 10}
+        member_with_data.save()
+        data = selectors.get_member_dashboard_data(member_with_data.id, user)
+        segs = {s["name"]: s for s in data["positive_segments"]}
+        assert segs["homework"]["value"] == 30
+        assert segs["bonus"]["value"] == 10
+        assert segs["homework"]["pct"] == 75
+        assert segs["bonus"]["pct"] == 25
+        assert segs["homework"]["color"] and segs["bonus"]["color"]
+
+    def test_segments_exclude_text_columns(self, user, member_with_data):
+        """Text (str) columns are not bar segments — they belong to Notes."""
+        group = member_with_data.group
+        FieldDefinition.objects.create(group=group, name="comment", type="str", definition="positive")
+        data = selectors.get_member_dashboard_data(member_with_data.id, user)
+        names = {s["name"] for s in data["positive_segments"]}
+        assert "comment" not in names
+        assert "homework" in names
+
+    def test_negative_segments_built(self, user, member_with_data):
+        """negative_segments mirror positive_segments for the negative table."""
+        data = selectors.get_member_dashboard_data(member_with_data.id, user)
+        segs = {s["name"]: s for s in data["negative_segments"]}
+        assert segs["tardiness"]["value"] == 3
+        assert segs["tardiness"]["pct"] == 100
+
+    def test_all_zero_values_give_zero_pct(self, user, member_with_data):
+        """When the table total is 0, segments report pct 0 (empty-state hook)."""
+        member_with_data.positive_data = {"homework": 0}
+        member_with_data.save()
+        data = selectors.get_member_dashboard_data(member_with_data.id, user)
+        assert data["positive_total"] == 0
+        assert all(s["pct"] == 0 for s in data["positive_segments"])

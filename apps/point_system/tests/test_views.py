@@ -1013,3 +1013,34 @@ class TestKarmaDashboardView:
         response = client.get(url)
         assert response.status_code == 302
         assert "login" in response.url
+
+    def test_renders_three_tabs_negative_default(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        html = authenticated_client.get(url).content.decode()
+        assert 'aria-label="Positive"' in html
+        assert 'aria-label="Negative"' in html
+        assert 'aria-label="Notes"' in html
+        assert 'data-default-tab="negative"' in html
+
+    def test_legend_shows_column_name_and_value(self, authenticated_client, member_with_data):
+        # Negative tab is default; tardiness=3 should appear in its legend.
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        html = authenticated_client.get(url).content.decode()
+        assert "tardiness" in html
+
+    def test_all_zero_shows_no_values_yet(self, authenticated_client, member_with_data):
+        member_with_data.positive_data = {"homework": 0}
+        member_with_data.negative_data = {"tardiness": 0}
+        member_with_data.save()
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        html = authenticated_client.get(url).content.decode()
+        assert "No values yet" in html
+
+    def test_no_columns_shows_add_cta(self, authenticated_client, user):
+        from apps.group_maker.models import GroupCreationModel
+        group = GroupCreationModel.objects.create(user=user, title="Bare", members_string="Solo")
+        member = group.karma_members.first()
+        url = reverse("karma:karma-dashboard", args=[member.id])
+        html = authenticated_client.get(url).content.decode()
+        cta = reverse("karma:new-column", args=[group.id])
+        assert cta in html

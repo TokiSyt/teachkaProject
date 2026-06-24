@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n custom_tags %}
 
 {% block title %}{{ member.name }} · {% trans "Dashboard" %} · Teachka{% endblock title %}
 
@@ -41,6 +41,31 @@
           <p class="serif text-2xl md:text-3xl font-medium tabular-nums {% if net < 0 %}text-error{% else %}text-base-content/80{% endif %}">{{ net }}</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ── TABS ── -->
+  <section class="px-5 py-8 md:px-14">
+    <div role="tablist" class="tabs tabs-bordered" data-default-tab="negative">
+
+      <!-- Negative (default) -->
+      <input type="radio" name="dash_tab" role="tab" class="tab" aria-label="{% trans 'Negative' %}" checked />
+      <div role="tabpanel" class="tab-content pt-6">
+        {% include "point_system/_dashboard_bar.html" with fields=negative_fields segments=negative_segments total=negative_total table="negative" %}
+      </div>
+
+      <!-- Positive -->
+      <input type="radio" name="dash_tab" role="tab" class="tab" aria-label="{% trans 'Positive' %}" />
+      <div role="tabpanel" class="tab-content pt-6">
+        {% include "point_system/_dashboard_bar.html" with fields=positive_fields segments=positive_segments total=positive_total table="positive" %}
+      </div>
+
+      <!-- Notes -->
+      <input type="radio" name="dash_tab" role="tab" class="tab" aria-label="{% trans 'Notes' %}" />
+      <div role="tabpanel" class="tab-content pt-6">
+        <p class="text-sm text-base-content/40">{% trans "Notes coming soon." %}</p>
+      </div>
+
     </div>
   </section>
 

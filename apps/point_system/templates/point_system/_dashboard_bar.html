@@ -1,0 +1,44 @@
+{% load i18n %}
+{% comment %}
+Stacked-bar + legend for one table (positive/negative).
+Context: segments (list of {name,value,pct,color}), total, table ("positive"/"negative"), group.
+States: no numeric columns -> CTA; columns but all-zero -> "No values yet"; else bar+legend.
+{% endcomment %}
+
+{% if not segments %}
+  <!-- No-columns state -->
+  <div class="rounded-2xl border-2 border-dashed border-base-300 px-6 py-10 text-center">
+    <i data-lucide="bar-chart-3" class="w-7 h-7 mx-auto mb-3 text-base-content/30"></i>
+    <p class="text-sm text-base-content/50 mb-4">{% trans "No columns in this table yet." %}</p>
+    <a href="{% url 'karma:new-column' group.id %}?table={{ table }}" class="btn-as-link">
+      <i data-lucide="plus" class="w-4 h-4"></i> {% trans "Add a column" %}
+    </a>
+  </div>
+
+{% elif total == 0 %}
+  <!-- Empty data state: columns exist, all values 0 -->
+  <div class="rounded-2xl border-2 border-dashed border-base-300 px-6 py-10 text-center">
+    <p class="text-sm text-base-content/40">{% trans "No values yet" %}</p>
+  </div>
+
+{% else %}
+  <!-- Stacked bar -->
+  <div class="w-full h-5 rounded-full overflow-hidden flex border border-base-300">
+    {% for seg in segments %}
+      {% if seg.pct %}
+        <div style="width: {{ seg.pct }}%; background: {{ seg.color }};" title="{{ seg.name }}: {{ seg.value }}"></div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <!-- Legend -->
+  <ul class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+    {% for seg in segments %}
+      <li class="flex items-center gap-2 text-sm">
+        <span class="inline-block w-3 h-3 rounded-sm shrink-0" style="background: {{ seg.color }};"></span>
+        <span class="flex-1 min-w-0 truncate text-base-content/70">{{ seg.name }}</span>
+        <span class="tabular-nums font-medium text-base-content/80">{{ seg.value }}</span>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
