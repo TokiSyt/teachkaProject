@@ -1,3 +1,4 @@
+import logging
 from datetime import date
 
 from asgiref.sync import async_to_sync
@@ -21,6 +22,8 @@ from apps.point_system.models import Member
 from apps.quizzmaker import live
 from apps.quizzmaker.models import GameSession
 from apps.users.models import UserStats
+
+logger = logging.getLogger(__name__)
 
 
 class RobotsView(View):
@@ -175,7 +178,13 @@ class AdminMessageReplyView(AdminRequiredMixin, View):
                 to=[recipient],
             )
             email.attach_alternative(render_to_string("email/contact_reply.html", ctx), "text/html")
-            email.send(fail_silently=False)
+            try:
+                email.send(fail_silently=False)
+            except Exception:
+                # SMTP/config failure must not 500 the dashboard — log + flash.
+                logger.exception("Contact reply email failed (message pk=%s, to=%s)", msg.pk, recipient)
+                messages.error(request, _("Could not send the reply — email server error. Try again later."))
+                return redirect("admin_dashboard")
             msg.handled = True
             msg.save(update_fields=["handled"])
             messages.success(request, _("Reply sent to %(to)s.") % {"to": recipient})
