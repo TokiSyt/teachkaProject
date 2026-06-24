@@ -414,3 +414,11 @@ class TestGetMemberDashboardData:
         data = selectors.get_member_dashboard_data(member_with_data.id, user)
         assert data["positive_total"] == 0
         assert all(s["pct"] == 0 for s in data["positive_segments"])
+
+    def test_text_fields_split_by_table(self, user, member_with_data):
+        group = member_with_data.group
+        FieldDefinition.objects.create(group=group, name="pos_note", type="str", definition="positive")
+        FieldDefinition.objects.create(group=group, name="neg_note", type="str", definition="negative")
+        data = selectors.get_member_dashboard_data(member_with_data.id, user)
+        assert {f.name for f in data["positive_text_fields"]} == {"pos_note"}
+        assert {f.name for f in data["negative_text_fields"]} == {"neg_note"}

@@ -179,8 +179,11 @@ def get_member_dashboard_data(member_id: int, user) -> dict:
     negative_fields = list(
         FieldDefinition.objects.filter(group=group, definition="negative").order_by("order", "created_at")
     )
-    # Free-form (text) columns from both tables live together in the Notes tab.
-    text_fields = [f for f in positive_fields + negative_fields if f.type == "str"]
+    # Free-form (text) columns. They live together in the Notes tab but each
+    # still saves with its owning table, so keep the split lists too.
+    positive_text_fields = [f for f in positive_fields if f.type == "str"]
+    negative_text_fields = [f for f in negative_fields if f.type == "str"]
+    text_fields = positive_text_fields + negative_text_fields
 
     positive_total = MemberService._calculate_total(member.positive_data)
     negative_total = MemberService._calculate_total(member.negative_data)
@@ -191,6 +194,8 @@ def get_member_dashboard_data(member_id: int, user) -> dict:
         "positive_fields": positive_fields,
         "negative_fields": negative_fields,
         "text_fields": text_fields,
+        "positive_text_fields": positive_text_fields,
+        "negative_text_fields": negative_text_fields,
         "positive_column_types": {f.name: "number" if f.type == "int" else "text" for f in positive_fields},
         "negative_column_types": {f.name: "number" if f.type == "int" else "text" for f in negative_fields},
         "positive_segments": _bar_segments(positive_fields, member.positive_data, positive_total, _GREEN_SHADES),

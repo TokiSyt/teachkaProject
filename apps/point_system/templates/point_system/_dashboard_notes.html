@@ -1,0 +1,57 @@
+{% load i18n custom_tags %}
+{% comment %}
+Notes tab: every type=str column from both tables, as editable cards.
+Each table's notes save with its own table (positive str -> positive_save,
+negative str -> negative_save), reusing the numeric tabs' POST contract.
+Context: positive_text_fields, negative_text_fields, member, group.
+{% endcomment %}
+
+{% if not positive_text_fields and not negative_text_fields %}
+  <div class="rounded-2xl border-2 border-dashed border-base-300 px-6 py-10 text-center">
+    <i data-lucide="sticky-note" class="w-7 h-7 mx-auto mb-3 text-base-content/30"></i>
+    <p class="text-sm text-base-content/50 mb-4">{% trans "No text columns yet." %}</p>
+    <a href="{% url 'karma:new-column' group.id %}?table=positive" class="btn-as-link">
+      <i data-lucide="plus" class="w-4 h-4"></i> {% trans "Add a column" %}
+    </a>
+  </div>
+{% else %}
+  <div class="space-y-8 max-w-2xl">
+
+    {% if positive_text_fields %}
+      <form method="post" data-dash-form="positive" class="space-y-4">
+        {% csrf_token %}
+        {% for field in positive_text_fields %}
+          <div class="rounded-2xl border-2 border-base-300 bg-base-100 px-5 py-4">
+            <label class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2"
+                   for="note_positive_{{ field.id }}">{{ field.name }}</label>
+            <textarea id="note_positive_{{ field.id }}"
+                      name="{{ member.id }}_positive_{{ field.name }}" rows="3"
+                      class="textarea textarea-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full">{{ member.positive_data|get_item:field.name }}</textarea>
+          </div>
+        {% endfor %}
+        <button type="submit" name="positive_save" value="1" class="btn-as-link">
+          <i data-lucide="check" class="w-4 h-4"></i> {% trans "Save positive notes" %}
+        </button>
+      </form>
+    {% endif %}
+
+    {% if negative_text_fields %}
+      <form method="post" data-dash-form="negative" class="space-y-4">
+        {% csrf_token %}
+        {% for field in negative_text_fields %}
+          <div class="rounded-2xl border-2 border-base-300 bg-base-100 px-5 py-4">
+            <label class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2"
+                   for="note_negative_{{ field.id }}">{{ field.name }}</label>
+            <textarea id="note_negative_{{ field.id }}"
+                      name="{{ member.id }}_negative_{{ field.name }}" rows="3"
+                      class="textarea textarea-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full">{{ member.negative_data|get_item:field.name }}</textarea>
+          </div>
+        {% endfor %}
+        <button type="submit" name="negative_save" value="1" class="btn-as-link">
+          <i data-lucide="check" class="w-4 h-4"></i> {% trans "Save negative notes" %}
+        </button>
+      </form>
+    {% endif %}
+
+  </div>
+{% endif %}

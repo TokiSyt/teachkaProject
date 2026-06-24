@@ -1111,3 +1111,31 @@ class TestKarmaDashboardView:
         assert f'name="{member_with_data.id}_negative_tardiness"' in html
         assert 'name="positive_save"' in html
         assert 'name="negative_save"' in html
+
+    def test_notes_tab_renders_text_columns_from_both_tables(self, authenticated_client, member_with_data):
+        from apps.point_system.models import FieldDefinition
+        group = member_with_data.group
+        FieldDefinition.objects.create(group=group, name="pos_note", type="str", definition="positive")
+        FieldDefinition.objects.create(group=group, name="neg_note", type="str", definition="negative")
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        html = authenticated_client.get(url).content.decode()
+        assert f'name="{member_with_data.id}_positive_pos_note"' in html
+        assert f'name="{member_with_data.id}_negative_neg_note"' in html
+
+    def test_saving_a_note_persists(self, authenticated_client, member_with_data):
+        from apps.point_system.services.member_service import MemberService
+        group = member_with_data.group
+        MemberService.create_field(group, "comment", "str", "positive")
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        authenticated_client.post(url, {
+            "positive_save": "1",
+            f"{member_with_data.id}_positive_comment": "Great improvement",
+        })
+        member_with_data.refresh_from_db()
+        assert member_with_data.positive_data["comment"] == "Great improvement"
+
+    def test_notes_tab_empty_state(self, authenticated_client, member_with_data):
+        # Only numeric columns -> Notes tab shows the empty state.
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        html = authenticated_client.get(url).content.decode()
+        assert "No text columns yet" in html
