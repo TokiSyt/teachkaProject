@@ -46,7 +46,16 @@
 
   <!-- ── TABS ── -->
   <section class="px-5 py-8 md:px-14">
-    <div role="tablist" class="tabs tabs-bordered" data-default-tab="negative">
+
+    <!-- Autosave toggle (ported from the group home) -->
+    <label class="flex items-center gap-2 mb-5 w-fit cursor-pointer">
+      <input type="checkbox" id="dash-autosave-toggle" class="toggle toggle-sm toggle-primary" />
+      <span class="text-sm text-base-content/60">{% trans "Autosave" %}</span>
+      <span id="dash-autosave-status" class="text-[10px] text-base-content/30 italic"></span>
+    </label>
+
+    <div role="tablist" class="tabs tabs-bordered" data-default-tab="negative"
+         data-autosave-key="karma-dash-autosave-{{ member.id }}">
 
       <!-- Negative (default) -->
       <input type="radio" name="dash_tab" role="tab" class="tab" aria-label="{% trans 'Negative' %}" checked />
@@ -68,5 +77,122 @@
 
     </div>
   </section>
+
+  <!-- ── UNSAVED-CHANGES MODAL (tab switch guard) ── -->
+  <dialog id="tab-dirty-modal" class="modal">
+    <div class="modal-box max-w-sm rounded-2xl border border-base-300 bg-base-100">
+      <h2 class="serif font-medium leading-none tracking-tight text-2xl mb-3">
+        <span class="text-primary">{% trans "Unsaved" %}</span>
+        <span class="text-base-content/60">{% trans "changes" %}</span>
+      </h2>
+      <p class="text-sm text-base-content/70 mb-6">{% trans "You have unsaved edits. Save before switching?" %}</p>
+      <div class="flex items-center gap-3">
+        <button type="button" data-dirty="save" class="btn-as-link">{% trans "Save" %}</button>
+        <button type="button" data-dirty="discard" class="btn-as-link-ghost">{% trans "Discard" %}</button>
+        <button type="button" data-dirty="cancel" class="btn-as-link-ghost ml-auto">{% trans "Cancel" %}</button>
+      </div>
+    </div>
+    <form method="dialog" class="modal-backdrop"><button>close</button></form>
+  </dialog>
+
+  <script>
+  (function () {
+    const tablist = document.querySelector('[data-default-tab]');
+    if (!tablist) return;
+    const tabs = [...tablist.querySelectorAll('input[role="tab"]')];
+    const forms = [...document.querySelectorAll('form[data-dash-form]')];
+    const toggle = document.getElementById('dash-autosave-toggle');
+    const status = document.getElementById('dash-autosave-status');
+    const modal = document.getElementById('tab-dirty-modal');
+    const KEY = tablist.dataset.autosaveKey || 'karma-dash-autosave';
+    const DEBOUNCE_MS = 1500;
+
+    const T = {
+      enabled: "{% trans 'enabled' %}", pending: "{% trans 'pending…' %}",
+      saving: "{% trans 'saving…' %}", saved: "{% trans 'saved' %}",
+      failed: "{% trans 'save failed, refresh page' %}",
+    };
+    function setStatus(t) { if (status) status.textContent = t ? '· ' + t : ''; }
+
+    // dirty tables (data-dash-form value) -> the form element
+    const dirty = new Map();
+    let timer = null;
+
+    toggle.checked = localStorage.getItem(KEY) === '1';
+    setStatus(toggle.checked ? T.enabled : '');
+    toggle.addEventListener('change', function () {
+      localStorage.setItem(KEY, toggle.checked ? '1' : '0');
+      setStatus(toggle.checked ? T.enabled : '');
+      if (toggle.checked && dirty.size) schedule();
+    });
+
+    forms.forEach(function (form) {
+      form.addEventListener('input', function () {
+        dirty.set(form.dataset.dashForm, form);
+        if (toggle.checked) { setStatus(T.pending); schedule(); }
+      });
+      // Manual save buttons submit normally (full reload) — clears dirty.
+      form.addEventListener('submit', function () { dirty.delete(form.dataset.dashForm); });
+    });
+
+    function schedule() { clearTimeout(timer); timer = setTimeout(saveDirty, DEBOUNCE_MS); }
+
+    async function saveDirty() {
+      if (!dirty.size) return;
+      setStatus(T.saving);
+      const entries = [...dirty.entries()];
+      let failed = false;
+      for (const [table, form] of entries) {
+        try {
+          const fd = new FormData(form);
+          fd.set(table + '_save', '1');
+          const res = await fetch(window.location.pathname, {
+            method: 'POST', body: fd,
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            credentials: 'same-origin',
+          });
+          if (res.ok) dirty.delete(table); else failed = true;
+        } catch (e) { failed = true; }
+      }
+      setStatus(failed ? T.failed : T.saved + ' ' + new Date().toLocaleTimeString());
+      return !failed;
+    }
+
+    // --- tab-switch dirty guard ---
+    let pendingTab = null;
+    tabs.forEach(function (tab) {
+      tab.addEventListener('mousedown', function (e) {
+        if (!tab.checked && dirty.size) { e.preventDefault(); pendingTab = tab; modal.showModal(); }
+      });
+      // keyboard / programmatic: block change while dirty
+      tab.addEventListener('click', function (e) {
+        if (dirty.size && pendingTab !== tab && !tab.checked) { e.preventDefault(); }
+      });
+    });
+
+    function go() { if (pendingTab) { pendingTab.checked = true; pendingTab = null; } }
+
+    modal?.querySelector('[data-dirty="save"]')?.addEventListener('click', async function () {
+      const ok = await saveDirty();
+      modal.close();
+      if (ok) go(); else pendingTab = null;
+    });
+    modal?.querySelector('[data-dirty="discard"]')?.addEventListener('click', function () {
+      dirty.forEach(function (form) { form.reset(); });
+      dirty.clear();
+      setStatus('');
+      modal.close();
+      go();
+    });
+    modal?.querySelector('[data-dirty="cancel"]')?.addEventListener('click', function () {
+      pendingTab = null;
+      modal.close();
+    });
+
+    window.addEventListener('beforeunload', function (e) {
+      if (dirty.size) { e.preventDefault(); e.returnValue = ''; }
+    });
+  })();
+  </script>
 
 {% endblock content %}

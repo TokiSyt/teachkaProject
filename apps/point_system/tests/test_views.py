@@ -1139,3 +1139,9 @@ class TestKarmaDashboardView:
         url = reverse("karma:karma-dashboard", args=[member_with_data.id])
         html = authenticated_client.get(url).content.decode()
         assert "No text columns yet" in html
+
+    def test_renders_autosave_toggle_and_dirty_modal(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        html = authenticated_client.get(url).content.decode()
+        assert 'id="dash-autosave-toggle"' in html
+        assert 'id="tab-dirty-modal"' in html
