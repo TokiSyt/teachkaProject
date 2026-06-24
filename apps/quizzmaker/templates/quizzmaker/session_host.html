@@ -102,7 +102,10 @@
   "all_answers": "{% trans 'All answers' %}",
   "no_answers": "{% trans 'No answers submitted' %}",
   "show_all_answers": "{% trans 'Show participant answers' %}",
-  "hide_answers": "{% trans 'Hide answers' %}"
+  "show_accepted": "{% trans 'Show all accepted answers' %}",
+  "hide_answers": "{% trans 'Hide answers' %}",
+  "true": "{% trans 'True' %}",
+  "false": "{% trans 'False' %}"
 }
 </script>
 
@@ -177,6 +180,8 @@
   function el(html) { const d = document.createElement("div"); d.innerHTML = html.trim(); return d.firstChild; }
   function clear() { root.innerHTML = ""; }
   function esc(s) { const d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; }
+  // true_false: localized True/False by index; other types: the stored option text.
+  function optText(qtype, text, i) { return qtype === "true_false" ? (i === 0 ? T.true : T.false) : esc(text); }
 
   function render() {
     clear();
@@ -246,11 +251,12 @@
     if (r.question_type === "type_input") {
       node.appendChild(el(`<p class="text-center text-base-content/50 text-lg">{% trans "Players type their answer" %}</p>`));
     } else {
-      node.appendChild(modeBadge(!!r.single_select));
+      const tf = r.question_type === "true_false";
+      if (!tf) node.appendChild(modeBadge(!!r.single_select));
       const grid = el(`<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-3xl mx-auto"></div>`);
       (r.answers || []).forEach((a, i) =>
-        grid.appendChild(el(`<div class="rounded-2xl p-5 font-semibold text-lg flex items-center gap-3" style="background:${OPT_BG[i % 4]};color:${OPT_FG[i % 4]}">
-          <span class="text-2xl font-bold w-8">${LETTERS[i % 4]}</span><span class="flex-1 whitespace-normal">${esc(a.text)}</span></div>`)));
+        grid.appendChild(el(`<div class="rounded-2xl p-5 font-semibold text-lg flex items-center gap-3 ${tf ? "justify-center" : ""}" style="background:${OPT_BG[i % 4]};color:${OPT_FG[i % 4]}">
+          ${tf ? "" : `<span class="text-2xl font-bold w-8">${LETTERS[i % 4]}</span>`}<span class="${tf ? "" : "flex-1"} whitespace-normal">${optText(r.question_type, a.text, i)}</span></div>`)));
       node.appendChild(grid);
     }
     const btn = el(`<button class="btn-as-link self-center">${T.reveal}</button>`);
@@ -291,6 +297,29 @@
           <p class="serif text-3xl text-primary font-medium">${esc(texts[0] || "")}</p>
           <p class="text-sm text-base-content/60">${d.right} ${T.right} · ${d.wrong} ${T.wrong}</p>
         </div>`);
+      // Other accepted answers (beyond the first) are revealed on demand.
+      if (texts.length > 1) {
+        const accHolder = el(`<div class="flex flex-col items-center gap-2"></div>`);
+        const accCollapsed = () => {
+          accHolder.innerHTML = "";
+          const b = el(`<button class="btn-as-link-ghost mx-auto">${T.show_accepted}</button>`);
+          b.addEventListener("click", accExpanded);
+          accHolder.appendChild(b);
+        };
+        const accExpanded = () => {
+          accHolder.innerHTML = "";
+          const list = el(`<div class="flex flex-wrap gap-2 justify-center"></div>`);
+          // Show every accepted answer (including the first) for consistency.
+          texts.forEach((t) =>
+            list.appendChild(el(`<span class="px-3 py-1 rounded-full bg-base-200 border border-base-300 text-sm">${esc(t)}</span>`)));
+          accHolder.appendChild(list);
+          const h = el(`<button class="btn-as-link-ghost mx-auto">${T.hide_answers}</button>`);
+          h.addEventListener("click", accCollapsed);
+          accHolder.appendChild(h);
+        };
+        accCollapsed();
+        block.appendChild(accHolder);
+      }
       const submissions = (rev.answers_list || []).filter((a) => a.text && a.text.trim());
       if (submissions.length) {
         const holder = el(`<div class="w-full flex flex-col items-center gap-3"></div>`);
@@ -312,6 +341,7 @@
       }
       node.appendChild(block);
     } else {
+      const tf = r.question_type === "true_false";
       const counts = (rev.distribution && rev.distribution.counts) || {};
       const correct = new Set(rev.correct_ids || []);
       const max = Math.max(1, ...Object.values(counts));
@@ -322,8 +352,8 @@
         const ringStyle = isC ? "box-shadow:0 0 0 4px color-mix(in oklch, var(--color-primary) 30%, transparent);" : "";
         grid.appendChild(el(`
           <div class="rounded-2xl p-4 font-semibold flex items-center gap-3 ${isC ? "quiz-correct" : "opacity-50"}" style="background:${OPT_BG[i % 4]};color:${OPT_FG[i % 4]};${ringStyle}">
-            <span class="text-xl font-bold w-7">${LETTERS[i % 4]}</span>
-            <span class="flex-1 whitespace-normal">${esc(a.text)} ${isC ? "✓" : ""}</span>
+            ${tf ? "" : `<span class="text-xl font-bold w-7">${LETTERS[i % 4]}</span>`}
+            <span class="flex-1 whitespace-normal">${optText(r.question_type, a.text, i)} ${isC ? "✓" : ""}</span>
             <span class="text-sm">${c}</span>
           </div>`));
       });
@@ -452,9 +482,10 @@
     } else {
       const counts = (d.distribution && d.distribution.counts) || {};
       const correct = new Set(d.correct_ids || []);
+      const tf = d.question_type === "true_false";
       body = (d.answers || []).map((a, i) =>
         `<div class="flex items-center gap-2 text-sm ${correct.has(a.id) ? "font-semibold text-primary" : "text-base-content/60"}">
-          <span class="w-5">${LETTERS[i % 4]}</span><span class="flex-1">${esc(a.text)} ${correct.has(a.id) ? "✓" : ""}</span>
+          ${tf ? "" : `<span class="w-5">${LETTERS[i % 4]}</span>`}<span class="flex-1">${optText(d.question_type, a.text, i)} ${correct.has(a.id) ? "✓" : ""}</span>
           <span>${counts[a.id] || 0}</span></div>`).join("");
     }
     panel.innerHTML = `<div class="bg-base-100 border border-base-300 rounded-2xl p-5 text-left space-y-2">

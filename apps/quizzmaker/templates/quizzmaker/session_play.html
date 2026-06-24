@@ -62,7 +62,9 @@
   "host_left": "{% trans 'Host disconnected, waiting for them to return…' %}",
   "leaderboard": "{% trans 'Leaderboard' %}",
   "pick_one": "{% trans 'Pick one' %}",
-  "pick_all": "{% trans 'Pick all that apply' %}"
+  "pick_all": "{% trans 'Pick all that apply' %}",
+  "true": "{% trans 'True' %}",
+  "false": "{% trans 'False' %}"
 }
 </script>
 
@@ -205,18 +207,22 @@
       });
       wrap.appendChild(box);
     } else {
-      // select_correct: pick option(s), then Submit.
+      // select_correct / true_false: pick option(s), then Submit.
+      const tf = r.question_type === "true_false";
       const single = !!r.single_select;
-      wrap.appendChild(modeBadge(single));
+      if (!tf) wrap.appendChild(modeBadge(single));
       const grid = el(`<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full"></div>`);
       (r.answers || []).forEach((a, i) => {
         const on = selected.has(a.id);
         const ringStyle = on ? "outline:4px solid color-mix(in oklch, var(--color-primary) 30%, transparent);outline-offset:0;" : "";
+        // true_false: always show localized True/False; select_correct hides text unless host shares the question.
+        const label = tf ? (i === 0 ? T.true : T.false) : (state.show_question ? esc(a.text) : "");
+        const lead = tf ? "" : `<span class="text-2xl font-bold w-8">${LETTERS[i % 4]}</span>`;
         const btn = el(`
-          <button class="rounded-2xl p-5 text-left font-semibold text-lg flex items-center gap-3 transition ${on ? "" : "opacity-90"}"
+          <button class="rounded-2xl p-5 ${tf ? "text-center justify-center" : "text-left"} font-semibold text-lg flex items-center gap-3 transition ${on ? "" : "opacity-90"}"
                   style="background:${OPT_BG[i % 4]};color:${OPT_FG[i % 4]};${ringStyle}">
-            <span class="text-2xl font-bold w-8">${LETTERS[i % 4]}</span>
-            <span class="flex-1 whitespace-normal">${state.show_question ? esc(a.text) : ""}</span>
+            ${lead}
+            <span class="${tf ? "" : "flex-1"} whitespace-normal">${label}</span>
             ${on ? '<span class="text-2xl">✓</span>' : ""}
           </button>`);
         btn.addEventListener("click", () => {

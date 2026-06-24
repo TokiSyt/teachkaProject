@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Teachka\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-15 07:04+0000\n"
+"POT-Creation-Date: 2026-06-24 11:30+0000\n"
 "PO-Revision-Date: 2026-02-14 21:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
@@ -108,7 +108,7 @@ msgstr "Kontaktujte nás"
 #: apps/calendar/templates/calendar/event_confirm_delete.html:14
 #: apps/calendar/templates/calendar/event_form.html:14
 #: apps/calendar/templates/calendar/home.html:4
-#: apps/calendar/templates/calendar/week_detail.html:49 templates/base.html:172
+#: apps/calendar/templates/calendar/week_detail.html:49 templates/base.html:174
 #: templates/home.html:310
 msgid "Calendar"
 msgstr "Kalendář"
@@ -171,8 +171,8 @@ msgstr "Nebezpečná zóna"
 #: apps/group_maker/templates/group_maker/confirm_delete.html:17
 #: apps/group_maker/templates/group_maker/home.html:47
 #: apps/point_system/templates/point_system/delete_column.html:22
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:446
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:546
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:518
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:681
 #: apps/users/templates/users/delete_account.html:16
 #: apps/users/templates/users/settings.html:106
 msgid "Delete"
@@ -222,15 +222,18 @@ msgstr "Trvale smazat"
 #: apps/group_maker/templates/group_maker/list_edit.html:89
 #: apps/point_system/templates/point_system/delete_column.html:83
 #: apps/point_system/templates/point_system/edit_column.html:103
-#: apps/point_system/templates/point_system/home.html:222
-#: apps/point_system/templates/point_system/home.html:342
-#: apps/point_system/templates/point_system/new_column.html:86
+#: apps/point_system/templates/point_system/home.html:159
+#: apps/point_system/templates/point_system/home.html:307
+#: apps/point_system/templates/point_system/home.html:749
+#: apps/point_system/templates/point_system/home.html:769
+#: apps/point_system/templates/point_system/new_column.html:102
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:70
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:345
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:429
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:461
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:524
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:561
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:396
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:501
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:533
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:565
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:659
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:696
 #: apps/quizzmaker/templates/quizzmaker/session_host.html:32
 #: apps/quizzmaker/templates/quizzmaker/session_host.html:64
 #: apps/quizzmaker/templates/quizzmaker/session_play.html:30
@@ -246,8 +249,8 @@ msgstr "Událost"
 #: apps/calendar/templates/calendar/event_form.html:18
 #: apps/group_maker/templates/group_maker/list_edit.html:17
 #: apps/point_system/templates/point_system/edit_column.html:22
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:367
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:482
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:418
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:586
 #: apps/users/templates/users/edit_profile.html:17
 msgid "Edit"
 msgstr "Upravit"
@@ -269,7 +272,7 @@ msgstr "Detaily události"
 
 #: apps/calendar/templates/calendar/event_form.html:40
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:40
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:489
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:593
 msgid "Title"
 msgstr "Název"
 
@@ -284,9 +287,9 @@ msgstr "např. Hodina matematiky, Rodičovská schůzka"
 #: apps/calendar/templates/calendar/event_form.html:151
 #: apps/contact/templates/contact/contact.html:184
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:48
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:307
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:382
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:497
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:346
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:433
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:601
 #: apps/users/templates/registration/register.html:98
 #: apps/users/templates/users/edit_profile.html:73
 #: apps/users/templates/users/edit_profile.html:101
@@ -333,8 +336,8 @@ msgstr "Cíle, materiály, domácí úkoly..."
 #: apps/calendar/templates/calendar/event_form.html:166
 #: apps/group_maker/templates/group_maker/list_edit.html:85
 #: apps/point_system/templates/point_system/edit_column.html:98
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:425
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:520
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:497
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:655
 #: apps/users/templates/users/edit_profile.html:123
 msgid "Save changes"
 msgstr "Uložit změny"
@@ -346,12 +349,12 @@ msgstr "Vytvořte si ho"
 #: apps/calendar/templates/calendar/home.html:48
 #: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:14
 #: apps/group_divider/templates/group_divider/home.html:13
-#: apps/point_system/templates/point_system/home.html:15
+#: apps/point_system/templates/point_system/home.html:16
 #: apps/quizzmaker/templates/quizzmaker/home.html:15
 #: apps/timer/templates/timer/countdown.html:13
 #: apps/timer/templates/timer/home.html:14
 #: apps/timer/templates/timer/stopwatch.html:13
-#: apps/wheel/templates/wheel/home.html:14 templates/base.html:167
+#: apps/wheel/templates/wheel/home.html:14 templates/base.html:169
 msgid "Tools"
 msgstr "Nástroje"
 
@@ -390,8 +393,8 @@ msgid "Bug report"
 msgstr "Hlášení chyby"
 
 #: apps/contact/models.py:12 apps/contact/templates/contact/contact.html:119
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:299
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:374
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:338
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:425
 msgid "Question"
 msgstr "Otázka"
 
@@ -400,8 +403,8 @@ msgid "Feature request"
 msgstr "Žádost o funkci"
 
 #: apps/contact/templates/contact/contact.html:4
-#: apps/contact/templates/contact/contact.html:37 templates/base.html:157
-#: templates/base.html:326 templates/legal/privacy.html:39
+#: apps/contact/templates/contact/contact.html:37 templates/base.html:159
+#: templates/base.html:328 templates/legal/privacy.html:39
 #: templates/legal/terms.html:39
 msgid "Contact"
 msgstr "Kontakt"
@@ -520,7 +523,7 @@ msgid "Decimal number"
 msgstr "Desetinné číslo"
 
 #: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:4
-#: templates/base.html:190
+#: templates/base.html:192
 msgid "Grade calculator"
 msgstr "Kalkulačka známek"
 
@@ -565,7 +568,7 @@ msgstr "Vypočítat"
 #: apps/grade_calculator/templates/grade_calculator/grade_calculator.html:75
 #: apps/group_divider/templates/group_divider/home.html:128
 #: apps/group_maker/templates/group_maker/home.html:44
-#: apps/point_system/templates/point_system/home.html:110
+#: apps/point_system/templates/point_system/home.html:111
 #: apps/wheel/templates/wheel/home.html:126
 msgid "Reset"
 msgstr "Obnovit"
@@ -612,7 +615,7 @@ msgid "Members per team, or number of teams"
 msgstr "Členů na tým, nebo počet týmů"
 
 #: apps/group_divider/templates/group_divider/home.html:4
-#: templates/base.html:184
+#: templates/base.html:186
 msgid "Group divider"
 msgstr "Rozdělovač skupin"
 
@@ -624,7 +627,7 @@ msgstr "Organizace"
 
 #: apps/group_divider/templates/group_divider/home.html:16
 #: apps/group_divider/templates/group_divider/home.html:35
-#: apps/point_system/templates/point_system/home.html:43
+#: apps/point_system/templates/point_system/home.html:44
 #: apps/wheel/templates/wheel/home.html:36
 msgid "Group"
 msgstr "Skupina"
@@ -641,10 +644,10 @@ msgstr "Rozdělte skupinu na menší týmy"
 #: apps/group_divider/templates/group_divider/home.html:47
 #: apps/group_divider/templates/group_divider/home.html:49
 #: apps/group_maker/templates/group_maker/home.html:28
-#: apps/point_system/templates/point_system/home.html:26
-#: apps/point_system/templates/point_system/home.html:47
-#: apps/point_system/templates/point_system/home.html:55
-#: apps/point_system/templates/point_system/home.html:57
+#: apps/point_system/templates/point_system/home.html:27
+#: apps/point_system/templates/point_system/home.html:48
+#: apps/point_system/templates/point_system/home.html:56
+#: apps/point_system/templates/point_system/home.html:58
 #: apps/wheel/templates/wheel/home.html:40
 #: apps/wheel/templates/wheel/home.html:48
 #: apps/wheel/templates/wheel/home.html:50 templates/home.html:361
@@ -653,14 +656,14 @@ msgstr "členů"
 
 #: apps/group_divider/templates/group_divider/home.html:39
 #: apps/group_maker/templates/group_maker/home.html:25
-#: apps/point_system/templates/point_system/home.html:47
+#: apps/point_system/templates/point_system/home.html:48
 #: apps/wheel/templates/wheel/home.html:40
 msgid "Choose a group..."
 msgstr "Vyberte skupinu..."
 
 #: apps/group_divider/templates/group_divider/home.html:53
 #: apps/group_maker/templates/group_maker/list_edit.html:4
-#: apps/point_system/templates/point_system/home.html:61
+#: apps/point_system/templates/point_system/home.html:62
 #: apps/wheel/templates/wheel/home.html:54
 msgid "Edit group"
 msgstr "Upravit skupinu"
@@ -668,13 +671,13 @@ msgstr "Upravit skupinu"
 #: apps/group_divider/templates/group_divider/home.html:58
 #: apps/group_maker/templates/group_maker/confirm_delete.html:4
 #: apps/group_maker/templates/group_maker/list_edit.html:97
-#: apps/point_system/templates/point_system/home.html:66
+#: apps/point_system/templates/point_system/home.html:67
 #: apps/wheel/templates/wheel/home.html:59
 msgid "Delete group"
 msgstr "Smazat skupinu"
 
 #: apps/group_divider/templates/group_divider/home.html:63
-#: apps/point_system/templates/point_system/home.html:71
+#: apps/point_system/templates/point_system/home.html:72
 #: apps/wheel/templates/wheel/home.html:64
 msgid "No groups available"
 msgstr "Žádné skupiny nejsou k dispozici"
@@ -702,7 +705,7 @@ msgid "Members per team"
 msgstr "Členů na tým"
 
 #: apps/group_divider/templates/group_divider/home.html:115
-#: apps/point_system/templates/point_system/home.html:83
+#: apps/point_system/templates/point_system/home.html:84
 #: apps/wheel/templates/wheel/home.html:119
 msgid "New group"
 msgstr "Vytvořit skupinu"
@@ -879,8 +882,8 @@ msgstr "Záporné body"
 
 #: apps/point_system/templates/point_system/delete_column.html:5
 #: apps/point_system/templates/point_system/delete_column.html:78
-#: apps/point_system/templates/point_system/home.html:235
-#: apps/point_system/templates/point_system/home.html:354
+#: apps/point_system/templates/point_system/home.html:172
+#: apps/point_system/templates/point_system/home.html:319
 msgid "Delete column"
 msgstr "Smazat sloupec"
 
@@ -893,8 +896,8 @@ msgstr "Zpět na body"
 
 #: apps/point_system/templates/point_system/delete_column.html:23
 #: apps/point_system/templates/point_system/edit_column.html:23
-#: apps/point_system/templates/point_system/home.html:134
-#: apps/point_system/templates/point_system/home.html:254
+#: apps/point_system/templates/point_system/home.html:136
+#: apps/point_system/templates/point_system/home.html:284
 #: apps/point_system/templates/point_system/new_column.html:22
 msgid "column"
 msgstr "sloupec"
@@ -928,7 +931,6 @@ msgstr "Žádné sloupce nejsou k dispozici"
 
 #: apps/point_system/templates/point_system/delete_column.html:66
 #: apps/point_system/templates/point_system/edit_column.html:86
-#: apps/point_system/templates/point_system/new_column.html:67
 msgid "Column type"
 msgstr "Typ sloupce"
 
@@ -936,7 +938,7 @@ msgstr "Typ sloupce"
 #: apps/point_system/templates/point_system/delete_column.html:98
 #: apps/point_system/templates/point_system/edit_column.html:88
 #: apps/point_system/templates/point_system/edit_column.html:118
-#: apps/point_system/templates/point_system/new_column.html:69
+#: apps/point_system/templates/point_system/new_column.html:73
 msgid "Numerical"
 msgstr "Číselný"
 
@@ -944,13 +946,13 @@ msgstr "Číselný"
 #: apps/point_system/templates/point_system/delete_column.html:98
 #: apps/point_system/templates/point_system/edit_column.html:88
 #: apps/point_system/templates/point_system/edit_column.html:118
-#: apps/point_system/templates/point_system/new_column.html:70
+#: apps/point_system/templates/point_system/new_column.html:74
 msgid "Text"
 msgstr "Textový"
 
 #: apps/point_system/templates/point_system/edit_column.html:5
-#: apps/point_system/templates/point_system/home.html:230
-#: apps/point_system/templates/point_system/home.html:350
+#: apps/point_system/templates/point_system/home.html:167
+#: apps/point_system/templates/point_system/home.html:315
 msgid "Edit column"
 msgstr "Upravit sloupec"
 
@@ -970,111 +972,160 @@ msgstr "Nový název sloupce"
 msgid "Enter new name"
 msgstr "Zadej nový název"
 
-#: apps/point_system/templates/point_system/home.html:5
-#: apps/point_system/templates/point_system/home.html:15
-#: templates/base.html:178
+#: apps/point_system/templates/point_system/home.html:6
+#: apps/point_system/templates/point_system/home.html:16
+#: templates/base.html:180
 msgid "Point system"
 msgstr "Bodový systém"
 
-#: apps/point_system/templates/point_system/home.html:19
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:331
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:415
+#: apps/point_system/templates/point_system/home.html:20
+#: apps/point_system/templates/point_system/home.html:737
+#: apps/point_system/templates/point_system/home.html:758
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:382
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:481
 #: templates/home.html:366
 msgid "Points"
 msgstr "Body"
 
-#: apps/point_system/templates/point_system/home.html:28
+#: apps/point_system/templates/point_system/home.html:29
 msgid "Track participation and behavior, group by group"
 msgstr "Sledujte účast a chování pomocí vlastních bodových kategorií."
 
-#: apps/point_system/templates/point_system/home.html:36
+#: apps/point_system/templates/point_system/home.html:37
 msgid "Choose group"
 msgstr "Vyberte skupinu..."
 
-#: apps/point_system/templates/point_system/home.html:114
+#: apps/point_system/templates/point_system/home.html:115
 msgid "Auto-save"
 msgstr "Automatické ukládání"
 
-#: apps/point_system/templates/point_system/home.html:131
+#: apps/point_system/templates/point_system/home.html:132
 #: apps/point_system/templates/point_system/karma_dashboard.html:92
 msgid "Negative points"
 msgstr "Záporné body"
 
-#: apps/point_system/templates/point_system/home.html:134
-#: apps/point_system/templates/point_system/home.html:254
+#: apps/point_system/templates/point_system/home.html:136
+#: apps/point_system/templates/point_system/home.html:284
 msgid "columns"
 msgstr "sloupce"
 
-#: apps/point_system/templates/point_system/home.html:146
-#: apps/point_system/templates/point_system/home.html:266
+#: apps/point_system/templates/point_system/home.html:144
+#: apps/point_system/templates/point_system/home.html:292
+#: apps/point_system/templates/point_system/home.html:686
+msgid "Hide"
+msgstr "Skrýt"
+
+#: apps/point_system/templates/point_system/home.html:144
+#: apps/point_system/templates/point_system/home.html:292
+#: apps/point_system/templates/point_system/home.html:686
+msgid "Show"
+msgstr "Zobrazit"
+
+#: apps/point_system/templates/point_system/home.html:155
+#: apps/point_system/templates/point_system/home.html:303
+msgid "Save points"
+msgstr "Uložit body"
+
+#: apps/point_system/templates/point_system/home.html:163
+#: apps/point_system/templates/point_system/home.html:311
+msgid "Add column"
+msgstr "Přidat sloupec"
+
+#: apps/point_system/templates/point_system/home.html:180
+#: apps/point_system/templates/point_system/home.html:327
+#: apps/point_system/templates/point_system/home.html:760
+#: apps/point_system/templates/point_system/home.html:767
+msgid "Delete all columns"
+msgstr "Smazat všechny sloupce"
+
+#: apps/point_system/templates/point_system/home.html:185
+#: apps/point_system/templates/point_system/home.html:332
+msgid "Add first column"
+msgstr "Přidat první sloupec"
+
+#: apps/point_system/templates/point_system/home.html:199
+#: apps/point_system/templates/point_system/home.html:346
 #: apps/wheel/templates/wheel/home.html:17
 msgid "Name"
 msgstr "Jméno"
 
-#: apps/point_system/templates/point_system/home.html:156
-#: apps/point_system/templates/point_system/home.html:276
+#: apps/point_system/templates/point_system/home.html:209
+#: apps/point_system/templates/point_system/home.html:356
+msgid "Clear all values in this column"
+msgstr "Vymazat všechny hodnoty v tomto sloupci"
+
+#: apps/point_system/templates/point_system/home.html:210
+#: apps/point_system/templates/point_system/home.html:357
+#: apps/point_system/templates/point_system/home.html:747
+msgid "Clear column"
+msgstr "Vymazat sloupec"
+
+#: apps/point_system/templates/point_system/home.html:216
+#: apps/point_system/templates/point_system/home.html:363
 msgid "Total"
 msgstr "Celkem"
 
-#: apps/point_system/templates/point_system/home.html:207
+#: apps/point_system/templates/point_system/home.html:267
 msgid "No negative columns yet"
 msgstr "Žádné záporné body zaznamenány"
 
-#: apps/point_system/templates/point_system/home.html:208
+#: apps/point_system/templates/point_system/home.html:268
 msgid "Add one to start tracking."
 msgstr "Přidej jeden a začni sledovat."
 
-#: apps/point_system/templates/point_system/home.html:218
-#: apps/point_system/templates/point_system/home.html:338
-msgid "Save points"
-msgstr "Uložit body"
-
-#: apps/point_system/templates/point_system/home.html:226
-#: apps/point_system/templates/point_system/home.html:346
-msgid "Add column"
-msgstr "Přidat sloupec"
-
-#: apps/point_system/templates/point_system/home.html:240
-#: apps/point_system/templates/point_system/home.html:359
-msgid "Add first column"
-msgstr "Přidat první sloupec"
-
-#: apps/point_system/templates/point_system/home.html:251
+#: apps/point_system/templates/point_system/home.html:280
 #: apps/point_system/templates/point_system/karma_dashboard.html:119
 msgid "Positive points"
 msgstr "Kladné body"
 
-#: apps/point_system/templates/point_system/home.html:327
+#: apps/point_system/templates/point_system/home.html:414
 msgid "No positive columns yet"
 msgstr "Žádné kladné body zaznamenány"
 
-#: apps/point_system/templates/point_system/home.html:328
+#: apps/point_system/templates/point_system/home.html:415
 msgid "Add one to start rewarding."
 msgstr "Přidej jeden a začni odměňovat."
 
-#: apps/point_system/templates/point_system/home.html:400
+#: apps/point_system/templates/point_system/home.html:457
 msgid "enabled"
 msgstr "zapnuto"
 
-#: apps/point_system/templates/point_system/home.html:401
+#: apps/point_system/templates/point_system/home.html:458
 msgid "pending…"
 msgstr "čeká se…"
 
-#: apps/point_system/templates/point_system/home.html:402
+#: apps/point_system/templates/point_system/home.html:459
 msgid "saving…"
 msgstr "ukládání…"
 
-#: apps/point_system/templates/point_system/home.html:403
+#: apps/point_system/templates/point_system/home.html:460
 msgid "saved"
 msgstr "uloženo"
 
-#: apps/point_system/templates/point_system/home.html:404
+#: apps/point_system/templates/point_system/home.html:461
 msgid "save failed"
 msgstr "uložení selhalo"
 
-#: apps/point_system/templates/point_system/home.html:405
+#: apps/point_system/templates/point_system/home.html:462
 msgid "save failed, refresh page"
 msgstr "uložení selhalo, obnov stránku"
+
+#: apps/point_system/templates/point_system/home.html:739
+msgid "Clear"
+msgstr "Vymazat"
+
+#: apps/point_system/templates/point_system/home.html:744
+msgid "This resets every value in this column to zero and cannot be undone."
+msgstr ""
+"Tímto se všechny hodnoty v tomto sloupci vynulují a nelze to vrátit zpět."
+
+#: apps/point_system/templates/point_system/home.html:764
+msgid ""
+"This removes every column in this table and all of its points. This cannot "
+"be undone."
+msgstr ""
+"Tímto se odstraní všechny sloupce v této tabulce a všechny jejich body. "
+"Nelze to vrátit zpět."
 
 #: apps/point_system/templates/point_system/karma_dashboard.html:4
 #: templates/admin_dashboard/dashboard.html:15
@@ -1146,52 +1197,70 @@ msgstr "Sloupec ke smazání"
 msgid "Column name"
 msgstr "Název sloupce"
 
-#: apps/point_system/templates/point_system/new_column.html:61
+#: apps/point_system/templates/point_system/new_column.html:56
+msgid "Type"
+msgstr "Typ"
+
+#: apps/point_system/templates/point_system/new_column.html:70
 msgid "e.g., Homework, Participation"
 msgstr "např. Úkoly, Účast"
 
-#: apps/point_system/templates/point_system/new_column.html:72
-msgid "Numerical columns are summed in the total."
-msgstr "Číselné sloupce budou sečteny v celkovém součtu"
+#: apps/point_system/templates/point_system/new_column.html:78
+msgid "Remove row"
+msgstr "Odebrat řádek"
 
-#: apps/point_system/templates/point_system/new_column.html:81
-msgid "Create column"
-msgstr "Vytvořit sloupec"
+#: apps/point_system/templates/point_system/new_column.html:86
+msgid "Add another column"
+msgstr "Přidat další sloupec"
 
-#: apps/point_system/views.py:131
+#: apps/point_system/templates/point_system/new_column.html:89
+msgid "Each row becomes a column. Numerical columns are summed in the total."
+msgstr ""
+"Každý řádek se stane sloupcem. Číselné sloupce se sčítají do celkového "
+"součtu."
+
+#: apps/point_system/templates/point_system/new_column.html:97
+msgid "Create columns"
+msgstr "Vytvořit sloupce"
+
+#: apps/point_system/views.py:151
 #, python-format
 msgid "A column named '%(name)s' already exists in %(definition)s table."
 msgstr "Sloupec s názvem '%(name)s' již existuje v tabulce %(definition)s."
 
-#: apps/point_system/views.py:193
+#: apps/point_system/views.py:203
 #, python-format
 msgid "Column '%(name)s' not found."
 msgstr "Sloupec '%(name)s' nenalezen."
 
-#: apps/point_system/views.py:196
+#: apps/point_system/views.py:206
 #, python-format
 msgid "A column named '%(name)s' already exists."
 msgstr "Sloupec s názvem '%(name)s' již existuje."
 
 #: apps/quizzmaker/models.py:13
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:512
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:616
 msgid "Public"
 msgstr "Veřejný"
 
 #: apps/quizzmaker/models.py:14
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:513
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:617
 msgid "Private"
 msgstr "Soukromý"
 
-#: apps/quizzmaker/models.py:46
+#: apps/quizzmaker/models.py:51
 msgid "Pick the correct answer"
 msgstr "Vyber správnou odpověď"
 
-#: apps/quizzmaker/models.py:47
+#: apps/quizzmaker/models.py:52
+msgid "True or false"
+msgstr "Pravda nebo nepravda"
+
+#: apps/quizzmaker/models.py:53
 msgid "Write the answer"
 msgstr "Napiš odpověď"
 
-#: apps/quizzmaker/models.py:48
+#: apps/quizzmaker/models.py:54
 msgid "Drag the answer into the blank"
 msgstr "Přetáhni odpověď na prázdné místo"
 
@@ -1323,7 +1392,7 @@ msgstr "Zatím bez správné odpovědi"
 #: apps/quizzmaker/templates/quizzmaker/home.html:18
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:15
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:16
-#: templates/base.html:208
+#: templates/base.html:210
 msgid "Quizzes"
 msgstr "Kvízy"
 
@@ -1375,12 +1444,12 @@ msgid "Title, logo, visibility"
 msgstr "Název, logo, viditelnost"
 
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:48
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:497
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:601
 msgid "Logo"
 msgstr "Logo"
 
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:56
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:508
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:612
 msgid "Visibility"
 msgstr "Viditelnost"
 
@@ -1425,7 +1494,7 @@ msgstr "Upravit kolo"
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:101
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:137
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:138
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:457
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:529
 msgid "Delete round"
 msgstr "Smazat kolo"
 
@@ -1442,8 +1511,9 @@ msgid "to add one"
 msgstr "a přidej kolo"
 
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:170
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:364
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:443
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:415
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:515
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:546
 #, python-format
 msgid "Round %(n)s"
 msgstr "Kolo %(n)s"
@@ -1453,6 +1523,7 @@ msgid "Preview"
 msgstr "Náhled"
 
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:201
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:230
 msgid "Mark as correct"
 msgstr "Označit jako správné"
 
@@ -1460,104 +1531,199 @@ msgstr "Označit jako správné"
 msgid "Answer"
 msgstr "Odpověď"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:227
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:235
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:242
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:107
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:66
+msgid "True"
+msgstr "Pravda"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:242
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:108
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:67
+msgid "False"
+msgstr "Nepravda"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:249
+msgid "Pick the correct one. Players choose True or False."
+msgstr "Vyber tu správnou. Hráči volí Pravda, nebo Nepravda."
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:255
+#, fuzzy
+#| msgid "Answers locked"
+msgid "All answers accepted"
+msgstr "Odpovědi uzamčeny"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:257
+msgid ""
+"Players type anything. Every answer scores full points, then all answers are "
+"shown."
+msgstr ""
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:266
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:274
 msgid "Type an accepted answer"
 msgstr "Napiš uznávanou odpověď"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:239
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:278
 msgid "Remove answer"
 msgstr "Odebrat odpověď"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:248
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:287
 msgid "Add accepted answer"
 msgstr "Přidat uznávanou odpověď"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:252
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:291
 msgid "Players match any of these. Case-insensitive."
 msgstr "Hráči musí trefit některou z nich. Nezáleží na velikosti písmen."
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:264
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:303
 msgid "Nothing to preview"
 msgstr "Není co zobrazit"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:266
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:305
 msgid "Create your first round"
 msgstr "Vytvoř své první kolo"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:269
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:308
 msgid ""
 "Use the plus button on the left to add a round. The live preview will appear "
 "here as you build."
 msgstr ""
 "Pomocí tlačítka plus vlevo přidej kolo. Náhled se zde zobrazí během tvorby."
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:285
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:364
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:443
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:479
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:543
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:324
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:415
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:515
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:546
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:583
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:678
 msgid "Quiz"
 msgstr "Kvíz"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:288
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:327
 msgctxt "feminine noun"
 msgid "New"
 msgstr "Nová"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:288
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:367
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:327
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:418
 msgid "question"
 msgstr "otázka"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:307
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:382
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:346
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:433
 msgid "Image"
 msgstr "Obrázek"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:315
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:395
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:354
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:446
 msgid "Question type"
 msgstr "Typ otázky"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:324
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:408
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:364
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:463
+#, fuzzy
+#| msgid "Add accepted answer"
+msgid "Accept all answers"
+msgstr "Přidat uznávanou odpověď"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:366
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:465
+msgid ""
+"Every submission counts as correct. After the round, all answers are shown."
+msgstr ""
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:375
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:474
 msgid "Duration"
 msgstr "Trvání"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:341
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:392
 msgid "Create round"
 msgstr "Vytvořit kolo"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:446
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:491
+msgid "Copy time to all rounds"
+msgstr ""
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:518
 msgid "round"
 msgstr "kolo"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:451
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:523
 msgid ""
 "This will permanently remove the round and its answers. This cannot be "
 "undone."
 msgstr "Tímto trvale odstraníš kolo i jeho odpovědi. Nelze vrátit zpět."
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:479
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:543
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:549
+msgid "Copy time"
+msgstr ""
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:549
+#, fuzzy
+#| msgid "Delete all columns"
+msgid "to all rounds"
+msgstr "Smazat všechny sloupce"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:554
+#, fuzzy
+#| msgid "This resets every value in this column to zero and cannot be undone."
+msgid ""
+"This sets every round's time limit to this round's value. It overwrites the "
+"time on all other rounds and cannot be undone."
+msgstr ""
+"Tímto se všechny hodnoty v tomto sloupci vynulují a nelze to vrátit zpět."
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:561
+msgid "Apply to all rounds"
+msgstr ""
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:583
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:678
 #: apps/users/templates/users/profile.html:75
 #: apps/users/templates/users/settings.html:4
-#: apps/users/templates/users/settings.html:17 templates/base.html:156
+#: apps/users/templates/users/settings.html:17 templates/base.html:158
 msgid "Settings"
 msgstr "Nastavení"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:482
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:546
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:586
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:681
 msgid "quiz"
 msgstr "kvíz"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:528
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:557
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:624
+msgid "Streak bonus"
+msgstr "Bonus za sérii"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:627
+#, python-format
+msgid ""
+"Extra points for consecutive correct answers, as a %% of each round's points."
+msgstr "Body navíc za správné odpovědi v řadě, jako %% z bodů každého kola."
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:632
+msgid "Per streak"
+msgstr "Za sérii"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:640
+msgid "Max bonus"
+msgstr "Maximální bonus"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:648
+msgid "max"
+msgstr "max"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:649
+msgid "Streak bonus off"
+msgstr "Bonus za sérii vypnutý"
+
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:663
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:692
 msgid "Delete quiz"
 msgstr "Smazat kvíz"
 
-#: apps/quizzmaker/templates/quizzmaker/round_editor.html:551
+#: apps/quizzmaker/templates/quizzmaker/round_editor.html:686
 msgid ""
 "This will permanently remove the quiz, all its rounds, and their answers. "
 "This cannot be undone."
@@ -1653,7 +1819,7 @@ msgid "of"
 msgstr "z"
 
 #: apps/quizzmaker/templates/quizzmaker/session_host.html:90
-#: apps/quizzmaker/templates/quizzmaker/session_play.html:61
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:63
 msgid "Leaderboard"
 msgstr "Žebříček"
 
@@ -1690,12 +1856,12 @@ msgid "wrong"
 msgstr "špatně"
 
 #: apps/quizzmaker/templates/quizzmaker/session_host.html:99
-#: apps/quizzmaker/templates/quizzmaker/session_play.html:62
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:64
 msgid "Pick one"
 msgstr "Vyber jednu"
 
 #: apps/quizzmaker/templates/quizzmaker/session_host.html:100
-#: apps/quizzmaker/templates/quizzmaker/session_play.html:63
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:65
 msgid "Pick all that apply"
 msgstr "Vyber všechny správné"
 
@@ -1703,12 +1869,32 @@ msgstr "Vyber všechny správné"
 msgid "Standings"
 msgstr "Pořadí"
 
-#: apps/quizzmaker/templates/quizzmaker/session_host.html:130
-#: apps/quizzmaker/templates/quizzmaker/session_play.html:95
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:102
+msgid "All answers"
+msgstr "Všechny odpovědi"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:103
+msgid "No answers submitted"
+msgstr "Žádné odpovědi"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:104
+msgid "Show participant answers"
+msgstr "Zobrazit odpovědi účastníků"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:105
+msgid "Show all accepted answers"
+msgstr "Zobrazit všechny uznávané odpovědi"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:106
+msgid "Hide answers"
+msgstr "Skrýt odpovědi"
+
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:137
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:99
 msgid "Live server unavailable. Please try again shortly."
 msgstr "Živý server je nedostupný. Zkuste to prosím za chvíli."
 
-#: apps/quizzmaker/templates/quizzmaker/session_host.html:242
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:252
 msgid "Players type their answer"
 msgstr "Hráči píší svou odpověď"
 
@@ -1767,47 +1953,63 @@ msgid "Missed"
 msgstr "Mimo"
 
 #: apps/quizzmaker/templates/quizzmaker/session_play.html:54
+#, fuzzy
+#| msgid "Answered"
+msgid "Answer submitted!"
+msgstr "Zodpovězená"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:55
+#, fuzzy
+#| msgid "Type your answer"
+msgid "Your answer"
+msgstr "Napiš svou odpověď"
+
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:56
 msgid "Rank"
 msgstr "Pořadí"
 
-#: apps/quizzmaker/templates/quizzmaker/session_play.html:55
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:57
 msgid "Score"
 msgstr "Body"
 
-#: apps/quizzmaker/templates/quizzmaker/session_play.html:56
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:58
 msgid "Streak"
 msgstr "Série"
 
-#: apps/quizzmaker/templates/quizzmaker/session_play.html:57
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:59
 msgid "Final result"
 msgstr "Konečný výsledek"
 
-#: apps/quizzmaker/templates/quizzmaker/session_play.html:58
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:60
 msgid "Thanks for playing!"
 msgstr "Díky za hru!"
 
-#: apps/quizzmaker/templates/quizzmaker/session_play.html:59
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:61
 msgid "Reconnecting…"
 msgstr "Opětovné připojování…"
 
-#: apps/quizzmaker/templates/quizzmaker/session_play.html:60
+#: apps/quizzmaker/templates/quizzmaker/session_play.html:62
 msgid "Host disconnected, waiting for them to return…"
 msgstr "Hostitel se odpojil, čeká se na jeho návrat…"
 
-#: apps/quizzmaker/views.py:202
+#: apps/quizzmaker/views.py:203
+msgid "Time limit copied to all rounds."
+msgstr ""
+
+#: apps/quizzmaker/views.py:231
 #, python-format
 msgid "Round %(n)s needs a correct answer before you can save."
 msgstr "Kolo %(n)s potřebuje správnou odpověď, než budeš moci uložit."
 
-#: apps/quizzmaker/views.py:213
+#: apps/quizzmaker/views.py:242
 msgid "Quiz deleted."
 msgstr "Kvíz smazán."
 
-#: apps/quizzmaker/views.py:331
+#: apps/quizzmaker/views.py:363
 msgid "Game not found. Check the code."
 msgstr "Hra nenalezena. Zkontroluj kód."
 
-#: apps/quizzmaker/views.py:334
+#: apps/quizzmaker/views.py:366
 msgid "You're hosting this game. Open it from your host screen."
 msgstr "Tuto hru hostuješ. Otevři ji ze své obrazovky hostitele."
 
@@ -1822,7 +2024,7 @@ msgstr "Odpočítávání"
 #: apps/timer/templates/timer/home.html:4
 #: apps/timer/templates/timer/home.html:14
 #: apps/timer/templates/timer/home.html:17
-#: apps/timer/templates/timer/stopwatch.html:13 templates/base.html:202
+#: apps/timer/templates/timer/stopwatch.html:13 templates/base.html:204
 #: templates/home.html:296 templates/home.html:399
 msgid "Timer"
 msgstr "Časovač"
@@ -1898,23 +2100,23 @@ msgstr "Účet s tímto uživatelským jménem již existuje."
 msgid "Confirm new password"
 msgstr "Potvrď nové heslo"
 
-#: apps/users/models.py:8 templates/base.html:222
+#: apps/users/models.py:8 templates/base.html:244
 msgid "Light"
 msgstr "Světlý"
 
-#: apps/users/models.py:9 templates/base.html:227
+#: apps/users/models.py:9 templates/base.html:229
 msgid "Dark"
 msgstr "Tmavý"
 
-#: apps/users/models.py:10 templates/base.html:232
+#: apps/users/models.py:10 templates/base.html:234
 msgid "Pastel"
 msgstr "Pastelový"
 
-#: apps/users/models.py:11 templates/base.html:237
+#: apps/users/models.py:11 templates/base.html:239
 msgid "Editorial"
 msgstr "Upravit profil"
 
-#: apps/users/models.py:12 templates/base.html:242
+#: apps/users/models.py:12 templates/base.html:224
 msgid "Palette"
 msgstr "Paleta"
 
@@ -2023,7 +2225,7 @@ msgstr "Vytvořit účet"
 msgid "Create account"
 msgstr "Vytvořit účet"
 
-#: apps/users/templates/registration/register.html:50 templates/base.html:286
+#: apps/users/templates/registration/register.html:50 templates/base.html:288
 #: templates/home.html:130
 msgid "Get started"
 msgstr "Začít"
@@ -2087,7 +2289,7 @@ msgstr "Změnit heslo"
 msgid "Back to profile"
 msgstr "Zpět na úvod"
 
-#: apps/users/templates/users/change_password.html:59 templates/base.html:329
+#: apps/users/templates/users/change_password.html:59 templates/base.html:331
 #: templates/legal/security.html:4
 msgid "Security"
 msgstr "Zabezpečení"
@@ -2121,7 +2323,7 @@ msgid "Delete account"
 msgstr "Smazat účet"
 
 #: apps/users/templates/users/delete_account.html:14
-#: apps/users/templates/users/edit_profile.html:14 templates/base.html:153
+#: apps/users/templates/users/edit_profile.html:14 templates/base.html:155
 msgid "Account"
 msgstr "Účet"
 
@@ -2263,7 +2465,7 @@ msgstr ""
 "Dostáváš tento e-mail, protože byla požádána obnova hesla k tvému účtu "
 "Teachka."
 
-#: apps/users/templates/users/profile.html:4 templates/base.html:155
+#: apps/users/templates/users/profile.html:4 templates/base.html:157
 msgid "Profile"
 msgstr "Profil"
 
@@ -2284,11 +2486,11 @@ msgstr "Změnit heslo"
 msgid "Preferences"
 msgstr "Předvolby"
 
-#: apps/users/templates/users/settings.html:39 templates/base.html:273
+#: apps/users/templates/users/settings.html:39 templates/base.html:275
 msgid "Theme"
 msgstr "Motiv"
 
-#: apps/users/templates/users/settings.html:52 templates/base.html:254
+#: apps/users/templates/users/settings.html:52 templates/base.html:256
 msgid "Language"
 msgstr "Jazyk"
 
@@ -2369,7 +2571,7 @@ msgid "Members chosen"
 msgstr "Vybraní členové"
 
 #: apps/wheel/templates/wheel/home.html:4
-#: apps/wheel/templates/wheel/home.html:14 templates/base.html:196
+#: apps/wheel/templates/wheel/home.html:14 templates/base.html:198
 msgid "Name wheel"
 msgstr "Kolo jmen"
 
@@ -2521,7 +2723,7 @@ msgstr ""
 "znovu."
 
 #: templates/admin_dashboard/dashboard.html:4
-#: templates/admin_dashboard/dashboard.html:15 templates/base.html:159
+#: templates/admin_dashboard/dashboard.html:15 templates/base.html:161
 msgid "Admin"
 msgstr "Administrace"
 
@@ -2633,35 +2835,35 @@ msgstr "Vynutit ukončení"
 msgid "No live sessions running."
 msgstr "Neběží žádné živé relace."
 
-#: templates/base.html:131 templates/home.html:7
+#: templates/base.html:133 templates/home.html:7
 msgid "Home"
 msgstr "Domů"
 
-#: templates/base.html:138
+#: templates/base.html:140
 msgid "Login"
 msgstr "Přihlásit se"
 
-#: templates/base.html:144
+#: templates/base.html:146
 msgid "Register"
 msgstr "Registrovat se"
 
-#: templates/base.html:280
+#: templates/base.html:282
 msgid "Logout"
 msgstr "Odhlásit se"
 
-#: templates/base.html:327
+#: templates/base.html:329
 msgid "Privacy"
 msgstr "Soukromí"
 
-#: templates/base.html:328
+#: templates/base.html:330
 msgid "Terms"
 msgstr "Podmínky"
 
-#: templates/base.html:342
+#: templates/base.html:344
 msgid "We use a session cookie to keep you logged in. No tracking. "
 msgstr "Používáme session cookie, abys zůstal přihlášený. Žádné sledování. "
 
-#: templates/base.html:343
+#: templates/base.html:345
 msgid "Privacy policy"
 msgstr "Zásady ochrany osobních údajů"
 
@@ -3910,6 +4112,12 @@ msgstr "Přehled"
 msgid "Go Back"
 msgstr "Zpět"
 
+#~ msgid "Numerical columns are summed in the total."
+#~ msgstr "Číselné sloupce budou sečteny v celkovém součtu"
+
+#~ msgid "Create column"
+#~ msgstr "Vytvořit sloupec"
+
 #~ msgid "Cancellation"
 #~ msgstr "Zrušení"
 
@@ -3987,62 +4195,8 @@ msgstr "Zpět"
 #~ msgid "Participants will type their answer here. Match is case-insensitive."
 #~ msgstr "Účastníci sem napíší svou odpověď. Nezáleží na velikosti písmen."
 
-#: apps/point_system/templates/point_system/home.html
-msgid "Hide"
-msgstr "Skrýt"
+#~ msgid "Clear all values in this column?"
+#~ msgstr "Vymazat všechny hodnoty v tomto sloupci?"
 
-#: apps/point_system/templates/point_system/home.html
-msgid "Show"
-msgstr "Zobrazit"
-
-#: apps/point_system/templates/point_system/home.html
-msgid "Delete all columns"
-msgstr "Smazat všechny sloupce"
-
-#: apps/point_system/templates/point_system/home.html
-msgid "Clear all values in this column"
-msgstr "Vymazat všechny hodnoty v tomto sloupci"
-
-#: apps/point_system/templates/point_system/home.html
-msgid "Clear all values in this column?"
-msgstr "Vymazat všechny hodnoty v tomto sloupci?"
-
-#: apps/point_system/templates/point_system/home.html
-msgid "Clear column"
-msgstr "Vymazat sloupec"
-
-#: apps/point_system/templates/point_system/home.html
-msgid "Delete ALL columns from this group? Points data will be lost."
-msgstr "Smazat VŠECHNY sloupce z této skupiny? Data bodů budou ztracena."
-
-#: apps/point_system/templates/point_system/new_column.html
-msgid "Create columns"
-msgstr "Vytvořit sloupce"
-
-#: apps/point_system/templates/point_system/new_column.html
-msgid "Add another column"
-msgstr "Přidat další sloupec"
-
-#: apps/point_system/templates/point_system/new_column.html
-msgid "Remove row"
-msgstr "Odebrat řádek"
-
-#: apps/point_system/templates/point_system/new_column.html
-msgid "Each row becomes a column. Numerical columns are summed in the total."
-msgstr "Každý řádek se stane sloupcem. Číselné sloupce se sčítají do celkového součtu."
-
-#: apps/point_system/templates/point_system/new_column.html
-msgid "Type"
-msgstr "Typ"
-
-#: apps/point_system/templates/point_system/home.html
-msgid "Clear"
-msgstr "Vymazat"
-
-#: apps/point_system/templates/point_system/home.html
-msgid "This resets every value in this column to zero and cannot be undone."
-msgstr "Tímto se všechny hodnoty v tomto sloupci vynulují a nelze to vrátit zpět."
-
-#: apps/point_system/templates/point_system/home.html
-msgid "This removes every column in this table and all of its points. This cannot be undone."
-msgstr "Tímto se odstraní všechny sloupce v této tabulce a všechny jejich body. Nelze to vrátit zpět."
+#~ msgid "Delete ALL columns from this group? Points data will be lost."
+#~ msgstr "Smazat VŠECHNY sloupce z této skupiny? Data bodů budou ztracena."

@@ -3,11 +3,15 @@ from django import forms
 from .models import Quiz, Round
 from .utils import validate_upload
 
+_NUM = (
+    "input input-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-full"
+)
+
 
 class QuizForm(forms.ModelForm):
     class Meta:
         model = Quiz
-        fields = ["title", "logo", "visibility", "focus_x", "focus_y"]
+        fields = ["title", "logo", "visibility", "streak_bonus_rate", "streak_bonus_cap", "focus_x", "focus_y"]
         widgets = {
             "title": forms.TextInput(
                 attrs={
@@ -17,15 +21,37 @@ class QuizForm(forms.ModelForm):
             ),
             "logo": forms.ClearableFileInput(attrs={"class": "file-input file-input-bordered rounded-xl w-full"}),
             "visibility": forms.Select(attrs={"class": "select select-bordered rounded-xl w-full"}),
+            "streak_bonus_rate": forms.NumberInput(attrs={"class": _NUM, "min": 0, "max": 100}),
+            "streak_bonus_cap": forms.NumberInput(attrs={"class": _NUM, "min": 0, "max": 100}),
             "focus_x": forms.HiddenInput(),
             "focus_y": forms.HiddenInput(),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Optional in the form; omitted -> keep the model/instance default.
+        self.fields["streak_bonus_rate"].required = False
+        self.fields["streak_bonus_cap"].required = False
 
     def clean_logo(self):
         f = self.cleaned_data.get("logo")
         if f and f is not getattr(self.instance, "logo", None):
             validate_upload(f)
         return f
+
+    def _streak(self, field):
+        v = self.cleaned_data.get(field)
+        if v is None:
+            v = getattr(self.instance, field, None)
+        if v is None:
+            v = Quiz._meta.get_field(field).default
+        return min(max(int(v), 0), 100)
+
+    def clean_streak_bonus_rate(self):
+        return self._streak("streak_bonus_rate")
+
+    def clean_streak_bonus_cap(self):
+        return self._streak("streak_bonus_cap")
 
 
 class RoundForm(forms.ModelForm):
