@@ -18,7 +18,7 @@ def _serialize_split(splitted_teams):
     out = []
     for team in splitted_teams:
         *members, color = team
-        out.append([{"name": m.name} for m in members] + [color])
+        out.append([{"id": m.id, "name": m.name} for m in members] + [color])
     return out
 
 

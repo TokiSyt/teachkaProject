@@ -165,7 +165,12 @@
               {% if not forloop.last %}
               <li class="flex flex-row items-center gap-3 px-4 py-2 hover:bg-transparent">
                 <span class="w-1.5 h-1.5 rounded-full" style="background-color: {{ color }};"></span>
+                {% if member.id %}
+                <a href="{% url 'karma:karma-dashboard' member.id %}"
+                   class="font-medium text-base-content/80 hover:text-primary transition-colors">{{ member.name }}</a>
+                {% else %}
                 <span class="font-medium text-base-content/80">{{ member.name }}</span>
+                {% endif %}
               </li>
               {% endif %}
             {% endfor %}
