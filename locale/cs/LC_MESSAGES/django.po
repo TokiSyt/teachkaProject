@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Teachka\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-24 16:35+0000\n"
+"POT-Creation-Date: 2026-06-24 17:01+0000\n"
 "PO-Revision-Date: 2026-02-14 21:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
@@ -877,7 +877,6 @@ msgstr "Zpět na úvod"
 #: apps/point_system/templates/point_system/dashboard.html:43
 #: apps/point_system/templates/point_system/dashboard.html:75
 #: apps/point_system/templates/point_system/dashboard.html:76
-#: apps/point_system/templates/point_system/karma_dashboard.html:52
 msgid "Positive"
 msgstr "Kladné body"
 
@@ -886,7 +885,6 @@ msgstr "Kladné body"
 #: apps/point_system/templates/point_system/dashboard.html:47
 #: apps/point_system/templates/point_system/dashboard.html:72
 #: apps/point_system/templates/point_system/dashboard.html:73
-#: apps/point_system/templates/point_system/karma_dashboard.html:36
 msgid "Negative"
 msgstr "Záporné body"
 
@@ -928,13 +926,11 @@ msgid "No text columns yet."
 msgstr "Zatím žádné textové sloupce."
 
 #: apps/point_system/templates/point_system/dashboard.html:4
-#: apps/point_system/templates/point_system/karma_dashboard.html:4
 #: templates/admin_dashboard/dashboard.html:15
 msgid "Dashboard"
 msgstr "Přehled"
 
 #: apps/point_system/templates/point_system/dashboard.html:18
-#: apps/point_system/templates/point_system/karma_dashboard.html:147
 msgid "Back to group"
 msgstr "Zpět do skupiny"
 
@@ -948,12 +944,10 @@ msgid "Edit member"
 msgstr "Upravit člena"
 
 #: apps/point_system/templates/point_system/dashboard.html:51
-#: apps/point_system/templates/point_system/karma_dashboard.html:69
 msgid "Net"
 msgstr "Saldo"
 
 #: apps/point_system/templates/point_system/dashboard.html:62
-#: apps/point_system/templates/point_system/karma_dashboard.html:84
 msgid "Breakdown"
 msgstr "Rozpis"
 
@@ -1039,7 +1033,6 @@ msgstr "Smazat sloupec"
 
 #: apps/point_system/templates/point_system/delete_column.html:18
 #: apps/point_system/templates/point_system/edit_column.html:18
-#: apps/point_system/templates/point_system/karma_dashboard.html:14
 #: apps/point_system/templates/point_system/new_column.html:17
 msgid "Back to points"
 msgstr "Zpět na body"
@@ -1156,7 +1149,6 @@ msgid "Auto-save"
 msgstr "Automatické ukládání"
 
 #: apps/point_system/templates/point_system/home.html:132
-#: apps/point_system/templates/point_system/karma_dashboard.html:92
 msgid "Negative points"
 msgstr "Záporné body"
 
@@ -1224,7 +1216,6 @@ msgid "Add one to start tracking."
 msgstr "Přidej jeden a začni sledovat."
 
 #: apps/point_system/templates/point_system/home.html:280
-#: apps/point_system/templates/point_system/karma_dashboard.html:119
 msgid "Positive points"
 msgstr "Kladné body"
 
@@ -1256,47 +1247,6 @@ msgid ""
 msgstr ""
 "Tímto se odstraní všechny sloupce v této tabulce a všechny jejich body. "
 "Nelze to vrátit zpět."
-
-#: apps/point_system/templates/point_system/karma_dashboard.html:22
-msgid "Member dashboard"
-msgstr "Individuální přehled člena"
-
-#: apps/point_system/templates/point_system/karma_dashboard.html:28
-#: templates/admin_dashboard/dashboard.html:29
-msgid "Overview"
-msgstr "Přehled"
-
-#: apps/point_system/templates/point_system/karma_dashboard.html:43
-#: apps/point_system/templates/point_system/karma_dashboard.html:59
-msgid "categor"
-msgstr "kategori"
-
-#: apps/point_system/templates/point_system/karma_dashboard.html:43
-#: apps/point_system/templates/point_system/karma_dashboard.html:59
-msgid "y"
-msgstr "e"
-
-#: apps/point_system/templates/point_system/karma_dashboard.html:43
-#: apps/point_system/templates/point_system/karma_dashboard.html:59
-msgid "ies"
-msgstr "Minuty"
-
-#: apps/point_system/templates/point_system/karma_dashboard.html:43
-#: apps/point_system/templates/point_system/karma_dashboard.html:59
-msgid "none recorded"
-msgstr "Žádné záporné body zaznamenány"
-
-#: apps/point_system/templates/point_system/karma_dashboard.html:75
-msgid "positive balance"
-msgstr "kladný zůstatek"
-
-#: apps/point_system/templates/point_system/karma_dashboard.html:109
-msgid "No negative points recorded"
-msgstr "Žádné záporné body zaznamenány"
-
-#: apps/point_system/templates/point_system/karma_dashboard.html:136
-msgid "No positive points recorded"
-msgstr "Žádné kladné body zaznamenány"
 
 #: apps/point_system/templates/point_system/new_column.html:4
 msgid "New column"
@@ -2852,6 +2802,10 @@ msgstr "Administrace"
 msgid "Control panel"
 msgstr "Ovládací panel"
 
+#: templates/admin_dashboard/dashboard.html:29
+msgid "Overview"
+msgstr "Přehled"
+
 #: templates/admin_dashboard/dashboard.html:33
 #: templates/admin_dashboard/dashboard.html:51
 msgid "Messages"
@@ -4232,6 +4186,30 @@ msgstr "Přehled"
 #: templates/wip.html:51
 msgid "Go Back"
 msgstr "Zpět"
+
+#~ msgid "Member dashboard"
+#~ msgstr "Individuální přehled člena"
+
+#~ msgid "categor"
+#~ msgstr "kategori"
+
+#~ msgid "y"
+#~ msgstr "e"
+
+#~ msgid "ies"
+#~ msgstr "Minuty"
+
+#~ msgid "none recorded"
+#~ msgstr "Žádné záporné body zaznamenány"
+
+#~ msgid "positive balance"
+#~ msgstr "kladný zůstatek"
+
+#~ msgid "No negative points recorded"
+#~ msgstr "Žádné záporné body zaznamenány"
+
+#~ msgid "No positive points recorded"
+#~ msgstr "Žádné kladné body zaznamenány"
 
 #~ msgid "Change color"
 #~ msgstr "Změnit barvu"
