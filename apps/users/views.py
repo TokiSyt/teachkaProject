@@ -149,15 +149,8 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
 
-    def form_valid(self, form):
-        email = form.cleaned_data.get("email")
-        if User.objects.exclude(pk=self.request.user.pk).filter(email=email).exists():
-            form.add_error("email", _("An account with this email address already exists."))
-            return self.form_invalid(form)
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        return super().form_invalid(form)
+    # Email is immutable here (locked in EditProfileForm, no ownership
+    # verification); changes are handled manually via info@teachka.com.
 
 
 class ChangePassword(LoginRequiredMixin, FormView):

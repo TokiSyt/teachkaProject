@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Teachka\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-24 11:30+0000\n"
+"POT-Creation-Date: 2026-06-24 12:26+0000\n"
 "PO-Revision-Date: 2026-02-14 21:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
@@ -367,12 +367,12 @@ msgid "Plans and events"
 msgstr "Planos e eventos"
 
 #: apps/calendar/templates/calendar/week_detail.html:60
-#: teachkaBaseProject/views.py:243
+#: teachkaBaseProject/views.py:252
 msgid "Even"
 msgstr "Par"
 
 #: apps/calendar/templates/calendar/week_detail.html:60
-#: teachkaBaseProject/views.py:243
+#: teachkaBaseProject/views.py:252
 msgid "Odd"
 msgstr "Ímpar"
 
@@ -2097,7 +2097,7 @@ msgstr ""
 "Para continuar, tem de aceitar os Termos de Serviço e a Política de "
 "Privacidade."
 
-#: apps/users/forms.py:38 apps/users/views.py:155
+#: apps/users/forms.py:38
 msgid "An account with this email address already exists."
 msgstr "Já existe uma conta com este endereço de email."
 
@@ -2105,7 +2105,7 @@ msgstr "Já existe uma conta com este endereço de email."
 msgid "An account with this username already exists."
 msgstr "Já existe uma conta com este nome de utilizador."
 
-#: apps/users/forms.py:61
+#: apps/users/forms.py:66
 msgid "Confirm new password"
 msgstr "Confirmar nova palavra-passe"
 
@@ -2371,6 +2371,10 @@ msgstr "Detalhes da conta"
 msgid "Username cannot be changed"
 msgstr "O nome de utilizador não pode ser alterado"
 
+#: apps/users/templates/users/edit_profile.html:95
+msgid "To change your email, contact info@teachka.com"
+msgstr "Para alterares o teu email, contacta info@teachka.com"
+
 #: apps/users/templates/users/edit_profile.html:101
 #: apps/users/templates/users/profile.html:60
 msgid "Country"
@@ -2546,38 +2550,38 @@ msgstr "A sua conta foi ativada com sucesso!"
 msgid "Activation link is invalid or expired."
 msgstr "O link de ativação é inválido ou expirou."
 
-#: apps/users/views.py:172
+#: apps/users/views.py:165
 msgid "You have requested a new password"
 msgstr "Pediu uma nova palavra-passe"
 
-#: apps/users/views.py:187
+#: apps/users/views.py:180
 msgid "You will receive a password reset link in the email registered"
 msgstr "Receberá um link de redefinição da palavra-passe no email registado"
 
-#: apps/users/views.py:213 apps/users/views.py:219
+#: apps/users/views.py:206 apps/users/views.py:212
 msgid "Reset link is invalid or expired."
 msgstr "O link de redefinição é inválido ou expirou."
 
-#: apps/users/views.py:226
+#: apps/users/views.py:219
 msgid "Your password was successfully reset. You may now login again."
 msgstr ""
 "A sua palavra-passe foi redefinida com sucesso. Já pode iniciar sessão "
 "novamente."
 
-#: apps/users/views.py:248
+#: apps/users/views.py:241
 msgid "Reset your Teachka password"
 msgstr "Repor a tua palavra-passe do Teachka"
 
-#: apps/users/views.py:268
+#: apps/users/views.py:261
 msgid "If that email is registered you'll receive a reset link shortly."
 msgstr ""
 "Se esse email estiver registado, receberá em breve um link de redefinição."
 
-#: apps/users/views.py:283
+#: apps/users/views.py:276
 msgid "Incorrect password. Account not deleted."
 msgstr "Palavra-passe incorreta. Conta não eliminada."
 
-#: apps/users/views.py:287
+#: apps/users/views.py:280
 msgid "Your account and all associated data have been permanently deleted."
 msgstr ""
 "A sua conta e todos os dados associados foram permanentemente eliminados."
@@ -2649,30 +2653,34 @@ msgstr "Todos os membros foram escolhidos! Clique em Repor para recomeçar."
 msgid "Spinning..."
 msgstr "A girar..."
 
-#: teachkaBaseProject/views.py:150
+#: teachkaBaseProject/views.py:153
 #, python-format
 msgid "Session %(code)s was force-quit."
 msgstr "A sessão %(code)s foi terminada à força."
 
-#: teachkaBaseProject/views.py:165
+#: teachkaBaseProject/views.py:168
 msgid "No email on file for this message — cannot reply."
 msgstr "Sem email registado para esta mensagem — não é possível responder."
 
-#: teachkaBaseProject/views.py:172
+#: teachkaBaseProject/views.py:175
 #, python-format
 msgid "Re: %(subject)s"
 msgstr "Re: %(subject)s"
 
-#: teachkaBaseProject/views.py:181
+#: teachkaBaseProject/views.py:186
+msgid "Could not send the reply — email server error. Try again later."
+msgstr ""
+
+#: teachkaBaseProject/views.py:190
 #, python-format
 msgid "Reply sent to %(to)s."
 msgstr "Resposta enviada para %(to)s."
 
-#: teachkaBaseProject/views.py:187
+#: teachkaBaseProject/views.py:196
 msgid "Marked as handled."
 msgstr "Marcada como tratada."
 
-#: teachkaBaseProject/views.py:187
+#: teachkaBaseProject/views.py:196
 msgid "Marked as open."
 msgstr "Marcada como aberta."
 

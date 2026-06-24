@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Teachka\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-24 11:30+0000\n"
+"POT-Creation-Date: 2026-06-24 12:26+0000\n"
 "PO-Revision-Date: 2026-02-14 21:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
@@ -367,12 +367,12 @@ msgid "Plans and events"
 msgstr "Plány a události"
 
 #: apps/calendar/templates/calendar/week_detail.html:60
-#: teachkaBaseProject/views.py:243
+#: teachkaBaseProject/views.py:252
 msgid "Even"
 msgstr "Sudý"
 
 #: apps/calendar/templates/calendar/week_detail.html:60
-#: teachkaBaseProject/views.py:243
+#: teachkaBaseProject/views.py:252
 msgid "Odd"
 msgstr "Lichý"
 
@@ -2088,7 +2088,7 @@ msgstr ""
 "Pro pokračování musíte přijmout Podmínky služby a Zásady ochrany osobních "
 "údajů."
 
-#: apps/users/forms.py:38 apps/users/views.py:155
+#: apps/users/forms.py:38
 msgid "An account with this email address already exists."
 msgstr "Účet s tímto e-mailem již existuje."
 
@@ -2096,7 +2096,7 @@ msgstr "Účet s tímto e-mailem již existuje."
 msgid "An account with this username already exists."
 msgstr "Účet s tímto uživatelským jménem již existuje."
 
-#: apps/users/forms.py:61
+#: apps/users/forms.py:66
 msgid "Confirm new password"
 msgstr "Potvrď nové heslo"
 
@@ -2361,6 +2361,10 @@ msgstr "Detaily účtu"
 msgid "Username cannot be changed"
 msgstr "Uživatelské jméno nelze změnit"
 
+#: apps/users/templates/users/edit_profile.html:95
+msgid "To change your email, contact info@teachka.com"
+msgstr "Pro změnu e-mailu kontaktuj info@teachka.com"
+
 #: apps/users/templates/users/edit_profile.html:101
 #: apps/users/templates/users/profile.html:60
 msgid "Country"
@@ -2534,35 +2538,35 @@ msgstr "Váš účet byl úspěšně aktivován!"
 msgid "Activation link is invalid or expired."
 msgstr "Aktivační odkaz je neplatný nebo vypršel."
 
-#: apps/users/views.py:172
+#: apps/users/views.py:165
 msgid "You have requested a new password"
 msgstr "Požádali jste o nové heslo"
 
-#: apps/users/views.py:187
+#: apps/users/views.py:180
 msgid "You will receive a password reset link in the email registered"
 msgstr "Na zaregistrovaný e-mail obdržíte odkaz pro obnovení hesla"
 
-#: apps/users/views.py:213 apps/users/views.py:219
+#: apps/users/views.py:206 apps/users/views.py:212
 msgid "Reset link is invalid or expired."
 msgstr "Odkaz pro obnovení je neplatný nebo vypršel."
 
-#: apps/users/views.py:226
+#: apps/users/views.py:219
 msgid "Your password was successfully reset. You may now login again."
 msgstr "Vaše heslo bylo úspěšně obnoveno. Nyní se můžete znovu přihlásit."
 
-#: apps/users/views.py:248
+#: apps/users/views.py:241
 msgid "Reset your Teachka password"
 msgstr "Obnovení hesla Teachka"
 
-#: apps/users/views.py:268
+#: apps/users/views.py:261
 msgid "If that email is registered you'll receive a reset link shortly."
 msgstr "Pokud je e-mail zaregistrován, brzy obdržíte odkaz pro obnovení."
 
-#: apps/users/views.py:283
+#: apps/users/views.py:276
 msgid "Incorrect password. Account not deleted."
 msgstr "Nesprávné heslo. Účet nebyl smazán."
 
-#: apps/users/views.py:287
+#: apps/users/views.py:280
 msgid "Your account and all associated data have been permanently deleted."
 msgstr "Váš účet a všechna související data byla trvale smazána."
 
@@ -2633,30 +2637,34 @@ msgstr "Všichni členové byli vybráni! Klikněte na Resetovat pro nový zač�
 msgid "Spinning..."
 msgstr "Točí se..."
 
-#: teachkaBaseProject/views.py:150
+#: teachkaBaseProject/views.py:153
 #, python-format
 msgid "Session %(code)s was force-quit."
 msgstr "Relace %(code)s byla násilně ukončena."
 
-#: teachkaBaseProject/views.py:165
+#: teachkaBaseProject/views.py:168
 msgid "No email on file for this message — cannot reply."
 msgstr "K této zprávě není uložen žádný e-mail — nelze odpovědět."
 
-#: teachkaBaseProject/views.py:172
+#: teachkaBaseProject/views.py:175
 #, python-format
 msgid "Re: %(subject)s"
 msgstr "Re: %(subject)s"
 
-#: teachkaBaseProject/views.py:181
+#: teachkaBaseProject/views.py:186
+msgid "Could not send the reply — email server error. Try again later."
+msgstr ""
+
+#: teachkaBaseProject/views.py:190
 #, python-format
 msgid "Reply sent to %(to)s."
 msgstr "Odpověď odeslána na %(to)s."
 
-#: teachkaBaseProject/views.py:187
+#: teachkaBaseProject/views.py:196
 msgid "Marked as handled."
 msgstr "Označeno jako vyřízené."
 
-#: teachkaBaseProject/views.py:187
+#: teachkaBaseProject/views.py:196
 msgid "Marked as open."
 msgstr "Označeno jako otevřené."
 

@@ -173,7 +173,10 @@ class TestEditProfileView:
         user.refresh_from_db()
         assert user.username == original_username
 
-    def test_duplicate_email_rejected(self, authenticated_client, user, other_user):
+    def test_email_cannot_be_changed(self, authenticated_client, user, other_user):
+        # Email is locked (no ownership verification). Posting any email --
+        # even another account's -- must leave the user's address unchanged.
+        original_email = user.email
         response = authenticated_client.post(
             "/users/profile/edit/",
             {
@@ -183,7 +186,9 @@ class TestEditProfileView:
                 "email": other_user.email,
             },
         )
-        assert response.status_code == 200
+        assert response.status_code == 302
+        user.refresh_from_db()
+        assert user.email == original_email
 
 
 @pytest.mark.django_db
