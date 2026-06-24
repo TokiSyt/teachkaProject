@@ -13,7 +13,7 @@ from django.views.generic import TemplateView
 from apps.group_maker.models import GroupCreationModel
 
 from .forms import EditColumnForm
-from .models import FieldDefinition, PointSystemGroupSettings
+from .models import FieldDefinition, Member, PointSystemGroupSettings
 from .selectors import (
     get_group_full_data,
     get_group_with_members,
@@ -314,6 +314,34 @@ class DashboardView(LoginRequiredMixin, View):
     def get(self, request, pk):
         data = get_member_dashboard_data(pk, request.user)
         return render(request, self.template_name, data)
+
+    def post(self, request, pk):
+        member = get_object_or_404(Member, id=pk, group__user=request.user)
+
+        # Field names match the home page: "<member_id>_<table>_<col>".
+        prefix_pos = f"{member.id}_positive_"
+        prefix_neg = f"{member.id}_negative_"
+
+        if "positive_save" in request.POST:
+            data = member.positive_data.copy() if member.positive_data else {}
+            for key, value in request.POST.items():
+                if key.startswith(prefix_pos):
+                    col = key[len(prefix_pos):]
+                    if col in data:  # only existing columns
+                        data[col] = value
+            MemberService.update_member_data(member, positive_data=data)
+        elif "negative_save" in request.POST:
+            data = member.negative_data.copy() if member.negative_data else {}
+            for key, value in request.POST.items():
+                if key.startswith(prefix_neg):
+                    col = key[len(prefix_neg):]
+                    if col in data:
+                        data[col] = value
+            MemberService.update_member_data(member, negative_data=data)
+
+        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            return HttpResponse(status=204)
+        return redirect("karma:karma-dashboard", pk=member.id)
 
 
 class ColumnReorderView(LoginRequiredMixin, View):

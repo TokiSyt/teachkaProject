@@ -1,8 +1,9 @@
-{% load i18n %}
+{% load i18n custom_tags %}
 {% comment %}
-Stacked-bar + legend for one table (positive/negative).
-Context: segments (list of {name,value,pct,color}), total, table ("positive"/"negative"), group.
-States: no numeric columns -> CTA; columns but all-zero -> "No values yet"; else bar+legend.
+Stacked-bar + legend + edit form for one table (positive/negative).
+Context: segments (list of {name,value,pct,color}), total, table ("positive"/"negative"),
+member, group, plus the matching *_data dict on member.
+States: no numeric columns -> CTA; columns but all-zero -> "No values yet" (still editable).
 {% endcomment %}
 
 {% if not segments %}
@@ -15,30 +16,47 @@ States: no numeric columns -> CTA; columns but all-zero -> "No values yet"; else
     </a>
   </div>
 
-{% elif total == 0 %}
-  <!-- Empty data state: columns exist, all values 0 -->
-  <div class="rounded-2xl border-2 border-dashed border-base-300 px-6 py-10 text-center">
-    <p class="text-sm text-base-content/40">{% trans "No values yet" %}</p>
-  </div>
-
 {% else %}
-  <!-- Stacked bar -->
-  <div class="w-full h-5 rounded-full overflow-hidden flex border border-base-300">
-    {% for seg in segments %}
-      {% if seg.pct %}
-        <div style="width: {{ seg.pct }}%; background: {{ seg.color }};" title="{{ seg.name }}: {{ seg.value }}"></div>
-      {% endif %}
-    {% endfor %}
-  </div>
+  {% if total == 0 %}
+    <!-- Empty data state: columns exist, all values 0 -->
+    <div class="rounded-2xl border-2 border-dashed border-base-300 px-6 py-8 text-center mb-6">
+      <p class="text-sm text-base-content/40">{% trans "No values yet" %}</p>
+    </div>
+  {% else %}
+    <!-- Stacked bar -->
+    <div class="w-full h-5 rounded-full overflow-hidden flex border border-base-300">
+      {% for seg in segments %}
+        {% if seg.pct %}
+          <div style="width: {{ seg.pct }}%; background: {{ seg.color }};" title="{{ seg.name }}: {{ seg.value }}"></div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <!-- Legend -->
+    <ul class="mt-4 mb-6 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+      {% for seg in segments %}
+        <li class="flex items-center gap-2 text-sm">
+          <span class="inline-block w-3 h-3 rounded-sm shrink-0" style="background: {{ seg.color }};"></span>
+          <span class="flex-1 min-w-0 truncate text-base-content/70">{{ seg.name }}</span>
+          <span class="tabular-nums font-medium text-base-content/80">{{ seg.value }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 
-  <!-- Legend -->
-  <ul class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+  <!-- Edit form (manual save; autosave wiring added in #63) -->
+  <form method="post" data-dash-form="{{ table }}" class="space-y-3 max-w-md">
+    {% csrf_token %}
     {% for seg in segments %}
-      <li class="flex items-center gap-2 text-sm">
-        <span class="inline-block w-3 h-3 rounded-sm shrink-0" style="background: {{ seg.color }};"></span>
-        <span class="flex-1 min-w-0 truncate text-base-content/70">{{ seg.name }}</span>
-        <span class="tabular-nums font-medium text-base-content/80">{{ seg.value }}</span>
-      </li>
+      <label class="flex items-center gap-3">
+        <span class="flex-1 min-w-0 truncate text-sm text-base-content/70">{{ seg.name }}</span>
+        <input type="number" min="0"
+               name="{{ member.id }}_{{ table }}_{{ seg.name }}"
+               value="{{ seg.value }}"
+               class="input input-bordered border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary rounded-xl w-28 text-right tabular-nums" />
+      </label>
     {% endfor %}
-  </ul>
+    <button type="submit" name="{{ table }}_save" value="1" class="btn-as-link">
+      <i data-lucide="check" class="w-4 h-4"></i> {% trans "Save" %}
+    </button>
+  </form>
 {% endif %}

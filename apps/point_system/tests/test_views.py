@@ -1044,3 +1044,70 @@ class TestKarmaDashboardView:
         html = authenticated_client.get(url).content.decode()
         cta = reverse("karma:new-column", args=[group.id])
         assert cta in html
+
+    def test_positive_save_updates_only_positive(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        authenticated_client.post(url, {
+            "positive_save": "1",
+            f"{member_with_data.id}_positive_homework": "42",
+        })
+        member_with_data.refresh_from_db()
+        assert member_with_data.positive_data["homework"] == 42
+        assert member_with_data.negative_data == {"tardiness": 3}
+
+    def test_negative_save_updates_only_negative(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        authenticated_client.post(url, {
+            "negative_save": "1",
+            f"{member_with_data.id}_negative_tardiness": "5",
+        })
+        member_with_data.refresh_from_db()
+        assert member_with_data.negative_data["tardiness"] == 5
+        assert member_with_data.positive_data == {"homework": 10}
+
+    def test_unknown_column_ignored(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        authenticated_client.post(url, {
+            "positive_save": "1",
+            f"{member_with_data.id}_positive_ghost": "99",
+        })
+        member_with_data.refresh_from_db()
+        assert "ghost" not in member_with_data.positive_data
+
+    def test_save_updates_totals(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        authenticated_client.post(url, {
+            "positive_save": "1",
+            f"{member_with_data.id}_positive_homework": "50",
+        })
+        member_with_data.refresh_from_db()
+        assert member_with_data.positive_total == 50
+
+    def test_ajax_save_returns_204(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        resp = authenticated_client.post(
+            url,
+            {"positive_save": "1", f"{member_with_data.id}_positive_homework": "1"},
+            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
+        )
+        assert resp.status_code == 204
+
+    def test_non_ajax_save_redirects_to_dashboard(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        resp = authenticated_client.post(url, {"positive_save": "1"})
+        assert resp.status_code == 302
+        assert resp.url == url
+
+    def test_non_owner_post_returns_404(self, client, other_user, member_with_data):
+        client.force_login(other_user)
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        resp = client.post(url, {"positive_save": "1"})
+        assert resp.status_code == 404
+
+    def test_numeric_tabs_render_editable_form(self, authenticated_client, member_with_data):
+        url = reverse("karma:karma-dashboard", args=[member_with_data.id])
+        html = authenticated_client.get(url).content.decode()
+        assert f'name="{member_with_data.id}_positive_homework"' in html
+        assert f'name="{member_with_data.id}_negative_tardiness"' in html
+        assert 'name="positive_save"' in html
+        assert 'name="negative_save"' in html
