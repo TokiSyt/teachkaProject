@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Teachka\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-24 12:26+0000\n"
+"POT-Creation-Date: 2026-06-24 16:35+0000\n"
 "PO-Revision-Date: 2026-02-14 21:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
@@ -219,13 +219,15 @@ msgstr "Apagar permanentemente"
 #: apps/contact/templates/contact/contact.html:213
 #: apps/group_maker/templates/group_maker/confirm_delete.html:59
 #: apps/group_maker/templates/group_maker/list_create.html:74
-#: apps/group_maker/templates/group_maker/list_edit.html:89
+#: apps/group_maker/templates/group_maker/list_edit.html:90
+#: apps/point_system/templates/point_system/dashboard.html:138
+#: apps/point_system/templates/point_system/dashboard.html:156
 #: apps/point_system/templates/point_system/delete_column.html:83
 #: apps/point_system/templates/point_system/edit_column.html:103
 #: apps/point_system/templates/point_system/home.html:159
 #: apps/point_system/templates/point_system/home.html:307
-#: apps/point_system/templates/point_system/home.html:749
-#: apps/point_system/templates/point_system/home.html:769
+#: apps/point_system/templates/point_system/home.html:753
+#: apps/point_system/templates/point_system/home.html:773
 #: apps/point_system/templates/point_system/new_column.html:102
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:70
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:396
@@ -248,6 +250,7 @@ msgstr "Evento"
 
 #: apps/calendar/templates/calendar/event_form.html:18
 #: apps/group_maker/templates/group_maker/list_edit.html:17
+#: apps/point_system/templates/point_system/dashboard.html:107
 #: apps/point_system/templates/point_system/edit_column.html:22
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:418
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:586
@@ -257,7 +260,6 @@ msgstr "Editar"
 
 #: apps/calendar/templates/calendar/event_form.html:20
 #: apps/calendar/templates/calendar/week_detail.html:93
-#: apps/point_system/templates/point_system/new_column.html:21
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:15
 msgid "New"
 msgstr "Novo"
@@ -334,7 +336,7 @@ msgid "Learning objectives, materials, homework..."
 msgstr "Objetivos, materiais, trabalhos de casa..."
 
 #: apps/calendar/templates/calendar/event_form.html:166
-#: apps/group_maker/templates/group_maker/list_edit.html:85
+#: apps/group_maker/templates/group_maker/list_edit.html:86
 #: apps/point_system/templates/point_system/edit_column.html:98
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:497
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:655
@@ -669,7 +671,7 @@ msgstr "Editar grupo"
 
 #: apps/group_divider/templates/group_divider/home.html:58
 #: apps/group_maker/templates/group_maker/confirm_delete.html:4
-#: apps/group_maker/templates/group_maker/list_edit.html:97
+#: apps/group_maker/templates/group_maker/list_edit.html:98
 #: apps/point_system/templates/point_system/home.html:67
 #: apps/wheel/templates/wheel/home.html:59
 msgid "Delete group"
@@ -694,12 +696,12 @@ msgid "Fixed team count"
 msgstr "Número fixo de equipas"
 
 #: apps/group_divider/templates/group_divider/home.html:97
-#: apps/group_divider/templates/group_divider/home.html:209
+#: apps/group_divider/templates/group_divider/home.html:214
 msgid "How many teams?"
 msgstr "Quantas equipas?"
 
 #: apps/group_divider/templates/group_divider/home.html:97
-#: apps/group_divider/templates/group_divider/home.html:209
+#: apps/group_divider/templates/group_divider/home.html:214
 msgid "Members per team"
 msgstr "Membros por equipa"
 
@@ -871,14 +873,162 @@ msgid "Back to Home"
 msgstr "Voltar ao Início"
 
 #: apps/point_system/forms.py:60
+#: apps/point_system/templates/point_system/_dashboard_notes.html:26
+#: apps/point_system/templates/point_system/dashboard.html:43
+#: apps/point_system/templates/point_system/dashboard.html:75
+#: apps/point_system/templates/point_system/dashboard.html:76
 #: apps/point_system/templates/point_system/karma_dashboard.html:52
 msgid "Positive"
 msgstr "Pontos positivos"
 
 #: apps/point_system/forms.py:60
+#: apps/point_system/templates/point_system/_dashboard_notes.html:54
+#: apps/point_system/templates/point_system/dashboard.html:47
+#: apps/point_system/templates/point_system/dashboard.html:72
+#: apps/point_system/templates/point_system/dashboard.html:73
 #: apps/point_system/templates/point_system/karma_dashboard.html:36
 msgid "Negative"
 msgstr "Pontos negativos"
+
+#: apps/point_system/templates/point_system/_dashboard_bar.html:14
+#, fuzzy
+#| msgid "No columns available"
+msgid "No columns in this table yet."
+msgstr "Nenhuma coluna disponível"
+
+#: apps/point_system/templates/point_system/_dashboard_bar.html:16
+#: apps/point_system/templates/point_system/_dashboard_notes.html:14
+#, fuzzy
+#| msgid "Add column"
+msgid "Add a column"
+msgstr "Adicionar coluna"
+
+#: apps/point_system/templates/point_system/_dashboard_bar.html:26
+msgid "Column breakdown"
+msgstr "Repartição por coluna"
+
+#: apps/point_system/templates/point_system/_dashboard_bar.html:35
+#, fuzzy
+#| msgid "No quizzes yet"
+msgid "No values yet"
+msgstr "Ainda não há quizzes"
+
+#: apps/point_system/templates/point_system/_dashboard_bar.html:68
+#: apps/point_system/templates/point_system/_dashboard_notes.html:43
+#: apps/point_system/templates/point_system/_dashboard_notes.html:71
+#: apps/point_system/templates/point_system/dashboard.html:135
+#: apps/point_system/templates/point_system/dashboard.html:154
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:58
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:80
+msgid "Save"
+msgstr "Guardar"
+
+#: apps/point_system/templates/point_system/_dashboard_notes.html:12
+msgid "No text columns yet."
+msgstr "Ainda não há colunas de texto."
+
+#: apps/point_system/templates/point_system/dashboard.html:4
+#: apps/point_system/templates/point_system/karma_dashboard.html:4
+#: templates/admin_dashboard/dashboard.html:15
+msgid "Dashboard"
+msgstr "Painel"
+
+#: apps/point_system/templates/point_system/dashboard.html:18
+#: apps/point_system/templates/point_system/karma_dashboard.html:147
+msgid "Back to group"
+msgstr "Voltar ao grupo"
+
+#: apps/point_system/templates/point_system/dashboard.html:22
+msgid "Karma"
+msgstr "Karma"
+
+#: apps/point_system/templates/point_system/dashboard.html:30
+#: apps/point_system/templates/point_system/dashboard.html:35
+msgid "Edit member"
+msgstr "Editar membro"
+
+#: apps/point_system/templates/point_system/dashboard.html:51
+#: apps/point_system/templates/point_system/karma_dashboard.html:69
+msgid "Net"
+msgstr "Saldo"
+
+#: apps/point_system/templates/point_system/dashboard.html:62
+#: apps/point_system/templates/point_system/karma_dashboard.html:84
+msgid "Breakdown"
+msgstr "Repartição"
+
+#: apps/point_system/templates/point_system/dashboard.html:65
+msgid "Autosave"
+msgstr "Guardar automaticamente"
+
+#: apps/point_system/templates/point_system/dashboard.html:78
+#: apps/point_system/templates/point_system/dashboard.html:79
+msgid "Notes"
+msgstr "Notas"
+
+#: apps/point_system/templates/point_system/dashboard.html:108
+msgid "member"
+msgstr "membro"
+
+#: apps/point_system/templates/point_system/dashboard.html:114
+#: apps/point_system/templates/point_system/home.html:199
+#: apps/point_system/templates/point_system/home.html:346
+#: apps/wheel/templates/wheel/home.html:17
+msgid "Name"
+msgstr "Nome"
+
+#: apps/point_system/templates/point_system/dashboard.html:118
+msgid "Color"
+msgstr "Cor"
+
+#: apps/point_system/templates/point_system/dashboard.html:129
+msgid "Custom"
+msgstr "Personalizada"
+
+#: apps/point_system/templates/point_system/dashboard.html:149
+#, fuzzy
+#| msgid "saved"
+msgid "Unsaved"
+msgstr "guardado"
+
+#: apps/point_system/templates/point_system/dashboard.html:150
+#, fuzzy
+#| msgid "Save changes"
+msgid "changes"
+msgstr "Guardar alterações"
+
+#: apps/point_system/templates/point_system/dashboard.html:152
+msgid "You have unsaved edits. Save before switching?"
+msgstr ""
+
+#: apps/point_system/templates/point_system/dashboard.html:155
+msgid "Discard"
+msgstr ""
+
+#: apps/point_system/templates/point_system/dashboard.html:185
+#: apps/point_system/templates/point_system/home.html:457
+msgid "enabled"
+msgstr "ativado"
+
+#: apps/point_system/templates/point_system/dashboard.html:185
+#: apps/point_system/templates/point_system/home.html:458
+msgid "pending…"
+msgstr "pendente…"
+
+#: apps/point_system/templates/point_system/dashboard.html:186
+#: apps/point_system/templates/point_system/home.html:459
+msgid "saving…"
+msgstr "a guardar…"
+
+#: apps/point_system/templates/point_system/dashboard.html:186
+#: apps/point_system/templates/point_system/home.html:460
+msgid "saved"
+msgstr "guardado"
+
+#: apps/point_system/templates/point_system/dashboard.html:187
+#: apps/point_system/templates/point_system/home.html:462
+msgid "save failed, refresh page"
+msgstr "falha ao guardar, atualiza a página"
 
 #: apps/point_system/templates/point_system/delete_column.html:5
 #: apps/point_system/templates/point_system/delete_column.html:78
@@ -905,12 +1055,18 @@ msgstr "coluna"
 #: apps/point_system/templates/point_system/delete_column.html:29
 #: apps/point_system/templates/point_system/edit_column.html:29
 #: apps/point_system/templates/point_system/new_column.html:28
-msgid "table"
-msgstr "tabela"
+msgid "Negative table"
+msgstr "Tabela negativa"
+
+#: apps/point_system/templates/point_system/delete_column.html:29
+#: apps/point_system/templates/point_system/edit_column.html:29
+#: apps/point_system/templates/point_system/new_column.html:28
+msgid "Positive table"
+msgstr "Tabela positiva"
 
 #: apps/point_system/templates/point_system/delete_column.html:36
 msgid "Remove column"
-msgstr "Nova coluna"
+msgstr "Remover coluna"
 
 #: apps/point_system/templates/point_system/delete_column.html:41
 msgid "This action cannot be undone"
@@ -960,7 +1116,7 @@ msgstr "Editar coluna"
 
 #: apps/point_system/templates/point_system/edit_column.html:36
 msgid "Rename column"
-msgstr "Criar coluna"
+msgstr "Renomear coluna"
 
 #: apps/point_system/templates/point_system/edit_column.html:56
 msgid "Column to edit"
@@ -981,8 +1137,8 @@ msgid "Point system"
 msgstr "Sistema de pontos"
 
 #: apps/point_system/templates/point_system/home.html:20
-#: apps/point_system/templates/point_system/home.html:737
-#: apps/point_system/templates/point_system/home.html:758
+#: apps/point_system/templates/point_system/home.html:741
+#: apps/point_system/templates/point_system/home.html:762
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:382
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:481
 #: templates/home.html:366
@@ -1015,13 +1171,13 @@ msgstr "colunas"
 
 #: apps/point_system/templates/point_system/home.html:144
 #: apps/point_system/templates/point_system/home.html:292
-#: apps/point_system/templates/point_system/home.html:686
+#: apps/point_system/templates/point_system/home.html:690
 msgid "Hide"
 msgstr "Ocultar"
 
 #: apps/point_system/templates/point_system/home.html:144
 #: apps/point_system/templates/point_system/home.html:292
-#: apps/point_system/templates/point_system/home.html:686
+#: apps/point_system/templates/point_system/home.html:690
 msgid "Show"
 msgstr "Mostrar"
 
@@ -1037,8 +1193,8 @@ msgstr "Adicionar coluna"
 
 #: apps/point_system/templates/point_system/home.html:180
 #: apps/point_system/templates/point_system/home.html:327
-#: apps/point_system/templates/point_system/home.html:760
-#: apps/point_system/templates/point_system/home.html:767
+#: apps/point_system/templates/point_system/home.html:764
+#: apps/point_system/templates/point_system/home.html:771
 msgid "Delete all columns"
 msgstr "Eliminar todas as colunas"
 
@@ -1047,12 +1203,6 @@ msgstr "Eliminar todas as colunas"
 msgid "Add first column"
 msgstr "Adicionar primeira coluna"
 
-#: apps/point_system/templates/point_system/home.html:199
-#: apps/point_system/templates/point_system/home.html:346
-#: apps/wheel/templates/wheel/home.html:17
-msgid "Name"
-msgstr "Nome"
-
 #: apps/point_system/templates/point_system/home.html:209
 #: apps/point_system/templates/point_system/home.html:356
 msgid "Clear all values in this column"
@@ -1060,7 +1210,7 @@ msgstr "Limpar todos os valores desta coluna"
 
 #: apps/point_system/templates/point_system/home.html:210
 #: apps/point_system/templates/point_system/home.html:357
-#: apps/point_system/templates/point_system/home.html:747
+#: apps/point_system/templates/point_system/home.html:751
 msgid "Clear column"
 msgstr "Limpar coluna"
 
@@ -1090,51 +1240,26 @@ msgstr "Nenhum ponto positivo registado"
 msgid "Add one to start rewarding."
 msgstr "Adiciona uma para começar a recompensar."
 
-#: apps/point_system/templates/point_system/home.html:457
-msgid "enabled"
-msgstr "ativado"
-
-#: apps/point_system/templates/point_system/home.html:458
-msgid "pending…"
-msgstr "pendente…"
-
-#: apps/point_system/templates/point_system/home.html:459
-msgid "saving…"
-msgstr "a guardar…"
-
-#: apps/point_system/templates/point_system/home.html:460
-msgid "saved"
-msgstr "guardado"
-
 #: apps/point_system/templates/point_system/home.html:461
 msgid "save failed"
 msgstr "falha ao guardar"
 
-#: apps/point_system/templates/point_system/home.html:462
-msgid "save failed, refresh page"
-msgstr "falha ao guardar, atualiza a página"
-
-#: apps/point_system/templates/point_system/home.html:739
+#: apps/point_system/templates/point_system/home.html:743
 msgid "Clear"
 msgstr "Limpar"
 
-#: apps/point_system/templates/point_system/home.html:744
+#: apps/point_system/templates/point_system/home.html:748
 msgid "This resets every value in this column to zero and cannot be undone."
 msgstr ""
 "Isto repõe a zero todos os valores desta coluna e não pode ser desfeito."
 
-#: apps/point_system/templates/point_system/home.html:764
+#: apps/point_system/templates/point_system/home.html:768
 msgid ""
 "This removes every column in this table and all of its points. This cannot "
 "be undone."
 msgstr ""
 "Isto remove todas as colunas desta tabela e todos os seus pontos. Não pode "
 "ser desfeito."
-
-#: apps/point_system/templates/point_system/karma_dashboard.html:4
-#: templates/admin_dashboard/dashboard.html:15
-msgid "Dashboard"
-msgstr "Painel"
 
 #: apps/point_system/templates/point_system/karma_dashboard.html:22
 msgid "Member dashboard"
@@ -1165,17 +1290,9 @@ msgstr "Minutos"
 msgid "none recorded"
 msgstr "Nenhum ponto negativo registado"
 
-#: apps/point_system/templates/point_system/karma_dashboard.html:69
-msgid "Net"
-msgstr "Não definido"
-
 #: apps/point_system/templates/point_system/karma_dashboard.html:75
 msgid "positive balance"
 msgstr "saldo positivo"
-
-#: apps/point_system/templates/point_system/karma_dashboard.html:84
-msgid "Breakdown"
-msgstr "Detalhe"
 
 #: apps/point_system/templates/point_system/karma_dashboard.html:109
 msgid "No negative points recorded"
@@ -1185,17 +1302,18 @@ msgstr "Nenhum ponto negativo registado"
 msgid "No positive points recorded"
 msgstr "Nenhum ponto positivo registado"
 
-#: apps/point_system/templates/point_system/karma_dashboard.html:147
-msgid "Back to group"
-msgstr "Voltar ao Início"
-
 #: apps/point_system/templates/point_system/new_column.html:4
 msgid "New column"
 msgstr "Nova coluna"
 
+#: apps/point_system/templates/point_system/new_column.html:21
+msgctxt "column"
+msgid "New"
+msgstr "Nova"
+
 #: apps/point_system/templates/point_system/new_column.html:35
 msgid "Column details"
-msgstr "Coluna a eliminar"
+msgstr "Detalhes da coluna"
 
 #: apps/point_system/templates/point_system/new_column.html:55
 msgid "Column name"
@@ -1226,17 +1344,17 @@ msgstr ""
 msgid "Create columns"
 msgstr "Criar colunas"
 
-#: apps/point_system/views.py:151
+#: apps/point_system/views.py:157
 #, python-format
 msgid "A column named '%(name)s' already exists in %(definition)s table."
 msgstr "Já existe uma coluna chamada '%(name)s' na tabela %(definition)s."
 
-#: apps/point_system/views.py:203
+#: apps/point_system/views.py:209
 #, python-format
 msgid "Column '%(name)s' not found."
 msgstr "Coluna '%(name)s' não encontrada."
 
-#: apps/point_system/views.py:206
+#: apps/point_system/views.py:212
 #, python-format
 msgid "A column named '%(name)s' already exists."
 msgstr "Já existe uma coluna chamada '%(name)s'."
@@ -1771,11 +1889,6 @@ msgstr "Jogador"
 #: apps/quizzmaker/templates/quizzmaker/session_host.html:54
 msgid "Edit name"
 msgstr "Editar nome"
-
-#: apps/quizzmaker/templates/quizzmaker/session_host.html:58
-#: apps/quizzmaker/templates/quizzmaker/session_host.html:80
-msgid "Save"
-msgstr "Guardar"
 
 #: apps/quizzmaker/templates/quizzmaker/session_host.html:62
 #: apps/quizzmaker/templates/quizzmaker/session_host.html:81
@@ -4163,6 +4276,22 @@ msgstr "Painel"
 #: templates/wip.html:51
 msgid "Go Back"
 msgstr "Voltar"
+
+#~ msgid "Change color"
+#~ msgstr "Alterar cor"
+
+#, fuzzy
+#~| msgid "Save points"
+#~ msgid "Save positive notes"
+#~ msgstr "Guardar pontos"
+
+#, fuzzy
+#~| msgid "Negative points"
+#~ msgid "Save negative notes"
+#~ msgstr "Pontos negativos"
+
+#~ msgid "table"
+#~ msgstr "tabela"
 
 #~ msgid "Numerical columns are summed in the total."
 #~ msgstr "Colunas numéricas serão somadas no total"

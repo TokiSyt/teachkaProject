@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Teachka\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-24 12:26+0000\n"
+"POT-Creation-Date: 2026-06-24 16:35+0000\n"
 "PO-Revision-Date: 2026-02-14 21:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
@@ -219,13 +219,15 @@ msgstr "Trvale smazat"
 #: apps/contact/templates/contact/contact.html:213
 #: apps/group_maker/templates/group_maker/confirm_delete.html:59
 #: apps/group_maker/templates/group_maker/list_create.html:74
-#: apps/group_maker/templates/group_maker/list_edit.html:89
+#: apps/group_maker/templates/group_maker/list_edit.html:90
+#: apps/point_system/templates/point_system/dashboard.html:138
+#: apps/point_system/templates/point_system/dashboard.html:156
 #: apps/point_system/templates/point_system/delete_column.html:83
 #: apps/point_system/templates/point_system/edit_column.html:103
 #: apps/point_system/templates/point_system/home.html:159
 #: apps/point_system/templates/point_system/home.html:307
-#: apps/point_system/templates/point_system/home.html:749
-#: apps/point_system/templates/point_system/home.html:769
+#: apps/point_system/templates/point_system/home.html:753
+#: apps/point_system/templates/point_system/home.html:773
 #: apps/point_system/templates/point_system/new_column.html:102
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:70
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:396
@@ -248,6 +250,7 @@ msgstr "Událost"
 
 #: apps/calendar/templates/calendar/event_form.html:18
 #: apps/group_maker/templates/group_maker/list_edit.html:17
+#: apps/point_system/templates/point_system/dashboard.html:107
 #: apps/point_system/templates/point_system/edit_column.html:22
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:418
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:586
@@ -257,7 +260,6 @@ msgstr "Upravit"
 
 #: apps/calendar/templates/calendar/event_form.html:20
 #: apps/calendar/templates/calendar/week_detail.html:93
-#: apps/point_system/templates/point_system/new_column.html:21
 #: apps/quizzmaker/templates/quizzmaker/quiz_form.html:15
 msgid "New"
 msgstr "Nový"
@@ -334,7 +336,7 @@ msgid "Learning objectives, materials, homework..."
 msgstr "Cíle, materiály, domácí úkoly..."
 
 #: apps/calendar/templates/calendar/event_form.html:166
-#: apps/group_maker/templates/group_maker/list_edit.html:85
+#: apps/group_maker/templates/group_maker/list_edit.html:86
 #: apps/point_system/templates/point_system/edit_column.html:98
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:497
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:655
@@ -670,7 +672,7 @@ msgstr "Upravit skupinu"
 
 #: apps/group_divider/templates/group_divider/home.html:58
 #: apps/group_maker/templates/group_maker/confirm_delete.html:4
-#: apps/group_maker/templates/group_maker/list_edit.html:97
+#: apps/group_maker/templates/group_maker/list_edit.html:98
 #: apps/point_system/templates/point_system/home.html:67
 #: apps/wheel/templates/wheel/home.html:59
 msgid "Delete group"
@@ -695,12 +697,12 @@ msgid "Fixed team count"
 msgstr "Pevný počet týmů"
 
 #: apps/group_divider/templates/group_divider/home.html:97
-#: apps/group_divider/templates/group_divider/home.html:209
+#: apps/group_divider/templates/group_divider/home.html:214
 msgid "How many teams?"
 msgstr "Kolik týmů?"
 
 #: apps/group_divider/templates/group_divider/home.html:97
-#: apps/group_divider/templates/group_divider/home.html:209
+#: apps/group_divider/templates/group_divider/home.html:214
 msgid "Members per team"
 msgstr "Členů na tým"
 
@@ -871,14 +873,162 @@ msgid "Back to Home"
 msgstr "Zpět na úvod"
 
 #: apps/point_system/forms.py:60
+#: apps/point_system/templates/point_system/_dashboard_notes.html:26
+#: apps/point_system/templates/point_system/dashboard.html:43
+#: apps/point_system/templates/point_system/dashboard.html:75
+#: apps/point_system/templates/point_system/dashboard.html:76
 #: apps/point_system/templates/point_system/karma_dashboard.html:52
 msgid "Positive"
 msgstr "Kladné body"
 
 #: apps/point_system/forms.py:60
+#: apps/point_system/templates/point_system/_dashboard_notes.html:54
+#: apps/point_system/templates/point_system/dashboard.html:47
+#: apps/point_system/templates/point_system/dashboard.html:72
+#: apps/point_system/templates/point_system/dashboard.html:73
 #: apps/point_system/templates/point_system/karma_dashboard.html:36
 msgid "Negative"
 msgstr "Záporné body"
+
+#: apps/point_system/templates/point_system/_dashboard_bar.html:14
+#, fuzzy
+#| msgid "No columns available"
+msgid "No columns in this table yet."
+msgstr "Žádné sloupce nejsou k dispozici"
+
+#: apps/point_system/templates/point_system/_dashboard_bar.html:16
+#: apps/point_system/templates/point_system/_dashboard_notes.html:14
+#, fuzzy
+#| msgid "Add column"
+msgid "Add a column"
+msgstr "Přidat sloupec"
+
+#: apps/point_system/templates/point_system/_dashboard_bar.html:26
+msgid "Column breakdown"
+msgstr "Rozpis sloupců"
+
+#: apps/point_system/templates/point_system/_dashboard_bar.html:35
+#, fuzzy
+#| msgid "No quizzes yet"
+msgid "No values yet"
+msgstr "Zatím žádné kvízy"
+
+#: apps/point_system/templates/point_system/_dashboard_bar.html:68
+#: apps/point_system/templates/point_system/_dashboard_notes.html:43
+#: apps/point_system/templates/point_system/_dashboard_notes.html:71
+#: apps/point_system/templates/point_system/dashboard.html:135
+#: apps/point_system/templates/point_system/dashboard.html:154
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:58
+#: apps/quizzmaker/templates/quizzmaker/session_host.html:80
+msgid "Save"
+msgstr "Uložit"
+
+#: apps/point_system/templates/point_system/_dashboard_notes.html:12
+msgid "No text columns yet."
+msgstr "Zatím žádné textové sloupce."
+
+#: apps/point_system/templates/point_system/dashboard.html:4
+#: apps/point_system/templates/point_system/karma_dashboard.html:4
+#: templates/admin_dashboard/dashboard.html:15
+msgid "Dashboard"
+msgstr "Přehled"
+
+#: apps/point_system/templates/point_system/dashboard.html:18
+#: apps/point_system/templates/point_system/karma_dashboard.html:147
+msgid "Back to group"
+msgstr "Zpět do skupiny"
+
+#: apps/point_system/templates/point_system/dashboard.html:22
+msgid "Karma"
+msgstr "Karma"
+
+#: apps/point_system/templates/point_system/dashboard.html:30
+#: apps/point_system/templates/point_system/dashboard.html:35
+msgid "Edit member"
+msgstr "Upravit člena"
+
+#: apps/point_system/templates/point_system/dashboard.html:51
+#: apps/point_system/templates/point_system/karma_dashboard.html:69
+msgid "Net"
+msgstr "Saldo"
+
+#: apps/point_system/templates/point_system/dashboard.html:62
+#: apps/point_system/templates/point_system/karma_dashboard.html:84
+msgid "Breakdown"
+msgstr "Rozpis"
+
+#: apps/point_system/templates/point_system/dashboard.html:65
+msgid "Autosave"
+msgstr "Automatické ukládání"
+
+#: apps/point_system/templates/point_system/dashboard.html:78
+#: apps/point_system/templates/point_system/dashboard.html:79
+msgid "Notes"
+msgstr "Poznámky"
+
+#: apps/point_system/templates/point_system/dashboard.html:108
+msgid "member"
+msgstr "člen"
+
+#: apps/point_system/templates/point_system/dashboard.html:114
+#: apps/point_system/templates/point_system/home.html:199
+#: apps/point_system/templates/point_system/home.html:346
+#: apps/wheel/templates/wheel/home.html:17
+msgid "Name"
+msgstr "Jméno"
+
+#: apps/point_system/templates/point_system/dashboard.html:118
+msgid "Color"
+msgstr "Barva"
+
+#: apps/point_system/templates/point_system/dashboard.html:129
+msgid "Custom"
+msgstr "Vlastní"
+
+#: apps/point_system/templates/point_system/dashboard.html:149
+#, fuzzy
+#| msgid "saved"
+msgid "Unsaved"
+msgstr "uloženo"
+
+#: apps/point_system/templates/point_system/dashboard.html:150
+#, fuzzy
+#| msgid "Save changes"
+msgid "changes"
+msgstr "Uložit změny"
+
+#: apps/point_system/templates/point_system/dashboard.html:152
+msgid "You have unsaved edits. Save before switching?"
+msgstr ""
+
+#: apps/point_system/templates/point_system/dashboard.html:155
+msgid "Discard"
+msgstr ""
+
+#: apps/point_system/templates/point_system/dashboard.html:185
+#: apps/point_system/templates/point_system/home.html:457
+msgid "enabled"
+msgstr "zapnuto"
+
+#: apps/point_system/templates/point_system/dashboard.html:185
+#: apps/point_system/templates/point_system/home.html:458
+msgid "pending…"
+msgstr "čeká se…"
+
+#: apps/point_system/templates/point_system/dashboard.html:186
+#: apps/point_system/templates/point_system/home.html:459
+msgid "saving…"
+msgstr "ukládání…"
+
+#: apps/point_system/templates/point_system/dashboard.html:186
+#: apps/point_system/templates/point_system/home.html:460
+msgid "saved"
+msgstr "uloženo"
+
+#: apps/point_system/templates/point_system/dashboard.html:187
+#: apps/point_system/templates/point_system/home.html:462
+msgid "save failed, refresh page"
+msgstr "uložení selhalo, obnov stránku"
 
 #: apps/point_system/templates/point_system/delete_column.html:5
 #: apps/point_system/templates/point_system/delete_column.html:78
@@ -905,12 +1055,18 @@ msgstr "sloupec"
 #: apps/point_system/templates/point_system/delete_column.html:29
 #: apps/point_system/templates/point_system/edit_column.html:29
 #: apps/point_system/templates/point_system/new_column.html:28
-msgid "table"
-msgstr "tabulka"
+msgid "Negative table"
+msgstr "Záporná tabulka"
+
+#: apps/point_system/templates/point_system/delete_column.html:29
+#: apps/point_system/templates/point_system/edit_column.html:29
+#: apps/point_system/templates/point_system/new_column.html:28
+msgid "Positive table"
+msgstr "Kladná tabulka"
 
 #: apps/point_system/templates/point_system/delete_column.html:36
 msgid "Remove column"
-msgstr "Nový sloupec"
+msgstr "Odebrat sloupec"
 
 #: apps/point_system/templates/point_system/delete_column.html:41
 msgid "This action cannot be undone"
@@ -958,7 +1114,7 @@ msgstr "Upravit sloupec"
 
 #: apps/point_system/templates/point_system/edit_column.html:36
 msgid "Rename column"
-msgstr "Vytvořit sloupec"
+msgstr "Přejmenovat sloupec"
 
 #: apps/point_system/templates/point_system/edit_column.html:56
 msgid "Column to edit"
@@ -979,8 +1135,8 @@ msgid "Point system"
 msgstr "Bodový systém"
 
 #: apps/point_system/templates/point_system/home.html:20
-#: apps/point_system/templates/point_system/home.html:737
-#: apps/point_system/templates/point_system/home.html:758
+#: apps/point_system/templates/point_system/home.html:741
+#: apps/point_system/templates/point_system/home.html:762
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:382
 #: apps/quizzmaker/templates/quizzmaker/round_editor.html:481
 #: templates/home.html:366
@@ -1011,13 +1167,13 @@ msgstr "sloupce"
 
 #: apps/point_system/templates/point_system/home.html:144
 #: apps/point_system/templates/point_system/home.html:292
-#: apps/point_system/templates/point_system/home.html:686
+#: apps/point_system/templates/point_system/home.html:690
 msgid "Hide"
 msgstr "Skrýt"
 
 #: apps/point_system/templates/point_system/home.html:144
 #: apps/point_system/templates/point_system/home.html:292
-#: apps/point_system/templates/point_system/home.html:686
+#: apps/point_system/templates/point_system/home.html:690
 msgid "Show"
 msgstr "Zobrazit"
 
@@ -1033,8 +1189,8 @@ msgstr "Přidat sloupec"
 
 #: apps/point_system/templates/point_system/home.html:180
 #: apps/point_system/templates/point_system/home.html:327
-#: apps/point_system/templates/point_system/home.html:760
-#: apps/point_system/templates/point_system/home.html:767
+#: apps/point_system/templates/point_system/home.html:764
+#: apps/point_system/templates/point_system/home.html:771
 msgid "Delete all columns"
 msgstr "Smazat všechny sloupce"
 
@@ -1043,12 +1199,6 @@ msgstr "Smazat všechny sloupce"
 msgid "Add first column"
 msgstr "Přidat první sloupec"
 
-#: apps/point_system/templates/point_system/home.html:199
-#: apps/point_system/templates/point_system/home.html:346
-#: apps/wheel/templates/wheel/home.html:17
-msgid "Name"
-msgstr "Jméno"
-
 #: apps/point_system/templates/point_system/home.html:209
 #: apps/point_system/templates/point_system/home.html:356
 msgid "Clear all values in this column"
@@ -1056,7 +1206,7 @@ msgstr "Vymazat všechny hodnoty v tomto sloupci"
 
 #: apps/point_system/templates/point_system/home.html:210
 #: apps/point_system/templates/point_system/home.html:357
-#: apps/point_system/templates/point_system/home.html:747
+#: apps/point_system/templates/point_system/home.html:751
 msgid "Clear column"
 msgstr "Vymazat sloupec"
 
@@ -1086,51 +1236,26 @@ msgstr "Žádné kladné body zaznamenány"
 msgid "Add one to start rewarding."
 msgstr "Přidej jeden a začni odměňovat."
 
-#: apps/point_system/templates/point_system/home.html:457
-msgid "enabled"
-msgstr "zapnuto"
-
-#: apps/point_system/templates/point_system/home.html:458
-msgid "pending…"
-msgstr "čeká se…"
-
-#: apps/point_system/templates/point_system/home.html:459
-msgid "saving…"
-msgstr "ukládání…"
-
-#: apps/point_system/templates/point_system/home.html:460
-msgid "saved"
-msgstr "uloženo"
-
 #: apps/point_system/templates/point_system/home.html:461
 msgid "save failed"
 msgstr "uložení selhalo"
 
-#: apps/point_system/templates/point_system/home.html:462
-msgid "save failed, refresh page"
-msgstr "uložení selhalo, obnov stránku"
-
-#: apps/point_system/templates/point_system/home.html:739
+#: apps/point_system/templates/point_system/home.html:743
 msgid "Clear"
 msgstr "Vymazat"
 
-#: apps/point_system/templates/point_system/home.html:744
+#: apps/point_system/templates/point_system/home.html:748
 msgid "This resets every value in this column to zero and cannot be undone."
 msgstr ""
 "Tímto se všechny hodnoty v tomto sloupci vynulují a nelze to vrátit zpět."
 
-#: apps/point_system/templates/point_system/home.html:764
+#: apps/point_system/templates/point_system/home.html:768
 msgid ""
 "This removes every column in this table and all of its points. This cannot "
 "be undone."
 msgstr ""
 "Tímto se odstraní všechny sloupce v této tabulce a všechny jejich body. "
 "Nelze to vrátit zpět."
-
-#: apps/point_system/templates/point_system/karma_dashboard.html:4
-#: templates/admin_dashboard/dashboard.html:15
-msgid "Dashboard"
-msgstr "Přehled"
 
 #: apps/point_system/templates/point_system/karma_dashboard.html:22
 msgid "Member dashboard"
@@ -1161,17 +1286,9 @@ msgstr "Minuty"
 msgid "none recorded"
 msgstr "Žádné záporné body zaznamenány"
 
-#: apps/point_system/templates/point_system/karma_dashboard.html:69
-msgid "Net"
-msgstr "Nenastaveno"
-
 #: apps/point_system/templates/point_system/karma_dashboard.html:75
 msgid "positive balance"
 msgstr "kladný zůstatek"
-
-#: apps/point_system/templates/point_system/karma_dashboard.html:84
-msgid "Breakdown"
-msgstr "Rozpis"
 
 #: apps/point_system/templates/point_system/karma_dashboard.html:109
 msgid "No negative points recorded"
@@ -1181,17 +1298,18 @@ msgstr "Žádné záporné body zaznamenány"
 msgid "No positive points recorded"
 msgstr "Žádné kladné body zaznamenány"
 
-#: apps/point_system/templates/point_system/karma_dashboard.html:147
-msgid "Back to group"
-msgstr "Zpět na úvod"
-
 #: apps/point_system/templates/point_system/new_column.html:4
 msgid "New column"
 msgstr "Nový sloupec"
 
+#: apps/point_system/templates/point_system/new_column.html:21
+msgctxt "column"
+msgid "New"
+msgstr "Nový"
+
 #: apps/point_system/templates/point_system/new_column.html:35
 msgid "Column details"
-msgstr "Sloupec ke smazání"
+msgstr "Podrobnosti sloupce"
 
 #: apps/point_system/templates/point_system/new_column.html:55
 msgid "Column name"
@@ -1223,17 +1341,17 @@ msgstr ""
 msgid "Create columns"
 msgstr "Vytvořit sloupce"
 
-#: apps/point_system/views.py:151
+#: apps/point_system/views.py:157
 #, python-format
 msgid "A column named '%(name)s' already exists in %(definition)s table."
 msgstr "Sloupec s názvem '%(name)s' již existuje v tabulce %(definition)s."
 
-#: apps/point_system/views.py:203
+#: apps/point_system/views.py:209
 #, python-format
 msgid "Column '%(name)s' not found."
 msgstr "Sloupec '%(name)s' nenalezen."
 
-#: apps/point_system/views.py:206
+#: apps/point_system/views.py:212
 #, python-format
 msgid "A column named '%(name)s' already exists."
 msgstr "Sloupec s názvem '%(name)s' již existuje."
@@ -1763,11 +1881,6 @@ msgstr "Hráč"
 #: apps/quizzmaker/templates/quizzmaker/session_host.html:54
 msgid "Edit name"
 msgstr "Upravit jméno"
-
-#: apps/quizzmaker/templates/quizzmaker/session_host.html:58
-#: apps/quizzmaker/templates/quizzmaker/session_host.html:80
-msgid "Save"
-msgstr "Uložit"
 
 #: apps/quizzmaker/templates/quizzmaker/session_host.html:62
 #: apps/quizzmaker/templates/quizzmaker/session_host.html:81
@@ -4119,6 +4232,22 @@ msgstr "Přehled"
 #: templates/wip.html:51
 msgid "Go Back"
 msgstr "Zpět"
+
+#~ msgid "Change color"
+#~ msgstr "Změnit barvu"
+
+#, fuzzy
+#~| msgid "Save points"
+#~ msgid "Save positive notes"
+#~ msgstr "Uložit body"
+
+#, fuzzy
+#~| msgid "Negative points"
+#~ msgid "Save negative notes"
+#~ msgstr "Záporné body"
+
+#~ msgid "table"
+#~ msgstr "tabulka"
 
 #~ msgid "Numerical columns are summed in the total."
 #~ msgstr "Číselné sloupce budou sečteny v celkovém součtu"
