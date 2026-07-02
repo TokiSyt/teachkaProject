@@ -24,7 +24,7 @@ python-dotenv==1.2.2
 # Development tools
 pip-audit==2.9.0
 mypy==1.14.1
-django-stubs==5.1.1
+django-stubs==6.0.6
 ruff==0.9.2
 pytest==8.3.4
 pytest-cov==7.1.0
