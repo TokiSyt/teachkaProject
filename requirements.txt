@@ -29,7 +29,7 @@ ruff==0.9.2
 pytest==8.3.4
 pytest-cov==7.1.0
 pytest-django==4.9.0
-pytest-env==1.1.5
+pytest-env==1.6.0
 factory-boy==3.3.3
 django-axes==7.0.1
 Pillow==12.2.0
