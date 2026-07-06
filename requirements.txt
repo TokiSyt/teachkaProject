@@ -2,7 +2,7 @@ asgiref==3.11.1
 Brotli==1.2.0
 click==8.4.2
 colorama==0.4.6
-crispy-bootstrap4==2024.10
+crispy-bootstrap4==2026.2
 dj-database-url==3.1.2
 Django==5.2.15
 django-crispy-forms==2.4
