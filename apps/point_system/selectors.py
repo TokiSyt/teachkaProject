@@ -112,8 +112,8 @@ def get_group_full_data(group_id: int, user) -> dict:
 
     # Calculate totals for each member
     for member in members:
-        member.positive_total = MemberService._calculate_total(member.positive_data)
-        member.negative_total = MemberService._calculate_total(member.negative_data)
+        member.positive_total = MemberService._calculate_total(member, member.positive_data, definition="positive")
+        member.negative_total = MemberService._calculate_total(member, member.negative_data, definition="negative")
 
     return {
         "group": group,
@@ -185,8 +185,8 @@ def get_member_dashboard_data(member_id: int, user) -> dict:
     negative_text_fields = [f for f in negative_fields if f.type == "str"]
     text_fields = positive_text_fields + negative_text_fields
 
-    positive_total = MemberService._calculate_total(member.positive_data)
-    negative_total = MemberService._calculate_total(member.negative_data)
+    positive_total = MemberService._calculate_total(member, member.positive_data, definition="positive")
+    negative_total = MemberService._calculate_total(member, member.negative_data, definition="negative")
 
     return {
         "member": member,

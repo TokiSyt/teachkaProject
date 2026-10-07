@@ -38,38 +38,31 @@ class MemberService:
     ) -> Member:
         """
         Update member's positive and/or negative data.
-
-        Args:
-            member: The Member instance to update
-            positive_data: New positive data dict (optional)
-            negative_data: New negative data dict (optional)
-
-        Returns:
-            Updated Member instance
         """
         if positive_data is not None:
             member.positive_data = MemberService._sanitize_data(positive_data)
         if negative_data is not None:
             member.negative_data = MemberService._sanitize_data(negative_data)
 
-        # Recalculate totals
-        member.positive_total = MemberService._calculate_total(member.positive_data)
-        member.negative_total = MemberService._calculate_total(member.negative_data)
+        # Recalculate totals by passing the specific data dictionaries
+        member.positive_total = MemberService._calculate_total(member, member.positive_data, definition="positive")
+        member.negative_total = MemberService._calculate_total(member, member.negative_data, definition="negative")
 
         member.save()
         logger.debug(f"Updated member {member.name}: +{member.positive_total}/-{member.negative_total}")
         return member
 
     @staticmethod
-    def _calculate_total(data: dict[str, Any] | None) -> int:
+    def _calculate_total(member: Member, data: dict[str, Any] | None, definition) -> int:
         """Calculate total from a data dict, handling non-numeric values."""
         if not data:
             return 0
-
+        
         total = 0
-        for value in data.values():
+        for col_name, value in data.items():
             try:
-                total += int(value)
+                if FieldDefinition.objects.filter(group=member.group, name=col_name, definition=definition).first().type == "int":
+                    total += int(value)
             except (ValueError, TypeError):
                 pass
         return total
@@ -191,8 +184,8 @@ class MemberService:
             if data and field_name in data:
                 data[field_name] = default_value
                 setattr(member, update_field, MemberService._sanitize_data(data))
-            member.positive_total = MemberService._calculate_total(member.positive_data)
-            member.negative_total = MemberService._calculate_total(member.negative_data)
+            member.positive_total = MemberService._calculate_total(member, member.positive_data, definition)
+            member.negative_total = MemberService._calculate_total(member, member.negative_data, definition)
 
         if members:
             Member.objects.bulk_update(members, [update_field, "positive_total", "negative_total"])
