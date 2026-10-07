@@ -44,7 +44,7 @@ def get_group_with_members(group_id: int, user) -> tuple[GroupCreationModel, Que
     group = get_object_or_404(GroupCreationModel, id=group_id, user=user)
 
     # Prefetch related data to avoid N+1
-    members = Member.objects.filter(group=group).order_by("id")
+    members = Member.objects.filter(group=group).order_by("order")
 
     return group, members
 

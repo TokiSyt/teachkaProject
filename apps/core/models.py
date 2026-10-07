@@ -95,15 +95,17 @@ class Member(TimestampedModel):
     )
     name = models.CharField(max_length=50)
     color = models.CharField(max_length=7, blank=True, default="")
+    order = models.IntegerField(default=0, blank=True)
 
     # Karma/points data (used by point_system app)
     positive_data = models.JSONField(default=dict)
     negative_data = models.JSONField(default=dict)
+    
     positive_total = models.IntegerField(default=0, blank=True)
     negative_total = models.IntegerField(default=0, blank=True)
 
     class Meta:
-        ordering = ["id"]
+        ordering = ["order"]
 
     def __str__(self):
         return f"{self.name} ({self.group.title})"
