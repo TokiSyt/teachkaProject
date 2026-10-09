@@ -53,16 +53,27 @@ class MemberService:
         return member
 
     @staticmethod
-    def _calculate_total(member: Member, data: dict[str, Any] | None, definition) -> int:
-        """Calculate total from a data dict, handling non-numeric values."""
+    def _calculate_total(member: Member, data: dict[str, Any] | None, definition: str) -> int:
+        """Sum only values whose FieldDefinition is numeric (type 'int').
+
+        Keys without a matching numeric FieldDefinition (text fields, or orphaned
+        data left behind after a field was deleted) are ignored.
+        """
         if not data:
             return 0
-        
+
+        int_field_names = set(
+            FieldDefinition.objects.filter(group=member.group, definition=definition, type="int").values_list(
+                "name", flat=True
+            )
+        )
+
         total = 0
         for col_name, value in data.items():
+            if col_name not in int_field_names:
+                continue
             try:
-                if FieldDefinition.objects.filter(group=member.group, name=col_name, definition=definition).first().type == "int":
-                    total += int(value)
+                total += int(value)
             except (ValueError, TypeError):
                 pass
         return total
@@ -184,8 +195,8 @@ class MemberService:
             if data and field_name in data:
                 data[field_name] = default_value
                 setattr(member, update_field, MemberService._sanitize_data(data))
-            member.positive_total = MemberService._calculate_total(member, member.positive_data, definition)
-            member.negative_total = MemberService._calculate_total(member, member.negative_data, definition)
+            member.positive_total = MemberService._calculate_total(member, member.positive_data, "positive")
+            member.negative_total = MemberService._calculate_total(member, member.negative_data, "negative")
 
         if members:
             Member.objects.bulk_update(members, [update_field, "positive_total", "negative_total"])

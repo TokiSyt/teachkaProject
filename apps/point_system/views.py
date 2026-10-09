@@ -96,15 +96,15 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
             if "negative_save" in request.POST:
                 negative_data = member.negative_data.copy() if member.negative_data else {}
-                
+
                 for col_name, value in member_post.get("negative", {}).items():
                     negative_data[col_name] = value
 
                 MemberService.update_member_data(member, negative_data=negative_data)
-                
+
             elif "positive_save" in request.POST:
                 positive_data = member.positive_data.copy() if member.positive_data else {}
-                
+
                 for col_name, value in member_post.get("positive", {}).items():
                     if col_name in positive_data:
                         positive_data[col_name] = value

@@ -321,7 +321,6 @@ class TestMemberFieldRelationship:
         # Add a new member to the group
         group_with_fields.members_string = "Alice, Bob, Charlie"
         group_with_fields.save()
-        group_with_fields.sync_members()
 
         charlie = group_with_fields.karma_members.get(name="Charlie")
         assert "homework" in charlie.positive_data

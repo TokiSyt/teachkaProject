@@ -100,7 +100,7 @@ class Member(TimestampedModel):
     # Karma/points data (used by point_system app)
     positive_data = models.JSONField(default=dict)
     negative_data = models.JSONField(default=dict)
-    
+
     positive_total = models.IntegerField(default=0, blank=True)
     negative_total = models.IntegerField(default=0, blank=True)
 

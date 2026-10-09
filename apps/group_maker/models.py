@@ -1,5 +1,5 @@
 import logging
-from django.apps import apps
+
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -43,15 +43,10 @@ class GroupCreationModel(models.Model):
     def get_size(self):
         return self.size
 
-    #note: this should be updated
     @property
     def karma_members(self):
         """Alias for backward compatibility with code using old related_name."""
         return self.members
 
-    """ 
-    def sync_members(self):
-        Sync Member records with the current members_string input.
-
-        Note: This is called automatically via post_save signal "sync_members_on_save".
-        """
+    # Member records are kept in sync automatically via the post_save signal
+    # "sync_members_on_save" in signals.py (no explicit sync_members() method).
