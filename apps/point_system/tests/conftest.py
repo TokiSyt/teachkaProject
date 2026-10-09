@@ -31,9 +31,9 @@ def group_with_fields(db, user):
         definition="negative",
     )
 
-    # Delete existing members and re-sync to pick up field definitions
+    # Delete existing members and re-sync (post_save signal) to pick up field definitions
     group.karma_members.all().delete()
-    group.sync_members()
+    group.save()
 
     return group
 

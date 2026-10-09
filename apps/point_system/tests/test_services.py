@@ -14,6 +14,7 @@ class TestMemberService:
     def test_update_member_data(self, group_with_fields):
         """Test updating member data."""
         member = group_with_fields.karma_members.first()
+        FieldDefinition.objects.create(group=group_with_fields, name="participation", type="int", definition="positive")
 
         MemberService.update_member_data(
             member,
@@ -441,7 +442,7 @@ class TestDeleteAllFieldsEdgeCases:
     def test_delete_empty_table_is_noop(self, user):
         group = GroupCreationModel.objects.create(user=user, title="G", members_string="A")
         FieldDefinition.objects.create(group=group, name="hw", type="int", definition="positive")
-        group.sync_members()
+        group.save()
         # No negative fields exist; deleting them must not touch positive
         MemberService.delete_all_fields(group, "negative")
         assert FieldDefinition.objects.filter(group=group, definition="positive").exists()
@@ -545,58 +546,104 @@ class TestDeleteAllFields:
 
 @pytest.mark.django_db
 class TestMemberServiceCalculateTotal:
-    """Tests for MemberService._calculate_total."""
+    """Tests for MemberService._calculate_total.
 
-    def test_calculate_total_empty(self):
+    Only values whose FieldDefinition has type "int" are summed. Text fields and
+    keys with no matching field definition (orphaned data) are ignored.
+    """
+
+    def _make_member(self, user, specs, definition="positive"):
+        """Create a member whose group defines fields from ``specs`` ({name: type})."""
+        group = GroupCreationModel.objects.create(user=user, title="Totals", members_string="A")
+        for name, ftype in specs.items():
+            FieldDefinition.objects.create(group=group, name=name, type=ftype, definition=definition)
+        return group.karma_members.first()
+
+    def test_calculate_total_empty(self, user):
         """Test total calculation with empty data."""
-        assert MemberService._calculate_total({}) == 0
+        member = self._make_member(user, {})
+        assert MemberService._calculate_total(member, {}, "positive") == 0
 
-    def test_calculate_total_none(self):
+    def test_calculate_total_none(self, user):
         """Test total calculation with None."""
-        assert MemberService._calculate_total(None) == 0
+        member = self._make_member(user, {})
+        assert MemberService._calculate_total(member, None, "positive") == 0
 
-    def test_calculate_total_integers(self):
+    def test_calculate_total_integers(self, user):
         """Test total calculation with integer values."""
+        member = self._make_member(user, {"a": "int", "b": "int", "c": "int"})
         data = {"a": 10, "b": 20, "c": 30}
-        assert MemberService._calculate_total(data) == 60
+        assert MemberService._calculate_total(member, data, "positive") == 60
 
-    def test_calculate_total_with_strings(self):
-        """Test total calculation ignores non-numeric strings."""
+    def test_calculate_total_ignores_text_fields(self, user):
+        """Values for text (str) fields are not summed."""
+        member = self._make_member(user, {"num": "int", "text": "str", "another_num": "int"})
         data = {"num": 10, "text": "hello", "another_num": 5}
-        assert MemberService._calculate_total(data) == 15
+        assert MemberService._calculate_total(member, data, "positive") == 15
 
-    def test_calculate_total_with_numeric_strings(self):
-        """Test total calculation converts numeric strings."""
+    def test_calculate_total_ignores_orphaned_keys(self, user):
+        """Keys without a matching field definition are ignored (not summed, no crash)."""
+        member = self._make_member(user, {"a": "int"})
+        data = {"a": 10, "orphan": 999}
+        assert MemberService._calculate_total(member, data, "positive") == 10
+
+    def test_calculate_total_with_numeric_strings(self, user):
+        """Numeric strings stored on int fields are converted."""
+        member = self._make_member(user, {"a": "int", "b": "int"})
         data = {"a": "10", "b": "20"}
-        assert MemberService._calculate_total(data) == 30
+        assert MemberService._calculate_total(member, data, "positive") == 30
 
-    def test_calculate_total_with_zero(self):
+    def test_calculate_total_with_zero(self, user):
         """Test total calculation with zero values."""
+        member = self._make_member(user, {"a": "int", "b": "int", "c": "int"})
         data = {"a": 0, "b": 0, "c": 10}
-        assert MemberService._calculate_total(data) == 10
+        assert MemberService._calculate_total(member, data, "positive") == 10
 
-    def test_calculate_total_with_negative_numbers(self):
+    def test_calculate_total_with_negative_numbers(self, user):
         """Test total calculation with negative numbers."""
+        member = self._make_member(user, {"a": "int", "b": "int", "c": "int"})
         data = {"a": 10, "b": -5, "c": 3}
-        assert MemberService._calculate_total(data) == 8
+        assert MemberService._calculate_total(member, data, "positive") == 8
 
-    def test_calculate_total_mixed_types(self):
-        """Test total calculation with mixed types."""
+    def test_calculate_total_mixed_types(self, user):
+        """Only int fields with convertible values contribute to the total."""
+        member = self._make_member(
+            user,
+            {
+                "int": "int",
+                "str_num": "int",
+                "text": "str",
+                "float": "int",
+                "none": "int",
+                "empty": "int",
+            },
+        )
         data = {
             "int": 10,
             "str_num": "20",
-            "text": "hello",
-            "float": 5.5,  # Will be converted to int
-            "none": None,
-            "empty": "",
+            "text": "hello",  # str field -> ignored
+            "float": 5.5,  # int field -> converted to 5
+            "none": None,  # unconvertible -> ignored
+            "empty": "",  # unconvertible -> ignored
         }
-        # 10 + 20 + 5 (float to int) = 35
-        assert MemberService._calculate_total(data) == 35
+        # 10 + 20 + 5 = 35
+        assert MemberService._calculate_total(member, data, "positive") == 35
 
-    def test_calculate_total_large_numbers(self):
+    def test_calculate_total_respects_definition(self, user):
+        """A field defined on the other side (definition) is not counted."""
+        group = GroupCreationModel.objects.create(user=user, title="Totals", members_string="A")
+        FieldDefinition.objects.create(group=group, name="shared", type="int", definition="negative")
+        member = group.karma_members.first()
+        data = {"shared": 50}
+        # "shared" is a negative field, so it must not count towards the positive total.
+        assert MemberService._calculate_total(member, data, "positive") == 0
+        assert MemberService._calculate_total(member, data, "negative") == 50
+
+    def test_calculate_total_large_numbers(self, user):
         """Test total calculation with large numbers."""
+        member = self._make_member(user, {"big": "int", "also_big": "int"})
         data = {"big": 999999999999, "also_big": 1}
-        assert MemberService._calculate_total(data) == 1000000000000
+        assert MemberService._calculate_total(member, data, "positive") == 1000000000000
 
 
 @pytest.mark.django_db
@@ -747,6 +794,8 @@ class TestCalculationService:
 
     def test_recalculate_all_totals_with_text_fields(self, group_with_fields):
         """Test recalculating totals ignores text fields."""
+        FieldDefinition.objects.create(group=group_with_fields, name="score", type="int", definition="positive")
+        FieldDefinition.objects.create(group=group_with_fields, name="notes", type="str", definition="positive")
         for member in group_with_fields.karma_members.all():
             member.positive_data = {"score": 10, "notes": "Good job"}
             member.positive_total = 999  # Wrong value
@@ -827,6 +876,7 @@ class TestServiceEdgeCases:
     def test_update_member_with_none_values_in_data(self, group_with_fields):
         """Test updating member with None values in data dict."""
         member = group_with_fields.karma_members.first()
+        FieldDefinition.objects.create(group=group_with_fields, name="valid", type="int", definition="positive")
         MemberService.update_member_data(
             member,
             positive_data={"valid": 10, "null": None},

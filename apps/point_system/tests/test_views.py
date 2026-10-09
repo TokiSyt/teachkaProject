@@ -489,7 +489,7 @@ class TestDeleteColumnView:
             type="int",
             definition="positive",
         )
-        group.sync_members()
+        group.save()
 
         url = reverse("karma:delete-column", args=[group.id])
         data = {

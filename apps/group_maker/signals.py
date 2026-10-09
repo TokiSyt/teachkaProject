@@ -39,6 +39,12 @@ def sync_members_on_save(sender, instance, created, **kwargs):
     existing_members = list(instance.members.all())
     existing_name_counts = Counter(m.name for m in existing_members)
 
+    from collections import defaultdict
+
+    name_to_members = defaultdict(list)
+    for member in instance.members.all():
+        name_to_members[member.name].append(member)
+
     # Delete members that are no longer needed (or have too many)
     for member in existing_members:
         if existing_name_counts[member.name] > current_name_counts.get(member.name, 0):
@@ -50,23 +56,17 @@ def sync_members_on_save(sender, instance, created, **kwargs):
     positive_fields = list(FieldDefinition.objects.filter(group=instance, definition="positive"))
     negative_fields = list(FieldDefinition.objects.filter(group=instance, definition="negative"))
 
-    # existing_name_counts is already up-to-date from the deletion loop above
-    for name in current_names:
-        needed = current_name_counts[name]
-        have = existing_name_counts.get(name, 0)
+    for index, name in enumerate(current_names):
+        if name_to_members[name]:
+            member = name_to_members[name].pop(0)
 
-        if have < needed:
-            member = Member.objects.create(group=instance, name=name)
+            if member.order != index:
+                member.order = index
+                member.save(update_fields=["order"])
 
-            member.positive_data = {}
-            for field in positive_fields:
-                member.positive_data[field.name] = 0 if field.type == "int" else ""
-
-            member.negative_data = {}
-            for field in negative_fields:
-                member.negative_data[field.name] = 0 if field.type == "int" else ""
-
+        else:
+            member = Member.objects.create(group=instance, name=name, order=index)
+            member.positive_data = {field.name: (0 if field.type == "int" else "") for field in positive_fields}
+            member.negative_data = {field.name: (0 if field.type == "int" else "") for field in negative_fields}
             member.assign_color()
             member.save()
-            existing_name_counts[name] = have + 1
-            logger.debug(f"Created member {name} in group {instance.title}")

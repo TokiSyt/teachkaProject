@@ -240,7 +240,7 @@ class TestGetGroupFullData:
         group = GroupCreationModel.objects.create(user=user, title="Mixed", members_string="A")
         FieldDefinition.objects.create(group=group, name="score", type="int", definition="positive")
         FieldDefinition.objects.create(group=group, name="notes", type="str", definition="positive")
-        group.sync_members()
+        group.save()
 
         data = selectors.get_group_full_data(group.id, user)
         assert data["column_type_positive"]["score"] == "number"
@@ -263,7 +263,7 @@ class TestGetGroupFullData:
         for i in range(10):
             FieldDefinition.objects.create(group=group, name=f"pos_field_{i}", type="int", definition="positive")
             FieldDefinition.objects.create(group=group, name=f"neg_field_{i}", type="int", definition="negative")
-        group.sync_members()
+        group.save()
 
         data = selectors.get_group_full_data(group.id, user)
         assert len(data["positive_column_names"]) == 10
@@ -285,7 +285,7 @@ class TestSelectorEdgeCases:
         """Test that full data handles text values in data correctly."""
         group = GroupCreationModel.objects.create(user=user, title="Text Data", members_string="A")
         FieldDefinition.objects.create(group=group, name="notes", type="str", definition="positive")
-        group.sync_members()
+        group.save()
 
         member = group.karma_members.first()
         member.positive_data = {"notes": "Some text"}
@@ -301,7 +301,7 @@ class TestSelectorEdgeCases:
         group = GroupCreationModel.objects.create(user=user, title="Mixed Data", members_string="A")
         FieldDefinition.objects.create(group=group, name="score", type="int", definition="positive")
         FieldDefinition.objects.create(group=group, name="notes", type="str", definition="positive")
-        group.sync_members()
+        group.save()
 
         member = group.karma_members.first()
         member.positive_data = {"score": 100, "notes": "Excellent"}
