@@ -129,14 +129,6 @@
   --separator: oklch(78% 0.050 354);
 }
 
-[data-theme="light"] {
-  --color-base-100: oklch(98.554% 0.00621 317.003); /*sidebar + inputs*/
-  --color-base-200: oklch(96.787% 0.01432 308.034); /*Background*/
-  --color-base-300: oklch(86.02% 0.00186 249.044); /*Borders*/
-  --color-primary: oklch(60.221% 0.21537 310.815);
-  --color-primary-content: oklch(100% 0 0);
-}
-
 [data-theme="fantasy"] {
   --color-primary-content: oklch(100% 0 0);
 }
@@ -639,22 +631,6 @@ button.btn {
 .input,
 .select { padding-inline: 1rem !important; }
 
-/* ── Light theme: make input borders + bg visible ──
-   Default daisy borders blend into the near-white base-100 background. */
-[data-theme=light] .input,
-[data-theme=light] .select,
-[data-theme=light] .textarea {
-  background-color: var(--color-base-200);
-  border: 1px solid var(--color-base-300);
-}
-[data-theme=light] .input:focus,
-[data-theme=light] .select:focus,
-[data-theme=light] .textarea:focus {
-  border-color: var(--color-primary-content);
-  outline: 2px solid var(--color-primary);
-  outline-offset: -1px;
-}
-
 /* Custom <details>-based dropdowns (group picker): hide content when closed,
    and hide the default disclosure triangle on the summary. */
 details:not([open]) > ul { display: none; }
@@ -941,17 +917,6 @@ input[type="password"]::-webkit-textfield-decoration-container {
 .bg-primary\/22 { background-color: color-mix(in srgb, var(--color-primary) 22%, transparent); }
 .hover\:bg-primary\/22:hover { background-color: color-mix(in srgb, var(--color-primary) 22%, transparent); }
 
-/* Light theme: boost primary opacity — white bg makes low-% tints nearly invisible */
-[data-theme="light"] .bg-primary\/5  { background-color: color-mix(in srgb, var(--color-primary) 10%, transparent); }
-[data-theme="light"] .bg-primary\/12 { background-color: color-mix(in srgb, var(--color-primary) 22%, transparent); }
-[data-theme="light"] .bg-primary\/15 { background-color: color-mix(in srgb, var(--color-primary) 25%, transparent); }
-[data-theme="light"] .bg-primary\/22 { background-color: color-mix(in srgb, var(--color-primary) 35%, transparent); }
-[data-theme="light"] .hover\:bg-primary\/22:hover { background-color: color-mix(in srgb, var(--color-primary) 35%, transparent); }
-
-/* ── Calendar light-theme text boosts ── */
-[data-theme="light"] .cal-grid .text-base-content\/35 { color: color-mix(in srgb, var(--color-base-content) 60%, transparent); }
-[data-theme="light"] .cal-grid .text-base-content\/20 { color: color-mix(in srgb, var(--color-base-content) 38%, transparent); }
-
 /* ── Dark theme: bg-base-300 override ── */
 [data-theme="dark"] {
   --color-base-300: oklch(32.57% 0.04663 323.444);
@@ -1017,7 +982,6 @@ input[type="password"]::-webkit-textfield-decoration-container {
 /* ── Toggle + field visibility for light-palette themes ── */
 
 /* Unchecked toggle: swap near-black base-content for a soft gray indicator */
-[data-theme="light"] .toggle,
 [data-theme="lemonade"] .toggle,
 [data-theme="pastel"] .toggle {
   color: var(--color-base-300);
@@ -1041,17 +1005,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   background-color: var(--form-background) !important;
 }
 
-/* ── Light theme: toggle off-state knob ──
-   Track is near-white (--form-background: #f8f9fa), so a white knob vanishes.
-   Use a gray knob + border that stay visible on light containers. */
-[data-theme="light"] .toggle:not(:checked) {
-  color: var(--color-base-300) !important;
-  border-color: color-mix(in oklch, var(--color-base-content) 30%, transparent) !important;
-}
-
 /* Select and non-ghost inputs: ensure a visible border against light backgrounds */
-[data-theme="light"] .select,
-[data-theme="light"] .input:not(.input-ghost),
 [data-theme="lemonade"] .select,
 [data-theme="lemonade"] .input:not(.input-ghost) {
   border-color: var(--color-base-300) !important;

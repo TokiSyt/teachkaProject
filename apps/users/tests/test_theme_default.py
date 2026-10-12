@@ -21,8 +21,8 @@ class TestThemeDefault:
         assert u.theme == "fantasy"
 
     def test_explicit_theme_overrides_default(self):
-        u = User.objects.create_user(username="lighty", email="l@e.com", password="x", theme="light")
-        assert u.theme == "light"
+        u = User.objects.create_user(username="darky", email="d@e.com", password="x", theme="dark")
+        assert u.theme == "dark"
 
 
 @pytest.mark.django_db
@@ -34,12 +34,18 @@ class TestThemeUpdateView:
         assert resp.status_code == 302
         assert "login" in resp.url
 
-    @pytest.mark.parametrize("theme", ["light", "dark", "pastel", "lemonade", "fantasy"])
+    @pytest.mark.parametrize("theme", ["dark", "pastel", "lemonade", "fantasy"])
     def test_accepts_valid_themes(self, authenticated_client, user, theme):
         resp = authenticated_client.post(reverse("profile:theme-update"), {"theme": theme})
         assert resp.status_code == 200
         user.refresh_from_db()
         assert user.theme == theme
+
+    def test_rejects_removed_light_theme(self, authenticated_client, user):
+        resp = authenticated_client.post(reverse("profile:theme-update"), {"theme": "light"})
+        assert resp.status_code == 400
+        user.refresh_from_db()
+        assert user.theme != "light"
 
     def test_rejects_invalid_theme(self, authenticated_client, user):
         resp = authenticated_client.post(reverse("profile:theme-update"), {"theme": "neon"})
@@ -64,11 +70,11 @@ class TestBaseTemplateThemeRendering:
         html = authenticated_client.get(reverse("home")).content.decode()
         assert 'data-theme="fantasy"' in html
 
-    def test_authenticated_light_user_keeps_light(self, client):
+    def test_legacy_light_value_falls_back_to_fantasy(self, client):
         User.objects.create_user(username="li", email="li@e.com", password="x", theme="light")
         client.login(username="li", password="x")
         html = client.get(reverse("home")).content.decode()
-        assert 'data-theme="light"' in html
+        assert 'data-theme="fantasy"' in html
 
     def test_authenticated_dark_user_keeps_dark(self, client):
         User.objects.create_user(username="dk", email="dk@e.com", password="x", theme="dark")

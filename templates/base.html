@@ -5,7 +5,7 @@
 
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}"
-  data-theme="{% if request.user.is_authenticated %}{% if request.user.theme == 'dark' %}dark{% elif request.user.theme == 'pastel' %}pastel{% elif request.user.theme == 'lemonade' %}lemonade{% elif request.user.theme == 'fantasy' %}fantasy{% else %}light{% endif %}{% else %}fantasy{% endif %}">
+  data-theme="{% if request.user.is_authenticated %}{% if request.user.theme == 'dark' %}dark{% elif request.user.theme == 'pastel' %}pastel{% elif request.user.theme == 'lemonade' %}lemonade{% else %}fantasy{% endif %}{% else %}fantasy{% endif %}">
 
 <head>
   <meta charset="UTF-8">
@@ -93,6 +93,11 @@
     #sidebar #theme-compact:hover {
       background-color: color-mix(in srgb, var(--sidebar-hover-color) 10%, transparent) !important;
       color: var(--sidebar-hover-color) !important;
+    }
+    /* Logout: same row style as Language/Theme, red on hover */
+    #sidebar #logout-sb:hover {
+      background-color: color-mix(in srgb, var(--color-error) 10%, transparent);
+      color: var(--color-error);
     }
     #sidebar .menu li > a:hover svg,
     #sidebar #language-toggle-sb:hover svg,
@@ -241,11 +246,6 @@
           class="theme-swatch w-full h-7 rounded-lg border-2 border-base-300 hover:scale-105 transition-transform"
           style="background:conic-gradient(#f4faf0 0% 50%,#4a9b55 50%)"></button>
       </div>
-      <div class="tooltip tooltip-top flex-1" data-tip="{% trans 'Light' %}">
-        <button onclick="setTheme('light')" data-swatch="light"
-          class="theme-swatch w-full h-7 rounded-lg border-2 border-base-300 hover:scale-105 transition-transform"
-          style="background:conic-gradient(#ffffff 0% 50%,#ddc8f8 50%)"></button>
-      </div>
     </div>
 
     <!-- Language -->
@@ -277,9 +277,10 @@
       {% if user.is_authenticated %}
       <form action="{% url 'logout' %}" method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-ghost btn-sm w-full gap-2 rounded-xl text-base-content/60 hover:text-error">
-          <i data-lucide="log-out" class="w-4 h-4 shrink-0"></i>
-          <span id="cta-label" class="fade-label">{% trans "Logout" %}</span>
+        <button type="submit" id="logout-sb"
+          class="rounded-lg py-1 px-2 w-full flex items-center gap-2 text-base-content/60 active:bg-base-300 transition-colors">
+          <i data-lucide="log-out" class="w-6 h-6 shrink-0"></i>
+          <span id="cta-label" class="fade-label nav-label">{% trans "Logout" %}</span>
         </button>
       </form>
       {% else %}
@@ -454,9 +455,9 @@ function updateThemeUI(t) {
 }
 
 // Cycle order matches the swatch order in the sidebar (fantasy = default).
-const THEMES = ['fantasy','dark','pastel','lemonade','light'];
+const THEMES = ['fantasy','dark','pastel','lemonade'];
 function cycleTheme() {
-  const cur = document.documentElement.getAttribute('data-theme') || 'light';
+  const cur = document.documentElement.getAttribute('data-theme') || 'fantasy';
   const next = THEMES[(THEMES.indexOf(cur) + 1) % THEMES.length];
   setTheme(next);
 }
@@ -464,13 +465,13 @@ function cycleTheme() {
 {% if not user.is_authenticated %}
 (function(){
   const s = localStorage.getItem('theme');
-  if (['light','dark','pastel','lemonade','fantasy'].includes(s)) {
+  if (['dark','pastel','lemonade','fantasy'].includes(s)) {
     document.documentElement.setAttribute('data-theme', s);
     updateThemeUI(s);
   } else { updateThemeUI('fantasy'); }
 })();
 {% else %}
-updateThemeUI('{% if request.user.theme == "dark" %}dark{% elif request.user.theme == "pastel" %}pastel{% elif request.user.theme == "lemonade" %}lemonade{% elif request.user.theme == "fantasy" %}fantasy{% else %}light{% endif %}');
+updateThemeUI('{% if request.user.theme == "dark" %}dark{% elif request.user.theme == "pastel" %}pastel{% elif request.user.theme == "lemonade" %}lemonade{% else %}fantasy{% endif %}');
 {% endif %}
 
 // ── Language dropdown
