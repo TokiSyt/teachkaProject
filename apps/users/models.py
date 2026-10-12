@@ -5,7 +5,6 @@ from django.utils.translation import gettext_lazy as _
 
 class CustomUser(AbstractUser):
     THEME_CHOICES = [
-        ("light", _("Light")),
         ("dark", _("Dark")),
         ("pastel", _("Pastel")),
         ("lemonade", _("Editorial")),
