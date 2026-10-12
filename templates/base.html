@@ -94,6 +94,11 @@
       background-color: color-mix(in srgb, var(--sidebar-hover-color) 10%, transparent) !important;
       color: var(--sidebar-hover-color) !important;
     }
+    /* Logout: same row style as Language/Theme, red on hover */
+    #sidebar #logout-sb:hover {
+      background-color: color-mix(in srgb, var(--color-error) 10%, transparent);
+      color: var(--color-error);
+    }
     #sidebar .menu li > a:hover svg,
     #sidebar #language-toggle-sb:hover svg,
     #sidebar #theme-compact:hover svg {
@@ -272,9 +277,10 @@
       {% if user.is_authenticated %}
       <form action="{% url 'logout' %}" method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-ghost btn-sm w-full gap-2 rounded-xl text-base-content/60 hover:text-error">
-          <i data-lucide="log-out" class="w-4 h-4 shrink-0"></i>
-          <span id="cta-label" class="fade-label">{% trans "Logout" %}</span>
+        <button type="submit" id="logout-sb"
+          class="rounded-lg py-1 px-2 w-full flex items-center gap-2 text-base-content/60 active:bg-base-300 transition-colors">
+          <i data-lucide="log-out" class="w-6 h-6 shrink-0"></i>
+          <span id="cta-label" class="fade-label nav-label">{% trans "Logout" %}</span>
         </button>
       </form>
       {% else %}
