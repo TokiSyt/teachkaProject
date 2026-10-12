@@ -32,7 +32,10 @@ jobs:
           script: |
             set -euo pipefail
             cd "${{ secrets.DEPLOY_PATH_DEV }}"
-            git pull --ff-only origin development
+            # Mirror the branch exactly: development may be rewritten (squashed)
+            # before merging to main, which a fast-forward pull would refuse.
+            git fetch origin development
+            git reset --hard origin/development
             # Not ops/deploy.sh: that script is hardcoded to the prod stack.
             docker compose -p teachka-dev -f docker-compose.staging.yml up -d --build
             docker image prune -f >/dev/null 2>&1 || true
