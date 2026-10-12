@@ -7,6 +7,9 @@
 {% block breadcrumb %}{% trans "Home" %}{% endblock %}
 
 {% block extra_css %}
+{% if not user.is_authenticated %}
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..600,0..100&display=swap" rel="stylesheet">
+{% endif %}
 <style>
   /* Tool cards follow base-100 (override legacy .card rule in style.css) */
   .tool-card { background-color: var(--color-base-100); }
@@ -46,112 +49,8 @@
 {% block content %}
 
   {% if not user.is_authenticated %}
-  <!-- ── HERO ── -->
-  <section class="relative overflow-hidden px-5 pt-16 pb-16 md:px-14 md:pt-20 md:pb-18 border-b border-base-300">
-
-    <!-- Deco panel -->
-    <div class="absolute top-0 right-0 bottom-0 w-[42%] bg-base-200 hidden md:block"
-         style="clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%)"></div>
-
-    <!-- Deco cluster -->
-    <svg class="absolute pointer-events-none select-none brand-title hidden md:block"
-         aria-hidden="true"
-         style="top:50%;right:10%;transform:translate(50%,-50%)"
-         width="480" height="530" viewBox="0 0 480 530">
-
-      <!-- large filled backdrop -->
-      <circle cx="175" cy="205" r="100" fill="currentColor" opacity="0.07"/>
-
-      <!-- medium filled, upper-right -->
-      <circle cx="300" cy="142" r="68"  fill="currentColor" opacity="0.10"/>
-
-      <!-- medium filled, upper-right -->
-      <circle cx="200" cy="342" r="68"  fill="currentColor" opacity="0.10"/>
-
-      <!-- small filled, lower-right -->
-      <circle cx="308" cy="315" r="42"  fill="currentColor" opacity="0.13"/>
-
-      <!-- tiny filled, far lower-right -->
-      <circle cx="318" cy="385" r="22"  fill="currentColor" opacity="0.20"/>
-
-      <!-- small filled, upper-left -->
-      <circle cx="60"  cy="66"  r="30"  fill="currentColor" opacity="0.09"/>
-
-      <!-- outline ring, medium -->
-      <circle cx="190" cy="146" r="90"  fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.22"/>
-
-      <!-- outline ring, small -->
-      <circle cx="70"  cy="100" r="40"  fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.14"/>
-
-      <!-- partial arc — large -->
-      <path d="M 200,292.8 A 88,88 0 1 1 171.6,202.6"
-            fill="none" stroke="currentColor" stroke-width="1.3" opacity="0.20" stroke-linecap="round"/>
-
-      <!-- partial arc — medium -->
-      <path d="M 213.6,361 A 60,60 0 1 1 180,290"
-            fill="none" stroke="currentColor" stroke-width="1" opacity="0.17" stroke-linecap="round"/>
-
-      <!-- partial arc — small -->
-      <path d="M 135,330 A 40,40 0 1 1 70,360"
-            fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.15" stroke-linecap="round"/>
-
-    </svg>
-
-    <!-- Mobile deco — compact bubble cluster -->
-    <div class="absolute top-0 right-0 overflow-hidden pointer-events-none select-none md:hidden" style="width:200px;height:280px">
-      <div class="absolute rounded-full brand-title" style="top:-40px;right:-40px;width:160px;height:160px;background:currentColor;opacity:0.08"></div>
-      <div class="absolute rounded-full brand-title" style="top:30px;right:60px;width:88px;height:88px;background:currentColor;opacity:0.11"></div>
-      <div class="absolute rounded-full brand-title" style="top:110px;right:-10px;width:54px;height:54px;background:currentColor;opacity:0.15"></div>
-      <div class="absolute rounded-full brand-title" style="top:168px;right:54px;width:30px;height:30px;background:currentColor;opacity:0.19"></div>
-    </div>
-
-    <!-- Eyebrow -->
-    <div class="hero-child relative z-10 flex items-center gap-3 mb-6">
-      <div class="w-7 h-0.5 rounded bg-primary"></div>
-      <span class="text-[11px] font-semibold tracking-[2px] uppercase text-primary">{% trans "Toolkit for educators" %}</span>
-    </div>
-
-    <!-- Heading -->
-    <h1 class="hero-child relative z-10 serif font-medium text-[clamp(44px,5.5vw,72px)] leading-[1.03] tracking-tight max-w-[580px] mb-5 text-base-content">
-      {% trans "Teaching made" %}<br>
-      <em class="text-primary font-light">{% trans "effortlessly" %}</em><br>
-      {% trans "organised" %}
-    </h1>
-
-    <!-- Subtext -->
-    <p class="hero-child relative z-10 text-base text-base-content/60 max-w-[420px] leading-[1.75] font-light mb-10">
-      {% trans "One calm, clean hub for all your classroom tools." %}
-    </p>
-
-    <!-- Actions -->
-    <div class="hero-child relative z-10 flex items-center gap-4 flex-wrap mb-10">
-      <a href="{% url 'register' %}" class="btn btn-primary rounded-xl gap-2 font-medium">
-        <i data-lucide="arrow-right" class="w-4 h-4"></i>
-        {% trans "Get started" %}
-      </a>
-      <a href="#tools" class="btn btn-ghost rounded-xl gap-1.5 text-base-content/60 font-normal hover:text-base-content">
-        {% trans "See the tools" %}
-        <i data-lucide="chevron-down" class="w-4 h-4"></i>
-      </a>
-    </div>
-  </section>
-
-  <!-- ── STATS ── -->
-  <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-base-300 border-b border-base-300">
-    <div class="stat py-8 px-4 md:py-8 md:px-10">
-      <div class="stat-value serif font-medium text-3xl md:text-4xl tracking-tight">7</div>
-      <div class="stat-desc text-xs font-medium mt-1">{% trans "Built-in classroom tools" %}</div>
-    </div>
-    <div class="stat py-8 px-4 md:py-8 md:px-10">
-      <div class="stat-value serif font-medium text-3xl md:text-4xl tracking-tight">1</div>
-      <div class="stat-desc text-xs font-medium mt-1">{% trans "Place for everything" %}</div>
-    </div>
-    <div class="stat py-8 px-4 md:py-8 md:px-10">
-      <div class="stat-value serif font-medium text-3xl md:text-4xl tracking-tight">{% trans "Free" %}</div>
-      <div class="stat-desc text-xs font-medium mt-1">{% trans "No strings attached" %}</div>
-    </div>
-  </div>
-  {% endif %}
+  {% include "landing.html" %}
+  {% else %}
 
   <!-- ── WELCOME ── -->
   {% if user.is_authenticated %}
@@ -235,11 +134,6 @@
         <h2 class="serif text-[34px] font-medium tracking-tight leading-[1.1] text-base-content">
           {% trans "Seven tools," %}<br><em class="text-base-content/40 font-light">{% trans "one home" %}</em>
         </h2>
-        {% if not user.is_authenticated %}
-        <p class="text-[11px] text-base-content/40 font-light mt-3">
-          <a href="{% url 'login' %}" class="underline underline-offset-2 hover:text-base-content transition-colors">{% trans "Sign in" %}</a> {% trans "to start using any tool." %}
-        </p>
-        {% endif %}
       </div>
     </div>
 
@@ -558,117 +452,6 @@
   </script>
   {% endif %}
 
-  {% if not user.is_authenticated %}
-  <!-- ── ABOUT + HOW IT WORKS ── -->
-  <section class="grid grid-cols-2 border-t border-base-300 about-grid" id="about">
-
-    <!-- Left: why teachers use it -->
-    <div class="px-5 py-14 md:px-14 md:py-16 border-b md:border-b-0 md:border-r border-base-300">
-      <p class="text-[10px] font-semibold tracking-[2.5px] uppercase text-base-content/40 mb-2">{% trans "Built for teachers" %}</p>
-      <h2 class="serif text-[32px] font-medium tracking-tight leading-[1.1] mb-8 text-base-content">
-        {% trans "Why teachers" %}<br><em class="text-base-content/40 font-light">{% trans "use it" %}</em>
-      </h2>
-
-      <div class="flex flex-col gap-6">
-        <div class="flex gap-4">
-          <div class="w-9 h-9 rounded-[10px] bg-base-200 flex items-center justify-center shrink-0 text-primary">
-            <i data-lucide="zap" class="w-[18px] h-[18px]"></i>
-          </div>
-          <div>
-            <p class="font-medium text-sm text-base-content mb-1">{% trans "Ready in under a minute" %}</p>
-            <p class="text-[13px] text-base-content/55 font-light leading-relaxed">{% trans "No installation, no training, no IT department needed. Sign up and start using your tools straight away." %}</p>
-          </div>
-        </div>
-
-        <div class="flex gap-4">
-          <div class="w-9 h-9 rounded-[10px] bg-base-200 flex items-center justify-center shrink-0 text-primary">
-            <i data-lucide="users" class="w-[18px] h-[18px]"></i>
-          </div>
-          <div>
-            <p class="font-medium text-sm text-base-content mb-1">{% trans "One class list, every tool access" %}</p>
-            <p class="text-[13px] text-base-content/55 font-light leading-relaxed">{% trans "Add your students once. All the tools use the same list; no duplicate entry." %}</p>
-          </div>
-        </div>
-
-        <div class="flex gap-4">
-          <div class="w-9 h-9 rounded-[10px] bg-base-200 flex items-center justify-center shrink-0 text-primary">
-            <i data-lucide="smile" class="w-[18px] h-[18px]"></i>
-          </div>
-          <div>
-            <p class="font-medium text-sm text-base-content mb-1">{% trans "No learning curve" %}</p>
-            <p class="text-[13px] text-base-content/55 font-light leading-relaxed">{% trans "Every tool is designed to work the first time you open it, with no setup or manual needed." %}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Right: steps -->
-    <div class="px-5 py-14 md:px-14 md:py-16 bg-base-200">
-      <p class="text-[10px] font-semibold tracking-[2.5px] uppercase text-base-content/40 mb-2">{% trans "How it works" %}</p>
-      <h2 class="serif text-[32px] font-medium tracking-tight leading-[1.1] mb-8 text-base-content">
-        {% trans "Three steps" %}<br>{% trans "to start" %}
-      </h2>
-
-      <div class="flex flex-col">
-
-        <div class="flex gap-4">
-          <div class="flex flex-col items-center shrink-0">
-            <div class="w-9 h-9 rounded-full border-2 border-primary text-primary flex items-center justify-center font-semibold serif text-base shrink-0">1</div>
-            <div class="w-px flex-1 bg-primary/30 my-1.5"></div>
-          </div>
-          <div class="pb-7 pt-1">
-            <p class="font-medium text-sm text-base-content mb-1">{% trans "Create your account" %}</p>
-            <p class="text-xs text-base-content/55 font-light leading-relaxed">{% trans "Free signup. Ready in under a minute." %}</p>
-          </div>
-        </div>
-
-        <div class="flex gap-4">
-          <div class="flex flex-col items-center shrink-0">
-            <div class="w-9 h-9 rounded-full border-2 border-primary text-primary flex items-center justify-center font-semibold serif text-base shrink-0">2</div>
-            <div class="w-px flex-1 bg-primary/30 my-1.5"></div>
-          </div>
-          <div class="pb-7 pt-1">
-            <p class="font-medium text-sm text-base-content mb-1">{% trans "Add your class" %}</p>
-            <p class="text-xs text-base-content/55 font-light leading-relaxed">{% trans "Create your classes. All tools sync from these lists automatically." %}</p>
-          </div>
-        </div>
-
-        <div class="flex gap-4">
-          <div class="flex flex-col items-center shrink-0">
-            <div class="w-9 h-9 rounded-full border-2 border-primary text-primary flex items-center justify-center font-semibold serif text-base shrink-0">3</div>
-          </div>
-          <div class="pt-1">
-            <p class="font-medium text-sm text-base-content mb-1">{% trans "Open a tool and go" %}</p>
-            <p class="text-xs text-base-content/55 font-light leading-relaxed">{% trans "No duplicate data entry, no per-tool setup. It just works." %}</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-  {% endif %}
-
-  {% if not user.is_authenticated %}
-  <!-- ── CTA ── -->
-  <section class="px-5 py-16 md:px-14 md:py-20 text-center relative overflow-hidden">
-    <div class="absolute inset-0 pointer-events-none"
-         style="background: radial-gradient(ellipse 60% 60% at 50% 50%, color-mix(in srgb, var(--color-primary) 6%, transparent), transparent)"></div>
-    <div class="relative z-10 max-w-lg mx-auto">
-      <p class="serif italic text-sm text-primary mb-4">{% trans "Start today" %}</p>
-      <h2 class="serif text-[clamp(32px,5vw,48px)] font-medium tracking-tight leading-[1.08] mb-4 text-base-content">
-        {% trans "Your classroom," %}<br>{% trans "finally in one place" %}
-      </h2>
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-        <a href="{% url 'register' %}" class="btn btn-primary btn-lg rounded-xl gap-2 font-medium w-full sm:w-auto">
-          <i data-lucide="arrow-right" class="w-5 h-5"></i>
-          {% trans "Create an account" %}
-        </a>
-        <a href="{% url 'login' %}" class="btn btn-ghost btn-lg rounded-xl gap-2 font-medium text-base-content/60 w-full sm:w-auto">
-          {% trans "Sign in" %}
-        </a>
-      </div>
-    </div>
-  </section>
   {% endif %}
 
 {% endblock %}

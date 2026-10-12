@@ -4363,3 +4363,175 @@ msgstr "Voltar"
 #~ msgid "Delete ALL columns from this group? Points data will be lost."
 #~ msgstr ""
 #~ "Eliminar TODAS as colunas deste grupo? Os dados de pontos serão perdidos."
+
+#: templates/landing.html
+msgid "Free classroom tools for teachers"
+msgstr "Ferramentas gratuitas para professores"
+
+#: templates/landing.html
+msgid "The small jobs of every lesson,"
+msgstr "As pequenas tarefas de cada aula,"
+
+#: templates/landing.html
+msgid "one click away."
+msgstr "a um clique de distância."
+
+#: templates/landing.html
+msgid "Pick a name, split teams, run a timer or a quiz."
+msgstr "Sorteie um nome, faça equipas, abra um quiz."
+
+#: templates/landing.html
+msgid "Your class list is already there."
+msgstr "A sua turma já lá está."
+
+#: templates/landing.html
+msgid "Create your free account"
+msgstr "Criar conta gratuita"
+
+#: templates/landing.html
+msgid "Free to use. No payment details."
+msgstr "Gratuito. Sem dados de pagamento."
+
+#: templates/landing.html
+msgid "Your class"
+msgstr "A sua turma"
+
+#: templates/landing.html
+msgid "Teams"
+msgstr "Equipas"
+
+#: templates/landing.html
+msgid "Grades"
+msgstr "Notas"
+
+#: templates/landing.html
+msgid "Type your class once."
+msgstr "Escreva a sua turma uma só vez."
+
+#: templates/landing.html
+msgid "Add a group with your students' names and give each one a colour. The point system, the group divider and the name wheel all use that list, so you never retype it."
+msgstr "Crie um grupo com os nomes dos seus alunos e dê uma cor a cada um. O sistema de pontos, o divisor de grupos e a roleta de nomes usam essa lista, por isso nunca a terá de escrever de novo."
+
+#: templates/landing.html
+msgid "Give and take points during the lesson, student by student. Make your own columns for whatever you track, and open any student to see their full breakdown and notes."
+msgstr "Dê e tire pontos durante a aula, aluno a aluno. Crie as suas próprias colunas para o que quiser acompanhar e abra qualquer aluno para ver o detalhe completo e as observações."
+
+#: templates/landing.html
+msgid "Positive and negative tables"
+msgstr "Tabelas positiva e negativa"
+
+#: templates/landing.html
+msgid "Number or text columns"
+msgstr "Colunas numéricas ou de texto"
+
+#: templates/landing.html
+msgid "A page for each student"
+msgstr "Uma página por aluno"
+
+#: templates/landing.html
+msgid "Saves as you go"
+msgstr "Guarda automaticamente"
+
+#: templates/landing.html
+msgid "Split the class into random teams in one go. Say how many teams you want, or how many students should be in each."
+msgstr "Divida a turma em equipas aleatórias de uma só vez. Indique quantas equipas quer, ou quantos alunos deve ter cada uma."
+
+#: templates/landing.html
+msgid "Spin to pick who answers next. Turn on “Remove after spin” and every student gets picked once before anyone gets a second turn."
+msgstr "Gire para escolher quem responde a seguir. Ative “Remover após girar” e cada aluno é escolhido uma vez antes de alguém repetir."
+
+#: templates/landing.html
+msgid "For the lesson itself."
+msgstr "Para a própria aula."
+
+#: templates/landing.html
+msgid "Open them on the classroom screen and get going."
+msgstr "Abra-as no ecrã da sala e comece."
+
+#: templates/landing.html
+msgid "Build a quiz round by round, then open a room. Students join with a six-digit code on their own devices and answer live while you host."
+msgstr "Crie um quiz ronda a ronda e depois abra uma sala. Os alunos entram com um código de seis dígitos nos seus próprios dispositivos e respondem em direto enquanto apresenta."
+
+#: templates/landing.html
+msgid "Images and a time limit per round"
+msgstr "Imagens e limite de tempo por ronda"
+
+#: templates/landing.html
+msgid "Join with code"
+msgstr "Entrar com código"
+
+#: templates/landing.html
+msgid "Is the Sun a star?"
+msgstr "O Sol é uma estrela?"
+
+#: templates/landing.html
+msgid "Set a countdown for tests and group work, or run a stopwatch and flag times as you go."
+msgstr "Defina uma contagem decrescente para testes e trabalhos de grupo, ou use o cronómetro e marque tempos pelo caminho."
+
+#: templates/landing.html
+msgid "Stopwatch with flags"
+msgstr "Cronómetro com marcações"
+
+#: templates/landing.html
+msgid "And for the hours around it."
+msgstr "E para as horas à volta dela."
+
+#: templates/landing.html
+msgid "Planning the week and marking the test."
+msgstr "Planear a semana e corrigir o teste."
+
+#: templates/landing.html
+msgid "Plan lessons and events with notes attached. Set them to repeat, and see at a glance whether it's an odd or even week."
+msgstr "Planeie aulas e eventos com notas associadas. Defina-os para se repetirem e veja num relance se é semana par ou ímpar."
+
+#: templates/landing.html
+msgid "Repeats daily, weekly or monthly"
+msgstr "Repete diária, semanal ou mensalmente"
+
+#: templates/landing.html
+msgid "Odd and even weeks"
+msgstr "Semanas pares e ímpares"
+
+#: templates/landing.html
+msgid "Public holidays and name days"
+msgstr "Feriados e onomásticos"
+
+#: templates/landing.html
+msgid "Mon"
+msgstr "Seg"
+
+#: templates/landing.html
+msgid "Tue"
+msgstr "Ter"
+
+#: templates/landing.html
+msgid "Wed"
+msgstr "Qua"
+
+#: templates/landing.html
+msgid "Thu"
+msgstr "Qui"
+
+#: templates/landing.html
+msgid "Fri"
+msgstr "Sex"
+
+#: templates/landing.html
+msgid "Type the maximum points of a test and get the point range for each grade, from 1 to 5, in whole or half points."
+msgstr "Introduza a pontuação máxima de um teste e obtenha o intervalo de pontos de cada nota, de 1 a 5, em pontos inteiros ou meios pontos."
+
+#: templates/landing.html
+msgid "Grades 1 to 5"
+msgstr "Notas de 1 a 5"
+
+#: templates/landing.html
+msgid "Whole or half points"
+msgstr "Pontos inteiros ou meios pontos"
+
+#: templates/landing.html
+msgid "Try it in your next lesson."
+msgstr "Experimente na próxima aula."
+
+#: templates/landing.html
+msgid "Add a class, then spin the name wheel or split them into teams. It's free."
+msgstr "Adicione uma turma e depois gire a roleta de nomes ou divida-a em equipas. É gratuito."
