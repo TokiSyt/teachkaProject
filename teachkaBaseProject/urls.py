@@ -23,7 +23,9 @@ urlpatterns += i18n_patterns(
     # Main apps with clean URL paths
     path("grades/", include("apps.grade_calculator.urls")),
     path("groups/", include("apps.group_maker.urls", namespace="group_maker")),
-    path("karma/", include("apps.point_system.urls")),
+    path("points/", include("apps.point_system.urls")),
+    path("karma/", views.LegacyKarmaRedirectView.as_view()),
+    path("karma/<path:rest>", views.LegacyKarmaRedirectView.as_view()),
     path("divider/", include("apps.group_divider.urls")),
     path("wheel/", include("apps.wheel.urls")),
     path("timer/", include("apps.timer.urls")),

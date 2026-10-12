@@ -8,7 +8,7 @@ register = template.Library()
 def strip_lang_prefix(path):
     """Strip the language prefix from a URL path.
 
-    e.g. /pt/karma/ -> /karma/, /cs/groups/ -> /groups/, /karma/ -> /karma/
+    e.g. /pt/points/ -> /points/, /cs/groups/ -> /groups/, /points/ -> /points/
     """
     for code, _name in settings.LANGUAGES:
         prefix = f"/{code}/"

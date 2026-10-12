@@ -210,6 +210,9 @@
     text-wrap: balance;
   }
   .lp-chapter-head p { margin-top: 0.85rem; line-height: 1.65; font-weight: 300; color: var(--lp-muted); }
+  .lp-chapter-head .lp-privacy { display: flex; align-items: flex-start; gap: 0.55rem; font-size: 0.875rem; }
+  .lp-privacy svg { width: 1.05rem; height: 1.05rem; flex-shrink: 0; margin-top: 0.2rem; color: var(--lp-ink); }
+  .lp-privacy a { color: var(--color-base-content); text-decoration: underline; text-underline-offset: 2px; }
 
   .lp-tool {
     display: grid;
@@ -270,10 +273,18 @@
     transform: translate(35%, 25%);
   }
   .lp-tool.is-flipped .lp-stage::after { right: auto; left: 2%; transform: translate(-35%, 25%); }
-  /* On phones the stage spans the full width: keep the satellite on screen. */
+  /* On phones the stage spans the full width: keep the satellite on screen.
+     The stage stays a true oval but grows with its content. Padding is a share
+     of the width (16% / 68% / 16%), which keeps a mock's corners inside the
+     curve for any mock up to roughly as tall as the stage is wide. */
   @media (max-width: 899px) {
     .lp-stage::after,
     .lp-tool.is-flipped .lp-stage::after { transform: translate(0, 25%); }
+    .lp-stage {
+      width: 100%;
+      aspect-ratio: auto;
+      padding: 16%;
+    }
   }
   .lp-stage > * { position: relative; z-index: 1; }
   .lp-card {
@@ -281,7 +292,6 @@
     padding: 1rem;
     border-radius: 1.6rem;
     background: var(--color-base-100);
-    box-shadow: 0 10px 30px -12px color-mix(in oklab, var(--color-base-content) 30%, transparent);
     font-size: 0.85rem;
     color: var(--color-base-content);
   }
@@ -298,7 +308,6 @@
     padding: 1.1rem;
     border-radius: 999px;
     background: var(--color-base-100);
-    box-shadow: 0 8px 24px -14px color-mix(in oklab, var(--color-base-content) 40%, transparent);
   }
   .lp-team .lp-dot { width: 1.15rem; height: 1.15rem; }
 
@@ -313,7 +322,6 @@
       var(--lp-tint) 90deg 135deg, var(--lp-alt) 135deg 180deg,
       var(--lp-tint-strong) 180deg 225deg, var(--lp-alt-strong) 225deg 270deg,
       var(--lp-tint) 270deg 315deg, var(--lp-alt) 315deg 360deg);
-    box-shadow: 0 10px 30px -12px color-mix(in oklab, var(--color-base-content) 35%, transparent);
     position: relative;
   }
   .lp-wheel::after {
@@ -344,7 +352,6 @@
     background:
       radial-gradient(closest-side, var(--color-base-100) 82%, transparent 83%),
       conic-gradient(var(--lp-ink) calc(var(--p) * 360deg), var(--lp-tint-strong) 0);
-    box-shadow: 0 10px 30px -12px color-mix(in oklab, var(--color-base-content) 35%, transparent);
   }
   .lp-ring-time { font-size: 2.4rem; font-weight: 500; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
 
@@ -412,6 +419,26 @@
   @media (max-width: 767px) { .lp-close-blob { padding-bottom: 4.5rem; } }
   @media (max-width: 359px) { .lp-close-blob .lp-cta { padding: 0 1.1rem; font-size: 0.92rem; } }
 
+  /* Phones: scale the mocks down so they fit inside the oval stage. */
+  @media (max-width: 899px) {
+    .lp-card { width: 100%; padding: 0.8rem 0.85rem; border-radius: 1.25rem; font-size: 0.8rem; }
+    .lp-card-label { font-size: 0.62rem; }
+    .lp-team { padding: 0.85rem; gap: 0.35rem; }
+    .lp-team .lp-dot { width: 0.95rem; height: 0.95rem; }
+    .lp-teams { gap: 0.6rem; }
+    .lp-wheel, .lp-ring { width: 10rem; height: 10rem; }
+    .lp-ring-time { font-size: 2rem; }
+    .lp-pill { font-size: 0.8rem; padding: 0.35rem 0.8rem; }
+    .lp-code { gap: 0.25rem; margin: 0.4rem 0 0.75rem; }
+    .lp-code span { width: 1.6rem; height: 2.1rem; font-size: 1rem; border-radius: 0.7rem; }
+    .lp-answers span { padding: 0.5rem; }
+    .lp-week { gap: 0.3rem; margin-top: 0.5rem; }
+    .lp-day { padding: 0.45rem 0.1rem 0.55rem; font-size: 0.68rem; gap: 0.25rem; }
+    .lp-day b { font-size: 0.9rem; }
+    .lp-grade-row { padding: 0.3rem 0.2rem; }
+    .lp-grade { width: 1.5rem; height: 1.5rem; font-size: 0.8rem; }
+  }
+
   /* Scroll reveal for below-the-fold rows. Only hidden once JS has run. */
   .lp-js .lp-reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
   .lp-js .lp-reveal.is-in { opacity: 1; transform: none; }
@@ -429,7 +456,7 @@
   <!-- ── HERO ── -->
   <section class="lp-hero">
     <div class="lp-hero-copy">
-      <p class="lp-eyebrow lp-rise"><span class="lp-eyebrow-dot"></span>{% trans "Free classroom tools for teachers" %}</p>
+      <p class="lp-eyebrow lp-rise"><span class="lp-eyebrow-dot"></span>{% trans "Classroom tools for teachers" %}</p>
 
       <h1 class="lp-display lp-soft lp-rise lp-rise-2">
         {% trans "The small jobs of every lesson," %} <em>{% trans "one click away." %}</em>
@@ -437,7 +464,7 @@
 
       <p class="lp-lede lp-rise lp-rise-3">
         {% trans "Pick a name, split teams, run a timer or a quiz." %}
-        <span class="lp-lede-2">{% trans "Your class list is already there." %}</span>
+        <span class="lp-lede-2">{% trans "Type your class once and every tool uses it." %}</span>
       </p>
 
       <div class="lp-cta-row lp-rise lp-rise-4">
@@ -467,10 +494,10 @@
         </div>
 
         <div class="lp-bub is-linked" style="--x:20;--y:22;--d:26;--i:1">
-          <i data-lucide="book-open-check"></i>{% trans "Points" %}
+          <i data-lucide="book-open-check"></i>{% trans "Point system" %}
         </div>
-        <div class="lp-bub is-linked" style="--x:79;--y:20;--d:24;--i:2">
-          <i data-lucide="users"></i>{% trans "Teams" %}
+        <div class="lp-bub is-linked" style="--x:79;--y:20;--d:25;--i:2">
+          <i data-lucide="users"></i>{% trans "Group divider" %}
         </div>
         <div class="lp-bub is-linked" style="--x:86;--y:54;--d:22;--i:3">
           <i data-lucide="loader-pinwheel"></i>{% trans "Name wheel" %}
@@ -484,8 +511,8 @@
         <div class="lp-bub" style="--x:12;--y:58;--d:20;--i:6">
           <i data-lucide="calendar-check"></i>{% trans "Calendar" %}
         </div>
-        <div class="lp-bub" style="--x:50;--y:9;--d:16;--i:7">
-          <i data-lucide="calculator"></i>{% trans "Grades" %}
+        <div class="lp-bub" style="--x:50;--y:11;--d:20;--i:7">
+          <i data-lucide="calculator"></i>{% trans "Grade calculator" %}
         </div>
       </div>
     </div>
@@ -496,6 +523,11 @@
     <div class="lp-chapter-head lp-reveal">
       <h2 class="lp-soft">{% trans "Type your class once." %}</h2>
       <p>{% trans "Add a group with your students' names and give each one a colour. The point system, the group divider and the name wheel all use that list, so you never retype it." %}</p>
+      <p class="lp-privacy">
+        <i data-lucide="shield-check"></i>
+        <span>{% trans "Only you can see your students' names. We use them to run the tools and nothing else." %}
+          <a href="{% url 'privacy' %}">{% trans "Privacy policy" %}</a></span>
+      </p>
     </div>
 
     <article class="lp-tool lp-reveal">
@@ -503,7 +535,7 @@
         <h3 class="lp-tool-name lp-soft"><span class="lp-tool-icon"><i data-lucide="book-open-check"></i></span>{% trans "Point system" %}</h3>
         <p>{% trans "Give and take points during the lesson, student by student. Make your own columns for whatever you track, and open any student to see their full breakdown and notes." %}</p>
         <div class="lp-chips">
-          <span class="lp-chip">{% trans "Positive and negative tables" %}</span>
+          <span class="lp-chip">{% trans "Reward and penalty points" %}</span>
           <span class="lp-chip">{% trans "Number or text columns" %}</span>
           <span class="lp-chip">{% trans "A page for each student" %}</span>
           <span class="lp-chip">{% trans "Saves as you go" %}</span>
@@ -615,9 +647,9 @@
         <p>{% trans "Plan lessons and events with notes attached. Set them to repeat, and see at a glance whether it's an odd or even week." %}</p>
         <div class="lp-chips">
           <span class="lp-chip">{% trans "Lesson notes" %}</span>
-          <span class="lp-chip">{% trans "Repeats daily, weekly or monthly" %}</span>
+          <span class="lp-chip">{% trans "Repeats daily, weekly, monthly or yearly" %}</span>
           <span class="lp-chip">{% trans "Odd and even weeks" %}</span>
-          <span class="lp-chip">{% trans "Public holidays and name days" %}</span>
+          <span class="lp-chip">{% trans "Public holidays and Czech name days" %}</span>
         </div>
       </div>
       <div class="lp-stage is-alt" aria-hidden="true">
@@ -663,7 +695,7 @@
   <section class="lp-close">
     <div class="lp-close-blob lp-reveal">
       <h2 class="lp-soft">{% trans "Try it in your next lesson." %}</h2>
-      <p>{% trans "Add a class, then spin the name wheel or split them into teams. It's free." %}</p>
+      <p>{% trans "Add a class, then spin the name wheel or split them into teams." %}</p>
       <a href="{% url 'register' %}" class="btn btn-primary lp-cta">
         {% trans "Create your free account" %}
         <i data-lucide="arrow-right" class="w-4 h-4"></i>

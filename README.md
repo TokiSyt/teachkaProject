@@ -47,7 +47,7 @@ Each tool is an independent Django app. New tools drop in without touching the o
 | **Grade calculator** | `/grades/` | Weighted grade computation with a live, no-reload UI |
 | **Group maker** | `/groups/` | Build and save reusable class / member lists |
 | **Group divider** | `/divider/` | Split a group into teams, by team size **or** by number of teams |
-| **Point / karma system** | `/karma/` | Track participation and behaviour points per member |
+| **Point / karma system** | `/points/` | Track participation and behaviour points per member |
 | **Wheel** | `/wheel/` | Random picker for cold-calling students |
 | **Timer** | `/timer/` | Countdown and stopwatch for classroom activities |
 | **Calendar** | `/calendar/` | Events, holidays, and week / day views |

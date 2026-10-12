@@ -4365,8 +4365,8 @@ msgstr "Voltar"
 #~ "Eliminar TODAS as colunas deste grupo? Os dados de pontos serão perdidos."
 
 #: templates/landing.html
-msgid "Free classroom tools for teachers"
-msgstr "Ferramentas gratuitas para professores"
+msgid "Classroom tools for teachers"
+msgstr "Ferramentas de sala de aula para professores"
 
 #: templates/landing.html
 msgid "The small jobs of every lesson,"
@@ -4381,8 +4381,8 @@ msgid "Pick a name, split teams, run a timer or a quiz."
 msgstr "Sorteie um nome, faça equipas, abra um quiz."
 
 #: templates/landing.html
-msgid "Your class list is already there."
-msgstr "A sua turma já lá está."
+msgid "Type your class once and every tool uses it."
+msgstr "Escreva a sua turma uma vez e todas as ferramentas a usam."
 
 #: templates/landing.html
 msgid "Create your free account"
@@ -4417,8 +4417,8 @@ msgid "Give and take points during the lesson, student by student. Make your own
 msgstr "Dê e tire pontos durante a aula, aluno a aluno. Crie as suas próprias colunas para o que quiser acompanhar e abra qualquer aluno para ver o detalhe completo e as observações."
 
 #: templates/landing.html
-msgid "Positive and negative tables"
-msgstr "Tabelas positiva e negativa"
+msgid "Reward and penalty points"
+msgstr "Pontos de recompensa e penalização"
 
 #: templates/landing.html
 msgid "Number or text columns"
@@ -4485,16 +4485,16 @@ msgid "Plan lessons and events with notes attached. Set them to repeat, and see 
 msgstr "Planeie aulas e eventos com notas associadas. Defina-os para se repetirem e veja num relance se é semana par ou ímpar."
 
 #: templates/landing.html
-msgid "Repeats daily, weekly or monthly"
-msgstr "Repete diária, semanal ou mensalmente"
+msgid "Repeats daily, weekly, monthly or yearly"
+msgstr "Repete diária, semanal, mensal ou anualmente"
 
 #: templates/landing.html
 msgid "Odd and even weeks"
 msgstr "Semanas pares e ímpares"
 
 #: templates/landing.html
-msgid "Public holidays and name days"
-msgstr "Feriados e onomásticos"
+msgid "Public holidays and Czech name days"
+msgstr "Feriados e onomásticos checos"
 
 #: templates/landing.html
 msgid "Mon"
@@ -4533,5 +4533,9 @@ msgid "Try it in your next lesson."
 msgstr "Experimente na próxima aula."
 
 #: templates/landing.html
-msgid "Add a class, then spin the name wheel or split them into teams. It's free."
-msgstr "Adicione uma turma e depois gire a roleta de nomes ou divida-a em equipas. É gratuito."
+msgid "Add a class, then spin the name wheel or split them into teams."
+msgstr "Adicione uma turma e depois gire a roleta de nomes ou divida-a em equipas."
+
+#: templates/landing.html
+msgid "Only you can see your students' names. We use them to run the tools and nothing else."
+msgstr "Só você vê os nomes dos seus alunos. Usamo-los apenas para fazer funcionar as ferramentas."
