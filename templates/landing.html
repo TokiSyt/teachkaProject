@@ -1,0 +1,690 @@
+{% load i18n %}
+{# Landing page for anonymous visitors. Included from home.html. #}
+{# All colours come from the active daisyUI theme, so every theme restyles it. #}
+
+<style>
+  .lp {
+    /* Decorative bubbles must never widen the page (phones zoom out to fit it). */
+    overflow-x: clip;
+    --lp-ink: var(--color-primary);
+    --lp-tint: color-mix(in oklab, var(--color-primary) 16%, var(--color-base-100));
+    --lp-tint-strong: color-mix(in oklab, var(--color-primary) 30%, var(--color-base-100));
+    --lp-alt: color-mix(in oklab, var(--color-secondary) 22%, var(--color-base-100));
+    --lp-alt-strong: color-mix(in oklab, var(--color-secondary) 40%, var(--color-base-100));
+    --lp-muted: color-mix(in oklab, var(--color-base-content) 62%, transparent);
+    --lp-line: color-mix(in oklab, var(--color-base-content) 12%, transparent);
+    --lp-ease: cubic-bezier(0.34, 1.4, 0.64, 1);
+  }
+
+  .lp-soft { font-family: 'Fraunces', serif; font-variation-settings: "SOFT" 100; }
+
+  /* ── Hero ── */
+  .lp-hero {
+    display: grid;
+    grid-template-rows: auto minmax(11rem, 1fr);
+    gap: 1.25rem;
+    min-height: calc(100svh - 60px);
+    padding: 1.75rem 1.25rem 1.25rem;
+    background: var(--color-base-100);
+    border-bottom: 1px solid var(--color-base-300);
+    overflow: hidden;
+  }
+  @media (min-width: 768px) {
+    .lp-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-rows: none;
+      align-items: center;
+      gap: 2rem;
+      min-height: 100svh;
+      padding: 3rem 3.5rem;
+    }
+  }
+
+  .lp-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    padding: 0.35rem 0.85rem 0.35rem 0.4rem;
+    border-radius: 999px;
+    background: var(--lp-tint);
+    color: var(--lp-ink);
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+  .lp-eyebrow-dot {
+    width: 1.1rem; height: 1.1rem;
+    border-radius: 999px;
+    background: var(--lp-ink);
+    opacity: 0.85;
+  }
+
+  .lp-display {
+    margin: 1rem 0 0;
+    font-size: clamp(2.35rem, 5.2vw, 4.4rem);
+    font-weight: 500;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    color: var(--color-base-content);
+    text-wrap: balance;
+  }
+  .lp-display em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--lp-ink);
+  }
+  .lp-lede {
+    margin: 1rem 0 0;
+    max-width: 30rem;
+    font-size: clamp(0.98rem, 1.25vw, 1.12rem);
+    line-height: 1.6;
+    font-weight: 300;
+    color: var(--lp-muted);
+  }
+  @media (min-width: 768px) { .lp-lede-2 { display: block; } }
+  .lp-cta-row { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .lp-cta {
+    width: fit-content;
+    height: auto;
+    min-height: 3.25rem;
+    padding: 0 1.6rem;
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight: 500;
+    gap: 0.6rem;
+  }
+  .lp-cta svg { transition: transform 0.2s var(--lp-ease); }
+  .lp-cta:hover svg { transform: translateX(3px); }
+  .lp-note { font-size: 0.8rem; color: var(--lp-muted); }
+
+  @media (max-width: 767px) {
+    .lp-cta { width: 100%; }
+  }
+  /* Short phones: tighten so the whole hero still fits one screen. */
+  @media (max-width: 767px) and (max-height: 700px) {
+    .lp-hero { padding-top: 1.1rem; gap: 0.75rem; }
+    .lp-display { font-size: 2rem; margin-top: 0.7rem; }
+    .lp-lede { font-size: 0.92rem; margin-top: 0.7rem; line-height: 1.5; }
+    .lp-cta-row { margin-top: 1rem; }
+    .lp-cta { min-height: 2.9rem; }
+  }
+
+  /* ── Bubble cluster ──
+     Coordinates are percentages of a square: --x/--y is the centre, --d the diameter.
+     Tools joined to "Your class" by a line are the ones that read your student list. */
+  .lp-cluster-wrap {
+    align-self: stretch;
+    container-type: size;
+    display: grid;
+    place-items: center;
+  }
+  @media (min-width: 768px) {
+    .lp-cluster-wrap { min-height: 28rem; }
+  }
+  .lp-cluster {
+    position: relative;
+    width: min(100cqw, 100cqh, 36rem);
+    aspect-ratio: 1;
+    container-type: inline-size;
+  }
+  .lp-links {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    overflow: visible;
+    color: var(--lp-ink);
+  }
+  .lp-links line {
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-dasharray: 1 6;
+    stroke-linecap: round;
+    opacity: 0.6;
+    vector-effect: non-scaling-stroke;
+  }
+  .lp-bub {
+    position: absolute;
+    left: calc(var(--x) * 1% - var(--d) * 0.5%);
+    top: calc(var(--y) * 1% - var(--d) * 0.5%);
+    width: calc(var(--d) * 1%);
+    aspect-ratio: 1;
+    border-radius: 999px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6cqi;
+    text-align: center;
+    background: var(--lp-alt);
+    color: var(--color-base-content);
+    font-size: clamp(9px, 3.1cqi, 15px);
+    font-weight: 500;
+    line-height: 1.1;
+    padding: 1cqi;
+  }
+  .lp-bub svg { width: 5cqi; height: 5cqi; min-width: 14px; min-height: 14px; opacity: 0.75; }
+  .lp-bub.is-linked { background: var(--lp-tint-strong); }
+  .lp-bub.is-linked svg { color: var(--lp-ink); opacity: 1; }
+  .lp-bub.is-class {
+    background: var(--color-base-100);
+    box-shadow:
+      0 0 0 2px color-mix(in oklab, var(--lp-ink) 55%, transparent),
+      0 0 0 3.2cqi var(--lp-tint),
+      0 1.5cqi 5cqi color-mix(in oklab, var(--lp-ink) 18%, transparent);
+    gap: 2cqi;
+  }
+  .lp-class-label { font-size: clamp(12px, 4.4cqi, 22px); font-weight: 500; }
+  .lp-dots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2cqi; }
+  .lp-dots i {
+    display: block;
+    width: 3.4cqi; height: 3.4cqi;
+    border-radius: 999px;
+    background: var(--c, var(--lp-ink));
+  }
+
+  /* Entrance: bubbles settle in once, lines follow. */
+  @keyframes lp-pop { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: none; } }
+  @keyframes lp-fade { from { opacity: 0; } to { opacity: 1; } }
+  .lp-bub { animation: lp-pop 0.7s var(--lp-ease) both; animation-delay: calc(0.15s + var(--i, 0) * 0.07s); }
+  .lp-links { animation: lp-fade 0.6s ease 0.75s both; }
+  .lp-rise { animation: lp-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .lp-rise-2 { animation-delay: 0.08s; }
+  .lp-rise-3 { animation-delay: 0.16s; }
+  .lp-rise-4 { animation-delay: 0.24s; }
+  @keyframes lp-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+  /* ── Below the fold ── */
+  .lp-chapter {
+    padding: 4.5rem 1.25rem 2rem;
+    background: var(--color-base-100);
+  }
+  .lp-chapter + .lp-chapter { padding-top: 3rem; }
+  @media (min-width: 768px) { .lp-chapter { padding: 6rem 3.5rem 2.5rem; } }
+  .lp-chapter-head { max-width: 40rem; margin-bottom: 2.5rem; }
+  .lp-chapter-head h2 {
+    font-size: clamp(1.9rem, 3.6vw, 2.8rem);
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--color-base-content);
+    text-wrap: balance;
+  }
+  .lp-chapter-head p { margin-top: 0.85rem; line-height: 1.65; font-weight: 300; color: var(--lp-muted); }
+
+  .lp-tool {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.75rem;
+    align-items: center;
+    padding: 2rem 0;
+  }
+  @media (min-width: 900px) {
+    .lp-tool { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 4rem; padding: 2.5rem 0; }
+    .lp-tool.is-flipped .lp-tool-text { order: 2; }
+  }
+  .lp-tool-name {
+    display: flex; align-items: center; gap: 0.75rem;
+    font-size: 1.45rem; font-weight: 500; letter-spacing: -0.01em;
+    color: var(--color-base-content);
+  }
+  .lp-tool-icon {
+    display: grid; place-items: center;
+    width: 2.6rem; height: 2.6rem;
+    border-radius: 999px;
+    background: var(--lp-tint);
+    color: var(--lp-ink);
+  }
+  .lp-tool-icon.is-alt { background: var(--lp-alt); color: var(--color-base-content); }
+  .lp-tool-icon svg { width: 1.15rem; height: 1.15rem; }
+  .lp-tool-text p { margin-top: 0.8rem; max-width: 28rem; line-height: 1.65; font-weight: 300; color: var(--lp-muted); }
+  .lp-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1.1rem; }
+  .lp-chip {
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    border: 1px solid var(--lp-line);
+    font-size: 0.8rem;
+    color: color-mix(in oklab, var(--color-base-content) 78%, transparent);
+  }
+
+  /* Each mock sits in a soft, slightly irregular blob. */
+  .lp-stage {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: min(100%, 30rem);
+    aspect-ratio: 1.08;
+    justify-self: center;
+    padding: 2rem 1.25rem;
+    border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+    background: var(--lp-tint);
+  }
+  .lp-stage.is-alt { background: var(--lp-alt); border-radius: 55% 45% 47% 53% / 52% 58% 42% 48%; }
+  /* A small satellite bubble beside each stage. */
+  .lp-stage::after {
+    content: "";
+    position: absolute;
+    right: 2%; bottom: 4%;
+    width: 16%; aspect-ratio: 1;
+    border-radius: 999px;
+    background: inherit;
+    transform: translate(35%, 25%);
+  }
+  .lp-tool.is-flipped .lp-stage::after { right: auto; left: 2%; transform: translate(-35%, 25%); }
+  /* On phones the stage spans the full width: keep the satellite on screen. */
+  @media (max-width: 899px) {
+    .lp-stage::after,
+    .lp-tool.is-flipped .lp-stage::after { transform: translate(0, 25%); }
+  }
+  .lp-stage > * { position: relative; z-index: 1; }
+  .lp-card {
+    width: min(100%, 21rem);
+    padding: 1rem;
+    border-radius: 1.6rem;
+    background: var(--color-base-100);
+    box-shadow: 0 10px 30px -12px color-mix(in oklab, var(--color-base-content) 30%, transparent);
+    font-size: 0.85rem;
+    color: var(--color-base-content);
+  }
+  .lp-card-label { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--lp-muted); }
+  .lp-dot { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 999px; background: var(--c, var(--lp-ink)); flex-shrink: 0; }
+  .lp-num { font-variant-numeric: tabular-nums; font-weight: 500; }
+  .lp-plus { color: color-mix(in oklab, var(--color-success) 75%, var(--color-base-content)); }
+  .lp-minus { color: color-mix(in oklab, var(--color-error) 80%, var(--color-base-content)); }
+
+  /* Teams mock */
+  .lp-teams { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.9rem; }
+  .lp-team {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.45rem;
+    padding: 1.1rem;
+    border-radius: 999px;
+    background: var(--color-base-100);
+    box-shadow: 0 8px 24px -14px color-mix(in oklab, var(--color-base-content) 40%, transparent);
+  }
+  .lp-team .lp-dot { width: 1.15rem; height: 1.15rem; }
+
+  /* Wheel mock */
+  .lp-wheel-wrap { position: relative; display: grid; justify-items: center; gap: 1rem; }
+  .lp-wheel {
+    width: 12rem; height: 12rem;
+    border-radius: 999px;
+    border: 6px solid var(--color-base-100);
+    background: conic-gradient(
+      var(--lp-tint-strong) 0 45deg, var(--lp-alt-strong) 45deg 90deg,
+      var(--lp-tint) 90deg 135deg, var(--lp-alt) 135deg 180deg,
+      var(--lp-tint-strong) 180deg 225deg, var(--lp-alt-strong) 225deg 270deg,
+      var(--lp-tint) 270deg 315deg, var(--lp-alt) 315deg 360deg);
+    box-shadow: 0 10px 30px -12px color-mix(in oklab, var(--color-base-content) 35%, transparent);
+    position: relative;
+  }
+  .lp-wheel::after {
+    content: ""; position: absolute; inset: 42%;
+    border-radius: 999px; background: var(--color-base-100);
+  }
+  .lp-wheel-pin {
+    position: absolute; top: -0.4rem; left: 50%; transform: translateX(-50%);
+    width: 0; height: 0;
+    border-left: 0.6rem solid transparent; border-right: 0.6rem solid transparent;
+    border-top: 1rem solid var(--color-base-content);
+    z-index: 1;
+  }
+  .lp-pill {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.45rem 0.95rem;
+    border-radius: 999px;
+    background: var(--color-base-100);
+    font-size: 0.85rem;
+  }
+
+  /* Timer mock */
+  .lp-ring {
+    --p: 0.72;
+    width: 12rem; height: 12rem;
+    border-radius: 999px;
+    display: grid; place-items: center;
+    background:
+      radial-gradient(closest-side, var(--color-base-100) 82%, transparent 83%),
+      conic-gradient(var(--lp-ink) calc(var(--p) * 360deg), var(--lp-tint-strong) 0);
+    box-shadow: 0 10px 30px -12px color-mix(in oklab, var(--color-base-content) 35%, transparent);
+  }
+  .lp-ring-time { font-size: 2.4rem; font-weight: 500; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+
+  /* Quiz mock */
+  .lp-code { display: flex; gap: 0.35rem; justify-content: center; margin: 0.5rem 0 1rem; }
+  .lp-code span {
+    display: grid; place-items: center;
+    width: 2.1rem; height: 2.6rem;
+    border-radius: 0.9rem;
+    background: var(--lp-tint);
+    font-size: 1.2rem; font-weight: 500; font-variant-numeric: tabular-nums;
+  }
+  .lp-answers { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .lp-answers span {
+    padding: 0.7rem; border-radius: 999px; text-align: center; font-weight: 500;
+    background: var(--lp-alt);
+  }
+  .lp-answers span:first-child { background: var(--lp-tint-strong); }
+
+  /* Calendar mock */
+  .lp-week { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.4rem; margin-top: 0.75rem; }
+  .lp-day {
+    display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+    padding: 0.6rem 0.2rem 0.7rem;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--color-base-content) 4%, transparent);
+    font-size: 0.75rem;
+  }
+  .lp-day b { font-size: 1rem; font-weight: 500; }
+  .lp-day.is-today { background: var(--lp-tint-strong); }
+  .lp-day .lp-dot { width: 0.45rem; height: 0.45rem; }
+  .lp-day .lp-dot.is-holiday { background: var(--color-secondary); }
+
+  /* Grades mock */
+  .lp-grade-row { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0.25rem; }
+  .lp-grade-row + .lp-grade-row { border-top: 1px solid var(--lp-line); }
+  .lp-grade {
+    display: grid; place-items: center;
+    width: 1.9rem; height: 1.9rem; border-radius: 999px;
+    background: var(--lp-tint); color: var(--lp-ink); font-weight: 600;
+  }
+
+  /* ── Closing ── */
+  .lp-close {
+    padding: 3rem 1.25rem 5rem;
+    background: var(--color-base-100);
+  }
+  @media (min-width: 768px) { .lp-close { padding: 4rem 3.5rem 6rem; } }
+  .lp-close-blob {
+    max-width: 44rem;
+    margin: 0 auto;
+    padding: 3.5rem clamp(1.5rem, 9%, 4.5rem);
+    text-align: center;
+    border-radius: 48% 52% 45% 55% / 55% 45% 55% 45%;
+    background: var(--lp-tint);
+  }
+  .lp-close-blob h2 {
+    font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+    font-weight: 500; line-height: 1.1; letter-spacing: -0.02em;
+    color: var(--color-base-content);
+    text-wrap: balance;
+  }
+  .lp-close-blob p { margin: 0.75rem auto 1.75rem; max-width: 26rem; font-weight: 300; line-height: 1.6; color: var(--lp-muted); }
+  .lp-close-blob .lp-cta { margin: 0 auto; width: fit-content; white-space: nowrap; }
+  @media (max-width: 767px) { .lp-close-blob { padding-bottom: 4.5rem; } }
+  @media (max-width: 359px) { .lp-close-blob .lp-cta { padding: 0 1.1rem; font-size: 0.92rem; } }
+
+  /* Scroll reveal for below-the-fold rows. Only hidden once JS has run. */
+  .lp-js .lp-reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+  .lp-js .lp-reveal.is-in { opacity: 1; transform: none; }
+
+  .lp a:focus-visible { outline: 3px solid var(--lp-ink); outline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lp-bub, .lp-links, .lp-rise { animation: none; }
+    .lp-js .lp-reveal { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+
+<div class="lp">
+
+  <!-- ── HERO ── -->
+  <section class="lp-hero">
+    <div class="lp-hero-copy">
+      <p class="lp-eyebrow lp-rise"><span class="lp-eyebrow-dot"></span>{% trans "Free classroom tools for teachers" %}</p>
+
+      <h1 class="lp-display lp-soft lp-rise lp-rise-2">
+        {% trans "The small jobs of every lesson," %} <em>{% trans "one click away." %}</em>
+      </h1>
+
+      <p class="lp-lede lp-rise lp-rise-3">
+        {% trans "Pick a name, split teams, run a timer or a quiz." %}
+        <span class="lp-lede-2">{% trans "Your class list is already there." %}</span>
+      </p>
+
+      <div class="lp-cta-row lp-rise lp-rise-4">
+        <a href="{% url 'register' %}" class="btn btn-primary lp-cta">
+          {% trans "Create your free account" %}
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </a>
+        <p class="lp-note">{% trans "Free to use. No payment details." %}</p>
+      </div>
+    </div>
+
+    <div class="lp-cluster-wrap" aria-hidden="true">
+      <div class="lp-cluster">
+        <svg class="lp-links" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <line x1="50" y1="50" x2="20" y2="22"/>
+          <line x1="50" y1="50" x2="79" y2="20"/>
+          <line x1="50" y1="50" x2="86" y2="54"/>
+        </svg>
+
+        <div class="lp-bub is-class lp-soft" style="--x:50;--y:50;--d:40;--i:0">
+          <span class="lp-class-label">{% trans "Your class" %}</span>
+          <span class="lp-dots">
+            <i style="--c:var(--color-primary)"></i><i style="--c:var(--color-secondary)"></i><i style="--c:var(--color-success)"></i><i style="--c:var(--color-info)"></i>
+            <i style="--c:var(--color-success)"></i><i style="--c:var(--color-warning)"></i><i style="--c:var(--color-primary)"></i><i style="--c:var(--color-error)"></i>
+            <i style="--c:var(--color-secondary)"></i><i style="--c:var(--color-info)"></i><i style="--c:var(--color-success)"></i><i style="--c:var(--color-success)"></i>
+          </span>
+        </div>
+
+        <div class="lp-bub is-linked" style="--x:20;--y:22;--d:26;--i:1">
+          <i data-lucide="book-open-check"></i>{% trans "Points" %}
+        </div>
+        <div class="lp-bub is-linked" style="--x:79;--y:20;--d:24;--i:2">
+          <i data-lucide="users"></i>{% trans "Teams" %}
+        </div>
+        <div class="lp-bub is-linked" style="--x:86;--y:54;--d:22;--i:3">
+          <i data-lucide="loader-pinwheel"></i>{% trans "Name wheel" %}
+        </div>
+        <div class="lp-bub" style="--x:73;--y:84;--d:22;--i:4">
+          <i data-lucide="clock"></i>{% trans "Timer" %}
+        </div>
+        <div class="lp-bub" style="--x:33;--y:84;--d:26;--i:5">
+          <i data-lucide="badge-question-mark"></i>{% trans "Quizzes" %}
+        </div>
+        <div class="lp-bub" style="--x:12;--y:58;--d:20;--i:6">
+          <i data-lucide="calendar-check"></i>{% trans "Calendar" %}
+        </div>
+        <div class="lp-bub" style="--x:50;--y:9;--d:16;--i:7">
+          <i data-lucide="calculator"></i>{% trans "Grades" %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── AROUND YOUR CLASS ── -->
+  <section class="lp-chapter" id="tools">
+    <div class="lp-chapter-head lp-reveal">
+      <h2 class="lp-soft">{% trans "Type your class once." %}</h2>
+      <p>{% trans "Add a group with your students' names and give each one a colour. The point system, the group divider and the name wheel all use that list, so you never retype it." %}</p>
+    </div>
+
+    <article class="lp-tool lp-reveal">
+      <div class="lp-tool-text">
+        <h3 class="lp-tool-name lp-soft"><span class="lp-tool-icon"><i data-lucide="book-open-check"></i></span>{% trans "Point system" %}</h3>
+        <p>{% trans "Give and take points during the lesson, student by student. Make your own columns for whatever you track, and open any student to see their full breakdown and notes." %}</p>
+        <div class="lp-chips">
+          <span class="lp-chip">{% trans "Positive and negative tables" %}</span>
+          <span class="lp-chip">{% trans "Number or text columns" %}</span>
+          <span class="lp-chip">{% trans "A page for each student" %}</span>
+          <span class="lp-chip">{% trans "Saves as you go" %}</span>
+        </div>
+      </div>
+      <div class="lp-stage" aria-hidden="true">
+        <div class="lp-card">
+          <div class="flex justify-between lp-card-label mb-2"><span>{% trans "Name" %}</span><span>{% trans "Total" %}</span></div>
+          <div class="flex items-center gap-2 py-1.5"><span class="lp-dot" style="--c:var(--color-primary)"></span>Ema<span class="ml-auto lp-num lp-plus">+6</span><span class="lp-num lp-minus w-8 text-right">−1</span></div>
+          <div class="flex items-center gap-2 py-1.5"><span class="lp-dot" style="--c:var(--color-secondary)"></span>Tomás<span class="ml-auto lp-num lp-plus">+4</span><span class="lp-num lp-minus w-8 text-right">0</span></div>
+          <div class="flex items-center gap-2 py-1.5"><span class="lp-dot" style="--c:var(--color-info)"></span>Jakub<span class="ml-auto lp-num lp-plus">+3</span><span class="lp-num lp-minus w-8 text-right">−2</span></div>
+          <div class="flex items-center gap-2 py-1.5"><span class="lp-dot" style="--c:var(--color-warning)"></span>Inês<span class="ml-auto lp-num lp-plus">+5</span><span class="lp-num lp-minus w-8 text-right">0</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="lp-tool is-flipped lp-reveal">
+      <div class="lp-tool-text">
+        <h3 class="lp-tool-name lp-soft"><span class="lp-tool-icon"><i data-lucide="users"></i></span>{% trans "Group divider" %}</h3>
+        <p>{% trans "Split the class into random teams in one go. Say how many teams you want, or how many students should be in each." %}</p>
+        <div class="lp-chips">
+          <span class="lp-chip">{% trans "Fixed team count" %}</span>
+          <span class="lp-chip">{% trans "Fixed members per team" %}</span>
+        </div>
+      </div>
+      <div class="lp-stage" aria-hidden="true">
+        <div class="lp-teams">
+          <div class="lp-team"><span class="lp-dot" style="--c:var(--color-primary)"></span><span class="lp-dot" style="--c:var(--color-info)"></span><span class="lp-dot" style="--c:var(--color-warning)"></span><span class="lp-dot" style="--c:var(--color-success)"></span></div>
+          <div class="lp-team"><span class="lp-dot" style="--c:var(--color-secondary)"></span><span class="lp-dot" style="--c:var(--color-error)"></span><span class="lp-dot" style="--c:var(--color-primary)"></span><span class="lp-dot" style="--c:var(--color-success)"></span></div>
+          <div class="lp-team"><span class="lp-dot" style="--c:var(--color-success)"></span><span class="lp-dot" style="--c:var(--color-secondary)"></span><span class="lp-dot" style="--c:var(--color-info)"></span><span class="lp-dot" style="--c:var(--color-warning)"></span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="lp-tool lp-reveal">
+      <div class="lp-tool-text">
+        <h3 class="lp-tool-name lp-soft"><span class="lp-tool-icon"><i data-lucide="loader-pinwheel"></i></span>{% trans "Name wheel" %}</h3>
+        <p>{% trans "Spin to pick who answers next. Turn on “Remove after spin” and every student gets picked once before anyone gets a second turn." %}</p>
+        <div class="lp-chips">
+          <span class="lp-chip">{% trans "Remove after spin" %}</span>
+          <span class="lp-chip">{% trans "Shuffle" %}</span>
+        </div>
+      </div>
+      <div class="lp-stage" aria-hidden="true">
+        <div class="lp-wheel-wrap">
+          <span class="lp-wheel-pin"></span>
+          <div class="lp-wheel"></div>
+          <span class="lp-pill"><span class="lp-dot" style="--c:var(--color-info)"></span>Jakub</span>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ── DURING THE LESSON ── -->
+  <section class="lp-chapter">
+    <div class="lp-chapter-head lp-reveal">
+      <h2 class="lp-soft">{% trans "For the lesson itself." %}</h2>
+      <p>{% trans "Open them on the classroom screen and get going." %}</p>
+    </div>
+
+    <article class="lp-tool lp-reveal">
+      <div class="lp-tool-text">
+        <h3 class="lp-tool-name lp-soft"><span class="lp-tool-icon is-alt"><i data-lucide="badge-question-mark"></i></span>{% trans "Quizzes" %}</h3>
+        <p>{% trans "Build a quiz round by round, then open a room. Students join with a six-digit code on their own devices and answer live while you host." %}</p>
+        <div class="lp-chips">
+          <span class="lp-chip">{% trans "Pick the correct answer" %}</span>
+          <span class="lp-chip">{% trans "True or false" %}</span>
+          <span class="lp-chip">{% trans "Write the answer" %}</span>
+          <span class="lp-chip">{% trans "Drag the answer into the blank" %}</span>
+          <span class="lp-chip">{% trans "Images and a time limit per round" %}</span>
+          <span class="lp-chip">{% trans "Streak bonus" %}</span>
+        </div>
+      </div>
+      <div class="lp-stage is-alt" aria-hidden="true">
+        <div class="lp-card text-center">
+          <p class="lp-card-label">{% trans "Join with code" %}</p>
+          <div class="lp-code"><span>4</span><span>8</span><span>2</span><span>1</span><span>0</span><span>7</span></div>
+          <p class="lp-soft text-base mb-3">{% trans "Is the Sun a star?" %}</p>
+          <div class="lp-answers"><span>{% trans "True" %}</span><span>{% trans "False" %}</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="lp-tool is-flipped lp-reveal">
+      <div class="lp-tool-text">
+        <h3 class="lp-tool-name lp-soft"><span class="lp-tool-icon is-alt"><i data-lucide="clock"></i></span>{% trans "Timer" %}</h3>
+        <p>{% trans "Set a countdown for tests and group work, or run a stopwatch and flag times as you go." %}</p>
+        <div class="lp-chips">
+          <span class="lp-chip">{% trans "Countdown" %}</span>
+          <span class="lp-chip">{% trans "Stopwatch with flags" %}</span>
+        </div>
+      </div>
+      <div class="lp-stage is-alt" aria-hidden="true">
+        <div class="lp-ring"><span class="lp-ring-time lp-soft">07:12</span></div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ── BEFORE AND AFTER ── -->
+  <section class="lp-chapter">
+    <div class="lp-chapter-head lp-reveal">
+      <h2 class="lp-soft">{% trans "And for the hours around it." %}</h2>
+      <p>{% trans "Planning the week and marking the test." %}</p>
+    </div>
+
+    <article class="lp-tool lp-reveal">
+      <div class="lp-tool-text">
+        <h3 class="lp-tool-name lp-soft"><span class="lp-tool-icon is-alt"><i data-lucide="calendar-check"></i></span>{% trans "Calendar" %}</h3>
+        <p>{% trans "Plan lessons and events with notes attached. Set them to repeat, and see at a glance whether it's an odd or even week." %}</p>
+        <div class="lp-chips">
+          <span class="lp-chip">{% trans "Lesson notes" %}</span>
+          <span class="lp-chip">{% trans "Repeats daily, weekly or monthly" %}</span>
+          <span class="lp-chip">{% trans "Odd and even weeks" %}</span>
+          <span class="lp-chip">{% trans "Public holidays and name days" %}</span>
+        </div>
+      </div>
+      <div class="lp-stage is-alt" aria-hidden="true">
+        <div class="lp-card">
+          <div class="flex justify-between items-baseline">
+            <span class="lp-soft text-base">{% trans "This week" %}</span>
+            <span class="lp-card-label">{% trans "Even" %}</span>
+          </div>
+          <div class="lp-week">
+            <div class="lp-day">{% trans "Mon" %}<b>12</b><span class="lp-dot"></span></div>
+            <div class="lp-day is-today">{% trans "Tue" %}<b>13</b><span class="flex gap-0.5"><span class="lp-dot"></span><span class="lp-dot"></span></span></div>
+            <div class="lp-day">{% trans "Wed" %}<b>14</b><span class="lp-dot is-holiday"></span></div>
+            <div class="lp-day">{% trans "Thu" %}<b>15</b><span class="lp-dot"></span></div>
+            <div class="lp-day">{% trans "Fri" %}<b>16</b><span class="lp-dot" style="opacity:0"></span></div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="lp-tool is-flipped lp-reveal">
+      <div class="lp-tool-text">
+        <h3 class="lp-tool-name lp-soft"><span class="lp-tool-icon is-alt"><i data-lucide="calculator"></i></span>{% trans "Grade calculator" %}</h3>
+        <p>{% trans "Type the maximum points of a test and get the point range for each grade, from 1 to 5, in whole or half points." %}</p>
+        <div class="lp-chips">
+          <span class="lp-chip">{% trans "Grades 1 to 5" %}</span>
+          <span class="lp-chip">{% trans "Whole or half points" %}</span>
+        </div>
+      </div>
+      <div class="lp-stage is-alt" aria-hidden="true">
+        <div class="lp-card">
+          <div class="flex justify-between lp-card-label mb-1"><span>{% trans "Grade" %}</span><span>{% trans "Max" %}: 30</span></div>
+          <div class="lp-grade-row"><span class="lp-grade">1</span><span class="lp-num">27 – 30</span></div>
+          <div class="lp-grade-row"><span class="lp-grade">2</span><span class="lp-num">22 – 26</span></div>
+          <div class="lp-grade-row"><span class="lp-grade">3</span><span class="lp-num">15 – 21</span></div>
+          <div class="lp-grade-row"><span class="lp-grade">4</span><span class="lp-num">10 – 14</span></div>
+          <div class="lp-grade-row"><span class="lp-grade">5</span><span class="lp-num">0 – 9</span></div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ── CLOSE ── -->
+  <section class="lp-close">
+    <div class="lp-close-blob lp-reveal">
+      <h2 class="lp-soft">{% trans "Try it in your next lesson." %}</h2>
+      <p>{% trans "Add a class, then spin the name wheel or split them into teams. It's free." %}</p>
+      <a href="{% url 'register' %}" class="btn btn-primary lp-cta">
+        {% trans "Create your free account" %}
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  (function () {
+    var root = document.querySelector('.lp');
+    if (!root || !('IntersectionObserver' in window)) return;
+    root.classList.add('lp-js');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('is-in');
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    root.querySelectorAll('.lp-reveal').forEach(function (el) { io.observe(el); });
+  })();
+</script>
