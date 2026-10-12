@@ -48,12 +48,18 @@ services:
       - "443:443"
     environment:
       CF_API_TOKEN: ${CF_API_TOKEN}
+      DEV_BASIC_AUTH_HASH: ${DEV_BASIC_AUTH_HASH}
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
     depends_on:
       - web
+    networks: [default, edge]
+
+networks:
+  edge:
+    external: true
 
 volumes:
   postgres_data:

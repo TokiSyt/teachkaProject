@@ -1,0 +1,39 @@
+name: Deploy dev
+
+# Auto-deploy the staging stack (dev.teachka.com) on every push to development.
+# Runs on the same Hetzner server as prod, from a second checkout of the repo,
+# as its own compose project (teachka-dev) with its own db/redis. The prod
+# Caddy proxies dev.teachka.com to it over the shared "edge" network.
+#
+# Required secrets (in the same environment as deploy.yml):
+#   DEPLOY_HOST, DEPLOY_USER, DEPLOY_SSH_KEY, DEPLOY_PORT  shared with prod
+#   DEPLOY_PATH_DEV  absolute path to the dev checkout on the server
+
+on:
+  push:
+    branches: [development]
+
+concurrency:
+  group: deploy-dev
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: "main - teachka-web-eu"
+    steps:
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.2.5
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          port: ${{ secrets.DEPLOY_PORT || 22 }}
+          script: |
+            set -euo pipefail
+            cd "${{ secrets.DEPLOY_PATH_DEV }}"
+            git pull --ff-only origin development
+            # Not ops/deploy.sh: that script is hardcoded to the prod stack.
+            docker compose -p teachka-dev -f docker-compose.staging.yml up -d --build
+            docker image prune -f >/dev/null 2>&1 || true
+            docker compose -p teachka-dev -f docker-compose.staging.yml logs --tail 20 web-dev

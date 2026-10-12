@@ -1,0 +1,40 @@
+# Staging stack for dev.teachka.com, run from a second checkout on the prod
+# server (branch development):
+#   docker compose -p teachka-dev -f docker-compose.staging.yml up -d --build
+# No ports exposed: the prod Caddy reaches web-dev over the external "edge"
+# network. Service is named web-dev (not web) so it can't shadow prod's web
+# in Caddy's DNS lookups on that shared network.
+
+services:
+  db:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    volumes: [postgres_data:/var/lib/postgresql]
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-teachkadb}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 5s
+      retries: 5
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+  web-dev:
+    build: .
+    restart: unless-stopped
+    env_file: [.env]
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      WEB_CONCURRENCY: 1
+    deploy:
+      resources:
+        limits: { cpus: "0.5", memory: 512M }
+    depends_on:
+      db: { condition: service_healthy }
+    networks: [default, edge]
+networks:
+  edge: { external: true }
+volumes:
+  postgres_data:

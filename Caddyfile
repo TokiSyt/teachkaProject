@@ -22,3 +22,19 @@ teachka.com {
 		header_up X-Real-IP {remote_host}
 	}
 }
+
+# Staging stack (docker-compose.staging.yml), reached over the shared "edge"
+# network. Password-gated; bcrypt hash comes from env, never committed.
+dev.teachka.com {
+	encode gzip zstd
+
+	basic_auth {
+		tester {$DEV_BASIC_AUTH_HASH}
+	}
+	header X-Robots-Tag "noindex, nofollow"
+
+	reverse_proxy web-dev:8000 {
+		header_up Host {host}
+		header_up X-Real-IP {remote_host}
+	}
+}
