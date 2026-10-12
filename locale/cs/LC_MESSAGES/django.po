@@ -4317,8 +4317,8 @@ msgstr "Zpět"
 #~ msgstr "Smazat VŠECHNY sloupce z této skupiny? Data bodů budou ztracena."
 
 #: templates/landing.html
-msgid "Free classroom tools for teachers"
-msgstr "Bezplatné nástroje pro učitele"
+msgid "Classroom tools for teachers"
+msgstr "Nástroje do výuky pro učitele"
 
 #: templates/landing.html
 msgid "The small jobs of every lesson,"
@@ -4333,8 +4333,8 @@ msgid "Pick a name, split teams, run a timer or a quiz."
 msgstr "Vylosujte jméno, rozdělte týmy, spusťte kvíz."
 
 #: templates/landing.html
-msgid "Your class list is already there."
-msgstr "Vaše třída už je připravená."
+msgid "Type your class once and every tool uses it."
+msgstr "Zadejte třídu jednou a použije ji každý nástroj."
 
 #: templates/landing.html
 msgid "Create your free account"
@@ -4369,8 +4369,8 @@ msgid "Give and take points during the lesson, student by student. Make your own
 msgstr "Přidávejte a odebírejte body během hodiny, studentovi po studentovi. Vytvořte si vlastní sloupce pro cokoli, co sledujete, a otevřete kteréhokoli studenta pro úplný přehled a poznámky."
 
 #: templates/landing.html
-msgid "Positive and negative tables"
-msgstr "Kladná a záporná tabulka"
+msgid "Reward and penalty points"
+msgstr "Kladné a záporné body"
 
 #: templates/landing.html
 msgid "Number or text columns"
@@ -4437,16 +4437,16 @@ msgid "Plan lessons and events with notes attached. Set them to repeat, and see 
 msgstr "Plánujte hodiny a události s poznámkami. Nastavte jejich opakování a na první pohled uvidíte, zda je lichý, nebo sudý týden."
 
 #: templates/landing.html
-msgid "Repeats daily, weekly or monthly"
-msgstr "Opakování denně, týdně nebo měsíčně"
+msgid "Repeats daily, weekly, monthly or yearly"
+msgstr "Opakování denně, týdně, měsíčně nebo ročně"
 
 #: templates/landing.html
 msgid "Odd and even weeks"
 msgstr "Liché a sudé týdny"
 
 #: templates/landing.html
-msgid "Public holidays and name days"
-msgstr "Státní svátky a jmeniny"
+msgid "Public holidays and Czech name days"
+msgstr "Státní svátky a české jmeniny"
 
 #: templates/landing.html
 msgid "Mon"
@@ -4485,5 +4485,9 @@ msgid "Try it in your next lesson."
 msgstr "Zkuste to v příští hodině."
 
 #: templates/landing.html
-msgid "Add a class, then spin the name wheel or split them into teams. It's free."
-msgstr "Přidejte třídu a pak zatočte kolem jmen nebo ji rozdělte do týmů. Je to zdarma."
+msgid "Add a class, then spin the name wheel or split them into teams."
+msgstr "Přidejte třídu a pak zatočte kolem jmen nebo ji rozdělte do týmů."
+
+#: templates/landing.html
+msgid "Only you can see your students' names. We use them to run the tools and nothing else."
+msgstr "Jména vašich žáků vidíte jen vy. Používáme je jen k provozu nástrojů a k ničemu jinému."
