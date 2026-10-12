@@ -1202,3 +1202,26 @@ class TestKarmaDashboardView:
         member_with_data.refresh_from_db()
         assert member_with_data.name == original
         assert member_with_data.color == "#3fc2f1"
+
+
+@pytest.mark.django_db
+class TestLegacyKarmaRedirect:
+    """Old /karma/ URLs redirect permanently to /points/."""
+
+    def test_point_system_lives_under_points(self):
+        assert reverse("karma:karma-home") == "/points/"
+
+    def test_root_redirects(self, client):
+        response = client.get("/karma/")
+        assert response.status_code == 301
+        assert response.url == "/points/"
+
+    def test_subpath_and_query_preserved(self, client):
+        response = client.get("/karma/dashboard/5?tab=notes")
+        assert response.status_code == 301
+        assert response.url == "/points/dashboard/5?tab=notes"
+
+    def test_language_prefix_preserved(self, client):
+        response = client.get("/pt/karma/")
+        assert response.status_code == 301
+        assert response.url == "/pt/points/"
