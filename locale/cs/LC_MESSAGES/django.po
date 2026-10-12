@@ -4315,3 +4315,175 @@ msgstr "Zpět"
 
 #~ msgid "Delete ALL columns from this group? Points data will be lost."
 #~ msgstr "Smazat VŠECHNY sloupce z této skupiny? Data bodů budou ztracena."
+
+#: templates/landing.html
+msgid "Free classroom tools for teachers"
+msgstr "Bezplatné nástroje pro učitele"
+
+#: templates/landing.html
+msgid "The small jobs of every lesson,"
+msgstr "Drobnosti každé hodiny,"
+
+#: templates/landing.html
+msgid "one click away."
+msgstr "na jedno kliknutí."
+
+#: templates/landing.html
+msgid "Pick a name, split teams, run a timer or a quiz."
+msgstr "Vylosujte jméno, rozdělte týmy, spusťte kvíz."
+
+#: templates/landing.html
+msgid "Your class list is already there."
+msgstr "Vaše třída už je připravená."
+
+#: templates/landing.html
+msgid "Create your free account"
+msgstr "Vytvořit účet zdarma"
+
+#: templates/landing.html
+msgid "Free to use. No payment details."
+msgstr "Zdarma. Bez platebních údajů."
+
+#: templates/landing.html
+msgid "Your class"
+msgstr "Vaše třída"
+
+#: templates/landing.html
+msgid "Teams"
+msgstr "Týmy"
+
+#: templates/landing.html
+msgid "Grades"
+msgstr "Známky"
+
+#: templates/landing.html
+msgid "Type your class once."
+msgstr "Třídu zadáte jen jednou."
+
+#: templates/landing.html
+msgid "Add a group with your students' names and give each one a colour. The point system, the group divider and the name wheel all use that list, so you never retype it."
+msgstr "Vytvořte skupinu se jmény studentů a každému přiřaďte barvu. Bodový systém, rozdělovač skupin i kolo jmen používají tento seznam, takže ho nemusíte psát znovu."
+
+#: templates/landing.html
+msgid "Give and take points during the lesson, student by student. Make your own columns for whatever you track, and open any student to see their full breakdown and notes."
+msgstr "Přidávejte a odebírejte body během hodiny, studentovi po studentovi. Vytvořte si vlastní sloupce pro cokoli, co sledujete, a otevřete kteréhokoli studenta pro úplný přehled a poznámky."
+
+#: templates/landing.html
+msgid "Positive and negative tables"
+msgstr "Kladná a záporná tabulka"
+
+#: templates/landing.html
+msgid "Number or text columns"
+msgstr "Číselné nebo textové sloupce"
+
+#: templates/landing.html
+msgid "A page for each student"
+msgstr "Stránka pro každého studenta"
+
+#: templates/landing.html
+msgid "Saves as you go"
+msgstr "Ukládá se průběžně"
+
+#: templates/landing.html
+msgid "Split the class into random teams in one go. Say how many teams you want, or how many students should be in each."
+msgstr "Rozdělte třídu na náhodné týmy najednou. Zadejte, kolik týmů chcete, nebo kolik studentů má být v každém."
+
+#: templates/landing.html
+msgid "Spin to pick who answers next. Turn on “Remove after spin” and every student gets picked once before anyone gets a second turn."
+msgstr "Zatočte a vyberte, kdo odpoví další. Zapněte „Odebrat po otočení“ a každý student přijde na řadu jednou, než se někdo dostane podruhé."
+
+#: templates/landing.html
+msgid "For the lesson itself."
+msgstr "Pro samotnou hodinu."
+
+#: templates/landing.html
+msgid "Open them on the classroom screen and get going."
+msgstr "Otevřete je na obrazovce ve třídě a můžete začít."
+
+#: templates/landing.html
+msgid "Build a quiz round by round, then open a room. Students join with a six-digit code on their own devices and answer live while you host."
+msgstr "Sestavte kvíz kolo po kole a pak otevřete místnost. Studenti se připojí šestimístným kódem na svých zařízeních a odpovídají živě, zatímco vy kvíz vedete."
+
+#: templates/landing.html
+msgid "Images and a time limit per round"
+msgstr "Obrázky a časový limit pro každé kolo"
+
+#: templates/landing.html
+msgid "Join with code"
+msgstr "Připojit se kódem"
+
+#: templates/landing.html
+msgid "Is the Sun a star?"
+msgstr "Je Slunce hvězda?"
+
+#: templates/landing.html
+msgid "Set a countdown for tests and group work, or run a stopwatch and flag times as you go."
+msgstr "Nastavte odpočítávání pro testy a skupinovou práci, nebo spusťte stopky a průběžně si označujte časy."
+
+#: templates/landing.html
+msgid "Stopwatch with flags"
+msgstr "Stopky s označením"
+
+#: templates/landing.html
+msgid "And for the hours around it."
+msgstr "A pro čas kolem ní."
+
+#: templates/landing.html
+msgid "Planning the week and marking the test."
+msgstr "Plánování týdne a hodnocení testu."
+
+#: templates/landing.html
+msgid "Plan lessons and events with notes attached. Set them to repeat, and see at a glance whether it's an odd or even week."
+msgstr "Plánujte hodiny a události s poznámkami. Nastavte jejich opakování a na první pohled uvidíte, zda je lichý, nebo sudý týden."
+
+#: templates/landing.html
+msgid "Repeats daily, weekly or monthly"
+msgstr "Opakování denně, týdně nebo měsíčně"
+
+#: templates/landing.html
+msgid "Odd and even weeks"
+msgstr "Liché a sudé týdny"
+
+#: templates/landing.html
+msgid "Public holidays and name days"
+msgstr "Státní svátky a jmeniny"
+
+#: templates/landing.html
+msgid "Mon"
+msgstr "Po"
+
+#: templates/landing.html
+msgid "Tue"
+msgstr "Út"
+
+#: templates/landing.html
+msgid "Wed"
+msgstr "St"
+
+#: templates/landing.html
+msgid "Thu"
+msgstr "Čt"
+
+#: templates/landing.html
+msgid "Fri"
+msgstr "Pá"
+
+#: templates/landing.html
+msgid "Type the maximum points of a test and get the point range for each grade, from 1 to 5, in whole or half points."
+msgstr "Zadejte maximální počet bodů testu a získáte bodové rozmezí pro každou známku od 1 do 5, v celých nebo polovičních bodech."
+
+#: templates/landing.html
+msgid "Grades 1 to 5"
+msgstr "Známky 1 až 5"
+
+#: templates/landing.html
+msgid "Whole or half points"
+msgstr "Celé nebo poloviční body"
+
+#: templates/landing.html
+msgid "Try it in your next lesson."
+msgstr "Zkuste to v příští hodině."
+
+#: templates/landing.html
+msgid "Add a class, then spin the name wheel or split them into teams. It's free."
+msgstr "Přidejte třídu a pak zatočte kolem jmen nebo ji rozdělte do týmů. Je to zdarma."
