@@ -18,7 +18,13 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["groups"] = GroupCreationModel.objects.filter(user=self.request.user).prefetch_related("members")
+        groups = GroupCreationModel.objects.filter(user=self.request.user).prefetch_related("members")
+        context["groups"] = groups
+        # Members per group for the wheel script, rendered with |json_script (raw names, safely encoded).
+        context["wheel_groups"] = {
+            str(g.id): [{"id": m.id, "name": m.name, "color": m.color or "#6366f1"} for m in g.get_members()]
+            for g in groups
+        }
         return context
 
     def get(self, request, *args, **kwargs):
@@ -59,6 +65,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
             # Get already chosen members
             session_key = f"already_chosen_members_{selected_group.id}"
             already_chosen_ids = request.session.get(session_key, [])
+            context["already_chosen_ids"] = already_chosen_ids
             if already_chosen_ids:
                 context["already_chosen_members"] = Member.objects.filter(id__in=already_chosen_ids)
 

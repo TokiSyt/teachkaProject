@@ -473,3 +473,25 @@ class TestHomeViewEdgeCases:
         )
         data = json.loads(response.content)
         assert len(data["chosen_members"]) == 1
+
+
+@pytest.mark.django_db
+class TestWheelGroupsData:
+    """The wheel script gets each group's members as JSON (json_script), with raw names."""
+
+    @pytest.fixture
+    def url(self):
+        return reverse("wheel:home")
+
+    @pytest.fixture
+    def group(self, user):
+        return GroupCreationModelFactory(user=user, members_string="Alice, Bob, Charlie")
+
+    def test_wheel_groups_json_has_raw_names(self, authenticated_client, url, group):
+        member = group.get_members().first()
+        member.name = "Ana & Bea"
+        member.save(update_fields=["name"])
+        response = authenticated_client.get(url)
+        data = response.context["wheel_groups"][str(group.id)]
+        assert {"id": member.id, "name": "Ana & Bea", "color": member.color or "#6366f1"} in data
+        assert 'id="wheel-groups"' in response.content.decode()
