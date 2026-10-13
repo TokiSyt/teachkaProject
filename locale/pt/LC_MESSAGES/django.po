@@ -2186,7 +2186,7 @@ msgstr "Pastel"
 
 #: apps/users/models.py:11 templates/base.html:239
 msgid "Editorial"
-msgstr "Editar perfil"
+msgstr "Editorial"
 
 #: apps/users/models.py:12 templates/base.html:224
 msgid "Palette"
@@ -4539,3 +4539,7 @@ msgstr "Adicione uma turma e depois gire a roleta de nomes ou divida-a em equipa
 #: templates/landing.html
 msgid "Only you can see your students' names. We use them to run the tools and nothing else."
 msgstr "Só você vê os nomes dos seus alunos. Usamo-los apenas para fazer funcionar as ferramentas."
+
+#: templates/base.html
+msgid "Appearance"
+msgstr "Aparência"

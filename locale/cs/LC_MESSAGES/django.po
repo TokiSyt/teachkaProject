@@ -2177,7 +2177,7 @@ msgstr "Pastelový"
 
 #: apps/users/models.py:11 templates/base.html:239
 msgid "Editorial"
-msgstr "Upravit profil"
+msgstr "Redakční"
 
 #: apps/users/models.py:12 templates/base.html:224
 msgid "Palette"
@@ -4491,3 +4491,7 @@ msgstr "Přidejte třídu a pak zatočte kolem jmen nebo ji rozdělte do týmů.
 #: templates/landing.html
 msgid "Only you can see your students' names. We use them to run the tools and nothing else."
 msgstr "Jména vašich žáků vidíte jen vy. Používáme je jen k provozu nástrojů a k ničemu jinému."
+
+#: templates/base.html
+msgid "Appearance"
+msgstr "Vzhled"

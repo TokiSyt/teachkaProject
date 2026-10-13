@@ -511,10 +511,12 @@ button.btn {
   -webkit-appearance: none;
   appearance: none;
   font-family: inherit;
-  /* Let DaisyUI's .btn drive font-size (var(--fontsize) honours btn-sm/btn-xs);
-     forcing `inherit` here inflated <button class="btn btn-sm"> vs <a class="btn btn-sm">. */
   cursor: pointer;
 }
+/* Tailwind's unlayered preflight (button { font-size: 100% }) beats daisyUI's layered .btn rule,
+   so restate daisyUI's size; var(--fontsize) honours btn-sm/btn-xs/btn-lg. :where() keeps this at
+   preflight's specificity (it wins by loading later) so text-* utilities on a button still apply. */
+button:where(.btn) { font-size: var(--fontsize, 0.875rem); }
 
 /* Make a <button> visually identical to an <a class="btn btn-primary rounded-xl"> */
 .btn-as-link {

@@ -8,7 +8,8 @@
 
 {% block extra_css %}
 {% if not user.is_authenticated %}
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..600,0..100&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+<script src="{% static 'js/landing.js' %}" defer></script>
 {% endif %}
 <style>
   /* Tool cards follow base-100 (override legacy .card rule in style.css) */
@@ -380,8 +381,7 @@
     .ac-previewing #sidebar .menu li > a svg {
       color: var(--sidebar-hover-color) !important;
     }
-    .ac-previewing #sidebar #language-toggle-sb,
-    .ac-previewing #sidebar #theme-compact {
+    .ac-previewing #sidebar .sb-row {
       color: var(--sidebar-hover-color) !important;
     }
   </style>
