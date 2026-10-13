@@ -90,16 +90,17 @@ format:
 	docker compose exec web ruff format .
 
 # Build Tailwind CSS
+# (Runs in the Node-based `tailwind` service; the web image has no Node.)
 tailwind-build:
-	docker compose exec web sh -c "cd /app/theme/static_src && npm run build"
+	docker compose run --rm tailwind sh -c "npm install && npm run build"
 
 # Install Tailwind dependencies
 tailwind-install:
-	docker compose exec web sh -c "cd /app/theme/static_src && npm install"
+	docker compose run --rm tailwind npm install
 
-# Watch Tailwind CSS changes (development) 
+# Watch Tailwind CSS changes (development)
 tailwind-dev:
-	docker-compose run --rm web sh -c "cd theme/static_src && npm run dev"
+	docker compose run --rm tailwind
 
 # Run all checks (lint, typecheck, test)
 check:
