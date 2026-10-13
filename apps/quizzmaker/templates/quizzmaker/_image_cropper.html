@@ -1,22 +1,19 @@
 {% load i18n %}
-<div class="image-cropper hidden mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4"
-     data-image-cropper
-     data-input-id="{{ input_id }}">
+{% comment %} Crop preview for an image field (static/js/image_cropper.js drives the dims and preview). {% endcomment %}
+<div class="image-cropper ap-cropper hidden" data-image-cropper data-input-id="{{ input_id }}">
   <div>
-    <p class="text-[10px] tracking-[2px] uppercase font-bold text-base-content/40 mb-2">{% trans "Original" %} · {% trans "shaded = cut" %}</p>
-    <div data-crop-stage class="relative inline-block max-w-full bg-base-200 rounded-xl overflow-hidden border border-base-300 select-none touch-none">
-      <img data-crop-full class="block max-w-full h-auto max-h-[45vh] pointer-events-none" alt="" />
-      <div data-crop-dim="top"    class="absolute top-0 left-0 right-0 crop-dim pointer-events-none"></div>
-      <div data-crop-dim="bottom" class="absolute bottom-0 left-0 right-0 crop-dim pointer-events-none"></div>
-      <div data-crop-dim="left"   class="absolute top-0 bottom-0 left-0 crop-dim pointer-events-none"></div>
-      <div data-crop-dim="right"  class="absolute top-0 bottom-0 right-0 crop-dim pointer-events-none"></div>
+    <p class="ap-field-label mb-2">{% trans "Original" %} · {% trans "shaded = cut" %}</p>
+    <div data-crop-stage class="ap-crop-stage">
+      <img data-crop-full alt="">
+      <div data-crop-dim="top"    class="crop-dim ap-crop-dim is-top"></div>
+      <div data-crop-dim="bottom" class="crop-dim ap-crop-dim is-bottom"></div>
+      <div data-crop-dim="left"   class="crop-dim ap-crop-dim is-left"></div>
+      <div data-crop-dim="right"  class="crop-dim ap-crop-dim is-right"></div>
     </div>
-    <p class="text-[10px] text-base-content/40 mt-1">{% trans "Drag the bright area to choose what is kept" %}</p>
+    <p class="ap-help mt-1">{% trans "Drag the bright area to choose what is kept" %}</p>
   </div>
   <div>
-    <p class="text-[10px] tracking-[2px] uppercase font-bold text-base-content/40 mb-2">{% trans "Card preview" %}</p>
-    <div class="aspect-video bg-base-200 rounded-xl overflow-hidden border border-base-300">
-      <img data-crop-card class="w-full h-full object-cover" alt="" />
-    </div>
+    <p class="ap-field-label mb-2">{% trans "Card preview" %}</p>
+    <div class="ap-crop-card"><img data-crop-card alt=""></div>
   </div>
 </div>

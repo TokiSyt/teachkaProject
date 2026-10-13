@@ -1,49 +1,37 @@
 {% load i18n %}
+{% comment %} Image upload with a crop/focus picker (static/js/image_cropper.js; keep the data-* hooks).
+   Args: input_id, input_name, current_url (existing image), clear_name (remove checkbox), focus_x / focus_y.
+   The remove button and error start hidden with inline display:none: the script toggles that. {% endcomment %}
 
 {% if current_url %}
-  <div class="mb-2 flex items-center gap-3">
-    <button type="button"
-            data-image-recut
-            data-input-id="{{ input_id }}"
-            data-current-url="{{ current_url }}"
-            data-focus-x="{{ focus_x|default:50 }}"
-            data-focus-y="{{ focus_y|default:50 }}"
-            title="{% trans 'Re-cut current image' %}"
-            class="group relative cursor-pointer">
-      <img src="{{ current_url }}" alt=""
-           class="h-12 w-20 object-cover rounded-lg border border-base-300 group-hover:opacity-80 transition"
-           style="object-position: {{ focus_x|default:50 }}% {{ focus_y|default:50 }}%;" />
-      <span class="absolute inset-0 rounded-lg bg-black/40 text-white text-[10px] tracking-[1px] uppercase font-bold flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-        {% trans "Re-cut" %}
-      </span>
-    </button>
-    {% if clear_name %}
-      <label class="flex items-center gap-1 text-xs text-base-content/60 cursor-pointer">
-        <input type="checkbox" name="{{ clear_name }}" class="checkbox checkbox-xs" />
-        {% trans "Remove" %}
-      </label>
-    {% endif %}
-  </div>
+<div class="ap-image-current">
+  <button type="button" class="ap-thumb" data-image-recut data-input-id="{{ input_id }}" data-current-url="{{ current_url }}"
+          data-focus-x="{{ focus_x|default:50 }}" data-focus-y="{{ focus_y|default:50 }}" title="{% trans 'Re-cut current image' %}">
+    <img src="{{ current_url }}" alt="" style="--fx: {{ focus_x|default:50 }}%; --fy: {{ focus_y|default:50 }}%">
+    <span>{% trans "Re-cut" %}</span>
+  </button>
+  {% if clear_name %}
+  <label class="ap-switch text-sm">
+    <input type="checkbox" name="{{ clear_name }}" class="checkbox checkbox-xs">{% trans "Remove" %}
+  </label>
+  {% endif %}
+</div>
 {% endif %}
 
-<div class="flex items-center gap-2">
-  <input type="file" id="{{ input_id }}" name="{{ input_name }}" accept="image/*"
-         class="sr-only" data-image-empty="{% trans 'No file chosen' %}"
-         data-image-max-bytes="8388608"
-         data-image-max-gif-bytes="5242880"
+<div class="ap-file">
+  <input type="file" id="{{ input_id }}" name="{{ input_name }}" accept="image/*" class="sr-only"
+         data-image-empty="{% trans 'No file chosen' %}" data-image-max-bytes="8388608" data-image-max-gif-bytes="5242880"
          data-image-toobig="{% trans 'Image is too large. Maximum size is 8 MB.' %}"
-         data-image-toobig-gif="{% trans 'GIF is too large. Maximum size is 5 MB.' %}" />
-  <label for="{{ input_id }}" class="btn-as-link-ghost cursor-pointer shrink-0">
-    <i data-lucide="upload" class="w-4 h-4"></i>
-    {% trans "Choose file" %}
+         data-image-toobig-gif="{% trans 'GIF is too large. Maximum size is 5 MB.' %}">
+  <label for="{{ input_id }}" class="btn btn-ghost btn-sm gap-2 rounded-full border border-base-300 font-medium text-base-content/75 shrink-0">
+    <i data-lucide="upload" class="w-4 h-4"></i>{% trans "Choose file" %}
   </label>
-  <span data-image-filename class="text-sm text-base-content/50 truncate flex-1">{% trans "No file chosen" %}</span>
-  <button type="button" data-image-remove data-input-id="{{ input_id }}" class="btn-as-link-ghost shrink-0" style="display:none;">
-    <i data-lucide="x" class="w-4 h-4"></i>
-    {% trans "Remove" %}
+  <span data-image-filename class="ap-file-name">{% trans "No file chosen" %}</span>
+  <button type="button" data-image-remove data-input-id="{{ input_id }}" class="btn btn-ghost btn-sm gap-1.5 rounded-full font-medium text-error shrink-0" style="display:none;">
+    <i data-lucide="x" class="w-4 h-4"></i>{% trans "Remove" %}
   </button>
 </div>
-<p data-image-error data-input-id="{{ input_id }}" class="mt-1.5 text-xs text-error" style="display:none;"></p>
+<p data-image-error data-input-id="{{ input_id }}" class="ap-error" style="display:none;"></p>
 
 <input type="hidden" name="focus_x" value="{{ focus_x|default:50 }}" data-image-focus="x" data-input-id="{{ input_id }}">
 <input type="hidden" name="focus_y" value="{{ focus_y|default:50 }}" data-image-focus="y" data-input-id="{{ input_id }}">
