@@ -104,9 +104,7 @@
   border-radius: 55% 45% 47% 53% / 52% 58% 42% 48%;
   background: var(--color-base-100);
   color: var(--lp-ink);
-  box-shadow:
-    0 0 0 2px color-mix(in oklab, var(--lp-ink) 55%, transparent),
-    0 1.5cqi 5cqi color-mix(in oklab, var(--lp-ink) 18%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--lp-ink) 55%, transparent);
   --pop: 0.5s; --dur: 8s; --off: -3.5s;
 }
 .wp-dot.is-icon svg { width: 42%; height: 42%; }

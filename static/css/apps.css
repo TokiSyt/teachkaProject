@@ -92,7 +92,6 @@
   border-radius: var(--r2);
   scale: 1.04;
   background: color-mix(in oklab, var(--c) 22%, var(--color-base-100));
-  box-shadow: 0 0 0 0.6rem color-mix(in oklab, var(--c) 10%, transparent);
 }
 .ap-choice:focus-visible { outline: 2px solid var(--c); outline-offset: 0.9rem; }
 .ap-choice-icon {
@@ -333,7 +332,6 @@
   border-radius: 1.5rem;
   border: 1px solid var(--lp-line);
   background: var(--color-base-100);
-  box-shadow: 0 0.75rem 2rem color-mix(in oklab, var(--color-base-content) 12%, transparent);
 }
 .ap-menu li { display: flex; align-items: center; gap: 0.15rem; border-radius: 999px; }
 .ap-menu li:hover { background: color-mix(in oklab, var(--lp-alt) 50%, var(--color-base-100)); }
@@ -357,7 +355,7 @@
 .ap-mode:nth-child(2) .ap-mode-icon { border-radius: 55% 45% 47% 53% / 52% 58% 42% 48%; }
 .ap-mode-icon svg { width: 1.05rem; height: 1.05rem; }
 .ap-mode:hover .ap-mode-icon { scale: 1.06; }
-.ap-mode input:checked + .ap-mode-body .ap-mode-icon { background: var(--lp-ink); color: var(--color-primary-content); box-shadow: 0 0 0 0.3rem var(--lp-tint); scale: 1.08; }
+.ap-mode input:checked + .ap-mode-body .ap-mode-icon { background: var(--lp-ink); color: var(--color-primary-content); scale: 1.08; }
 .ap-mode input:focus-visible + .ap-mode-body .ap-mode-icon { outline: 2px solid var(--lp-tint-strong); outline-offset: 3px; }
 .ap-mode-title { display: block; font-size: 0.9rem; font-weight: 500; color: var(--color-base-content); }
 .ap-mode-desc { display: block; font-size: 0.78rem; font-weight: 300; color: var(--lp-muted); }
@@ -567,7 +565,6 @@ a.ap-entry:hover { background: color-mix(in oklab, var(--lp-alt) 70%, var(--colo
   border-radius: 1.25rem;
   border: 1px solid var(--lp-line);
   background: var(--color-base-100);
-  box-shadow: 0 0.75rem 2rem color-mix(in oklab, var(--color-base-content) 12%, transparent);
 }
 .ap-timedrop-item { padding: 0.35rem 0.6rem; border-radius: 999px; font-size: 0.8rem; text-align: center; font-variant-numeric: tabular-nums; cursor: pointer; }
 .ap-timedrop-item:hover { background: var(--lp-tint); color: var(--lp-ink); }
@@ -732,7 +729,6 @@ a.ap-entry:hover { background: color-mix(in oklab, var(--lp-alt) 70%, var(--colo
   border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
   background: var(--c, var(--color-primary));
   cursor: pointer;
-  box-shadow: 0 0 0 0.3rem color-mix(in oklab, var(--c, var(--color-primary)) 20%, transparent);
   transition: scale 0.3s var(--lp-ease);
 }
 .lp.ap .ap-hero button.ap-member-dot:hover { scale: 1.12; }
@@ -832,7 +828,6 @@ a.ap-entry:hover { background: color-mix(in oklab, var(--lp-alt) 70%, var(--colo
   position: absolute; top: 0; left: 50%; z-index: 1;
   translate: -50% -0.4rem;
   transform-origin: 50% 0;
-  filter: drop-shadow(0 2px 3px color-mix(in oklab, var(--color-base-content) 30%, transparent));
 }
 .ap-wheel-pointer span {
   display: block; width: 0; height: 0;

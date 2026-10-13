@@ -206,7 +206,6 @@
 .au-kind:hover .au-kind-icon { transform: scale(1.06); }
 .au-kind input:checked + .au-kind-body .au-kind-icon {
   background: var(--lp-ink); color: var(--color-primary-content);
-  box-shadow: 0 0 0 0.3rem var(--lp-tint);
   transform: scale(1.08);
 }
 .au-kind input:checked + .au-kind-body .au-kind-icon::after { transform: scale(1); }
@@ -285,7 +284,6 @@
   border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
   background: none;
   cursor: pointer;
-  box-shadow: 0 0 0 0.3rem var(--lp-tint);
   transition: transform 0.3s var(--lp-ease);
 }
 .au-color input[type="color"]:hover { transform: scale(1.06); }

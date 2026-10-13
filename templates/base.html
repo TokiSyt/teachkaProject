@@ -13,7 +13,7 @@
   <title>{% block title %}Teachka{% endblock %}</title>
   <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon" />
   <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}?v=5">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=9">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=10">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..600,0..100&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
   {% block extra_css %}{% endblock %}
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
@@ -240,7 +240,7 @@
   {% if messages %}
   <div id="toast-container" class="fixed top-[72px] md:top-4 left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center gap-2 w-[calc(100%-2rem)] max-w-md pointer-events-none">
     {% for message in messages %}
-    <div role="alert" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-error{% elif message.tags == 'warning' %}alert-warning{% else %}alert-info{% endif %} shadow-lg pointer-events-auto animate-[fadeDown_0.3s_ease_both]">
+    <div role="alert" class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-error{% elif message.tags == 'warning' %}alert-warning{% else %}alert-info{% endif %} pointer-events-auto animate-[fadeDown_0.3s_ease_both]">
       <span>{{ message }}</span>
       <button onclick="dismissToast(this.parentElement)" class="btn btn-ghost btn-xs">✕</button>
     </div>
@@ -268,7 +268,7 @@
   <!-- ── COOKIE BANNER ── -->
   <div id="cookie-banner"
        class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[200] hidden w-[calc(100%-2rem)] max-w-lg">
-    <div class="bg-base-200 border border-base-300 rounded-2xl shadow-xl px-5 py-4 flex items-center gap-4">
+    <div class="bg-base-200 border border-base-300 rounded-2xl px-5 py-4 flex items-center gap-4">
       <p class="text-xs text-base-content/60 flex-1 leading-relaxed">
         {% trans "We use a session cookie to keep you logged in. No tracking. " %}
         <a href="{% url 'privacy' %}" class="link link-primary">{% trans "Privacy policy" %}</a>
