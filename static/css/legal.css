@@ -2,7 +2,8 @@
    Pages wrap their content in .lp so they share the landing page's colour tokens,
    .lp-soft heading font and .lp-rise entrance from static/css/landing.css. */
 
-.lg { background: var(--color-base-100); }
+/* flex: fill <main> (a flex column) down to the footer on short pages. */
+.lg { flex: 1 0 auto; background: var(--color-base-100); }
 
 /* ── Header ── */
 .lg-hero {

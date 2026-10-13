@@ -1,0 +1,23 @@
+{% comment %} Profile aside: the user's initial in the middle, the profile fields around it
+   (name, username, email, country). Icons only, no text.
+   Built from the landing cluster pieces (static/css/landing.css; needs an .lp ancestor). {% endcomment %}
+<div class="lp-cluster-wrap">
+  <div class="lp-cluster">
+    <svg class="lp-links" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <line x1="50" y1="50" x2="22" y2="26"/>
+      <line x1="50" y1="50" x2="80" y2="30"/>
+      <line x1="50" y1="50" x2="70" y2="80"/>
+    </svg>
+
+    <div class="lp-bub is-class lp-soft" style="--x:50;--y:50;--d:34;--i:0"><span class="au-initial">{{ user.first_name|default:user.username|first|upper }}</span></div>
+
+    <div class="lp-bub is-linked" style="--x:22;--y:26;--d:22;--i:1"><i data-lucide="user-round"></i></div>
+    <div class="lp-bub is-linked" style="--x:80;--y:30;--d:20;--i:2"><i data-lucide="at-sign"></i></div>
+    <div class="lp-bub is-linked" style="--x:70;--y:80;--d:21;--i:3"><i data-lucide="globe"></i></div>
+    <div class="lp-bub" style="--x:24;--y:76;--d:18;--i:4"><i data-lucide="mail"></i></div>
+
+    <div class="lp-bub" style="--x:88;--y:58;--d:8;--i:5"></div>
+    <div class="lp-bub is-linked" style="--x:10;--y:52;--d:6;--i:6"></div>
+    <div class="lp-bub" style="--x:52;--y:10;--d:7;--i:7"></div>
+  </div>
+</div>

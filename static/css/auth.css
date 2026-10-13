@@ -30,6 +30,7 @@
   color: var(--color-base-content);
   text-wrap: balance;
 }
+.au-title em { font-style: italic; font-weight: 300; color: var(--lp-ink); }
 .au-lede { margin-top: 0.75rem; line-height: 1.6; font-weight: 300; color: var(--lp-muted); }
 
 /* ── Form ── */
@@ -65,6 +66,31 @@
 .au .input:focus,
 .au .input:focus-within { border-color: var(--lp-ink); outline: 2px solid var(--lp-tint-strong); outline-offset: 0; }
 .au .input[aria-invalid="true"] { border-color: var(--color-error); }
+/* Pill select, same shape as the inputs (edit profile: country). */
+.au .select {
+  width: 100%;
+  border-radius: 999px;
+  padding-inline: 1.1rem 2.5rem;
+  background-color: var(--color-base-100);
+  border: 1px solid color-mix(in oklab, var(--color-base-content) 22%, transparent);
+}
+.au .select:focus { border-color: var(--lp-ink); outline: 2px solid var(--lp-tint-strong); outline-offset: 0; }
+/* Read-only fields (edit profile: username, email): soft fill, lock on the right. */
+.au-locked { position: relative; }
+.au .au-locked .input:disabled {
+  padding-right: 2.75rem;
+  background: color-mix(in oklab, var(--lp-alt) 45%, var(--color-base-100));
+  border-color: transparent;
+  color: var(--lp-muted);
+  cursor: not-allowed;
+}
+.au-locked svg {
+  position: absolute; right: 1rem; top: 50%;
+  width: 0.95rem; height: 0.95rem;
+  transform: translateY(-50%);
+  color: var(--lp-muted);
+  pointer-events: none;
+}
 
 .au-pw { position: relative; }
 .au-pw .input { padding-right: 2.75rem; }
@@ -220,3 +246,67 @@
 .au:has(input[name="kind"][value="bug"]:checked) .au-kb-bug svg,
 .au:has(input[name="kind"][value="question"]:checked) .au-kb-question svg,
 .au:has(input[name="kind"][value="feature"]:checked) .au-kb-feature svg { color: var(--lp-ink); opacity: 1; }
+
+/* ── Danger variant (delete account): the page's accent becomes the error colour ── */
+.lp .au.is-danger {
+  --lp-ink: var(--color-error);
+  --lp-tint: color-mix(in oklab, var(--color-error) 14%, var(--color-base-100));
+  --lp-tint-strong: color-mix(in oklab, var(--color-error) 28%, var(--color-base-100));
+}
+.au.is-danger .au-stage { background: color-mix(in oklab, var(--color-error) 6%, var(--color-base-100)); }
+/* includes/delete_bubbles.html: data that goes with the account, faded and dashed.
+   Faded via border/icon colour: the lp-pop entrance animation owns `opacity`. */
+.au-gone {
+  background: transparent;
+  border: 1.5px dashed color-mix(in oklab, var(--color-base-content) 22%, transparent);
+}
+.au-gone svg { opacity: 0.4; }
+
+/* includes/profile_bubbles.html: the user's initial in the middle bubble. */
+.au-initial { font-size: 14cqi; font-weight: 500; line-height: 1; color: var(--lp-ink); }
+
+/* Profile: account details as a label / value list. */
+.au-dl { display: flex; flex-direction: column; margin-top: 2rem; }
+.au-dl > div {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  padding: 0.85rem 0.25rem;
+  border-top: 1px solid var(--lp-line);
+}
+.au-dl > div:last-child { border-bottom: 1px solid var(--lp-line); }
+.au-dl dt { font-size: 0.8rem; color: var(--lp-muted); }
+.au-dl dd { margin: 0; min-width: 0; font-weight: 500; text-align: right; overflow-wrap: anywhere; color: var(--color-base-content); }
+.au-actions-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+@media (max-width: 379px) { .au-actions-row { grid-template-columns: 1fr; } }
+
+/* Settings: the colour input is the swatch itself, a round bubble. */
+.au-color { display: flex; align-items: center; gap: 0.85rem; }
+.au-color input[type="color"] {
+  flex-shrink: 0;
+  width: 2.6rem; height: 2.6rem;
+  padding: 0;
+  border: 0;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: none;
+  cursor: pointer;
+  box-shadow: 0 0 0 0.3rem var(--lp-tint);
+  transition: transform 0.3s var(--lp-ease);
+}
+.au-color input[type="color"]:hover { transform: scale(1.06); }
+.au-color input[type="color"]:focus-visible { outline: 2px solid var(--lp-tint-strong); outline-offset: 5px; }
+.au-color input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+.au-color input[type="color"]::-webkit-color-swatch { border: 0; border-radius: inherit; }
+.au-color input[type="color"]::-moz-color-swatch { border: 0; border-radius: inherit; }
+.au-color-value { display: block; font-family: ui-monospace, monospace; font-size: 0.85rem; font-weight: 500; color: var(--color-base-content); }
+
+/* Settings: danger zone, a red-tinted row under the form. */
+.au-danger {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  margin-top: 2.5rem;
+  padding: 1rem 1rem 1rem 1.25rem;
+  border-radius: 1.5rem;
+  background: color-mix(in oklab, var(--color-error) 8%, var(--color-base-100));
+}
+.au-danger p { font-size: 0.78rem; line-height: 1.45; font-weight: 300; color: var(--lp-muted); }
+/* includes/settings_bubbles.html: the accent bubble shows the picked colour (--c, set live by settings.js). */
+.au-accent-bub { background: var(--c); }
+.au-accent-bub svg { color: #fff; opacity: 0.9; }

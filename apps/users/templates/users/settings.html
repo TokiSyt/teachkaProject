@@ -1,128 +1,85 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load i18n %}
 
 {% block title %}{% trans "Settings" %} · Teachka{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
 {% block content %}
+{% with accent=request.user.icon_hover_color|default:'#1779db' %}
+<div class="lp">
+<section class="au">
 
-  <!-- ── HEADER ── -->
-  <section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
-    <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
-      <i data-lucide="settings" class="text-primary" style="width:180px;height:180px;"></i>
-    </div>
-    <div class="relative z-10">
-      <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Preferences" %}</p>
+  <div class="au-main">
+    <p class="lp-eyebrow lp-rise"><span class="lp-eyebrow-dot"></span>{% trans "Preferences" %}</p>
+    <h1 class="au-title lp-soft lp-rise lp-rise-2">{% trans "Settings" %}</h1>
+    <p class="au-lede lp-rise lp-rise-2">@{{ user.username }}</p>
 
-      <h1 class="serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
-        <span class="text-primary">{% trans "Settings" %}</span>
-      </h1>
-
-      <div class="flex flex-wrap items-center gap-3">
-        <span class="text-[11px] tracking-[2px] uppercase text-base-content/30">@{{ user.username }}</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── SETTINGS ── -->
-  <section class="px-5 py-8 md:px-14">
-
-    <form id="settings-form" method="post">
+    <form method="post" class="au-form lp-rise lp-rise-3">
       {% csrf_token %}
 
-      <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Preferences" %}</p>
+      <div class="au-field">
+        <label for="settings-theme-select" class="au-label">{% trans "Theme" %}</label>
+        <select id="settings-theme-select" class="select">
+          {% with current_theme=request.user.theme|default:"fantasy" %}
+          {% for value, label in theme_choices %}
+          <option value="{{ value }}" {% if current_theme == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+          {% endwith %}
+        </select>
+      </div>
 
-      <div class="card bg-base-100 border border-base-300 max-w-lg">
-        <div class="card-body p-0 divide-y divide-base-300">
+      <div class="au-field">
+        <label for="settings-language-select" class="au-label">{% trans "Language" %}</label>
+        <select name="language" id="settings-language-select" class="select">
+          {% for code, label in language_choices %}
+          <option value="{{ code }}" {% if request.user.language == code %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
 
-          <!-- Theme -->
-          <div class="px-5 py-4">
-            <p class="text-xs text-base-content/40 mb-1.5">{% trans "Theme" %}</p>
-            <select id="settings-theme-select" class="select select-bordered w-full"
-                    onchange="setTheme(this.value)">
-              {% with current_theme=request.user.theme|default:"fantasy" %}
-              {% for value, label in theme_choices %}
-              <option value="{{ value }}" {% if current_theme == value %}selected{% endif %}>{{ label }}</option>
-              {% endfor %}
-              {% endwith %}
-            </select>
-          </div>
-
-          <!-- Language -->
-          <div class="px-5 py-4">
-            <p class="text-xs text-base-content/40 mb-1.5">{% trans "Language" %}</p>
-            <select name="language" class="select select-bordered w-full">
-              {% for code, label in language_choices %}
-              <option value="{{ code }}" {% if request.user.language == code %}selected{% endif %}>{{ label }}</option>
-              {% endfor %}
-            </select>
-          </div>
-
-          <!-- Accent colour -->
-          <div class="px-5 py-4">
-            <p class="text-xs text-base-content/40 mb-3">{% trans "Accent colour" %}</p>
-            <div class="flex items-center gap-3">
-              <div class="relative w-9 h-9">
-                <input type="color"
-                       id="settings-accent-input"
-                       name="icon_hover_color"
-                       value="{{ request.user.icon_hover_color|default:'#1779db' }}"
-                       class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
-                <div id="settings-accent-swatch"
-                     class="w-9 h-9 rounded-lg border-2 border-base-300 pointer-events-none"
-                     style="background-color:{{ request.user.icon_hover_color|default:'#1779db' }}"></div>
-              </div>
-              <div>
-                <p id="settings-accent-label" class="font-medium text-sm font-mono text-base-content">{{ request.user.icon_hover_color|default:'#1779db' }}</p>
-                <p class="text-[11px] text-base-content/25">{% trans "Sidebar highlight" %}</p>
-              </div>
-            </div>
-          </div>
-
+      <div class="au-field">
+        <label for="settings-accent-input" class="au-label">{% trans "Accent colour" %}</label>
+        <div class="au-color">
+          <input type="color" id="settings-accent-input" name="icon_hover_color" value="{{ accent }}">
+          <span>
+            <span id="settings-accent-label" class="au-color-value">{{ accent|upper }}</span>
+            <span class="au-small">{% trans "Sidebar highlight" %}</span>
+          </span>
         </div>
       </div>
 
-      <!-- Actions -->
-      <div class="flex flex-wrap gap-2 mt-6">
-        <button type="submit" class="btn-as-link">
-          {% trans "Save settings" %}
-        </button>
-        <a href="{% url 'profile:profile' %}" class="btn btn-ghost btn-sm">
-          {% trans "Back to profile" %}
+      <div class="au-actions">
+        <button type="submit" class="btn btn-primary w-full rounded-full">{% trans "Save settings" %}</button>
+        <a href="{% url 'profile:profile' %}" class="btn btn-ghost w-full gap-2 rounded-full border border-base-300 font-medium text-base-content/75">
+          <i data-lucide="arrow-left" class="w-4 h-4 shrink-0"></i>{% trans "Back to profile" %}
         </a>
       </div>
     </form>
 
-    <!-- Danger zone -->
-    <div class="mt-12">
-      <p class="text-[10px] tracking-[3px] uppercase font-semibold text-error/60 mb-5">{% trans "Danger zone" %}</p>
-      <div class="card bg-base-100 border border-error/30 max-w-lg">
-        <div class="card-body p-5 flex-row items-center justify-between gap-4">
-          <div>
-            <p class="font-medium text-sm">{% trans "Delete account" %}</p>
-            <p class="text-xs text-base-content/40 mt-0.5">{% trans "Permanently remove your account and all data." %}</p>
-          </div>
-          <a href="{% url 'profile:delete-account' %}" class="btn btn-error btn-sm btn-outline shrink-0 gap-2">
-            <i data-lucide="trash-2" class="w-4 h-4"></i>
-            {% trans "Delete" %}
-          </a>
-        </div>
-      </div>
+    <div class="au-danger lp-rise lp-rise-4">
+      <p>{% trans "Permanently remove your account and all data." %}</p>
+      <a href="{% url 'profile:delete-account' %}" class="btn btn-error btn-sm btn-outline rounded-full shrink-0 gap-2">
+        <i data-lucide="trash-2" class="w-4 h-4"></i>{% trans "Delete" %}
+      </a>
     </div>
-  </section>
+  </div>
 
+  <aside class="au-aside lp-rise lp-rise-3" aria-hidden="true">
+    <div class="au-stage">
+      {% include "includes/settings_bubbles.html" %}
+    </div>
+  </aside>
+
+</section>
+</div>
+{% endwith %}
 {% endblock %}
 
 {% block extra_js %}
-<script>
-(function () {
-  const colorInput = document.getElementById('settings-accent-input');
-  const swatch = document.getElementById('settings-accent-swatch');
-  const label = document.getElementById('settings-accent-label');
-
-  colorInput.addEventListener('input', function (e) {
-    swatch.style.backgroundColor = e.target.value;
-    label.textContent = e.target.value.toUpperCase();
-  });
-})();
-</script>
+<script src="{% static 'js/settings.js' %}"></script>
 {% endblock %}

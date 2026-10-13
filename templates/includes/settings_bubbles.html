@@ -1,0 +1,23 @@
+{% comment %} Settings aside: a gear in the middle, the preferences around it (theme, language,
+   accent colour). The accent bubble is filled with the user's colour and follows the picker
+   (static/js/settings.js). Built from the landing cluster pieces (static/css/landing.css;
+   needs an .lp ancestor). Args: accent = the current accent colour. {% endcomment %}
+<div class="lp-cluster-wrap">
+  <div class="lp-cluster">
+    <svg class="lp-links" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <line x1="50" y1="50" x2="24" y2="26"/>
+      <line x1="50" y1="50" x2="78" y2="28"/>
+      <line x1="50" y1="50" x2="68" y2="80"/>
+    </svg>
+
+    <div class="lp-bub is-class" style="--x:50;--y:50;--d:32;--i:0"><i data-lucide="settings"></i></div>
+
+    <div class="lp-bub is-linked" style="--x:24;--y:26;--d:22;--i:1"><i data-lucide="palette"></i></div>
+    <div class="lp-bub is-linked" style="--x:78;--y:28;--d:20;--i:2"><i data-lucide="languages"></i></div>
+    <div class="lp-bub au-accent-bub" style="--x:68;--y:80;--d:21;--i:3;--c:{{ accent }}"><i data-lucide="droplet"></i></div>
+
+    <div class="lp-bub" style="--x:20;--y:74;--d:10;--i:4"></div>
+    <div class="lp-bub is-linked" style="--x:88;--y:58;--d:7;--i:5"></div>
+    <div class="lp-bub" style="--x:50;--y:10;--d:7;--i:6"></div>
+  </div>
+</div>
