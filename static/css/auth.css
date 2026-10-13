@@ -78,7 +78,7 @@
 /* Read-only fields (edit profile: username, email): soft fill, lock on the right. */
 .au-locked { position: relative; }
 .au .au-locked .input:disabled {
-  padding-right: 2.75rem;
+  padding-inline-end: 2.75rem !important; /* beats style.css's `.input { padding-inline: 1rem !important }` */
   background: color-mix(in oklab, var(--lp-alt) 45%, var(--color-base-100));
   border-color: transparent;
   color: var(--lp-muted);
@@ -93,7 +93,9 @@
 }
 
 .au-pw { position: relative; }
-.au-pw .input { padding-right: 2.75rem; }
+/* !important: style.css forces `.input { padding-inline: 1rem !important }`, which let the
+   password run under the eye button. */
+.au-pw .input { padding-inline-end: 2.75rem !important; }
 .au-pw-toggle {
   position: absolute; right: 0.4rem; top: 50%; transform: translateY(-50%);
   display: grid; place-items: center;
@@ -143,11 +145,6 @@
 .au-check a { color: var(--color-base-content); text-decoration: underline; text-underline-offset: 2px; }
 .au-check a:hover { color: var(--lp-ink); }
 
-/* Tailwind v3's preflight is unlayered, so it beats daisyUI v5's layered components:
-   `button { background: transparent }` blanks <button class="btn"> and `* { border-width: 0 }`
-   strips daisyUI borders. Restore daisyUI's background only: <a class="btn"> (the sidebar
-   buttons) has no border either, so leaving it off keeps both looking the same. */
-.au button.btn { background-color: var(--btn-bg); background-image: none, var(--btn-noise); }
 
 .au-switch { margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid var(--lp-line); }
 .au-switch p { margin-bottom: 0.75rem; text-align: center; font-size: 0.875rem; color: var(--lp-muted); }
