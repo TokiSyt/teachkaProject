@@ -1,84 +1,54 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load i18n %}
 
 {% block title %}{% trans "Profile" %} · Teachka{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
 {% block content %}
+<div class="lp">
+<section class="au">
 
-  <!-- ── HEADER ── -->
-  <section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
-    <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
-      <i data-lucide="user" class="text-primary" style="width:180px;height:180px;"></i>
-    </div>
-    <div class="relative z-10">
-      <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Your profile" %}</p>
+  <div class="au-main">
+    <p class="lp-eyebrow lp-rise"><span class="lp-eyebrow-dot"></span>{% trans "Your profile" %}</p>
+    <h1 class="au-title lp-soft lp-rise lp-rise-2">
+      {{ user_data.first_name|default:user_data.username }}{% if user_data.last_name %} <em>{{ user_data.last_name }}</em>{% endif %}
+    </h1>
+    <p class="au-lede lp-rise lp-rise-2">@{{ user_data.username }} · {% trans "Member since" %} {{ user_data.date_joined|date:"F Y" }}</p>
 
-      <h1 class="serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
-        <span class="text-primary">{{ user_data.first_name|default:user_data.username }}</span>
-        {% if user_data.last_name %}
-        <span class="text-base-content/25">{{ user_data.last_name }}</span>
-        {% endif %}
-      </h1>
+    <dl class="au-dl lp-rise lp-rise-3">
+      <div><dt>{% trans "Username" %}</dt><dd>{{ user_data.username }}</dd></div>
+      <div><dt>{% trans "First name" %}</dt><dd>{{ user_data.first_name|default:"-" }}</dd></div>
+      <div><dt>{% trans "Last name" %}</dt><dd>{{ user_data.last_name|default:"-" }}</dd></div>
+      <div><dt>{% trans "Email" %}</dt><dd>{{ user_data.email|default:"-" }}</dd></div>
+      <div><dt>{% trans "Country" %}</dt><dd>{{ user_data.get_country_display|default:"-" }}</dd></div>
+    </dl>
 
-      <div class="flex flex-wrap items-center gap-3">
-        <span class="text-[11px] tracking-[2px] uppercase text-base-content/30">@{{ user_data.username }}</span>
-        <span class="text-base-content/15 text-sm">·</span>
-        <span class="text-[11px] tracking-[2px] uppercase text-base-content/30">{% trans "Member since" %} {{ user_data.date_joined|date:"F Y" }}</span>
+    <div class="au-actions lp-rise lp-rise-4">
+      <a href="{% url 'profile:edit_profile' %}" class="btn btn-primary w-full gap-2 rounded-full">
+        <i data-lucide="pen-line" class="w-4 h-4"></i>{% trans "Edit profile" %}
+      </a>
+      <div class="au-actions-row">
+        <a href="{% url 'profile:settings' %}" class="btn btn-ghost gap-2 rounded-full border border-base-300 font-medium text-base-content/75">
+          <i data-lucide="settings" class="w-4 h-4"></i>{% trans "Settings" %}
+        </a>
+        <a href="{% url 'profile:change-password' %}" class="btn btn-ghost gap-2 rounded-full border border-base-300 font-medium text-base-content/75">
+          <i data-lucide="lock" class="w-4 h-4"></i>{% trans "Change password" %}
+        </a>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- ── ACCOUNT DETAILS ── -->
-  <section class="px-5 py-8 md:px-14">
-
-    <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Account details" %}</p>
-
-    <div class="card bg-base-100 border border-base-300 max-w-lg">
-      <div class="card-body p-0 divide-y divide-base-300">
-
-        <div class="px-5 py-4">
-          <p class="text-xs text-base-content/40 mb-0.5">{% trans "Username" %}</p>
-          <p class="font-medium text-base-content">{{ user_data.username }}</p>
-        </div>
-
-        <div class="px-5 py-4">
-          <p class="text-xs text-base-content/40 mb-0.5">{% trans "First name" %}</p>
-          <p class="font-medium text-base-content">{{ user_data.first_name|default:"-" }}</p>
-        </div>
-
-        <div class="px-5 py-4">
-          <p class="text-xs text-base-content/40 mb-0.5">{% trans "Last name" %}</p>
-          <p class="font-medium text-base-content">{{ user_data.last_name|default:"-" }}</p>
-        </div>
-
-        <div class="px-5 py-4">
-          <p class="text-xs text-base-content/40 mb-0.5">{% trans "Email" %}</p>
-          <p class="font-medium text-base-content">{{ user_data.email|default:"-" }}</p>
-        </div>
-
-        <div class="px-5 py-4">
-          <p class="text-xs text-base-content/40 mb-0.5">{% trans "Country" %}</p>
-          <p class="font-medium text-base-content">{{ user_data.get_country_display|default:"-" }}</p>
-        </div>
-
-      </div>
+  <aside class="au-aside lp-rise lp-rise-3" aria-hidden="true">
+    <div class="au-stage">
+      {% include "includes/profile_bubbles.html" %}
     </div>
+  </aside>
 
-    <!-- Actions -->
-    <div class="flex flex-wrap gap-2 mt-6">
-      <a href="{% url 'profile:edit_profile' %}" class="btn-as-link">
-        <i data-lucide="pen-line" class="w-4 h-4"></i>
-        {% trans "Edit profile" %}
-      </a>
-      <a href="{% url 'profile:settings' %}" class="btn btn-outline btn-sm">
-        <i data-lucide="settings" class="w-4 h-4"></i>
-        {% trans "Settings" %}
-      </a>
-      <a href="{% url 'profile:change-password' %}" class="btn btn-outline btn-sm">
-        <i data-lucide="lock" class="w-4 h-4"></i>
-        {% trans "Change password" %}
-      </a>
-    </div>
-  </section>
-
+</section>
+</div>
 {% endblock %}

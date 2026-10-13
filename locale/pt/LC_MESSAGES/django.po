@@ -2186,7 +2186,7 @@ msgstr "Pastel"
 
 #: apps/users/models.py:11 templates/base.html:239
 msgid "Editorial"
-msgstr "Editar perfil"
+msgstr "Editorial"
 
 #: apps/users/models.py:12 templates/base.html:224
 msgid "Palette"
@@ -2274,7 +2274,7 @@ msgstr "Palavra-passe"
 
 #: apps/users/templates/registration/login.html:101
 msgid "Forgot password?"
-msgstr "Alterar palavra-passe"
+msgstr "Esqueceu-se da palavra-passe?"
 
 #: apps/users/templates/registration/login.html:114
 #: apps/users/templates/registration/register.html:166
@@ -2332,7 +2332,7 @@ msgstr "Email"
 #: apps/users/templates/registration/register.html:180
 #: apps/users/templates/users/password_reset.html:114
 msgid "Confirm password"
-msgstr "Alterar palavra-passe"
+msgstr "Confirmar palavra-passe"
 
 #: apps/users/templates/registration/register.html:215
 #, python-format
@@ -2449,7 +2449,7 @@ msgstr "Nenhum"
 
 #: apps/users/templates/users/forgot_password.html:5
 msgid "Forgot password"
-msgstr "Alterar palavra-passe"
+msgstr "Recuperar palavra-passe"
 
 #: apps/users/templates/users/forgot_password.html:53
 msgid "Back to sign in"
@@ -2470,16 +2470,16 @@ msgstr "Palavra-passe"
 
 #: apps/users/templates/users/forgot_password.html:70
 msgid "Enter your registered email and we'll send you a reset link."
-msgstr "Introduz o email registado e enviaremos um link de recuperação."
+msgstr "Introduza o email registado e enviaremos um link de recuperação."
 
 #: apps/users/templates/users/forgot_password.html:113
 #: apps/users/templates/users/password_reset.html:146
 msgid "Remember your password?"
-msgstr "Introduza a sua nova palavra-passe"
+msgstr "Lembra-se da palavra-passe?"
 
 #: apps/users/templates/users/password_reset.html:5
 msgid "Reset Password"
-msgstr "Redefinir Palavra-passe"
+msgstr "Redefinir palavra-passe"
 
 #: apps/users/templates/users/password_reset.html:56
 msgid "Choose a new"
@@ -2487,11 +2487,11 @@ msgstr "Escolher um grupo..."
 
 #: apps/users/templates/users/password_reset.html:61
 msgid "Enter your new password below."
-msgstr "Introduza a sua nova palavra-passe"
+msgstr "Introduza a sua nova palavra-passe abaixo."
 
 #: apps/users/templates/users/password_reset.html:81
 msgid "New password"
-msgstr "Alterar palavra-passe"
+msgstr "Nova palavra-passe"
 
 #: apps/users/templates/users/password_reset.html:104
 msgid "Password requirements"
@@ -2499,7 +2499,7 @@ msgstr "Requisitos da palavra-passe"
 
 #: apps/users/templates/users/password_reset.html:139
 msgid "Reset password"
-msgstr "Redefinir Palavra-passe"
+msgstr "Redefinir palavra-passe"
 
 #: apps/users/templates/users/password_reset_email.html:7
 msgid "Reset your password"
@@ -4539,3 +4539,55 @@ msgstr "Adicione uma turma e depois gire a roleta de nomes ou divida-a em equipa
 #: templates/landing.html
 msgid "Only you can see your students' names. We use them to run the tools and nothing else."
 msgstr "Só você vê os nomes dos seus alunos. Usamo-los apenas para fazer funcionar as ferramentas."
+
+#: templates/base.html
+msgid "Appearance"
+msgstr "Aparência"
+
+#: apps/users/templates/users/password_reset.html
+msgid "Choose a new password"
+msgstr "Escolha uma nova palavra-passe"
+
+#: apps/contact/templates/contact/contact.html
+msgid "Send us a message"
+msgstr "Envie-nos uma mensagem"
+
+#: templates/includes/recovery_steps.html
+msgid "Enter your email"
+msgstr "Introduza o seu email"
+
+#: templates/includes/recovery_steps.html
+msgid "Open the link we send"
+msgstr "Abra o link que enviamos"
+
+#: apps/contact/templates/contact/contact.html
+msgid "Prefer email?"
+msgstr "Prefere email?"
+
+#: apps/contact/templates/contact/contact.html
+msgid "What happens next"
+msgstr "O que acontece a seguir"
+
+#: apps/contact/templates/contact/contact.html
+msgid "If a reply is needed, we'll write back to the address you left."
+msgstr "Se for necessária uma resposta, escreveremos para o endereço que indicou."
+
+#: apps/timer/templates/timer/stopwatch.html
+msgid "Pause"
+msgstr "Pausar"
+
+#: apps/timer/templates/timer/stopwatch.html
+msgid "Stop"
+msgstr "Parar"
+
+#: apps/timer/templates/timer/stopwatch.html
+msgid "Flag"
+msgstr "Marcar"
+
+#: apps/point_system/templates/point_system/_points_table.html
+msgid "Decrease"
+msgstr "Diminuir"
+
+#: apps/point_system/templates/point_system/_points_table.html
+msgid "Increase"
+msgstr "Aumentar"

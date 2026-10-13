@@ -1,0 +1,40 @@
+{% load i18n %}
+{% comment %} One labelled pill input for visitor form pages (static/css/auth.css).
+   Args: field, label, autocomplete, type (default "text"), optional, password, autofocus,
+   hint_url + hint_label (a small link at the end of the label row, e.g. "Forgot password?"),
+   placeholder, help_summary (shows field.help_text in a collapsible block with this title). {% endcomment %}
+<div class="au-field">
+  {% if hint_url %}<div class="au-label-row">{% endif %}
+  <label for="{{ field.id_for_label }}" class="au-label">
+    {{ label }}{% if optional %} <span class="au-optional">({% trans "optional" %})</span>{% endif %}
+  </label>
+  {% if hint_url %}<a href="{{ hint_url }}" class="au-hint">{{ hint_label }}</a></div>{% endif %}
+  {% if password %}<div class="au-pw">{% endif %}
+  <input type="{% if password %}password{% else %}{{ type|default:'text' }}{% endif %}"
+         name="{{ field.html_name }}"
+         id="{{ field.id_for_label }}"
+         {% if not password %}value="{{ field.value|default:'' }}"{% endif %}
+         autocomplete="{{ autocomplete }}"
+         {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+         {% if field.field.widget.attrs.maxlength %}maxlength="{{ field.field.widget.attrs.maxlength }}"{% endif %}
+         class="input"
+         {% if field.field.required %}required{% endif %}
+         {% if autofocus %}autofocus{% endif %}
+         {% if field.errors %}aria-invalid="true" aria-describedby="{{ field.id_for_label }}-error"{% endif %}>
+  {% if password %}
+    <button type="button" class="au-pw-toggle" data-password-toggle="{{ field.id_for_label }}"
+            aria-label="{% trans 'Toggle password visibility' %}" aria-pressed="false">
+      <i data-lucide="eye"></i>
+    </button>
+  </div>
+  {% endif %}
+  {% if field.errors %}
+  <p id="{{ field.id_for_label }}-error" class="au-error">{{ field.errors.0 }}</p>
+  {% endif %}
+  {% if help_summary and field.help_text %}
+  <details class="au-help">
+    <summary>{{ help_summary }}<i data-lucide="chevron-down"></i></summary>
+    <div>{{ field.help_text|safe }}</div>
+  </details>
+  {% endif %}
+</div>

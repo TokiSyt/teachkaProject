@@ -1,150 +1,108 @@
 {% load i18n %}
+{% comment %} Quiz list region (filter, cards, pagination). Rendered inside home.html and on its own
+   for ?partial=1 reloads (static/js/quizzes.js swaps it in place). {% endcomment %}
 
-<!-- ── FILTER ── -->
-<section class="px-5 pt-6 md:px-14">
-  <div class="flex flex-wrap items-center gap-3">
-    <div class="join">
-      <a href="?scope=public{% if query %}&q={{ query }}{% endif %}"
-         data-quiz-toggle
-         class="btn btn-sm join-item rounded-l-xl {% if scope == 'public' %}btn-primary border-none{% else %}btn-ghost border border-base-300{% endif %}">
-        <i data-lucide="search" class="w-4 h-4"></i>
-        {% trans "Search Quizzes" %}
+<section class="ap-sec">
+  <div class="ap-toolbar">
+    <div class="ap-toolbar-nav">
+      <nav class="ap-switcher" aria-label="{% trans 'Quizzes' %}">
+        <a href="?scope=public{% if query %}&q={{ query }}{% endif %}" data-quiz-toggle aria-current="{% if scope == 'public' %}true{% else %}false{% endif %}">
+          <i data-lucide="search"></i>{% trans "Search Quizzes" %}
+        </a>
+        <a href="?scope=mine{% if query %}&q={{ query }}{% endif %}" data-quiz-toggle aria-current="{% if scope == 'mine' %}true{% else %}false{% endif %}">
+          <i data-lucide="library"></i>{% trans "My Quizz Library" %}
+        </a>
+      </nav>
+      <form method="get" data-quiz-search class="ap-search">
+        <input type="hidden" name="scope" value="{{ scope }}">
+        <input type="text" name="q" value="{{ query }}" class="input" aria-label="{% trans 'Search' %}"
+               placeholder="{% if scope == 'mine' %}{% trans 'Search your quizzes...' %}{% else %}{% trans 'Search by title...' %}{% endif %}">
+        <button type="submit" class="btn btn-ghost btn-sm btn-circle" aria-label="{% trans 'Search' %}" title="{% trans 'Search' %}">
+          <i data-lucide="search" class="w-4 h-4"></i>
+        </button>
+      </form>
+    </div>
+    <div class="ap-toolbar-nav">
+      <a href="{% url 'quizzmaker:join' %}" class="btn btn-ghost btn-sm gap-2 rounded-full border border-base-300 font-medium text-base-content/75">
+        <i data-lucide="log-in" class="w-4 h-4"></i>{% trans "Join a game" %}
       </a>
-      <a href="?scope=mine{% if query %}&q={{ query }}{% endif %}"
-         data-quiz-toggle
-         class="btn btn-sm join-item rounded-r-xl {% if scope == 'mine' %}btn-primary border-none{% else %}btn-ghost border border-base-300{% endif %}">
-        <i data-lucide="library" class="w-4 h-4"></i>
-        {% trans "My Quizz Library" %}
+      <a href="{% url 'quizzmaker:create' %}" class="btn btn-primary btn-sm gap-2 rounded-full px-5">
+        <i data-lucide="plus" class="w-4 h-4"></i>{% trans "Create a Quizz" %}
       </a>
     </div>
-    <form method="get" data-quiz-search class="flex-1 min-w-[200px] max-w-md flex items-center gap-2">
-      <input type="hidden" name="scope" value="{{ scope }}" />
-      <input type="text" name="q" value="{{ query }}"
-             placeholder="{% if scope == 'mine' %}{% trans 'Search your quizzes...' %}{% else %}{% trans 'Search by title...' %}{% endif %}"
-             class="input input-bordered input-sm rounded-xl w-full" />
-      <button type="submit" class="btn-as-link-ghost"
-              aria-label="{% trans 'Search' %}" title="{% trans 'Search' %}">
-        <i data-lucide="search" class="w-4 h-4"></i>
-      </button>
-    </form>
-    <a href="{% url 'quizzmaker:join' %}"
-       class="btn-as-link ml-auto">
-      <i data-lucide="log-in" class="w-4 h-4"></i>
-      {% trans "Join a game" %}
-    </a>
-    <a href="{% url 'quizzmaker:create' %}"
-       class="btn-as-link">
-      <i data-lucide="plus" class="w-4 h-4"></i>
-      {% trans "Create a Quizz" %}
-    </a>
   </div>
 </section>
 
-<!-- ── RESULTS ── -->
-<section class="px-5 py-8 md:px-14">
+<section class="ap-sec">
   {% if not quizzes %}
-    <div class="flex flex-col items-center justify-center text-center py-20 px-4">
-      <div class="w-16 h-16 mb-4 rounded-full bg-base-200 flex items-center justify-center">
-        <i data-lucide="search-x" class="w-7 h-7 text-base-content/30"></i>
-      </div>
+    <div class="ap-empty is-center">
+      <span class="ap-empty-icon" aria-hidden="true"><i data-lucide="search-x"></i></span>
       {% if query %}
-        <h3 class="serif text-xl text-base-content/70 mb-2">{% trans "No quizzes match" %} "{{ query }}"</h3>
-        <p class="text-[11px] tracking-[2px] uppercase text-base-content/40">
-          {% trans "Try a different search" %}
-        </p>
+        <h3 class="lp-soft">{% trans "No quizzes match" %} "{{ query }}"</h3>
+        <p>{% trans "Try a different search" %}</p>
       {% elif scope == "mine" %}
-        <h3 class="serif text-xl text-base-content/70 mb-2">{% trans "No quizzes yet" %}</h3>
-        <p class="text-[11px] tracking-[2px] uppercase text-base-content/40">
-          {% trans "Create your first quiz to get started" %}
-        </p>
+        <h3 class="lp-soft">{% trans "No quizzes yet" %}</h3>
+        <p>{% trans "Create your first quiz to get started" %}</p>
       {% else %}
-        <h3 class="serif text-xl text-base-content/70 mb-2">{% trans "No quizzes yet" %}</h3>
-        <p class="text-[11px] tracking-[2px] uppercase text-base-content/40">
-          {% trans "Be the first to publish one" %}
-        </p>
+        <h3 class="lp-soft">{% trans "No quizzes yet" %}</h3>
+        <p>{% trans "Be the first to publish one" %}</p>
       {% endif %}
     </div>
   {% else %}
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3">
+    <div class="ap-quizzes">
       {% for quiz in quizzes %}
-        <div class="card bg-base-100 border border-base-300 shadow-sm overflow-hidden relative">
-          {% if user.is_authenticated and quiz.user_id == user.id %}
-            <a href="{% url 'quizzmaker:rounds' quiz.pk %}"
-               class="btn btn-sm btn-circle btn-ghost bg-base-100/80 hover:bg-base-100 absolute top-2 right-2 z-10 shadow"
-               title="{% trans 'Edit quiz' %}">
-              <i data-lucide="pencil" class="w-4 h-4"></i>
-            </a>
-          {% endif %}
-          {% if user.is_authenticated %}
-            <form method="post" action="{% url 'quizzmaker:host_create' quiz.pk %}"
-                  class="absolute top-2 left-2 z-10">
-              {% csrf_token %}
-              <button type="submit"
-                      class="btn btn-sm btn-circle btn-primary border-none shadow"
-                      title="{% trans 'Host live game' %}">
-                <i data-lucide="play" class="w-4 h-4"></i>
-              </button>
-            </form>
-          {% endif %}
+      <article class="ap-quiz">
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'quizzmaker:host_create' quiz.pk %}" class="ap-quiz-act is-left">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-sm btn-circle btn-primary" title="{% trans 'Host live game' %}" aria-label="{% trans 'Host live game' %}">
+            <i data-lucide="play" class="w-4 h-4"></i>
+          </button>
+        </form>
+        {% endif %}
+        {% if user.is_authenticated and quiz.user_id == user.id %}
+        <a href="{% url 'quizzmaker:rounds' quiz.pk %}" class="ap-quiz-act is-right btn btn-sm btn-circle btn-ghost bg-base-100" title="{% trans 'Edit quiz' %}" aria-label="{% trans 'Edit quiz' %}">
+          <i data-lucide="pencil" class="w-4 h-4"></i>
+        </a>
+        {% endif %}
+        <figure class="ap-cover">
           {% if quiz.logo %}
-            <figure class="h-40 sm:h-44 bg-base-200">
-              <img src="{{ quiz.logo.url }}" alt="{{ quiz.title }}"
-                   class="w-full h-full object-cover"
-                   style="object-position: {{ quiz.focus_x|default:50 }}% {{ quiz.focus_y|default:50 }}%;"
-                   {% if quiz.logo.name|lower|slice:"-4:" == ".gif" %}data-gif="1"{% endif %} />
-            </figure>
+          <img src="{{ quiz.logo.url }}" alt="{{ quiz.title }}" style="--fx: {{ quiz.focus_x|default:50 }}%; --fy: {{ quiz.focus_y|default:50 }}%"
+               {% if quiz.logo.name|lower|slice:"-4:" == ".gif" %}data-gif="1"{% endif %}>
           {% else %}
-            <figure class="h-40 sm:h-44 bg-neutral text-neutral-content flex items-center justify-center">
-              <i data-lucide="badge-question-mark" class="opacity-30 w-12 h-12"></i>
-            </figure>
+          <i data-lucide="badge-question-mark"></i>
           {% endif %}
-          <div class="card-body p-3 gap-1">
-            <h3 class="font-semibold text-sm truncate">{{ quiz.title }}</h3>
-            <p class="text-[10px] text-base-content/60 flex items-center gap-1">
-              <i data-lucide="user" class="w-3 h-3"></i>
-              {{ quiz.user.username }}
-            </p>
-            <div class="flex items-center justify-between text-[10px] text-base-content/50">
-              <span class="flex items-center gap-2">
-                <span>{{ quiz.total_points }} {% trans "pts" %}</span>
-                <span class="flex items-center gap-1">
-                  <i data-lucide="clock" class="w-3 h-3"></i>
-                  {{ quiz.expected_duration }}m
-                </span>
-                {% if quiz.timeless_rounds %}
-                  <span class="flex items-center"
-                        title="{% blocktrans count counter=quiz.timeless_rounds %}{{ counter }} round has no time limit{% plural %}{{ counter }} rounds have no time limit{% endblocktrans %}">
-                    <i data-lucide="alarm-clock-off" class="w-3 h-3"></i>
-                  </span>
-                {% endif %}
-              </span>
-              <span class="uppercase tracking-[1px]">{{ quiz.get_visibility_display|slice:":3" }}</span>
-            </div>
+        </figure>
+        <div class="ap-quiz-body">
+          <h3 class="lp-soft" title="{{ quiz.title }}">{{ quiz.title }}</h3>
+          <span class="ap-quiz-by"><i data-lucide="user"></i>{{ quiz.user.username }}</span>
+          <div class="ap-quiz-meta">
+            <span class="ap-chip">{{ quiz.total_points }} {% trans "pts" %}</span>
+            <span class="ap-chip"><i data-lucide="clock"></i>{{ quiz.expected_duration }}m</span>
+            {% if quiz.timeless_rounds %}
+            <span class="ap-chip" title="{% blocktrans count counter=quiz.timeless_rounds %}{{ counter }} round has no time limit{% plural %}{{ counter }} rounds have no time limit{% endblocktrans %}"><i data-lucide="alarm-clock-off" class="m-0"></i></span>
+            {% endif %}
+            <span class="ap-chip is-ink">{{ quiz.get_visibility_display }}</span>
           </div>
         </div>
+      </article>
       {% endfor %}
     </div>
 
     {% if is_paginated %}
-      <div class="flex justify-center gap-2 mt-8">
-        {% if page_obj.has_previous %}
-          <a href="?scope={{ scope }}{% if query %}&q={{ query }}{% endif %}&page={{ page_obj.previous_page_number }}"
-             data-quiz-toggle
-             class="btn btn-ghost btn-sm rounded-xl">
-            <i data-lucide="chevron-left" class="w-4 h-4"></i>
-          </a>
-        {% endif %}
-        <span class="btn btn-ghost btn-sm rounded-xl pointer-events-none">
-          {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
-        </span>
-        {% if page_obj.has_next %}
-          <a href="?scope={{ scope }}{% if query %}&q={{ query }}{% endif %}&page={{ page_obj.next_page_number }}"
-             data-quiz-toggle
-             class="btn btn-ghost btn-sm rounded-xl">
-            <i data-lucide="chevron-right" class="w-4 h-4"></i>
-          </a>
-        {% endif %}
-      </div>
+    <div class="ap-pager">
+      {% if page_obj.has_previous %}
+      <a href="?scope={{ scope }}{% if query %}&q={{ query }}{% endif %}&page={{ page_obj.previous_page_number }}" data-quiz-toggle class="btn btn-ghost btn-sm btn-circle border border-base-300" aria-label="{{ page_obj.previous_page_number }}">
+        <i data-lucide="chevron-left" class="w-4 h-4"></i>
+      </a>
+      {% endif %}
+      <span class="ap-chip">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+      {% if page_obj.has_next %}
+      <a href="?scope={{ scope }}{% if query %}&q={{ query }}{% endif %}&page={{ page_obj.next_page_number }}" data-quiz-toggle class="btn btn-ghost btn-sm btn-circle border border-base-300" aria-label="{{ page_obj.next_page_number }}">
+        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+      </a>
+      {% endif %}
+    </div>
     {% endif %}
   {% endif %}
 </section>

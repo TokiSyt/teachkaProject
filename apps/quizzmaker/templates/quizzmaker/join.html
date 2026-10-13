@@ -1,48 +1,52 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}{% trans "Join a quiz" %} · Teachka{% endblock title %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+<link rel="stylesheet" href="{% static 'css/apps.css' %}">
+{% endblock %}
+
 {% block content %}
-<section class="min-h-[70vh] px-5 py-12 flex items-center justify-center">
-  <div class="w-full max-w-sm">
-    <div class="text-center mb-8">
-      <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
-        <i data-lucide="badge-question-mark" class="w-7 h-7"></i>
-      </div>
-      <h1 class="serif text-3xl font-medium tracking-tight">{% trans "Join a quiz" %}</h1>
-      <p class="text-sm text-base-content/60 mt-1">{% trans "Enter the code from your teacher's screen." %}</p>
-    </div>
+<div class="lp ap">
+  <section class="ap-join">
+    <div class="ap-join-card lp-rise">
+      <span class="ap-dialog-icon" aria-hidden="true"><i data-lucide="badge-question-mark"></i></span>
+      <h1 class="lp-soft">{% trans "Join a quiz" %}</h1>
+      <p class="ap-lede">{% trans "Enter the code from your teacher's screen." %}</p>
 
-    {% if error %}
-      <div class="alert alert-error rounded-xl mb-4 text-sm">{{ error }}</div>
-    {% endif %}
+      <form method="post" class="ap-form lp-rise lp-rise-2">
+        {% csrf_token %}
+        {% if error %}
+        <div role="alert" class="ap-alert m-0"><i data-lucide="alert-circle"></i><p>{{ error }}</p></div>
+        {% endif %}
 
-    <form method="post" class="space-y-4">
-      {% csrf_token %}
-      {% if code_locked %}
-        <input type="hidden" name="code" value="{{ code }}" />
-        <input type="hidden" name="code_locked" value="1" />
+        {% if code_locked %}
+        <input type="hidden" name="code" value="{{ code }}">
+        <input type="hidden" name="code_locked" value="1">
         <div class="text-center">
-          <p class="text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">{% trans "Game code" %}</p>
-          <p class="serif text-3xl font-bold tracking-[6px] text-primary">{{ code }}</p>
+          <p class="ap-field-label">{% trans "Game code" %}</p>
+          <p class="ap-code lp-soft">{{ code }}</p>
         </div>
-      {% else %}
-        <div>
-          <label class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">{% trans "Game code" %}</label>
-          <input type="text" name="code" value="{{ code }}" required autofocus
-                 inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="123456"
-                 class="input input-bordered input-lg rounded-xl w-full text-center text-2xl tracking-[6px] font-bold" />
+        {% else %}
+        <div class="ap-field">
+          <label for="join-code" class="ap-field-label">{% trans "Game code" %}</label>
+          <input type="text" id="join-code" name="code" value="{{ code }}" required autofocus inputmode="numeric" pattern="[0-9]*"
+                 maxlength="6" placeholder="123456" autocomplete="off" class="input is-big">
         </div>
-      {% endif %}
-      <div>
-        <label class="block text-[11px] tracking-[2px] uppercase font-bold text-base-content/50 mb-2">{% trans "Nickname" %}</label>
-        <input type="text" name="nickname" value="{{ nickname }}" required maxlength="30" {% if code_locked %}autofocus{% endif %}
-               placeholder="{% trans 'Your name' %}"
-               class="input input-bordered input-lg rounded-xl w-full text-center text-xl" />
-      </div>
-       <button type="submit" class="btn-as-link w-full">{% trans "Join" %}</button>
-    </form>
-  </div>
-</section>
+        {% endif %}
+
+        <div class="ap-field">
+          <label for="join-nickname" class="ap-field-label">{% trans "Nickname" %}</label>
+          <input type="text" id="join-nickname" name="nickname" value="{{ nickname }}" required maxlength="30" {% if code_locked %}autofocus{% endif %}
+                 placeholder="{% trans 'Your name' %}" class="input is-name">
+        </div>
+        <button type="submit" class="btn btn-primary rounded-full w-full gap-2">
+          <i data-lucide="log-in" class="w-4 h-4"></i>{% trans "Join" %}
+        </button>
+      </form>
+    </div>
+  </section>
+</div>
 {% endblock content %}

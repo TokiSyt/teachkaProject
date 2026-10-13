@@ -1,0 +1,160 @@
+/* Admin dashboard (templates/admin_dashboard/dashboard.html).
+   The page wraps its content in .lp so it shares the landing page's colour tokens,
+   .lp-soft heading font and .lp-rise / lp-pop entrances from static/css/landing.css.
+   Pill buttons are plain <button>s: selectors are `.lp.ad .ad-pills button.ad-pill` to match the specificity
+   of style.css's global `button:not(.btn):not(...)` reset (background: none) and win by loading later. */
+
+/* flex: fill <main> (a flex column) down to the footer, so the page background never shows below. */
+.ad { flex: 1 0 auto; padding: 2.5rem 1.25rem 4rem; background: var(--color-base-100); }
+@media (min-width: 768px) { .ad { padding: 3.5rem 3.5rem 5rem; } }
+
+/* ── Header ── */
+.ad-hero { position: relative; margin-bottom: 2rem; }
+.ad-title {
+  margin: 1rem 0 0;
+  padding-right: 5rem;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--color-base-content);
+}
+.ad-badge {
+  position: absolute;
+  top: 0; right: 0;
+  display: grid; place-items: center;
+  width: 4.5rem; height: 4.5rem;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: var(--lp-tint);
+  color: var(--lp-ink);
+  animation: lp-pop 0.7s var(--lp-ease) 0.15s both, lp-drift 10s ease-in-out 0.9s infinite;
+}
+/* After the pop-in the badge drifts slowly (lp-drift, landing.css); its satellite bobs out of step. */
+.ad-badge::after {
+  animation: lp-drift 6.5s ease-in-out -2s infinite reverse;
+  content: "";
+  position: absolute;
+  right: -0.35rem; bottom: -0.2rem;
+  width: 1.1rem; height: 1.1rem;
+  border-radius: 999px;
+  background: var(--lp-alt);
+}
+.ad-badge svg { width: 1.8rem; height: 1.8rem; }
+@media (min-width: 768px) {
+  .ad-badge { width: 6rem; height: 6rem; }
+  .ad-badge svg { width: 2.4rem; height: 2.4rem; }
+}
+
+/* ── Pills: tabs and message filters ── */
+.ad-pills { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-bottom: 1.75rem; }
+.lp.ad .ad-pills button.ad-pill {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--lp-line);
+  background: var(--color-base-100);
+  font-size: 0.875rem; font-weight: 500;
+  color: color-mix(in oklab, var(--color-base-content) 75%, transparent);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+.lp.ad .ad-pills button.ad-pill:hover { border-color: var(--lp-ink); color: var(--lp-ink); }
+.lp.ad .ad-pills button.ad-pill[aria-selected="true"] { border-color: transparent; background: var(--lp-ink); color: var(--color-primary-content); }
+.ad-pill svg { width: 1rem; height: 1rem; }
+.ad-count {
+  min-width: 1.4rem;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  background: var(--lp-tint);
+  font-size: 0.72rem; line-height: 1.4rem; text-align: center;
+  font-variant-numeric: tabular-nums;
+  color: var(--lp-ink);
+}
+.ad-pill[aria-selected="true"] .ad-count { background: color-mix(in oklab, var(--color-primary-content) 25%, transparent); color: inherit; }
+.ad-count.is-warn { background: color-mix(in oklab, var(--color-warning) 30%, var(--color-base-100)); color: var(--color-base-content); }
+.ad-toggle { display: inline-flex; align-items: center; gap: 0.5rem; margin-left: auto; font-size: 0.875rem; color: var(--lp-muted); cursor: pointer; user-select: none; }
+
+/* ── Overview: stats as bubbles ── */
+.ad-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 1.25rem; max-width: 42rem; }
+.ad-stat {
+  display: grid; place-items: center; align-content: center; gap: 0.35rem;
+  aspect-ratio: 1;
+  max-width: 13rem;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: var(--lp-alt);
+  text-align: center;
+  animation: lp-pop 0.7s var(--lp-ease) both;
+}
+.ad-stat:nth-child(1) { background: var(--lp-tint); animation-delay: 0.1s; }
+.ad-stat:nth-child(2) { border-radius: 55% 45% 47% 53% / 52% 58% 42% 48%; animation-delay: 0.18s; }
+.ad-stat:nth-child(3) { border-radius: 50% 50% 44% 56% / 56% 44% 56% 44%; animation-delay: 0.26s; }
+.ad-stat-num { font-size: 3rem; font-weight: 500; line-height: 1; color: var(--lp-ink); }
+.ad-stat-label { font-size: 0.8rem; color: var(--lp-muted); }
+
+/* ── Rows: messages and live sessions ── */
+.ad-list { display: flex; flex-direction: column; gap: 0.6rem; max-width: 52rem; }
+.ad-row {
+  border-radius: 1.5rem;
+  background: color-mix(in oklab, var(--lp-alt) 40%, var(--color-base-100));
+  transition: background-color 0.15s;
+}
+.ad-row[open], .ad-row:hover { background: color-mix(in oklab, var(--lp-alt) 65%, var(--color-base-100)); }
+.ad-row-head { display: flex; align-items: center; gap: 0.75rem; padding: 0.9rem 1.25rem; cursor: pointer; list-style: none; }
+.ad-row-head::-webkit-details-marker { display: none; }
+.ad-subject { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; color: var(--color-base-content); }
+.ad-meta { flex-shrink: 0; font-size: 0.75rem; color: var(--lp-muted); }
+.ad-chev { flex-shrink: 0; width: 1rem; height: 1rem; color: var(--lp-muted); transition: transform 0.2s; }
+.ad-row[open] .ad-chev { transform: rotate(180deg); }
+
+/* Kind and status tags: a coloured dot + label. */
+.ad-tag {
+  display: inline-flex; align-items: center; gap: 0.4rem; flex-shrink: 0;
+  padding: 0.2rem 0.65rem 0.2rem 0.5rem;
+  border-radius: 999px;
+  background: var(--color-base-100);
+  font-size: 0.75rem; font-weight: 500;
+  color: color-mix(in oklab, var(--color-base-content) 75%, transparent);
+}
+.ad-tag::before { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--c, var(--lp-ink)); }
+.ad-tag.is-bug { --c: var(--color-error); }
+.ad-tag.is-question { --c: var(--color-info); }
+.ad-tag.is-feature { --c: var(--color-success); }
+.ad-tag.is-open { --c: var(--color-warning); }
+.ad-tag.is-done { --c: var(--color-success); }
+.ad-tag.is-active { --c: var(--color-success); }
+.ad-tag.is-waiting { --c: var(--color-warning); }
+
+.ad-body { display: flex; flex-direction: column; gap: 0.85rem; padding: 0 1.25rem 1.25rem; font-size: 0.9rem; }
+.ad-text { white-space: pre-wrap; line-height: 1.65; color: color-mix(in oklab, var(--color-base-content) 82%, transparent); }
+.ad-from { display: flex; flex-direction: column; gap: 0.15rem; font-size: 0.78rem; color: var(--lp-muted); }
+.ad-reply { display: flex; flex-direction: column; gap: 0.6rem; padding-top: 0.85rem; border-top: 1px solid var(--lp-line); }
+.ad .textarea {
+  width: 100%;
+  border-radius: 1.25rem;
+  padding: 0.75rem 1.1rem;
+  line-height: 1.6;
+  background: var(--color-base-100);
+  border: 1px solid color-mix(in oklab, var(--color-base-content) 22%, transparent);
+}
+.ad .textarea:focus { border-color: var(--lp-ink); outline: 2px solid var(--lp-tint-strong); outline-offset: 0; }
+.ad-btns { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.ad-empty { font-size: 0.875rem; color: var(--lp-muted); }
+
+/* Live sessions: the join code in a blob. */
+.ad-session { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; padding: 0.9rem 1.25rem; }
+.ad-code {
+  display: grid; place-items: center; flex-shrink: 0;
+  min-width: 5.5rem; height: 3.25rem;
+  padding: 0 1rem;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: var(--lp-tint);
+  font-size: 1.25rem; font-weight: 500; letter-spacing: 0.08em;
+  color: var(--lp-ink);
+}
+.ad-session-info { flex: 1; min-width: 12rem; }
+.ad-session-info p:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; color: var(--color-base-content); }
+.ad-session-info p + p { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin-top: 0.2rem; font-size: 0.78rem; color: var(--lp-muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ad-badge, .ad-badge::after, .ad-stat { animation: none; }
+}

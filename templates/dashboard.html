@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Teachka: Toolkit for Educators" %}{% endblock %}
+
+{% block breadcrumb %}{% trans "Home" %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="lp hm">
+
+  <!-- ── WELCOME ── -->
+  <section class="hm-sec">
+    <div class="hm-hero">
+      <div class="hm-hero-text">
+        <p class="lp-eyebrow lp-rise"><span class="lp-eyebrow-dot"></span>{% trans "Welcome back to" %}</p>
+        <h1 class="hm-title lp-soft lp-rise lp-rise-2">Teachka</h1>
+        <p class="hm-date lp-soft lp-rise lp-rise-3"><span>{{ today|date:"l" }}</span><span>{{ today|date:"j F Y" }}</span></p>
+        <div class="hm-chips lp-rise lp-rise-4">
+          <span class="hm-chip">{% trans "Week" %} {{ week_number }}</span>
+          <span class="hm-chip is-ink">{{ week_parity|capfirst }}</span>
+          {% if name_day %}
+          <span class="hm-chip">{% trans "Name day" %}: <b>{{ name_day }}</b></span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="hm-day" aria-hidden="true">
+        <span class="hm-day-num lp-soft">{{ today|date:"j" }}</span>
+        <span class="hm-day-month">{{ today|date:"M" }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TOOLS ── -->
+  <section class="hm-sec" id="tools">
+    <div class="hm-head">
+      <p class="lp-eyebrow"><span class="lp-eyebrow-dot"></span>{% trans "The toolkit" %}</p>
+      <h2 class="hm-h2 lp-soft">{% trans "Seven tools," %} <em>{% trans "one home" %}</em></h2>
+    </div>
+
+    <div class="hm-tools">
+      <a href="{% url 'grade_calculator:grade_calculator' %}" class="hm-tool">
+        <span class="hm-tool-num lp-soft" aria-hidden="true">01</span>
+        <span class="hm-tool-icon"><i data-lucide="calculator"></i></span>
+        <h3 class="lp-soft">{% trans "Grade Calculator" %}</h3>
+        <p>{% trans "Weighted averages, bulk grading, instant export to your records." %}</p>
+      </a>
+      <a href="{% url 'group_divider:home' %}" class="hm-tool">
+        <span class="hm-tool-num lp-soft" aria-hidden="true">02</span>
+        <span class="hm-tool-icon"><i data-lucide="users"></i></span>
+        <h3 class="lp-soft">{% trans "Group Divider" %}</h3>
+        <p>{% trans "Split your class into balanced teams in seconds." %}</p>
+      </a>
+      <a href="{% url 'karma:karma-home' %}" class="hm-tool">
+        <span class="hm-tool-num lp-soft" aria-hidden="true">03</span>
+        <span class="hm-tool-icon"><i data-lucide="book-open-check"></i></span>
+        <h3 class="lp-soft">{% trans "Point System" %}</h3>
+        <p>{% trans "Track participation and reward students with points in real time." %}</p>
+      </a>
+      <a href="{% url 'timer:home' %}" class="hm-tool">
+        <span class="hm-tool-num lp-soft" aria-hidden="true">04</span>
+        <span class="hm-tool-icon"><i data-lucide="clock"></i></span>
+        <h3 class="lp-soft">{% trans "Timer" %}</h3>
+        <p>{% trans "Visual countdowns for tests, group work, and transitions." %}</p>
+      </a>
+      <a href="{% url 'calendar_app:home' %}" class="hm-tool">
+        <span class="hm-tool-num lp-soft" aria-hidden="true">05</span>
+        <span class="hm-tool-icon"><i data-lucide="calendar-check"></i></span>
+        <h3 class="lp-soft">{% trans "Calendar" %}</h3>
+        <p>{% trans "Lesson planning and deadline tracking in one clean weekly view." %}</p>
+      </a>
+      <a href="{% url 'wheel:home' %}" class="hm-tool">
+        <span class="hm-tool-num lp-soft" aria-hidden="true">06</span>
+        <span class="hm-tool-icon"><i data-lucide="loader-pinwheel"></i></span>
+        <h3 class="lp-soft">{% trans "Name Wheel" %}</h3>
+        <p>{% trans "Spin to pick a random student: fair, fun, and instant." %}</p>
+      </a>
+      <a href="{% url 'quizzmaker:home' %}" class="hm-tool">
+        <span class="hm-tool-num lp-soft" aria-hidden="true">07</span>
+        <span class="hm-tool-icon"><i data-lucide="list-checks"></i></span>
+        <h3 class="lp-soft">{% trans "Quiz Maker" %}</h3>
+        <p>{% trans "Build multi-round quizzes with custom questions and answers." %}</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── YOUR ACTIVITY ── -->
+  <section class="hm-sec">
+    <div class="hm-head">
+      <p class="lp-eyebrow"><span class="lp-eyebrow-dot"></span>{% trans "Your activity" %}</p>
+    </div>
+
+    <div class="hm-stats">
+      <div class="hm-stat">
+        <span class="hm-stat-label">{% trans "Groups" %}</span>
+        <span class="hm-stat-num lp-soft" data-target="{{ user_groups_count }}">{{ user_groups_count }}</span>
+        <span class="hm-stat-unit">{{ user_members_count }} {% trans "members" %}</span>
+      </div>
+      <div class="hm-stat">
+        <span class="hm-stat-label">{% trans "Points" %}</span>
+        <span class="hm-stat-num is-split lp-soft"><span class="hm-plus">+<span data-target="{{ user_positive_points }}">{{ user_positive_points }}</span></span><span class="hm-slash">/</span><span class="hm-minus">−<span data-target="{{ user_negative_points }}">{{ user_negative_points }}</span></span></span>
+      </div>
+      <div class="hm-stat">
+        <span class="hm-stat-label">{% trans "Calculator" %}</span>
+        <span class="hm-stat-num lp-soft" data-target="{{ calculator_uses }}">{{ calculator_uses }}</span>
+        <span class="hm-stat-unit">{% trans "uses" %}</span>
+      </div>
+      <div class="hm-stat">
+        <span class="hm-stat-label">{% trans "Wheel" %}</span>
+        <span class="hm-stat-num lp-soft" data-target="{{ wheel_spins }}">{{ wheel_spins }}</span>
+        <span class="hm-stat-unit">{% trans "spins" %}</span>
+      </div>
+      <div class="hm-stat">
+        <span class="hm-stat-label">{% trans "Divider" %}</span>
+        <span class="hm-stat-num lp-soft" data-target="{{ divider_uses }}">{{ divider_uses }}</span>
+        <span class="hm-stat-unit">{% trans "splits" %}</span>
+      </div>
+      <div class="hm-stat">
+        <span class="hm-stat-label">{% trans "Timer" %}</span>
+        <span class="hm-stat-num lp-soft" data-target="{{ timer_total_minutes }}">{{ timer_total_minutes }}</span>
+        <span class="hm-stat-unit">{% trans "minutes" %}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ACCENT COLOUR ── -->
+  <section class="hm-sec">
+    <div class="hm-head">
+      <p class="lp-eyebrow"><span class="lp-eyebrow-dot"></span>{% trans "Accent colour" %}</p>
+      <p class="hm-sub">{% trans "Sidebar highlight colour." %}</p>
+    </div>
+
+    <div class="hm-swatches" id="accent-swatches" data-url="{% url 'profile:settings' %}" data-csrf="{{ csrf_token }}">
+      {% for hex, label in accent_palette %}
+      <button type="button" class="hm-swatch" style="--c:{{ hex }}" data-color="{{ hex }}"
+              aria-label="{{ label }}" aria-pressed="{% if user.icon_hover_color == hex %}true{% else %}false{% endif %}">
+        <span class="hm-swatch-label">{{ label }}</span>
+      </button>
+      {% endfor %}
+    </div>
+    <p class="hm-hint lp-soft">{% trans "hover to preview · click to save" %}</p>
+  </section>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/home.js' %}"></script>
+{% endblock %}

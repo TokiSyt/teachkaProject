@@ -1,90 +1,61 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
-{% block title %}{% trans "Group Maker" %}{% endblock title %}
+{% block title %}{% trans "Group Maker" %} · Teachka{% endblock title %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+<link rel="stylesheet" href="{% static 'css/apps.css' %}">
+{% endblock %}
 
 {% block content %}
-<div class="max-w-2xl mx-auto">
-  <!-- Header -->
-  <div class="mb-8">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{% trans "Group Maker" %}</h1>
-    <p class="mt-1 text-gray-600 dark:text-gray-400">{% trans "Manage your groups and member lists" %}</p>
-  </div>
+<div class="lp ap">
 
-  <!-- Main Card -->
-  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-    <form method="POST" class="space-y-6">
-      {% csrf_token %}
-
-      <!-- Group Selection -->
-      <div>
-        <label for="groupSelect" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          {% trans "Select a group" %}
-        </label>
-        <select id="groupSelect" name="group_id" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors" required>
-          <option value="" disabled hidden selected>{% trans "Choose a group..." %}</option>
-          {% for group in groups %}
-          <option value="{{ group.id }}" {% if selected_group and selected_group.id == group.id %}selected{% endif %}>
-            {{ group.title }} ({{ group.size }} {% trans "members" %})
-          </option>
-          {% endfor %}
-        </select>
-      </div>
-
-      <!-- Actions -->
-      <div class="flex flex-wrap gap-3 pt-2">
-        <a href="{% url 'group_maker:group-maker-creation' %}" class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors inline-flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-          {% trans "Create Group" %}
-        </a>
-        <a id="editGroupsBtn" href="#" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-          {% trans "Edit Group" %}
-        </a>
-        <a href="{% url 'group_maker:group-maker-home' %}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
-          {% trans "Reset" %}
-        </a>
-        <a id="deleteGroupBtn" href="#" class="px-5 py-2.5 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 font-medium rounded-lg transition-colors ml-auto disabled:opacity-50 disabled:cursor-not-allowed">
-          {% trans "Delete" %}
-        </a>
-      </div>
-    </form>
-  </div>
-
-  {% if not groups %}
-  <!-- Empty State -->
-  <div class="mt-8 text-center py-12">
-    <div class="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+  <header class="ap-sec ap-hero">
+    <span class="ap-badge" aria-hidden="true"><i data-lucide="users"></i></span>
+    <div class="ap-hero-text">
+      <p class="lp-eyebrow lp-rise"><span class="lp-eyebrow-dot"></span>{% trans "Organization" %} · {% trans "Management" %}</p>
+      <h1 class="ap-title lp-soft lp-rise lp-rise-2">{% trans "Group Maker" %}</h1>
+      <p class="ap-lede lp-rise lp-rise-3">{% trans "Manage your groups and member lists" %}</p>
     </div>
-    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{% trans "No groups yet" %}</h3>
-    <p class="text-gray-600 dark:text-gray-400 mb-4">{% trans "Create your first group to get started" %}</p>
-  </div>
-  {% endif %}
+  </header>
+
+  <section class="ap-sec lp-rise lp-rise-3">
+    {% if groups %}
+    <div class="ap-actions mb-6">
+      <a href="{% url 'group_maker:group-maker-creation' %}?next={% url 'group_maker:group-maker-home' %}" class="btn btn-primary rounded-full gap-2 px-6">
+        <i data-lucide="plus" class="w-4 h-4"></i>{% trans "Create Group" %}
+      </a>
+    </div>
+
+    <ul class="ap-groups">
+      {% for group in groups %}
+      <li class="ap-group">
+        <span class="ap-group-icon" aria-hidden="true"><i data-lucide="users"></i></span>
+        <span class="ap-group-title">{{ group.title }}</span>
+        <span class="ap-chip">{{ group.size }} {% trans "members" %}</span>
+        <a href="{% url 'group_maker:group-maker-edit' group.id %}" class="btn btn-ghost btn-sm btn-circle"
+           title="{% trans 'Edit Group' %}" aria-label="{% trans 'Edit Group' %}">
+          <i data-lucide="pen-line" class="w-4 h-4"></i>
+        </a>
+        <a href="{% url 'group_maker:group-maker-delete' group.id %}" class="btn btn-ghost btn-sm btn-circle text-error/70 hover:text-error"
+           title="{% trans 'Delete' %}" aria-label="{% trans 'Delete' %}">
+          <i data-lucide="trash-2" class="w-4 h-4"></i>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <div class="ap-empty">
+      <span class="ap-empty-icon" aria-hidden="true"><i data-lucide="users"></i></span>
+      <h3 class="lp-soft">{% trans "No groups yet" %}</h3>
+      <p>{% trans "Create your first group to get started" %}</p>
+      <a href="{% url 'group_maker:group-maker-creation' %}?next={% url 'group_maker:group-maker-home' %}" class="btn btn-primary rounded-full gap-2 px-6">
+        <i data-lucide="plus" class="w-4 h-4"></i>{% trans "Create Group" %}
+      </a>
+    </div>
+    {% endif %}
+  </section>
+
 </div>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const groupSelect = document.getElementById("groupSelect");
-    const editBtn = document.getElementById("editGroupsBtn");
-    const deleteBtn = document.getElementById("deleteGroupBtn");
-
-    function updateEditLink() {
-      const groupId = groupSelect.value;
-      if (groupId) {
-        editBtn.href = "{% url 'group_maker:group-maker-edit' 0 %}".replace("0", groupId);
-        editBtn.classList.remove("opacity-50", "cursor-not-allowed", "pointer-events-none");
-        deleteBtn.href = "{% url 'group_maker:group-maker-delete' 0 %}".replace("0", groupId);
-        deleteBtn.classList.remove("opacity-50", "cursor-not-allowed", "pointer-events-none");
-      } else {
-        editBtn.href = "#";
-        editBtn.classList.add("opacity-50", "cursor-not-allowed", "pointer-events-none");
-        deleteBtn.href = "#";
-        deleteBtn.classList.add("opacity-50", "cursor-not-allowed", "pointer-events-none");
-      }
-    }
-
-    groupSelect.addEventListener("change", updateEditLink);
-    updateEditLink();
-  });
-</script>
 {% endblock content %}

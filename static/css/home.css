@@ -1,0 +1,225 @@
+/* Logged-in home (templates/dashboard.html).
+   The page wraps its content in .lp so it shares the landing page's colour tokens,
+   .lp-soft heading font and .lp-rise / lp-pop entrances from static/css/landing.css.
+   Swatches are plain <button>s: selectors are `.lp.hm .hm-swatches button.hm-swatch` to match the
+   specificity of style.css's global `button:not(.btn):not(...)` reset (background: none). */
+
+/* flex: fill <main> (a flex column) down to the footer. */
+.hm { flex: 1 0 auto; background: var(--color-base-100); }
+.hm-sec { padding: 3rem 1.25rem; }
+.hm-sec + .hm-sec { border-top: 1px solid var(--lp-line); }
+@media (min-width: 768px) { .hm-sec { padding: 3.5rem 3.5rem; } }
+.hm-h2 {
+  margin: 0.9rem 0 0;
+  font-size: clamp(1.75rem, 3.2vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--color-base-content);
+}
+.hm-h2 em { font-style: italic; font-weight: 300; color: var(--lp-muted); }
+.hm-head { margin-bottom: 2rem; }
+.hm-sub { margin-top: 0.4rem; font-size: 0.875rem; font-weight: 300; color: var(--lp-muted); }
+
+/* ── Welcome ── */
+.hm-hero { position: relative; display: grid; gap: 2rem; align-items: center; }
+@media (min-width: 768px) { .hm-hero { grid-template-columns: minmax(0, 1fr) auto; } }
+.hm-title {
+  margin: 1rem 0 0;
+  font-size: clamp(3rem, 6.5vw, 5.25rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--lp-ink);
+}
+.hm-date {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.4rem 0.9rem;
+  margin-top: 1.5rem;
+  font-size: clamp(1.25rem, 2.4vw, 1.85rem);
+  font-weight: 500;
+  color: var(--color-base-content);
+}
+.hm-date span + span::before { content: "·"; margin-right: 0.9rem; font-weight: 300; color: var(--lp-line); }
+.hm-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; }
+.hm-chip {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  background: var(--lp-alt);
+  font-size: 0.8rem;
+  color: color-mix(in oklab, var(--color-base-content) 75%, transparent);
+}
+.hm-chip.is-ink { background: var(--lp-tint); color: var(--lp-ink); font-weight: 500; }
+.hm-chip b { font-weight: 600; color: var(--color-base-content); }
+
+/* Today's day number in a blob, top right. */
+.hm-day {
+  position: relative;
+  justify-self: end;
+  display: grid; place-items: center; align-content: center;
+  width: 9rem; height: 9rem;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: var(--lp-tint);
+  color: var(--lp-ink);
+  text-align: center;
+  animation: lp-pop 0.7s var(--lp-ease) 0.15s both, lp-drift 10s ease-in-out 0.9s infinite;
+}
+@media (min-width: 768px) { .hm-day { width: 12rem; height: 12rem; } }
+@media (max-width: 767px) { .hm-day { position: absolute; top: 0; right: 0; width: 6rem; height: 6rem; } .hm-hero-text { padding-right: 6.5rem; } }
+.hm-day-num { font-size: 4.5rem; font-weight: 500; line-height: 0.9; }
+@media (max-width: 767px) { .hm-day-num { font-size: 2.75rem; } }
+.hm-day-month { font-size: 0.8rem; font-weight: 500; text-transform: lowercase; color: var(--lp-muted); }
+/* After the pop-in the badge drifts slowly (lp-drift, landing.css); its satellite bobs out of step. */
+.hm-day::before, .hm-day::after { content: ""; position: absolute; border-radius: 999px; animation: lp-drift 6.5s ease-in-out -2s infinite reverse; }
+.hm-day::after { animation-duration: 5.5s; animation-delay: -0.5s; }
+.hm-day::before { right: -0.5rem; bottom: 0.2rem; width: 22%; aspect-ratio: 1; background: var(--lp-alt); }
+.hm-day::after { left: -0.2rem; top: 0.5rem; width: 9%; aspect-ratio: 1; background: var(--lp-tint-strong); }
+
+/* ── Tools: a cluster of floating bubbles ──
+   Each tool is a blob in its own theme hue (--c), with a white icon bubble in the middle and
+   its number riding in a satellite bubble on the rim. Bubbles idle-float out of step; on hover
+   the blob morphs, swells and gets a soft halo. `translate` (float) and `scale` (hover) are
+   separate properties so the two never fight over `transform`. */
+.hm-tools {
+  display: grid;
+  gap: 1.25rem 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+}
+.hm-tool {
+  --c: var(--color-primary);
+  --r1: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  --r2: 58% 42% 45% 55% / 45% 55% 45% 55%;
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 1.75rem 1.5rem;
+  border-radius: 2.5rem;
+  background: color-mix(in oklab, var(--c) 14%, var(--color-base-100));
+  text-align: center;
+  animation: hm-float 6s ease-in-out infinite;
+  transition: border-radius 0.6s var(--lp-ease), scale 0.4s var(--lp-ease), box-shadow 0.3s, background-color 0.3s;
+}
+@media (min-width: 640px) {
+  /* Stagger every other bubble 2rem down so the grid reads as a cluster. `top` moves it visually
+     only, so the row gap is 2rem wider than the gap we want, and the last row gets that room below. */
+  .hm-tools { row-gap: 3.25rem; padding-bottom: 2rem; }
+  .hm-tool { aspect-ratio: 1; padding: 2rem 2.25rem; border-radius: var(--r1); }
+  .hm-tool:nth-child(even) { top: 2rem; }
+}
+.hm-tool:hover,
+.hm-tool:focus-visible {
+  border-radius: var(--r2);
+  scale: 1.04;
+  background: color-mix(in oklab, var(--c) 22%, var(--color-base-100));
+  box-shadow: 0 0 0 0.6rem color-mix(in oklab, var(--c) 10%, transparent);
+}
+.hm-tool:focus-visible { outline: 2px solid var(--c); outline-offset: 0.9rem; }
+
+/* One hue, one shape and one float rhythm per tool. */
+.hm-tool:nth-child(1) { --c: var(--color-primary); animation-delay: 0s; }
+.hm-tool:nth-child(2) { --c: var(--color-secondary); --r1: 55% 45% 47% 53% / 52% 58% 42% 48%; --r2: 44% 56% 58% 42% / 55% 45% 55% 45%; animation-delay: -1.5s; animation-duration: 7s; }
+.hm-tool:nth-child(3) { --c: var(--color-info); --r1: 50% 50% 44% 56% / 56% 44% 56% 44%; animation-delay: -3s; }
+.hm-tool:nth-child(4) { --c: var(--color-success); --r1: 53% 47% 55% 45% / 47% 55% 45% 53%; --r2: 45% 55% 42% 58% / 58% 42% 52% 48%; animation-delay: -0.8s; animation-duration: 6.5s; }
+.hm-tool:nth-child(5) { --c: var(--color-warning); --r1: 48% 52% 50% 50% / 55% 48% 52% 45%; animation-delay: -2.2s; animation-duration: 7.5s; }
+.hm-tool:nth-child(6) { --c: var(--color-accent); --r1: 56% 44% 48% 52% / 46% 52% 48% 54%; --r2: 46% 54% 56% 44% / 54% 46% 54% 46%; animation-delay: -4s; }
+.hm-tool:nth-child(7) { --c: var(--color-error); --r1: 45% 55% 53% 47% / 50% 45% 55% 50%; animation-delay: -1s; animation-duration: 6.8s; }
+
+/* static/js/home.js pauses the float while the tools are scrolled out of view. */
+.hm-tools.is-paused .hm-tool { animation-play-state: paused; }
+
+@keyframes hm-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -7px; }
+}
+
+/* Icon: a white bubble that wobbles on hover. */
+.hm-tool-icon {
+  display: grid; place-items: center;
+  width: 3.25rem; height: 3.25rem;
+  margin-bottom: 0.9rem;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: var(--color-base-100);
+  color: color-mix(in oklab, var(--c) 80%, var(--color-base-content));
+  transition: scale 0.4s var(--lp-ease), rotate 0.4s var(--lp-ease);
+}
+.hm-tool:hover .hm-tool-icon { scale: 1.12; rotate: -8deg; }
+.hm-tool-icon svg { width: 1.3rem; height: 1.3rem; }
+
+/* Number: a satellite bubble on the rim that drifts outward on hover. */
+.hm-tool-num {
+  position: absolute;
+  top: 6%; right: 8%;
+  display: grid; place-items: center;
+  width: 2.1rem; height: 2.1rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--c) 28%, var(--color-base-100));
+  font-size: 0.72rem;
+  color: color-mix(in oklab, var(--c) 70%, var(--color-base-content));
+  transition: translate 0.4s var(--lp-ease);
+}
+.hm-tool:hover .hm-tool-num { translate: 0.35rem -0.35rem; }
+@media (max-width: 639px) { .hm-tool-num { top: 0.9rem; right: 1rem; } }
+
+.hm-tool h3 { margin: 0 0 0.35rem; font-size: 1.15rem; font-weight: 500; letter-spacing: -0.01em; color: var(--color-base-content); }
+.hm-tool p { max-width: 15rem; font-size: 0.8rem; line-height: 1.5; font-weight: 300; color: var(--lp-muted); }
+
+/* ── Activity: stats as bubbles ── */
+.hm-stats { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); max-width: 64rem; }
+.hm-stat {
+  display: grid; place-items: center; align-content: center; gap: 0.2rem;
+  aspect-ratio: 1;
+  max-width: 12rem;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: var(--lp-alt);
+  text-align: center;
+}
+.hm-stat:nth-child(2n) { border-radius: 55% 45% 47% 53% / 52% 58% 42% 48%; background: var(--lp-tint); }
+.hm-stat:nth-child(3n) { border-radius: 50% 50% 44% 56% / 56% 44% 56% 44%; }
+.hm-stat-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lp-muted); }
+.hm-stat-num { font-size: 2.25rem; font-weight: 500; line-height: 1.05; font-variant-numeric: tabular-nums; color: var(--color-base-content); }
+.hm-stat-num.is-split { font-size: 1.6rem; }
+.hm-stat-unit { font-size: 0.75rem; color: var(--lp-muted); }
+.hm-plus { color: var(--color-success); }
+.hm-minus { color: var(--color-error); }
+.hm-slash { margin: 0 0.2rem; font-weight: 300; color: var(--lp-muted); }
+/* Revealed on scroll by static/js/home.js; without JS they simply show. */
+.hm-js .hm-stat { opacity: 0; scale: 0.85; transition: opacity 0.45s ease, scale 0.5s var(--lp-ease); }
+.hm-js .hm-stat.is-in { opacity: 1; scale: 1; }
+
+/* ── Accent colour: swatches as bubbles ── */
+.hm-swatches { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.lp.hm .hm-swatches button.hm-swatch {
+  position: relative;
+  width: 2.75rem; height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--c);
+  cursor: pointer;
+  transition: transform 0.3s var(--lp-ease), box-shadow 0.2s;
+}
+.lp.hm .hm-swatches button.hm-swatch:nth-child(2n) { border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%; }
+.lp.hm .hm-swatches button.hm-swatch:hover { transform: scale(1.15); }
+.lp.hm .hm-swatches button.hm-swatch:focus-visible { outline: 2px solid var(--c); outline-offset: 3px; }
+.lp.hm .hm-swatches button.hm-swatch[aria-pressed="true"] { box-shadow: 0 0 0 3px var(--color-base-100), 0 0 0 5px var(--c); }
+.hm-swatch-label {
+  position: absolute; left: 50%; top: calc(100% + 0.35rem);
+  transform: translateX(-50%);
+  font-size: 0.68rem; white-space: nowrap;
+  color: var(--lp-muted);
+  opacity: 0;
+  transition: opacity 0.15s;
+  pointer-events: none;
+}
+.hm-swatch:hover .hm-swatch-label,
+.hm-swatch:focus-visible .hm-swatch-label { opacity: 1; }
+.hm-hint { margin-top: 1.5rem; font-size: 0.75rem; font-style: italic; color: var(--lp-muted); }
+
+/* Preview: while hovering a swatch, paint the sidebar links in that colour (static/js/home.js). */
+.ac-previewing #sidebar .menu li > a,
+.ac-previewing #sidebar .menu li > a svg,
+.ac-previewing #sidebar .sb-row { color: var(--sidebar-hover-color) !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hm-day, .hm-day::before, .hm-day::after, .hm-tool { animation: none; }
+  .hm-js .hm-stat { transition: none; }
+}

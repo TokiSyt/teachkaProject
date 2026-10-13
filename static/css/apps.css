@@ -1,0 +1,1069 @@
+/* Shared look for the tool (app) pages: grade calculator, timer, calendar, point system, ...
+   Pages wrap their content in `.lp ap` so they share the landing page's colour tokens,
+   .lp-soft heading font, .lp-rise / lp-pop entrances and lp-drift from static/css/landing.css.
+   Plain <button>s styled here use `.lp.ap .x button.y` selectors to match the specificity of
+   style.css's global `button:not(.btn):not(...)` reset (background: none). */
+
+/* flex: fill <main> (a flex column) down to the footer. */
+.ap { flex: 1 0 auto; background: var(--color-base-100); }
+/* Page scripts toggle Tailwind's `hidden`; keep it winning over this file's display rules
+   (e.g. .ap-clock-wrap { display: flex }), which load later at the same specificity.
+   Skipped when a responsive class is present (`hidden md:grid`), so Tailwind's breakpoints work. */
+.lp.ap .hidden:not([class*=":"]) { display: none; }
+.ap-sec { padding: 2.5rem 1.25rem; }
+.ap-sec + .ap-sec { padding-top: 0; }
+/* A wrapper of sections right after the header (e.g. a region reloaded by JS) joins up the same way. */
+.ap-region > .ap-sec:first-child { padding-top: 0; }
+@media (min-width: 768px) { .ap-sec { padding: 3.5rem 3.5rem; } .ap-sec + .ap-sec { padding-top: 0; } }
+
+/* ── Header: eyebrow, soft title, lede; a drifting icon badge top right ── */
+.ap-hero { position: relative; }
+.ap-hero-text { max-width: 40rem; padding-right: 5.5rem; }
+@media (min-width: 768px) { .ap-hero-text { padding-right: 8rem; } }
+.ap-title {
+  margin: 1rem 0 0;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--color-base-content);
+}
+.ap-title em { font-style: italic; font-weight: 300; color: var(--lp-ink); }
+.ap-lede { margin-top: 0.75rem; line-height: 1.6; font-weight: 300; color: var(--lp-muted); }
+.ap-badge {
+  position: absolute;
+  /* Inset by the section padding (.ap-hero is also an .ap-sec), so the badge and its
+     satellite sit inside the page instead of against the window edge. */
+  top: 2.5rem; right: 1.25rem;
+  display: grid; place-items: center;
+  width: 4.5rem; height: 4.5rem;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: var(--lp-tint);
+  color: var(--lp-ink);
+  animation: lp-pop 0.7s var(--lp-ease) 0.15s both, lp-drift 10s ease-in-out 0.9s infinite;
+}
+.ap-badge svg { width: 1.8rem; height: 1.8rem; }
+/* Satellite bubble, bobbing out of step with the badge. */
+.ap-badge::after {
+  content: "";
+  position: absolute;
+  right: -0.35rem; bottom: -0.2rem;
+  width: 1.1rem; height: 1.1rem;
+  border-radius: 999px;
+  background: var(--lp-alt);
+  animation: lp-drift 6.5s ease-in-out -2s infinite reverse;
+}
+@media (min-width: 768px) {
+  .ap-badge { top: 3.5rem; right: 3.5rem; width: 6.5rem; height: 6.5rem; }
+  .ap-badge svg { width: 2.6rem; height: 2.6rem; }
+  .ap-badge::after { width: 1.5rem; height: 1.5rem; }
+}
+
+/* Section label: an eyebrow-style line above a block. */
+.ap-label { margin-bottom: 1.25rem; font-size: 0.8rem; font-weight: 500; color: var(--lp-muted); }
+
+/* ── Choices: big floating bubbles that link to a mode or sub-page ──
+   Same family as the home dashboard's tool bubbles (static/css/home.css), but still: on app
+   pages only the header badge moves. Each choice has its own hue (--c) and blob shape, and
+   morphs and grows on hover. */
+.ap-choices { display: grid; gap: 1.25rem 1rem; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); max-width: 34rem; }
+.ap-choice {
+  --c: var(--color-primary);
+  --r1: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  --r2: 58% 42% 45% 55% / 45% 55% 45% 55%;
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 1.75rem 1.5rem;
+  border-radius: 2.5rem;
+  background: color-mix(in oklab, var(--c) 14%, var(--color-base-100));
+  text-align: center;
+  transition: border-radius 0.6s var(--lp-ease), scale 0.4s var(--lp-ease), box-shadow 0.3s, background-color 0.3s;
+}
+@media (min-width: 640px) {
+  .ap-choice { aspect-ratio: 1; padding: 2rem; border-radius: var(--r1); }
+  .ap-choice:nth-child(even) { top: 1.5rem; }
+  .ap-choices { padding-bottom: 1.5rem; }
+}
+.ap-choice:nth-child(2) { --c: var(--color-secondary); --r1: 55% 45% 47% 53% / 52% 58% 42% 48%; --r2: 44% 56% 58% 42% / 55% 45% 55% 45%; }
+.ap-choice:nth-child(3) { --c: var(--color-info); --r1: 50% 50% 44% 56% / 56% 44% 56% 44%; }
+.ap-choice:nth-child(4) { --c: var(--color-success); }
+.ap-choice:hover,
+.ap-choice:focus-visible {
+  border-radius: var(--r2);
+  scale: 1.04;
+  background: color-mix(in oklab, var(--c) 22%, var(--color-base-100));
+  box-shadow: 0 0 0 0.6rem color-mix(in oklab, var(--c) 10%, transparent);
+}
+.ap-choice:focus-visible { outline: 2px solid var(--c); outline-offset: 0.9rem; }
+.ap-choice-icon {
+  display: grid; place-items: center;
+  width: 3.5rem; height: 3.5rem;
+  margin-bottom: 0.9rem;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: var(--color-base-100);
+  color: color-mix(in oklab, var(--c) 80%, var(--color-base-content));
+  transition: scale 0.4s var(--lp-ease), rotate 0.4s var(--lp-ease);
+}
+.ap-choice:hover .ap-choice-icon { scale: 1.12; rotate: -8deg; }
+.ap-choice-icon svg { width: 1.4rem; height: 1.4rem; }
+.ap-choice h3 { margin: 0 0 0.35rem; font-size: 1.25rem; font-weight: 500; letter-spacing: -0.01em; color: var(--color-base-content); }
+.ap-choice p { max-width: 13rem; font-size: 0.82rem; line-height: 1.5; font-weight: 300; color: var(--lp-muted); }
+
+/* Small bordered pill link, e.g. "Back to Timer". */
+.ap-back { margin-bottom: 1.5rem; }
+
+/* ── Clock: the time in a big blob (stopwatch, countdown) ──
+   .is-running (set by the page script) deepens the tint while the clock runs. */
+.ap-clock-wrap { display: flex; flex-direction: column; align-items: center; gap: 1.75rem; }
+.ap-clock {
+  position: relative;
+  display: grid; place-items: center;
+  width: min(100%, 20rem);
+  aspect-ratio: 1;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: var(--lp-tint);
+  transition: background-color 0.4s;
+}
+.ap-clock.is-running { background: color-mix(in oklab, var(--color-primary) 22%, var(--color-base-100)); }
+/* Satellites around the face. */
+.ap-clock::before, .ap-clock::after { content: ""; position: absolute; border-radius: 999px; }
+.ap-clock::before { right: 2%; top: 8%; width: 13%; aspect-ratio: 1; background: var(--lp-alt); }
+.ap-clock::after { left: 4%; bottom: 8%; width: 7%; aspect-ratio: 1; background: var(--lp-tint-strong); }
+.ap-time {
+  display: flex; align-items: baseline;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  color: var(--color-base-content);
+}
+.ap-time-ms { margin-left: 0.1rem; color: var(--lp-muted); }
+
+/* Countdown: progress ring inside the clock blob, time centred on top. */
+.ap-ring { position: absolute; inset: 9%; width: 82%; height: 82%; rotate: -90deg; }
+/* Contrast on the tinted blob in every theme: a light track cut through the tint, and a fill a
+   touch darker than primary. The fill's warning/error colours come from countdown.js as var(). */
+.ap-ring circle { stroke-width: 10; }
+.ap-ring .countdown-ring-bg { stroke: var(--color-base-100); }
+.ap-ring .countdown-ring-fill { stroke: color-mix(in oklab, var(--color-primary) 85%, var(--color-base-content)); }
+.ap-clock-center { position: relative; display: flex; flex-direction: column; align-items: center; }
+.ap-clock-sub { margin-top: 0.25rem; font-size: 0.8rem; font-variant-numeric: tabular-nums; color: var(--lp-muted); }
+
+/* Countdown setup: three scroll pickers (timer.js initPicker) with a selection band. */
+.ap-pickers { display: flex; align-items: flex-end; gap: 0.35rem; }
+.ap-picker { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; }
+.ap-picker-label { font-size: 0.72rem; font-weight: 500; color: var(--lp-muted); }
+.ap-picker-box { position: relative; width: 4rem; }
+.ap-picker-box::before {
+  content: "";
+  position: absolute; inset-inline: 0; top: 50%;
+  height: 40px; translate: 0 -50%;
+  border-radius: 999px;
+  background: var(--color-base-100);
+  pointer-events: none;
+}
+.ap-picker-box .scroll-picker { position: relative; }
+.ap-picker-box .scroll-picker-item { font-family: 'Fraunces', serif; font-variation-settings: "SOFT" 100; font-weight: 500; }
+.ap-picker-sep { padding-bottom: 2.6rem; font-size: 1.5rem; font-weight: 600; color: var(--lp-muted); }
+
+/* Small pill buttons in a row, e.g. the countdown's +5s / +10s / +20s. */
+.ap-chips { display: flex; justify-content: center; gap: 0.5rem; }
+
+/* Round controls under the clock. */
+.ap-controls { display: flex; align-items: center; justify-content: center; gap: 0.75rem; min-height: 4rem; }
+.ap-controls .btn-circle { width: 3.5rem; height: 3.5rem; transition: scale 0.3s var(--lp-ease); }
+.ap-controls .btn-circle:hover { scale: 1.08; }
+.ap-controls .btn-circle.is-main { width: 4rem; height: 4rem; }
+
+/* Soft rounded rows, e.g. the stopwatch's flags. */
+.ap-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.ap-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 0.6rem 1rem 0.6rem 0.6rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--lp-alt) 40%, var(--color-base-100));
+  font-variant-numeric: tabular-nums;
+}
+.ap-row-num {
+  display: grid; place-items: center; flex-shrink: 0;
+  width: 2rem; height: 2rem;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: var(--color-base-100);
+  font-size: 0.75rem; font-weight: 600;
+  color: var(--lp-ink);
+}
+.ap-row-main { display: flex; align-items: center; gap: 0.75rem; font-weight: 500; color: var(--color-base-content); }
+.ap-row-dim, .ap-row-side { color: var(--lp-muted); }
+.ap-row-side { font-size: 0.875rem; }
+
+/* ── Forms: labelled pill fields and pill toggles ──
+   Inputs get their own border: Tailwind's unlayered preflight (`* { border-width: 0 }`)
+   strips daisyUI's layered input border, as on the auth pages (auth.css). */
+.ap-form { display: flex; flex-direction: column; gap: 1.5rem; max-width: 28rem; }
+/* Wide form (edit group): fields keep the usual width, an .is-full block (e.g. member colours)
+   uses the extra room on large screens. */
+.ap-form.is-wide { max-width: 60rem; }
+.ap-form.is-wide > :not(.is-full) { max-width: 28rem; }
+.ap-field { display: flex; flex-direction: column; gap: 0.45rem; }
+.ap-field-label { padding-left: 0.25rem; font-size: 0.8rem; font-weight: 500; color: color-mix(in oklab, var(--color-base-content) 75%, transparent); }
+/* Matches the specificity of style.css's global `form label:not(.input):not(.btn):not(.label)`
+   (bold, display: block) and wins by loading later, as in auth.css. */
+.lp.ap form label.ap-field-label { margin-bottom: 0; font-weight: 500; }
+.lp.ap form label.ap-toggle,
+.lp.ap form label.ap-mode { margin-bottom: 0; font-weight: inherit; color: inherit; }
+.lp.ap .input {
+  width: 100%;
+  border-radius: 999px;
+  padding-inline: 1.25rem;
+  background: var(--color-base-100);
+  border: 1px solid color-mix(in oklab, var(--color-base-content) 22%, transparent);
+}
+.lp.ap .input:focus { border-color: var(--lp-ink); outline: 2px solid var(--lp-tint-strong); outline-offset: 0; }
+.lp.ap .input[aria-invalid="true"] { border-color: var(--color-error); }
+/* Number fields: no browser spinners. */
+.lp.ap .input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
+.lp.ap .input[type="number"]::-webkit-inner-spin-button,
+.lp.ap .input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.ap-error { padding-left: 0.25rem; font-size: 0.8rem; color: var(--color-error); }
+
+/* Pill toggles: native radios, the checked one fills with the accent. */
+.ap-toggles { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.ap-toggle { position: relative; cursor: pointer; }
+.ap-toggle input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.ap-toggle span {
+  display: inline-flex; align-items: center;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid var(--lp-line);
+  font-size: 0.875rem; font-weight: 500;
+  color: color-mix(in oklab, var(--color-base-content) 75%, transparent);
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+.ap-toggle:hover span { border-color: var(--lp-ink); color: var(--lp-ink); }
+.ap-toggle input:checked + span { border-color: transparent; background: var(--lp-ink); color: var(--color-primary-content); }
+.ap-toggle input:focus-visible + span { outline: 2px solid var(--lp-tint-strong); outline-offset: 2px; }
+.ap-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+/* ── Results block: a soft panel under the form ── */
+/* scroll-margin: room above when a redirect lands on #results (below the phone top bar too). */
+.ap-results { margin-top: 0.5rem; padding-top: 2.5rem; border-top: 1px solid var(--lp-line); scroll-margin-top: 4.5rem; }
+@media (min-width: 768px) { .ap-results { scroll-margin-top: 1rem; } }
+.ap-results-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.75rem; margin-bottom: 1.5rem; }
+.ap-results-head h2 { margin: 0; font-size: 1.75rem; font-weight: 500; font-style: italic; color: var(--color-base-content); }
+.ap-chip {
+  display: inline-flex; align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: var(--lp-alt);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in oklab, var(--color-base-content) 75%, transparent);
+}
+/* Accent chip: primary tint with primary text, like the eyebrow pill. */
+.ap-chip.is-ink { background: var(--lp-tint); color: var(--lp-ink); font-weight: 500; }
+.ap-note {
+  max-width: 34rem;
+  margin-top: 1.5rem;
+  padding: 0.9rem 1.25rem;
+  border-radius: 1.5rem;
+  background: var(--lp-tint);
+  font-size: 0.85rem; line-height: 1.6;
+  color: color-mix(in oklab, var(--color-base-content) 75%, transparent);
+}
+
+/* Grade calculator: one row per grade, the grade in a blob from green (1) to red (5).
+   The column header is the list's first child, so grade n is :nth-child(n + 1). */
+.ap-grades { display: flex; flex-direction: column; gap: 0.5rem; max-width: 34rem; }
+.ap-grades-head { display: grid; grid-template-columns: 3rem 1fr auto; gap: 1rem; padding: 0 1rem 0 0.6rem; font-size: 0.75rem; color: var(--lp-muted); }
+.ap-grades-head span:last-child { text-align: right; }
+.ap-grade {
+  --c: var(--color-success);
+  display: grid; grid-template-columns: 3rem 1fr auto; align-items: center; gap: 1rem;
+  padding: 0.5rem 1rem 0.5rem 0.6rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--c) 10%, var(--color-base-100));
+  font-variant-numeric: tabular-nums;
+}
+.ap-grade:nth-child(3) { --c: color-mix(in oklab, var(--color-success) 50%, var(--color-warning)); }
+.ap-grade:nth-child(4) { --c: var(--color-warning); }
+.ap-grade:nth-child(5) { --c: color-mix(in oklab, var(--color-warning) 50%, var(--color-error)); }
+.ap-grade:nth-child(6) { --c: var(--color-error); }
+.ap-grade-num {
+  display: grid; place-items: center;
+  width: 3rem; height: 3rem;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: color-mix(in oklab, var(--c) 80%, var(--color-base-content));
+  font-size: 1.35rem; font-weight: 500;
+  color: var(--color-base-100);
+}
+.ap-grade:nth-child(odd) .ap-grade-num { border-radius: 55% 45% 47% 53% / 52% 58% 42% 48%; }
+.ap-grade-range { font-size: 1.25rem; font-weight: 600; color: var(--color-base-content); }
+
+/* Label row with a small action on the right (e.g. "New group"). */
+.ap-field-row { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+
+/* Input with an icon inside on the left. */
+.ap-input-icon { position: relative; }
+/* z-index: daisyUI's .input is positioned too and comes later, so it would paint over the icon. */
+.ap-input-icon svg { position: absolute; z-index: 1; left: 1.1rem; top: 50%; width: 1rem; height: 1rem; translate: 0 -50%; color: var(--lp-muted); pointer-events: none; }
+/* !important: style.css forces `.input { padding-inline: 1rem !important }`. */
+.lp.ap .ap-input-icon .input { padding-inline-start: 2.75rem !important; }
+
+/* Dropdown built on <details>: a pill trigger and a rounded panel of rows. */
+.ap-dropdown { position: relative; }
+.ap-dropdown > summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+  height: 2.75rem;
+  padding: 0 1rem 0 1.25rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--color-base-content) 22%, transparent);
+  background: var(--color-base-100);
+  cursor: pointer;
+  list-style: none;
+}
+.ap-dropdown > summary::-webkit-details-marker { display: none; }
+.ap-dropdown > summary span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ap-dropdown > summary svg { flex-shrink: 0; width: 1rem; height: 1rem; color: var(--lp-muted); transition: rotate 0.2s; }
+.ap-dropdown[open] > summary { border-color: var(--lp-ink); outline: 2px solid var(--lp-tint-strong); }
+.ap-dropdown[open] > summary svg { rotate: 180deg; }
+.ap-menu {
+  position: absolute; left: 0; right: 0; z-index: 50;
+  margin-top: 0.4rem;
+  padding: 0.35rem;
+  max-height: 16rem; overflow-y: auto;
+  border-radius: 1.5rem;
+  border: 1px solid var(--lp-line);
+  background: var(--color-base-100);
+  box-shadow: 0 0.75rem 2rem color-mix(in oklab, var(--color-base-content) 12%, transparent);
+}
+.ap-menu li { display: flex; align-items: center; gap: 0.15rem; border-radius: 999px; }
+.ap-menu li:hover { background: color-mix(in oklab, var(--lp-alt) 50%, var(--color-base-100)); }
+.lp.ap .ap-menu li button.ap-menu-pick { flex: 1; min-width: 0; padding: 0.55rem 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; cursor: pointer; }
+.ap-menu-empty { padding: 0.55rem 0.9rem; color: var(--lp-muted); }
+
+/* Mode picker (native radios): plain rows, only the icon blob highlights when chosen,
+   like the contact page's kind picker (auth.css .au-kind). */
+.ap-modes { display: flex; flex-direction: column; gap: 0.25rem; }
+.ap-mode { position: relative; display: block; cursor: pointer; }
+.ap-mode input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.ap-mode-body { display: flex; align-items: center; gap: 0.9rem; padding: 0.4rem 0.5rem; border-radius: 1.25rem; }
+.ap-mode-icon {
+  display: grid; place-items: center; flex-shrink: 0;
+  width: 2.6rem; height: 2.6rem;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: var(--lp-alt);
+  color: var(--color-base-content);
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.25s, scale 0.35s var(--lp-ease);
+}
+.ap-mode:nth-child(2) .ap-mode-icon { border-radius: 55% 45% 47% 53% / 52% 58% 42% 48%; }
+.ap-mode-icon svg { width: 1.05rem; height: 1.05rem; }
+.ap-mode:hover .ap-mode-icon { scale: 1.06; }
+.ap-mode input:checked + .ap-mode-body .ap-mode-icon { background: var(--lp-ink); color: var(--color-primary-content); box-shadow: 0 0 0 0.3rem var(--lp-tint); scale: 1.08; }
+.ap-mode input:focus-visible + .ap-mode-body .ap-mode-icon { outline: 2px solid var(--lp-tint-strong); outline-offset: 3px; }
+.ap-mode-title { display: block; font-size: 0.9rem; font-weight: 500; color: var(--color-base-content); }
+.ap-mode-desc { display: block; font-size: 0.78rem; font-weight: 300; color: var(--lp-muted); }
+
+/* Group divider results: one soft card per team in its colour (--c), members as pill bubbles. */
+.ap-teams { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); }
+.ap-team {
+  padding: 1.1rem 1.1rem 1.25rem;
+  border-radius: 1.75rem;
+  background: color-mix(in oklab, var(--c) 10%, var(--color-base-100));
+}
+.ap-team-head { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.85rem; padding-left: 0.25rem; }
+.ap-team-head h3 { margin: 0; font-size: 1.2rem; font-weight: 500; color: color-mix(in oklab, var(--c) 75%, var(--color-base-content)); }
+.ap-members { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.ap-member {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.35rem 0.8rem 0.35rem 0.55rem;
+  border-radius: 999px;
+  background: var(--color-base-100);
+  font-size: 0.85rem; font-weight: 500;
+  color: color-mix(in oklab, var(--color-base-content) 82%, transparent);
+}
+.ap-member::before { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--c); }
+a.ap-member:hover { color: var(--lp-ink); }
+.ap-results-head .ap-chip + .ap-chip { margin-left: -0.25rem; }
+
+/* Multi-line field, rounded to match the pills without going full-oval. */
+.lp.ap .textarea {
+  width: 100%;
+  border-radius: 1.25rem;
+  padding: 0.75rem 1.1rem;
+  line-height: 1.6;
+  background: var(--color-base-100);
+  border: 1px solid color-mix(in oklab, var(--color-base-content) 22%, transparent);
+}
+.lp.ap .textarea:focus { border-color: var(--lp-ink); outline: 2px solid var(--lp-tint-strong); outline-offset: 0; }
+.lp.ap .textarea[aria-invalid="true"] { border-color: var(--color-error); }
+.ap-help { padding-left: 0.25rem; font-size: 0.78rem; line-height: 1.5; font-weight: 300; color: var(--lp-muted); }
+.ap-actions .is-end { margin-left: auto; }
+
+/* Danger variant (delete pages): the page accent becomes the error colour. */
+.lp.ap.is-danger {
+  --lp-ink: var(--color-error);
+  --lp-tint: color-mix(in oklab, var(--color-error) 14%, var(--color-base-100));
+  --lp-tint-strong: color-mix(in oklab, var(--color-error) 28%, var(--color-base-100));
+}
+
+/* A soft panel, e.g. the delete confirmation: icon blob, title, text, a footer row. */
+.ap-panel { max-width: 28rem; padding: 1.75rem 1.5rem 1.25rem; border-radius: 2rem; background: var(--lp-tint); text-align: center; }
+.ap-panel-icon {
+  display: grid; place-items: center;
+  width: 3.25rem; height: 3.25rem;
+  margin: 0 auto 0.9rem;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: var(--color-base-100);
+  color: var(--lp-ink);
+}
+.ap-panel-icon svg { width: 1.4rem; height: 1.4rem; }
+.ap-panel h2 { margin: 0 0 0.4rem; font-size: 1.5rem; font-weight: 500; overflow-wrap: anywhere; color: var(--color-base-content); }
+.ap-panel p { font-size: 0.875rem; line-height: 1.55; font-weight: 300; color: color-mix(in oklab, var(--color-base-content) 70%, transparent); }
+.ap-panel-foot { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.25rem; padding: 0.6rem 0.6rem 0.6rem 1rem; border-radius: 999px; background: var(--color-base-100); font-size: 0.8rem; color: var(--lp-muted); }
+
+/* List of groups (Groups home): one pill row each, actions on the right. */
+.ap-groups { display: flex; flex-direction: column; gap: 0.5rem; max-width: 34rem; }
+.ap-group {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.5rem 0.5rem 0.5rem 0.6rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--lp-alt) 40%, var(--color-base-100));
+  transition: background-color 0.15s;
+}
+.ap-group:hover { background: color-mix(in oklab, var(--lp-alt) 65%, var(--color-base-100)); }
+.ap-group-icon {
+  display: grid; place-items: center; flex-shrink: 0;
+  width: 2.5rem; height: 2.5rem;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: var(--color-base-100);
+  color: var(--lp-ink);
+}
+.ap-group:nth-child(even) .ap-group-icon { border-radius: 55% 45% 47% 53% / 52% 58% 42% 48%; }
+.ap-group-icon svg { width: 1.05rem; height: 1.05rem; }
+.ap-group-title { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; color: var(--color-base-content); }
+
+/* Empty state: an icon bubble, a line of text, an action. */
+.ap-empty { display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; max-width: 28rem; }
+.ap-empty-icon {
+  display: grid; place-items: center;
+  width: 4rem; height: 4rem;
+  margin-bottom: 0.5rem;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: var(--lp-tint);
+  color: var(--lp-ink);
+}
+.ap-empty-icon svg { width: 1.6rem; height: 1.6rem; }
+.ap-empty h3 { margin: 0; font-size: 1.35rem; font-weight: 500; color: var(--color-base-content); }
+.ap-empty p { margin-bottom: 0.75rem; font-weight: 300; color: var(--lp-muted); }
+.ap-empty.is-center { align-items: center; margin: 0 auto; padding: 2.5rem 0; text-align: center; }
+
+/* Member colours (edit group): a round colour swatch per member, the input is the swatch. */
+.ap-swatches { display: grid; gap: 0.5rem; grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); }
+.ap-swatch {
+  display: flex; align-items: center; gap: 0.6rem; min-width: 0;
+  padding: 0.35rem 0.9rem 0.35rem 0.35rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--lp-alt) 40%, var(--color-base-100));
+}
+.ap-swatch input[type="color"] {
+  flex-shrink: 0;
+  width: 2rem; height: 2rem;
+  padding: 0; border: 0;
+  border-radius: 999px;
+  background: none;
+  cursor: pointer;
+  transition: scale 0.3s var(--lp-ease);
+}
+.ap-swatch input[type="color"]:hover { scale: 1.1; }
+.ap-swatch input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+.ap-swatch input[type="color"]::-webkit-color-swatch { border: 0; border-radius: 999px; }
+.ap-swatch input[type="color"]::-moz-color-swatch { border: 0; border-radius: 999px; }
+.ap-swatch a { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.875rem; font-weight: 500; color: color-mix(in oklab, var(--color-base-content) 80%, transparent); }
+.ap-swatch a:hover { color: var(--lp-ink); }
+
+/* Pill select, same shape as the inputs. */
+.lp.ap .select {
+  width: 100%;
+  border-radius: 999px;
+  background-color: var(--color-base-100);
+  border: 1px solid color-mix(in oklab, var(--color-base-content) 22%, transparent);
+}
+.lp.ap .select:focus { border-color: var(--lp-ink); outline: 2px solid var(--lp-tint-strong); outline-offset: 0; }
+/* Two fields side by side from small screens up (e.g. start / end). */
+.ap-row2 { display: grid; gap: 1.25rem; }
+@media (min-width: 560px) { .ap-row2 { grid-template-columns: 1fr 1fr; } }
+.ap-inline { display: flex; gap: 0.5rem; }
+.ap-form.is-wide > .ap-row2-dates { max-width: 44rem; }
+.ap-inline > :first-child { flex: 1; min-width: 0; }
+
+/* ── Toolbar: pill nav on the left, the main action on the right ── */
+.ap-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; margin-bottom: 1.5rem; }
+.ap-toolbar-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; }
+
+/* ── Calendar grid (month, week): rounded frame, chips for holidays and events ──
+   Lines and cell hover come from style.css (.cal-grid, .cal-cell). */
+.ap-cal { border: 1px solid var(--cal-line); border-radius: 1.5rem; overflow: hidden; background: var(--color-base-100); }
+.ap-cal .cal-header { background: color-mix(in oklab, var(--lp-alt) 35%, var(--color-base-100)); }
+.ap-cal-day { display: grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 999px; font-size: 0.72rem; font-weight: 600; color: var(--lp-muted); }
+.ap-cal-day.is-holiday { color: var(--lp-ink); }
+.ap-cal-day.is-today { background: var(--lp-ink); color: var(--color-primary-content); }
+.ap-cal-chip {
+  position: relative; z-index: 2;
+  display: flex; align-items: center; gap: 0.3rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--color-primary) 12%, var(--color-base-100));
+  font-size: 0.68rem; font-weight: 600; line-height: 1.4;
+  color: color-mix(in oklab, var(--color-primary) 80%, var(--color-base-content));
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: background-color 0.15s;
+}
+a.ap-cal-chip:hover { background: color-mix(in oklab, var(--color-primary) 22%, var(--color-base-100)); }
+.ap-cal-chip.is-holiday { background: var(--lp-tint); }
+.ap-cal-chip svg { flex-shrink: 0; width: 0.65rem; height: 0.65rem; opacity: 0.7; }
+.ap-cal-chip span { overflow: hidden; text-overflow: ellipsis; }
+.ap-cal-chip .ap-cal-time { opacity: 0.6; font-weight: 400; }
+@media (max-width: 767px) { .ap-cal-week .ap-cal-chip { font-size: 0.78rem; padding: 0.3rem 0.7rem; } }
+
+/* ── Day view: holiday panels and event rows ── */
+.ap-entries { display: flex; flex-direction: column; gap: 0.6rem; max-width: 52rem; }
+.ap-entry {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1rem 1.25rem 1rem 1rem;
+  border-radius: 1.75rem;
+  background: color-mix(in oklab, var(--lp-alt) 40%, var(--color-base-100));
+  transition: background-color 0.15s;
+}
+a.ap-entry:hover { background: color-mix(in oklab, var(--lp-alt) 70%, var(--color-base-100)); }
+.ap-entry.is-holiday { background: var(--lp-tint); }
+.ap-entry-side {
+  display: grid; place-items: center; align-content: center; flex-shrink: 0;
+  width: 4.5rem; min-height: 4.5rem;
+  padding: 0.5rem;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: var(--color-base-100);
+  text-align: center;
+  color: var(--lp-ink);
+}
+.ap-entry-side svg { width: 1.2rem; height: 1.2rem; }
+/* Holiday side blob: icon + country name. Bigger, and the name is compact normal-case text that
+   wraps between words, so "Czech Republic" / "Internacional" / "Mezinárodní" stay inside. */
+.ap-entry-side.is-country { width: 6rem; min-height: 6rem; padding: 0.75rem; }
+.ap-entry-side.is-country small { max-width: 100%; margin-top: 0.3rem; font-size: 0.66rem; font-weight: 600; line-height: 1.15; letter-spacing: 0; text-transform: none; overflow-wrap: anywhere; hyphens: auto; }
+.ap-entry-side small { display: block; margin-top: 0.15rem; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.ap-entry-time { font-size: 1.1rem; font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; color: var(--color-base-content); }
+.ap-entry-body { flex: 1; min-width: 0; padding-top: 0.2rem; }
+.ap-entry-body h3 { margin: 0; font-size: 1.1rem; font-weight: 500; overflow-wrap: anywhere; color: var(--color-base-content); }
+.ap-entry-meta { margin-top: 0.15rem; font-size: 0.78rem; color: var(--lp-muted); }
+.ap-entry-text { margin-top: 0.5rem; font-size: 0.85rem; line-height: 1.6; font-weight: 300; color: color-mix(in oklab, var(--color-base-content) 70%, transparent); }
+.ap-entry-go { flex-shrink: 0; align-self: center; width: 1rem; height: 1rem; color: var(--lp-muted); }
+
+/* Event form: the 24h time dropdown under a time field (static/js/event_form.js). */
+.ap-timefield { position: relative; width: 6.5rem; flex-shrink: 0; }
+.lp.ap .ap-timefield .input { text-align: center; font-variant-numeric: tabular-nums; }
+.ap-timedrop {
+  position: absolute; left: 0; right: 0; top: calc(100% + 0.3rem); z-index: 50;
+  max-height: 12rem; overflow-y: auto;
+  padding: 0.3rem;
+  border-radius: 1.25rem;
+  border: 1px solid var(--lp-line);
+  background: var(--color-base-100);
+  box-shadow: 0 0.75rem 2rem color-mix(in oklab, var(--color-base-content) 12%, transparent);
+}
+.ap-timedrop-item { padding: 0.35rem 0.6rem; border-radius: 999px; font-size: 0.8rem; text-align: center; font-variant-numeric: tabular-nums; cursor: pointer; }
+.ap-timedrop-item:hover { background: var(--lp-tint); color: var(--lp-ink); }
+.lp.ap .input:disabled { opacity: 0.35; }
+
+/* Toggle row (e.g. "All-day event"). */
+.ap-switch { display: inline-flex; align-items: center; gap: 0.75rem; cursor: pointer; font-size: 0.875rem; font-weight: 500; color: color-mix(in oklab, var(--color-base-content) 75%, transparent); }
+.lp.ap form label.ap-switch { display: inline-flex; margin-bottom: 0; }
+
+/* Dialog (e.g. the calendar's help note): a rounded card with an icon blob header. */
+.ap-dialog .modal-box { position: relative; max-width: 28rem; padding: 2rem 1.75rem 1.5rem; border-radius: 2rem; }
+.ap-dialog .modal-box:focus { outline: none; }
+.ap-dialog-close { position: absolute; top: 1rem; right: 1rem; color: var(--lp-muted); }
+.ap-dialog-head { display: flex; align-items: center; gap: 0.9rem; margin-bottom: 1.1rem; padding-right: 2.5rem; }
+.ap-dialog-icon {
+  position: relative;
+  display: grid; place-items: center; flex-shrink: 0;
+  width: 3.25rem; height: 3.25rem;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: var(--lp-tint);
+  color: var(--lp-ink);
+}
+.ap-dialog-icon::after { content: ""; position: absolute; right: -0.3rem; bottom: -0.1rem; width: 0.85rem; height: 0.85rem; border-radius: 999px; background: var(--lp-alt); }
+.ap-dialog-icon svg { width: 1.3rem; height: 1.3rem; }
+.ap-dialog h3 { margin: 0; font-size: 1.4rem; font-weight: 500; line-height: 1.2; color: var(--color-base-content); }
+.ap-dialog p { font-size: 0.9rem; line-height: 1.65; font-weight: 300; color: color-mix(in oklab, var(--color-base-content) 72%, transparent); }
+.ap-dialog p + p { margin-top: 0.6rem; }
+.ap-dialog-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.5rem; margin-top: 1.5rem; }
+.ap-dialog-actions.is-center { justify-content: center; }
+
+/* Chip with a coloured dot in front (e.g. positive / negative table). */
+.ap-chip.has-dot { gap: 0.4rem; }
+.ap-chip.has-dot::before { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--c, var(--lp-ink)); }
+.ap-chip.is-pos { --c: var(--color-success); }
+.ap-chip.is-neg { --c: var(--color-error); }
+
+/* Inline alert: a soft rounded panel with an icon (errors, warnings). */
+.ap-alert {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  max-width: 34rem;
+  margin-bottom: 1.25rem;
+  padding: 0.85rem 1.1rem;
+  border-radius: 1.5rem;
+  background: color-mix(in oklab, var(--color-error) 10%, var(--color-base-100));
+  font-size: 0.875rem;
+  color: var(--color-base-content);
+}
+.ap-alert svg { flex-shrink: 0; width: 1.1rem; height: 1.1rem; margin-top: 0.1rem; color: var(--color-error); }
+.ap-alert p + p { margin-top: 0.15rem; font-size: 0.8rem; font-weight: 300; color: color-mix(in oklab, var(--color-base-content) 70%, transparent); }
+
+/* Repeating rows (new column): name, type, remove. */
+.ap-rows-head { display: none; gap: 0.6rem; padding: 0 0.25rem; font-size: 0.75rem; color: var(--lp-muted); }
+.ap-rows-head span:first-child { flex: 1; }
+.ap-rows-head span:nth-child(2) { width: 10rem; }
+.ap-rows-head span:last-child { width: 2.5rem; }
+.ap-rows { display: flex; flex-direction: column; gap: 0.6rem; }
+.ap-form.is-wide > .ap-cols { max-width: 40rem; }
+.ap-rowset { display: flex; flex-direction: column; gap: 0.5rem; }
+@media (min-width: 640px) {
+  .ap-rows-head { display: flex; }
+  .ap-rowset { flex-direction: row; align-items: center; }
+  .ap-rowset .input { flex: 1; min-width: 0; }
+  .lp.ap .ap-rowset .select { width: 10rem; flex-shrink: 0; }
+}
+
+/* ── Points tables (point system home) ── */
+.ap-block { padding-top: 2rem; margin-top: 2rem; border-top: 1px solid var(--lp-line); }
+.ap-block-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; margin-bottom: 1rem; }
+.ap-block-title { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.ap-block-title h2 { margin: 0; font-size: 1.5rem; font-weight: 500; color: var(--color-base-content); }
+.ap-table-wrap { overflow-x: auto; border: 1px solid var(--cal-line, var(--lp-line)); border-radius: 1.5rem; background: var(--color-base-100); }
+.ap-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.ap-table th {
+  padding: 0.7rem 0.9rem;
+  background: color-mix(in oklab, var(--lp-alt) 35%, var(--color-base-100));
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-align: left; white-space: nowrap;
+  color: color-mix(in oklab, var(--color-base-content) 55%, transparent);
+}
+.ap-table td { padding: 0.45rem 0.9rem; border-top: 1px solid var(--lp-line); vertical-align: middle; }
+.ap-table th + th, .ap-table td + td { border-left: 1px dashed var(--lp-line); }
+.ap-table tbody tr { transition: background-color 0.15s; }
+.ap-table tbody tr:hover { background: color-mix(in oklab, var(--lp-alt) 20%, var(--color-base-100)); }
+.ap-table .is-end { text-align: right; }
+.ap-th-drag { display: inline-flex; align-items: center; gap: 0.4rem; cursor: move; }
+.ap-th-drag svg { width: 0.75rem; height: 0.75rem; opacity: 0.55; }
+.ap-th-drag.is-dragging { opacity: 0.45; }
+.lp.ap .ap-table button.ap-th-clear { display: inline-grid; place-items: center; width: 1.3rem; height: 1.3rem; border-radius: 999px; opacity: 0.5; cursor: pointer; transition: opacity 0.15s, color 0.15s, background-color 0.15s; }
+.lp.ap .ap-table button.ap-th-clear:hover { opacity: 1; color: var(--color-error); background: color-mix(in oklab, var(--color-error) 12%, transparent); }
+.ap-member-link { display: inline-flex; align-items: center; gap: 0.35rem; font-weight: 500; white-space: nowrap; color: var(--color-base-content); }
+.ap-member-link svg { width: 0.8rem; height: 0.8rem; opacity: 0; transition: opacity 0.15s; }
+.ap-member-link:hover { color: var(--lp-ink); }
+.ap-member-link:hover svg { opacity: 0.7; }
+/* Cell inputs: small pills of their own (not .input, which style.css forces to 3rem / 1rem padding). */
+.ap-cell {
+  height: 2rem;
+  padding: 0 0.6rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--color-base-content) 18%, transparent);
+  background: var(--color-base-100);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-base-content);
+}
+.ap-cell:focus { border-color: var(--lp-ink); outline: 2px solid var(--lp-tint-strong); outline-offset: 0; }
+/* Number cells: a stepper pill, round − / + buttons around the value (static/js/points_home.js).
+   The browser spinner is hidden; keyboard ↑ / ↓ still step the value. */
+.ap-step {
+  display: inline-flex; align-items: center; gap: 0.15rem;
+  height: 2rem; padding: 0 0.2rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--color-base-content) 18%, transparent);
+  background: var(--color-base-100);
+  transition: border-color 0.15s;
+}
+.ap-step:focus-within { border-color: var(--lp-ink); outline: 2px solid var(--lp-tint-strong); }
+.lp.ap .ap-step .ap-cell[type="number"] {
+  width: 2.4rem; height: 1.8rem; padding: 0;
+  border: 0; outline: 0; background: transparent;
+  text-align: center;
+  -moz-appearance: textfield; appearance: textfield;
+}
+.ap-cell[type="number"]::-webkit-inner-spin-button, .ap-cell[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.lp.ap .ap-step button.ap-step-btn {
+  display: grid; place-items: center; flex-shrink: 0;
+  width: 1.5rem; height: 1.5rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--lp-alt) 55%, var(--color-base-100));
+  font-size: 1rem; font-weight: 600; line-height: 1;
+  color: color-mix(in oklab, var(--color-base-content) 70%, transparent);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, scale 0.25s var(--lp-ease);
+}
+.lp.ap .ap-step button.ap-step-btn:hover { background: var(--lp-tint); color: var(--lp-ink); scale: 1.1; }
+.lp.ap .ap-step button.ap-step-btn:active { scale: 0.92; }
+.ap-cell[type="text"] { width: 12rem; }
+/* Row totals: a small bubble, tinted by size (static/js/points_home.js keeps it in sync). */
+.ap-total {
+  display: inline-grid; place-items: center;
+  min-width: 2.25rem; height: 2.25rem;
+  padding: 0 0.6rem;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: color-mix(in oklab, var(--lp-alt) 50%, var(--color-base-100));
+  font-weight: 600; font-variant-numeric: tabular-nums;
+  color: color-mix(in oklab, var(--color-base-content) 65%, transparent);
+}
+.ap-total.is-pos-mid { background: color-mix(in oklab, var(--color-success) 22%, var(--color-base-100)); color: color-mix(in oklab, var(--color-success) 70%, var(--color-base-content)); }
+.ap-total.is-pos-high { background: var(--color-success); color: var(--color-success-content); }
+.ap-total.is-neg-mid { background: color-mix(in oklab, var(--color-warning) 35%, var(--color-base-100)); color: color-mix(in oklab, var(--color-warning) 45%, var(--color-base-content)); }
+.ap-total.is-neg-high { background: var(--color-error); color: var(--color-error-content); }
+/* Dashed empty state inside a block. */
+.ap-blank { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; padding: 2.5rem 1rem; border: 1.5px dashed var(--lp-line); border-radius: 1.5rem; text-align: center; }
+.ap-blank svg { width: 2rem; height: 2rem; margin-bottom: 0.35rem; color: var(--lp-muted); opacity: 0.6; }
+.ap-blank p { font-size: 0.875rem; font-weight: 300; color: var(--lp-muted); }
+.ap-blank p + p { font-size: 0.78rem; }
+.ap-status { font-size: 0.75rem; font-style: italic; color: var(--lp-muted); }
+.ap-dialog-icon.is-danger { background: color-mix(in oklab, var(--color-error) 14%, var(--color-base-100)); color: var(--color-error); }
+
+/* ── Member dashboard (point system) ── */
+.ap-name-row { display: flex; align-items: center; gap: 0.75rem; }
+.lp.ap .ap-hero button.ap-member-dot {
+  flex-shrink: 0;
+  width: 2rem; height: 2rem;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: var(--c, var(--color-primary));
+  cursor: pointer;
+  box-shadow: 0 0 0 0.3rem color-mix(in oklab, var(--c, var(--color-primary)) 20%, transparent);
+  transition: scale 0.3s var(--lp-ease);
+}
+.lp.ap .ap-hero button.ap-member-dot:hover { scale: 1.12; }
+@media (min-width: 768px) { .lp.ap .ap-hero button.ap-member-dot { width: 2.6rem; height: 2.6rem; } }
+/* Three stat bubbles: positive, negative, net. */
+.ap-statrow { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+.ap-stat {
+  --c: var(--color-primary);
+  display: grid; place-items: center; align-content: center;
+  width: 6rem; height: 6rem;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: color-mix(in oklab, var(--c) 14%, var(--color-base-100));
+  text-align: center;
+}
+.ap-stat:nth-child(2) { border-radius: 55% 45% 47% 53% / 52% 58% 42% 48%; }
+.ap-stat:nth-child(3) { border-radius: 50% 50% 44% 56% / 56% 44% 56% 44%; }
+.ap-stat.is-pos { --c: var(--color-success); }
+.ap-stat.is-neg { --c: var(--color-error); }
+.ap-stat-num { font-size: 1.85rem; font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; color: color-mix(in oklab, var(--c) 80%, var(--color-base-content)); }
+.ap-stat-label { margin-top: 0.2rem; font-size: 0.7rem; color: var(--lp-muted); }
+/* Tabs: pills with a dot; the active one takes its hue (data-hue). */
+.ap-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.ap-tab {
+  --c: var(--color-primary);
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--lp-line);
+  font-size: 0.875rem; font-weight: 500;
+  color: color-mix(in oklab, var(--color-base-content) 72%, transparent);
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+.ap-tab[data-hue="error"] { --c: var(--color-error); }
+.ap-tab[data-hue="success"] { --c: var(--color-success); }
+.ap-tab svg { width: 0.9rem; height: 0.9rem; }
+.ap-tab-dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--c); }
+.ap-tab:hover { border-color: var(--c); }
+.ap-tab.is-active { border-color: transparent; background: color-mix(in oklab, var(--c) 16%, var(--color-base-100)); color: color-mix(in oklab, var(--c) 75%, var(--color-base-content)); }
+/* Tab panel: a soft rounded area in the tab's hue. */
+.ap-tabpanel { --c: var(--color-primary); margin-top: 1rem; padding: 1rem; border-radius: 2rem; background: color-mix(in oklab, var(--c) 7%, var(--color-base-100)); }
+@media (min-width: 768px) { .ap-tabpanel { padding: 1.5rem; } }
+.ap-tabpanel.is-error { --c: var(--color-error); }
+.ap-tabpanel.is-success { --c: var(--color-success); }
+.ap-card { padding: 1.25rem; border-radius: 1.5rem; background: var(--color-base-100); }
+.ap-card + .ap-card, .ap-card + form, form + .ap-card { margin-top: 0.75rem; }
+.ap-card-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 0.85rem; }
+.ap-card-head p { font-size: 0.78rem; color: var(--lp-muted); }
+.ap-card-total { font-size: 1.75rem; font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; color: color-mix(in oklab, var(--c) 80%, var(--color-base-content)); }
+/* Stacked bar: segments sized by --w and coloured by --c (set inline as data, updated by JS). */
+.ap-bar { display: flex; height: 1.5rem; overflow: hidden; border-radius: 999px; background: color-mix(in oklab, var(--lp-alt) 45%, var(--color-base-100)); }
+.ap-seg { width: var(--w, 0%); background: var(--c); transition: width 0.3s ease; }
+.ap-legend { margin-top: 1rem; }
+.ap-legend li { display: flex; align-items: center; gap: 0.75rem; padding: 0.45rem 0.25rem; border-top: 1px solid var(--lp-line); font-size: 0.875rem; }
+.ap-legend li:first-child { border-top: 0; }
+.ap-legend-dot { flex-shrink: 0; width: 0.65rem; height: 0.65rem; border-radius: 999px; background: var(--c); }
+.ap-legend-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: color-mix(in oklab, var(--color-base-content) 75%, transparent); }
+.ap-legend-pct { font-size: 0.72rem; font-variant-numeric: tabular-nums; color: var(--lp-muted); }
+.ap-legend-val { width: 2.5rem; text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--color-base-content); }
+.ap-edit-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.5rem 0.25rem; border-top: 1px solid var(--lp-line); }
+.ap-edit-row:first-child { border-top: 0; }
+.ap-edit-row span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.875rem; color: color-mix(in oklab, var(--color-base-content) 75%, transparent); }
+.ap-notes { display: flex; flex-direction: column; gap: 2rem; max-width: 42rem; }
+.ap-notes-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; }
+/* Colour picker in the member dialog: round swatches, the chosen one ringed. */
+.ap-palette { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.lp.ap .ap-palette button.ap-palette-swatch {
+  width: 1.9rem; height: 1.9rem; border-radius: 999px; background: var(--c); cursor: pointer;
+  transition: scale 0.25s var(--lp-ease), box-shadow 0.2s;
+}
+.lp.ap .ap-palette button.ap-palette-swatch:hover { scale: 1.12; }
+.lp.ap .ap-palette button.ap-palette-swatch[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--color-base-100), 0 0 0 4px var(--c); }
+.ap-custom-color { display: inline-flex; align-items: center; gap: 0.6rem; font-size: 0.8rem; color: var(--lp-muted); }
+.ap-custom-color input[type="color"] { width: 2rem; height: 2rem; padding: 0; border: 0; border-radius: 999px; background: none; cursor: pointer; }
+.ap-custom-color input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+.ap-custom-color input[type="color"]::-webkit-color-swatch { border: 0; border-radius: 999px; }
+.ap-custom-color input[type="color"]::-moz-color-swatch { border: 0; border-radius: 999px; }
+.lp.ap form label.ap-custom-color { display: inline-flex; margin-bottom: 0; font-weight: 400; }
+
+/* ── Name wheel ── */
+/* Bigger stepper for a single important number (members to pick). */
+.ap-step.is-lg { align-self: flex-start; height: 3rem; padding: 0 0.35rem; gap: 0.35rem; }
+.lp.ap .ap-step.is-lg .ap-cell[type="number"] { width: 3.5rem; height: 2.6rem; font-size: 1.5rem; font-weight: 600; color: var(--lp-ink); }
+.lp.ap .ap-step.is-lg button.ap-step-btn { width: 2.2rem; height: 2.2rem; font-size: 1.25rem; }
+/* Switch with a two-line label on the left, the toggle on the right. */
+.ap-switch.is-row { display: flex; justify-content: space-between; gap: 1rem; padding: 0.75rem 1rem; border-radius: 1.25rem; background: color-mix(in oklab, var(--lp-alt) 35%, var(--color-base-100)); }
+.lp.ap form label.ap-switch.is-row { display: flex; }
+.ap-alert.is-warn { background: color-mix(in oklab, var(--color-warning) 14%, var(--color-base-100)); }
+.ap-alert.is-warn svg { color: color-mix(in oklab, var(--color-warning) 70%, var(--color-base-content)); }
+/* Wheel: canvas in a square box; the pointer is a CSS triangle tinted with the slice under it (--c). */
+.ap-wheel { display: flex; justify-content: center; margin-top: 2.5rem; }
+.ap-wheel-stage { position: relative; padding-top: 0.5rem; }
+.ap-wheel-box { width: min(80vw, 34rem); aspect-ratio: 1; }
+.ap-wheel-box canvas { display: block; width: 100%; height: 100%; }
+.ap-wheel-pointer {
+  --c: var(--color-primary);
+  position: absolute; top: 0; left: 50%; z-index: 1;
+  translate: -50% -0.4rem;
+  transform-origin: 50% 0;
+  filter: drop-shadow(0 2px 3px color-mix(in oklab, var(--color-base-content) 30%, transparent));
+}
+.ap-wheel-pointer span {
+  display: block; width: 0; height: 0;
+  border-left: 15px solid transparent; border-right: 15px solid transparent;
+  border-top: 26px solid var(--c);
+  transition: border-top-color 0.1s;
+}
+.ap-wheel-pointer.is-tick { animation: ap-tick 0.12s ease-out; }
+@keyframes ap-tick { 0% { rotate: 0deg; } 40% { rotate: 9deg; } 75% { rotate: -4deg; } 100% { rotate: 0deg; } }
+/* Result dialog: one name in a big soft blob, several as pills. */
+.ap-picked { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; max-height: 55vh; overflow-y: auto; margin: 0.5rem 0 0.5rem; }
+.ap-picked-name {
+  padding: 1.25rem 2.25rem;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: var(--lp-tint);
+  font-size: clamp(2rem, 6vw, 3rem); font-weight: 500; line-height: 1.1;
+  overflow-wrap: anywhere;
+  color: var(--lp-ink);
+}
+.ap-picked.is-many .ap-picked-name { padding: 0.6rem 1.2rem; border-radius: 999px; font-size: 1.35rem; }
+
+/* ── Quizzes ── */
+/* Segmented pill switch (two or three links, the current one filled). */
+.ap-switcher { display: inline-flex; padding: 0.25rem; gap: 0.15rem; border-radius: 999px; background: color-mix(in oklab, var(--lp-alt) 45%, var(--color-base-100)); }
+.ap-switcher a {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.85rem; font-weight: 500;
+  color: color-mix(in oklab, var(--color-base-content) 70%, transparent);
+  transition: background-color 0.15s, color 0.15s;
+}
+.ap-switcher a svg { width: 0.95rem; height: 0.95rem; }
+.ap-switcher a:hover { color: var(--lp-ink); }
+.ap-switcher a[aria-current="true"] { background: var(--lp-ink); color: var(--color-primary-content); }
+/* Search: a pill input with a round submit button inside on the right. */
+.ap-search { position: relative; flex: 1; min-width: 12rem; max-width: 26rem; }
+.lp.ap .ap-search .input { min-height: 2.5rem !important; padding-block: 0.4rem !important; padding-inline-end: 2.75rem !important; }
+.ap-search .btn { position: absolute; right: 0.25rem; top: 50%; translate: 0 -50%; }
+/* Quiz cards. */
+.ap-quizzes { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr)); }
+.ap-quiz { position: relative; display: flex; flex-direction: column; overflow: hidden; border-radius: 1.75rem; background: color-mix(in oklab, var(--lp-alt) 35%, var(--color-base-100)); transition: background-color 0.2s, translate 0.25s var(--lp-ease); }
+.ap-quiz:hover { background: color-mix(in oklab, var(--lp-alt) 60%, var(--color-base-100)); translate: 0 -2px; }
+.ap-cover { display: grid; place-items: center; height: 10rem; margin: 0.4rem 0.4rem 0; overflow: hidden; border-radius: 1.4rem; background: var(--lp-tint); color: var(--lp-ink); }
+.ap-cover img { width: 100%; height: 100%; object-fit: cover; object-position: var(--fx, 50%) var(--fy, 50%); }
+.ap-cover svg { width: 2.75rem; height: 2.75rem; opacity: 0.45; }
+.ap-quiz-act { position: absolute; top: 0.85rem; z-index: 2; }
+.ap-quiz-act.is-left { left: 0.85rem; }
+.ap-quiz-act.is-right { right: 0.85rem; }
+.ap-quiz-body { display: flex; flex-direction: column; gap: 0.35rem; padding: 0.75rem 1rem 1rem; }
+.ap-quiz-body h3 { margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 1.05rem; font-weight: 500; color: var(--color-base-content); }
+.ap-quiz-by { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.75rem; color: var(--lp-muted); }
+.ap-quiz-by svg { width: 0.8rem; height: 0.8rem; }
+.ap-quiz-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem; }
+.ap-quiz-meta .ap-chip { padding: 0.15rem 0.55rem; font-size: 0.7rem; background: var(--color-base-100); }
+.ap-quiz-meta .ap-chip svg { width: 0.75rem; height: 0.75rem; margin-right: 0.2rem; }
+.ap-pager { display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-top: 2rem; }
+/* Join (students): a centred card. */
+.ap-join { display: grid; place-items: center; padding: 3rem 1.25rem 4rem; }
+.ap-join-card { width: 100%; max-width: 24rem; text-align: center; }
+.ap-join-card .ap-dialog-icon { width: 4rem; height: 4rem; margin: 0 auto 1rem; }
+.ap-join-card .ap-dialog-icon svg { width: 1.7rem; height: 1.7rem; }
+/* The join blob floats like the header badges (lp-drift, landing.css); its satellite bobs out of step. */
+.ap-join-card .ap-dialog-icon { animation: lp-pop 0.7s var(--lp-ease) 0.15s both, lp-drift 10s ease-in-out 0.9s infinite; }
+.ap-join-card .ap-dialog-icon::after { animation: lp-drift 6.5s ease-in-out -2s infinite reverse; }
+.ap-join-card h1 { margin: 0; font-size: 2.25rem; font-weight: 500; color: var(--color-base-content); }
+.ap-join-card form { margin-top: 1.75rem; text-align: left; }
+.lp.ap .ap-join-card .input.is-big { min-height: 3.5rem !important; text-align: center; font-size: 1.5rem; font-weight: 600; letter-spacing: 0.3em; }
+.lp.ap .ap-join-card .input.is-name { min-height: 3.25rem !important; text-align: center; font-size: 1.15rem; }
+.ap-code { font-size: 2.5rem; font-weight: 600; letter-spacing: 0.25em; color: var(--lp-ink); }
+
+/* Image field with crop picker (quizzmaker/_image_field.html + _image_cropper.html). */
+.ap-form.is-wide > .ap-image-wrap { max-width: 44rem; }
+.ap-image-current { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
+.ap-thumb { position: relative; width: 6rem; height: 3.5rem; overflow: hidden; border-radius: 1rem; cursor: pointer; }
+.ap-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: var(--fx, 50%) var(--fy, 50%); }
+.ap-thumb span { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(0, 0, 0, 0.45); font-size: 0.7rem; font-weight: 600; color: #fff; opacity: 0; transition: opacity 0.15s; }
+.ap-thumb:hover span, .ap-thumb:focus-visible span { opacity: 1; }
+.ap-file { display: flex; align-items: center; gap: 0.5rem; min-width: 0; }
+.ap-file-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.85rem; color: var(--lp-muted); }
+.ap-cropper { display: grid; gap: 1rem; margin-top: 1rem; }
+@media (min-width: 640px) { .ap-cropper { grid-template-columns: 1fr 1fr; } }
+.ap-crop-stage { position: relative; display: inline-block; max-width: 100%; overflow: hidden; border-radius: 1.25rem; background: color-mix(in oklab, var(--lp-alt) 40%, var(--color-base-100)); user-select: none; touch-action: none; }
+.ap-crop-stage img { display: block; max-width: 100%; height: auto; max-height: 45vh; pointer-events: none; }
+.ap-crop-dim { position: absolute; pointer-events: none; }
+.ap-crop-dim.is-top { top: 0; left: 0; right: 0; }
+.ap-crop-dim.is-bottom { bottom: 0; left: 0; right: 0; }
+.ap-crop-dim.is-left { top: 0; bottom: 0; left: 0; }
+.ap-crop-dim.is-right { top: 0; bottom: 0; right: 0; }
+.ap-crop-card { aspect-ratio: 16 / 9; overflow: hidden; border-radius: 1.25rem; background: color-mix(in oklab, var(--lp-alt) 40%, var(--color-base-100)); }
+.ap-crop-card img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ── Quiz round editor ── */
+.ap-editor { display: grid; gap: 1.25rem; align-items: start; }
+@media (min-width: 900px) { .ap-editor { grid-template-columns: 17rem minmax(0, 1fr); } }
+.ap-rail { padding: 1rem; border-radius: 2rem; background: color-mix(in oklab, var(--lp-alt) 35%, var(--color-base-100)); }
+@media (min-width: 900px) { .ap-rail { position: sticky; top: 1rem; max-height: calc(100vh - 2rem); overflow-y: auto; } }
+.ap-rail-head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.75rem; padding-left: 0.4rem; }
+.ap-rounds { display: flex; flex-direction: column; gap: 0.4rem; }
+.ap-round { position: relative; border-radius: 1.25rem; background: var(--color-base-100); border: 1.5px solid transparent; transition: border-color 0.15s, background-color 0.15s; }
+.ap-round:hover { border-color: color-mix(in oklab, var(--lp-ink) 35%, transparent); }
+.ap-round.is-current { border-color: var(--lp-ink); background: color-mix(in oklab, var(--lp-tint) 45%, var(--color-base-100)); }
+.ap-round.is-dragging { opacity: 0.45; }
+.ap-round > a { display: flex; align-items: center; gap: 0.7rem; padding: 0.65rem 0.75rem; cursor: grab; }
+.ap-round-num { display: grid; place-items: center; flex-shrink: 0; width: 2.1rem; height: 2.1rem; border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%; background: var(--lp-tint); font-size: 0.85rem; font-weight: 600; color: var(--lp-ink); }
+.ap-round.is-current .ap-round-num { background: var(--lp-ink); color: var(--color-primary-content); }
+.ap-round-q { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-right: 2.5rem; font-size: 0.875rem; font-weight: 500; color: var(--color-base-content); }
+.ap-round-meta { display: flex; gap: 0.6rem; margin-top: 0.15rem; font-size: 0.7rem; color: var(--lp-muted); }
+.ap-round-meta span { display: inline-flex; align-items: center; gap: 0.2rem; }
+.ap-round-meta svg { width: 0.75rem; height: 0.75rem; }
+.ap-round-acts { position: absolute; right: 0.35rem; bottom: 0.3rem; display: flex; gap: 0.1rem; opacity: 0; transition: opacity 0.15s; }
+.ap-round:hover .ap-round-acts, .ap-round.is-current .ap-round-acts, .ap-round:focus-within .ap-round-acts { opacity: 1; }
+/* Correct-answer markers (quizzmaker/_round_markers.html), top right of a round row. */
+.ap-marks { position: absolute; top: 0.55rem; right: 0.75rem; display: flex; align-items: center; gap: 0.2rem; }
+.ap-mark-dot { width: 0.4rem; height: 0.4rem; border-radius: 999px; background: color-mix(in oklab, var(--color-base-content) 20%, transparent); transition: background-color 0.15s; }
+.ap-mark-dot.is-on { background: var(--lp-ink); }
+.ap-mark-tick { display: inline-flex; color: color-mix(in oklab, var(--color-base-content) 25%, transparent); }
+.ap-mark-tick.is-on { color: var(--lp-ink); }
+.ap-mark-tick svg { width: 0.8rem; height: 0.8rem; }
+/* Preview card. */
+.ap-preview { display: flex; flex-direction: column; min-height: 60vh; overflow: hidden; border-radius: 2rem; border: 1px solid var(--lp-line); background: var(--color-base-100); }
+.ap-preview-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--lp-line); }
+.ap-preview-body { flex: 1; display: flex; flex-direction: column; gap: 1.25rem; padding: 1.5rem; }
+.ap-preview-q { margin: 0 auto; max-width: 48rem; text-align: center; font-weight: 500; line-height: 1.15; overflow-wrap: anywhere; color: var(--color-base-content); }
+.ap-preview-q.is-big { flex: 1; display: grid; place-items: center; font-size: clamp(2rem, 5vw, 4rem); }
+.ap-preview-q.is-small { font-size: clamp(1.4rem, 3vw, 2.2rem); }
+.ap-preview-img { width: 100%; max-width: 52rem; margin: 0 auto; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 1.5rem; background: color-mix(in oklab, var(--lp-alt) 40%, var(--color-base-100)); }
+.ap-preview-img img { width: 100%; height: 100%; object-fit: cover; object-position: var(--fx, 50%) var(--fy, 50%); }
+/* Answer tiles: check bubble, letter blob, editable text. */
+.ap-answers { display: grid; gap: 0.75rem; }
+@media (min-width: 640px) { .ap-answers.is-grid { grid-template-columns: 1fr 1fr; } }
+.ap-answer { display: flex; align-items: center; gap: 0.9rem; padding: 1rem 1.25rem; border-radius: 1.5rem; border: 1.5px solid var(--lp-line); background: var(--color-base-100); transition: border-color 0.15s, background-color 0.15s; }
+.ap-answer:hover, .ap-answer:focus-within { border-color: color-mix(in oklab, var(--lp-ink) 45%, transparent); }
+.ap-answer:has(input[data-answer-correct]:checked) { border-color: var(--lp-ink); background: color-mix(in oklab, var(--lp-tint) 50%, var(--color-base-100)); }
+.ap-answer.is-tall { padding-block: 1.6rem; }
+.ap-check { position: relative; display: grid; place-items: center; flex-shrink: 0; width: 1.9rem; height: 1.9rem; border-radius: 999px; border: 2px solid color-mix(in oklab, var(--color-base-content) 22%, transparent); cursor: pointer; transition: border-color 0.15s, background-color 0.15s; }
+.ap-check input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.ap-check svg { width: 1rem; height: 1rem; color: var(--color-primary-content); opacity: 0; transition: opacity 0.15s; }
+.ap-check:has(input:checked) { border-color: var(--lp-ink); background: var(--lp-ink); }
+.ap-check:has(input:checked) svg { opacity: 1; }
+.ap-check:has(input:focus-visible) { outline: 2px solid var(--lp-tint-strong); outline-offset: 2px; }
+.ap-letter { display: grid; place-items: center; flex-shrink: 0; min-width: 2.6rem; height: 2.6rem; padding: 0 0.6rem; border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%; background: var(--lp-tint); font-size: 1.35rem; font-weight: 500; color: var(--lp-ink); }
+.ap-answer:nth-child(even) .ap-letter { border-radius: 55% 45% 47% 53% / 52% 58% 42% 48%; }
+.ap-answer-input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font-size: 1.1rem; color: var(--color-base-content); }
+.ap-answer-input::placeholder { color: var(--lp-muted); }
+.ap-answer-input.is-center { text-align: center; font-size: 1.35rem; }
+.ap-answer > svg { flex-shrink: 0; width: 1.3rem; height: 1.3rem; color: var(--lp-muted); }
+.ap-preview-note { text-align: center; font-size: 0.78rem; color: var(--lp-muted); }
+/* Streak bonus box in quiz settings. */
+.ap-subpanel { display: flex; flex-direction: column; gap: 0.75rem; padding: 1rem; border-radius: 1.5rem; background: color-mix(in oklab, var(--lp-alt) 35%, var(--color-base-100)); }
+.ap-subpanel-head { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 600; color: var(--color-base-content); }
+.ap-subpanel-head svg { width: 1rem; height: 1rem; color: var(--lp-ink); }
+.ap-streak { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.ap-dialog .modal-box.is-wide { max-width: 34rem; max-height: 90dvh; overflow-y: auto; }
+
+/* ── Live quiz: host and player screens (static/js/session_host.js, session_play.js) ──
+   The scripts render each game phase into #app using these qz-* classes. */
+.qz { flex: 1 0 auto; display: flex; flex-direction: column; padding: 1.25rem 1.25rem 2.5rem; background: var(--color-base-100); }
+@media (min-width: 768px) { .qz { padding: 1.5rem 2.5rem 3rem; } }
+.qz-top { display: flex; justify-content: flex-end; }
+.qz-app { flex: 1; display: flex; flex-direction: column; width: 100%; max-width: 64rem; margin: 0 auto; }
+.qz-app.is-player { max-width: 40rem; align-items: center; justify-content: center; text-align: center; }
+.qz-stage { display: flex; flex-direction: column; align-items: center; gap: 1.25rem; width: 100%; margin: auto 0; text-align: center; }
+.qz-muted { color: var(--lp-muted); }
+.qz-label { font-size: 0.78rem; color: var(--lp-muted); }
+.qz-title { margin: 0; font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 500; line-height: 1.15; color: var(--color-base-content); }
+.qz-question { margin: 0; max-width: 56rem; font-size: clamp(1.75rem, 4vw, 3.25rem); font-weight: 500; line-height: 1.15; overflow-wrap: anywhere; color: var(--color-base-content); }
+.qz-question.is-small { font-size: clamp(1.5rem, 3vw, 2.5rem); }
+.qz-head { display: flex; justify-content: space-between; width: 100%; font-size: 0.78rem; color: var(--lp-muted); }
+.qz-icon { display: grid; place-items: center; width: 4.5rem; height: 4.5rem; border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%; background: var(--lp-tint); color: var(--lp-ink); }
+.qz-icon.is-warn { background: color-mix(in oklab, var(--color-warning) 18%, var(--color-base-100)); color: color-mix(in oklab, var(--color-warning) 70%, var(--color-base-content)); }
+.qz-icon svg { width: 2rem; height: 2rem; }
+/* Lobby: join URL and the big code. */
+.qz-joinurl { font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 500; overflow-wrap: anywhere; }
+.qz-joinurl b { color: var(--lp-ink); }
+.qz-code { display: inline-block; padding: 0.4rem 1.6rem; border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%; background: var(--lp-tint); font-size: clamp(3rem, 9vw, 6rem); font-weight: 600; letter-spacing: 0.15em; line-height: 1.1; color: var(--lp-ink); }
+.qz-players { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; max-width: 44rem; }
+/* Timer bar. */
+.qz-timer { width: 100%; max-width: 48rem; height: 0.6rem; overflow: hidden; border-radius: 999px; background: color-mix(in oklab, var(--lp-alt) 50%, var(--color-base-100)); }
+.qz-timer span { display: block; width: 100%; height: 100%; border-radius: 999px; background: var(--lp-ink); transition: width 0.25s linear; }
+.qz-img { width: 100%; max-width: 48rem; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 1.5rem; background: color-mix(in oklab, var(--lp-alt) 40%, var(--color-base-100)); }
+.qz-img img { width: 100%; height: 100%; object-fit: cover; object-position: var(--fx, 50%) var(--fy, 50%); }
+.qz-app.is-player .qz-img { max-width: 28rem; }
+/* Answer options: primary tiles. Reveal: correct ones ringed, others dimmed; players: chosen ones ringed. */
+.qz-opts { display: grid; gap: 0.75rem; width: 100%; max-width: 48rem; }
+@media (min-width: 640px) { .qz-opts { grid-template-columns: 1fr 1fr; } }
+.qz-opt { display: flex; align-items: center; gap: 0.85rem; padding: 1.1rem 1.25rem; border-radius: 1.5rem; background: var(--lp-ink); font-size: 1.1rem; font-weight: 600; text-align: left; color: var(--color-primary-content); transition: opacity 0.15s, box-shadow 0.15s, scale 0.2s var(--lp-ease); }
+.qz-opt.is-tf { justify-content: center; }
+.qz-opt-letter { display: grid; place-items: center; flex-shrink: 0; width: 2.4rem; height: 2.4rem; border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%; background: color-mix(in oklab, var(--color-primary-content) 22%, transparent); font-size: 1.25rem; font-weight: 700; }
+.qz-opt-text { flex: 1; overflow-wrap: anywhere; }
+.qz-opt.is-tf .qz-opt-text { flex: 0 1 auto; }
+.qz-opt-count { font-size: 0.95rem; font-variant-numeric: tabular-nums; }
+.qz-opt.is-correct { box-shadow: 0 0 0 0.35rem var(--lp-tint-strong); }
+.qz-opt.is-dim { opacity: 0.4; }
+button.qz-opt { cursor: pointer; }
+.lp.ap .qz-opts button.qz-opt { background: var(--lp-ink); }
+.lp.ap .qz-opts button.qz-opt:hover { scale: 1.02; }
+.lp.ap .qz-opts button.qz-opt.is-on { box-shadow: 0 0 0 0.35rem var(--lp-tint-strong); }
+.lp.ap .qz-opts button.qz-opt:not(.is-on) { opacity: 0.88; }
+/* Leaderboard. */
+.qz-lb { display: flex; flex-direction: column; gap: 0.45rem; width: 100%; max-width: 28rem; text-align: left; }
+.qz-lb li { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.6rem 1rem; border-radius: 999px; background: color-mix(in oklab, var(--lp-alt) 40%, var(--color-base-100)); }
+.qz-lb li.is-lead { background: var(--lp-tint); box-shadow: inset 0 0 0 2px var(--lp-tint-strong); }
+.qz-lb .qz-rank { display: inline-block; width: 2rem; font-weight: 700; color: var(--lp-muted); }
+.qz-lb .qz-score { font-weight: 700; font-variant-numeric: tabular-nums; }
+.qz-flame { display: inline-flex; align-items: center; gap: 0.15rem; margin-left: 0.35rem; font-size: 0.78rem; color: var(--lp-muted); }
+.qz-flame svg { width: 0.9rem; height: 0.9rem; fill: var(--lp-ink); stroke: var(--lp-ink); }
+/* Text answers (type-in rounds). */
+.qz-answers { display: grid; gap: 0.6rem; width: 100%; max-width: 48rem; }
+@media (min-width: 640px) { .qz-answers { grid-template-columns: 1fr 1fr; } }
+.qz-ans { padding: 0.75rem 1rem; border-radius: 1.25rem; background: color-mix(in oklab, var(--lp-alt) 40%, var(--color-base-100)); text-align: left; }
+.qz-ans.is-ok { box-shadow: inset 0 0 0 2px var(--lp-tint-strong); }
+.qz-ans p:first-child { font-size: 0.72rem; color: var(--lp-muted); }
+.qz-ans p + p { font-size: 1.1rem; font-weight: 500; overflow-wrap: anywhere; }
+.qz-ans-ok { color: var(--lp-ink); }
+.qz-big-answer { font-size: 2rem; font-weight: 500; color: var(--lp-ink); }
+.qz-review { width: 100%; max-width: 40rem; padding: 1.25rem; border-radius: 1.5rem; border: 1px solid var(--lp-line); text-align: left; }
+.qz-review-row { display: flex; align-items: center; gap: 0.5rem; padding: 0.2rem 0; font-size: 0.9rem; color: var(--lp-muted); }
+.qz-review-row.is-correct { font-weight: 600; color: var(--lp-ink); }
+.qz-review-row span:nth-last-child(2) { flex: 1; }
+/* Player result heading. */
+.qz-result { font-size: clamp(2.25rem, 7vw, 3.25rem); font-weight: 500; }
+.qz-result.is-good { color: var(--color-success); }
+.qz-result.is-part { color: color-mix(in oklab, var(--color-warning) 75%, var(--color-base-content)); }
+.qz-result.is-miss { color: var(--color-error); }
+.qz-points { font-size: 1.75rem; font-weight: 700; color: var(--color-base-content); }
+.qz-stats { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+.qz-form { display: flex; flex-direction: column; gap: 0.75rem; width: 100%; max-width: 28rem; }
+.lp.ap .qz-form .input { min-height: 3.5rem !important; text-align: center; font-size: 1.5rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ap-badge, .ap-badge::after, .ap-wheel-pointer.is-tick,
+  .ap-join-card .ap-dialog-icon, .ap-join-card .ap-dialog-icon::after { animation: none; }
+}

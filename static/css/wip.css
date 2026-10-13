@@ -1,0 +1,116 @@
+/* "Coming soon" page (templates/wip.html), shown by tools still being built (e.g. math_ops).
+   Same layout as the error pages (errors.css), but inside base.html's sidebar shell.
+   Colour tokens, .lp-soft, .lp-eyebrow and the lp-pop / lp-drift / .lp-rise motion come from landing.css. */
+
+/* Fill the content column on the page background, like the app pages (.ap in apps.css). */
+.wp-page { flex: 1 0 auto; background: var(--color-base-100); }
+
+.wp {
+  display: grid;
+  align-content: center;
+  gap: 2.5rem;
+  min-height: calc(100svh - 6rem);
+  padding: 3rem 1.25rem;
+}
+@media (min-width: 1000px) {
+  .wp {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 3rem;
+    padding: 3rem 3.5rem;
+  }
+}
+
+.wp-main { width: 100%; max-width: 30rem; justify-self: center; }
+.wp-title {
+  margin: 1rem 0 0;
+  font-size: clamp(2.4rem, 5.5vw, 4rem);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: var(--color-base-content);
+  text-wrap: balance;
+}
+.wp-title em { font-style: italic; font-weight: 300; color: var(--lp-ink); }
+.wp-lede { margin-top: 1rem; max-width: 26rem; line-height: 1.65; font-weight: 300; color: var(--lp-muted); }
+
+/* Status pill with a soft pulse. */
+.wp-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+  padding: 0.45rem 1rem 0.45rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--lp-line);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--lp-muted);
+}
+.wp-pulse {
+  position: relative;
+  width: 0.55rem; height: 0.55rem;
+  border-radius: 999px;
+  background: var(--lp-ink);
+}
+.wp-pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--lp-ink);
+  animation: wp-ping 1.8s ease-out infinite;
+}
+@keyframes wp-ping {
+  from { transform: scale(1); opacity: 0.6; }
+  to   { transform: scale(2.6); opacity: 0; }
+}
+
+.wp-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
+.wp-actions .btn { padding-inline: 1.6rem; }
+.wp-actions svg { width: 1rem; height: 1rem; }
+
+/* ── Hammer in a bubble cluster ── */
+.wp-stage {
+  position: relative;
+  justify-self: center;
+  width: min(100%, 20rem);
+  aspect-ratio: 1;
+  container-type: inline-size;
+}
+@media (min-width: 1000px) { .wp-stage { width: min(100%, 26rem); } }
+.wp-blob {
+  position: absolute;
+  inset: 8%;
+  display: grid; place-items: center;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: var(--lp-tint);
+  color: var(--lp-ink);
+  animation: lp-pop 0.7s var(--lp-ease) 0.1s both, lp-drift 10s ease-in-out 0.8s infinite;
+}
+.wp-blob svg { width: 34%; height: 34%; stroke-width: 1.5; }
+.wp-dot {
+  position: absolute;
+  border-radius: 999px;
+  /* Each dot pops in, then drifts out of step with the blob. */
+  animation: lp-pop 0.7s var(--lp-ease) var(--pop, 0s) both, lp-drift var(--dur, 7s) ease-in-out var(--off, -1s) infinite reverse;
+}
+.wp-dot.is-a { right: 2%; top: 10%; width: 14%; aspect-ratio: 1; background: var(--lp-alt); --pop: 0.3s; --dur: 6.5s; --off: -2s; }
+.wp-dot.is-b { left: 4%; bottom: 6%; width: 7%; aspect-ratio: 1; background: var(--lp-tint-strong); --pop: 0.4s; --dur: 5.5s; --off: -0.5s; }
+.wp-dot.is-icon {
+  right: 6%; bottom: 4%;
+  width: 22%; aspect-ratio: 1;
+  display: grid; place-items: center;
+  border-radius: 55% 45% 47% 53% / 52% 58% 42% 48%;
+  background: var(--color-base-100);
+  color: var(--lp-ink);
+  box-shadow:
+    0 0 0 2px color-mix(in oklab, var(--lp-ink) 55%, transparent),
+    0 1.5cqi 5cqi color-mix(in oklab, var(--lp-ink) 18%, transparent);
+  --pop: 0.5s; --dur: 8s; --off: -3.5s;
+}
+.wp-dot.is-icon svg { width: 42%; height: 42%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .wp-blob, .wp-dot, .wp-pulse::after { animation: none; }
+}

@@ -2177,7 +2177,7 @@ msgstr "Pastelový"
 
 #: apps/users/models.py:11 templates/base.html:239
 msgid "Editorial"
-msgstr "Upravit profil"
+msgstr "Redakční"
 
 #: apps/users/models.py:12 templates/base.html:224
 msgid "Palette"
@@ -2265,7 +2265,7 @@ msgstr "Heslo"
 
 #: apps/users/templates/registration/login.html:101
 msgid "Forgot password?"
-msgstr "Změnit heslo"
+msgstr "Zapomněli jste heslo?"
 
 #: apps/users/templates/registration/login.html:114
 #: apps/users/templates/registration/register.html:166
@@ -2323,7 +2323,7 @@ msgstr "Email"
 #: apps/users/templates/registration/register.html:180
 #: apps/users/templates/users/password_reset.html:114
 msgid "Confirm password"
-msgstr "Změnit heslo"
+msgstr "Potvrzení hesla"
 
 #: apps/users/templates/registration/register.html:215
 #, python-format
@@ -2439,7 +2439,7 @@ msgstr "Žádná"
 
 #: apps/users/templates/users/forgot_password.html:5
 msgid "Forgot password"
-msgstr "Změnit heslo"
+msgstr "Zapomenuté heslo"
 
 #: apps/users/templates/users/forgot_password.html:53
 msgid "Back to sign in"
@@ -2460,12 +2460,12 @@ msgstr "Heslo"
 
 #: apps/users/templates/users/forgot_password.html:70
 msgid "Enter your registered email and we'll send you a reset link."
-msgstr "Zadej registrovaný e-mail a pošleme ti odkaz pro obnovu."
+msgstr "Zadejte registrovaný e-mail a pošleme vám odkaz pro obnovu."
 
 #: apps/users/templates/users/forgot_password.html:113
 #: apps/users/templates/users/password_reset.html:146
 msgid "Remember your password?"
-msgstr "Zadejte své nové heslo"
+msgstr "Pamatujete si heslo?"
 
 #: apps/users/templates/users/password_reset.html:5
 msgid "Reset Password"
@@ -2477,11 +2477,11 @@ msgstr "Vyberte skupinu..."
 
 #: apps/users/templates/users/password_reset.html:61
 msgid "Enter your new password below."
-msgstr "Zadejte své nové heslo"
+msgstr "Níže zadejte své nové heslo."
 
 #: apps/users/templates/users/password_reset.html:81
 msgid "New password"
-msgstr "Změnit heslo"
+msgstr "Nové heslo"
 
 #: apps/users/templates/users/password_reset.html:104
 msgid "Password requirements"
@@ -4491,3 +4491,55 @@ msgstr "Přidejte třídu a pak zatočte kolem jmen nebo ji rozdělte do týmů.
 #: templates/landing.html
 msgid "Only you can see your students' names. We use them to run the tools and nothing else."
 msgstr "Jména vašich žáků vidíte jen vy. Používáme je jen k provozu nástrojů a k ničemu jinému."
+
+#: templates/base.html
+msgid "Appearance"
+msgstr "Vzhled"
+
+#: apps/users/templates/users/password_reset.html
+msgid "Choose a new password"
+msgstr "Zvolte si nové heslo"
+
+#: apps/contact/templates/contact/contact.html
+msgid "Send us a message"
+msgstr "Pošlete zprávu"
+
+#: templates/includes/recovery_steps.html
+msgid "Enter your email"
+msgstr "Zadejte svůj e-mail"
+
+#: templates/includes/recovery_steps.html
+msgid "Open the link we send"
+msgstr "Otevřete odkaz, který pošleme"
+
+#: apps/contact/templates/contact/contact.html
+msgid "Prefer email?"
+msgstr "Raději e-mailem?"
+
+#: apps/contact/templates/contact/contact.html
+msgid "What happens next"
+msgstr "Co bude dál"
+
+#: apps/contact/templates/contact/contact.html
+msgid "If a reply is needed, we'll write back to the address you left."
+msgstr "Pokud bude potřeba odpověď, ozveme se na adresu, kterou jste zadali."
+
+#: apps/timer/templates/timer/stopwatch.html
+msgid "Pause"
+msgstr "Pozastavit"
+
+#: apps/timer/templates/timer/stopwatch.html
+msgid "Stop"
+msgstr "Zastavit"
+
+#: apps/timer/templates/timer/stopwatch.html
+msgid "Flag"
+msgstr "Označit"
+
+#: apps/point_system/templates/point_system/_points_table.html
+msgid "Decrease"
+msgstr "Snížit"
+
+#: apps/point_system/templates/point_system/_points_table.html
+msgid "Increase"
+msgstr "Zvýšit"

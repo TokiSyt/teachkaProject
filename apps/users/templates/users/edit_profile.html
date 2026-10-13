@@ -1,132 +1,89 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load i18n %}
 
 {% block title %}{% trans "Edit profile" %} · Teachka{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
 {% block content %}
+<div class="lp">
+<section class="au">
 
-  <!-- ── HEADER ── -->
-  <section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
-    <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
-      <i data-lucide="pen-line" class="text-primary" style="width:180px;height:180px;"></i>
+  <div class="au-main">
+    <p class="lp-eyebrow lp-rise"><span class="lp-eyebrow-dot"></span>{% trans "Account" %}</p>
+    <h1 class="au-title lp-soft lp-rise lp-rise-2">{% trans "Edit" %} <em>{% trans "profile" %}</em></h1>
+    <p class="au-lede lp-rise lp-rise-2">@{{ user.username }}</p>
+
+    {% if form.non_field_errors %}
+    <div role="alert" class="alert alert-error mt-6 text-sm rounded-2xl">
+      <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
+      <span>{{ form.non_field_errors.0 }}</span>
     </div>
-    <div class="relative z-10">
-      <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Account" %}</p>
+    {% endif %}
 
-      <h1 class="serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
-        <span class="text-primary">{% trans "Edit" %}</span>
-        <span class="text-base-content/25">{% trans "profile" %}</span>
-      </h1>
-
-      <div class="flex flex-wrap items-center gap-3">
-        <span class="text-[11px] tracking-[2px] uppercase text-base-content/30">@{{ user.username }}</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── FORM ── -->
-  <section class="px-5 py-8 md:px-14">
-
-    <form id="edit-form" method="post" novalidate>
+    <form method="post" class="au-form lp-rise lp-rise-3" novalidate>
       {% csrf_token %}
 
-      {% if form.non_field_errors %}
-      <div role="alert" class="alert alert-error mb-5 text-sm">
-        <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
-        <span>{{ form.non_field_errors.0 }}</span>
+      <div class="au-row">
+        {% include "includes/au_field.html" with field=form.first_name label=_("First name") autocomplete="given-name" %}
+        {% include "includes/au_field.html" with field=form.last_name label=_("Last name") autocomplete="family-name" optional=True %}
       </div>
-      {% endif %}
 
-      <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Account details" %}</p>
-
-      <div class="card bg-base-100 border border-base-300 max-w-lg">
-        <div class="card-body p-0 divide-y divide-base-300">
-
-          <!-- Username (disabled) -->
-          <div class="px-5 py-4">
-            <p class="text-xs text-base-content/40 mb-1.5">{% trans "Username" %}</p>
-            <input type="text"
-                   name="username"
-                   id="id_username"
-                   value="{{ form.username.value|default:'' }}"
-                   class="input input-bordered w-full bg-base-200 text-base-content/40 cursor-not-allowed"
-                   disabled>
-            <p class="text-[11px] text-base-content/25 mt-1">{% trans "Username cannot be changed" %}</p>
-          </div>
-
-          <!-- First name -->
-          <div class="px-5 py-4">
-            <p class="text-xs text-base-content/40 mb-1.5">{% trans "First name" %}</p>
-            <input type="text"
-                   name="first_name"
-                   id="id_first_name"
-                   value="{{ form.first_name.value|default:'' }}"
-                   autocomplete="given-name"
-                   class="input input-bordered w-full">
-            {% if form.first_name.errors %}
-            <p class="text-xs text-error mt-1">{{ form.first_name.errors.0 }}</p>
-            {% endif %}
-          </div>
-
-          <!-- Last name -->
-          <div class="px-5 py-4">
-            <p class="text-xs text-base-content/40 mb-1.5">{% trans "Last name" %} <span class="text-base-content/25">({% trans "optional" %})</span></p>
-            <input type="text"
-                   name="last_name"
-                   id="id_last_name"
-                   value="{{ form.last_name.value|default:'' }}"
-                   autocomplete="family-name"
-                   class="input input-bordered w-full">
-            {% if form.last_name.errors %}
-            <p class="text-xs text-error mt-1">{{ form.last_name.errors.0 }}</p>
-            {% endif %}
-          </div>
-
-          <!-- Email (locked) -->
-          <div class="px-5 py-4">
-            <p class="text-xs text-base-content/40 mb-1.5">{% trans "Email" %}</p>
-            <input type="email"
-                   id="id_email"
-                   value="{{ form.email.value|default:'' }}"
-                   autocomplete="email"
-                   class="input input-bordered w-full bg-base-200 text-base-content/40 cursor-not-allowed"
-                   disabled>
-            <p class="text-[11px] text-base-content/25 mt-1">
-              {% blocktrans %}To change your email, contact info@teachka.com{% endblocktrans %}
-            </p>
-          </div>
-
-          <!-- Country -->
-          <div class="px-5 py-4">
-            <p class="text-xs text-base-content/40 mb-1.5">{% trans "Country" %} <span class="text-base-content/25">({% trans "optional" %})</span></p>
-            <select name="country"
-                    id="id_country"
-                    class="select select-bordered w-full">
-              <option value="" {% if not form.country.value %}selected{% endif %}>{% trans "None" %}</option>
-              {% for value, label in form.fields.country.choices %}
-                {% if value %}
-                <option value="{{ value }}" {% if form.country.value == value %}selected{% endif %}>{{ label }}</option>
-                {% endif %}
-              {% endfor %}
-            </select>
-            {% if form.country.errors %}
-            <p class="text-xs text-error mt-1">{{ form.country.errors.0 }}</p>
-            {% endif %}
-          </div>
-
+      <div class="au-field">
+        <label for="id_username" class="au-label">{% trans "Username" %}</label>
+        <div class="au-locked">
+          <input type="text" id="id_username" value="{{ form.username.value|default:'' }}" class="input" disabled>
+          <i data-lucide="lock"></i>
         </div>
+        <p class="au-small">{% trans "Username cannot be changed" %}</p>
       </div>
 
-      <!-- Actions -->
-      <div class="flex flex-wrap gap-2 mt-6">
-        <button type="submit" class="btn-as-link">
-          {% trans "Save changes" %}
-        </button>
-        <a href="{% url 'profile:profile' %}" class="btn btn-ghost btn-sm">
+      <div class="au-field">
+        <label for="id_email" class="au-label">{% trans "Email" %}</label>
+        <div class="au-locked">
+          <input type="email" id="id_email" value="{{ form.email.value|default:'' }}" class="input" disabled>
+          <i data-lucide="lock"></i>
+        </div>
+        <p class="au-small">{% blocktrans %}To change your email, contact info@teachka.com{% endblocktrans %}</p>
+      </div>
+
+      <div class="au-field">
+        <label for="id_country" class="au-label">
+          {% trans "Country" %} <span class="au-optional">({% trans "optional" %})</span>
+        </label>
+        <select name="country" id="id_country" class="select"
+                {% if form.country.errors %}aria-invalid="true" aria-describedby="id_country-error"{% endif %}>
+          <option value="" {% if not form.country.value %}selected{% endif %}>{% trans "None" %}</option>
+          {% for value, label in form.fields.country.choices %}
+            {% if value %}
+            <option value="{{ value }}" {% if form.country.value == value %}selected{% endif %}>{{ label }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        {% if form.country.errors %}
+        <p id="id_country-error" class="au-error">{{ form.country.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <div class="au-actions">
+        <button type="submit" class="btn btn-primary w-full rounded-full">{% trans "Save changes" %}</button>
+        <a href="{% url 'profile:profile' %}" class="btn btn-ghost w-full rounded-full border border-base-300 font-medium text-base-content/75">
           {% trans "Cancel" %}
         </a>
       </div>
     </form>
-  </section>
+  </div>
 
+  <aside class="au-aside lp-rise lp-rise-3" aria-hidden="true">
+    <div class="au-stage">
+      {% include "includes/profile_bubbles.html" %}
+    </div>
+  </aside>
+
+</section>
+</div>
 {% endblock %}

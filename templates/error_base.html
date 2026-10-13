@@ -1,0 +1,59 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:'en' }}" data-theme="fantasy">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %} · Teachka</title>
+  <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon" />
+  <script>
+    // Apply the saved theme before paint, as base.html does.
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t) document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}?v=5">
+  {# Theme colour overrides (e.g. pastel primary + white button text), as base.html loads. #}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=9">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..600,0..100&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+  <link rel="stylesheet" href="{% static 'css/errors.css' %}">
+</head>
+<body class="er-body bg-base-100 text-base-content">
+<div class="lp">
+<main class="er">
+
+  <a href="/" class="er-brand lp-soft">Teachka</a>
+
+  <div class="er-main">
+    <p class="lp-eyebrow lp-rise"><span class="lp-eyebrow-dot"></span>{% trans "Error" %}</p>
+    <h1 class="er-title lp-soft lp-rise lp-rise-2">{% block heading %}{% endblock %}</h1>
+    <p class="er-lede lp-rise lp-rise-3">{% block lede %}{% endblock %}</p>
+    <div class="er-actions lp-rise lp-rise-4">
+      <a href="/" class="btn btn-primary rounded-full">
+        <i data-lucide="home"></i>{% trans "Return Home" %}
+      </a>
+      <a href="{% url 'contact:contact' %}" class="btn btn-ghost rounded-full border border-base-300 font-medium text-base-content/75">
+        {% trans "Contact" %}
+      </a>
+    </div>
+  </div>
+
+  <div class="er-stage" aria-hidden="true">
+    <span class="er-blob"><span class="er-code lp-soft">{% block code %}{% endblock %}</span></span>
+    <span class="er-dot is-a"></span>
+    <span class="er-dot is-b"></span>
+    <span class="er-dot is-icon"><i data-lucide="{% block icon %}{% endblock %}"></i></span>
+  </div>
+
+</main>
+</div>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>lucide.createIcons();</script>
+</body>
+</html>

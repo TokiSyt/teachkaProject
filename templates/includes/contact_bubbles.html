@@ -1,0 +1,31 @@
+{% load i18n %}
+{% comment %} Contact aside: "Your message" linked to the three message kinds, built from the landing
+   cluster pieces (static/css/landing.css; needs an .lp ancestor). The kind picked in the form
+   grows and tints via :has() in static/css/auth.css. {% endcomment %}
+<div class="lp-cluster-wrap">
+  <div class="lp-cluster">
+    <svg class="lp-links" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <line x1="50" y1="52" x2="22" y2="24"/>
+      <line x1="50" y1="52" x2="80" y2="30"/>
+      <line x1="50" y1="52" x2="64" y2="84"/>
+    </svg>
+
+    <div class="lp-bub is-class lp-soft" style="--x:50;--y:52;--d:36;--i:0">
+      <i data-lucide="mail"></i>
+      <span class="lp-class-label">{% trans "Your message" %}</span>
+    </div>
+    <div class="lp-bub au-kb au-kb-bug" style="--x:22;--y:24;--d:26;--i:1">
+      <i data-lucide="bug"></i>{% trans "Bug report" %}
+    </div>
+    <div class="lp-bub au-kb au-kb-question" style="--x:80;--y:30;--d:24;--i:2">
+      <i data-lucide="message-circle-question"></i>{% trans "Question" %}
+    </div>
+    <div class="lp-bub au-kb au-kb-feature" style="--x:64;--y:84;--d:26;--i:3">
+      <i data-lucide="sparkles"></i>{% trans "Feature request" %}
+    </div>
+
+    <div class="lp-bub" style="--x:16;--y:70;--d:10;--i:4"></div>
+    <div class="lp-bub is-linked" style="--x:88;--y:62;--d:7;--i:5"></div>
+    <div class="lp-bub" style="--x:46;--y:10;--d:8;--i:6"></div>
+  </div>
+</div>

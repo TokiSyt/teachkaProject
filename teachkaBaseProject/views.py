@@ -206,7 +206,14 @@ class AdminMessageReplyView(AdminRequiredMixin, View):
 
 
 class HomeView(TemplateView):
+    """Visitors get the landing page (home.html); logged-in users their dashboard."""
+
     template_name = "home.html"
+
+    def get_template_names(self):
+        if self.request.user.is_authenticated:
+            return ["dashboard.html"]
+        return [self.template_name]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

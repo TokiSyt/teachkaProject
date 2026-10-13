@@ -12,99 +12,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}Teachka{% endblock %}</title>
   <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon" />
-  <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}?v=4">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=4">
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300;1,9..144,500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}?v=5">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=9">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..600,0..100&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
   {% block extra_css %}{% endblock %}
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
   <style>
-    html, body { overflow-x: hidden; max-width: 100%; }
-    body { font-family: 'Epilogue', system-ui, sans-serif; }
-    .serif { font-family: 'Fraunces', serif; }
-
-    /* Sidebar layout */
-    #sidebar { transition: width 0.28s cubic-bezier(0.4,0,0.2,1); overflow: hidden; width: 180px; }
-    #main    { transition: margin-left 0.28s cubic-bezier(0.4,0,0.2,1); margin-left: 180px; }
-    .fade-label { transition: opacity 0.18s, width 0.18s; }
-    #theme-row { transition: opacity 0.18s, height 0.18s, margin 0.18s; }
-
-    /* Force all sidebar menu icons to the same size always */
-    #sidebar .menu a svg {
-      width: 1.5rem !important;
-      height: 1.5rem !important;
-      min-width: 1.5rem;
-      min-height: 1.5rem;
-      max-width: 1.5rem;
-      max-height: 1.5rem;
-    }
-    /* Make all sidebar li flex containers so <a> becomes a flex item (constrains height) */
-    #sidebar .menu li {
-      display: flex !important;
-      flex-direction: column !important;
-    }
-
-    /* Mobile overlay */
-    #drawer-overlay {
-      display: none; position: fixed; inset: 0; z-index: 40;
-      background: rgba(0,0,0,0.45);
-    }
-    #drawer-overlay.show { display: block; }
-
-    @media (max-width: 768px) {
-      #sidebar {
-        transform: translateX(-100%);
-        transition: transform 0.28s cubic-bezier(0.4,0,0.2,1) !important;
-        width: 180px !important;
-      }
-      #sidebar.mobile-open { transform: translateX(0); }
-      #main { margin-left: 0 !important; }
-      #desktop-toggle { display: none !important; }
-    }
-
-    /* Toast messages */
-    @keyframes fadeDown { from { opacity:0; transform:translateY(-12px); } to { opacity:1; transform:none; } }
-    @keyframes fadeUpOut { from { opacity:1; transform:none; } to { opacity:0; transform:translateY(-12px); } }
-    .toast-leaving { animation: fadeUpOut 0.3s ease both; }
-
-    /* Landing page animations */
-    @keyframes ticker { to { transform: translateX(-50%); } }
-    .ticker-track { animation: ticker 22s linear infinite; width: max-content; }
-    @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
-    .hero-child { animation: fadeUp 0.55s ease both; }
-    .hero-child:nth-child(1) { animation-delay: 0.05s; }
-    .hero-child:nth-child(2) { animation-delay: 0.13s; }
-    .hero-child:nth-child(3) { animation-delay: 0.21s; }
-    .hero-child:nth-child(4) { animation-delay: 0.29s; }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-    .blink { animation: blink 2s infinite; }
-    .lp-tool-card:hover .lp-arrow { transform: translateX(4px); }
-    .lp-arrow { transition: transform 0.15s; }
-
-    /* Center toggle button when sidebar collapsed */
-    #sidebar.collapsed #sidebar-header {
-      justify-content: center;
-    }
-
-    /* User accent / hover color for sidebar menu items */
+    /* Per-user sidebar accent; the rest of the shell styles live in static/css/base.css. */
     :root {
       --sidebar-hover-color: {% if user.is_authenticated and user.icon_hover_color %}{{ user.icon_hover_color }}{% else %}var(--color-primary){% endif %};
     }
-    #sidebar .menu li > a:hover,
-    #sidebar #language-toggle-sb:hover,
-    #sidebar #theme-compact:hover {
-      background-color: color-mix(in srgb, var(--sidebar-hover-color) 10%, transparent) !important;
-      color: var(--sidebar-hover-color) !important;
-    }
-    /* Logout: same row style as Language/Theme, red on hover */
-    #sidebar #logout-sb:hover {
-      background-color: color-mix(in srgb, var(--color-error) 10%, transparent);
-      color: var(--color-error);
-    }
-    #sidebar .menu li > a:hover svg,
-    #sidebar #language-toggle-sb:hover svg,
-    #sidebar #theme-compact:hover svg {
-      color: var(--sidebar-hover-color) !important;
-    }
-
   </style>
 </head>
 
@@ -138,26 +55,29 @@
             <span class="fade-label nav-label">{% trans "Home" %}</span>
           </a>
         </li>
-        {% if not user.is_authenticated %}
-        <li>
-          <a href="{% url 'login' %}" class="rounded-lg {% if request.resolver_match.url_name == 'login' %}active{% endif %}">
-            <i data-lucide="key-round" class="w-6 h-6 shrink-0"></i>
-            <span class="fade-label nav-label">{% trans "Login" %}</span>
-          </a>
-        </li>
-        <li>
-          <a href="{% url 'register' %}" class="rounded-lg {% if request.resolver_match.url_name == 'register' %}active{% endif %}">
-            <i data-lucide="user-plus" class="w-6 h-6 shrink-0"></i>
-            <span class="fade-label nav-label">{% trans "Register" %}</span>
-          </a>
-        </li>
-        {% endif %}
       </ul>
     </div>
 
+    {% if not user.is_authenticated %}
+    {# Visitors: the tools, in landing-page order, each linking to its section there. #}
+    {% url 'home' as home_url %}
+    <div class="mb-4">
+      <p class="sb-label">{% trans "Tools" %}</p>
+      <ul class="menu menu-sm p-0 gap-0.5">
+        <li><a href="{{ home_url }}#tool-points" class="rounded-lg"><i data-lucide="book-open-check" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Point system" %}</span></a></li>
+        <li><a href="{{ home_url }}#tool-groups" class="rounded-lg"><i data-lucide="users" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Group divider" %}</span></a></li>
+        <li><a href="{{ home_url }}#tool-wheel" class="rounded-lg"><i data-lucide="loader-pinwheel" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Name wheel" %}</span></a></li>
+        <li><a href="{{ home_url }}#tool-quizzes" class="rounded-lg"><i data-lucide="badge-question-mark" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Quizzes" %}</span></a></li>
+        <li><a href="{{ home_url }}#tool-timer" class="rounded-lg"><i data-lucide="clock" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Timer" %}</span></a></li>
+        <li><a href="{{ home_url }}#tool-calendar" class="rounded-lg"><i data-lucide="calendar-check" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Calendar" %}</span></a></li>
+        <li><a href="{{ home_url }}#tool-grades" class="rounded-lg"><i data-lucide="calculator" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Grade calculator" %}</span></a></li>
+      </ul>
+    </div>
+    {% endif %}
+
     {% if user.is_authenticated %}
     <div class="mb-4">
-      <p id="lbl-main" class="text-[9px] font-semibold tracking-[2px] uppercase text-base-content/30 px-2.5 mb-1.5 overflow-hidden" style="height:18px">{% trans "Account" %}</p>
+      <p class="sb-label">{% trans "Account" %}</p>
       <ul class="menu menu-sm p-0 gap-0.5">
         <li><a href="{% url 'profile:profile' %}" class="rounded-lg"><i data-lucide="user" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Profile" %}</span></a></li>
         <li><a href="{% url 'profile:settings' %}" class="rounded-lg"><i data-lucide="settings" class="w-6 h-6 shrink-0"></i><span class="fade-label nav-label">{% trans "Settings" %}</span></a></li>
@@ -171,7 +91,7 @@
 
     {% if user.is_authenticated %}
     <div class="mb-4">
-      <p id="lbl-tools" class="text-[9px] font-semibold tracking-[2px] uppercase text-base-content/30 px-2.5 mb-1.5 overflow-hidden" style="height:18px">{% trans "Tools" %}</p>
+      <p class="sb-label">{% trans "Tools" %}</p>
       <ul class="menu menu-sm p-0 gap-0.5">
         <li>
           <a href="{% url 'calendar_app:home' %}" class="rounded-lg">
@@ -222,73 +142,81 @@
   </div>
 
   <!-- Footer -->
-  <div class="p-2.5 border-t border-base-300 shrink-0 flex flex-col gap-2">
+  {% strip_lang_prefix request.path as clean_path %}
+  <div class="p-2.5 border-t border-base-300 shrink-0 flex flex-col gap-3">
 
-    <!-- Theme swatches -->
-    <div id="theme-row" class="fade-label flex gap-1 px-1 flex-wrap">
-      <div class="tooltip tooltip-top flex-1" data-tip="{% trans 'Palette' %}">
-        <button onclick="setTheme('fantasy')" data-swatch="fantasy"
-          class="theme-swatch w-full h-7 rounded-lg border-2 border-base-300 hover:scale-105 transition-transform"
-          style="background:conic-gradient(#ffffff 0% 50%,#7a2b68 50%)"></button>
-      </div>
-      <div class="tooltip tooltip-top flex-1" data-tip="{% trans 'Dark' %}">
-        <button onclick="setTheme('dark')" data-swatch="dark"
-          class="theme-swatch w-full h-7 rounded-lg border-2 border-base-300 hover:scale-105 transition-transform"
-          style="background:conic-gradient(#0c1221 0% 50%,#d46ea4 50%)"></button>
-      </div>
-      <div class="tooltip tooltip-top flex-1" data-tip="{% trans 'Pastel' %}">
-        <button onclick="setTheme('pastel')" data-swatch="pastel"
-          class="theme-swatch w-full h-7 rounded-lg border-2 border-base-300 hover:scale-105 transition-transform"
-          style="background:conic-gradient(#fff2f5 0% 50%,#e07898 50%)"></button>
-      </div>
-      <div class="tooltip tooltip-top flex-1" data-tip="{% trans 'Editorial' %}">
-        <button onclick="setTheme('lemonade')" data-swatch="lemonade"
-          class="theme-swatch w-full h-7 rounded-lg border-2 border-base-300 hover:scale-105 transition-transform"
-          style="background:conic-gradient(#f4faf0 0% 50%,#4a9b55 50%)"></button>
-      </div>
+    {% if not user.is_authenticated %}
+    <!-- Account: sign up, or log in -->
+    <div class="flex flex-col gap-1">
+      <a href="{% url 'register' %}" class="btn btn-primary btn-sm w-full gap-2 rounded-full" aria-label="{% trans 'Get started' %}">
+        <span class="sb-wide">{% trans "Get started" %}</span>
+        <i data-lucide="user-plus" class="sb-narrow w-4 h-4 shrink-0"></i>
+      </a>
+      <a href="{% url 'login' %}" class="btn btn-ghost btn-sm w-full gap-2 rounded-full border border-base-300 font-medium text-base-content/75 hover:border-base-300" aria-label="{% trans 'Login' %}">
+        <span class="sb-wide">{% trans "Login" %}</span>
+        <i data-lucide="log-in" class="w-4 h-4 shrink-0"></i>
+      </a>
     </div>
-
-    <!-- Language -->
-    <div class="relative language-switcher">
-      <button type="button" id="language-toggle-sb"
-        class="rounded-lg py-1 px-2 w-full flex items-center gap-2 text-base-content/60 active:bg-base-300 transition-colors">
-        <i data-lucide="globe" class="w-6 h-6 shrink-0"></i>
-        <span class="fade-label nav-label">{% trans "Language" %}</span>
+    {% else %}
+    <!-- Account: log out -->
+    <form action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <button type="submit" id="logout-sb" aria-label="{% trans 'Logout' %}"
+        class="btn btn-ghost btn-sm w-full gap-2 rounded-full border border-base-300 font-medium text-base-content/75">
+        <span class="sb-wide">{% trans "Logout" %}</span>
+        <i data-lucide="log-out" class="w-4 h-4 shrink-0"></i>
       </button>
-      <div class="language-dropdown" id="lang-dd-sidebar">
-        <form action="{% url 'set_language' %}" method="post">
+    </form>
+    {% endif %}
+
+    <!-- Appearance: theme + language -->
+    <div>
+      <p class="sb-label">{% trans "Appearance" %}</p>
+
+      <div class="sb-wide flex flex-col gap-2.5 px-1.5">
+        <div class="flex items-center justify-between" role="group" aria-label="{% trans 'Theme' %}">
+          <button type="button" onclick="setTheme('fantasy')" data-swatch="fantasy" data-name="{% trans 'Palette' %}" title="{% trans 'Palette' %}" aria-label="{% trans 'Palette' %}" aria-pressed="false"
+            class="sb-swatch" style="background:conic-gradient(#ffffff 0% 50%,#7a2b68 50%)"></button>
+          <button type="button" onclick="setTheme('dark')" data-swatch="dark" data-name="{% trans 'Dark' %}" title="{% trans 'Dark' %}" aria-label="{% trans 'Dark' %}" aria-pressed="false"
+            class="sb-swatch" style="background:conic-gradient(#0c1221 0% 50%,#d46ea4 50%)"></button>
+          <button type="button" onclick="setTheme('pastel')" data-swatch="pastel" data-name="{% trans 'Pastel' %}" title="{% trans 'Pastel' %}" aria-label="{% trans 'Pastel' %}" aria-pressed="false"
+            class="sb-swatch" style="background:conic-gradient(#fff2f5 0% 50%,#e07898 50%)"></button>
+          <button type="button" onclick="setTheme('lemonade')" data-swatch="lemonade" data-name="{% trans 'Editorial' %}" title="{% trans 'Editorial' %}" aria-label="{% trans 'Editorial' %}" aria-pressed="false"
+            class="sb-swatch" style="background:conic-gradient(#f4faf0 0% 50%,#4a9b55 50%)"></button>
+        </div>
+        <p class="text-[11px] text-base-content/45 -mt-1 px-0.5">{% trans "Theme" %}: <span id="theme-name" class="serif italic text-base-content/75" aria-live="polite"></span></p>
+
+        <form action="{% url 'set_language' %}" method="post" class="sb-seg" aria-label="{% trans 'Language' %}">
           {% csrf_token %}
-          {% strip_lang_prefix request.path as clean_path %}
           <input type="hidden" name="next" value="{{ clean_path }}">
-          <button type="submit" name="language" value="en" class="language-option {% if LANGUAGE_CODE == 'en' %}active{% endif %}">English</button>
-          <button type="submit" name="language" value="pt" class="language-option {% if LANGUAGE_CODE == 'pt' %}active{% endif %}">Português</button>
-          <button type="submit" name="language" value="cs" class="language-option {% if LANGUAGE_CODE == 'cs' %}active{% endif %}">Čeština</button>
+          <button type="submit" name="language" value="en" lang="en" title="English" aria-label="English" {% if LANGUAGE_CODE == 'en' %}aria-current="true"{% endif %}>EN</button>
+          <button type="submit" name="language" value="pt" lang="pt" title="Português" aria-label="Português" {% if LANGUAGE_CODE == 'pt' %}aria-current="true"{% endif %}>PT</button>
+          <button type="submit" name="language" value="cs" lang="cs" title="Čeština" aria-label="Čeština" {% if LANGUAGE_CODE == 'cs' %}aria-current="true"{% endif %}>CS</button>
         </form>
       </div>
-    </div>
 
-    <!-- CTA -->
-    <div class="flex flex-col gap-1">
-      <button id="theme-compact" onclick="cycleTheme()"
-        class="rounded-lg py-1 px-2 w-full flex items-center gap-2 text-base-content/60 active:bg-base-300 transition-colors">
-        <i data-lucide="palette" class="w-6 h-6 shrink-0"></i>
-        <span class="fade-label nav-label">{% trans "Theme" %}</span>
-      </button>
-      {% if user.is_authenticated %}
-      <form action="{% url 'logout' %}" method="post">
-        {% csrf_token %}
-        <button type="submit" id="logout-sb"
-          class="rounded-lg py-1 px-2 w-full flex items-center gap-2 text-base-content/60 active:bg-base-300 transition-colors">
-          <i data-lucide="log-out" class="w-6 h-6 shrink-0"></i>
-          <span id="cta-label" class="fade-label nav-label">{% trans "Logout" %}</span>
+      <!-- Collapsed sidebar: icon buttons instead -->
+      <div class="sb-narrow flex flex-col gap-1">
+        <button type="button" id="theme-compact" onclick="cycleTheme()" title="{% trans 'Theme' %}" aria-label="{% trans 'Theme' %}"
+          class="sb-row rounded-lg py-1 px-2 w-full flex items-center gap-2 text-base-content/60 transition-colors">
+          <i data-lucide="palette" class="w-6 h-6 shrink-0"></i>
         </button>
-      </form>
-      {% else %}
-      <a href="{% url 'register' %}" class="btn btn-primary btn-sm w-full gap-2 rounded-xl">
-        <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
-        <span id="cta-label" class="fade-label">{% trans "Get started" %}</span>
-      </a>
-      {% endif %}
+        <div class="relative language-switcher">
+          <button type="button" id="language-toggle-sb" title="{% trans 'Language' %}" aria-label="{% trans 'Language' %}"
+            class="sb-row rounded-lg py-1 px-2 w-full flex items-center gap-2 text-base-content/60 transition-colors">
+            <i data-lucide="globe" class="w-6 h-6 shrink-0"></i>
+          </button>
+          <div class="language-dropdown" id="lang-dd-sidebar">
+            <form action="{% url 'set_language' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{ clean_path }}">
+              <button type="submit" name="language" value="en" class="language-option {% if LANGUAGE_CODE == 'en' %}active{% endif %}">English</button>
+              <button type="submit" name="language" value="pt" class="language-option {% if LANGUAGE_CODE == 'pt' %}active{% endif %}">Português</button>
+              <button type="submit" name="language" value="cs" class="language-option {% if LANGUAGE_CODE == 'cs' %}active{% endif %}">Čeština</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -398,27 +326,16 @@ function toggleSidebar() {
     el.style.lineHeight = sbOpen ? '' : '0';
     el.style.overflow   = sbOpen ? '' : 'hidden';
   });
-  ['logo-text','cta-label'].forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.style.opacity = sbOpen ? '1' : '0';
-    el.style.width   = sbOpen ? '' : '0';
-    el.style.overflow = sbOpen ? '' : 'hidden';
-  });
-  const themeRow = document.getElementById('theme-row');
-  if (themeRow) {
-    themeRow.style.opacity  = sbOpen ? '1' : '0';
-    themeRow.style.height   = sbOpen ? '' : '0';
-    themeRow.style.overflow = sbOpen ? '' : 'hidden';
-    themeRow.style.marginBottom = sbOpen ? '' : '0';
-  }
-  ['lbl-main','lbl-tools'].forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.style.height = sbOpen ? '18px' : '0';
+  const logo = document.getElementById('logo-text');
+  logo.style.opacity  = sbOpen ? '1' : '0';
+  logo.style.width    = sbOpen ? '' : '0';
+  logo.style.overflow = sbOpen ? '' : 'hidden';
+  document.querySelectorAll('#sidebar .sb-label').forEach(el => {
+    el.style.height = sbOpen ? '' : '0';
     el.style.opacity = sbOpen ? '1' : '0';
     el.style.marginBottom = sbOpen ? '' : '0';
   });
+  // .sb-wide / .sb-narrow blocks swap via CSS on this class.
   document.getElementById('sidebar').classList.toggle('collapsed', !sbOpen);
 
   lucide.createIcons();
@@ -433,6 +350,10 @@ function closeMobileSidebar() {
   document.getElementById('sidebar').classList.remove('mobile-open');
   document.getElementById('drawer-overlay').classList.remove('show');
 }
+// Visitor tool links jump to a section of the same page: close the drawer so it's visible.
+document.querySelectorAll('#sidebar a[href*="#"]').forEach(a => {
+  a.addEventListener('click', closeMobileSidebar);
+});
 
 // ── Theme
 function setTheme(t) {
@@ -450,7 +371,9 @@ function setTheme(t) {
 
 function updateThemeUI(t) {
   document.querySelectorAll('[data-swatch]').forEach(btn => {
-    btn.style.borderColor = btn.dataset.swatch === t ? 'var(--color-primary)' : '';
+    const on = btn.dataset.swatch === t;
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    if (on) document.getElementById('theme-name').textContent = btn.dataset.name;
   });
 }
 

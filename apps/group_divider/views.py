@@ -82,4 +82,5 @@ class GroupDividerHome(LoginRequiredMixin, TemplateView):
             "size": selected_group_size,
             "mode": mode,
         }
-        return redirect(reverse("group_divider:home"))
+        # Land on the new teams instead of the top of the page.
+        return redirect(reverse("group_divider:home") + "#results")

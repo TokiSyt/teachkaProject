@@ -1,58 +1,41 @@
 {% extends "base.html" %}
+{% load static %}
 {% load i18n %}
 
 {% block title %}{% trans "Timer" %} · Teachka{% endblock title %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+<link rel="stylesheet" href="{% static 'css/apps.css' %}">
+{% endblock %}
+
 {% block content %}
+<div class="lp ap">
 
-<section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
-  <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
-    <span class="serif font-medium text-primary" style="font-size:180px;line-height:1">⏱</span>
-  </div>
-  <div class="relative z-10">
-    <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">
-      {% trans "Tools" %} · {% trans "Timer" %}
-    </p>
-    <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
-      <span class="text-primary">{% trans "Timer" %}</span>
-    </h1>
-    <p class="drift drift-3 text-[11px] tracking-[2px] uppercase text-base-content/30">
-      {% trans "Countdown timers and stopwatches" %}
-    </p>
-  </div>
-</section>
+  <header class="ap-sec ap-hero">
+    <span class="ap-badge" aria-hidden="true"><i data-lucide="timer"></i></span>
+    <div class="ap-hero-text">
+      <p class="lp-eyebrow lp-rise"><span class="lp-eyebrow-dot"></span>{% trans "Tools" %} · {% trans "Timer" %}</p>
+      <h1 class="ap-title lp-soft lp-rise lp-rise-2">{% trans "Timer" %}</h1>
+      <p class="ap-lede lp-rise lp-rise-3">{% trans "Countdown timers and stopwatches" %}</p>
+    </div>
+  </header>
 
-<section class="px-5 py-10 md:px-14">
-  <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Choose a mode" %}</p>
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-lg">
+  <section class="ap-sec">
+    <p class="ap-label">{% trans "Choose a mode" %}</p>
+    <div class="ap-choices">
+      <a href="{% url 'timer:stopwatch' %}" class="ap-choice">
+        <span class="ap-choice-icon"><i data-lucide="timer"></i></span>
+        <h3 class="lp-soft">{% trans "Stopwatch" %}</h3>
+        <p>{% trans "Count up with lap flags" %}</p>
+      </a>
+      <a href="{% url 'timer:countdown' %}" class="ap-choice">
+        <span class="ap-choice-icon"><i data-lucide="hourglass"></i></span>
+        <h3 class="lp-soft">{% trans "Countdown" %}</h3>
+        <p>{% trans "Set a duration and count down to zero" %}</p>
+      </a>
+    </div>
+  </section>
 
-    <a href="{% url 'timer:stopwatch' %}" class="card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md transition-all duration-200">
-      <div class="card-body p-6 flex flex-col gap-0">
-        <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
-          <i data-lucide="timer" class="w-[18px] h-[18px]"></i>
-        </div>
-        <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">{% trans "Stopwatch" %}</h3>
-        <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">{% trans "Count up with lap flags" %}</p>
-        <div class="mt-4 text-base-content/25 flex items-center">
-          <i data-lucide="arrow-right" class="w-4 h-4"></i>
-        </div>
-      </div>
-    </a>
-
-    <a href="{% url 'timer:countdown' %}" class="card bg-base-100 border border-base-300 rounded-[18px] hover:-translate-y-1 hover:shadow-md transition-all duration-200">
-      <div class="card-body p-6 flex flex-col gap-0">
-        <div class="w-10 h-10 rounded-[10px] bg-base-200 flex items-center justify-center mb-3.5 text-primary">
-          <i data-lucide="hourglass" class="w-[18px] h-[18px]"></i>
-        </div>
-        <h3 class="serif text-[17px] font-medium tracking-tight mb-2 text-base-content">{% trans "Countdown" %}</h3>
-        <p class="text-[13px] text-base-content/55 leading-relaxed font-light flex-1">{% trans "Set a duration and count down to zero" %}</p>
-        <div class="mt-4 text-base-content/25 flex items-center">
-          <i data-lucide="arrow-right" class="w-4 h-4"></i>
-        </div>
-      </div>
-    </a>
-
-  </div>
-</section>
-
+</div>
 {% endblock content %}

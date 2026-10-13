@@ -1,52 +1,58 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load i18n %}
 
 {% block title %}{% trans "Delete account" %} · Teachka{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
 {% block content %}
+<div class="lp">
+<section class="au is-danger">
 
-  <!-- ── HEADER ── -->
-  <section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
-    <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
-      <i data-lucide="trash-2" class="text-error" style="width:180px;height:180px;"></i>
-    </div>
-    <div class="relative z-10">
-      <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Account" %}</p>
-      <h1 class="serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
-        {% trans "Delete" %} <em class="text-error font-light">{% trans "account" %}</em>
-      </h1>
-      <p class="text-sm text-base-content/50 max-w-md leading-relaxed">
-        {% trans "This will permanently delete your account and all associated data: groups, members, points, and usage stats. This action cannot be undone." %}
-      </p>
-    </div>
-  </section>
+  <div class="au-main">
+    <p class="lp-eyebrow lp-rise"><span class="lp-eyebrow-dot"></span>{% trans "Account" %}</p>
+    <h1 class="au-title lp-soft lp-rise lp-rise-2">{% trans "Delete" %} <em>{% trans "account" %}</em></h1>
+    <p class="au-lede lp-rise lp-rise-2">{% trans "This will permanently delete your account and all associated data: groups, members, points, and usage stats. This action cannot be undone." %}</p>
 
-  <!-- ── FORM ── -->
-  <section class="px-5 py-8 md:px-14">
-
-    <form method="post" class="max-w-sm">
+    <form method="post" class="au-form lp-rise lp-rise-3" novalidate>
       {% csrf_token %}
-
-      <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Confirm with password" %}</p>
-
-      <div class="card bg-base-100 border border-base-300 mb-6">
-        <div class="card-body p-5">
-          <label class="text-xs text-base-content/40 mb-1 block">{% trans "Password" %}</label>
-          <input type="password" name="password" required autofocus
-                 class="input input-bordered w-full" placeholder="••••••••">
+      <div class="au-field">
+        <label for="id_password" class="au-label">{% trans "Confirm with password" %}</label>
+        <div class="au-pw">
+          <input type="password" name="password" id="id_password" class="input"
+                 autocomplete="current-password" placeholder="••••••••" required autofocus>
+          <button type="button" class="au-pw-toggle" data-password-toggle="id_password"
+                  aria-label="{% trans 'Toggle password visibility' %}" aria-pressed="false">
+            <i data-lucide="eye"></i>
+          </button>
         </div>
       </div>
 
-      <div class="flex flex-wrap gap-2">
-        <button type="submit" class="btn-as-link">
-          {% trans "Delete my account" %}
+      <div class="au-actions">
+        <button type="submit" class="btn btn-error w-full rounded-full">
+          <i data-lucide="trash-2" class="w-4 h-4"></i>{% trans "Delete my account" %}
         </button>
-        <a href="{% url 'profile:settings' %}" class="btn btn-ghost btn-sm">
+        <a href="{% url 'profile:settings' %}" class="btn btn-ghost w-full rounded-full border border-base-300 font-medium text-base-content/75">
           {% trans "Cancel" %}
         </a>
       </div>
     </form>
+  </div>
 
-  </section>
+  <aside class="au-aside lp-rise lp-rise-3" aria-hidden="true">
+    <div class="au-stage">
+      {% include "includes/delete_bubbles.html" %}
+    </div>
+  </aside>
 
+</section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/auth.js' %}"></script>
 {% endblock %}
