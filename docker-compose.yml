@@ -52,6 +52,8 @@ services:
     volumes:
       - .:/app
       - node_modules:/app/theme/static_src/node_modules
+      # Root deps (Vitest) for `make test-js`; keeps Linux binaries out of the host's node_modules.
+      - js_node_modules:/app/node_modules
     profiles:
       - dev
 
@@ -59,3 +61,4 @@ volumes:
   postgres_data:
   static_volume:
   node_modules:
+  js_node_modules:

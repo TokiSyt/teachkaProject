@@ -62,8 +62,9 @@ test:
 	docker compose exec web pytest
 
 # Run JavaScript tests with Vitest
+# (Runs in the Node-based `tailwind` service from the repo root; the web image has no Node.)
 test-js:
-	docker compose exec web sh -c "cd /app && npm install --silent && npm test"
+	docker compose run --rm tailwind sh -c "cd /app && npm install --silent && npm test"
 
 # Run tests with coverage report
 test-cov:
