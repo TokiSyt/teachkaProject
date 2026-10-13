@@ -1,224 +1,156 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}{% trans "Group divider" %} · Teachka{% endblock title %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+<link rel="stylesheet" href="{% static 'css/apps.css' %}">
+{% endblock %}
+
 {% block content %}
-<section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
-  <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
-    <i data-lucide="git-fork" class="text-primary" style="width:180px;height:180px;"></i>
-  </div>
-  <div class="relative z-10">
-    <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">
-      {% trans "Tools" %} · {% trans "Organization" %}
-    </p>
-    <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
-      <span class="text-primary">{% trans "Group" %}</span> {% trans "divider" %}
-    </h1>
-    <p class="drift drift-3 text-[11px] tracking-[2px] uppercase text-base-content/30">
-      {% trans "Split your group into smaller teams effortlessly" %}
-    </p>
-  </div>
-</section>
+<div class="lp ap">
 
-<section class="px-5 py-8 md:px-14 {% if splitted_teams %}border-b border-base-300{% endif %}">
-  <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Configuration" %}</p>
+  <header class="ap-sec ap-hero">
+    <span class="ap-badge" aria-hidden="true"><i data-lucide="git-fork"></i></span>
+    <div class="ap-hero-text">
+      <p class="lp-eyebrow lp-rise"><span class="lp-eyebrow-dot"></span>{% trans "Tools" %} · {% trans "Organization" %}</p>
+      <h1 class="ap-title lp-soft lp-rise lp-rise-2">{% trans "Group" %} <em>{% trans "divider" %}</em></h1>
+      <p class="ap-lede lp-rise lp-rise-3">{% trans "Split your group into smaller teams effortlessly" %}</p>
+    </div>
+  </header>
 
-  <form method="POST" id="divider-form">
-    {% csrf_token %}
+  <section class="ap-sec">
+    <p class="ap-label">{% trans "Configuration" %}</p>
 
-    <div class="flex items-start gap-2 max-w-lg">
-      <div class="card bg-base-100 border border-base-300 flex-1 min-w-0 !overflow-visible">
-        <div class="card-body p-0 divide-y divide-base-300">
+    <form method="POST" id="divider-form" class="ap-form lp-rise lp-rise-3">
+      {% csrf_token %}
 
-          <div class="px-5 py-4">
-            <p class="text-xs text-base-content/40 mb-1.5">{% trans "Group" %}</p>
-            <details class="relative w-full" id="groupDropdown">
-              <summary class="select select-bordered w-full cursor-pointer">
-                <span id="groupSelectLabel" class="truncate">
-                  {% if selected_group %}{{ selected_group.title }} - {{ selected_group.size }} {% trans "members" %}{% else %}{% trans "Choose a group..." %}{% endif %}
-                </span>
-              </summary>
-              <ul class="absolute left-0 right-0 mt-1 z-50 bg-base-100 border border-base-300 rounded-box p-1 max-h-60 overflow-y-auto shadow-lg">
-                {% for group in groups %}
-                <li class="flex flex-row items-center gap-1 hover:bg-base-200 rounded-md">
-                  <button type="button" class="flex-1 truncate text-left px-3 py-2 hover:bg-transparent"
-                          data-id="{{ group.id }}"
-                          data-label="{{ group.title }} - {{ group.size }} {% trans 'members' %}"
-                          onclick="pickGroup(this)">
-                    {{ group.title }} - {{ group.size }} {% trans "members" %}
-                  </button>
-                  <a href="{% url 'group_maker:group-maker-edit' group.id %}?origin_app=group_divider"
-                     class="btn btn-ghost btn-xs btn-square shrink-0"
-                     title="{% trans 'Edit group' %}" aria-label="{% trans 'Edit group' %}">
-                    <i data-lucide="pen-line" class="w-3 h-3"></i>
-                  </a>
-                  <a href="{% url 'group_maker:group-maker-delete' group.id %}?origin_app=group_divider"
-                     class="btn btn-ghost btn-xs btn-square shrink-0 text-error/70 hover:bg-error/10 hover:text-error"
-                     title="{% trans 'Delete group' %}" aria-label="{% trans 'Delete group' %}">
-                    <i data-lucide="trash-2" class="w-3 h-3"></i>
-                  </a>
-                </li>
-                {% empty %}
-                <li class="px-3 py-2 text-base-content/40">{% trans "No groups available" %}</li>
-                {% endfor %}
-              </ul>
-            </details>
-            <input type="hidden" name="group_id" id="groupSelect" value="{{ selected_group.id|default:'' }}" required>
-          </div>
-
-          {% with cur_mode=form.mode.value|default:"size" %}
-          <div class="px-5 py-4">
-            <p class="text-xs text-base-content/40 mb-2">{% trans "Split by" %}</p>
-            <div class="grid grid-cols-2 gap-2" id="modeCards">
-              <label class="mode-card relative flex cursor-pointer flex-col gap-1 rounded-box border bg-base-100 p-3 transition-colors hover:bg-base-200 {% if cur_mode != 'teams' %}border-primary bg-base-200{% else %}border-base-300{% endif %}">
-                <input type="radio" name="mode" value="size" class="sr-only mode-radio"
-                       {% if cur_mode != 'teams' %}checked{% endif %}>
-                <span class="flex items-center gap-2">
-                  <i data-lucide="users" class="w-4 h-4 text-primary shrink-0"></i>
-                  <span class="font-medium text-sm">{% trans "Team size" %}</span>
-                </span>
-                <span class="text-xs text-base-content/40">{% trans "Fixed members per team" %}</span>
-              </label>
-              <label class="mode-card relative flex cursor-pointer flex-col gap-1 rounded-box border bg-base-100 p-3 transition-colors hover:bg-base-200 {% if cur_mode == 'teams' %}border-primary bg-base-200{% else %}border-base-300{% endif %}">
-                <input type="radio" name="mode" value="teams" class="sr-only mode-radio"
-                       {% if cur_mode == 'teams' %}checked{% endif %}>
-                <span class="flex items-center gap-2">
-                  <i data-lucide="layout-grid" class="w-4 h-4 text-primary shrink-0"></i>
-                  <span class="font-medium text-sm">{% trans "Number of teams" %}</span>
-                </span>
-                <span class="text-xs text-base-content/40">{% trans "Fixed team count" %}</span>
-              </label>
-            </div>
-          </div>
-
-          <div class="px-5 py-4">
-            <p class="text-xs text-base-content/40 mb-1.5" id="sizeLabel">
-              {% if cur_mode == 'teams' %}{% trans "How many teams?" %}{% else %}{% trans "Members per team" %}{% endif %}
-            </p>
-            <label class="input input-bordered flex items-center gap-2 w-full">
-              <i data-lucide="hash" class="w-4 h-4 text-base-content/30 shrink-0" id="sizeIcon"></i>
-              <input type="number" name="size" id="{{ form.size.id_for_label }}"
-                     value="{{ form.size.value|default:'' }}"
-                     class="grow min-w-0 bg-transparent"
-                     placeholder="0" min="1" required>
-            </label>
-          </div>
-          {% endwith %}
-
+      <div class="ap-field">
+        <div class="ap-field-row">
+          <span class="ap-field-label">{% trans "Group" %}</span>
+          <a href="{% url 'group_maker:group-maker-creation' %}?next={% url 'group_divider:home' %}" class="btn btn-ghost btn-xs gap-1 rounded-full border border-base-300 font-medium text-base-content/75">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>{% trans "New group" %}
+          </a>
         </div>
-      </div>
-
-      <div class="flex flex-col gap-2 shrink-0">
-        <a href="{% url 'group_maker:group-maker-creation' %}?next={% url 'group_divider:home' %}" class="btn btn-ghost btn-sm justify-start">
-          <i data-lucide="plus" class="w-4 h-4"></i>
-          {% trans "New group" %}
-        </a>
-      </div>
-    </div>
-
-    <div class="flex flex-wrap gap-2 mt-6">
-      <button type="submit" form="divider-form"
-              class="btn-as-link">
-        <i data-lucide="git-fork" class="w-4 h-4"></i>
-        {% trans "Divide" %}
-      </button>
-      <a href="{% url 'group_divider:home' %}?reset=1" class="btn btn-ghost btn-sm">
-        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-        {% trans "Reset" %}
-      </a>
-    </div>
-  </form>
-</section>
-
-{% if splitted_teams %}
-<section class="px-5 py-12 md:px-14 bg-base-200/40 min-h-[40vh]">
-  <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
-    <div>
-      <h2 class="serif text-3xl font-medium mb-1">{% trans "Selected teams" %}</h2>
-      <p class="text-[11px] tracking-[2px] uppercase text-base-content/30">{% trans "Source" %}: {{ selected_group.title }}</p>
-    </div>
-    <div class="stats shadow-sm border border-base-300 bg-base-100">
-      <div class="stat py-2 px-4">
-        <div class="stat-title text-[10px] uppercase tracking-widest">{% trans "Total Teams" %}</div>
-        <div class="stat-value text-xl serif text-primary">{{ splitted_teams|length }}</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    {% for team in splitted_teams %}
-      {% with color=team|last %}
-      <div class="card bg-base-100 border border-base-300 shadow-sm hover:shadow-md transition-all drift"
-           style="animation-delay: {% widthratio forloop.counter0 1 100 %}ms">
-
-        <div class="p-4 border-b border-base-200 flex items-center justify-between" style="background-color: {{ color }}10;">
-          <h3 class="serif font-semibold text-lg" style="color: {{ color }};">{% trans "Team" %} {{ forloop.counter }}</h3>
-          <div class="badge badge-outline border-base-300 text-[10px] font-bold opacity-60 uppercase">
-            {{ team|length|add:"-1" }} {% trans "Members" %}
-          </div>
-        </div>
-
-        <div class="p-2">
-          <ul class="menu menu-sm w-full">
-            {% for member in team %}
-              {% if not forloop.last %}
-              <li class="flex flex-row items-center gap-3 px-4 py-2 hover:bg-transparent">
-                <span class="w-1.5 h-1.5 rounded-full" style="background-color: {{ color }};"></span>
-                {% if member.id %}
-                <a href="{% url 'karma:karma-dashboard' member.id %}"
-                   class="font-medium text-base-content/80 hover:text-primary transition-colors">{{ member.name }}</a>
-                {% else %}
-                <span class="font-medium text-base-content/80">{{ member.name }}</span>
-                {% endif %}
-              </li>
-              {% endif %}
+        <details class="ap-dropdown" id="groupDropdown">
+          <summary>
+            <span id="groupSelectLabel">{% if selected_group %}{{ selected_group.title }} - {{ selected_group.size }} {% trans "members" %}{% else %}{% trans "Choose a group..." %}{% endif %}</span>
+            <i data-lucide="chevron-down"></i>
+          </summary>
+          <ul class="ap-menu">
+            {% for group in groups %}
+            <li>
+              <button type="button" class="ap-menu-pick" data-id="{{ group.id }}" data-label="{{ group.title }} - {{ group.size }} {% trans 'members' %}">
+                {{ group.title }} - {{ group.size }} {% trans "members" %}
+              </button>
+              <a href="{% url 'group_maker:group-maker-edit' group.id %}?origin_app=group_divider"
+                 class="btn btn-ghost btn-xs btn-circle shrink-0"
+                 title="{% trans 'Edit group' %}" aria-label="{% trans 'Edit group' %}">
+                <i data-lucide="pen-line" class="w-3.5 h-3.5"></i>
+              </a>
+              <a href="{% url 'group_maker:group-maker-delete' group.id %}?origin_app=group_divider"
+                 class="btn btn-ghost btn-xs btn-circle shrink-0 text-error/70 hover:text-error"
+                 title="{% trans 'Delete group' %}" aria-label="{% trans 'Delete group' %}">
+                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+              </a>
+            </li>
+            {% empty %}
+            <li class="ap-menu-empty">{% trans "No groups available" %}</li>
             {% endfor %}
           </ul>
+        </details>
+        <input type="hidden" name="group_id" id="groupSelect" value="{{ selected_group.id|default:'' }}" required>
+      </div>
+
+      {% with cur_mode=form.mode.value|default:"size" %}
+      <fieldset class="ap-field">
+        <legend class="ap-field-label mb-2">{% trans "Split by" %}</legend>
+        <div class="ap-modes">
+          <label class="ap-mode">
+            <input type="radio" name="mode" value="size" class="mode-radio" {% if cur_mode != 'teams' %}checked{% endif %}>
+            <span class="ap-mode-body">
+              <span class="ap-mode-icon"><i data-lucide="users"></i></span>
+              <span>
+                <span class="ap-mode-title">{% trans "Team size" %}</span>
+                <span class="ap-mode-desc">{% trans "Fixed members per team" %}</span>
+              </span>
+            </span>
+          </label>
+          <label class="ap-mode">
+            <input type="radio" name="mode" value="teams" class="mode-radio" {% if cur_mode == 'teams' %}checked{% endif %}>
+            <span class="ap-mode-body">
+              <span class="ap-mode-icon"><i data-lucide="layout-grid"></i></span>
+              <span>
+                <span class="ap-mode-title">{% trans "Number of teams" %}</span>
+                <span class="ap-mode-desc">{% trans "Fixed team count" %}</span>
+              </span>
+            </span>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="ap-field">
+        <label for="{{ form.size.id_for_label }}" class="ap-field-label" id="sizeLabel"
+               data-size="{% trans 'Members per team' %}" data-teams="{% trans 'How many teams?' %}">
+          {% if cur_mode == 'teams' %}{% trans "How many teams?" %}{% else %}{% trans "Members per team" %}{% endif %}
+        </label>
+        <div class="ap-input-icon" id="sizeIconWrap">
+          <i data-lucide="{% if cur_mode == 'teams' %}layout-grid{% else %}hash{% endif %}"></i>
+          <input type="number" name="size" id="{{ form.size.id_for_label }}" value="{{ form.size.value|default:'' }}"
+                 class="input" placeholder="0" min="1" required>
         </div>
       </div>
       {% endwith %}
-    {% endfor %}
-  </div>
-</section>
-{% endif %}
 
-<script>
-function pickGroup(btn) {
-  const sel = document.getElementById('groupSelect');
-  sel.value = btn.dataset.id;
-  document.getElementById('groupSelectLabel').textContent = btn.dataset.label;
-  const dd = document.getElementById('groupDropdown');
-  if (dd) dd.open = false;
-  sel.dispatchEvent(new Event('change', { bubbles: true }));
-  const f = btn.closest('form');
-  if (f && f.dataset.autosubmit === '1') f.submit();
-}
-document.addEventListener('click', function(e) {
-  const dd = document.getElementById('groupDropdown');
-  if (dd && dd.open && !dd.contains(e.target)) dd.open = false;
-});
-document.querySelectorAll('.mode-radio').forEach(r => {
-  r.addEventListener('change', function () {
-    if (!this.checked) return;
-    const teams = this.value === 'teams';
-    // Active card styling
-    document.querySelectorAll('.mode-card').forEach(card => {
-      const on = card.contains(this);
-      card.classList.toggle('border-primary', on);
-      card.classList.toggle('bg-base-200', on);
-      card.classList.toggle('border-base-300', !on);
-    });
-    // Dynamic field label + icon
-    document.getElementById('sizeLabel').textContent =
-      teams ? '{% trans "How many teams?" %}' : '{% trans "Members per team" %}';
-    const icon = document.getElementById('sizeIcon');
-    if (icon) {
-      icon.setAttribute('data-lucide', teams ? 'layout-grid' : 'hash');
-      if (window.lucide) lucide.createIcons();
-    }
-  });
-});
-</script>
+      <div class="ap-actions">
+        <button type="submit" class="btn btn-primary rounded-full gap-2 px-7">
+          <i data-lucide="git-fork" class="w-4 h-4"></i>{% trans "Divide" %}
+        </button>
+        <a href="{% url 'group_divider:home' %}?reset=1" class="btn btn-ghost gap-2 rounded-full border border-base-300 font-medium text-base-content/75">
+          <i data-lucide="rotate-ccw" class="w-4 h-4"></i>{% trans "Reset" %}
+        </a>
+      </div>
+    </form>
 
+    {% if splitted_teams %}
+    <div class="ap-results" id="results">
+      <div class="ap-results-head">
+        <h2 class="lp-soft">{% trans "Selected teams" %}</h2>
+        <span class="ap-chip is-ink">{% trans "Source" %}: {{ selected_group.title }}</span>
+        <span class="ap-chip is-ink">{% trans "Total Teams" %}: {{ splitted_teams|length }}</span>
+      </div>
+
+      <div class="ap-teams">
+        {% for team in splitted_teams %}
+        {% with color=team|last %}
+        <div class="ap-team" style="--c: {{ color }}">
+          <div class="ap-team-head">
+            <h3 class="lp-soft">{% trans "Team" %} {{ forloop.counter }}</h3>
+            <span class="ap-chip">{{ team|length|add:"-1" }} {% trans "Members" %}</span>
+          </div>
+          <div class="ap-members">
+            {% for member in team %}
+              {% if not forloop.last %}
+                {% if member.id %}
+                <a href="{% url 'karma:karma-dashboard' member.id %}" class="ap-member">{{ member.name }}</a>
+                {% else %}
+                <span class="ap-member">{{ member.name }}</span>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        {% endwith %}
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </section>
+
+</div>
 {% endblock content %}
+
+{% block extra_js %}
+<script src="{% static 'js/group_divider.js' %}"></script>
+{% endblock %}
