@@ -165,8 +165,7 @@
   background: var(--color-base-100);
   box-shadow:
     0 0 0 2px color-mix(in oklab, var(--lp-ink) 55%, transparent),
-    0 0 0 3.2cqi var(--lp-tint),
-    0 1.5cqi 5cqi color-mix(in oklab, var(--lp-ink) 18%, transparent);
+    0 0 0 3.2cqi var(--lp-tint);
   gap: 2cqi;
 }
 .lp-class-label { font-size: clamp(12px, 4.4cqi, 22px); font-weight: 500; }

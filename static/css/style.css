@@ -21,7 +21,7 @@
   --sidebar-background: #f8f9fa;
   --text-color: #212529;
   --tr-text-color: #f1f3f5;
-  --form-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  --form-shadow: none;
   --form-background: #f8f9fa;
   --form-result-head: #d9dadb;
   --form-result-body: #f5f4f4;
@@ -51,7 +51,7 @@
   --text-color: #f9fafb;
   --tr-text-color: #f9fafb;
   --tr-hover-color: #ffffff;
-  --form-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --form-shadow: none;
   --form-background: #1f2937;
   --form-result-head: #374151;
   --form-result-body: #1f2937;
@@ -119,7 +119,7 @@
   --text-color: oklch(39% 0.100 360);
   --tr-text-color: oklch(39% 0.100 360);
   --tr-hover-color: oklch(30% 0.080 360);
-  --form-shadow: 0 2px 8px oklch(70% 0.060 354 / 0.15);
+  --form-shadow: none;
   --form-background: oklch(97% 0.014 343);
   --form-result-head: oklch(91% 0.040 343);
   --form-result-body: oklch(96% 0.020 343);
@@ -142,6 +142,10 @@
   --radius-field: 0.5rem;
   --radius-box: 0.75rem;
 }
+/* Flat UI, no soft glows: --depth drives daisyUI's built-in shadows (buttons, inputs, checkboxes).
+   html[...] outranks the themes' own [data-theme=x] rules. The modal box has a fixed shadow. */
+html[data-theme] { --depth: 0; }
+.modal-box { box-shadow: none; }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
@@ -450,7 +454,6 @@ form-container table { width: 100%; border-collapse: collapse; font-size: 0.95re
   background: var(--sidebar-background);
   border: 1px solid var(--form-border-color);
   border-radius: 0.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 1002;
   min-width: 130px;
   overflow: hidden;
@@ -490,10 +493,6 @@ form-container table { width: 100%; border-collapse: collapse; font-size: 0.95re
 .language-option.active {
   font-weight: 600;
   color: var(--icon-hover-color);
-}
-
-[data-theme="dark"] .language-dropdown {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 
@@ -548,7 +547,6 @@ input:where(.toggle) { border: var(--border) solid currentColor; padding: var(--
   line-height: 1.25rem;
   cursor: pointer;
   text-decoration: none;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   transition: background-color 0.15s ease, transform 0.05s ease;
   -webkit-appearance: none;
   appearance: none;
@@ -613,7 +611,6 @@ input:where(.toggle) { border: var(--border) solid currentColor; padding: var(--
   line-height: 1.25rem;
   cursor: pointer;
   text-decoration: none;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   transition: background-color 0.15s ease, transform 0.05s ease;
   -webkit-appearance: none;
   appearance: none;
@@ -902,15 +899,6 @@ input[type="password"]::-webkit-textfield-decoration-container {
 
 [data-theme="pastel"] .focus\:border-primary-500:focus {
   border-color: oklch(83% 0.075 354) !important;
-}
-
-[data-theme="pastel"] .rounded-2xl:not(.quiz-correct),
-[data-theme="pastel"] .rounded-lg:not(#sidebar *) {
-  box-shadow: 0 2px 8px oklch(70% 0.060 354 / 0.15) !important;
-}
-
-[data-theme="pastel"] #sidebar .rounded-lg {
-  box-shadow: none !important;
 }
 
 [data-theme="pastel"] .bg-gray-100.hover\:bg-gray-200,
