@@ -20,52 +20,12 @@
       <div class="lp-cta-row lp-rise lp-rise-4">
         <a href="{% url 'register' %}" class="btn btn-primary lp-cta">
           {% trans "Create your free account" %}
-          <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </a>
         <p class="lp-note">{% trans "Free to use. No payment details." %}</p>
       </div>
     </div>
 
-    <div class="lp-cluster-wrap" aria-hidden="true">
-      <div class="lp-cluster">
-        <svg class="lp-links" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <line x1="50" y1="50" x2="20" y2="22"/>
-          <line x1="50" y1="50" x2="79" y2="20"/>
-          <line x1="50" y1="50" x2="86" y2="54"/>
-        </svg>
-
-        <div class="lp-bub is-class lp-soft" style="--x:50;--y:50;--d:40;--i:0">
-          <span class="lp-class-label">{% trans "Your class" %}</span>
-          <span class="lp-dots">
-            <i style="--c:var(--color-primary)"></i><i style="--c:var(--color-secondary)"></i><i style="--c:var(--color-success)"></i><i style="--c:var(--color-info)"></i>
-            <i style="--c:var(--color-success)"></i><i style="--c:var(--color-warning)"></i><i style="--c:var(--color-primary)"></i><i style="--c:var(--color-error)"></i>
-            <i style="--c:var(--color-secondary)"></i><i style="--c:var(--color-info)"></i><i style="--c:var(--color-success)"></i><i style="--c:var(--color-success)"></i>
-          </span>
-        </div>
-
-        <div class="lp-bub is-linked" style="--x:20;--y:22;--d:26;--i:1">
-          <i data-lucide="book-open-check"></i>{% trans "Point system" %}
-        </div>
-        <div class="lp-bub is-linked" style="--x:79;--y:20;--d:25;--i:2">
-          <i data-lucide="users"></i>{% trans "Group divider" %}
-        </div>
-        <div class="lp-bub is-linked" style="--x:86;--y:54;--d:22;--i:3">
-          <i data-lucide="loader-pinwheel"></i>{% trans "Name wheel" %}
-        </div>
-        <div class="lp-bub" style="--x:73;--y:84;--d:22;--i:4">
-          <i data-lucide="clock"></i>{% trans "Timer" %}
-        </div>
-        <div class="lp-bub" style="--x:33;--y:84;--d:26;--i:5">
-          <i data-lucide="badge-question-mark"></i>{% trans "Quizzes" %}
-        </div>
-        <div class="lp-bub" style="--x:12;--y:58;--d:20;--i:6">
-          <i data-lucide="calendar-check"></i>{% trans "Calendar" %}
-        </div>
-        <div class="lp-bub" style="--x:50;--y:11;--d:20;--i:7">
-          <i data-lucide="calculator"></i>{% trans "Grade calculator" %}
-        </div>
-      </div>
-    </div>
+    {% include "includes/class_cluster.html" %}
   </section>
 
   <!-- ── AROUND YOUR CLASS ── -->
@@ -213,7 +173,7 @@
             <div class="lp-day is-today">{% trans "Tue" %}<b>13</b><span class="flex gap-0.5"><span class="lp-dot"></span><span class="lp-dot"></span></span></div>
             <div class="lp-day">{% trans "Wed" %}<b>14</b><span class="lp-dot is-holiday"></span></div>
             <div class="lp-day">{% trans "Thu" %}<b>15</b><span class="lp-dot"></span></div>
-            <div class="lp-day">{% trans "Fri" %}<b>16</b><span class="lp-dot" style="opacity:0"></span></div>
+            <div class="lp-day">{% trans "Fri" %}<b>16</b><span class="lp-dot is-blank"></span></div>
           </div>
         </div>
       </div>
@@ -248,7 +208,6 @@
       <p>{% trans "Add a class, then spin the name wheel or split them into teams." %}</p>
       <a href="{% url 'register' %}" class="btn btn-primary lp-cta">
         {% trans "Create your free account" %}
-        <i data-lucide="arrow-right" class="w-4 h-4"></i>
       </a>
     </div>
   </section>

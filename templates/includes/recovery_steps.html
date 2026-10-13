@@ -1,0 +1,26 @@
+{% load i18n %}
+{% comment %} Password recovery as three linked bubbles, built from the landing cluster pieces
+   (static/css/landing.css; needs an .lp ancestor). Args: step = the current step, 1 to 3.
+   Done steps are tinted with a check, the current one is the ringed white bubble. {% endcomment %}
+<div class="lp-cluster-wrap">
+  <div class="lp-cluster">
+    <svg class="lp-links" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <line x1="27" y1="25" x2="70" y2="45"/>
+      <line x1="70" y1="45" x2="38" y2="75"/>
+    </svg>
+
+    <div class="lp-bub au-step {% if step == 1 %}is-class{% else %}is-linked{% endif %}" style="--x:27;--y:25;--d:32;--i:0">
+      <i data-lucide="{% if step > 1 %}check{% else %}mail{% endif %}"></i>{% trans "Enter your email" %}
+    </div>
+    <div class="lp-bub au-step {% if step == 2 %}is-class{% elif step > 2 %}is-linked{% endif %}" style="--x:70;--y:45;--d:30;--i:1">
+      <i data-lucide="{% if step > 2 %}check{% else %}link{% endif %}"></i>{% trans "Open the link we send" %}
+    </div>
+    <div class="lp-bub au-step {% if step == 3 %}is-class{% endif %}" style="--x:38;--y:75;--d:34;--i:2">
+      <i data-lucide="key-round"></i>{% trans "Choose a new password" %}
+    </div>
+
+    <div class="lp-bub" style="--x:84;--y:80;--d:11;--i:3"></div>
+    <div class="lp-bub is-linked" style="--x:12;--y:56;--d:7;--i:4"></div>
+    <div class="lp-bub" style="--x:62;--y:12;--d:8;--i:5"></div>
+  </div>
+</div>

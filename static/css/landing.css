@@ -92,8 +92,6 @@
   font-weight: 500;
   gap: 0.6rem;
 }
-.lp-cta svg { transition: transform 0.2s var(--lp-ease); }
-.lp-cta:hover svg { transform: translateX(3px); }
 .lp-note { font-size: 0.8rem; color: var(--lp-muted); }
 
 @media (max-width: 767px) {
@@ -381,6 +379,7 @@
 .lp-day b { font-size: 1rem; font-weight: 500; }
 .lp-day.is-today { background: var(--lp-tint-strong); }
 .lp-day .lp-dot { width: 0.45rem; height: 0.45rem; }
+.lp-day .lp-dot.is-blank { opacity: 0; }
 .lp-day .lp-dot.is-holiday { background: var(--color-secondary); }
 
 /* Grades mock */

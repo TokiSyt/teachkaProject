@@ -1,0 +1,222 @@
+/* Visitor form pages (register, login, password reset).
+   Pages wrap their content in .lp so they share the landing page's colour tokens,
+   .lp-soft heading font and .lp-rise entrance from static/css/landing.css. */
+
+.au {
+  display: grid;
+  align-items: center;
+  gap: 2.5rem;
+  min-height: calc(100svh - 60px);
+  padding: 2rem 1.25rem 3rem;
+  background: var(--color-base-100);
+}
+@media (min-width: 900px) {
+  .au {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 3rem;
+    min-height: 100svh;
+    padding: 3rem 3.5rem;
+  }
+}
+.au-main { width: 100%; max-width: 28rem; justify-self: center; }
+
+/* ── Heading ── */
+.au-title {
+  margin: 1rem 0 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--color-base-content);
+  text-wrap: balance;
+}
+.au-lede { margin-top: 0.75rem; line-height: 1.6; font-weight: 300; color: var(--lp-muted); }
+
+/* ── Form ── */
+.au-form { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+.au-row { display: grid; gap: 1rem; }
+@media (min-width: 480px) { .au-row { grid-template-columns: 1fr 1fr; gap: 0.75rem; } }
+.au-field { display: flex; flex-direction: column; gap: 0.4rem; min-width: 0; }
+/* `.lp .au form label.x` matches the specificity of style.css's global
+   `form label:not(.input):not(.btn):not(.label)` (bold, display:block) and wins by loading later. */
+.lp .au form label.au-label,
+.lp .au form label.au-check { margin-bottom: 0; }
+.lp .au form label.au-label { display: block; font-weight: 500; color: color-mix(in oklab, var(--color-base-content) 75%, transparent); }
+.lp .au form label.au-check { display: flex; font-weight: 300; color: var(--lp-muted); }
+.lp .au form label.au-kind { margin-bottom: 0; font-weight: inherit; color: inherit; }
+
+.au-label {
+  padding-left: 0.25rem;
+  font-size: 0.8rem;
+}
+.au-label-row { display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; }
+.au-hint { padding-right: 0.25rem; font-size: 0.78rem; color: var(--lp-muted); }
+.au-hint:hover { color: var(--lp-ink); text-decoration: underline; text-underline-offset: 2px; }
+.au-optional { font-weight: 300; color: var(--lp-muted); }
+
+/* Pill inputs, matching the pill buttons. */
+.au .input {
+  width: 100%;
+  border-radius: 999px;
+  padding-inline: 1.1rem;
+  background: var(--color-base-100);
+  border: 1px solid color-mix(in oklab, var(--color-base-content) 22%, transparent);
+}
+.au .input:focus,
+.au .input:focus-within { border-color: var(--lp-ink); outline: 2px solid var(--lp-tint-strong); outline-offset: 0; }
+.au .input[aria-invalid="true"] { border-color: var(--color-error); }
+
+.au-pw { position: relative; }
+.au-pw .input { padding-right: 2.75rem; }
+.au-pw-toggle {
+  position: absolute; right: 0.4rem; top: 50%; transform: translateY(-50%);
+  display: grid; place-items: center;
+  width: 2rem; height: 2rem;
+  border-radius: 999px;
+  color: var(--lp-muted);
+}
+.au-pw-toggle:hover { color: var(--lp-ink); background: var(--lp-tint); }
+.au-pw-toggle svg { width: 1rem; height: 1rem; }
+
+.au-help { padding-left: 0.25rem; font-size: 0.78rem; color: var(--lp-muted); }
+.au-help summary {
+  display: inline-flex; align-items: center; gap: 0.25rem;
+  list-style: none; cursor: pointer; user-select: none;
+}
+.au-help summary::-webkit-details-marker { display: none; }
+.au-help summary svg { width: 0.85rem; height: 0.85rem; transition: transform 0.15s; }
+.au-help[open] summary svg { transform: rotate(180deg); }
+.au-help summary:hover { color: var(--lp-ink); }
+.au-help > div { margin-top: 0.4rem; line-height: 1.55; }
+.au-help ul { padding-left: 1rem; list-style: disc; }
+.au-error { padding-left: 0.25rem; font-size: 0.78rem; color: var(--color-error); }
+
+.au-check {
+  position: relative;
+  display: flex; align-items: flex-start; gap: 0.65rem;
+  padding-left: 0.25rem;
+  font-size: 0.875rem; line-height: 1.5;
+  cursor: pointer;
+}
+/* Round tick, like the theme swatches. The real checkbox stays focusable but invisible. */
+.au-check-input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.au-tick {
+  display: grid; place-items: center; flex-shrink: 0;
+  width: 1.25rem; height: 1.25rem; margin-top: 0.05rem;
+  border-radius: 999px;
+  border: 1.5px solid color-mix(in oklab, var(--color-base-content) 30%, transparent);
+  background: var(--color-base-100);
+  color: transparent;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+.au-tick svg { width: 0.8rem; height: 0.8rem; stroke-width: 3; }
+.au-check:hover .au-tick { border-color: var(--lp-ink); }
+.au-check-input:checked + .au-tick { background: var(--lp-ink); border-color: var(--lp-ink); color: var(--color-primary-content); }
+.au-check-input:focus-visible + .au-tick { outline: 2px solid var(--lp-tint-strong); outline-offset: 2px; }
+.au-check-input[aria-invalid="true"] + .au-tick { border-color: var(--color-error); }
+.au-check a { color: var(--color-base-content); text-decoration: underline; text-underline-offset: 2px; }
+.au-check a:hover { color: var(--lp-ink); }
+
+/* Tailwind v3's preflight is unlayered, so it beats daisyUI v5's layered components:
+   `button { background: transparent }` blanks <button class="btn"> and `* { border-width: 0 }`
+   strips daisyUI borders. Restore daisyUI's background only: <a class="btn"> (the sidebar
+   buttons) has no border either, so leaving it off keeps both looking the same. */
+.au button.btn { background-color: var(--btn-bg); background-image: none, var(--btn-noise); }
+
+.au-switch { margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid var(--lp-line); }
+.au-switch p { margin-bottom: 0.75rem; text-align: center; font-size: 0.875rem; color: var(--lp-muted); }
+
+/* ── Aside: the class cluster in a soft blob ── */
+.au-aside { display: none; }
+@media (min-width: 900px) {
+  .au-aside { display: grid; justify-items: center; gap: 1.5rem; }
+}
+.au-stage {
+  width: min(100%, 32rem);
+  aspect-ratio: 1;
+  padding: 7%;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: color-mix(in oklab, var(--color-primary) 7%, var(--color-base-100));
+}
+.au-stage .lp-cluster-wrap { width: 100%; height: 100%; min-height: 0; }
+.au-note {
+  display: flex; align-items: flex-start; gap: 0.55rem;
+  max-width: 24rem;
+  font-size: 0.85rem; line-height: 1.55; font-weight: 300;
+  color: var(--lp-muted);
+}
+.au-note svg { width: 1.05rem; height: 1.05rem; flex-shrink: 0; margin-top: 0.15rem; color: var(--lp-ink); }
+
+/* ── Contact: message kind picker (native radios) ── */
+.au-fieldset { display: flex; flex-direction: column; gap: 0.5rem; min-width: 0; }
+.au-fieldset legend { margin-bottom: 0.4rem; font-weight: 500; color: color-mix(in oklab, var(--color-base-content) 75%, transparent); }
+.au-kind { position: relative; display: block; cursor: pointer; }
+.au-kind input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.au-kind-body {
+  display: flex; align-items: center; gap: 0.95rem;
+  padding: 0.45rem 0.5rem;
+  border-radius: 1.25rem;
+}
+/* Only the icon bubble reacts; the row itself stays plain. */
+.au-kind input:focus-visible + .au-kind-body .au-kind-icon { outline: 2px solid var(--lp-tint-strong); outline-offset: 3px; }
+.au-kind-icon {
+  position: relative;
+  display: grid; place-items: center; flex-shrink: 0;
+  width: 2.6rem; height: 2.6rem;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: var(--lp-alt); color: var(--color-base-content);
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.25s, transform 0.35s var(--lp-ease);
+}
+.au-kind:nth-of-type(2) .au-kind-icon { border-radius: 55% 45% 47% 53% / 52% 58% 42% 48%; }
+.au-kind:nth-of-type(3) .au-kind-icon { border-radius: 50% 50% 44% 56% / 56% 44% 56% 44%; }
+/* Small satellite bubble, revealed when chosen. */
+.au-kind-icon::after {
+  content: "";
+  position: absolute;
+  right: -0.2rem; bottom: -0.1rem;
+  width: 0.7rem; height: 0.7rem;
+  border-radius: 999px;
+  background: var(--lp-tint-strong);
+  transform: scale(0);
+  transition: transform 0.35s var(--lp-ease);
+}
+.au-kind:hover .au-kind-icon { transform: scale(1.06); }
+.au-kind input:checked + .au-kind-body .au-kind-icon {
+  background: var(--lp-ink); color: var(--color-primary-content);
+  box-shadow: 0 0 0 0.3rem var(--lp-tint);
+  transform: scale(1.08);
+}
+.au-kind input:checked + .au-kind-body .au-kind-icon::after { transform: scale(1); }
+.au-kind-icon svg { width: 1.1rem; height: 1.1rem; }
+.au-kind-title { display: block; font-size: 0.9rem; font-weight: 500; color: var(--color-base-content); }
+.au-kind-desc { display: block; margin-top: 0.1rem; font-size: 0.78rem; line-height: 1.45; font-weight: 300; color: var(--lp-muted); }
+
+/* Multi-line field, rounded to match the pills without going full-oval. */
+.au .textarea {
+  width: 100%;
+  border-radius: 1.25rem;
+  padding: 0.75rem 1.1rem;
+  line-height: 1.6;
+  background: var(--color-base-100);
+  border: 1px solid color-mix(in oklab, var(--color-base-content) 22%, transparent);
+}
+.au .textarea:focus { border-color: var(--lp-ink); outline: 2px solid var(--lp-tint-strong); outline-offset: 0; }
+.au .textarea[aria-invalid="true"] { border-color: var(--color-error); }
+.au-count { padding-right: 0.25rem; font-size: 0.72rem; font-variant-numeric: tabular-nums; color: var(--lp-muted); }
+
+.au-small { padding-left: 0.25rem; font-size: 0.78rem; line-height: 1.55; font-weight: 300; color: var(--lp-muted); }
+.au-actions { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 2rem; }
+
+/* ── Asides for pages without the class cluster (includes/recovery_steps.html, contact_bubbles.html) ── */
+.au-step { font-size: clamp(9px, 2.8cqi, 14px); }
+/* The kind picked in the form grows and tints. `scale`, not transform, so the pop-in animation can't override it. */
+.au-kb { transition: scale 0.3s var(--lp-ease), background-color 0.2s; }
+.au:has(input[name="kind"][value="bug"]:checked) .au-kb-bug,
+.au:has(input[name="kind"][value="question"]:checked) .au-kb-question,
+.au:has(input[name="kind"][value="feature"]:checked) .au-kb-feature {
+  scale: 1.14;
+  background: var(--lp-tint-strong);
+}
+.au:has(input[name="kind"][value="bug"]:checked) .au-kb-bug svg,
+.au:has(input[name="kind"][value="question"]:checked) .au-kb-question svg,
+.au:has(input[name="kind"][value="feature"]:checked) .au-kb-feature svg { color: var(--lp-ink); opacity: 1; }

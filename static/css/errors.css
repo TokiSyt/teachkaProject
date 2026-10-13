@@ -1,0 +1,94 @@
+/* Error pages (403, 404, 500). Standalone: no sidebar, no base.html.
+   Pages wrap their content in .lp so they share the landing page's colour tokens,
+   .lp-soft heading font and .lp-rise / lp-pop entrances from static/css/landing.css. */
+
+/* base.css sets the body font on normal pages; these pages do not load it. */
+.er-body { font-family: 'Epilogue', system-ui, sans-serif; }
+
+.er {
+  position: relative;
+  display: grid;
+  align-content: center;
+  gap: 2.5rem;
+  min-height: 100svh;
+  padding: 4.5rem 1.25rem 3rem;
+  background: var(--color-base-100);
+}
+@media (min-width: 900px) {
+  .er {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 3rem;
+    padding: 3rem 3.5rem;
+  }
+}
+
+.er-brand {
+  position: absolute;
+  top: 1.25rem; left: 1.25rem;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--color-base-content);
+}
+@media (min-width: 900px) { .er-brand { top: 2rem; left: 3.5rem; } }
+
+.er-main { width: 100%; max-width: 28rem; justify-self: center; }
+.er-title {
+  margin: 1rem 0 0;
+  font-size: clamp(2.5rem, 6vw, 4.25rem);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--color-base-content);
+}
+.er-title em { font-style: italic; font-weight: 300; color: var(--lp-ink); }
+.er-lede { margin-top: 1rem; max-width: 24rem; line-height: 1.65; font-weight: 300; color: var(--lp-muted); }
+.er-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
+.er-actions .btn { padding-inline: 1.6rem; }
+.er-actions svg { width: 1rem; height: 1rem; }
+
+/* ── The number, in a bubble cluster ── */
+.er-stage {
+  position: relative;
+  justify-self: center;
+  width: min(100%, 22rem);
+  aspect-ratio: 1;
+  margin-top: 3rem;
+  container-type: inline-size;
+}
+@media (min-width: 900px) { .er-stage { width: min(100%, 30rem); margin-top: 0; } }
+.er-blob {
+  position: absolute;
+  inset: 8%;
+  display: grid; place-items: center;
+  border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
+  background: var(--lp-tint);
+  animation: lp-pop 0.7s var(--lp-ease) 0.1s both;
+}
+.er-code {
+  font-size: 30cqi;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--lp-ink);
+}
+.er-dot {
+  position: absolute;
+  border-radius: 999px;
+  animation: lp-pop 0.7s var(--lp-ease) both;
+}
+.er-dot.is-a { right: 2%; top: 10%; width: 14%; aspect-ratio: 1; background: var(--lp-alt); animation-delay: 0.3s; }
+.er-dot.is-b { left: 4%; bottom: 6%; width: 7%; aspect-ratio: 1; background: var(--lp-tint-strong); animation-delay: 0.4s; }
+.er-dot.is-icon {
+  right: 6%; bottom: 4%;
+  width: 22%; aspect-ratio: 1;
+  display: grid; place-items: center;
+  border-radius: 55% 45% 47% 53% / 52% 58% 42% 48%;
+  background: var(--color-base-100);
+  color: var(--lp-ink);
+  box-shadow:
+    0 0 0 2px color-mix(in oklab, var(--lp-ink) 55%, transparent),
+    0 1.5cqi 5cqi color-mix(in oklab, var(--lp-ink) 18%, transparent);
+  animation-delay: 0.5s;
+}
+.er-dot.is-icon svg { width: 42%; height: 42%; }

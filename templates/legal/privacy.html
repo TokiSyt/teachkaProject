@@ -1,243 +1,181 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load i18n %}
 
 {% block title %}{% trans "Privacy Policy" %} · Teachka{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+<link rel="stylesheet" href="{% static 'css/legal.css' %}">
+{% endblock %}
+
 {% block content %}
+<div class="lp lg">
 
-  <!-- ── HEADER ── -->
-  <section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
-    <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
-      <i data-lucide="shield" class="text-primary" style="width:180px;height:180px;"></i>
+  <header class="lg-hero">
+    <span class="lg-badge" aria-hidden="true"><i data-lucide="shield"></i></span>
+    <div class="lg-hero-text">
+      <p class="lp-eyebrow lp-rise"><span class="lp-eyebrow-dot"></span>{% trans "Legal" %}</p>
+      <h1 class="lg-title lp-soft lp-rise lp-rise-2">{% blocktrans %}Privacy <em class="text-primary font-light">Policy</em>{% endblocktrans %}</h1>
+      <p class="lg-lede lp-rise lp-rise-2">{% trans "This policy describes how the operator of the Teachka application processes users' personal data in accordance with Regulation (EU) 2016/679 of the European Parliament and of the Council (GDPR) and Portuguese Law No. 58/2019 (Lei n.º 58/2019), on the processing of personal data." %}</p>
+      <p class="lg-updated lp-rise lp-rise-3">{% trans "Last updated" %}: 2026-06-09</p>
     </div>
-    <div class="relative z-10">
-      <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Legal" %}</p>
-      <h1 class="serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
-        {% blocktrans %}Privacy <em class="text-primary font-light">Policy</em>{% endblocktrans %}
-      </h1>
-      <p class="text-xs text-base-content/30">{% trans "Last updated" %}: 2026-06-09</p>
-    </div>
-  </section>
+  </header>
 
-  <!-- ── CONTENT ── -->
-  <section class="px-5 py-10 md:px-14">
-    <div class="max-w-2xl space-y-6">
+  <div class="lg-body lp-rise lp-rise-3">
 
-      <p class="text-sm text-base-content/70 leading-relaxed">{% trans "This policy describes how the operator of the Teachka application processes users' personal data in accordance with Regulation (EU) 2016/679 of the European Parliament and of the Council (GDPR) and Portuguese Law No. 58/2019 (Lei n.º 58/2019), on the processing of personal data." %}</p>
+    <section class="lg-sec">
+      <div class="lg-sec-head">
+        <span class="lg-icon"><i data-lucide="user-circle"></i></span>
+        <h2 class="lp-soft">{% trans "1. Data controller" %}</h2>
+      </div>
+      <p>
+        <strong>Tiago Pereira Maria Gonçalves da Silva</strong>, {% trans "a private individual based in Portugal, operating Teachka on a non-commercial basis." %}<br>
+        {% trans "Contact" %}: <a href="mailto:info@teachka.com">info@teachka.com</a>
+      </p>
+    </section>
 
-      <!-- 1. Controller -->
-      <article class="card bg-base-100 border border-base-300 shadow-sm">
-        <div class="card-body p-6 md:p-7">
-          <div class="flex items-center gap-2.5 mb-3">
-            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-              <i data-lucide="user-circle" class="w-3.5 h-3.5"></i>
-            </span>
-            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "1. Data controller" %}</h2>
-          </div>
-          <p class="text-sm text-base-content/70 leading-relaxed m-0">
-            <span class="font-medium">Tiago Pereira Maria Gonçalves da Silva</span>, {% trans "a private individual based in Portugal, operating Teachka on a non-commercial basis." %}<br>
-            {% trans "Contact" %}: <a href="mailto:info@teachka.com" class="link link-primary">info@teachka.com</a>
-          </p>
-        </div>
-      </article>
+    <section class="lg-sec">
+      <div class="lg-sec-head">
+        <span class="lg-icon"><i data-lucide="database"></i></span>
+        <h2 class="lp-soft">{% trans "2. What data we process" %}</h2>
+      </div>
+      <p>{% trans "When you use the application we process the following categories of personal data:" %}</p>
+      <ul>
+        <li>{% trans "Account data: username, e-mail address, password (stored only as a salted one-way hash, never in plain text)." %}</li>
+        <li>{% trans "Preferences: country, language, theme, and interface accent colour." %}</li>
+        <li>{% trans "Usage data: counts and durations of tool usage (e.g. wheel spins, timer time, calculator uses) linked to your account." %}</li>
+        <li>{% trans "Security data: IP address and username recorded on login attempts, for brute-force protection." %}</li>
+        <li>{% trans "Content you create: groups, members, points, quizzes, calendar entries, which may include names, photos, or data of third parties such as students." %}</li>
+      </ul>
+      <p>{% trans "The application does not process special categories of personal data (e.g. health or biometric data) and does not carry out automated decision-making or profiling." %}</p>
+    </section>
 
-      <!-- 2. Data we process -->
-      <article class="card bg-base-100 border border-base-300 shadow-sm">
-        <div class="card-body p-6 md:p-7">
-          <div class="flex items-center gap-2.5 mb-3">
-            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-              <i data-lucide="database" class="w-3.5 h-3.5"></i>
-            </span>
-            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "2. What data we process" %}</h2>
-          </div>
-          <p class="text-sm text-base-content/70 leading-relaxed mb-3">{% trans "When you use the application we process the following categories of personal data:" %}</p>
-          <ul class="text-sm text-base-content/70 leading-relaxed list-disc pl-5 space-y-2 m-0">
-            <li>{% trans "Account data: username, e-mail address, password (stored only as a salted one-way hash, never in plain text)." %}</li>
-            <li>{% trans "Preferences: country, language, theme, and interface accent colour." %}</li>
-            <li>{% trans "Usage data: counts and durations of tool usage (e.g. wheel spins, timer time, calculator uses) linked to your account." %}</li>
-            <li>{% trans "Security data: IP address and username recorded on login attempts, for brute-force protection." %}</li>
-            <li>{% trans "Content you create: groups, members, points, quizzes, calendar entries, which may include names, photos, or data of third parties such as students." %}</li>
-          </ul>
-          <p class="text-sm text-base-content/70 leading-relaxed mt-3 mb-0">{% trans "The application does not process special categories of personal data (e.g. health or biometric data) and does not carry out automated decision-making or profiling." %}</p>
-        </div>
-      </article>
+    <section class="lg-sec">
+      <div class="lg-sec-head">
+        <span class="lg-icon"><i data-lucide="scale"></i></span>
+        <h2 class="lp-soft">{% trans "3. Purpose and legal basis" %}</h2>
+      </div>
+      <div class="lg-table-wrap">
+        <table class="lg-table">
+          <thead>
+            <tr>
+              <th>{% trans "Purpose" %}</th>
+              <th>{% trans "Legal basis" %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{% trans "Providing the service and managing your account" %}</td>
+              <td>{% trans "Performance of a contract (Art. 6(1)(b) GDPR)" %}</td>
+            </tr>
+            <tr>
+              <td>{% trans "Transactional e-mails (account activation, password reset)" %}</td>
+              <td>{% trans "Performance of a contract (Art. 6(1)(b) GDPR)" %}</td>
+            </tr>
+            <tr>
+              <td>{% trans "Usage statistics shown on your dashboard" %}</td>
+              <td>{% trans "Legitimate interest (Art. 6(1)(f) GDPR)" %}</td>
+            </tr>
+            <tr>
+              <td>{% trans "Protection against abuse and operational security" %}</td>
+              <td>{% trans "Legitimate interest (Art. 6(1)(f) GDPR)" %}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
 
-      <!-- 3. Purpose & legal basis -->
-      <article class="card bg-base-100 border border-base-300 shadow-sm">
-        <div class="card-body p-6 md:p-7">
-          <div class="flex items-center gap-2.5 mb-3">
-            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-              <i data-lucide="scale" class="w-3.5 h-3.5"></i>
-            </span>
-            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "3. Purpose and legal basis" %}</h2>
-          </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-sm text-base-content/70 border-collapse">
-              <thead>
-                <tr class="text-left border-b border-base-300">
-                  <th class="py-2 pr-4 font-medium text-base-content">{% trans "Purpose" %}</th>
-                  <th class="py-2 font-medium text-base-content">{% trans "Legal basis" %}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="border-b border-base-200">
-                  <td class="py-2 pr-4">{% trans "Providing the service and managing your account" %}</td>
-                  <td class="py-2">{% trans "Performance of a contract (Art. 6(1)(b) GDPR)" %}</td>
-                </tr>
-                <tr class="border-b border-base-200">
-                  <td class="py-2 pr-4">{% trans "Transactional e-mails (account activation, password reset)" %}</td>
-                  <td class="py-2">{% trans "Performance of a contract (Art. 6(1)(b) GDPR)" %}</td>
-                </tr>
-                <tr class="border-b border-base-200">
-                  <td class="py-2 pr-4">{% trans "Usage statistics shown on your dashboard" %}</td>
-                  <td class="py-2">{% trans "Legitimate interest (Art. 6(1)(f) GDPR)" %}</td>
-                </tr>
-                <tr>
-                  <td class="py-2 pr-4">{% trans "Protection against abuse and operational security" %}</td>
-                  <td class="py-2">{% trans "Legitimate interest (Art. 6(1)(f) GDPR)" %}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </article>
+    <section class="lg-sec">
+      <div class="lg-sec-head">
+        <span class="lg-icon"><i data-lucide="clock"></i></span>
+        <h2 class="lp-soft">{% trans "4. Data retention" %}</h2>
+      </div>
+      <p>{% trans "We retain your personal data for as long as your account is active. When you delete your account, your data is permanently removed from our active database, and encrypted backups containing it are rotated out within 30 days. Accounts inactive for 365 consecutive days may be deleted after prior e-mail warning. See our " %}<a href="{% url 'cancellation' %}">{% trans "Cancellation policy" %}</a>{% trans " for details." %}</p>
+    </section>
 
-      <!-- 4. Retention -->
-      <article class="card bg-base-100 border border-base-300 shadow-sm">
-        <div class="card-body p-6 md:p-7">
-          <div class="flex items-center gap-2.5 mb-3">
-            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-              <i data-lucide="clock" class="w-3.5 h-3.5"></i>
-            </span>
-            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "4. Data retention" %}</h2>
-          </div>
-          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "We retain your personal data for as long as your account is active. When you delete your account, your data is permanently removed from our active database, and encrypted backups containing it are rotated out within 30 days. Accounts inactive for 365 consecutive days may be deleted after prior e-mail warning. See our " %}<a href="{% url 'cancellation' %}" class="link link-primary">{% trans "Cancellation policy" %}</a>{% trans " for details." %}</p>
-        </div>
-      </article>
+    <section class="lg-sec">
+      <div class="lg-sec-head">
+        <span class="lg-icon"><i data-lucide="share-2"></i></span>
+        <h2 class="lp-soft">{% trans "5. Recipients of personal data" %}</h2>
+      </div>
+      <p>{% trans "Your data may, to the extent necessary, be processed by the following categories of recipients (processors):" %}</p>
+      <ul>
+        <li>{% trans "Hetzner, application hosting and database (EU, Germany)." %}</li>
+        <li>{% trans "Our e-mail provider, for delivering transactional messages." %}</li>
+        <li>{% trans "Sentry, error monitoring (personal data is scrubbed where possible)." %}</li>
+        <li>{% trans "Public authorities, where required by law." %}</li>
+      </ul>
+      <p>{% trans "We do not sell your data or share it for marketing purposes." %}</p>
+    </section>
 
-      <!-- 5. Recipients / processors -->
-      <article class="card bg-base-100 border border-base-300 shadow-sm">
-        <div class="card-body p-6 md:p-7">
-          <div class="flex items-center gap-2.5 mb-3">
-            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-              <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
-            </span>
-            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "5. Recipients of personal data" %}</h2>
-          </div>
-          <p class="text-sm text-base-content/70 leading-relaxed mb-3">{% trans "Your data may, to the extent necessary, be processed by the following categories of recipients (processors):" %}</p>
-          <ul class="text-sm text-base-content/70 leading-relaxed list-disc pl-5 space-y-2 m-0">
-            <li>{% trans "Hetzner, application hosting and database (EU, Germany)." %}</li>
-            <li>{% trans "Our e-mail provider, for delivering transactional messages." %}</li>
-            <li>{% trans "Sentry, error monitoring (personal data is scrubbed where possible)." %}</li>
-            <li>{% trans "Public authorities, where required by law." %}</li>
-          </ul>
-          <p class="text-sm text-base-content/70 leading-relaxed mt-3 mb-0">{% trans "We do not sell your data or share it for marketing purposes." %}</p>
-        </div>
-      </article>
+    <section class="lg-sec">
+      <div class="lg-sec-head">
+        <span class="lg-icon"><i data-lucide="globe"></i></span>
+        <h2 class="lp-soft">{% trans "6. International transfers" %}</h2>
+      </div>
+      <p>{% trans "Our database and application servers are located within the EU (Germany). Where a processor (such as our error-monitoring provider) may process limited data outside the EU/EEA, such transfers take place on the basis of Standard Contractual Clauses approved by the European Commission or an equivalent safeguard." %}</p>
+    </section>
 
-      <!-- 6. International transfers -->
-      <article class="card bg-base-100 border border-base-300 shadow-sm">
-        <div class="card-body p-6 md:p-7">
-          <div class="flex items-center gap-2.5 mb-3">
-            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-              <i data-lucide="globe" class="w-3.5 h-3.5"></i>
-            </span>
-            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "6. International transfers" %}</h2>
-          </div>
-          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Our database and application servers are located within the EU (Germany). Where a processor (such as our error-monitoring provider) may process limited data outside the EU/EEA, such transfers take place on the basis of Standard Contractual Clauses approved by the European Commission or an equivalent safeguard." %}</p>
-        </div>
-      </article>
+    <section class="lg-sec">
+      <div class="lg-sec-head">
+        <span class="lg-icon"><i data-lucide="gavel"></i></span>
+        <h2 class="lp-soft">{% trans "7. Your rights" %}</h2>
+      </div>
+      <p>{% trans "In relation to your personal data you have the following rights:" %}</p>
+      <ul>
+        <li>{% trans "Right of access to your personal data (Art. 15 GDPR)." %}</li>
+        <li>{% trans "Right to rectification of inaccurate data (Art. 16 GDPR)." %}</li>
+        <li>{% trans 'Right to erasure ("right to be forgotten", Art. 17 GDPR). You can delete your account and all data from ' %}<a href="{% url 'profile:settings' %}">{% trans "Settings → Delete account" %}</a>.</li>
+        <li>{% trans "Right to restriction of processing (Art. 18 GDPR)." %}</li>
+        <li>{% trans "Right to data portability (Art. 20 GDPR)." %}</li>
+        <li>{% trans "Right to object to processing (Art. 21 GDPR)." %}</li>
+        <li>{% trans "Right to lodge a complaint with a supervisory authority." %}</li>
+      </ul>
+      <p>{% trans "You may exercise your rights in writing at " %}<a href="mailto:info@teachka.com">info@teachka.com</a>. {% trans "You may lodge a complaint with the Portuguese supervisory authority, the National Data Protection Commission (Comissão Nacional de Proteção de Dados, CNPD), Av. D. Carlos I, 134, 1.º, 1200-651 Lisbon, Portugal, " %}<a href="https://www.cnpd.pt" rel="noopener" target="_blank">www.cnpd.pt</a>.</p>
+    </section>
 
-      <!-- 7. Your rights -->
-      <article class="card bg-base-100 border border-base-300 shadow-sm">
-        <div class="card-body p-6 md:p-7">
-          <div class="flex items-center gap-2.5 mb-3">
-            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-              <i data-lucide="gavel" class="w-3.5 h-3.5"></i>
-            </span>
-            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "7. Your rights" %}</h2>
-          </div>
-          <p class="text-sm text-base-content/70 leading-relaxed mb-3">{% trans "In relation to your personal data you have the following rights:" %}</p>
-          <ul class="text-sm text-base-content/70 leading-relaxed list-disc pl-5 space-y-2 m-0">
-            <li>{% trans "Right of access to your personal data (Art. 15 GDPR)." %}</li>
-            <li>{% trans "Right to rectification of inaccurate data (Art. 16 GDPR)." %}</li>
-            <li>{% trans 'Right to erasure ("right to be forgotten", Art. 17 GDPR). You can delete your account and all data from ' %}<a href="{% url 'profile:settings' %}" class="link link-primary">{% trans "Settings → Delete account" %}</a>.</li>
-            <li>{% trans "Right to restriction of processing (Art. 18 GDPR)." %}</li>
-            <li>{% trans "Right to data portability (Art. 20 GDPR)." %}</li>
-            <li>{% trans "Right to object to processing (Art. 21 GDPR)." %}</li>
-            <li>{% trans "Right to lodge a complaint with a supervisory authority." %}</li>
-          </ul>
-          <p class="text-sm text-base-content/70 leading-relaxed mt-3 mb-0">{% trans "You may exercise your rights in writing at " %}<a href="mailto:info@teachka.com" class="link link-primary">info@teachka.com</a>. {% trans "You may lodge a complaint with the Portuguese supervisory authority, the National Data Protection Commission (Comissão Nacional de Proteção de Dados, CNPD), Av. D. Carlos I, 134, 1.º, 1200-651 Lisbon, Portugal, " %}<a href="https://www.cnpd.pt" class="link link-primary" rel="noopener" target="_blank">www.cnpd.pt</a>.</p>
-        </div>
-      </article>
+    <section class="lg-sec">
+      <div class="lg-sec-head">
+        <span class="lg-icon"><i data-lucide="graduation-cap"></i></span>
+        <h2 class="lp-soft">{% trans "8. Data about students" %}</h2>
+      </div>
+      <p>{% trans "Teachka is intended for teachers and educators. When you enter data about your students (names, photos, points, etc.), you act as the data controller for that data and Teachka acts only as a processor on your behalf. You are responsible for having a lawful basis to enter it, including any parental or school consent required. We process such data only to provide the service to you and do not use it for any other purpose." %}</p>
+    </section>
 
-      <!-- 8. Students / pupil data (processor role) -->
-      <article class="card bg-base-100 border border-base-300 shadow-sm">
-        <div class="card-body p-6 md:p-7">
-          <div class="flex items-center gap-2.5 mb-3">
-            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-              <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i>
-            </span>
-            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "8. Data about students" %}</h2>
-          </div>
-          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Teachka is intended for teachers and educators. When you enter data about your students (names, photos, points, etc.), you act as the data controller for that data and Teachka acts only as a processor on your behalf. You are responsible for having a lawful basis to enter it, including any parental or school consent required. We process such data only to provide the service to you and do not use it for any other purpose." %}</p>
-        </div>
-      </article>
+    <section class="lg-sec">
+      <div class="lg-sec-head">
+        <span class="lg-icon"><i data-lucide="cookie"></i></span>
+        <h2 class="lp-soft">{% trans "9. Cookies and tracking" %}</h2>
+      </div>
+      <p>{% trans "We use only strictly necessary cookies: a session cookie to keep you logged in and a CSRF cookie for security (no consent required under ePrivacy). We store your theme preference in localStorage, which is not a cookie and does not leave your device. We do not use advertising or third-party analytics cookies." %}</p>
+      <p>{% trans 'We do not track users across third-party websites and therefore do not respond to "Do Not Track" browser signals.' %}</p>
+    </section>
 
-      <!-- 9. Cookies & tracking -->
-      <article class="card bg-base-100 border border-base-300 shadow-sm">
-        <div class="card-body p-6 md:p-7">
-          <div class="flex items-center gap-2.5 mb-3">
-            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-              <i data-lucide="cookie" class="w-3.5 h-3.5"></i>
-            </span>
-            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "9. Cookies and tracking" %}</h2>
-          </div>
-          <p class="text-sm text-base-content/70 leading-relaxed mb-3">{% trans "We use only strictly necessary cookies: a session cookie to keep you logged in and a CSRF cookie for security (no consent required under ePrivacy). We store your theme preference in localStorage, which is not a cookie and does not leave your device. We do not use advertising or third-party analytics cookies." %}</p>
-          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans 'We do not track users across third-party websites and therefore do not respond to "Do Not Track" browser signals.' %}</p>
-        </div>
-      </article>
+    <section class="lg-sec">
+      <div class="lg-sec-head">
+        <span class="lg-icon"><i data-lucide="lock"></i></span>
+        <h2 class="lp-soft">{% trans "10. Security" %}</h2>
+      </div>
+      <p>{% trans "We take appropriate technical and organisational measures to protect personal data against unauthorised access, loss, or destruction. All communication with the application is encrypted (HTTPS), and passwords are stored as salted one-way hashes. See our " %}<a href="{% url 'security' %}">{% trans "Security overview" %}</a>{% trans " for more." %}</p>
+    </section>
 
-      <!-- 10. Security -->
-      <article class="card bg-base-100 border border-base-300 shadow-sm">
-        <div class="card-body p-6 md:p-7">
-          <div class="flex items-center gap-2.5 mb-3">
-            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-              <i data-lucide="lock" class="w-3.5 h-3.5"></i>
-            </span>
-            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "10. Security" %}</h2>
-          </div>
-          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "We take appropriate technical and organisational measures to protect personal data against unauthorised access, loss, or destruction. All communication with the application is encrypted (HTTPS), and passwords are stored as salted one-way hashes. See our " %}<a href="{% url 'security' %}" class="link link-primary">{% trans "Security overview" %}</a>{% trans " for more." %}</p>
-        </div>
-      </article>
+    <section class="lg-sec">
+      <div class="lg-sec-head">
+        <span class="lg-icon"><i data-lucide="refresh-cw"></i></span>
+        <h2 class="lp-soft">{% trans "11. Changes to this policy" %}</h2>
+      </div>
+      <p>{% trans "We may update this policy from time to time. The current version is always available on this page. We will inform users of material changes by e-mail or through the application." %}</p>
+    </section>
 
-      <!-- 11. Changes -->
-      <article class="card bg-base-100 border border-base-300 shadow-sm">
-        <div class="card-body p-6 md:p-7">
-          <div class="flex items-center gap-2.5 mb-3">
-            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-              <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-            </span>
-            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "11. Changes to this policy" %}</h2>
-          </div>
-          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "We may update this policy from time to time. The current version is always available on this page. We will inform users of material changes by e-mail or through the application." %}</p>
-        </div>
-      </article>
+    <section class="lg-sec">
+      <div class="lg-sec-head">
+        <span class="lg-icon"><i data-lucide="mail"></i></span>
+        <h2 class="lp-soft">{% trans "12. Contact" %}</h2>
+      </div>
+      <p>{% trans "Questions about this policy: " %}<a href="mailto:info@teachka.com">info@teachka.com</a></p>
+    </section>
 
-      <!-- 12. Contact -->
-      <article class="card bg-base-100 border border-base-300 shadow-sm">
-        <div class="card-body p-6 md:p-7">
-          <div class="flex items-center gap-2.5 mb-3">
-            <span class="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-              <i data-lucide="mail" class="w-3.5 h-3.5"></i>
-            </span>
-            <h2 class="serif font-medium text-xl tracking-tight m-0">{% trans "12. Contact" %}</h2>
-          </div>
-          <p class="text-sm text-base-content/70 leading-relaxed m-0">{% trans "Questions about this policy: " %}<a href="mailto:info@teachka.com" class="link link-primary">info@teachka.com</a></p>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
+  </div>
+</div>
 {% endblock %}

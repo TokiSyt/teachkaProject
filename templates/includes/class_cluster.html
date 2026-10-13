@@ -1,0 +1,44 @@
+{% load i18n %}
+{% comment %} "Your class" bubble cluster: the class in the middle, the tools around it.
+   Tools joined by a line are the ones that read the class list.
+   Styled by static/css/landing.css; needs an .lp ancestor for its colour tokens. {% endcomment %}
+<div class="lp-cluster-wrap" aria-hidden="true">
+  <div class="lp-cluster">
+    <svg class="lp-links" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <line x1="50" y1="50" x2="20" y2="22"/>
+      <line x1="50" y1="50" x2="79" y2="20"/>
+      <line x1="50" y1="50" x2="86" y2="54"/>
+    </svg>
+
+    <div class="lp-bub is-class lp-soft" style="--x:50;--y:50;--d:40;--i:0">
+      <span class="lp-class-label">{% trans "Your class" %}</span>
+      <span class="lp-dots">
+        <i style="--c:var(--color-primary)"></i><i style="--c:var(--color-secondary)"></i><i style="--c:var(--color-success)"></i><i style="--c:var(--color-info)"></i>
+        <i style="--c:var(--color-success)"></i><i style="--c:var(--color-warning)"></i><i style="--c:var(--color-primary)"></i><i style="--c:var(--color-error)"></i>
+        <i style="--c:var(--color-secondary)"></i><i style="--c:var(--color-info)"></i><i style="--c:var(--color-success)"></i><i style="--c:var(--color-success)"></i>
+      </span>
+    </div>
+
+    <div class="lp-bub is-linked" style="--x:20;--y:22;--d:26;--i:1">
+      <i data-lucide="book-open-check"></i>{% trans "Point system" %}
+    </div>
+    <div class="lp-bub is-linked" style="--x:79;--y:20;--d:25;--i:2">
+      <i data-lucide="users"></i>{% trans "Group divider" %}
+    </div>
+    <div class="lp-bub is-linked" style="--x:86;--y:54;--d:22;--i:3">
+      <i data-lucide="loader-pinwheel"></i>{% trans "Name wheel" %}
+    </div>
+    <div class="lp-bub" style="--x:73;--y:84;--d:22;--i:4">
+      <i data-lucide="clock"></i>{% trans "Timer" %}
+    </div>
+    <div class="lp-bub" style="--x:33;--y:84;--d:26;--i:5">
+      <i data-lucide="badge-question-mark"></i>{% trans "Quizzes" %}
+    </div>
+    <div class="lp-bub" style="--x:12;--y:58;--d:20;--i:6">
+      <i data-lucide="calendar-check"></i>{% trans "Calendar" %}
+    </div>
+    <div class="lp-bub" style="--x:50;--y:11;--d:20;--i:7">
+      <i data-lucide="calculator"></i>{% trans "Grade calculator" %}
+    </div>
+  </div>
+</div>
