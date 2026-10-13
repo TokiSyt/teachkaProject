@@ -63,7 +63,7 @@
   display: grid; place-items: center;
   border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
   background: var(--lp-tint);
-  animation: lp-pop 0.7s var(--lp-ease) 0.1s both;
+  animation: lp-pop 0.7s var(--lp-ease) 0.1s both, lp-drift 10s ease-in-out 0.8s infinite;
 }
 .er-code {
   font-size: 30cqi;
@@ -75,10 +75,11 @@
 .er-dot {
   position: absolute;
   border-radius: 999px;
-  animation: lp-pop 0.7s var(--lp-ease) both;
+  /* Each dot: pop-in, then its own slow drift (lp-drift, landing.css), out of step with the blob. */
+  animation: lp-pop 0.7s var(--lp-ease) var(--pop, 0s) both, lp-drift var(--dur, 7s) ease-in-out var(--off, -1s) infinite reverse;
 }
-.er-dot.is-a { right: 2%; top: 10%; width: 14%; aspect-ratio: 1; background: var(--lp-alt); animation-delay: 0.3s; }
-.er-dot.is-b { left: 4%; bottom: 6%; width: 7%; aspect-ratio: 1; background: var(--lp-tint-strong); animation-delay: 0.4s; }
+.er-dot.is-a { right: 2%; top: 10%; width: 14%; aspect-ratio: 1; background: var(--lp-alt); --pop: 0.3s; --dur: 6.5s; --off: -2s; }
+.er-dot.is-b { left: 4%; bottom: 6%; width: 7%; aspect-ratio: 1; background: var(--lp-tint-strong); --pop: 0.4s; --dur: 5.5s; --off: -0.5s; }
 .er-dot.is-icon {
   right: 6%; bottom: 4%;
   width: 22%; aspect-ratio: 1;
@@ -89,6 +90,10 @@
   box-shadow:
     0 0 0 2px color-mix(in oklab, var(--lp-ink) 55%, transparent),
     0 1.5cqi 5cqi color-mix(in oklab, var(--lp-ink) 18%, transparent);
-  animation-delay: 0.5s;
+  --pop: 0.5s; --dur: 8s; --off: -3.5s;
 }
 .er-dot.is-icon svg { width: 42%; height: 42%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .er-blob, .er-dot { animation: none; }
+}

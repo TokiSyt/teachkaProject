@@ -181,7 +181,23 @@
 /* Entrance: bubbles settle in once, lines follow. */
 @keyframes lp-pop { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: none; } }
 @keyframes lp-fade { from { opacity: 0; } to { opacity: 1; } }
-.lp-bub { animation: lp-pop 0.7s var(--lp-ease) both; animation-delay: calc(0.15s + var(--i, 0) * 0.07s); }
+.lp-bub {
+  animation:
+    lp-pop 0.7s var(--lp-ease) calc(0.15s + var(--i, 0) * 0.07s) both,
+    lp-float calc(5.5s + var(--i, 0) * 0.45s) ease-in-out calc(var(--i, 0) * -0.8s) infinite;
+}
+/* Idle float: each bubble drifts on its own rhythm (--i), every other one the opposite way.
+   `translate`, not transform, so it stacks with lp-pop's scale. Amplitude follows the cluster
+   size (cqi). static/js/landing.js pauses clusters and stages that are off screen. */
+.lp-bub:nth-child(odd) { animation-direction: normal, reverse; }
+@keyframes lp-float {
+  0%, 100% { translate: 0 0; }
+  33% { translate: 0.4cqi -1.2cqi; }
+  66% { translate: -0.4cqi -0.5cqi; }
+}
+.lp-cluster.is-paused .lp-bub,
+.lp-stage.is-paused,
+.lp-stage.is-paused::after { animation-play-state: paused; }
 .lp-links { animation: lp-fade 0.6s ease 0.75s both; }
 .lp-rise { animation: lp-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
 .lp-rise-2 { animation-delay: 0.08s; }
@@ -258,6 +274,14 @@
   background: var(--lp-tint);
 }
 .lp-stage.is-alt { background: var(--lp-alt); border-radius: 55% 45% 47% 53% / 52% 58% 42% 48%; }
+/* Stages drift slowly; their satellite bobs out of step. */
+.lp-stage { animation: lp-drift 9s ease-in-out infinite; }
+.lp-stage.is-alt { animation-duration: 10.5s; animation-delay: -3s; }
+.lp-stage::after { animation: lp-drift 6s ease-in-out -1.5s infinite reverse; }
+@keyframes lp-drift {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -8px; }
+}
 /* A small satellite bubble beside each stage. */
 .lp-stage::after {
   content: "";
@@ -443,7 +467,7 @@
 .lp a:focus-visible { outline: 3px solid var(--lp-ink); outline-offset: 3px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .lp-bub, .lp-links, .lp-rise { animation: none; }
+  .lp-bub, .lp-links, .lp-rise, .lp-stage, .lp-stage::after { animation: none; }
   .lp-js .lp-reveal { opacity: 1; transform: none; transition: none; }
 }
 

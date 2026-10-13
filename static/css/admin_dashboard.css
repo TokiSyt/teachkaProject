@@ -27,9 +27,11 @@
   border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
   background: var(--lp-tint);
   color: var(--lp-ink);
-  animation: lp-pop 0.7s var(--lp-ease) 0.15s both;
+  animation: lp-pop 0.7s var(--lp-ease) 0.15s both, lp-drift 10s ease-in-out 0.9s infinite;
 }
+/* After the pop-in the badge drifts slowly (lp-drift, landing.css); its satellite bobs out of step. */
 .ad-badge::after {
+  animation: lp-drift 6.5s ease-in-out -2s infinite reverse;
   content: "";
   position: absolute;
   right: -0.35rem; bottom: -0.2rem;
@@ -152,3 +154,7 @@
 .ad-session-info { flex: 1; min-width: 12rem; }
 .ad-session-info p:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; color: var(--color-base-content); }
 .ad-session-info p + p { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin-top: 0.2rem; font-size: 0.78rem; color: var(--lp-muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ad-badge, .ad-badge::after, .ad-stat { animation: none; }
+}

@@ -33,9 +33,11 @@
   border-radius: 46% 54% 52% 48% / 48% 46% 54% 52%;
   background: var(--lp-tint);
   color: var(--lp-ink);
-  animation: lp-pop 0.7s var(--lp-ease) 0.15s both;
+  animation: lp-pop 0.7s var(--lp-ease) 0.15s both, lp-drift 10s ease-in-out 0.9s infinite;
 }
+/* After the pop-in the badge drifts slowly (lp-drift, landing.css); its satellite bobs out of step. */
 .lg-badge::after {
+  animation: lp-drift 6.5s ease-in-out -2s infinite reverse;
   content: "";
   position: absolute;
   right: -0.35rem; bottom: -0.2rem;
@@ -115,3 +117,7 @@
 .lg-table td { padding: 0.6rem 1rem; background: color-mix(in oklab, var(--lp-alt) 55%, var(--color-base-100)); vertical-align: top; }
 .lg-table td:first-child { border-radius: 1rem 0 0 1rem; }
 .lg-table td:last-child { border-radius: 0 1rem 1rem 0; color: var(--color-base-content); font-weight: 400; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lg-badge, .lg-badge::after { animation: none; }
+}
