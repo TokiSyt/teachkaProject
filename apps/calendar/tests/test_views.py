@@ -1,3 +1,5 @@
+from datetime import date
+
 import pytest
 from django.urls import reverse
 
@@ -126,3 +128,28 @@ class TestEventDeleteView:
         response = authenticated_client.post(url)
         assert response.status_code == 302
         assert not Event.objects.filter(pk=pk).exists()
+
+
+@pytest.mark.django_db
+class TestEventCreateDefaultDate:
+    """New event opens on the day the user came from (?date=), else today."""
+
+    def test_uses_date_param(self, authenticated_client):
+        response = authenticated_client.get(reverse("calendar_app:event_create") + "?date=2026-04-20")
+        body = response.content.decode()
+        # The hidden fields the date/time pickers read from must carry the date.
+        assert 'id="id_start_datetime" value="2026-04-20T00:00"' in body
+        assert 'id="id_end_datetime" value="2026-04-20T23:59"' in body
+
+    def test_invalid_date_falls_back_to_today(self, authenticated_client):
+        response = authenticated_client.get(reverse("calendar_app:event_create") + "?date=nope")
+        today = date.today().strftime("%Y-%m-%d")
+        assert f'id="id_start_datetime" value="{today}T00:00"' in response.content.decode()
+
+    def test_day_view_links_to_its_date(self, authenticated_client):
+        response = authenticated_client.get(reverse("calendar_app:day_detail", args=[2026, 4, 20]))
+        assert "date=2026-04-20" in response.content.decode()
+
+    def test_other_month_links_to_its_first_day(self, authenticated_client):
+        response = authenticated_client.get(reverse("calendar_app:home") + "?year=2031&month=5")
+        assert "date=2031-05-01" in response.content.decode()

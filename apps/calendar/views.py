@@ -1,5 +1,5 @@
 import calendar
-from datetime import date, timedelta
+from datetime import date, datetime, time, timedelta
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
@@ -61,6 +61,8 @@ class CalendarView(LoginRequiredMixin, TemplateView):
 
         prev_year, prev_month = _prev_month(year, month)
         next_year, next_month = _next_month(year, month)
+        # "New event" starts on today when viewing the current month, else on the 1st.
+        new_event_date = today if (year, month) == (today.year, today.month) else date(year, month, 1)
 
         ctx.update(
             {
@@ -74,6 +76,7 @@ class CalendarView(LoginRequiredMixin, TemplateView):
                 "next_year": next_year,
                 "next_month": next_month,
                 "weekday_headers": [WEEKDAYS_ABBR[i] for i in range(7)],
+                "new_event_date": new_event_date,
             }
         )
         return ctx
@@ -132,6 +135,9 @@ class WeekDetailView(LoginRequiredMixin, TemplateView):
         ]
 
         iso_year, iso_week, _ = week_start.isocalendar()
+        today = date.today()
+        # "New event" starts on today when it's in this week, else on the week's Monday.
+        new_event_date = today if week_start <= today <= week_end else week_start
 
         ctx.update(
             {
@@ -140,7 +146,8 @@ class WeekDetailView(LoginRequiredMixin, TemplateView):
                 "prev_start": prev_start,
                 "next_start": next_start,
                 "days": days,
-                "today": date.today(),
+                "today": today,
+                "new_event_date": new_event_date,
                 "iso_year": iso_year,
                 "iso_week": iso_week,
             }
@@ -162,10 +169,16 @@ class EventCreateView(FormUserMixin, LoginRequiredMixin, CreateView):
         return None
 
     def get_initial(self):
-        today = date.today()
+        # Start on the day the user came from (?date=YYYY-MM-DD from the month / week / day
+        # views); fall back to today when it's missing or invalid.
+        try:
+            day = date.fromisoformat(self.request.GET.get("date", ""))
+        except ValueError:
+            day = date.today()
+        # datetimes, not strings: the template formats them with |date, which blanks strings.
         return {
-            "start_datetime": today.strftime("%Y-%m-%dT00:00"),
-            "end_datetime": today.strftime("%Y-%m-%dT23:59"),
+            "start_datetime": datetime.combine(day, time(0, 0)),
+            "end_datetime": datetime.combine(day, time(23, 59)),
         }
 
     def get_success_url(self):

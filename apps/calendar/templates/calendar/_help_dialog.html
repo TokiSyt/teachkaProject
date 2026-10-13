@@ -1,0 +1,26 @@
+{% load i18n %}
+{% comment %} "Help us tell the story" note about holiday descriptions, shared by the month, week
+   and day views. Opened by a button with data-dialog-open="holiday_help_modal" (static/js/calendar.js). {% endcomment %}
+<dialog id="holiday_help_modal" class="modal ap-dialog" aria-labelledby="holiday_help_title">
+  {# tabindex + autofocus: opening focuses the box, not the close button (no focus ring on open). #}
+  <div class="modal-box" tabindex="-1" autofocus>
+    <form method="dialog">
+      <button class="ap-dialog-close btn btn-ghost btn-sm btn-circle" aria-label="{% trans 'Close' %}"><i data-lucide="x" class="w-4 h-4"></i></button>
+    </form>
+    <div class="ap-dialog-head">
+      <span class="ap-dialog-icon" aria-hidden="true"><i data-lucide="book-open"></i></span>
+      <h3 id="holiday_help_title" class="lp-soft">{% trans "Help us tell the story" %}</h3>
+    </div>
+    <p>{% blocktrans %}Teachka is still being detailed. Holiday descriptions are a work in progress and not every entry has the depth it deserves yet.{% endblocktrans %}</p>
+    <p>{% blocktrans %}If you know the history behind a holiday and would like to contribute, we'd love to hear from you.{% endblocktrans %}</p>
+    <div class="ap-dialog-actions">
+      <form method="dialog">
+        <button class="btn btn-ghost rounded-full border border-base-300 font-medium text-base-content/75">{% trans "Close" %}</button>
+      </form>
+      <a href="{% url 'contact:contact' %}" class="btn btn-primary rounded-full gap-2 px-6">
+        <i data-lucide="mail" class="w-4 h-4"></i>{% trans "Contact us" %}
+      </a>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop"><button>close</button></form>
+</dialog>

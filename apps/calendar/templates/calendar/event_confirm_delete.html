@@ -1,75 +1,56 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}{% trans "Delete event" %} · Teachka{% endblock title %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+<link rel="stylesheet" href="{% static 'css/apps.css' %}">
+{% endblock %}
+
 {% block content %}
-<section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
-  <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
-    <i data-lucide="trash-2" class="text-error" style="width: 180px; height: 180px;"></i>
-  </div>
+<div class="lp ap is-danger">
 
-  <div class="relative z-10">
-    <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-error/50 mb-5">
-      {% trans "Danger Zone" %} · {% trans "Calendar" %}
-    </p>
-    <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
-      {% trans "Delete" %} <span class="text-error">{% trans "event" %}</span>
-    </h1>
-    <p class="drift drift-3 text-[11px] tracking-[2px] uppercase text-base-content/30">
-      {% trans "This action is permanent and cannot be undone" %}
-    </p>
-  </div>
-</section>
+  <header class="ap-sec ap-hero">
+    <span class="ap-badge" aria-hidden="true"><i data-lucide="trash-2"></i></span>
+    <div class="ap-hero-text">
+      <p class="lp-eyebrow lp-rise"><span class="lp-eyebrow-dot"></span>{% trans "Danger Zone" %} · {% trans "Calendar" %}</p>
+      <h1 class="ap-title lp-soft lp-rise lp-rise-2">{% trans "Delete" %} <em>{% trans "event" %}</em></h1>
+      <p class="ap-lede lp-rise lp-rise-3">{% trans "This action is permanent and cannot be undone" %}</p>
+    </div>
+  </header>
 
-<section class="px-5 py-12 md:px-14 flex justify-start">
-  <div class="max-w-md w-full">
-
-    <div class="card bg-base-100 border border-base-300 overflow-hidden shadow-sm">
-      <div class="card-body p-0 divide-y divide-base-300">
-
-        <div class="px-6 py-8 text-center bg-error/5">
-          <div class="w-12 h-12 bg-error/10 text-error rounded-full flex items-center justify-center mx-auto mb-4">
-            <i data-lucide="alert-triangle" class="w-6 h-6"></i>
-          </div>
-          <h2 class="serif text-2xl font-medium mb-2">"{{ object.title }}"</h2>
-          <p class="text-xs text-base-content/50 leading-relaxed px-4">
-            {% trans "Are you sure you want to delete this event?" %}
-          </p>
-        </div>
-
-        <div class="px-6 py-4 flex items-center justify-between">
-          <span class="text-[10px] tracking-widest uppercase font-bold text-base-content/30">{% trans "Date" %}</span>
-          <span class="badge badge-ghost font-mono text-xs">{{ object.start_datetime|date:"Y-m-d" }}</span>
-        </div>
-
-        {% if object.recurrence != 'none' %}
-        <div class="px-6 py-4 flex items-center justify-between">
-          <span class="text-[10px] tracking-widest uppercase font-bold text-base-content/30">{% trans "Recurrence" %}</span>
-          <span class="badge badge-warning text-xs">{{ object.get_recurrence_display }}</span>
-        </div>
-        {% endif %}
-
-        {% if object.subject %}
-        <div class="px-6 py-4 flex items-center justify-between">
-          <span class="text-[10px] tracking-widest uppercase font-bold text-base-content/30">{% trans "Subject" %}</span>
-          <span class="badge badge-ghost text-xs">{{ object.subject }}</span>
-        </div>
-        {% endif %}
-
+  <section class="ap-sec lp-rise lp-rise-3">
+    <div class="ap-panel">
+      <span class="ap-panel-icon" aria-hidden="true"><i data-lucide="alert-triangle"></i></span>
+      <h2 class="lp-soft">"{{ object.title }}"</h2>
+      <p>{% trans "Are you sure you want to delete this event?" %}</p>
+      <div class="ap-panel-foot">
+        <span>{% trans "Date" %}</span>
+        <span class="ap-chip">{{ object.start_datetime|date:"Y-m-d" }}</span>
       </div>
+      {% if object.recurrence != 'none' %}
+      <div class="ap-panel-foot mt-2">
+        <span>{% trans "Recurrence" %}</span>
+        <span class="ap-chip is-ink">{{ object.get_recurrence_display }}</span>
+      </div>
+      {% endif %}
+      {% if object.subject %}
+      <div class="ap-panel-foot mt-2">
+        <span>{% trans "Subject" %}</span>
+        <span class="ap-chip">{{ object.subject }}</span>
+      </div>
+      {% endif %}
     </div>
 
-    <form method="post" id="delete-form" class="flex items-center gap-3 mt-8">
+    <form method="post" id="delete-form" class="ap-actions mt-6">
       {% csrf_token %}
-      <button type="submit"
-              class="btn-as-link">
-        {% trans "Delete permanently" %}
+      <button type="submit" class="btn btn-error rounded-full gap-2 px-6">
+        <i data-lucide="trash-2" class="w-4 h-4"></i>{% trans "Delete permanently" %}
       </button>
-      <a href="{% url 'calendar_app:home' %}" class="btn btn-ghost btn-sm rounded-xl text-base-content/40 hover:text-base-content">
-        {% trans "Cancel" %}
-      </a>
+      <a href="{% url 'calendar_app:home' %}" class="btn btn-ghost rounded-full border border-base-300 font-medium text-base-content/75">{% trans "Cancel" %}</a>
     </form>
-  </div>
-</section>
+  </section>
+
+</div>
 {% endblock content %}
