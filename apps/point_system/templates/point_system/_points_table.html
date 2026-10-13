@@ -1,0 +1,118 @@
+{% load custom_tags i18n %}
+{% comment %} One points table (point system home), used for the negative and the positive table.
+   Args: kind ("negative" / "positive"), columns (column names), fields (FieldDefinitions),
+   types (column name → input type), show (table visible). Behaviour: static/js/points_home.js. {% endcomment %}
+<div class="ap-block">
+  <div class="ap-block-head">
+    <div class="ap-block-title">
+      <h2 class="lp-soft">{% if kind == "negative" %}{% trans "Negative points" %}{% else %}{% trans "Positive points" %}{% endif %}</h2>
+      <span class="ap-chip has-dot {% if kind == 'negative' %}is-neg{% else %}is-pos{% endif %}">
+        {{ columns|length }} {% if columns|length == 1 %}{% trans "column" %}{% else %}{% trans "columns" %}{% endif %}
+      </span>
+    </div>
+    <button type="button" class="btn btn-ghost btn-sm gap-1.5 rounded-full border border-base-300 font-medium text-base-content/75"
+            data-toggle-table="{{ kind }}" data-toggle-url="{% url 'karma:toggle-table' selected_group.id %}"
+            data-target="{{ kind }}-table-wrap" data-t-show="{% trans 'Show' %}" data-t-hide="{% trans 'Hide' %}"
+            aria-pressed="{{ show|yesno:'true,false' }}">
+      <i data-lucide="{% if show %}eye{% else %}eye-off{% endif %}" class="w-4 h-4"></i>
+      <span>{% if show %}{% trans "Hide" %}{% else %}{% trans "Show" %}{% endif %}</span>
+    </button>
+  </div>
+
+  <div class="ap-actions mb-4">
+    {% if columns %}
+    <button type="submit" form="points-form" name="{{ kind }}_save" value="1" class="btn btn-primary btn-sm rounded-full gap-2 px-5">
+      <i data-lucide="check" class="w-4 h-4"></i>{% trans "Save points" %}
+    </button>
+    <a href="?group_id={{ group_id }}" class="btn btn-ghost btn-sm rounded-full border border-base-300 font-medium text-base-content/75">{% trans "Cancel" %}</a>
+    <a href="{% url 'karma:new-column' selected_group.id %}?table={{ kind }}" class="btn btn-ghost btn-sm gap-1.5 rounded-full border border-base-300 font-medium text-base-content/75">
+      <i data-lucide="plus" class="w-4 h-4"></i>{% trans "Add column" %}
+    </a>
+    <a href="{% url 'karma:edit-column' selected_group.id %}?table={{ kind }}" class="btn btn-ghost btn-sm gap-1.5 rounded-full border border-base-300 font-medium text-base-content/75">
+      <i data-lucide="pen-line" class="w-4 h-4"></i>{% trans "Edit column" %}
+    </a>
+    <a href="{% url 'karma:delete-column' selected_group.id %}?table={{ kind }}" class="btn btn-ghost btn-sm gap-1.5 rounded-full font-medium text-error">
+      <i data-lucide="trash-2" class="w-4 h-4"></i>{% trans "Delete column" %}
+    </a>
+    <a href="#" role="button" class="btn btn-ghost btn-sm gap-1.5 rounded-full font-medium text-error"
+       data-delete-all data-definition="{{ kind }}" data-delete-all-url="{% url 'karma:delete-all-columns' selected_group.id %}">
+      <i data-lucide="trash-2" class="w-4 h-4"></i>{% trans "Delete all columns" %}
+    </a>
+    {% else %}
+    <a href="{% url 'karma:new-column' selected_group.id %}?table={{ kind }}" class="btn btn-primary btn-sm rounded-full gap-2 px-5">
+      <i data-lucide="plus" class="w-4 h-4"></i>{% trans "Add first column" %}
+    </a>
+    {% endif %}
+  </div>
+
+  <div id="{{ kind }}-table-wrap" class="{% if not show %}hidden{% endif %}">
+    {% if columns %}
+    <div class="ap-table-wrap">
+      <table class="ap-table" data-reorderable-table="{{ kind }}" data-reorder-url="{% url 'karma:column-reorder' selected_group.id %}">
+        <thead>
+          <tr>
+            <th>{% trans "Name" %}</th>
+            {% for field in fields %}
+            <th data-field-pk="{{ field.id }}" draggable="true">
+              <span class="ap-th-drag">
+                <i data-lucide="grip-vertical"></i>{{ field.name }}
+                <button type="button" class="ap-th-clear" data-clear-field="{{ field.name }}" data-definition="{{ kind }}"
+                        data-clear-url="{% url 'karma:clear-column' selected_group.id %}"
+                        title="{% trans 'Clear all values in this column' %}" aria-label="{% trans 'Clear column' %}">
+                  <i data-lucide="eraser"></i>
+                </button>
+              </span>
+            </th>
+            {% endfor %}
+            <th class="is-end">{% trans "Total" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for member in members %}
+          {% if kind == "negative" %}{% with data=member.negative_data total=member.negative_total %}
+          <tr>
+            <td><a href="{% url 'karma:karma-dashboard' member.id %}" class="ap-member-link">{{ member.name }}<i data-lucide="arrow-up-right"></i></a></td>
+            {% for field in fields %}
+            <td data-field-pk="{{ field.id }}">
+              {% if types|get_item:field.name == 'text' %}
+              <input type="text" name="{{ member.id }}_negative_{{ field.name }}" value="{{ data|get_item:field.name }}" title="{{ data|get_item:field.name }}" class="ap-cell">
+              {% else %}
+              <span class="ap-step"><button type="button" class="ap-step-btn" data-step="-1" tabindex="-1" aria-label="{% trans 'Decrease' %}">−</button><input type="{{ types|get_item:field.name }}" name="{{ member.id }}_negative_{{ field.name }}" value="{{ data|get_item:field.name }}" min="0" class="ap-cell"><button type="button" class="ap-step-btn" data-step="1" tabindex="-1" aria-label="{% trans 'Increase' %}">+</button></span>
+              {% endif %}
+            </td>
+            {% endfor %}
+            <td class="is-end"><span class="ap-total {% if total >= 10 %}is-neg-high{% elif total >= 5 %}is-neg-mid{% endif %}">{{ total }}</span></td>
+          </tr>
+          {% endwith %}{% else %}{% with data=member.positive_data total=member.positive_total %}
+          <tr>
+            <td><a href="{% url 'karma:karma-dashboard' member.id %}" class="ap-member-link">{{ member.name }}<i data-lucide="arrow-up-right"></i></a></td>
+            {% for field in fields %}
+            <td data-field-pk="{{ field.id }}">
+              {% if types|get_item:field.name == 'text' %}
+              <input type="text" name="{{ member.id }}_positive_{{ field.name }}" value="{{ data|get_item:field.name }}" title="{{ data|get_item:field.name }}" class="ap-cell">
+              {% else %}
+              <span class="ap-step"><button type="button" class="ap-step-btn" data-step="-1" tabindex="-1" aria-label="{% trans 'Decrease' %}">−</button><input type="{{ types|get_item:field.name }}" name="{{ member.id }}_positive_{{ field.name }}" value="{{ data|get_item:field.name }}" min="0" class="ap-cell"><button type="button" class="ap-step-btn" data-step="1" tabindex="-1" aria-label="{% trans 'Increase' %}">+</button></span>
+              {% endif %}
+            </td>
+            {% endfor %}
+            <td class="is-end"><span class="ap-total {% if total >= 10 %}is-pos-high{% elif total >= 5 %}is-pos-mid{% endif %}">{{ total }}</span></td>
+          </tr>
+          {% endwith %}{% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="ap-blank">
+      <i data-lucide="{% if kind == 'negative' %}list-x{% else %}list-plus{% endif %}"></i>
+      {% if kind == "negative" %}
+      <p>{% trans "No negative columns yet" %}</p>
+      <p>{% trans "Add one to start tracking." %}</p>
+      {% else %}
+      <p>{% trans "No positive columns yet" %}</p>
+      <p>{% trans "Add one to start rewarding." %}</p>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</div>

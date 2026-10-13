@@ -1,141 +1,82 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}{% trans "New column" %} · Teachka{% endblock title %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+<link rel="stylesheet" href="{% static 'css/apps.css' %}">
+{% endblock %}
+
 {% block content %}
+<div class="lp ap">
 
-  <section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
-    <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
-      <i data-lucide="list-plus" class="text-primary" style="width:180px;height:180px;"></i>
-    </div>
-    <div class="relative z-10">
-
-    <a href="{% url 'karma:karma-home' %}?group_id={{ group_id }}"
-       class="drift drift-1 inline-flex items-center gap-1.5 text-[11px] tracking-[2px] uppercase text-base-content/40 hover:text-primary transition-colors mb-5">
-      <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-      {% trans "Back to points" %}
-    </a>
-
-    <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
-      <span class="text-primary">{% trans "New" context "column" %}</span>
-      <span class="text-base-content/25">{% trans "column" %}</span>
-    </h1>
-
-    <div class="drift drift-3 flex flex-wrap items-center gap-3">
-      <span class="inline-flex items-center gap-2 text-[11px] tracking-[2px] uppercase text-base-content/30">
-        <span class="w-1.5 h-1.5 rounded-full {% if field_definition == 'negative' %}bg-error{% else %}bg-success{% endif %}"></span>
+  <header class="ap-sec ap-hero">
+    <span class="ap-badge" aria-hidden="true"><i data-lucide="list-plus"></i></span>
+    <div class="ap-hero-text">
+      <span class="ap-chip has-dot {% if field_definition == 'negative' %}is-neg{% else %}is-pos{% endif %} lp-rise">
         {% if field_definition == 'negative' %}{% trans "Negative table" %}{% else %}{% trans "Positive table" %}{% endif %}
       </span>
+      <h1 class="ap-title lp-soft lp-rise lp-rise-2">{% trans "New" context "column" %} <em>{% trans "column" %}</em></h1>
     </div>
-    </div>
-  </section>
+  </header>
 
-  <section class="px-5 py-8 md:px-14">
-    <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Column details" %}</p>
+  <section class="ap-sec">
+    <a href="{% url 'karma:karma-home' %}?group_id={{ group_id }}" class="ap-back btn btn-ghost btn-sm gap-2 rounded-full border border-base-300 font-medium text-base-content/75">
+      <i data-lucide="arrow-left" class="w-4 h-4"></i>{% trans "Back to points" %}
+    </a>
 
-    {% if messages %}
+    <p class="ap-label">{% trans "Column details" %}</p>
+
     {% for message in messages %}
-    <div role="alert" class="alert alert-error mb-5 max-w-lg text-sm">
-      <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
-      <span>{{ message }}</span>
-    </div>
+    <div role="alert" class="ap-alert"><i data-lucide="alert-circle"></i><p>{{ message }}</p></div>
     {% endfor %}
-    {% endif %}
 
-    <form method="POST" id="new-column-form">
+    <form method="POST" id="new-column-form" class="ap-form is-wide lp-rise lp-rise-3">
       {% csrf_token %}
       <input type="hidden" name="group_id" value="{{ group_id }}">
       <input type="hidden" name="definition" value="{{ field_definition }}">
 
-      <div class="card bg-base-100 border border-base-300 max-w-2xl">
-        <div class="card-body p-5">
-
-          <div class="hidden md:flex gap-3 mb-2 px-1">
-            <span class="flex-1 text-[10px] tracking-[2px] uppercase text-base-content/40">{% trans "Column name" %}</span>
-            <span class="w-40 text-[10px] tracking-[2px] uppercase text-base-content/40">{% trans "Type" %}</span>
-            <span class="w-9"></span>
-          </div>
-
-          <div id="column-rows" class="flex flex-col gap-3">
-            <!-- Rows injected here; one template row below is cloned -->
-          </div>
-
-          <template id="column-row-template">
-            <div class="column-row flex flex-col md:flex-row gap-3 md:items-center">
-              <input type="text"
-                     name="name"
-                     maxlength="25"
-                     class="input input-bordered w-full md:flex-1 md:min-w-0"
-                     placeholder="{% trans 'e.g., Homework, Participation' %}"
-                     required>
-              <select name="type" class="select select-bordered w-full md:w-40 md:shrink-0" required>
-                <option value="int">{% trans "Numerical" %}</option>
-                <option value="str">{% trans "Text" %}</option>
-              </select>
-              <button type="button"
-                      class="remove-row btn btn-ghost btn-sm btn-square text-error/70 hover:bg-error/10 shrink-0"
-                      title="{% trans 'Remove row' %}" aria-label="{% trans 'Remove row' %}">
-                <i data-lucide="x" class="w-4 h-4"></i>
-              </button>
-            </div>
-          </template>
-
-          <button type="button" id="add-row" class="btn btn-ghost btn-sm self-start mt-3 gap-1.5">
-            <i data-lucide="plus" class="w-4 h-4"></i>
-            {% trans "Add another column" %}
-          </button>
-
-          <p class="text-[11px] text-base-content/35 font-light mt-3">{% trans "Each row becomes a column. Numerical columns are summed in the total." %}</p>
-
+      <div class="ap-field is-full ap-cols">
+        <div class="ap-rows-head" aria-hidden="true">
+          <span>{% trans "Column name" %}</span><span>{% trans "Type" %}</span><span></span>
         </div>
+        <div id="column-rows" class="ap-rows"></div>
+
+        <template id="column-row-template">
+          <div class="column-row ap-rowset">
+            <input type="text" name="name" maxlength="25" class="input" placeholder="{% trans 'e.g., Homework, Participation' %}" required aria-label="{% trans 'Column name' %}">
+            <select name="type" class="select" required aria-label="{% trans 'Type' %}">
+              <option value="int">{% trans "Numerical" %}</option>
+              <option value="str">{% trans "Text" %}</option>
+            </select>
+            <button type="button" class="remove-row btn btn-ghost btn-circle text-error/70 hover:text-error shrink-0"
+                    title="{% trans 'Remove row' %}" aria-label="{% trans 'Remove row' %}">
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </template>
+
+        <div>
+          <button type="button" id="add-row" class="btn btn-ghost btn-sm gap-1.5 rounded-full border border-base-300 font-medium text-base-content/75 mt-1">
+            <i data-lucide="plus" class="w-4 h-4"></i>{% trans "Add another column" %}
+          </button>
+        </div>
+        <p class="ap-help">{% trans "Each row becomes a column. Numerical columns are summed in the total." %}</p>
       </div>
 
-      <div class="flex flex-wrap gap-2 mt-6">
-        <button type="submit" class="btn-as-link">
-          <i data-lucide="plus" class="w-4 h-4"></i>
-          {% trans "Create columns" %}
+      <div class="ap-actions">
+        <button type="submit" class="btn btn-primary rounded-full gap-2 px-6">
+          <i data-lucide="plus" class="w-4 h-4"></i>{% trans "Create columns" %}
         </button>
-
-        <a href="{% url 'karma:karma-home' %}?group_id={{ group_id }}" class="btn btn-ghost btn-sm">
-          <i data-lucide="x" class="w-4 h-4"></i>
-          {% trans "Cancel" %}
-        </a>
+        <a href="{% url 'karma:karma-home' %}?group_id={{ group_id }}" class="btn btn-ghost rounded-full border border-base-300 font-medium text-base-content/75">{% trans "Cancel" %}</a>
       </div>
     </form>
-
-    <script>
-    (function() {
-      const rows = document.getElementById('column-rows');
-      const tpl = document.getElementById('column-row-template');
-      const addBtn = document.getElementById('add-row');
-      if (!rows || !tpl || !addBtn) return;
-
-      function refreshRemoveState() {
-        const all = rows.querySelectorAll('.column-row');
-        all.forEach(function(row) {
-          const btn = row.querySelector('.remove-row');
-          if (btn) btn.disabled = all.length <= 1;
-        });
-      }
-
-      function addRow(focus) {
-        const frag = tpl.content.cloneNode(true);
-        rows.appendChild(frag);
-        const row = rows.lastElementChild;
-        row.querySelector('.remove-row').addEventListener('click', function() {
-          row.remove();
-          refreshRemoveState();
-        });
-        if (window.lucide) lucide.createIcons();
-        refreshRemoveState();
-        if (focus) row.querySelector('input[name="name"]').focus();
-      }
-
-      addBtn.addEventListener('click', function() { addRow(true); });
-      addRow(true); // start with one row
-    })();
-    </script>
   </section>
 
+</div>
 {% endblock content %}
+
+{% block extra_js %}
+<script src="{% static 'js/columns.js' %}"></script>
+{% endblock %}

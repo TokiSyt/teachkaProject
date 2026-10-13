@@ -5,780 +5,120 @@
 
 {% block title %}{% trans "Point system" %} · Teachka{% endblock title %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+<link rel="stylesheet" href="{% static 'css/apps.css' %}">
+{% endblock %}
+
 {% block content %}
+<div class="lp ap">
 
-  <section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
-    <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
-      <i data-lucide="star" class="text-primary" style="width:180px;height:180px;"></i>
-    </div>
-    <div class="relative z-10">
-      <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">
-        {% trans "Tools" %} · {% trans "Point system" %}
+  <header class="ap-sec ap-hero">
+    <span class="ap-badge" aria-hidden="true"><i data-lucide="star"></i></span>
+    <div class="ap-hero-text">
+      <p class="lp-eyebrow lp-rise"><span class="lp-eyebrow-dot"></span>{% trans "Tools" %} · {% trans "Point system" %}</p>
+      <h1 class="ap-title lp-soft lp-rise lp-rise-2">{% trans "Points" %}</h1>
+      <p class="ap-lede lp-rise lp-rise-3">
+        {% if selected_group %}{{ selected_group.title }} · {{ selected_group.size }} {% trans "members" %}{% else %}{% trans "Track participation and behavior, group by group" %}{% endif %}
       </p>
-
-      <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
-        <span class="text-primary">{% trans "Points" %}</span>
-      </h1>
-
-      <div class="drift drift-3 flex flex-wrap items-center gap-3">
-        {% if selected_group %}
-        <span class="text-[11px] tracking-[2px] uppercase text-base-content/30">{{ selected_group.title }}</span>
-        <span class="text-base-content/15 text-sm">·</span>
-        <span class="text-[11px] tracking-[2px] uppercase text-base-content/30">{{ selected_group.size }} {% trans "members" %}</span>
-        {% else %}
-        <span class="text-[11px] tracking-[2px] uppercase text-base-content/30">{% trans "Track participation and behavior, group by group" %}</span>
-        {% endif %}
-      </div>
     </div>
-  </section>
+  </header>
 
-  <section class="px-5 py-8 md:px-14 {% if selected_group %}border-b border-base-300{% endif %}">
+  <section class="ap-sec">
+    <p class="ap-label">{% trans "Choose group" %}</p>
 
-    <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Choose group" %}</p>
-
-    <form id="group-form" method="GET" data-autosubmit="1">
-      <div class="flex items-start gap-2 max-w-lg">
-        <div class="card bg-base-100 border border-base-300 flex-1 min-w-0 !overflow-visible">
-          <div class="card-body p-0 divide-y divide-base-300">
-            <div class="px-5 py-4">
-              <p class="text-xs text-base-content/40 mb-1.5">{% trans "Group" %}</p>
-              <details class="relative w-full" id="groupDropdown">
-                <summary class="select select-bordered w-full cursor-pointer">
-                  <span id="groupSelectLabel" class="truncate">
-                    {% if selected_group %}{{ selected_group.title }} - {{ selected_group.size }} {% trans "members" %}{% else %}{% trans "Choose a group..." %}{% endif %}
-                  </span>
-                </summary>
-                <ul class="absolute left-0 right-0 mt-1 z-50 bg-base-100 border border-base-300 rounded-box p-1 max-h-60 overflow-y-auto shadow-lg">
-                  {% for group in groups %}
-                  <li class="flex flex-row items-center gap-1 hover:bg-base-200 rounded-md">
-                    <button type="button" class="flex-1 truncate text-left px-3 py-2 hover:bg-transparent"
-                            data-id="{{ group.id }}"
-                            data-label="{{ group.title }} - {{ group.size }} {% trans 'members' %}"
-                            onclick="pickGroup(this)">
-                      {{ group.title }} - {{ group.size }} {% trans "members" %}
-                    </button>
-                    <a href="{% url 'group_maker:group-maker-edit' group.id %}?origin_app=karma"
-                       class="btn btn-ghost btn-xs btn-square shrink-0"
-                       title="{% trans 'Edit group' %}" aria-label="{% trans 'Edit group' %}">
-                      <i data-lucide="pen-line" class="w-3 h-3"></i>
-                    </a>
-                    <a href="{% url 'group_maker:group-maker-delete' group.id %}?origin_app=karma"
-                       class="btn btn-ghost btn-xs btn-square shrink-0 text-error/70 hover:bg-error/10 hover:text-error"
-                       title="{% trans 'Delete group' %}" aria-label="{% trans 'Delete group' %}">
-                      <i data-lucide="trash-2" class="w-3 h-3"></i>
-                    </a>
-                  </li>
-                  {% empty %}
-                  <li class="px-3 py-2 text-base-content/40">{% trans "No groups available" %}</li>
-                  {% endfor %}
-                </ul>
-              </details>
-              <input type="hidden" name="group_id" id="groupSelect" value="{{ selected_group.id|default:'' }}">
-            </div>
-          </div>
-        </div>
-
-        <div class="flex flex-col gap-2 shrink-0">
-          <a href="{% url 'group_maker:group-maker-creation' %}?next={% url 'karma:karma-home' %}" class="btn btn-ghost btn-sm justify-start">
-            <i data-lucide="plus" class="w-4 h-4"></i>
-            {% trans "New group" %}
+    <form id="group-form" method="GET" class="ap-form lp-rise lp-rise-3">
+      <div class="ap-field">
+        <div class="ap-field-row">
+          <span class="ap-field-label">{% trans "Group" %}</span>
+          <a href="{% url 'group_maker:group-maker-creation' %}?next={% url 'karma:karma-home' %}" class="btn btn-ghost btn-xs gap-1 rounded-full border border-base-300 font-medium text-base-content/75">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>{% trans "New group" %}
           </a>
         </div>
+        <details class="ap-dropdown" id="groupDropdown">
+          <summary>
+            <span id="groupSelectLabel">{% if selected_group %}{{ selected_group.title }} - {{ selected_group.size }} {% trans "members" %}{% else %}{% trans "Choose a group..." %}{% endif %}</span>
+            <i data-lucide="chevron-down"></i>
+          </summary>
+          <ul class="ap-menu">
+            {% for group in groups %}
+            <li>
+              <button type="button" class="ap-menu-pick" data-id="{{ group.id }}" data-label="{{ group.title }} - {{ group.size }} {% trans 'members' %}">
+                {{ group.title }} - {{ group.size }} {% trans "members" %}
+              </button>
+              <a href="{% url 'group_maker:group-maker-edit' group.id %}?origin_app=karma" class="btn btn-ghost btn-xs btn-circle shrink-0"
+                 title="{% trans 'Edit group' %}" aria-label="{% trans 'Edit group' %}"><i data-lucide="pen-line" class="w-3.5 h-3.5"></i></a>
+              <a href="{% url 'group_maker:group-maker-delete' group.id %}?origin_app=karma" class="btn btn-ghost btn-xs btn-circle shrink-0 text-error/70 hover:text-error"
+                 title="{% trans 'Delete group' %}" aria-label="{% trans 'Delete group' %}"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></a>
+            </li>
+            {% empty %}
+            <li class="ap-menu-empty">{% trans "No groups available" %}</li>
+            {% endfor %}
+          </ul>
+        </details>
+        <input type="hidden" name="group_id" id="groupSelect" value="{{ selected_group.id|default:'' }}">
       </div>
     </form>
 
-    <script>
-    function pickGroup(btn) {
-      const sel = document.getElementById('groupSelect');
-      sel.value = btn.dataset.id;
-      document.getElementById('groupSelectLabel').textContent = btn.dataset.label;
-      const dd = document.getElementById('groupDropdown');
-      if (dd) dd.open = false;
-      sel.dispatchEvent(new Event('change', { bubbles: true }));
-      const f = btn.closest('form');
-      if (f && f.dataset.autosubmit === '1') f.submit();
-    }
-    document.addEventListener('click', function(e) {
-      const dd = document.getElementById('groupDropdown');
-      if (dd && dd.open && !dd.contains(e.target)) dd.open = false;
-    });
-    </script>
-
     {% if selected_group %}
-    <div class="flex flex-wrap items-center gap-4 mt-6">
-      <a href="{% url 'karma:karma-home' %}" class="btn btn-ghost btn-sm">
-        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-        {% trans "Reset" %}
+    <div class="ap-actions mt-5">
+      <a href="{% url 'karma:karma-home' %}" class="btn btn-ghost btn-sm gap-2 rounded-full border border-base-300 font-medium text-base-content/75">
+        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>{% trans "Reset" %}
       </a>
-      <div class="flex items-center gap-2">
-        <input type="checkbox" id="autosave-toggle" class="toggle toggle-sm toggle-primary cursor-pointer">
-        <span class="text-[11px] tracking-[1.5px] uppercase text-base-content/50">{% trans "Auto-save" %}</span>
-        <span id="autosave-status" class="text-[10px] text-base-content/30 italic"></span>
-      </div>
+      <label class="ap-switch">
+        <input type="checkbox" id="autosave-toggle" class="toggle toggle-sm toggle-primary"
+               data-t-enabled="{% trans 'enabled' %}" data-t-pending="{% trans 'pending…' %}" data-t-saving="{% trans 'saving…' %}"
+               data-t-saved="{% trans 'saved' %}" data-t-failed="{% trans 'save failed' %}" data-t-failed-refresh="{% trans 'save failed, refresh page' %}">
+        {% trans "Auto-save" %}
+        <span id="autosave-status" class="ap-status"></span>
+      </label>
     </div>
+
+    <form method="POST" id="points-form">
+      {% csrf_token %}
+      <input type="hidden" name="group_id" value="{{ group_id }}">
+      {% include "point_system/_points_table.html" with kind="negative" columns=negative_data fields=negative_fields types=column_type_negative show=show_negative %}
+      {% include "point_system/_points_table.html" with kind="positive" columns=positive_data fields=positive_fields types=column_type_positive show=show_positive %}
+    </form>
+
+    {# ── Confirm dialogs ── #}
+    <dialog id="clear-column-modal" class="modal ap-dialog" aria-labelledby="clear-column-title">
+      <div class="modal-box" tabindex="-1" autofocus>
+        <div class="ap-dialog-head">
+          <span class="ap-dialog-icon is-danger" aria-hidden="true"><i data-lucide="eraser"></i></span>
+          <h3 id="clear-column-title" class="lp-soft">{% trans "Clear" %} “<span data-col-name></span>”</h3>
+        </div>
+        <p>{% trans "This resets every value in this column to zero and cannot be undone." %}</p>
+        <div class="ap-dialog-actions">
+          <form method="dialog"><button class="btn btn-ghost rounded-full border border-base-300 font-medium text-base-content/75">{% trans "Cancel" %}</button></form>
+          <button type="button" class="btn btn-error rounded-full gap-2 px-6" data-confirm><i data-lucide="eraser" class="w-4 h-4"></i>{% trans "Clear column" %}</button>
+        </div>
+      </div>
+      <form method="dialog" class="modal-backdrop"><button>close</button></form>
+    </dialog>
+
+    <dialog id="delete-all-modal" class="modal ap-dialog" aria-labelledby="delete-all-title">
+      <div class="modal-box" tabindex="-1" autofocus>
+        <div class="ap-dialog-head">
+          <span class="ap-dialog-icon is-danger" aria-hidden="true"><i data-lucide="trash-2"></i></span>
+          <h3 id="delete-all-title" class="lp-soft">{% trans "Delete all columns" %}</h3>
+        </div>
+        <p>{% trans "This removes every column in this table and all of its points. This cannot be undone." %}</p>
+        <div class="ap-dialog-actions">
+          <form method="dialog"><button class="btn btn-ghost rounded-full border border-base-300 font-medium text-base-content/75">{% trans "Cancel" %}</button></form>
+          <button type="button" class="btn btn-error rounded-full gap-2 px-6" data-confirm><i data-lucide="trash-2" class="w-4 h-4"></i>{% trans "Delete all columns" %}</button>
+        </div>
+      </div>
+      <form method="dialog" class="modal-backdrop"><button>close</button></form>
+    </dialog>
     {% endif %}
   </section>
 
-  {% if selected_group %}
-  <form method="POST" id="points-form">
-    {% csrf_token %}
-    <input type="hidden" name="group_id" value="{{ group_id }}">
-
-    <section class="px-5 py-8 md:px-14 border-b border-base-300">
-
-      <div class="flex items-center justify-between mb-5 flex-wrap gap-3">
-        <div class="flex items-center gap-3">
-          <span class="w-2 h-2 rounded-full bg-error"></span>
-          <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30">{% trans "Negative points" %}</p>
-        </div>
-        <div class="flex items-center gap-3">
-          {% if negative_data %}
-          <span class="text-[11px] tracking-[1.5px] uppercase text-base-content/30 serif">{{ negative_data|length }} {% if negative_data|length == 1 %}{% trans "column" %}{% else %}{% trans "columns" %}{% endif %}</span>
-          {% endif %}
-          <button type="button" class="btn btn-ghost btn-xs gap-1.5"
-                  data-toggle-table="negative"
-                  data-toggle-url="{% url 'karma:toggle-table' selected_group.id %}"
-                  data-target="neg-table-wrap"
-                  aria-pressed="{{ show_negative|yesno:'true,false' }}">
-            <i data-lucide="{% if show_negative %}eye{% else %}eye-off{% endif %}" class="w-3.5 h-3.5"></i>
-            <span class="text-[11px] tracking-[1px] uppercase">{% if show_negative %}{% trans "Hide" %}{% else %}{% trans "Show" %}{% endif %}</span>
-          </button>
-        </div>
-      </div>
-
-      {# ── Action buttons (top) ── #}
-      <div class="flex flex-wrap gap-2 mb-5">
-        {% if negative_data %}
-        <button type="submit" form="points-form" name="negative_save" value="1"
-                class="btn-as-link">
-          <i data-lucide="check" class="w-4 h-4"></i>
-          {% trans "Save points" %}
-        </button>
-        <a href="?group_id={{ group_id }}" class="btn btn-ghost btn-sm">
-          <i data-lucide="x" class="w-4 h-4"></i>
-          {% trans "Cancel" %}
-        </a>
-        <a href="{% url 'karma:new-column' selected_group.id %}?table=negative" class="btn btn-ghost btn-sm">
-          <i data-lucide="plus" class="w-4 h-4"></i>
-          {% trans "Add column" %}
-        </a>
-        <a href="{% url 'karma:edit-column' selected_group.id %}?table=negative" class="btn btn-ghost btn-sm">
-          <i data-lucide="pen-line" class="w-4 h-4"></i>
-          {% trans "Edit column" %}
-        </a>
-        <a href="{% url 'karma:delete-column' selected_group.id %}?table=negative"
-          class="btn btn-ghost btn-sm text-error hover:bg-error/10">
-            <i data-lucide="trash-2" class="w-4 h-4"></i>
-            {% trans "Delete column" %}
-        </a>
-        <a href="#" role="button"
-           class="btn btn-ghost btn-sm text-error hover:bg-error/10"
-           data-delete-all
-           data-definition="negative"
-           data-delete-all-url="{% url 'karma:delete-all-columns' selected_group.id %}">
-          <i data-lucide="trash-2" class="w-4 h-4"></i>
-          {% trans "Delete all columns" %}
-        </a>
-        {% else %}
-        <a href="{% url 'karma:new-column' selected_group.id %}?table=negative" class="btn-as-link">
-          <i data-lucide="plus" class="w-4 h-4"></i>
-          {% trans "Add first column" %}
-        </a>
-        {% endif %}
-      </div>
-
-      <div id="neg-table-wrap" class="{% if not show_negative %}hidden{% endif %}">
-      {% if negative_data %}
-      <div class="card bg-base-100 border border-base-300 overflow-hidden">
-        <div class="overflow-x-auto">
-          <table class="table [&_th]:border-r [&_th]:border-base-300 [&_td]:border-r [&_td]:border-base-300 [&_th:last-child]:border-r-0 [&_td:last-child]:border-r-0 [&_tbody_tr]:border-b [&_tbody_tr]:border-base-300 [&_tbody_tr:last-child]:border-b-0"
-                 data-reorderable-table="negative"
-                 data-reorder-url="{% url 'karma:column-reorder' selected_group.id %}">
-            <thead>
-              <tr class="bg-base-300">
-                <th class="text-[10px] font-semibold tracking-[1.5px] uppercase text-base-content/50">{% trans "Name" %}</th>
-                {% for field in negative_fields %}
-                <th class="text-[10px] font-semibold tracking-[1.5px] uppercase text-base-content/50 cursor-move active:cursor-grabbing"
-                    data-field-pk="{{ field.id }}" draggable="true">
-                  <span class="inline-flex items-center gap-1.5">
-                    <i data-lucide="menu" class="w-3 h-3 opacity-60"></i>
-                    {{ field.name }}
-                    <button type="button" class="ml-1 opacity-50 hover:opacity-100 hover:text-error transition"
-                            data-clear-field="{{ field.name }}" data-definition="negative"
-                            data-clear-url="{% url 'karma:clear-column' selected_group.id %}"
-                            title="{% trans 'Clear all values in this column' %}"
-                            aria-label="{% trans 'Clear column' %}">
-                      <i data-lucide="eraser" class="w-3 h-3"></i>
-                    </button>
-                  </span>
-                </th>
-                {% endfor %}
-                <th class="text-[10px] font-semibold tracking-[1.5px] uppercase text-base-content/50 text-right">{% trans "Total" %}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for member in members %}
-              <tr class="hover:bg-base-300 transition-colors">
-                <td>
-                  <a href="{% url 'karma:karma-dashboard' member.id %}" class="font-medium text-base-content hover:text-primary transition-colors inline-flex items-center gap-1.5 group">
-                    {{ member.name }}
-                    <i data-lucide="arrow-up-right" class="w-3 h-3 opacity-0 group-hover:opacity-60 transition-opacity"></i>
-                  </a>
-                </td>
-                {% for field in negative_fields %}
-                <td data-field-pk="{{ field.id }}">
-                  {% if column_type_negative|get_item:field.name == 'text' %}
-                  <input type="text"
-                         name="{{ member.id }}_negative_{{ field.name }}"
-                         value="{{ member.negative_data|get_item:field.name }}"
-                         title="{{ member.negative_data|get_item:field.name }}"
-                         class="input input-bordered input-sm w-48"
-                         oninput="this.title = this.value">
-                  {% else %}
-                  <input type="{{ column_type_negative|get_item:field.name }}"
-                         name="{{ member.id }}_negative_{{ field.name }}"
-                         value="{{ member.negative_data|get_item:field.name }}"
-                         min="0"
-                         class="input input-bordered input-sm w-16">
-                  {% endif %}
-                </td>
-                {% endfor %}
-                <td class="text-right tabular-nums">
-                  {% if member.negative_total >= 10 %}
-                    <span class="badge badge-error badge-sm font-semibold">{{ member.negative_total }}</span>
-                  {% elif member.negative_total >= 5 %}
-                    <span class="badge badge-warning badge-sm font-semibold">{{ member.negative_total }}</span>
-                  {% else %}
-                    <span class="badge badge-ghost bg-base-200 border-none badge-sm serif font-medium text-base-content/60">
-                      {{ member.negative_total }}
-                    </span>
-                  {% endif %}
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      {% else %}
-      <div class="card bg-base-100 border border-base-300 border-dashed">
-        <div class="card-body items-center text-center py-10">
-          <i data-lucide="list-x" class="w-8 h-8 text-base-content/20 mb-1"></i>
-          <p class="text-sm text-base-content/50 font-light">{% trans "No negative columns yet" %}</p>
-          <p class="text-[11px] text-base-content/30 font-light">{% trans "Add one to start tracking." %}</p>
-        </div>
-      </div>
-      {% endif %}
-      </div>
-    </section>
-
-    <section class="px-5 py-8 md:px-14">
-
-      <div class="flex items-center justify-between mb-5 flex-wrap gap-3">
-        <div class="flex items-center gap-3">
-          <span class="w-2 h-2 rounded-full bg-success"></span>
-          <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30">{% trans "Positive points" %}</p>
-        </div>
-        <div class="flex items-center gap-3">
-          {% if positive_data %}
-          <span class="text-[11px] tracking-[1.5px] uppercase text-base-content/30 serif">{{ positive_data|length }} {% if positive_data|length == 1 %}{% trans "column" %}{% else %}{% trans "columns" %}{% endif %}</span>
-          {% endif %}
-          <button type="button" class="btn btn-ghost btn-xs gap-1.5"
-                  data-toggle-table="positive"
-                  data-toggle-url="{% url 'karma:toggle-table' selected_group.id %}"
-                  data-target="pos-table-wrap"
-                  aria-pressed="{{ show_positive|yesno:'true,false' }}">
-            <i data-lucide="{% if show_positive %}eye{% else %}eye-off{% endif %}" class="w-3.5 h-3.5"></i>
-            <span class="text-[11px] tracking-[1px] uppercase">{% if show_positive %}{% trans "Hide" %}{% else %}{% trans "Show" %}{% endif %}</span>
-          </button>
-        </div>
-      </div>
-
-      {# ── Action buttons (top) ── #}
-      <div class="flex flex-wrap gap-2 mb-5">
-        {% if positive_data %}
-        <button type="submit" form="points-form" name="positive_save" value="1"
-                class="btn-as-link">
-          <i data-lucide="check" class="w-4 h-4"></i>
-          {% trans "Save points" %}
-        </button>
-        <a href="?group_id={{ group_id }}" class="btn btn-ghost btn-sm">
-          <i data-lucide="x" class="w-4 h-4"></i>
-          {% trans "Cancel" %}
-        </a>
-        <a href="{% url 'karma:new-column' selected_group.id %}?table=positive" class="btn btn-ghost btn-sm">
-          <i data-lucide="plus" class="w-4 h-4"></i>
-          {% trans "Add column" %}
-        </a>
-        <a href="{% url 'karma:edit-column' selected_group.id %}?table=positive" class="btn btn-ghost btn-sm">
-          <i data-lucide="pen-line" class="w-4 h-4"></i>
-          {% trans "Edit column" %}
-        </a>
-        <a href="{% url 'karma:delete-column' selected_group.id %}?table=positive" class="btn btn-ghost btn-sm text-error hover:bg-error/10">
-          <i data-lucide="trash-2" class="w-4 h-4"></i>
-          {% trans "Delete column" %}
-        </a>
-        <a href="#" role="button"
-           class="btn btn-ghost btn-sm text-error hover:bg-error/10"
-           data-delete-all
-           data-definition="positive"
-           data-delete-all-url="{% url 'karma:delete-all-columns' selected_group.id %}">
-          <i data-lucide="trash-2" class="w-4 h-4"></i>
-          {% trans "Delete all columns" %}
-        </a>
-        {% else %}
-        <a href="{% url 'karma:new-column' selected_group.id %}?table=positive" class="btn-as-link">
-          <i data-lucide="plus" class="w-4 h-4"></i>
-          {% trans "Add first column" %}
-        </a>
-        {% endif %}
-      </div>
-
-      <div id="pos-table-wrap" class="{% if not show_positive %}hidden{% endif %}">
-      {% if positive_data %}
-      <div class="card bg-base-100 border border-base-300 overflow-hidden">
-        <div class="overflow-x-auto">
-          <table class="table [&_th]:border-r [&_th]:border-base-300 [&_td]:border-r [&_td]:border-base-300 [&_th:last-child]:border-r-0 [&_td:last-child]:border-r-0 [&_tbody_tr]:border-b [&_tbody_tr]:border-base-300 [&_tbody_tr:last-child]:border-b-0"
-                 data-reorderable-table="positive"
-                 data-reorder-url="{% url 'karma:column-reorder' selected_group.id %}">
-            <thead>
-              <tr class="bg-base-300">
-                <th class="text-[10px] font-semibold tracking-[1.5px] uppercase text-base-content/50">{% trans "Name" %}</th>
-                {% for field in positive_fields %}
-                <th class="text-[10px] font-semibold tracking-[1.5px] uppercase text-base-content/50 cursor-move active:cursor-grabbing"
-                    data-field-pk="{{ field.id }}" draggable="true">
-                  <span class="inline-flex items-center gap-1.5">
-                    <i data-lucide="menu" class="w-3 h-3 opacity-60"></i>
-                    {{ field.name }}
-                    <button type="button" class="ml-1 opacity-50 hover:opacity-100 hover:text-error transition"
-                            data-clear-field="{{ field.name }}" data-definition="positive"
-                            data-clear-url="{% url 'karma:clear-column' selected_group.id %}"
-                            title="{% trans 'Clear all values in this column' %}"
-                            aria-label="{% trans 'Clear column' %}">
-                      <i data-lucide="eraser" class="w-3 h-3"></i>
-                    </button>
-                  </span>
-                </th>
-                {% endfor %}
-                <th class="text-[10px] font-semibold tracking-[1.5px] uppercase text-base-content/50 text-right">{% trans "Total" %}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for member in members %}
-              <tr class="hover:bg-base-300 transition-colors">
-                <td>
-                  <a href="{% url 'karma:karma-dashboard' member.id %}" class="font-medium text-base-content hover:text-primary transition-colors inline-flex items-center gap-1.5 group">
-                    {{ member.name }}
-                    <i data-lucide="arrow-up-right" class="w-3 h-3 opacity-0 group-hover:opacity-60 transition-opacity"></i>
-                  </a>
-                </td>
-                {% for field in positive_fields %}
-                <td data-field-pk="{{ field.id }}">
-                  {% if column_type_positive|get_item:field.name == 'text' %}
-                  <input type="text"
-                         name="{{ member.id }}_positive_{{ field.name }}"
-                         value="{{ member.positive_data|get_item:field.name }}"
-                         title="{{ member.positive_data|get_item:field.name }}"
-                         class="input input-bordered input-sm w-48"
-                         oninput="this.title = this.value">
-                  {% else %}
-                  <input type="{{ column_type_positive|get_item:field.name }}"
-                         name="{{ member.id }}_positive_{{ field.name }}"
-                         value="{{ member.positive_data|get_item:field.name }}"
-                         min="0"
-                         class="input input-bordered input-sm w-16">
-                  {% endif %}
-                </td>
-                {% endfor %}
-                <td class="text-right tabular-nums">
-                  {% if member.positive_total >= 10 %}
-                    <span class="badge badge-success badge-sm font-semibold">{{ member.positive_total }}</span>
-                  {% elif member.positive_total >= 5 %}
-                    <span class="badge badge-success badge-soft badge-sm font-semibold">{{ member.positive_total }}</span>
-                  {% else %}
-                    <span class="badge badge-ghost bg-base-200 border-none badge-sm serif font-medium text-base-content/60">
-                      {{ member.positive_total }}
-                    </span>
-                  {% endif %}
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      {% else %}
-      <div class="card bg-base-100 border border-base-300 border-dashed">
-        <div class="card-body items-center text-center py-10">
-          <i data-lucide="list-plus" class="w-8 h-8 text-base-content/20 mb-1"></i>
-          <p class="text-sm text-base-content/50 font-light">{% trans "No positive columns yet" %}</p>
-          <p class="text-[11px] text-base-content/30 font-light">{% trans "Add one to start rewarding." %}</p>
-        </div>
-      </div>
-      {% endif %}
-      </div>
-    </section>
-  </form>
-
-  <script>
-  (function() {
-    const form = document.getElementById('points-form');
-    if (!form) return;
-    form.addEventListener('keydown', function(e) {
-      if (e.key !== 'Enter') return;
-      const t = e.target;
-      if (!(t instanceof HTMLInputElement)) return;
-      if (t.type === 'submit' || t.type === 'button') return;
-      e.preventDefault();
-      const td = t.closest('td');
-      const tr = td && td.closest('tr');
-      if (!tr) return;
-      const idx = Array.from(tr.children).indexOf(td);
-      const next = tr.nextElementSibling;
-      if (!next) return;
-      const nextCell = next.children[idx];
-      const nextInput = nextCell && nextCell.querySelector('input');
-      if (nextInput) {
-        nextInput.focus();
-        if (nextInput.select) nextInput.select();
-      }
-    });
-  })();
-  </script>
-
-  <script>
-  (function() {
-    const form = document.getElementById('points-form');
-    const toggle = document.getElementById('autosave-toggle');
-    const status = document.getElementById('autosave-status');
-    if (!form || !toggle) return;
-
-    const T = {
-      enabled: "{% trans 'enabled' %}",
-      pending: "{% trans 'pending…' %}",
-      saving: "{% trans 'saving…' %}",
-      saved: "{% trans 'saved' %}",
-      failed: "{% trans 'save failed' %}",
-      failedRefresh: "{% trans 'save failed, refresh page' %}",
-    };
-
-    const STORAGE_KEY = 'points-autosave-' + (form.querySelector('[name=group_id]')?.value || 'x');
-    const DEBOUNCE_MS = 2000;
-    const MIN_INTERVAL_MS = 5000;
-
-    toggle.checked = localStorage.getItem(STORAGE_KEY) === '1';
-    toggle.addEventListener('change', function() {
-      localStorage.setItem(STORAGE_KEY, toggle.checked ? '1' : '0');
-      setStatus(toggle.checked ? T.enabled : '');
-    });
-    setStatus(toggle.checked ? 'enabled' : '');
-
-    let dirty = { negative: false, positive: false };
-    let timer = null;
-    let lastSaveAt = 0;
-    let saving = false;
-    let submitting = false;  // set on manual Save so beforeunload doesn't warn
-
-    // Manual save buttons submit the form -> intentional navigation, no warning.
-    form.addEventListener('submit', function() { submitting = true; });
-
-    function setStatus(text) {
-      if (status) status.textContent = text ? '· ' + text : '';
-    }
-
-    form.addEventListener('input', function(e) {
-      const name = e.target.name || '';
-      const isNeg = name.indexOf('_negative_') !== -1;
-      const isPos = name.indexOf('_positive_') !== -1;
-      if (!isNeg && !isPos) return;
-      updateRowTotal(e.target, isPos);
-      if (!toggle.checked) return;
-      if (isNeg) dirty.negative = true;
-      else dirty.positive = true;
-      schedule();
-    });
-
-    function updateRowTotal(input, isPositive) {
-      const tr = input.closest('tr');
-      if (!tr) return;
-      let total = 0;
-      tr.querySelectorAll('input[type="number"]').forEach(function(i) {
-        const v = parseInt(i.value, 10);
-        if (!isNaN(v)) total += v;
-      });
-      const tds = tr.children;
-      const totalTd = tds[tds.length - 1];
-      if (!totalTd) return;
-      const badge = totalTd.querySelector('.badge');
-      if (!badge) return;
-      badge.textContent = total;
-      const cls = ['badge', 'badge-sm', 'font-semibold'];
-      if (isPositive) {
-        if (total >= 10) cls.push('badge-success');
-        else if (total >= 5) cls.push('badge-success', 'badge-soft');
-        else cls.push('badge-ghost', 'bg-base-200', 'border-none', 'serif', 'font-medium', 'text-base-content/60');
-      } else {
-        if (total >= 10) cls.push('badge-error');
-        else if (total >= 5) cls.push('badge-warning');
-        else cls.push('badge-ghost', 'bg-base-200', 'border-none', 'serif', 'font-medium', 'text-base-content/60');
-      }
-      badge.className = cls.join(' ');
-    }
-
-    function schedule() {
-      clearTimeout(timer);
-      const elapsed = Date.now() - lastSaveAt;
-      const wait = Math.max(DEBOUNCE_MS, MIN_INTERVAL_MS - elapsed);
-      setStatus(T.pending);
-      timer = setTimeout(run, wait);
-    }
-
-    async function run() {
-      if (saving) return;
-      if (!dirty.negative && !dirty.positive) return;
-      saving = true;
-      const flags = [];
-      if (dirty.negative) flags.push('negative_save');
-      if (dirty.positive) flags.push('positive_save');
-      dirty = { negative: false, positive: false };
-      lastSaveAt = Date.now();
-      setStatus(T.saving);
-      let failed = false;
-      try {
-        for (const flag of flags) {
-          const fd = new FormData(form);
-          fd.set(flag, '1');
-          const res = await fetch(window.location.pathname + window.location.search, {
-            method: 'POST',
-            body: fd,
-            headers: { 'X-Requested-With': 'XMLHttpRequest' },
-            credentials: 'same-origin',
-          });
-          if (!res.ok && res.type !== 'opaqueredirect') {
-            failed = true;
-            console.warn('[autosave] HTTP', res.status, 'for', flag);
-          } else if (res.type === 'opaqueredirect') {
-            failed = true;
-            console.warn('[autosave] session expired (redirect)');
-          }
-        }
-        if (failed) {
-          setStatus(T.failedRefresh);
-          if (flags.includes('negative_save')) dirty.negative = true;
-          if (flags.includes('positive_save')) dirty.positive = true;
-        } else {
-          setStatus(T.saved + ' ' + new Date().toLocaleTimeString());
-        }
-      } catch (err) {
-        console.error('[autosave] error', err);
-        setStatus(T.failed);
-        if (flags.includes('negative_save')) dirty.negative = true;
-        if (flags.includes('positive_save')) dirty.positive = true;
-      } finally {
-        saving = false;
-        if (dirty.negative || dirty.positive) schedule();
-      }
-    }
-
-    window.addEventListener('beforeunload', function(e) {
-      if (!submitting && toggle.checked && (dirty.negative || dirty.positive)) {
-        e.preventDefault();
-        e.returnValue = '';
-      }
-    });
-  })();
-  </script>
-
-  <script>
-  (function() {
-    const csrf = document.querySelector('[name=csrfmiddlewaretoken]')?.value;
-    document.querySelectorAll('table[data-reorderable-table]').forEach(function(table) {
-      const definition = table.dataset.reorderableTable;
-      const url = table.dataset.reorderUrl;
-      const headerRow = table.querySelector('thead tr');
-      const tbody = table.querySelector('tbody');
-      if (!headerRow || !tbody || !url) return;
-      let dragTh = null;
-
-      function colIndex(th) {
-        return Array.from(headerRow.children).indexOf(th);
-      }
-
-      function moveCells(fromIdx, toIdx) {
-        if (fromIdx === toIdx) return;
-        tbody.querySelectorAll('tr').forEach(function(tr) {
-          const cells = tr.children;
-          const moving = cells[fromIdx];
-          if (!moving) return;
-          const ref = cells[toIdx];
-          if (toIdx > fromIdx) {
-            tr.insertBefore(moving, ref ? ref.nextSibling : null);
-          } else {
-            tr.insertBefore(moving, ref);
-          }
-        });
-      }
-
-      headerRow.addEventListener('dragstart', function(e) {
-        const th = e.target.closest('th[data-field-pk]');
-        if (!th) return;
-        dragTh = th;
-        th.classList.add('opacity-50');
-        e.dataTransfer.effectAllowed = 'move';
-      });
-
-      headerRow.addEventListener('dragend', function() {
-        if (dragTh) dragTh.classList.remove('opacity-50');
-        dragTh = null;
-      });
-
-      headerRow.addEventListener('dragover', function(e) {
-        e.preventDefault();
-        if (!dragTh) return;
-        const target = e.target.closest('th[data-field-pk]');
-        if (!target || target === dragTh) return;
-        const rect = target.getBoundingClientRect();
-        const after = (e.clientX - rect.left) > rect.width / 2;
-        const fromIdx = colIndex(dragTh);
-        headerRow.insertBefore(dragTh, after ? target.nextSibling : target);
-        const toIdx = colIndex(dragTh);
-        moveCells(fromIdx, toIdx);
-      });
-
-      headerRow.addEventListener('drop', function(e) {
-        e.preventDefault();
-        const order = Array.from(headerRow.querySelectorAll('th[data-field-pk]'))
-          .map(function(th) { return parseInt(th.dataset.fieldPk, 10); });
-        fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrf },
-          body: JSON.stringify({ definition: definition, order: order }),
-          credentials: 'same-origin',
-        }).then(function(r) {
-          if (!r.ok) console.warn('[reorder] failed', r.status);
-        });
-      });
-    });
-  })();
-  </script>
-
-  <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const csrf = document.querySelector('[name=csrfmiddlewaretoken]')?.value;
-    function postForm(url, fields) {
-      return fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'X-CSRFToken': csrf,
-          'X-Requested-With': 'XMLHttpRequest',
-        },
-        body: new URLSearchParams(fields).toString(),
-        credentials: 'same-origin',
-      });
-    }
-
-    // ── Show / hide table (persisted per group) ──
-    document.querySelectorAll('[data-toggle-table]').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        const wrap = document.getElementById(btn.dataset.target);
-        if (!wrap) return;
-        const nowHidden = wrap.classList.toggle('hidden');
-        const icon = btn.querySelector('[data-lucide]');
-        const label = btn.querySelector('span');
-        if (icon) icon.setAttribute('data-lucide', nowHidden ? 'eye-off' : 'eye');
-        if (label) label.textContent = nowHidden ? '{% trans "Show" %}' : '{% trans "Hide" %}';
-        btn.setAttribute('aria-pressed', nowHidden ? 'false' : 'true');
-        if (window.lucide) lucide.createIcons();
-        postForm(btn.dataset.toggleUrl, { definition: btn.dataset.toggleTable, visible: nowHidden ? '0' : '1' });
-      });
-    });
-
-    // ── Confirm modals (clear column / delete all columns) ──
-    let pending = null;
-    const clearModal = document.getElementById('clear-column-modal');
-    const deleteAllModal = document.getElementById('delete-all-modal');
-
-    function runPending(e) {
-      if (!pending) return;
-      const p = pending;
-      pending = null;
-      const dlg = e.target.closest('dialog');
-      if (dlg) dlg.close();
-      postForm(p.url, p.fields).then(function() { window.location.reload(); });
-    }
-
-    document.querySelectorAll('[data-clear-field]').forEach(function(btn) {
-      btn.addEventListener('mousedown', function(e) { e.stopPropagation(); });
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        if (!clearModal) return;
-        pending = { url: btn.dataset.clearUrl, fields: { field_name: btn.dataset.clearField, definition: btn.dataset.definition } };
-        const nameEl = clearModal.querySelector('[data-col-name]');
-        if (nameEl) nameEl.textContent = btn.dataset.clearField;
-        clearModal.showModal();
-      });
-    });
-    clearModal?.querySelector('[data-confirm]')?.addEventListener('click', runPending);
-
-    document.querySelectorAll('[data-delete-all]').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        if (!deleteAllModal) return;
-        pending = { url: btn.dataset.deleteAllUrl, fields: { definition: btn.dataset.definition } };
-        deleteAllModal.showModal();
-      });
-    });
-    deleteAllModal?.querySelector('[data-confirm]')?.addEventListener('click', runPending);
-  });
-  </script>
-
-  {# ── Confirm modals ── #}
-  <dialog id="clear-column-modal" class="modal">
-    <div class="modal-box max-w-md rounded-2xl border border-base-300 bg-base-100">
-      <header class="mb-5">
-        <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-2">{% trans "Points" %}</p>
-        <h2 class="serif font-medium leading-none tracking-tight text-2xl">
-          <span class="text-error">{% trans "Clear" %}</span>
-          <span class="text-base-content/60">“<span data-col-name></span>”</span>
-        </h2>
-      </header>
-      <p class="text-sm text-base-content/70 mb-6">
-        {% trans "This resets every value in this column to zero and cannot be undone." %}
-      </p>
-      <div class="flex items-center gap-3">
-        <button type="button" class="btn-as-link" data-confirm>{% trans "Clear column" %}</button>
-        <button type="button" class="btn-as-link-ghost"
-                onclick="document.getElementById('clear-column-modal').close()">{% trans "Cancel" %}</button>
-      </div>
-    </div>
-    <form method="dialog" class="modal-backdrop"><button>close</button></form>
-  </dialog>
-
-  <dialog id="delete-all-modal" class="modal">
-    <div class="modal-box max-w-md rounded-2xl border border-base-300 bg-base-100">
-      <header class="mb-5">
-        <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-2">{% trans "Points" %}</p>
-        <h2 class="serif font-medium leading-none tracking-tight text-2xl">
-          <span class="text-error">{% trans "Delete all columns" %}</span>
-        </h2>
-      </header>
-      <p class="text-sm text-base-content/70 mb-6">
-        {% trans "This removes every column in this table and all of its points. This cannot be undone." %}
-      </p>
-      <div class="flex items-center gap-3">
-        <button type="button" class="btn-as-link" data-confirm>{% trans "Delete all columns" %}</button>
-        <button type="button" class="btn-as-link-ghost"
-                onclick="document.getElementById('delete-all-modal').close()">{% trans "Cancel" %}</button>
-      </div>
-    </div>
-    <form method="dialog" class="modal-backdrop"><button>close</button></form>
-  </dialog>
-  {% endif %}
-
+</div>
 {% endblock content %}
 
 {% block extra_js %}
 <script src="{% static 'js/points.js' %}"></script>
+<script src="{% static 'js/stepper.js' %}"></script>
+<script src="{% static 'js/points_home.js' %}"></script>
 {% endblock extra_js %}
