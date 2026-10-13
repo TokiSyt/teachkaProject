@@ -3,322 +3,101 @@
 
 {% block title %}{% trans "Countdown" %} · Teachka{% endblock title %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+<link rel="stylesheet" href="{% static 'css/apps.css' %}">
+{% endblock %}
+
 {% block content %}
+<div class="lp ap">
 
-<section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
-  <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
-    <i data-lucide="hourglass" class="text-primary" style="width: 180px; height: 180px;"></i>
-  </div>
-  <div class="relative z-10">
-    <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Tools" %} · {% trans "Timer" %} · {% trans "Countdown" %}</p>
-    <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
-      <span class="text-primary">{% trans "Countdown" %}</span>
-    </h1>
-    <p class="drift drift-3 text-[11px] tracking-[2px] uppercase text-base-content/30">
-      {% trans "Set a duration and count down to zero" %}
-    </p>
-  </div>
-</section>
+  <header class="ap-sec ap-hero">
+    <span class="ap-badge" aria-hidden="true"><i data-lucide="hourglass"></i></span>
+    <div class="ap-hero-text">
+      <p class="lp-eyebrow lp-rise"><span class="lp-eyebrow-dot"></span>{% trans "Tools" %} · {% trans "Timer" %} · {% trans "Countdown" %}</p>
+      <h1 class="ap-title lp-soft lp-rise lp-rise-2">{% trans "Countdown" %}</h1>
+      <p class="ap-lede lp-rise lp-rise-3">{% trans "Set a duration and count down to zero" %}</p>
+    </div>
+  </header>
 
-<section class="px-5 py-10 md:px-14 flex flex-col items-center">
-  <div class="w-full max-w-sm">
-
-    <a href="{% url 'timer:home' %}" class="btn-as-link mb-6">
-      <i data-lucide="arrow-left" class="w-3 h-3"></i>
-      {% trans "Back to Timer" %}
+  <section class="ap-sec">
+    <a href="{% url 'timer:home' %}" class="ap-back btn btn-ghost btn-sm gap-2 rounded-full border border-base-300 font-medium text-base-content/75">
+      <i data-lucide="arrow-left" class="w-4 h-4"></i>{% trans "Back to Timer" %}
     </a>
 
-    <!-- Setup card -->
-    <div id="setupCard" class="card bg-base-100 border border-base-300 shadow-sm">
-      <div class="card-body p-8 flex flex-col items-center gap-6">
-
-        <div class="flex items-center justify-center gap-2">
-          <div class="text-center">
-            <label class="block text-[10px] font-semibold tracking-[2px] uppercase text-base-content/40 mb-1">{% trans "Hours" %}</label>
-            <div class="relative w-16">
-              <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-10 border-y border-base-content/10 pointer-events-none"></div>
-              <div id="scrollH" class="scroll-picker"><div class="scroll-picker-item"></div></div>
-            </div>
+    <!-- Setup: pick hours, minutes, seconds -->
+    <div id="setupCard" class="ap-clock-wrap lp-rise lp-rise-3">
+      <div class="ap-clock">
+        <div class="ap-pickers">
+          <div class="ap-picker">
+            <span class="ap-picker-label">{% trans "Hours" %}</span>
+            <div class="ap-picker-box"><div id="scrollH" class="scroll-picker"><div class="scroll-picker-item"></div></div></div>
           </div>
-          <span class="text-2xl font-bold text-base-content/30 mt-5">:</span>
-          <div class="text-center">
-            <label class="block text-[10px] font-semibold tracking-[2px] uppercase text-base-content/40 mb-1">{% trans "Minutes" %}</label>
-            <div class="relative w-16">
-              <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-10 border-y border-base-content/10 pointer-events-none"></div>
-              <div id="scrollM" class="scroll-picker"><div class="scroll-picker-item"></div></div>
-            </div>
+          <span class="ap-picker-sep">:</span>
+          <div class="ap-picker">
+            <span class="ap-picker-label">{% trans "Minutes" %}</span>
+            <div class="ap-picker-box"><div id="scrollM" class="scroll-picker"><div class="scroll-picker-item"></div></div></div>
           </div>
-          <span class="text-2xl font-bold text-base-content/30 mt-5">:</span>
-          <div class="text-center">
-            <label class="block text-[10px] font-semibold tracking-[2px] uppercase text-base-content/40 mb-1">{% trans "Seconds" %}</label>
-            <div class="relative w-16">
-              <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-10 border-y border-base-content/10 pointer-events-none"></div>
-              <div id="scrollS" class="scroll-picker"><div class="scroll-picker-item"></div></div>
-            </div>
+          <span class="ap-picker-sep">:</span>
+          <div class="ap-picker">
+            <span class="ap-picker-label">{% trans "Seconds" %}</span>
+            <div class="ap-picker-box"><div id="scrollS" class="scroll-picker"><div class="scroll-picker-item"></div></div></div>
           </div>
         </div>
+      </div>
 
-        <a id="startBtn" href="javascript:void(0)" class="btn btn-circle btn-primary cursor-pointer">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-        </a>
-
+      <div class="ap-controls">
+        <button type="button" id="startBtn" class="btn btn-circle btn-primary is-main" aria-label="{% trans 'Start' %}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+        </button>
       </div>
     </div>
 
-    <!-- Timer card (hidden until start) -->
-    <div id="timerCard" class="hidden card bg-base-100 border border-base-300 shadow-sm">
-      <div class="card-body p-8 flex flex-col items-center gap-6">
-
-        <div class="flex items-center justify-center gap-4">
-          <div class="relative w-56 h-56 sm:w-64 sm:h-64 shrink-0">
-            <svg class="w-full h-full -rotate-90" viewBox="0 0 200 200">
-              <circle cx="100" cy="100" r="90" fill="none" stroke-width="8" class="countdown-ring-bg"/>
-              <circle id="progressRing" cx="100" cy="100" r="90" fill="none" stroke-width="8" stroke-linecap="round" class="countdown-ring-fill" style="stroke-dasharray: 565.49; stroke-dashoffset: 0;"/>
-            </svg>
-            <div class="absolute inset-0 flex flex-col items-center justify-center">
-              <div class="flex items-baseline font-mono font-bold tabular-nums tracking-tight">
-                <span id="timerMain" class="text-4xl sm:text-5xl text-base-content" data-hours="0">00:00</span>
-                <span id="timerMs" class="text-lg sm:text-xl text-base-content/40 ml-0.5">.00</span>
-              </div>
-              <span id="totalLabel" class="text-xs text-base-content/40 font-mono mt-1"></span>
-            </div>
+    <!-- Running: ring around the time (hidden until start) -->
+    <div id="timerCard" class="hidden ap-clock-wrap">
+      <div id="clock" class="ap-clock">
+        <svg class="ap-ring" viewBox="0 0 200 200" aria-hidden="true">
+          <circle cx="100" cy="100" r="90" fill="none" stroke-width="8" class="countdown-ring-bg"/>
+          <circle id="progressRing" cx="100" cy="100" r="90" fill="none" stroke-width="8" stroke-linecap="round" class="countdown-ring-fill"/>
+        </svg>
+        <div class="ap-clock-center">
+          <div class="ap-time lp-soft">
+            <span id="timerMain" class="text-4xl sm:text-5xl" data-hours="0">00:00</span>
+            <span id="timerMs" class="ap-time-ms text-lg sm:text-xl">.00</span>
           </div>
-
-          <div class="flex flex-col gap-2 max-sm:hidden">
-            <a href="javascript:void(0)" class="add-time-btn btn btn-primary btn-xs cursor-pointer" data-seconds="5">+5s</a>
-            <a href="javascript:void(0)" class="add-time-btn btn btn-primary btn-xs cursor-pointer" data-seconds="10">+10s</a>
-            <a href="javascript:void(0)" class="add-time-btn btn btn-primary btn-xs cursor-pointer" data-seconds="20">+20s</a>
-          </div>
+          <span id="totalLabel" class="ap-clock-sub"></span>
         </div>
+      </div>
 
-        <div class="flex justify-center gap-2 sm:hidden">
-          <a href="javascript:void(0)" class="add-time-btn btn btn-primary btn-xs cursor-pointer" data-seconds="5">+5s</a>
-          <a href="javascript:void(0)" class="add-time-btn btn btn-primary btn-xs cursor-pointer" data-seconds="10">+10s</a>
-          <a href="javascript:void(0)" class="add-time-btn btn btn-primary btn-xs cursor-pointer" data-seconds="20">+20s</a>
-        </div>
+      <div class="ap-chips">
+        <button type="button" class="add-time-btn btn btn-ghost btn-sm rounded-full border border-base-300 font-medium" data-seconds="5">+5s</button>
+        <button type="button" class="add-time-btn btn btn-ghost btn-sm rounded-full border border-base-300 font-medium" data-seconds="10">+10s</button>
+        <button type="button" class="add-time-btn btn btn-ghost btn-sm rounded-full border border-base-300 font-medium" data-seconds="20">+20s</button>
+      </div>
 
-        <div class="flex items-center gap-3">
-          <a id="pauseBtn" href="javascript:void(0)" class="btn btn-circle btn-primary cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="5" y="3" width="4" height="18" rx="1"/><rect x="15" y="3" width="4" height="18" rx="1"/></svg>
-          </a>
-          <a id="playBtn" href="javascript:void(0)" class="hidden btn btn-circle btn-primary cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-          </a>
-          <a id="stopBtn" href="javascript:void(0)" class="hidden btn btn-circle btn-error cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
-          </a>
-          <a id="pipBtn" href="javascript:void(0)" class="btn btn-circle btn-ghost border border-base-300 cursor-pointer" title="Picture-in-Picture">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><rect x="12" y="9" width="8" height="6" rx="1"/></svg>
-          </a>
-        </div>
-
+      <div class="ap-controls">
+        <button type="button" id="pauseBtn" class="btn btn-circle btn-primary is-main" aria-label="{% trans 'Pause' %}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><rect x="5" y="3" width="4" height="18" rx="1"/><rect x="15" y="3" width="4" height="18" rx="1"/></svg>
+        </button>
+        <button type="button" id="playBtn" class="hidden btn btn-circle btn-primary is-main" aria-label="{% trans 'Start' %}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+        </button>
+        <button type="button" id="stopBtn" class="hidden btn btn-circle btn-error" aria-label="{% trans 'Stop' %}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+        </button>
+        <button type="button" id="pipBtn" class="btn btn-circle btn-ghost border border-base-300" title="Picture-in-Picture" aria-label="Picture-in-Picture">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><rect x="12" y="9" width="8" height="6" rx="1"/></svg>
+        </button>
       </div>
     </div>
+  </section>
 
-  </div>
-</section>
+</div>
 
 {% csrf_token %}
-<script src="{% static 'js/timer.js' %}"></script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  var main = document.getElementById("timerMain"),
-      ms = document.getElementById("timerMs"),
-      setup = document.getElementById("setupCard"),
-      timer = document.getElementById("timerCard"),
-      btns = ["playBtn","pauseBtn","stopBtn"].map(function(id) { return document.getElementById(id); }),
-      play = btns[0], pause = btns[1], stop = btns[2],
-      scrollH = document.getElementById("scrollH"),
-      scrollM = document.getElementById("scrollM"),
-      scrollS = document.getElementById("scrollS"),
-      ring = document.getElementById("progressRing"),
-      totalLabel = document.getElementById("totalLabel"),
-      CIRC = 565.49,
-      state = "idle", remaining = 0, endTime = null, afId = null,
-      totalSet = 0;
-
-  initPicker(scrollH, 99, 0);
-  initPicker(scrollM, 59, 5);
-  initPicker(scrollS, 59, 0);
-
-  function updateRing() {
-    var progress = totalSet > 0 ? remaining / totalSet : 1;
-    ring.style.strokeDashoffset = CIRC * (1 - progress);
-    if (progress > 0.5) ring.style.stroke = "";
-    else if (progress > 0.2) ring.style.stroke = "#eab308";
-    else ring.style.stroke = "#ef4444";
-    totalLabel.textContent = formatTime(totalSet).main;
-  }
-
-  function tick() {
-    if (state !== "running") return;
-    if (endTime !== null) remaining = Math.max(0, endTime - Date.now());
-    if (remaining <= 0) {
-      remaining = 0; updateTimerDisplay(main, ms, 0); updateRing();
-      track("stop", totalSet); state = "idle"; endTime = null;
-      showButtons(btns, stop); return;
-    }
-    updateTimerDisplay(main, ms, remaining);
-    updateRing();
-    afId = requestAnimationFrame(tick);
-  }
-
-  document.getElementById("startBtn").onclick = function() {
-    remaining = (getPickerValue(scrollH, 99) * 3600 + getPickerValue(scrollM, 59) * 60 + getPickerValue(scrollS, 59)) * 1000;
-    if (remaining <= 0) return;
-    totalSet = remaining;
-    setup.classList.add("hidden"); timer.classList.remove("hidden");
-    updateTimerDisplay(main, ms, remaining);
-    ring.style.strokeDashoffset = 0;
-    ring.style.stroke = "";
-    totalLabel.textContent = formatTime(totalSet).main;
-    endTime = Date.now() + remaining;
-    state = "running"; afId = requestAnimationFrame(tick);
-    showButtons(btns, pause);
-    track("start");
-  };
-
-  document.querySelectorAll(".add-time-btn").forEach(function(btn) {
-    btn.onclick = function() {
-      var extra = parseInt(btn.dataset.seconds) * 1000;
-      remaining += extra;
-      totalSet += extra;
-      if (endTime !== null) endTime += extra;
-      updateTimerDisplay(main, ms, remaining);
-      updateRing();
-    };
-  });
-
-  function doPlay() {
-    endTime = Date.now() + remaining;
-    state = "running"; afId = requestAnimationFrame(tick);
-    showButtons(btns, pause);
-  }
-
-  function doPause() {
-    if (endTime !== null) remaining = Math.max(0, endTime - Date.now());
-    state = "paused"; endTime = null;
-    if (afId) cancelAnimationFrame(afId);
-    showButtons(btns, play, stop);
-  }
-
-  function doStop() {
-    var elapsed = totalSet - remaining;
-    if (elapsed > 0) track("stop", elapsed);
-    state = "idle"; endTime = null;
-    if (afId) cancelAnimationFrame(afId);
-    main.dataset.hours = "0";
-    timer.classList.add("hidden"); setup.classList.remove("hidden");
-  }
-
-  play.onclick = doPlay;
-  pause.onclick = doPause;
-  stop.onclick = doStop;
-
-  var pipBtn = document.getElementById("pipBtn");
-  var pipWindow = null;
-
-  if (!("documentPictureInPicture" in window)) {
-    pipBtn.style.display = "none";
-  }
-
-  pipBtn.onclick = async function() {
-    if (pipWindow) { pipWindow.close(); pipWindow = null; return; }
-
-    pipWindow = await documentPictureInPicture.requestWindow({ width: 420, height: 340 });
-    var pipDoc = pipWindow.document;
-
-    // DaisyUI v4 stores CSS vars as full oklch(...) values — use directly, no wrapping
-    var cs = getComputedStyle(document.documentElement);
-    var primaryColor = cs.getPropertyValue("--color-primary").trim();
-    var bgColor = cs.getPropertyValue("--color-base-100").trim();
-    var textColor = cs.getPropertyValue("--color-base-content").trim();
-    var ringBgColor = cs.getPropertyValue("--color-base-300").trim();
-    var mutedColor = "color-mix(in srgb, " + textColor + " 40%, transparent)";
-
-    pipDoc.head.innerHTML = '<style>' +
-      'body{margin:0;display:flex;align-items:center;justify-content:center;height:100vh;background:' + bgColor + ';font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow:hidden}' +
-      '.wrap{text-align:center}' +
-      '.pip-ring{width:220px;height:220px;pointer-events:none;display:block}' +
-      '.ring-bg{stroke:' + ringBgColor + '}' +
-      '.ring-fill{stroke:' + primaryColor + ';transition:stroke-dashoffset 0.1s linear}' +
-      '.time{font-family:ui-monospace,monospace;font-weight:bold;font-size:40px;color:' + textColor + '}' +
-      '.time-ms{font-size:20px;color:' + mutedColor + '}' +
-      '.total{font-size:14px;color:' + mutedColor + ';font-family:ui-monospace,monospace;margin-top:4px}' +
-      '.controls{margin-top:12px;display:flex;gap:10px;justify-content:center}' +
-      '.pip-btn{width:44px;height:44px;border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff}' +
-      '.pip-primary{background:' + primaryColor + '}' +
-      '.pip-stop{background:#ef4444}' +
-      '</style>';
-
-    pipDoc.body.innerHTML =
-      '<div class="wrap">' +
-        '<svg class="pip-ring" viewBox="0 0 200 200">' +
-          '<g transform="rotate(-90 100 100)">' +
-            '<circle cx="100" cy="100" r="90" fill="none" stroke-width="8" class="ring-bg"/>' +
-            '<circle id="pipRing" cx="100" cy="100" r="90" fill="none" stroke-width="8" stroke-linecap="round" class="ring-fill" style="stroke-dasharray:565.49;stroke-dashoffset:0"/>' +
-          '</g>' +
-        '</svg>' +
-        '<div style="margin-top:-165px;position:relative">' +
-          '<div><span id="pipMain" class="time">00:00</span><span id="pipMs" class="time-ms">.00</span></div>' +
-          '<div id="pipTotal" class="total"></div>' +
-        '</div>' +
-        '<div class="controls">' +
-          '<button id="pipPause" class="pip-btn pip-primary" style="display:flex" autofocus><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="3" width="4" height="18" rx="1"/><rect x="15" y="3" width="4" height="18" rx="1"/></svg></button>' +
-          '<button id="pipPlay" class="pip-btn pip-primary" style="display:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg></button>' +
-          '<button id="pipStop" class="pip-btn pip-stop" style="display:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></button>' +
-        '</div>' +
-      '</div>';
-
-    var pipRing = pipDoc.getElementById("pipRing"),
-        pipMain = pipDoc.getElementById("pipMain"),
-        pipMs = pipDoc.getElementById("pipMs"),
-        pipTotal = pipDoc.getElementById("pipTotal"),
-        pipPause = pipDoc.getElementById("pipPause"),
-        pipPlay = pipDoc.getElementById("pipPlay"),
-        pipStop = pipDoc.getElementById("pipStop");
-
-    function syncPip() {
-      if (!pipWindow) return;
-      // Compute remaining from wall clock so PiP stays accurate even if main RAF is throttled
-      if (state === "running" && endTime !== null) remaining = Math.max(0, endTime - Date.now());
-      var t = formatTime(remaining);
-      pipMain.textContent = t.main;
-      pipMs.textContent = "." + t.cs;
-      pipTotal.textContent = formatTime(totalSet).main;
-      var progress = totalSet > 0 ? remaining / totalSet : 1;
-      pipRing.style.strokeDashoffset = CIRC * (1 - progress);
-      if (progress > 0.5) pipRing.style.stroke = primaryColor;
-      else if (progress > 0.2) pipRing.style.stroke = "#eab308";
-      else pipRing.style.stroke = "#ef4444";
-
-      if (state === "running") {
-        pipPause.style.display = "flex"; pipPlay.style.display = "none"; pipStop.style.display = "none";
-      } else if (state === "paused") {
-        pipPause.style.display = "none"; pipPlay.style.display = "flex"; pipStop.style.display = "flex";
-      } else {
-        pipPause.style.display = "none"; pipPlay.style.display = "none"; pipStop.style.display = "none";
-      }
-    }
-
-    pipPause.addEventListener("click", function() { doPause(); syncPip(); });
-    pipPlay.addEventListener("click", function() { doPlay(); syncPip(); });
-    pipStop.addEventListener("click", function() { doStop(); if (pipWindow) { pipWindow.close(); pipWindow = null; } });
-
-    var pipAf;
-    function pipTick() {
-      if (!pipWindow) return;
-      syncPip();
-      // Use PiP window's own RAF so it keeps running even if the main tab is backgrounded
-      pipAf = pipWindow.requestAnimationFrame(pipTick);
-    }
-    pipTick();
-
-    pipWindow.addEventListener("pagehide", function() {
-      pipWindow = null;
-      if (pipAf) cancelAnimationFrame(pipAf);
-    });
-  };
-});
-</script>
 {% endblock content %}
+
+{% block extra_js %}
+<script src="{% static 'js/timer.js' %}"></script>
+<script src="{% static 'js/countdown.js' %}"></script>
+{% endblock %}
