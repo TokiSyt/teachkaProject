@@ -28,8 +28,12 @@ class GradeCalculatorView(LoginRequiredMixin, TemplateView):
         initial = {}
         if result and result.get("score_range"):
             context["score_range"] = result["score_range"]
+            max_points = result.get("max_points")
+            # Stored as a float (FloatField): show 40 rather than 40.0, keep 37.5 as is.
+            if isinstance(max_points, float) and max_points.is_integer():
+                max_points = int(max_points)
             initial = {
-                "max_points": result.get("max_points"),
+                "max_points": max_points,
                 "rounding_option": result.get("rounding_option"),
             }
         context["form"] = self.form_class(initial=initial)

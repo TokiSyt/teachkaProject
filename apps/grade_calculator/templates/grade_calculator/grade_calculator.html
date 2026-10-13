@@ -1,144 +1,85 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}{% trans "Grade calculator" %} · Teachka{% endblock title %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+<link rel="stylesheet" href="{% static 'css/apps.css' %}">
+{% endblock %}
+
 {% block content %}
-<section class="px-5 pt-10 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
-  <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
-    <span class="serif font-medium text-primary text-[180px] leading-none">%</span>
-  </div>
+<div class="lp ap">
 
-  <div class="relative z-10">
-    <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">
-      {% trans "Tools" %} · {% trans "Grading" %}
-    </p>
-    <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
-      <span class="text-primary">{% trans "Grade" %}</span> {% trans "calculator" %}
-    </h1>
-    <p class="drift drift-3 text-[11px] tracking-[2px] uppercase text-base-content/30">
-      {% trans "Calculate grade ranges based on maximum points" %}
-    </p>
-  </div>
-</section>
+  <header class="ap-sec ap-hero">
+    <span class="ap-badge" aria-hidden="true"><i data-lucide="percent"></i></span>
+    <div class="ap-hero-text">
+      <p class="lp-eyebrow lp-rise"><span class="lp-eyebrow-dot"></span>{% trans "Tools" %} · {% trans "Grading" %}</p>
+      <h1 class="ap-title lp-soft lp-rise lp-rise-2">{% trans "Grade" %} <em>{% trans "calculator" %}</em></h1>
+      <p class="ap-lede lp-rise lp-rise-3">{% trans "Calculate grade ranges based on maximum points" %}</p>
+    </div>
+  </header>
 
-<section class="px-5 py-10 md:px-14 border-b border-base-300">
-  <form method="post" id="calc-form" class="max-w-lg">
-    {% csrf_token %}
-    
-    <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Configuration" %}</p>
-    
-    <div class="card bg-base-100 border border-base-300">
-      <div class="card-body p-0 divide-y divide-base-300">
-        
-        <div class="px-5 py-5">
-          <p class="text-xs text-base-content/40 mb-1.5">{% trans "Maximum points available" %}</p>
-          <input type="number"
-                 name="{{ form.max_points.name }}"
-                 id="{{ form.max_points.id_for_label }}"
-                 value="{{ form.max_points.value|default:'' }}"
-                 step="1" min="0"
-                 class="input input-bordered w-full"
-                 placeholder="0"
-                 {% if form.max_points.field.required %}required{% endif %}>
-          
-          {% if form.max_points.errors %}
-            <p class="text-[10px] text-error mt-2 uppercase font-bold tracking-wider">{{ form.max_points.errors.0 }}</p>
-          {% endif %}
-        </div>
+  <section class="ap-sec">
+    <p class="ap-label">{% trans "Configuration" %}</p>
 
-        <div class="px-5 py-5 bg-base-200/10">
-          <p class="text-[10px] tracking-[2px] text-base-content/40 mb-4 uppercase font-bold">{% trans "Rounding strategy" %}</p>
-          <div class="space-y-3">
-            {% for radio in form.rounding_option %}
-            <label class="flex items-center gap-3 cursor-pointer group">
-              <input type="radio"
-                     name="{{ form.rounding_option.name }}"
-                     value="{{ radio.data.value }}"
-                     {% if radio.data.selected %}checked{% endif %}
-                     class="radio radio-primary radio-xs">
-              <span class="text-sm font-medium text-base-content/60 group-hover:text-base-content transition-colors">{{ radio.choice_label }}</span>
-            </label>
-            {% endfor %}
-          </div>
-        </div>
+    <form method="post" id="calc-form" class="ap-form lp-rise lp-rise-3">
+      {% csrf_token %}
 
+      <div class="ap-field">
+        <label for="{{ form.max_points.id_for_label }}" class="ap-field-label">{% trans "Maximum points available" %}</label>
+        <input type="number"
+               name="{{ form.max_points.name }}"
+               id="{{ form.max_points.id_for_label }}"
+               value="{{ form.max_points.value|default:'' }}"
+               step="1" min="0"
+               class="input"
+               placeholder="0"
+               {% if form.max_points.field.required %}required{% endif %}
+               {% if form.max_points.errors %}aria-invalid="true" aria-describedby="{{ form.max_points.id_for_label }}-error"{% endif %}>
+        {% if form.max_points.errors %}
+        <p id="{{ form.max_points.id_for_label }}-error" class="ap-error">{{ form.max_points.errors.0 }}</p>
+        {% endif %}
       </div>
-    </div>
 
-    <div class="flex items-center gap-3 mt-8">
-      <button type="submit" form="calc-form"
-              class="btn-as-link">
-        {% trans "Calculate" %}
-      </button>
-      <a href="{% url 'grade_calculator:grade_calculator' %}?reset=1" class="btn btn-ghost btn-sm rounded-xl text-base-content/40">
-        {% trans "Reset" %}
-      </a>
-    </div>
-  </form>
-</section>
-
-{% if score_range %}
-<section class="px-5 pt-8 pb-4 md:px-14 bg-base-200/30">
-  <div class="flex items-baseline gap-4 mb-10">
-    <h2 class="serif text-3xl font-medium italic text-base-content/80">{% trans "The results" %}</h2>
-    <span class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/20">{% trans "Max" %}: {{ form.max_points.value }}</span>
-  </div>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl">
-    
-    <div class="drift">
-      <p class="text-[10px] tracking-[3px] uppercase font-bold text-base-content/30 mb-6">{% trans "Point ranges" %}</p>
-      <div class="card bg-base-100 border border-base-300 shadow-sm">
-        <div class="card-body p-0">
-          <ul class="divide-y divide-base-300/50">
-            <li class="px-5 py-4 flex items-center justify-between">
-              <span class="serif text-xl font-bold text-primary">{% trans "Grade" %} 1</span>
-              <span class="text-xl font-bold">{{ score_range.0 }} - {{ score_range.1 }}</span>
-            </li>
-            <li class="px-5 py-4 flex items-center justify-between">
-              <span class="serif text-xl font-medium">{% trans "Grade" %} 2</span>
-              <span class="text-xl font-medium text-base-content/70">{{ score_range.2 }} - {{ score_range.3 }}</span>
-            </li>
-            <li class="px-5 py-4 flex items-center justify-between">
-              <span class="serif text-xl font-medium">{% trans "Grade" %} 3</span>
-              <span class="text-xl font-medium text-base-content/70">{{ score_range.4 }} - {{ score_range.5 }}</span>
-            </li>
-            <li class="px-5 py-4 flex items-center justify-between">
-              <span class="serif text-xl font-medium">{% trans "Grade" %} 4</span>
-              <span class="text-xl font-medium text-base-content/70">{{ score_range.6 }} - {{ score_range.7 }}</span>
-            </li>
-            <li class="px-5 py-4 flex items-center justify-between">
-              <span class="serif text-xl font-medium">{% trans "Grade" %} 5</span>
-              <span class="text-xl font-medium text-base-content/70">{{ score_range.8 }} - {{ score_range.9 }}</span>
-            </li>
-          </ul>
+      <fieldset class="ap-field">
+        <legend class="ap-field-label mb-2">{% trans "Rounding strategy" %}</legend>
+        <div class="ap-toggles">
+          {% for radio in form.rounding_option %}
+          <label class="ap-toggle">
+            <input type="radio" name="{{ form.rounding_option.name }}" value="{{ radio.data.value }}" {% if radio.data.selected %}checked{% endif %}>
+            <span>{{ radio.choice_label }}</span>
+          </label>
+          {% endfor %}
         </div>
+      </fieldset>
+
+      <div class="ap-actions">
+        <button type="submit" class="btn btn-primary rounded-full px-8">{% trans "Calculate" %}</button>
+        <a href="{% url 'grade_calculator:grade_calculator' %}?reset=1" class="btn btn-ghost rounded-full border border-base-300 font-medium text-base-content/75">{% trans "Reset" %}</a>
       </div>
-    </div>
+    </form>
 
-    <div class="drift" style="animation-delay: 100ms">
-      <p class="text-[10px] tracking-[3px] uppercase font-bold text-base-content/30 mb-6">{% trans "Thresholds" %}</p>
-      <div class="card bg-base-100 border border-base-300 shadow-sm">
-        <div class="card-body p-0">
-          <ul class="divide-y divide-base-300/50">
-            <li class="px-5 py-4 flex items-center justify-between"><span class="serif text-xl font-medium">1</span><span class="badge badge-ghost font-medium">100% - 90%</span></li>
-            <li class="px-5 py-4 flex items-center justify-between"><span class="serif text-xl font-medium">2</span><span class="badge badge-ghost font-medium">89% - 75%</span></li>
-            <li class="px-5 py-4 flex items-center justify-between"><span class="serif text-xl font-medium">3</span><span class="badge badge-ghost font-medium">74% - 50%</span></li>
-            <li class="px-5 py-4 flex items-center justify-between"><span class="serif text-xl font-medium">4</span><span class="badge badge-ghost font-medium">49% - 35%</span></li>
-            <li class="px-5 py-4 flex items-center justify-between"><span class="serif text-xl font-medium">5</span><span class="badge badge-ghost font-medium">34% - 0%</span></li>
-          </ul>
-        </div>
+    {% if score_range %}
+    <div class="ap-results">
+      <div class="ap-results-head">
+        <h2 class="lp-soft">{% trans "The results" %}</h2>
+        <span class="ap-chip">{% trans "Max" %}: {{ form.max_points.value }}</span>
       </div>
+
+      <div class="ap-grades">
+        <div class="ap-grades-head" aria-hidden="true"><span>{% trans "Grade" %}</span><span>{% trans "Point ranges" %}</span><span>{% trans "Thresholds" %}</span></div>
+        <div class="ap-grade"><span class="ap-grade-num lp-soft" aria-label="{% trans 'Grade' %} 1">1</span><span class="ap-grade-range">{{ score_range.0 }} – {{ score_range.1 }}</span><span class="ap-chip">100% – 90%</span></div>
+        <div class="ap-grade"><span class="ap-grade-num lp-soft" aria-label="{% trans 'Grade' %} 2">2</span><span class="ap-grade-range">{{ score_range.2 }} – {{ score_range.3 }}</span><span class="ap-chip">89% – 75%</span></div>
+        <div class="ap-grade"><span class="ap-grade-num lp-soft" aria-label="{% trans 'Grade' %} 3">3</span><span class="ap-grade-range">{{ score_range.4 }} – {{ score_range.5 }}</span><span class="ap-chip">74% – 50%</span></div>
+        <div class="ap-grade"><span class="ap-grade-num lp-soft" aria-label="{% trans 'Grade' %} 4">4</span><span class="ap-grade-range">{{ score_range.6 }} – {{ score_range.7 }}</span><span class="ap-chip">49% – 35%</span></div>
+        <div class="ap-grade"><span class="ap-grade-num lp-soft" aria-label="{% trans 'Grade' %} 5">5</span><span class="ap-grade-range">{{ score_range.8 }} – {{ score_range.9 }}</span><span class="ap-chip">34% – 0%</span></div>
+      </div>
+
+      <p class="ap-note">{% trans "From 4 to 9 max points, grades do not follow specific percentage thresholds." %}</p>
     </div>
+    {% endif %}
+  </section>
 
-  </div>
-
-  <div class="mt-8 p-4 bg-primary/5 border-l-2 border-primary max-w-lg">
-    <p class="text-[11px] serif leading-relaxed text-base-content/60">
-      {% trans "From 4 to 9 max points, grades do not follow specific percentage thresholds." %}
-    </p>
-  </div>
-</section>
-{% endif %}
+</div>
 {% endblock content %}
