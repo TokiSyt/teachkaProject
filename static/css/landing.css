@@ -198,7 +198,10 @@
 .lp-stage.is-paused,
 .lp-stage.is-paused::after { animation-play-state: paused; }
 .lp-links { animation: lp-fade 0.6s ease 0.75s both; }
-.lp-rise { animation: lp-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+/* `backwards`, not `both`: holds the hidden start state during the delay, then lets go. Holding the
+   end state would keep a transform, making each risen block its own stacking context, so a dropdown
+   menu inside it (z-index) would sit under later positioned elements such as toggles. */
+.lp-rise { animation: lp-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
 .lp-rise-2 { animation-delay: 0.08s; }
 .lp-rise-3 { animation-delay: 0.16s; }
 .lp-rise-4 { animation-delay: 0.24s; }
