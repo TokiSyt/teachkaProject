@@ -1,80 +1,55 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}{% trans "Create group" %} · Teachka{% endblock title %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+<link rel="stylesheet" href="{% static 'css/apps.css' %}">
+{% endblock %}
+
 {% block content %}
+<div class="lp ap">
 
-<section class="px-5 pt-8 pb-8 md:px-14 border-b border-base-300 relative overflow-hidden">
-  <div class="absolute right-10 bottom-0 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
-    <i data-lucide="users" class="text-primary" style="width: 180px; height: 180px;"></i>
-  </div>
-  <div class="relative z-10">
-    <p class="drift drift-1 text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">
-      {% trans "Organization" %} · {% trans "Management" %}
-    </p>
-    <h1 class="drift drift-2 serif font-medium leading-none tracking-tight mb-4" style="font-size: clamp(36px, 5vw, 56px);">
-      {% trans "Create" %} <span class="text-primary">{% trans "group" %}</span>
-    </h1>
-    <p class="drift drift-3 text-[11px] tracking-[2px] uppercase text-base-content/30">
-      {% trans "Add a group that you can use across all tools" %}
-    </p>
-  </div>
-</section>
+  <header class="ap-sec ap-hero">
+    <span class="ap-badge" aria-hidden="true"><i data-lucide="users"></i></span>
+    <div class="ap-hero-text">
+      <p class="lp-eyebrow lp-rise"><span class="lp-eyebrow-dot"></span>{% trans "Organization" %} · {% trans "Management" %}</p>
+      <h1 class="ap-title lp-soft lp-rise lp-rise-2">{% trans "Create" %} <em>{% trans "group" %}</em></h1>
+      <p class="ap-lede lp-rise lp-rise-3">{% trans "Add a group that you can use across all tools" %}</p>
+    </div>
+  </header>
 
-<section class="px-5 py-6 md:px-14">
-  <form method="POST" id="create-form" class="max-w-2xl">
-    {% csrf_token %}
-    <input type="hidden" name="next" value="{{ request.GET.next|default:request.META.HTTP_REFERER|default:'/' }}">
+  <section class="ap-sec">
+    <p class="ap-label">{% trans "Group details" %}</p>
 
-    <p class="text-[10px] tracking-[3px] uppercase font-semibold text-base-content/30 mb-5">{% trans "Group details" %}</p>
+    <form method="POST" id="create-form" class="ap-form lp-rise lp-rise-3">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.GET.next|default:request.META.HTTP_REFERER|default:'/' }}">
 
-    <div class="card bg-base-100 border border-base-300 overflow-hidden shadow-sm">
-      <div class="card-body p-0 divide-y divide-base-300">
-
-        <div class="px-6 py-5">
-          <p class="text-[10px] tracking-[2px] text-base-content/40 mb-3 font-bold uppercase ml-1">{% trans "Group name" %}</p>
-          <input type="text"
-                 name="title"
-                 id="{{ form.title.id_for_label }}"
-                 value="{{ form.title.value|default:'' }}"
-                 placeholder="{% trans 'e.g. Class 10A, Project Team' %}"
-                 class="input input-bordered w-full text-base font-medium text-primary bg-base-200/40 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none rounded-xl transition-all px-4 placeholder:font-normal placeholder:text-base-content/30"
-                 required>
-          {% if form.title.errors %}
-          <p class="text-[10px] text-error mt-2 uppercase font-bold tracking-wider ml-1">{{ form.title.errors.0 }}</p>
-          {% endif %}
-        </div>
-
-        <div class="px-6 py-6">
-          <p class="text-[10px] tracking-[2px] text-base-content/40 mb-3 font-bold uppercase ml-1">{% trans "Members" %}</p>
-          <textarea name="members_string"
-                    id="{{ form.members_string.id_for_label }}"
-                    rows="6"
-                    placeholder="{% trans 'Enter names separated by commas or new lines' %}"
-                    class="textarea textarea-bordered w-full text-base font-medium leading-relaxed bg-base-200/40 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none rounded-xl transition-all resize-none px-4 py-3"
-                    required>{{ form.members_string.value|default:'' }}</textarea>
-          {% if form.members_string.help_text %}
-          <p class="text-[11px] text-base-content/40 mt-2 ml-1">{{ form.members_string.help_text }}</p>
-          {% endif %}
-          {% if form.members_string.errors %}
-          <p class="text-[10px] text-error mt-1 uppercase font-bold tracking-wider ml-1">{{ form.members_string.errors.0 }}</p>
-          {% endif %}
-        </div>
-
+      <div class="ap-field">
+        <label for="{{ form.title.id_for_label }}" class="ap-field-label">{% trans "Group name" %}</label>
+        <input type="text" name="title" id="{{ form.title.id_for_label }}" value="{{ form.title.value|default:'' }}"
+               placeholder="{% trans 'e.g. Class 10A, Project Team' %}" class="input" required
+               {% if form.title.errors %}aria-invalid="true" aria-describedby="{{ form.title.id_for_label }}-error"{% endif %}>
+        {% if form.title.errors %}<p id="{{ form.title.id_for_label }}-error" class="ap-error">{{ form.title.errors.0 }}</p>{% endif %}
       </div>
-    </div>
 
-    <div class="flex flex-wrap items-center gap-3 mt-8">
-      <button type="submit" form="create-form"
-              class="btn-as-link">
-        {% trans "Create group" %}
-      </button>
-      <a href="{{ request.META.HTTP_REFERER|default:'/' }}" class="btn btn-ghost btn-sm rounded-xl text-base-content/40 hover:text-base-content">
-        {% trans "Cancel" %}
-      </a>
-    </div>
-  </form>
-</section>
+      <div class="ap-field">
+        <label for="{{ form.members_string.id_for_label }}" class="ap-field-label">{% trans "Members" %}</label>
+        <textarea name="members_string" id="{{ form.members_string.id_for_label }}" rows="6"
+                  placeholder="{% trans 'Enter names separated by commas or new lines' %}" class="textarea resize-none" required
+                  {% if form.members_string.errors %}aria-invalid="true" aria-describedby="{{ form.members_string.id_for_label }}-error"{% endif %}>{{ form.members_string.value|default:'' }}</textarea>
+        {% if form.members_string.help_text %}<p class="ap-help">{{ form.members_string.help_text }}</p>{% endif %}
+        {% if form.members_string.errors %}<p id="{{ form.members_string.id_for_label }}-error" class="ap-error">{{ form.members_string.errors.0 }}</p>{% endif %}
+      </div>
 
+      <div class="ap-actions">
+        <button type="submit" class="btn btn-primary rounded-full px-7">{% trans "Create group" %}</button>
+        <a href="{{ request.META.HTTP_REFERER|default:'/' }}" class="btn btn-ghost rounded-full border border-base-300 font-medium text-base-content/75">{% trans "Cancel" %}</a>
+      </div>
+    </form>
+  </section>
+
+</div>
 {% endblock content %}
