@@ -4523,3 +4523,23 @@ msgstr "Co bude dál"
 #: apps/contact/templates/contact/contact.html
 msgid "If a reply is needed, we'll write back to the address you left."
 msgstr "Pokud bude potřeba odpověď, ozveme se na adresu, kterou jste zadali."
+
+#: apps/timer/templates/timer/stopwatch.html
+msgid "Pause"
+msgstr "Pozastavit"
+
+#: apps/timer/templates/timer/stopwatch.html
+msgid "Stop"
+msgstr "Zastavit"
+
+#: apps/timer/templates/timer/stopwatch.html
+msgid "Flag"
+msgstr "Označit"
+
+#: apps/point_system/templates/point_system/_points_table.html
+msgid "Decrease"
+msgstr "Snížit"
+
+#: apps/point_system/templates/point_system/_points_table.html
+msgid "Increase"
+msgstr "Zvýšit"

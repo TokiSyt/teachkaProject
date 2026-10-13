@@ -4571,3 +4571,23 @@ msgstr "O que acontece a seguir"
 #: apps/contact/templates/contact/contact.html
 msgid "If a reply is needed, we'll write back to the address you left."
 msgstr "Se for necessária uma resposta, escreveremos para o endereço que indicou."
+
+#: apps/timer/templates/timer/stopwatch.html
+msgid "Pause"
+msgstr "Pausar"
+
+#: apps/timer/templates/timer/stopwatch.html
+msgid "Stop"
+msgstr "Parar"
+
+#: apps/timer/templates/timer/stopwatch.html
+msgid "Flag"
+msgstr "Marcar"
+
+#: apps/point_system/templates/point_system/_points_table.html
+msgid "Decrease"
+msgstr "Diminuir"
+
+#: apps/point_system/templates/point_system/_points_table.html
+msgid "Increase"
+msgstr "Aumentar"
