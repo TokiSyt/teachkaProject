@@ -19,7 +19,7 @@ tzdata==2025.2
 uvicorn==0.35.0
 websockets==16.0
 whitenoise==6.12.0
-python-dotenv==1.2.2
+python-dotenv==1.2.4
 
 # Development tools
 pip-audit==2.9.0
