@@ -115,7 +115,7 @@ class MemberService:
         created: list[FieldDefinition] = []
         seen: set[str] = set()
         for name, field_type in specs:
-            if not name or name in existing or name in seen:
+            if not name.lower() or name.lower() in existing or name in seen:
                 continue
             seen.add(name)
             created.append(MemberService.create_field(group, name, field_type, definition))
