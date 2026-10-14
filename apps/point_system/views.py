@@ -150,10 +150,13 @@ class AddColumn(LoginRequiredMixin, TemplateView):
         if field_definition not in ("positive", "negative") or not specs:
             return _rerender()
 
-        existing = set(
-            FieldDefinition.objects.filter(group=group, definition=field_definition).values_list("name", flat=True)
-        )
-        duplicates = [name for name, _ in specs if name in existing]
+        existing = {
+            name.lower()
+            for name in FieldDefinition.objects.filter(group=group, definition=field_definition).values_list(
+                "name", flat=True
+            )
+        }
+        duplicates = [name for name, _ in specs if name.lower() in existing]
         if duplicates:
             messages.error(
                 request,
