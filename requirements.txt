@@ -39,6 +39,6 @@ holidays==0.96
 channels==4.2.0
 channels-redis==4.2.1
 daphne==4.2.2
-redis==5.2.1
+redis==8.1.0
 cloudinary==1.41.0
 django-cloudinary-storage==0.3.0
