@@ -36,7 +36,7 @@ Pillow==12.3.0
 holidays==0.96
 
 # Live quiz (Channels/WebSockets)
-channels==4.2.0
+channels==4.3.2
 channels-redis==4.2.1
 daphne==4.2.2
 redis==5.2.1
