@@ -19,7 +19,7 @@ from __future__ import annotations
 import json
 import secrets
 import time
-from typing import Any
+from typing import Any, cast
 
 import redis
 from django.conf import settings
@@ -75,6 +75,11 @@ def client() -> redis.Redis:
 
 def _k(code: str, suffix: str) -> str:
     return f"quizlive:{code}:{suffix}"
+
+
+def _hgetall(r: redis.Redis, key: str) -> dict[str, str]:
+    # redis-py types hash reads as bytes | str; client() sets decode_responses=True, so they are str.
+    return cast(dict[str, str], r.hgetall(key))
 
 
 def _touch_ttl(r: redis.Redis, code: str) -> None:
@@ -290,8 +295,10 @@ def host_rename(code: str, nickname: str, new_name: str) -> None:
     for tok, raw in r.hgetall(_k(code, "participants")).items():
         if tok != token and normalize_text(json.loads(raw)["nickname"]) == normalize_text(new_name):
             raise LiveError("That nickname is taken.")
-    raw = r.hget(_k(code, "participants"), token)
-    p = json.loads(raw)
+    current = r.hget(_k(code, "participants"), token)
+    if current is None:
+        raise LiveError("Player not found.")
+    p = json.loads(current)
     p["nickname"] = new_name
     r.hset(_k(code, "participants"), token, json.dumps(p))
     if p.get("pk"):
@@ -313,7 +320,7 @@ def remove_participant(code: str, token: str) -> None:
 
 
 def _all_participants(r: redis.Redis, code: str) -> dict[str, dict[str, Any]]:
-    return {tok: json.loads(raw) for tok, raw in r.hgetall(_k(code, "participants")).items()}
+    return {tok: json.loads(raw) for tok, raw in _hgetall(r, _k(code, "participants")).items()}
 
 
 def leaderboard(code: str) -> list[dict[str, Any]]:
@@ -559,7 +566,7 @@ def close_room(code: str) -> None:
 def end_game(code: str) -> None:
     """Enter ENDED and flush the summary (final scores) to Postgres."""
     r = client()
-    meta = client().hgetall(_k(code, "meta"))
+    meta = _hgetall(r, _k(code, "meta"))
     if not meta or meta.get("phase") == ENDED:
         return
     r.hset(_k(code, "meta"), "phase", ENDED)
