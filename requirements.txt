@@ -1,5 +1,5 @@
 asgiref==3.11.1
-Brotli==1.2.0
+Brotli==1.2.1
 click==8.4.2
 colorama==0.4.6
 crispy-bootstrap4==2026.2
@@ -32,7 +32,7 @@ pytest-django==4.9.0
 pytest-env==1.7.1
 factory-boy==3.3.3
 django-axes==7.0.1
-Pillow==12.3.0
+Pillow==13.0.0
 holidays==0.96
 
 # Live quiz (Channels/WebSockets)
