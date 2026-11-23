@@ -37,7 +37,7 @@ holidays==0.96
 
 # Live quiz (Channels/WebSockets)
 channels==4.3.2
-channels-redis==4.2.1
+channels-redis==4.3.0
 daphne==4.2.3
 redis==8.1.0
 cloudinary==1.41.0
