@@ -45,6 +45,11 @@ dev.teachka.com {
 	encode gzip zstd
 	header X-Robots-Tag "noindex, nofollow"
 
+	# Own token: the global one only covers the teachka zone
+	tls {
+		dns cloudflare {env.WEDDING_CF_API_TOKEN}
+	}
+
 	reverse_proxy wedding-web:8000 {
 		header_up Host {host}
 		header_up X-Real-IP {remote_host}
