@@ -49,6 +49,8 @@ services:
     environment:
       CF_API_TOKEN: ${CF_API_TOKEN}
       DEV_BASIC_AUTH_HASH: ${DEV_BASIC_AUTH_HASH}
+      # Never empty: an empty address would break the whole Caddyfile
+      WEDDING_DOMAIN: ${WEDDING_DOMAIN:-wedding.localhost}
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data

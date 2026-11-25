@@ -38,3 +38,15 @@ dev.teachka.com {
 		header_up X-Real-IP {remote_host}
 	}
 }
+
+# Separate project's stack on the same server, reached over the shared "edge"
+# network. The domain comes from env so it stays out of this public repo.
+{$WEDDING_DOMAIN} {
+	encode gzip zstd
+	header X-Robots-Tag "noindex, nofollow"
+
+	reverse_proxy wedding-web:8000 {
+		header_up Host {host}
+		header_up X-Real-IP {remote_host}
+	}
+}
